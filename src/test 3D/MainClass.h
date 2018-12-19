@@ -1,5 +1,5 @@
 #pragma once
-#pragma comment( lib, "_CoreLib D3D.lib")
+//#pragma comment( lib, "_CoreLib D3D.lib")
 #include "CoreDX.h"
 ///
 #include "SkySphere.h"
