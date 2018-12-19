@@ -66,7 +66,6 @@ class MainClass : public Core
 public:
 	AHeroObj	m_Hero;			// Ä³¸¯ÅÍ
 
-
 	static GameObject* m_pSkyBox;
 	static map<ESceneName, MainClass*> m_SceneList;
 	static MainClass* m_curScene;
