@@ -113,8 +113,8 @@
     <PostBuildEvent>
       <Command>copy "..\\..\\output\\$(ProjectName)\\$(ProjectName).lib" "..\\..\\lib\\"
 copy "..\\..\\output\\$(ProjectName)\\$(ProjectName).dll" "..\\..\\lib\\"
-md "..\\..\\include\\D3D"
-copy "*.h" "..\\..\\include\\D3D\\"</Command>
+md "..\\..\\include\\core"
+copy "*.h" "..\\..\\include\\core\\"</Command>
     </PostBuildEvent>
     <Lib>
       <AdditionalLibraryDirectories>../../fmod/lib;../../DX/Lib/x64;</AdditionalLibraryDirectories>
@@ -141,8 +141,8 @@ copy "*.h" "..\\..\\include\\D3D\\"</Command>
     <PostBuildEvent>
       <Command>copy "..\\..\\output\\$(ProjectName)\\$(ProjectName).lib" "..\\..\\lib\\"
 copy "..\\..\\output\\$(ProjectName)\\$(ProjectName).dll" "..\\..\\lib\\"
-md "..\\..\\include\\D3D"
-copy "*.h" "..\\..\\include\\D3D\\"</Command>
+md "..\\..\\include\\core"
+copy "*.h" "..\\..\\include\\core\\"</Command>
     </PostBuildEvent>
     <Lib>
       <AdditionalLibraryDirectories>../../fmod/lib;../../DX/Lib/x64;</AdditionalLibraryDirectories>
@@ -180,8 +180,8 @@ copy "*.h" "..\\..\\include\\D3D\\"</Command>
     <PostBuildEvent>
       <Command>copy "..\\..\\output\\$(ProjectName)\\$(ProjectName).lib" "..\\..\\lib\\"
 copy "..\\..\\output\\$(ProjectName)\\$(ProjectName).dll" "..\\..\\lib\\"
-md "..\\..\\include\\D3D"
-copy "*.h" "..\\..\\include\\D3D\\"</Command>
+md "..\\..\\include\\core"
+copy "*.h" "..\\..\\include\\core\\"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -217,8 +217,8 @@ copy "*.h" "..\\..\\include\\D3D\\"</Command>
     <PostBuildEvent>
       <Command>copy "..\\..\\output\\$(ProjectName)\\$(ProjectName).lib" "..\\..\\lib\\"
 copy "..\\..\\output\\$(ProjectName)\\$(ProjectName).dll" "..\\..\\lib\\"
-md "..\\..\\include\\D3D"
-copy "*.h" "..\\..\\include\\D3D\\"</Command>
+md "..\\..\\include\\core"
+copy "*.h" "..\\..\\include\\core\\"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

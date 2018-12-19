@@ -98,7 +98,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>../../include/D3D/;../../fmod/inc;../../DX/include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../include/model/;../../include/map/;../../include/ui/;../../include/network/;../../include/core/;../../fmod/inc;../../DX/include</AdditionalIncludeDirectories>
       <MinimalRebuild>false</MinimalRebuild>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -120,7 +120,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>../../include/D3D/;../../fmod/inc;../../DX/include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../include/model/;../../include/map/;../../include/ui/;../../include/network/;../../include/core/;../../fmod/inc;../../DX/include</AdditionalIncludeDirectories>
       <MinimalRebuild>false</MinimalRebuild>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -149,7 +149,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>../../include/D3D/;../../fmod/inc;../../DX/include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../include/model/;../../include/map/;../../include/ui/;../../include/network/;../../include/core/;../../fmod/inc;../../DX/include</AdditionalIncludeDirectories>
       <MinimalRebuild>false</MinimalRebuild>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -181,7 +181,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>../../include/D3D/;../../fmod/inc;../../DX/include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../include/model/;../../include/map/;../../include/ui/;../../include/network/;../../include/core/;../../fmod/inc;../../DX/include</AdditionalIncludeDirectories>
       <MinimalRebuild>false</MinimalRebuild>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
