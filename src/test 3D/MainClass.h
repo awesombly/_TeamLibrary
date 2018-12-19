@@ -1,7 +1,10 @@
 #pragma once
 //#pragma comment( lib, "_CoreLib D3D.lib")
+#pragma comment( lib, "ACoreLibTEAM.lib")
+
 #include "CoreDX.h"
 ///
+
 #include "SkySphere.h"
 #include "MaxImporter.h"
 #include "ParticleSystem.h"
@@ -17,6 +20,7 @@
 #include "ColliderOBB.h"
 #include "ColliderSphere.h"
 
+#include "AHeroObj.h"
 
 // =====================================================================
 // 카메라 조작(Shift 누르고)
@@ -60,8 +64,10 @@ enum class ESceneName : char {
 class MainClass : public Core 
 {
 public:
-	static GameObject* m_pSkyBox;
+	AHeroObj	m_Hero;
 
+
+	static GameObject* m_pSkyBox;
 	static map<ESceneName, MainClass*> m_SceneList;
 	static MainClass* m_curScene;
 public:
