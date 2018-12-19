@@ -1,0 +1,130 @@
+
+*NUMCHARACTER		2
+
+//////////////////////////////////////////////////////////////////////////
+*CHARACTERNAME		guard
+*SHADERFILENMAE		..\..\data\model\Character.hlsl
+
+*MATRIXMATRIXCOUNT  8
+*MATRIXFILENAME		..\..\data\model\Guard_02\HERO_DANCE3.Mat
+*MATRIXFILENAME		..\..\data\model\Guard_02\HERO_DANCE2.Mat
+*MATRIXFILENAME		..\..\data\model\Guard_02\HERO_DANCE.Mat
+*MATRIXFILENAME		..\..\data\model\Guard_02\HERO_LEFT.Mat
+*MATRIXFILENAME		..\..\data\model\Guard_02\HERO_RIGHT.Mat
+*MATRIXFILENAME		..\..\data\model\Guard_02\HERO_MOVE_BACK.Mat
+*MATRIXFILENAME		..\..\data\model\Guard_02\HERO_MOVE.Mat
+*MATRIXFILENAME		..\..\data\model\Guard_02\HERO_IDLE.Mat
+
+*SKIN_UPPER_BODY_COUNT	1
+*SKIN_UPPER_BODY	..\..\data\model\Guard_02\Guard_02.skm		null
+*SKIN_LOWER_BODY_COUNT	0
+*SKIN_LOWER_BODY		0
+
+//////////////////////////////////////////////////////////////////////////
+*CHARACTERNAME		zombie
+*SHADERFILENMAE		..\..\data\model\Character.hlsl
+
+*MATRIXMATRIXCOUNT  5
+*MATRIXFILENAME		..\..\data\model\zombie\zombie_back.Mat
+*MATRIXFILENAME		..\..\data\model\zombie\zombie_left.Mat
+*MATRIXFILENAME		..\..\data\model\zombie\zombie_right.Mat
+*MATRIXFILENAME		..\..\data\model\zombie\zombie_walk.Mat
+*MATRIXFILENAME		..\..\data\model\zombie\zombie_idle.Mat
+
+*SKIN_UPPER_BODY_COUNT	1
+*SKIN_UPPER_BODY	..\..\data\model\zombie\zombie.skm		null
+*SKIN_LOWER_BODY_COUNT	0
+*SKIN_LOWER_BODY		0
+
+
+//////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//////////////////////////////////////////////////////////////////////////
+// 캐릭터이름   
+// 0=상체				=> SKIN_UPPER_BODY
+// 1=하체				=> SKIN_LOWER_BODY
+// 2=팔					=> SKIN_ARM
+// 3=손( 장갑 )			=> SKIM_HAND
+// 4=발( 장화 )			=> SKIN_FOOT
+// 5=얼굴( 마스크 )		=> SKIN_FACE
+// 6=헤어( 모자 )		=> SKIN_HAIR
+// 7=무기류				=> SKIN_SEAPON
+// 8=방어류				=> SKIN_DEFENSE
+// 9=기타				=> SKIN_ETCETERA
+//struct CharacterTable
+//{
+//	char strName[32];
+//  char strShader[64];
+//	char strMatrix[32];
+//	char strTable[10][32];
+//}
+
+
+
+*NUMCHARACTER		2
+
+//////////////////////////////////////////////////////////////////////////
+*CHARACTERNAME		Guard_02
+*SHADERFILENMAE		..\..\data\shader\Character.hlsl
+
+*MATRIXMATRIXCOUNT  8
+*MATRIXFILENAME		..\..\data\model\Guard_02\HERO_DANCE3.Mat
+*MATRIXFILENAME		..\..\data\model\Guard_02\HERO_DANCE2.Mat
+*MATRIXFILENAME		..\..\data\model\Guard_02\HERO_DANCE.Mat
+*MATRIXFILENAME		..\..\data\model\Guard_02\HERO_LEFT.Mat
+*MATRIXFILENAME		..\..\data\model\Guard_02\HERO_RIGHT.Mat
+*MATRIXFILENAME		..\..\data\model\Guard_02\HERO_MOVE_BACK.Mat
+*MATRIXFILENAME		..\..\data\model\Guard_02\HERO_MOVE.Mat
+*MATRIXFILENAME		..\..\data\model\Guard_02\HERO_IDLE.Mat
+
+*SKIN_UPPER_BODY_COUNT	1
+*SKIN_UPPER_BODY	..\..\data\model\Guard_02\Guard_02.skm		null
+*SKIN_LOWER_BODY_COUNT	0
+*SKIN_ARM_COUNT			0
+*SKIN_HAND_COUNT		0
+*SKIN_FOOT_COUNT		0
+*SKIN_FACE_COUNT		0
+*SKIN_HAIR_COUNT		0
+*SKIN_WEAPON_COUNT		0
+*SKIN_DEFENSE_COUNT		0	
+*SKIN_ETCETERA_COUNT	0
+*SKIN_ETCETERA	0		0
+
+//////////////////////////////////////////////////////////////////////////
+*CHARACTERNAME		zombie
+*SHADERFILENMAE		..\..\data\shader\Character.hlsl
+
+*MATRIXMATRIXCOUNT  5
+*MATRIXFILENAME		..\..\data\model\zombie\zombie_back.Mat
+*MATRIXFILENAME		..\..\data\model\zombie\zombie_left.Mat
+*MATRIXFILENAME		..\..\data\model\zombie\zombie_right.Mat
+*MATRIXFILENAME		..\..\data\model\zombie\zombie_walk.Mat
+*MATRIXFILENAME		..\..\data\model\zombie\zombie_idle.Mat
+
+*SKIN_UPPER_BODY_COUNT	1
+*SKIN_UPPER_BODY	..\..\data\model\zombie\zombie.skm		null
+*SKIN_LOWER_BODY_COUNT	0
+*SKIN_ARM_COUNT			0
+*SKIN_HAND_COUNT		0
+*SKIN_FOOT_COUNT		0
+*SKIN_FACE_COUNT		0
+*SKIN_HAIR_COUNT		0
+*SKIN_WEAPON_COUNT		0
+*SKIN_DEFENSE_COUNT		0	
+*SKIN_ETCETERA_COUNT	0
+*SKIN_ETCETERA	0		0
