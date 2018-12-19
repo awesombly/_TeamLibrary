@@ -64,7 +64,7 @@ enum class ESceneName : char {
 class MainClass : public Core 
 {
 public:
-	AHeroObj	m_Hero;
+	AHeroObj	m_Hero;			// Ä³¸¯ÅÍ
 
 
 	static GameObject* m_pSkyBox;
