@@ -81,7 +81,7 @@ public:
 	virtual bool Frame(const float& spf, const float& accTime)	noexcept override;
 	virtual bool Render(ID3D11DeviceContext* pDContext)			noexcept override;
 	virtual bool Release()										noexcept override;
-	GameObject* clone()											noexcept;		// 자기 객체 복사 반환
+	virtual GameObject* clone()									noexcept;		// 자기 객체 복사 반환
 private:
 	GameObject* cloneChild(GameObject* pObject)					noexcept;		// 자식 복제용
 protected:
