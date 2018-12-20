@@ -52,7 +52,7 @@
 //애님 명령어
 //m_Hero.SetANIM(Guard_DANCE3);						//재생애니메이션 설정
 
-
+//m_Hero.m_objType = EObjType::Object;
 
 
 //////////////////////////////////Frame()
