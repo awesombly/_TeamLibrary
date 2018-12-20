@@ -4,6 +4,11 @@
 class IntroScene : public MainClass
 {
 public:
+	GameObject* m_pTakeObject = nullptr;
+	GameObject* m_pTakeObject2 = nullptr;
+	GameObject* m_pTakeObject3 = nullptr;
+	GameObject* m_pTakeObject4 = nullptr;
+
 	void LoadSound() noexcept;
 public:
 	virtual bool Init()		noexcept override;
