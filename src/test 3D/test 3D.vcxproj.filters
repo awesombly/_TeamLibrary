@@ -13,7 +13,9 @@
     <ClCompile Include="LobbyScene.cpp">
       <Filter>Scene</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerController.cpp" />
+    <ClCompile Include="PlayerController.cpp">
+      <Filter>Etc</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainClass.h">
@@ -28,7 +30,9 @@
     <ClInclude Include="LobbyScene.h">
       <Filter>Scene</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerController.h" />
+    <ClInclude Include="PlayerController.h">
+      <Filter>Etc</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="MainCore">
@@ -36,6 +40,9 @@
     </Filter>
     <Filter Include="Scene">
       <UniqueIdentifier>{370c20d3-4550-4776-b4d4-6f242b01d525}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Etc">
+      <UniqueIdentifier>{b2e2c52d-45cc-44d1-b214-e7e514288210}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -19,6 +19,7 @@
 #include "ColliderAABB.h"
 #include "ColliderOBB.h"
 #include "ColliderSphere.h"
+#include "PlayerController.h"
 
 #include "AHeroObj.h"
 
@@ -64,10 +65,11 @@ enum class ESceneName : char {
 class MainClass : public Core 
 {
 public:
+	PlayerController* m_pPlayer = nullptr;		// 컨트롤러
+
 	AHeroObj	m_Hero;							// 캐릭터 본체
 	ColliderOBB* m_pHeroCollider	= nullptr;	// 캐릭터 충돌체
 	
-	GameObject* m_pPlayer			= nullptr;	// 캐릭터 부모
 
 	static GameObject* m_pSkyBox;
 	static map<ESceneName, MainClass*> m_SceneList;
