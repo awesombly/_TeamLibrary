@@ -7,10 +7,10 @@ GameObject::GameObject()
 	ObjectManager::KeyObjects[m_keyValue] = this;
 }
 
-GameObject::~GameObject() noexcept
-{
-	ObjectManager::KeyObjects.erase(m_keyValue);
-}
+//GameObject::~GameObject()
+//{
+//	ObjectManager::KeyObjects.erase(m_keyValue);
+//}
 
 GameObject::GameObject(const wstring_view& myName, const EObjType& eType) : GameObject::GameObject()
 {
@@ -87,6 +87,7 @@ bool GameObject::Render(ID3D11DeviceContext* pDContext) noexcept
 
 bool GameObject::Release() noexcept
 {
+	ObjectManager::KeyObjects.erase(m_keyValue);
 	for (auto& iter : m_childList)
 	{
 		iter->Release();
@@ -338,7 +339,8 @@ bool GameObject::isNotDelete() noexcept
 
 GameObject* GameObject::clone() noexcept
 {
-	return cloneChild(new GameObject(*this));
+	m_keyValue = ++ObjectKeyCount;
+	return ObjectManager::KeyObjects[m_keyValue] = cloneChild(new GameObject(*this));
 }
 
 GameObject* GameObject::cloneChild(GameObject* pObject) noexcept

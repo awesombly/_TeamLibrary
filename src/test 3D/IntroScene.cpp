@@ -61,8 +61,8 @@ bool IntroScene::Init() noexcept
 	auto pParticle = new ParticleSystem(L"ParticleSystem", new Particle(), L"UI/cat.png");
 	pParticle->m_maxParticleCount = 9999;
 	pParticle->m_spawnInterval = 0.013f;
-	pParticle->m_minLifeCycle = 10.0f;
-	pParticle->m_maxLifeCycle = 10.0f;
+	pParticle->m_minLifeCycle = 7.0f;
+	pParticle->m_maxLifeCycle = 7.0f;
 	pParticle->m_minInitPosition = Vector3::One * 200;
 	pParticle->m_maxInitPosition = -Vector3::One * 200;
 	pParticle->m_minDirection = -Vector3::One;
@@ -138,7 +138,7 @@ bool IntroScene::Frame() noexcept
 {
 	if (m_pTakeObject != nullptr)
 	{
-		m_pTakeObject->Scaling(Vector3::One * Timer::SPF);
+		m_pTakeObject->Scaling(Vector3::One * 0.5f * Timer::SPF);
 		m_pTakeObject2->Translate(Vector3::Left * Timer::SPF * 5.0f);
 		m_pTakeObject3->Translate(Vector3::Right * Timer::SPF * 5.0f);
 		m_pTakeObject4->Translate(Vector3::Up * Timer::SPF * 5.0f);
