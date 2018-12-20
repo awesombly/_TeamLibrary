@@ -18,7 +18,6 @@
 *SKIN_UPPER_BODY_COUNT	1
 *SKIN_UPPER_BODY	..\..\data\model\Guard_02\Guard_02.skm		null
 *SKIN_LOWER_BODY_COUNT	0
-*SKIN_LOWER_BODY		0
 
 //////////////////////////////////////////////////////////////////////////
 *CHARACTERNAME		zombie
@@ -34,7 +33,6 @@
 *SKIN_UPPER_BODY_COUNT	1
 *SKIN_UPPER_BODY	..\..\data\model\zombie\zombie.skm		null
 *SKIN_LOWER_BODY_COUNT	0
-*SKIN_LOWER_BODY		0
 
 
 //////////////////////////////////////////////////////////////////////////
