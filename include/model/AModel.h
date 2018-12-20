@@ -110,6 +110,7 @@ public:
 
 	virtual void		SetCollisionData(D3DXVECTOR3 min, D3DXVECTOR3 max);
 	virtual void		UpdateCollisionData(D3DXVECTOR3 position);
+	virtual void		UpdateMatrix() noexcept override;
 
 public:
 	AModel() ;

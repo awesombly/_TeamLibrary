@@ -69,7 +69,7 @@ public:
 
 	bool		Convert(const TCHAR* strPathName = 0);
 public:
-	void		SetMatrix(D3DXMATRIX* pWorld, D3DXMATRIX* pView, D3DXMATRIX* pProj);
+	//void		SetMatrix(D3DXMATRIX* pWorld, D3DXMATRIX* pView, D3DXMATRIX* pProj);
 	bool		SetInputLayout(ID3D11Device* pdevice);
 	bool		SetBuffer(ID3D11Device* pd3dDevice);
 	void		SetBoundBox(D3DXVECTOR3* Quad, BoneMesh* pMesh);
