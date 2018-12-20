@@ -168,7 +168,7 @@ bool Camera::Frame(const float& spf, const float& accTime)	noexcept
 	else
 	{
 		// 카메라 Arm 조절
-		m_armLength += Input::GetWheelScroll() * spf;
+		m_armLength -= Input::GetWheelScroll() * 0.3f * spf;
 	}
 
 	if (m_pParent != nullptr)
