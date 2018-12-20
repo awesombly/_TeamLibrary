@@ -90,37 +90,39 @@ bool IntroScene::Init() noexcept
 	pRenderer = (Renderer*)ObjectManager::Get().TakeComponent(L"Cube");
 	pRenderer->SetNormalMap(L"NormalMap/tileADOT3.jpg");
 	pRenderer->SetEnviromentMap(L"CubeMap/grassenvmap1024.dds", EEnviType::Refraction);
-	pCollider = (Collider*)ObjectManager::Get().TakeComponent(L"ColliderOBB");
-	pObject = new GameObject(L"NormalEnvi1", { pRenderer, pCollider, new CTransformer(Vector3::Zero, Quaternion::Right * 2.0f) }, EObjType::Object);
+	//pCollider = (Collider*)ObjectManager::Get().TakeComponent(L"ColliderOBB");
+	pObject = new GameObject(L"Object1", { pRenderer, new CTransformer(Vector3::Zero, Quaternion::Right * 2.0f) }, EObjType::Object);
 	pObject->Translate(Vector3::Forward * 15.0f);
 	pObject->SetScale(Vector3::One * 4);
-	ObjectManager::Get().PushObject(pObject);
+	//ObjectManager::Get().PushObject(pObject);
+	ObjectManager::Get().SetProtoObject(pObject);
 
 	pRenderer = (Renderer*)ObjectManager::Get().TakeComponent(L"Cube");
 	pRenderer->SetNormalMap(L"NormalMap/wall_NM_height.dds");
 	pRenderer->SetEnviromentMap(L"CubeMap/grassenvmap1024.dds", EEnviType::Fresnel);
-	pCollider = (Collider*)ObjectManager::Get().TakeComponent(L"ColliderOBB");
-	pObject = new GameObject(L"NormalEnvi2", { pRenderer, pCollider }, EObjType::Object);
+	//pCollider = (Collider*)ObjectManager::Get().TakeComponent(L"ColliderOBB");
+	pObject = new GameObject(L"Object2", { pRenderer }, EObjType::Object);
 	pObject->Translate(Vector3::Left * 10.0f);
 	pObject->SetScale(Vector3::One * 2);
-	ObjectManager::Get().PushObject(pObject);
+	//ObjectManager::Get().PushObject(pObject);
+	ObjectManager::Get().SetProtoObject(pObject);
 
 	pRenderer = (Renderer*)ObjectManager::Get().TakeComponent(L"Sphere");
 	pRenderer->SetNormalMap(L"NormalMap/Earth_NormalMap.dds");
 	pRenderer->SetEnviromentMap(L"CubeMap/grassenvmap1024.dds", EEnviType::Basic);
-	pCollider = (Collider*)ObjectManager::Get().TakeComponent(L"ColliderSphere");
-	pObject = new GameObject(L"NormalEnvi3", { pRenderer, pCollider }, EObjType::Object);
+	//pCollider = (Collider*)ObjectManager::Get().TakeComponent(L"ColliderSphere");
+	pObject = new GameObject(L"Object3", { pRenderer }, EObjType::Object);
 	pObject->Translate(Vector3::Right * 15.0f);
 	pObject->SetScale(Vector3::One * 3);
-	ObjectManager::Get().PushObject(pObject);
+	ObjectManager::Get().SetProtoObject(pObject);
+	//ObjectManager::Get().PushObject(pObject);
+	m_pTakeObject = ObjectManager::Get().TakeObject(L"Object1");
+	m_pTakeObject2 = ObjectManager::Get().TakeObject(L"Object2");
+	m_pTakeObject3 = ObjectManager::Get().TakeObject(L"Object3");
+	m_pTakeObject4 = ObjectManager::Get().TakeObject(L"Object2");
 
-	//SoundManager::Get().Load("BGM/Mischievous Masquerade", false, FMOD_LOOP_NORMAL);
-	//SoundManager::Get().Load("BGM/Sandbag Mini Game", false, FMOD_LOOP_NORMAL);
-	//SoundManager::Get().Load("BGM/Brawl Breaks", false, FMOD_LOOP_NORMAL);
 	SoundManager::Get().Load("BGM/PLAY ROUGH", false, FMOD_LOOP_NORMAL);
 	SoundManager::Get().SetBGM("BGM/PLAY ROUGH");
-
-	//SoundManager::Get().Load("shout1");
 #pragma endregion
 	// ====================================================================================================
 
@@ -133,6 +135,13 @@ bool IntroScene::Init() noexcept
 // ÇÁ·¹ÀÓ
 bool IntroScene::Frame() noexcept
 {
+	if (m_pTakeObject != nullptr)
+	{
+		m_pTakeObject->Scaling(Vector3::One * Timer::SPF);
+		m_pTakeObject2->Translate(Vector3::Left * Timer::SPF * 5.0f);
+		m_pTakeObject3->Translate(Vector3::Right * Timer::SPF * 5.0f);
+		m_pTakeObject4->Translate(Vector3::Up * Timer::SPF * 5.0f);
+	}
 	DxManager::Get().Frame();
 	ObjectManager::Get().Frame(Timer::SPF, Timer::AccumulateTime);
 	SoundManager::Get().Frame();
