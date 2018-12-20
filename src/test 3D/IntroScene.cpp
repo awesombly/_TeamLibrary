@@ -116,6 +116,7 @@ bool IntroScene::Init() noexcept
 	pObject->SetScale(Vector3::One * 3);
 	ObjectManager::Get().SetProtoObject(pObject);
 	//ObjectManager::Get().PushObject(pObject);
+
 	m_pTakeObject = ObjectManager::Get().TakeObject(L"Object1");
 	m_pTakeObject2 = ObjectManager::Get().TakeObject(L"Object2");
 	m_pTakeObject3 = ObjectManager::Get().TakeObject(L"Object3");
