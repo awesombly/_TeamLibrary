@@ -61,13 +61,23 @@ void PlayerController::PlayerInput() noexcept
 		}
 		if (Input::GetKeyState('Q') == EKeyState::HOLD)
 		{
-			SetAnimation(EAction::Dance1);
 			m_pParent->Rotate(Quaternion::Left * Timer::SPF);
 		}
 		if (Input::GetKeyState('E') == EKeyState::HOLD)
 		{
-			SetAnimation(EAction::Dance2);
 			m_pParent->Rotate(Quaternion::Right * Timer::SPF);
+		}
+		if (Input::GetKeyState('1') == EKeyState::HOLD)
+		{
+			SetAnimation(EAction::Dance1);
+		}
+		if (Input::GetKeyState('2') == EKeyState::HOLD)
+		{
+			SetAnimation(EAction::Dance2);
+		}
+		if (Input::GetKeyState('3') == EKeyState::HOLD)
+		{
+			SetAnimation(EAction::Dance3);
 		}
 		if (Input::GetKeyState(VK_SPACE) == EKeyState::DOWN)
 		{
@@ -77,10 +87,10 @@ void PlayerController::PlayerInput() noexcept
 			m_pCollider = (Collider*)m_pParent->GetComponentList(EComponent::Collider)->front();
 			if (m_pCollider != nullptr)
 			{
-				m_pCollider->m_force = Vector3::Up * 180.0f;
+				m_pCollider->SetForce(Vector3::Up * 180.0f);
 			}
 		}
-
+		// 입력 없을시 Idle
 		if (m_toIdle && m_isLoopAnim)
 		{
 			SetAnimation(EAction::Idle);
