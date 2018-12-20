@@ -64,7 +64,8 @@ enum class ESceneName : char {
 class MainClass : public Core 
 {
 public:
-	AHeroObj	m_Hero;			// 캐릭터
+	AHeroObj	m_Hero;			// 캐릭터 본체
+	ColliderOBB* m_pHeroCollider	= nullptr;
 
 	static GameObject* m_pSkyBox;
 	static map<ESceneName, MainClass*> m_SceneList;

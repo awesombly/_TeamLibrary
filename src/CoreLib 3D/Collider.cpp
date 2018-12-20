@@ -35,7 +35,7 @@ bool Collider::Frame(const float& spf, const float& accTime)	noexcept
 	m_force -= m_force * m_damping * spf;
 
 	// 힘 적용
-	if(GetVelocitySq() > 1.0f)
+	if(GetVelocitySq() > 10.0f)
 		m_pParent->GetRoot()->Translate(m_force * spf);
 
 	// 충돌 체크
