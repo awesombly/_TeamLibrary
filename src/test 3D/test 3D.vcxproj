@@ -209,12 +209,14 @@
     <ClCompile Include="IntroScene.cpp" />
     <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="MainClass.cpp" />
+    <ClCompile Include="PlayerController.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="LobbyScene.h" />
     <ClInclude Include="IntroScene.h" />
     <ClInclude Include="GameScene.h" />
     <ClInclude Include="MainClass.h" />
+    <ClInclude Include="PlayerController.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
