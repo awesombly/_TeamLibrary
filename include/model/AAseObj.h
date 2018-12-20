@@ -3,7 +3,7 @@
 #include "AMesh.h"
 
 
-class AAseObj : public AModel
+class AAseObj : public AMesh
 {
 private:
 	const TCHAR*					m_FileName;

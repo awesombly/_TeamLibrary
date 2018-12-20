@@ -28,11 +28,11 @@ public:
 	bool		ObjectRender(ID3D11DeviceContext*    pContext, bool bCommand = false);
 	bool		Set(ID3D11Device* pd3dDevice, int iIndex);
 	void		SetConstantBuffers(ID3D11DeviceContext* pContext, ObjWM* pUint, int iMesh);
-	bool		SetCommandRender(ID3D11DeviceContext* pContext);
-	bool		CommandRender(ID3D11DeviceContext* pContext);
-	bool		CommandDraw(ID3D11DeviceContext* pContext, ObjWM* pUnit);
-	virtual HRESULT	SetCommmandList(ID3D11DeviceContext* pContext, AMesh* pSubMesh, bool bSave = false);
-	virtual void	ExecuteCommandList(ID3D11DeviceContext* pContext, AMesh* pSubMesh, bool bClear = true);
+	//bool		SetCommandRender(ID3D11DeviceContext* pContext);
+	//bool		CommandRender(ID3D11DeviceContext* pContext);
+	//bool		CommandDraw(ID3D11DeviceContext* pContext, ObjWM* pUnit);
+	//virtual HRESULT	SetCommmandList(ID3D11DeviceContext* pContext, AMesh* pSubMesh, bool bSave = false);
+	//virtual void	ExecuteCommandList(ID3D11DeviceContext* pContext, AMesh* pSubMesh, bool bClear = true);
 
 
 public:

@@ -4,7 +4,7 @@
 #include <DXGI.h>
 #include <D3DX11.h>
 #include <D3DX10math.h>
-#include <Dwrite.h>
+//#include <Dwrite.h>
 #include <wrl.h>
 #include <winnt.h>
 #include "D2D1Helper.h"
@@ -17,7 +17,7 @@
 #pragma comment (lib,"dxgi.lib")
 #pragma comment (lib,"d2d1.lib" )
 #pragma comment (lib,"dwrite.lib" )
-#pragma comment (lib, "dinput8.lib")
+//#pragma comment (lib, "dinput8.lib")
 #pragma comment( lib, "d3dcompiler.lib" )
 #pragma comment( lib, "d3dx10.lib" )
 
