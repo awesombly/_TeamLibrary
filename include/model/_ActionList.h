@@ -11,7 +11,7 @@
 //////////////////////////////////////////////////////////////////////////
 //Guard
 //ANIM_COUNT  9
-
+#define  Guard				L"guard"
 #define	 Guard_HAPPYWALK	L"HERO_HAPPYWALK.Mat"
 #define	 Guard_LEFT			L"HERO_LEFT.Mat"
 #define	 Guard_RIGHT		L"HERO_RIGHT.Mat"
@@ -27,7 +27,9 @@
 
 //////////////////////////////////////////////////////////////////////////
 //Zombie
-//ANIM_COUNT  5
+//ANIM_COUNT  6
+#define  Zombie				L"zombie"
+#define	 Zombie_FLY			L"zombie_fly.Mat"
 #define	 Zombie_LEFT		L"zombie_left.Mat"
 #define	 Zombie_RIGHT		L"zombie_right.Mat"
 #define	 Zombie_BACKWARD	L"zombie_back.Mat"
@@ -46,6 +48,7 @@
 //////////////////////////////////////////////////////////////////////////
 //NPC_BIRD
 //ANIM_COUNT  1
+#define	 NPC_Bird			L"NPC_bird"
 #define	 NPC_Bird_IDLE		L"NPC_bird.Mat"
 
 
