@@ -2,6 +2,7 @@
 #include "Collider.h"
 #include "AHeroObj.h"
 #include "ObjectManager.h"
+#include "PacketManager.h"
 
 
 bool PlayerController::Init() noexcept
@@ -36,15 +37,6 @@ bool PlayerController::Release() noexcept
 }
 
 
-bool PlayerController::isCharacter() noexcept
-{
-	return m_isCharacter;
-}
-void PlayerController::isCharacter(const bool& isCharacter) noexcept
-{
-	m_isCharacter = isCharacter;
-}
-
 
 void PlayerController::SetAnimation(const EAction& eAction) noexcept
 {
@@ -60,7 +52,7 @@ void PlayerController::SetAnimation(const EAction& eAction) noexcept
 	case EAction::Idle:
 	 {
 		m_isLoopAnim = false;
-	 	pHero->SetANIM(Guard_IDLE);
+	 	//pHero->SetANIM(Guard_HA IDLE);
 	 }	break;
 	case EAction::Jump:
 	 {
@@ -109,11 +101,15 @@ void PlayerController::PlayerInput(const float& spf) noexcept
 {
 	if (Input::GetKeyState(VK_SHIFT) != EKeyState::HOLD)
 	{
+		static Packet_Position format;
 		m_toIdle = true;
 		if (Input::GetKeyState('W') == EKeyState::HOLD)
 		{
+			format.KeyValue = m_pParent->m_keyValue;
+			format.position = m_pParent->GetForward() * m_moveSpeed * Timer::SPF;
+			PacketManager::Get().SendPacket((char*)&format, PACKET_Translate);
 			SetAnimation(EAction::Forward);
-			m_pParent->Translate(m_pParent->GetForward() * m_moveSpeed * Timer::SPF);
+			//m_pParent->Translate(m_pParent->GetForward() * m_moveSpeed * Timer::SPF);
 		}
 		if (Input::GetKeyState('S') == EKeyState::HOLD)
 		{
@@ -130,14 +126,14 @@ void PlayerController::PlayerInput(const float& spf) noexcept
 			SetAnimation(EAction::Right);
 			m_pParent->Translate(m_pParent->GetRight() * m_moveSpeed * Timer::SPF);
 		}
-		if (Input::GetKeyState('Q') == EKeyState::HOLD)
-		{
-			m_pParent->Rotate(Quaternion::Left * m_moveSpeed * Timer::SPF);
-		}
-		if (Input::GetKeyState('E') == EKeyState::HOLD)
-		{
-			m_pParent->Rotate(Quaternion::Right * m_moveSpeed * Timer::SPF);
-		}
+		///if (Input::GetKeyState('Q') == EKeyState::HOLD)
+		///{
+		///	m_pParent->Rotate(Quaternion::Left * m_moveSpeed * Timer::SPF);
+		///}
+		///if (Input::GetKeyState('E') == EKeyState::HOLD)
+		///{
+		///	m_pParent->Rotate(Quaternion::Right * m_moveSpeed * Timer::SPF);
+		///}
 		if (Input::GetKeyState('1') == EKeyState::HOLD)
 		{
 			SetAnimation(EAction::Dance1);
@@ -167,7 +163,6 @@ void PlayerController::PlayerInput(const float& spf) noexcept
 			SetAnimation(EAction::Idle);
 		}
 	}
-
 	spf;
 }
 
@@ -210,4 +205,17 @@ void PlayerController::ResetOption() noexcept
 	m_pCamera->m_armLength		 = 6.0f;
 	m_pCamera->m_lerpMoveSpeed   = 5.0f;
 	m_pCamera->m_lerpRotateSpeed = 6.0f;
+}
+
+
+
+
+
+bool PlayerController::isCharacter() noexcept
+{
+	return m_isCharacter;
+}
+void PlayerController::isCharacter(const bool& isCharacter) noexcept
+{
+	m_isCharacter = isCharacter;
 }

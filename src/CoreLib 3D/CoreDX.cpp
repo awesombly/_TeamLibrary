@@ -3,7 +3,7 @@
 #include <mutex>
 
 Timer   Core::m_Timer;
-bool Core::isExit = false;
+bool	Core::isPlaying = true;
 
 bool Core::GameRun() noexcept
 {
@@ -16,11 +16,12 @@ bool Core::GameRun() noexcept
 	std::thread gameRender(&Core::GameRender, this);
 	// 메인 쓰레드 루프
 	while (MessageProcess());
-
+	
+	this_thread::yield();
+	this_thread::sleep_for(chrono::seconds(1));
 	GameRelease();
 	// 모든 쓰레드 종료
 	//m_ClientServer.TerminateServer();
-	isExit = true;
 	gameTimer.join();
 	gameFrame.join();
 	gameRender.join();
@@ -48,7 +49,7 @@ bool Core::GameInit() noexcept
 
 bool Core::GameFrame() noexcept 
 {
-	while (!isExit)
+	while (isPlaying)
 	{
 		std::unique_lock<mutex> lock(m_Timer.m_mutex);
 		m_Timer.m_FrameEvent.wait(lock);
@@ -70,7 +71,7 @@ bool Core::GameFrame() noexcept
 
 bool Core::GameRender() noexcept
 {
-	while (!isExit)
+	while (isPlaying)
 	{
 		static std::mutex Mutex;
 		std::unique_lock<mutex> lock(Mutex);

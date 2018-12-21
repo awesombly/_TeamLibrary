@@ -31,7 +31,7 @@ bool Timer::Init() noexcept
 // 타이머-프레임 처리
 bool Timer::Frame() noexcept
 {
-	while (!Core::isExit)
+	while (Core::isPlaying)
 	{
 		std::lock_guard<mutex> lock(m_mutex);
 		// 프레임까지 계산
