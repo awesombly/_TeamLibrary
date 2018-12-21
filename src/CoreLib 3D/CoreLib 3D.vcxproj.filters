@@ -419,4 +419,7 @@
       <Filter>Shader</Filter>
     </FxCompile>
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\..\..\_Study\src\geometry.txt" />
+  </ItemGroup>
 </Project>

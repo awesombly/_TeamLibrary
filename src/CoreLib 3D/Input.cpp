@@ -3,9 +3,10 @@
 bool Input::isDebug = false;
 //bool Input::isChatting = false;
 short	  Input::m_WheelScroll = 0;
-short	  Input::m_tempWheelScroll = 0;
-POINT	  Input::m_Cursor = { 0, };
-POINT	  Input::m_prevCursor = { 0, };
+short	  Input::m_tempWheelScroll	= 0;
+POINT	  Input::m_Cursor			= { 0, };
+POINT	  Input::m_prevCursor		= { 0, };
+D3DXVECTOR2 Input::m_moveCursorPos = { 0.0f, 0.0f };
 EKeyState Input::m_KeyState[256]	 = { EKeyState::FREE, };
 EKeyState Input::m_MouseState[3]	 = { EKeyState::FREE, };
 EKeyState Input::m_MousePrevState[3] = { EKeyState::FREE, };
@@ -21,15 +22,12 @@ bool Input::Frame() noexcept
 	m_prevCursor = m_Cursor;
 	GetCursorPos(&m_Cursor);
 	ScreenToClient(Window::m_hWnd, &m_Cursor);
+	m_moveCursorPos.x = float(m_Cursor.x - m_prevCursor.x);
+	m_moveCursorPos.y = float(m_Cursor.y - m_prevCursor.y);
+
 	// 마우스 휠 값
 	m_WheelScroll = m_tempWheelScroll;
 	m_tempWheelScroll = 0;
-
-	if (KeyCheck(VK_ESCAPE) == EKeyState::DOWN)
-	{
-		isDebug = !isDebug;
-		//isChatting = false;
-	}
 
 	KeyCheck(VK_F1);		KeyCheck(VK_F2);		KeyCheck(VK_F3);		KeyCheck(VK_F4);
 	KeyCheck(VK_F5);		KeyCheck(VK_F6);		KeyCheck(VK_F7);		KeyCheck(VK_F8);
@@ -42,13 +40,19 @@ bool Input::Frame() noexcept
 	KeyCheck(VK_NUMPAD8);	KeyCheck(VK_NUMPAD9);	KeyCheck(VK_NUMLOCK);
 	KeyCheck(VK_ADD);		KeyCheck(VK_SUBTRACT);	KeyCheck(VK_DIVIDE);
 	KeyCheck(VK_RETURN);	KeyCheck(VK_CONTROL);
-
+	
 	KeyCheck('1');		KeyCheck('2');		KeyCheck('3');		KeyCheck('4');
 	KeyCheck('Q');		KeyCheck('W');		KeyCheck('E');		KeyCheck('R');
 	KeyCheck('A');		KeyCheck('S');		KeyCheck('D');		KeyCheck('F');
 	KeyCheck('Z');		KeyCheck('X');		KeyCheck('C');		KeyCheck('V');
 	KeyCheck('`');
 
+
+	if (GetKeyState(VK_ESCAPE) == EKeyState::DOWN)
+	{
+		isDebug = !isDebug;
+		//isChatting = false;
+	}
 	return true;
 }
 
@@ -72,15 +76,21 @@ EKeyState Input::GetMouseState(const EMouseButton& mouseButton)
 	return m_MouseState[mouseButton];
 }
 
-D3DXVECTOR2 Input::GetMouseMovePos()
-{
-	return { float(m_Cursor.x - m_prevCursor.x), float(m_Cursor.y - m_prevCursor.y) };
-}
-
 short Input::GetWheelScroll()
 {
 	return m_WheelScroll;
 }
+
+D3DXVECTOR2 Input::GetMouseMovePos()
+{
+	return m_moveCursorPos;
+}
+
+void Input::OperMoveMousePos(const D3DXVECTOR2& vector2)
+{
+	m_moveCursorPos += vector2;
+}
+
 
 EKeyState Input::GetKeyState(const WORD& keyValue)
 {
@@ -89,7 +99,7 @@ EKeyState Input::GetKeyState(const WORD& keyValue)
 	return m_KeyState[keyValue];
 }
 
-EKeyState Input::KeyCheck(const WORD& keyValue)
+void Input::KeyCheck(const WORD& keyValue)
 {
 	// GetKeyState()		// 동기식
 	// GetAsyncKeyState()	// 비동기식
@@ -98,17 +108,18 @@ EKeyState Input::KeyCheck(const WORD& keyValue)
 	if (sKey & 0x8000)		// 눌림			
 	{
 		if (m_KeyState[keyValue] == EKeyState::FREE)
-			return m_KeyState[keyValue] = EKeyState::DOWN;
+			m_KeyState[keyValue] = EKeyState::DOWN;
 		else
-			return m_KeyState[keyValue] = EKeyState::HOLD;
+			m_KeyState[keyValue] = EKeyState::HOLD;
 	}
 	else                    // 안눌림
 	{
 		if (m_KeyState[keyValue] == EKeyState::DOWN ||
 			m_KeyState[keyValue] == EKeyState::HOLD)
-			return m_KeyState[keyValue] = EKeyState::UP;
+			m_KeyState[keyValue] = EKeyState::UP;
+		else
+			m_KeyState[keyValue] = EKeyState::FREE;
 	}
-	return m_KeyState[keyValue] = EKeyState::FREE;
 }
 
 // 이벤트 핸들러, 윈도우에서 인자를 받아 대신 처리를 수행

@@ -3,6 +3,9 @@
 
 
 // static 초기화
+MSG			Window::message;					
+RECT		Window::m_winRect;					
+RECT		Window::m_realWinRect;				
 RECT        Window::m_clientRect{0,0,0,0};
 HWND		Window::m_hWnd = 0;			
 HINSTANCE	Window::m_hInstance = 0;	
@@ -35,10 +38,10 @@ bool Window::MessageProcess()
 // 운영체제로부터 메세지를 받아 처리하는 함수.
 // 메세지는 메세지 큐에 저장되고, 필요시 해당 윈도우가 꺼내온다.
 // CALLBACK : 사용자가 호출하지 않고 운영체제에서 호출하는 함수
-LRESULT CALLBACK Window::WndProc(HWND hWnd, UINT message, 
+LRESULT CALLBACK Window::WndProc(HWND hWnd, UINT msg, 
 								 WPARAM wParam, LPARAM lParam)
 {
-	switch (message)
+	switch (msg)
 	{
 	case WM_SIZE:
 	{
@@ -49,18 +52,17 @@ LRESULT CALLBACK Window::WndProc(HWND hWnd, UINT message,
 			int width = LOWORD(lParam);
 			int height = HIWORD(lParam);
 
-			//static once_flag bResize;
-			//call_once(bResize, [&]() {
-				DxManager::Get().ResizeDevice(width, height);
-			//});
+			DxManager::Get().ResizeDevice(width, height);
 
-			//Window::ResizeWindow({ 0, 0, width, height });
-			//auto pEvent = [](void* width, void* height)
-			//{
-			//	DxManager::Get().ResizeDevice(*(UINT*)width, *(UINT*)height);
-			//};
-			//ObjectManager::PostFrameEvent.emplace(pEvent, &width, &height);
-			//DxManager::Get().ResizeDevice(width, height);
+
+			RECT tempRect;
+			GetClientRect(Window::m_hWnd, &Instance->m_realWinRect);
+			//ScreenToClient(Window::m_hWnd, &Instance->m_realWinRect);
+			GetWindowRect(Window::m_hWnd, &tempRect);
+			Instance->m_realWinRect.left	+= tempRect.left;
+			Instance->m_realWinRect.right	+= tempRect.left;
+			Instance->m_realWinRect.top		+= tempRect.top;
+			Instance->m_realWinRect.bottom	+= tempRect.top;
 		}
 	}	break;
 	case WM_PAINT:
@@ -76,7 +78,7 @@ LRESULT CALLBACK Window::WndProc(HWND hWnd, UINT message,
 	} break;
 	default:
 		// 안받은 메세지들은 운영체제로 넘겨 알아서 처리하게 한다
-		return DefWindowProc(hWnd, message, wParam, lParam);
+		return DefWindowProc(hWnd, msg, wParam, lParam);
 	}
 	return 0;
 }
@@ -159,5 +161,15 @@ RECT& Window::getClientRect()
 
 RECT& Window::GetWinRect()
 {
-	return Instance->m_winRect;
+	return Instance->m_realWinRect;
+}
+
+D3DXVECTOR2 Window::GetWinCenter()
+{
+	return { (Instance->m_realWinRect.left + Instance->m_realWinRect.right) * 0.5f, (Instance->m_realWinRect.top + Instance->m_realWinRect.bottom) * 0.5f };
+}
+
+D3DXVECTOR2 Window::GetClientCenter()
+{
+	return { (m_clientRect.left + m_clientRect.right) * 0.5f, (m_clientRect.top + m_clientRect.bottom) * 0.5f };
 }

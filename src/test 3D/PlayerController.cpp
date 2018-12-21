@@ -1,9 +1,7 @@
 #include "PlayerController.h"
 #include "Collider.h"
 #include "AHeroObj.h"
-//#include "Input.h"
 #include "ObjectManager.h"
-#include "Camera.h"
 
 
 bool PlayerController::Init() noexcept
@@ -178,22 +176,38 @@ void PlayerController::CameraInput(const float& spf) noexcept
 	static const float MinCameraY = -PI * 0.2f;
 	static const float MaxCameraY =  PI * 0.4f;
 
-
-	Camera* pCamera = ObjectManager::Cameras[ECamera::Main];
-	if (Input::isDebug)
+	if (!Input::isDebug)
 	{
+		// 마우스 고정
+		static POINT prevPoint = { 0, 0 };
+		prevPoint = Input::GetCursor();
+		SetCursorPos((int)m_setMouseScreen.x, (int)m_setMouseScreen.y);
+
+		Input::OperMoveMousePos({ (float)(-m_setMouseClient.x + prevPoint.x), (float)(-m_setMouseClient.y + prevPoint.y) });
+
 		// 카메라 Arm 조절
-		pCamera->m_armLength = std::clamp(pCamera->m_armLength - Input::GetWheelScroll() * 0.3f * spf, 0.0f, 30.0f);
+		m_pCamera->m_armLength = std::clamp(m_pCamera->m_armLength - Input::GetWheelScroll() * 0.3f * spf, 0.0f, 30.0f);
 		// 회전
-		pCamera->SetRotationX(std::clamp(pCamera->GetRotation().x + Input::GetMouseMovePos().y * 0.002f, MinCameraY, MaxCameraY));
+		m_pCamera->SetRotationX(std::clamp(m_pCamera->GetRotation().x + Input::GetMouseMovePos().y * 0.002f, MinCameraY, MaxCameraY));
 		m_pParent->Rotate(0.0f, Input::GetMouseMovePos().x * 0.002f);
 		// 초기화
 		if (Input::GetInstance().GetKeyState('R') == EKeyState::DOWN)
 		{
-			pCamera->m_armLength = 6.0f;
-			pCamera->SetPosition(Vector3::Up * 60.0f);
-			pCamera->SetRotation(Quaternion::Left * PI + Quaternion::Up * PI * 0.2f);
+			ResetOption();
 		}
 	}
+}
 
+void PlayerController::ResetOption() noexcept
+{
+	m_setMouseScreen = { (LONG)Window::GetWinCenter().x, (LONG)Window::GetWinCenter().y };
+	m_setMouseClient = m_setMouseScreen;
+	ScreenToClient(Window::m_hWnd, &m_setMouseClient);
+	///
+	m_pCamera = ObjectManager::Cameras[ECamera::Main];
+	m_pCamera->SetPosition(Vector3::Up * 75.0f);
+	m_pCamera->SetRotation(Quaternion::Left * PI + Quaternion::Up * PI * 0.2f);
+	m_pCamera->m_armLength		 = 6.0f;
+	m_pCamera->m_lerpMoveSpeed   = 5.0f;
+	m_pCamera->m_lerpRotateSpeed = 6.0f;
 }

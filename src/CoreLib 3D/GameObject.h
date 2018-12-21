@@ -91,9 +91,8 @@ protected:
 	friend class MaxImporter;
 	friend class Dialog_Hierarchy;
 	friend class CAnimation;
-
-	GameObject();
 public:
+	GameObject();
 	GameObject(const wstring_view& myName, const EObjType& eType = EObjType::Dummy);
 	GameObject(const wstring_view& myName, const std::initializer_list<Component*>& components, const EObjType& eType = EObjType::Dummy);
 	GameObject(const wstring_view& myName, Component* pComponent, const EObjType& eType = EObjType::Dummy);

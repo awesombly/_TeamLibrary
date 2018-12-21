@@ -8,22 +8,28 @@ enum class EAction {
 };
 
 class Collider;
+class Camera;
 
 class PlayerController : public GameObject
 {
 private:
 	EAction		m_curAction;
 	Collider*	m_pCollider		= nullptr;
+	Camera*		m_pCamera		= nullptr;
 
 	bool		m_isCharacter	= false;
-	bool		m_toIdle	 = false;
-	bool		m_isLoopAnim = false;
+	bool		m_toIdle		= false;
+	bool		m_isLoopAnim	= false;
+	// 마우스 고정용
+	POINT		m_setMouseScreen;
+	POINT		m_setMouseClient;
 public:
 
 public:
+	void SetAnimation(const EAction& eAction) noexcept;
 	void PlayerInput(const float& spf)		  noexcept;
 	void CameraInput(const float& spf)		  noexcept;
-	void SetAnimation(const EAction& eAction) noexcept;
+	void ResetOption()						  noexcept;
 
 	bool isCharacter()						  noexcept;
 	void isCharacter(const bool& isCharacter) noexcept;

@@ -5,8 +5,9 @@
 class Window
 {
 private:
-	MSG				message;					// 메세지 컨테이너
-	RECT			m_winRect;					// 윈도우 크기 속성
+	static MSG		message;					// 메세지 컨테이너
+	static RECT		m_winRect;					// 윈도우 크기 속성
+	static RECT		m_realWinRect;				// 진짜 윈도우 영역
 	static RECT	    m_clientRect;				// 클라이언트 영역
 public:
 	static HWND				m_hWnd;				// 윈도우 핸들
@@ -18,6 +19,9 @@ public:
 	static void ResizeWindow(const MyRect& rect) noexcept;
 	static RECT& getClientRect();
 	static RECT& GetWinRect();
+	static D3DXVECTOR2 GetWinCenter();
+	static D3DXVECTOR2 GetClientCenter();
+
 	static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);							// 메세지 처리 콜백함수
 	bool SetWindow(const HINSTANCE& hInstance, const int& nCmdShow, const TCHAR* title = L"SampleWin") noexcept;	// 윈도우 활성화
 	void SetClientRect(const int& x, const int& y, const int& width, const int& height) noexcept;						// 화면 크기 설정
