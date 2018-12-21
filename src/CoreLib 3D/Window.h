@@ -17,6 +17,7 @@ public:
 public:
 	static void ResizeWindow(const MyRect& rect) noexcept;
 	static RECT& getClientRect();
+	static RECT& GetWinRect();
 	static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);							// 메세지 처리 콜백함수
 	bool SetWindow(const HINSTANCE& hInstance, const int& nCmdShow, const TCHAR* title = L"SampleWin") noexcept;	// 윈도우 활성화
 	void SetClientRect(const int& x, const int& y, const int& width, const int& height) noexcept;						// 화면 크기 설정

@@ -97,5 +97,5 @@ public:
 	GameObject(const wstring_view& myName, const EObjType& eType = EObjType::Dummy);
 	GameObject(const wstring_view& myName, const std::initializer_list<Component*>& components, const EObjType& eType = EObjType::Dummy);
 	GameObject(const wstring_view& myName, Component* pComponent, const EObjType& eType = EObjType::Dummy);
-	virtual ~GameObject() = default;
+	virtual ~GameObject() noexcept = default;
 };

@@ -169,6 +169,8 @@ void PlayerController::PlayerInput(const float& spf) noexcept
 			SetAnimation(EAction::Idle);
 		}
 	}
+
+	spf;
 }
 
 void PlayerController::CameraInput(const float& spf) noexcept

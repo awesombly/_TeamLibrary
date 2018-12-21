@@ -156,3 +156,8 @@ RECT& Window::getClientRect()
 {
 	return m_clientRect;
 }
+
+RECT& Window::GetWinRect()
+{
+	return Instance->m_winRect;
+}
