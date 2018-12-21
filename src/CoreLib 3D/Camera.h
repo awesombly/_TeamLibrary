@@ -16,24 +16,24 @@ protected:
 	// 부모와 보간된 좌표, 각도
 	D3DXVECTOR3	m_curPosition;
 	D3DXQUATERNION m_curRotation;
-
 	float m_Aspect;			// 종횡비
-	float m_FOV;			// 시야각
-	float m_Near;			// 최소 가시 거리
-	float m_Far;			// 최대 가시 거리
 	// 최대속, 가속, 현재속
 	float m_maxMoveSpeed;
 	float m_accMoveSpeed;
 	float m_curMoveSpeed;
 	// 회전속
 	float m_rotateSpeed;
+
+	bool m_isPerspect = true;		// 원근이니
+public:
+	float m_FOV;			// 시야각
+	float m_Near;			// 최소 가시 거리
+	float m_Far;			// 최대 가시 거리
 	// 보간 속도
 	float m_lerpMoveSpeed;
 	float m_lerpRotateSpeed;
 	// 암 길이
 	float m_armLength;
-
-	bool m_isPerspect = true;		// 원근이니
 public:
 	static Camera* SelectCamera;	// 선택된 카메라
 

@@ -47,7 +47,8 @@ bool Camera::Init()	noexcept
 
 bool Camera::Frame(const float& spf, const float& accTime)	noexcept
 {
-	if (Input::GetInstance().GetKeyState(VK_SHIFT) == EKeyState::HOLD)
+	if (Input::isDebug && 
+		Input::GetInstance().GetKeyState(VK_SHIFT) == EKeyState::HOLD)
 	{
 		static bool isMoving, isRotating;
 		isMoving = false;
@@ -165,11 +166,7 @@ bool Camera::Frame(const float& spf, const float& accTime)	noexcept
 			m_rotateSpeed -= m_rotateSpeed * 0.5f * spf;
 #pragma endregion
 	}
-	else
-	{
-		// 카메라 Arm 조절
-		m_armLength -= Input::GetWheelScroll() * 0.3f * spf;
-	}
+
 
 	if (m_pParent != nullptr)
 	{
