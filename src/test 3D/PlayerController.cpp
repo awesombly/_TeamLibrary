@@ -113,30 +113,30 @@ void PlayerController::PlayerInput(const float& spf) noexcept
 		if (Input::GetKeyState('W') == EKeyState::HOLD)
 		{
 			SetAnimation(EAction::Forward);
-			m_pParent->Translate(m_pParent->GetForward() * Timer::SPF * 70);
+			m_pParent->Translate(m_pParent->GetForward() * m_moveSpeed * Timer::SPF);
 		}
 		if (Input::GetKeyState('S') == EKeyState::HOLD)
 		{
 			SetAnimation(EAction::Backward);
-			m_pParent->Translate(m_pParent->GetBackward() * Timer::SPF * 70);
+			m_pParent->Translate(m_pParent->GetBackward() * m_moveSpeed * Timer::SPF);
 		}
 		if (Input::GetKeyState('A') == EKeyState::HOLD)
 		{
 			SetAnimation(EAction::Left);
-			m_pParent->Translate(m_pParent->GetLeft() * Timer::SPF * 70);
+			m_pParent->Translate(m_pParent->GetLeft() * m_moveSpeed * Timer::SPF);
 		}
 		if (Input::GetKeyState('D') == EKeyState::HOLD)
 		{
 			SetAnimation(EAction::Right);
-			m_pParent->Translate(m_pParent->GetRight() * Timer::SPF * 70);
+			m_pParent->Translate(m_pParent->GetRight() * m_moveSpeed * Timer::SPF);
 		}
 		if (Input::GetKeyState('Q') == EKeyState::HOLD)
 		{
-			m_pParent->Rotate(Quaternion::Left * Timer::SPF);
+			m_pParent->Rotate(Quaternion::Left * m_moveSpeed * Timer::SPF);
 		}
 		if (Input::GetKeyState('E') == EKeyState::HOLD)
 		{
-			m_pParent->Rotate(Quaternion::Right * Timer::SPF);
+			m_pParent->Rotate(Quaternion::Right * m_moveSpeed * Timer::SPF);
 		}
 		if (Input::GetKeyState('1') == EKeyState::HOLD)
 		{
@@ -158,7 +158,7 @@ void PlayerController::PlayerInput(const float& spf) noexcept
 			m_pCollider = (Collider*)m_pParent->GetComponentList(EComponent::Collider)->front();
 			if (m_pCollider != nullptr)
 			{
-				m_pCollider->SetForce(Vector3::Up * 180.0f);
+				m_pCollider->SetForce(Vector3::Up * m_jumpPower);
 			}
 		}
 		// 입력 없을시 Idle

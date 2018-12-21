@@ -17,6 +17,9 @@ private:
 	Collider*	m_pCollider		= nullptr;
 	Camera*		m_pCamera		= nullptr;
 
+	float		m_moveSpeed = 100.0f;
+	float		m_jumpPower = 180.0f;
+
 	bool		m_isCharacter	= false;
 	bool		m_toIdle		= false;
 	bool		m_isLoopAnim	= false;
