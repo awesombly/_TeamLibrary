@@ -52,7 +52,7 @@ void PlayerController::SetAnimation(const EAction& eAction) noexcept
 	case EAction::Idle:
 	 {
 		m_isLoopAnim = false;
-	 	//pHero->SetANIM(Guard_HA IDLE);
+	 	pHero->SetANIM(Guard_IDLE);
 	 }	break;
 	case EAction::Jump:
 	 {
@@ -72,7 +72,8 @@ void PlayerController::SetAnimation(const EAction& eAction) noexcept
 	case EAction::Forward:
 	 {
 		m_isLoopAnim = true;
-	 	pHero->SetANIM(Guard_FORWARD);
+	 	//pHero->SetANIM(Guard_FORWARD);
+		pHero->SetANIM(Guard_HAPPYWALK);
 	 }	break;
 	case EAction::Backward:
 	 {
