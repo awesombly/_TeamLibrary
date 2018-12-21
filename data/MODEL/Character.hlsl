@@ -3,6 +3,8 @@
 //--------------------------------------------------------------------------------------
 // Constant Buffer Variables
 //--------------------------------------------------------------------------------------
+
+
 Texture2D g_txDiffuse: register (t0);
 SamplerState samLinear: register (s0);
 cbuffer cb0: register (b0)
@@ -11,6 +13,15 @@ cbuffer cb0: register (b0)
 	float4x4	g_matView	: packoffset(c4);
 	float4x4	g_matProj	: packoffset(c8);
 	float4		g_MeshColor : packoffset(c12);
+};
+
+static const float NEAR = 0.1f;
+static const float FAR = 2000.0f;
+// ·»´õ Å¸°Ù
+struct PBUFFER_OUTPUT
+{
+	float4 color0 : SV_TARGET0;
+	float4 color1 : SV_TARGET1;
 };
 
 
@@ -103,14 +114,21 @@ VS_OUTPUT VS(PNCT5_VS_INPUT input)//,uniform bool bHalfVector )
 	output.p = mul(output.p, g_matProj);
 	output.t = input.t;
 	output.c = input.c;
+
+	output.c.w = (output.p.w - NEAR) / (FAR - NEAR);
 	return output;
 }
 //--------------------------------------------------------------------------------------
 // Pixel Shader
 //--------------------------------------------------------------------------------------
-float4 PS(VS_OUTPUT vIn) : SV_Target
+PBUFFER_OUTPUT PS(VS_OUTPUT vIn) : SV_Target
 {
-	return g_txDiffuse.Sample(samLinear, vIn.t);// *vIn.c;
+	PBUFFER_OUTPUT output = (PBUFFER_OUTPUT)0;
+	output.color0		= g_txDiffuse.Sample(samLinear, vIn.t);
+	output.color1.xyz	= vIn.n;
+	output.color1.w		= vIn.c.w;
+	//output.color0.w		= 1.0f;
+	return output;// *vIn.c;
 }
 
 //Matrix m =

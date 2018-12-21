@@ -7,7 +7,7 @@ GameObject::GameObject()
 	ObjectManager::KeyObjects[m_keyValue] = this;
 }
 
-//GameObject::~GameObject()
+//GameObject::~GameObject() noexcept
 //{
 //	ObjectManager::KeyObjects.erase(m_keyValue);
 //}

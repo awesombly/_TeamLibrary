@@ -68,31 +68,32 @@ public:
 	const D3DXMATRIX& GetScaleMatrix()				const noexcept;
 	const D3DXMATRIX& GetRotationMatrix()			const noexcept;
 
-	bool isEnable()		noexcept;
+	bool isEnable()								noexcept;
 	void isEnable(const bool& isEnable, const bool& putDisablePool = false) noexcept;
-	bool isGlobal()		noexcept;
-	void isGlobal(const bool& isGlobal) noexcept;
-	bool isStatic()		noexcept;
-	void isStatic(const bool& isStatic) noexcept;
-	bool isBillBoard()	noexcept;
-	void isBillBoard(const bool& isBillBoard) noexcept;
-	bool isNotDelete()	noexcept;
-	void isNotDelete(const bool& isNotDelete) noexcept;
+	bool isGlobal()								noexcept;
+	void isGlobal(const bool& isGlobal)			noexcept;
+	bool isStatic()								noexcept;
+	void isStatic(const bool& isStatic)			noexcept;
+	bool isBillBoard()							noexcept;
+	void isBillBoard(const bool& isBillBoard)	noexcept;
+	bool isNotDelete()							noexcept;
+	void isNotDelete(const bool& isNotDelete)	noexcept;
 
 	virtual bool Init()											noexcept override;
 	virtual bool Frame(const float& spf, const float& accTime)	noexcept override;
 	virtual bool Render(ID3D11DeviceContext* pDContext)			noexcept override;
 	virtual bool Release()										noexcept override;
 	virtual GameObject* clone()									noexcept;		// 자기 객체 복사 반환
-private:
+protected:
 	GameObject* cloneChild(GameObject* pObject)					noexcept;		// 자식 복제용
 protected:
 	friend class AseParser;
 	friend class MaxImporter;
 	friend class Dialog_Hierarchy;
 	friend class CAnimation;
-public:
+
 	GameObject();
+public:
 	GameObject(const wstring_view& myName, const EObjType& eType = EObjType::Dummy);
 	GameObject(const wstring_view& myName, const std::initializer_list<Component*>& components, const EObjType& eType = EObjType::Dummy);
 	GameObject(const wstring_view& myName, Component* pComponent, const EObjType& eType = EObjType::Dummy);

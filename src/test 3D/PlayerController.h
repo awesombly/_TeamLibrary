@@ -21,7 +21,8 @@ private:
 public:
 
 public:
-	void PlayerInput() noexcept;
+	void PlayerInput(const float& spf)		  noexcept;
+	void CameraInput(const float& spf)		  noexcept;
 	void SetAnimation(const EAction& eAction) noexcept;
 
 	bool isCharacter()						  noexcept;
