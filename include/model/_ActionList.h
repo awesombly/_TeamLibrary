@@ -1,6 +1,6 @@
 #pragma once
 
-#define MatrixPATH L"../../data/shader/MatrixViewer.hlsl"
+#define MatrixPATH L"../../data/Model/MatrixViewer.hlsl"
 #define TablePATH  L"../../data/Model/CharacterTable.cit"
 
 //참고 0 : 캐릭터 이름
