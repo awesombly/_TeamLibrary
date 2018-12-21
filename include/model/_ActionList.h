@@ -10,13 +10,15 @@
 //참고 1 : 액션리스트
 //////////////////////////////////////////////////////////////////////////
 //Guard
-//ANIM_COUNT  8
+//ANIM_COUNT  9
 
+#define	 Guard_HAPPYWALK	L"HERO_HAPPYWALK.Mat"
 #define	 Guard_LEFT			L"HERO_LEFT.Mat"
 #define	 Guard_RIGHT		L"HERO_RIGHT.Mat"
 #define	 Guard_BACKWARD		L"HERO_MOVE_BACK.Mat"
 #define	 Guard_FORWARD		L"HERO_MOVE.Mat"
 #define	 Guard_IDLE			L"HERO_IDLE.Mat"
+
 
 #define	 Guard_DANCE1		L"HERO_DANCE.mat"
 #define	 Guard_DANCE2		L"HERO_DANCE2.mat"
@@ -31,6 +33,24 @@
 #define	 Zombie_BACKWARD	L"zombie_back.Mat"
 #define	 Zombie_FORWARD		L"zombie_walk.Mat"
 #define	 Zombie_IDLE		L"zombie_idle.Mat"
+
+
+
+
+
+
+
+//NPC_NPC_NPC_NPC_NPC_NPC_NPC
+//NPC_NPC_NPC_NPC_NPC_NPC_NPC
+//NPC_NPC_NPC_NPC_NPC_NPC_NPC
+//////////////////////////////////////////////////////////////////////////
+//NPC_BIRD
+//ANIM_COUNT  1
+#define	 NPC_Bird_IDLE		L"NPC_bird.Mat"
+
+
+
+
 
 //참고 2 : 추가 방법 및 예제
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
