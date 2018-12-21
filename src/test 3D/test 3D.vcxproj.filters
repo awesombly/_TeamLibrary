@@ -16,6 +16,9 @@
     <ClCompile Include="PlayerController.cpp">
       <Filter>Etc</Filter>
     </ClCompile>
+    <ClCompile Include="PacketManager.cpp">
+      <Filter>Etc</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainClass.h">
@@ -31,6 +34,12 @@
       <Filter>Scene</Filter>
     </ClInclude>
     <ClInclude Include="PlayerController.h">
+      <Filter>Etc</Filter>
+    </ClInclude>
+    <ClInclude Include="MyProtocol.h">
+      <Filter>Etc</Filter>
+    </ClInclude>
+    <ClInclude Include="PacketManager.h">
       <Filter>Etc</Filter>
     </ClInclude>
   </ItemGroup>

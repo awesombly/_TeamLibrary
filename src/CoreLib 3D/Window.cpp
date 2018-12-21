@@ -1,5 +1,6 @@
 #include "Window.h"
 #include "ObjectManager.h"
+#include "CoreDX.h"
 
 
 // static √ ±‚»≠
@@ -14,7 +15,7 @@ Window*		Window::Instance = nullptr;
 
 bool Window::MessageProcess()
 {
-	while (1)
+	while (Core::isPlaying)
 	{
 		if (PeekMessage(&message, NULL, 0, 0, PM_REMOVE))
 		{

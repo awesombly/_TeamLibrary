@@ -1,4 +1,5 @@
 #include "Input.h"
+#include "CoreDX.h"
 
 bool Input::isDebug = false;
 //bool Input::isChatting = false;
@@ -45,13 +46,17 @@ bool Input::Frame() noexcept
 	KeyCheck('Q');		KeyCheck('W');		KeyCheck('E');		KeyCheck('R');
 	KeyCheck('A');		KeyCheck('S');		KeyCheck('D');		KeyCheck('F');
 	KeyCheck('Z');		KeyCheck('X');		KeyCheck('C');		KeyCheck('V');
-	KeyCheck('`');
 
 
 	if (GetKeyState(VK_ESCAPE) == EKeyState::DOWN)
 	{
 		isDebug = !isDebug;
 		//isChatting = false;
+	}
+	if (GetKeyState(VK_CONTROL) == EKeyState::DOWN)
+	{
+		Core::isPlaying = false;
+		//this_thread::yield();
 	}
 	return true;
 }

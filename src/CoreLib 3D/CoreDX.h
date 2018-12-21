@@ -17,7 +17,7 @@ private:
 	WriteManager&  m_WriteManager  = WriteManager::GetInstance();	// 문자 출력 관리
 	//ClientServer&  m_ClientServer = ClientServer::GetInstance();	// 클라-서버
 public:
-	static bool isExit;		// 프로그램 종료 플래그
+	static bool isPlaying;		// 프로그램 종료 플래그
 public:
 	virtual bool GameRun()		noexcept final;
 private:
