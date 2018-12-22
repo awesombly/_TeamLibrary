@@ -1,6 +1,5 @@
 #pragma once
-#include "MyRect.h"
-
+#include "header.h"
 
 class Window
 {
@@ -16,7 +15,7 @@ public:
 
 	//static MyVector2		DrawPoint;
 public:
-	static void ResizeWindow(const MyRect& rect) noexcept;
+	static void ResizeWindow(const RECT& rect) noexcept;
 	static RECT& getClientRect();
 	static RECT& GetWinRect();
 	static D3DXVECTOR2 GetWinCenter();

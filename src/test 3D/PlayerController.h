@@ -4,6 +4,7 @@
 
 class Collider;
 class Camera;
+class AHeroObj;
 
 class PlayerController : public GameObject
 {
@@ -15,31 +16,37 @@ public:
 		Backward = 8, BackwardLeft = 9, BackwardRight = 12,
 		Jump = 100, Dance1, Dance2, Dance3,
 	};
+	enum class ECharacter : char {
+		EGuard = 0, EZombie,
+	};
 private:
-	EAction		m_curAction;
+	AHeroObj*   m_pHero			= nullptr;
 	Camera*		m_pCamera		= nullptr;
+	Collider*	m_pCollider		= nullptr;
+	EAction		m_curAction;
 
 	D3DXVECTOR3 m_direction;
 	float		m_moveSpeed = 100.0f;
 	float		m_jumpPower = 180.0f;
 
 	bool		m_isCharacter	= false;
-	bool		m_toIdle		= false;
+	//bool		m_toIdle		= false;
 	bool		m_isLoopAnim	= false;
 	// 마우스 고정용
 	POINT		m_setMouseScreen;
 	POINT		m_setMouseClient;
 public:
-	Collider*	m_pCollider		= nullptr;
-
+	ECharacter  m_curCharacter;
 public:
-	void SetAnimation(const EAction& eAction) noexcept;
-	void PlayerInput(const float& spf)		  noexcept;
-	void CameraInput(const float& spf)		  noexcept;
-	void ResetOption()						  noexcept;
+	void SetAnimation(const EAction& eAction)			noexcept;
+	void AnimationGuard(const EAction& eAction)			noexcept;
+	void AnimationZombi(const EAction& eAction)			noexcept;
+	void PlayerInput(const float& spf)					noexcept;
+	void CameraInput(const float& spf)					noexcept;
+	void ResetOption()									noexcept;
 
-	bool isCharacter()						  noexcept;
-	void isCharacter(const bool& isCharacter) noexcept;
+	bool isCharacter()									noexcept;
+	void isCharacter(const bool& isCharacter)			noexcept;
 
 	bool Init()											noexcept override;
 	bool Frame(const float& spf, const float& accTime)	noexcept override;

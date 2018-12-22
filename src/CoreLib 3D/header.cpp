@@ -2,10 +2,37 @@
 #include <fstream>
 
 #ifdef _DEBUG
-	static std::wofstream debugStream(L"../../debugOut.txt", std::ios::app);
+static std::wofstream debugStream(L"../../debugOut.txt", std::ios::app);
 #endif
 
-void ErrorMessage(const string_view& msg, const bool& useLoop)
+
+char * WCharToChar(wchar_t* str) noexcept
+{
+	//반환할 char* 변수 선언
+	char* pStr;
+	//입력받은 wchar_t 변수의 길이를 구함
+	int strSize = WideCharToMultiByte(CP_ACP, 0, str, -1, NULL, 0, NULL, NULL);
+	//char* 메모리 할당
+	pStr = new char[strSize];
+	//형 변환 
+	WideCharToMultiByte(CP_ACP, 0, str, -1, pStr, strSize, 0, 0);
+	return pStr;
+}
+
+wchar_t* CharToWChar(char* str) noexcept
+{
+	//wchar_t형 변수 선언
+	wchar_t* pStr;
+	//멀티 바이트 크기 계산 길이 반환
+	int strSize = MultiByteToWideChar(CP_ACP, 0, str, -1, NULL, NULL);
+	//wchar_t 메모리 할당
+	pStr = new WCHAR[strSize];
+	//형 변환
+	MultiByteToWideChar(CP_ACP, 0, str, (int)strlen(str) + 1, pStr, strSize);
+	return pStr;
+}
+
+void ErrorMessage(const string_view& msg, const bool& useLoop) noexcept
 {
 #ifdef _DEBUG
 	// 디버그 출력
@@ -15,7 +42,7 @@ void ErrorMessage(const string_view& msg, const bool& useLoop)
 	//try	{
 	OutputDebugStringA(ostr.str().c_str());
 	//debugStream.open(L"../../debugOut.txt", std::ios::app);
-	if(debugStream.is_open())
+	if (debugStream.is_open())
 		debugStream << ostr.str().c_str();
 	//debugStream.close();
 	//}
@@ -28,7 +55,7 @@ void ErrorMessage(const string_view& msg, const bool& useLoop)
 #endif
 }
 
-void ErrorMessage(const wstring_view& msg, const bool& useLoop)
+void ErrorMessage(const wstring_view& msg, const bool& useLoop) noexcept
 {
 #ifdef _DEBUG
 	// 디버그 출력
@@ -46,60 +73,62 @@ void ErrorMessage(const wstring_view& msg, const bool& useLoop)
 #endif
 }
 
-D3DXVECTOR3 Lerp(const D3DXVECTOR3& start, const D3DXVECTOR3& end, const float& time)
+D3DXVECTOR3 Lerp(const D3DXVECTOR3& start, const D3DXVECTOR3& end, const float& time) noexcept
 {
 	return (1 - time) * start + time * end;
 }
 
-D3DXQUATERNION Lerp(const D3DXQUATERNION& start, const D3DXQUATERNION& end, const float& time)
+D3DXQUATERNION Lerp(const D3DXQUATERNION& start, const D3DXQUATERNION& end, const float& time) noexcept
 {
 	return (1 - time) * start + time * end;
 }
 
-D3DXVECTOR3 Product(const D3DXVECTOR3& vectorA, const D3DXVECTOR3& vectorB)
+D3DXVECTOR3 Product(const D3DXVECTOR3& vectorA, const D3DXVECTOR3& vectorB) noexcept
 {
 	return { vectorA.x * vectorB.x, vectorA.y * vectorB.y, vectorA.z * vectorB.z };
 }
-D3DXQUATERNION Product(const D3DXQUATERNION& quatA, const D3DXQUATERNION& quatB)
+D3DXQUATERNION Product(const D3DXQUATERNION& quatA, const D3DXQUATERNION& quatB) noexcept
 {
 	return { quatA.x * quatB.x, quatA.y * quatB.y, quatA.z * quatB.z, quatA.w * quatB.w };
 }
 
-D3DXVECTOR3 Divide(const D3DXVECTOR3& vectorA, const D3DXVECTOR3& vectorB)
+D3DXVECTOR3 Divide(const D3DXVECTOR3& vectorA, const D3DXVECTOR3& vectorB) noexcept
 {
 	return { vectorA.x / vectorB.x, vectorA.y / vectorB.y, vectorA.z / vectorB.z };
 }
-D3DXQUATERNION Divide(const D3DXQUATERNION& quatA, const D3DXQUATERNION& quatB)
+D3DXQUATERNION Divide(const D3DXQUATERNION& quatA, const D3DXQUATERNION& quatB) noexcept
 {
 	return { quatA.x / quatB.x, quatA.y / quatB.y, quatA.z / quatB.z, quatA.w / quatB.w };
 }
 
-char * WCharToChar(wchar_t* str)
+D3DXVECTOR2 Normalize(const D3DXVECTOR2& vector2) noexcept
 {
-	//반환할 char* 변수 선언
-	char* pStr;
-	//입력받은 wchar_t 변수의 길이를 구함
-	int strSize = WideCharToMultiByte(CP_ACP, 0, str, -1, NULL, 0, NULL, NULL);
-	//char* 메모리 할당
-	pStr = new char[strSize];
-	//형 변환 
-	WideCharToMultiByte(CP_ACP, 0, str, -1, pStr, strSize, 0, 0);
-	return pStr;
+	float length = sqrt(vector2.x * vector2.x + vector2.y * vector2.y);
+	return { vector2.x / length, vector2.y / length };
+}
+D3DXVECTOR3 Normalize(const D3DXVECTOR3& vector3) noexcept
+{
+	float length = sqrt(vector3.x * vector3.x + vector3.y * vector3.y + vector3.z * vector3.z);
+	return { vector3.x / length, vector3.y / length, vector3.z / length };
 }
 
-wchar_t* CharToWChar(char* str)
+float VectorLength(const D3DXVECTOR2& vector2) noexcept
 {
-	//wchar_t형 변수 선언
-	wchar_t* pStr;
-	//멀티 바이트 크기 계산 길이 반환
-	int strSize = MultiByteToWideChar(CP_ACP, 0, str, -1, NULL, NULL);
-	//wchar_t 메모리 할당
-	pStr = new WCHAR[strSize];
-	//형 변환
-	MultiByteToWideChar(CP_ACP, 0, str, (int)strlen(str) + 1, pStr, strSize);
-	return pStr;
+	return std::sqrtf(std::powf(vector2.x, 2) + std::powf(vector2.y, 2));
+}
+float VectorLength(const D3DXVECTOR3& vector3) noexcept
+{
+	return std::sqrtf(std::powf(vector3.x, 2) + std::powf(vector3.y, 2) + std::powf(vector3.z, 2));
 }
 
+float VectorLengthSq(const D3DXVECTOR2& vector2) noexcept
+{
+	return std::powf(vector2.x, 2) + std::powf(vector2.y, 2);
+}
+float VectorLengthSq(const D3DXVECTOR3& vector3) noexcept
+{
+	return std::powf(vector3.x, 2) + std::powf(vector3.y, 2) + std::powf(vector3.z, 2);
+}
 
 // + Random 비트 초기화
 static unsigned long wellState[16];

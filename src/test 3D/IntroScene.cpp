@@ -92,7 +92,7 @@ bool IntroScene::Init() noexcept
 	pRenderer->SetEnviromentMap(L"CubeMap/grassenvmap1024.dds", EEnviType::Refraction);
 	pCollider = (Collider*)ObjectManager::Get().TakeComponent(L"ColliderOBB");
 	pObject = new GameObject(L"Object1", { pRenderer, pCollider, new CTransformer(Vector3::Zero, Quaternion::Right * 2.0f) }, EObjType::Object);
-	pObject->Translate(Vector3::Forward * 15.0f);
+	pObject->Translate(Vector3::Backward * 30.0f + Vector3::Up * 200.0f);
 	pObject->SetScale(Vector3::One * 4);
 	//ObjectManager::Get().PushObject(pObject);
 	ObjectManager::Get().SetProtoObject(pObject);
@@ -102,8 +102,8 @@ bool IntroScene::Init() noexcept
 	pRenderer->SetEnviromentMap(L"CubeMap/grassenvmap1024.dds", EEnviType::Fresnel);
 	pCollider = (Collider*)ObjectManager::Get().TakeComponent(L"ColliderOBB");
 	pObject = new GameObject(L"Object2", { pRenderer, pCollider }, EObjType::Object);
-	pObject->Translate(Vector3::Left * 10.0f);
-	pObject->SetScale(Vector3::One * 2);
+	pObject->Translate(Vector3::Backward * 30.0f + Vector3::Left * 80.0f + Vector3::Up * 300);
+	pObject->SetScale(Vector3::One * 10);
 	//ObjectManager::Get().PushObject(pObject);
 	ObjectManager::Get().SetProtoObject(pObject);
 
@@ -112,15 +112,14 @@ bool IntroScene::Init() noexcept
 	pRenderer->SetEnviromentMap(L"CubeMap/grassenvmap1024.dds", EEnviType::Basic);
 	pCollider = (Collider*)ObjectManager::Get().TakeComponent(L"ColliderSphere");
 	pObject = new GameObject(L"Object3", { pRenderer, pCollider }, EObjType::Object);
-	pObject->Translate(Vector3::Right * 15.0f);
-	pObject->SetScale(Vector3::One * 3);
+	pObject->Translate(Vector3::Backward * 30.0f + Vector3::Right * 75.0f + Vector3::Up * 250);
+	pObject->SetScale(Vector3::One * 15);
 	ObjectManager::Get().SetProtoObject(pObject);
 	//ObjectManager::Get().PushObject(pObject);
 
 	m_pTakeObject = ObjectManager::Get().TakeObject(L"Object1");
 	m_pTakeObject2 = ObjectManager::Get().TakeObject(L"Object2");
 	m_pTakeObject3 = ObjectManager::Get().TakeObject(L"Object3");
-	m_pTakeObject4 = ObjectManager::Get().TakeObject(L"Object2");
 
 	SoundManager::Get().Load("BGM/PLAY ROUGH", false, FMOD_LOOP_NORMAL);
 	SoundManager::Get().SetBGM("BGM/PLAY ROUGH");
@@ -139,9 +138,8 @@ bool IntroScene::Frame() noexcept
 	if (m_pTakeObject != nullptr)
 	{
 		m_pTakeObject->Scaling(Vector3::One * 0.5f * Timer::SPF);
-		m_pTakeObject2->Translate(Vector3::Left * Timer::SPF * 5.0f);
-		m_pTakeObject3->Translate(Vector3::Right * Timer::SPF * 5.0f);
-		m_pTakeObject4->Translate(Vector3::Up * Timer::SPF * 5.0f);
+		//m_pTakeObject2->Translate(Vector3::Left * Timer::SPF * 5.0f);
+		//m_pTakeObject3->Translate(Vector3::Right * Timer::SPF * 5.0f);
 	}
 	DxManager::Get().Frame();
 	ObjectManager::Get().Frame(Timer::SPF, Timer::AccumulateTime);

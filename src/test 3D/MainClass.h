@@ -68,8 +68,8 @@ public:
 	PlayerController* m_pPlayer = nullptr;		// 컨트롤러
 
 	AHeroObj	m_Hero;							// 캐릭터 본체
+	AHeroObj	m_Zombi;						// 
 	AHeroObj	m_Bird;							// 
-	ColliderOBB* m_pHeroCollider	= nullptr;	// 캐릭터 충돌체
 	
 
 	static GameObject* m_pSkyBox;

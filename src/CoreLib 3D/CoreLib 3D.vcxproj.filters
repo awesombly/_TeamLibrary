@@ -31,20 +31,11 @@
     <ClCompile Include="Texture.cpp">
       <Filter>DirectX</Filter>
     </ClCompile>
-    <ClCompile Include="DxClient.cpp">
-      <Filter>Server</Filter>
-    </ClCompile>
-    <ClCompile Include="Worker.cpp">
-      <Filter>Server</Filter>
-    </ClCompile>
     <ClCompile Include="RenderDepthView.cpp">
       <Filter>DirectX</Filter>
     </ClCompile>
     <ClCompile Include="ObjectManager.cpp">
       <Filter>Object</Filter>
-    </ClCompile>
-    <ClCompile Include="MyRect.cpp">
-      <Filter>Utility</Filter>
     </ClCompile>
     <ClCompile Include="header.cpp">
       <Filter>Utility</Filter>
@@ -64,9 +55,6 @@
     <ClCompile Include="Camera.cpp">
       <Filter>Object\GameObject</Filter>
     </ClCompile>
-    <ClCompile Include="AseParser.cpp">
-      <Filter>Utility</Filter>
-    </ClCompile>
     <ClCompile Include="MaxImporter.cpp">
       <Filter>Utility</Filter>
     </ClCompile>
@@ -76,26 +64,11 @@
     <ClCompile Include="SkySphere.cpp">
       <Filter>Component\Renderer\Child</Filter>
     </ClCompile>
-    <ClCompile Include="Character.cpp">
-      <Filter>Component\Renderer\Child</Filter>
-    </ClCompile>
-    <ClCompile Include="FrustumBox.cpp">
-      <Filter>Component\Renderer\Child</Filter>
-    </ClCompile>
     <ClCompile Include="HeightMap.cpp">
       <Filter>Component\Renderer\Child</Filter>
     </ClCompile>
     <ClCompile Include="Light.cpp">
       <Filter>Object\GameObject</Filter>
-    </ClCompile>
-    <ClCompile Include="EnviDySphere.cpp">
-      <Filter>Component\Renderer\Child</Filter>
-    </ClCompile>
-    <ClCompile Include="RDViewCube.cpp">
-      <Filter>DirectX</Filter>
-    </ClCompile>
-    <ClCompile Include="QuadTree.cpp">
-      <Filter>Component\Renderer\Child</Filter>
     </ClCompile>
     <ClCompile Include="RCube.cpp">
       <Filter>Component\Renderer\Base</Filter>
@@ -112,15 +85,6 @@
     <ClCompile Include="RSphere.cpp">
       <Filter>Component\Renderer\Base</Filter>
     </ClCompile>
-    <ClCompile Include="RSphereSO.cpp">
-      <Filter>Component\Renderer\Base</Filter>
-    </ClCompile>
-    <ClCompile Include="StreamOut.cpp">
-      <Filter>Component\Renderer\Base</Filter>
-    </ClCompile>
-    <ClCompile Include="MapNode.cpp">
-      <Filter>Component\Renderer\Child</Filter>
-    </ClCompile>
     <ClCompile Include="InstanceRenderer.cpp">
       <Filter>Component\Renderer</Filter>
     </ClCompile>
@@ -130,19 +94,10 @@
     <ClCompile Include="Instancer.cpp">
       <Filter>Component\Renderer</Filter>
     </ClCompile>
-    <ClCompile Include="PlaneUI.cpp">
-      <Filter>Component\Renderer\UI</Filter>
-    </ClCompile>
     <ClCompile Include="WriteManager.cpp">
       <Filter>DirectX</Filter>
     </ClCompile>
     <ClCompile Include="CAnimation.cpp">
-      <Filter>Component\Basic</Filter>
-    </ClCompile>
-    <ClCompile Include="CPhysics.cpp">
-      <Filter>Component\Basic</Filter>
-    </ClCompile>
-    <ClCompile Include="CPlaneShadow.cpp">
       <Filter>Component\Basic</Filter>
     </ClCompile>
     <ClCompile Include="CTransformer.cpp">
@@ -159,6 +114,9 @@
     </ClCompile>
     <ClCompile Include="ColliderSphere.cpp">
       <Filter>Component\Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="PlaneUI.cpp">
+      <Filter>Component\Renderer\Child</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -207,20 +165,11 @@
     <ClInclude Include="Sprite.h">
       <Filter>DirectX</Filter>
     </ClInclude>
-    <ClInclude Include="DxClient.h">
-      <Filter>Server</Filter>
-    </ClInclude>
-    <ClInclude Include="Worker.h">
-      <Filter>Server</Filter>
-    </ClInclude>
     <ClInclude Include="RenderDepthView.h">
       <Filter>DirectX</Filter>
     </ClInclude>
     <ClInclude Include="ObjectManager.h">
       <Filter>Object</Filter>
-    </ClInclude>
-    <ClInclude Include="MyRect.h">
-      <Filter>Utility</Filter>
     </ClInclude>
     <ClInclude Include="GameObject.h">
       <Filter>Object\GameObject</Filter>
@@ -237,9 +186,6 @@
     <ClInclude Include="Camera.h">
       <Filter>Object\GameObject</Filter>
     </ClInclude>
-    <ClInclude Include="AseParser.h">
-      <Filter>Utility</Filter>
-    </ClInclude>
     <ClInclude Include="MaxImporter.h">
       <Filter>Utility</Filter>
     </ClInclude>
@@ -252,23 +198,8 @@
     <ClInclude Include="HeightMap.h">
       <Filter>Component\Renderer\Child</Filter>
     </ClInclude>
-    <ClInclude Include="Character.h">
-      <Filter>Component\Renderer\Child</Filter>
-    </ClInclude>
-    <ClInclude Include="FrustumBox.h">
-      <Filter>Component\Renderer\Child</Filter>
-    </ClInclude>
     <ClInclude Include="Light.h">
       <Filter>Object\GameObject</Filter>
-    </ClInclude>
-    <ClInclude Include="EnviDySphere.h">
-      <Filter>Component\Renderer\Child</Filter>
-    </ClInclude>
-    <ClInclude Include="RDViewCube.h">
-      <Filter>DirectX</Filter>
-    </ClInclude>
-    <ClInclude Include="QuadTree.h">
-      <Filter>Component\Renderer\Child</Filter>
     </ClInclude>
     <ClInclude Include="RCube.h">
       <Filter>Component\Renderer\Base</Filter>
@@ -285,15 +216,6 @@
     <ClInclude Include="RSphere.h">
       <Filter>Component\Renderer\Base</Filter>
     </ClInclude>
-    <ClInclude Include="RSphereSO.h">
-      <Filter>Component\Renderer\Base</Filter>
-    </ClInclude>
-    <ClInclude Include="StreamOut.h">
-      <Filter>Component\Renderer\Base</Filter>
-    </ClInclude>
-    <ClInclude Include="MapNode.h">
-      <Filter>Component\Renderer\Child</Filter>
-    </ClInclude>
     <ClInclude Include="InstanceRenderer.h">
       <Filter>Component\Renderer</Filter>
     </ClInclude>
@@ -303,9 +225,6 @@
     <ClInclude Include="Instancer.h">
       <Filter>Component\Renderer</Filter>
     </ClInclude>
-    <ClInclude Include="PlaneUI.h">
-      <Filter>Component\Renderer\UI</Filter>
-    </ClInclude>
     <ClInclude Include="WriteManager.h">
       <Filter>DirectX</Filter>
     </ClInclude>
@@ -313,12 +232,6 @@
       <Filter>Component\Basic</Filter>
     </ClInclude>
     <ClInclude Include="Component.h">
-      <Filter>Component\Basic</Filter>
-    </ClInclude>
-    <ClInclude Include="CPhysics.h">
-      <Filter>Component\Basic</Filter>
-    </ClInclude>
-    <ClInclude Include="CPlaneShadow.h">
       <Filter>Component\Basic</Filter>
     </ClInclude>
     <ClInclude Include="CTransformer.h">
@@ -336,6 +249,9 @@
     <ClInclude Include="ColliderSphere.h">
       <Filter>Component\Collider</Filter>
     </ClInclude>
+    <ClInclude Include="PlaneUI.h">
+      <Filter>Component\Renderer\Child</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="MainCore">
@@ -343,9 +259,6 @@
     </Filter>
     <Filter Include="Sound">
       <UniqueIdentifier>{c291919d-696f-46a6-b7fa-3236c77ab8f2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Server">
-      <UniqueIdentifier>{80c0f52a-21ce-48a0-9fdc-d65956ffcf78}</UniqueIdentifier>
     </Filter>
     <Filter Include="DirectX">
       <UniqueIdentifier>{5e5d9acb-e79f-4997-8a6c-c3820f36d880}</UniqueIdentifier>
@@ -382,9 +295,6 @@
     </Filter>
     <Filter Include="Component\Basic">
       <UniqueIdentifier>{13b60ea9-09c2-4bf0-9f10-0277b85ba652}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Component\Renderer\UI">
-      <UniqueIdentifier>{46741444-6238-4dfd-b35e-d234eb715b9a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

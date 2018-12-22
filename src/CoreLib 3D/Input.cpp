@@ -53,11 +53,11 @@ bool Input::Frame() noexcept
 		isDebug = !isDebug;
 		//isChatting = false;
 	}
-	if (GetKeyState(VK_CONTROL) == EKeyState::DOWN)
-	{
-		Core::isPlaying = false;
-		//this_thread::yield();
-	}
+	//if (GetKeyState(VK_CONTROL) == EKeyState::DOWN)
+	//{
+	//	Core::isPlaying = false;
+	//	//this_thread::yield();
+	//}
 	return true;
 }
 

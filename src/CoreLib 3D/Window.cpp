@@ -143,10 +143,10 @@ void Window::SetClientRect(const int& x, const int& y, const int& width, const i
 	m_clientRect = { x, y, width, height };
 };
 
-void Window::ResizeWindow(const MyRect& rect) noexcept
+void Window::ResizeWindow(const RECT& rect) noexcept
 {
-	rect.RECTset(&Instance->m_winRect);
-	rect.RECTset(&Instance->m_clientRect);
+	Instance->m_winRect = rect;
+	Instance->m_clientRect = rect;
 	AdjustWindowRectEx(&Instance->m_winRect, WS_OVERLAPPED, false, WS_EX_APPWINDOW);
 	Instance->m_winRect.right -= Instance->m_winRect.left;
 	Instance->m_winRect.bottom -= Instance->m_winRect.top;
