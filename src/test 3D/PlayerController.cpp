@@ -42,127 +42,166 @@ void PlayerController::SetAnimation(const EAction& eAction) noexcept
 {
 	m_toIdle = false;
 	if (!m_isCharacter ||
-		m_pParent == nullptr ||
-		m_curAction == eAction)	return;
+		m_pParent == nullptr)	return;
 
+	static Packet_Vector3 p_direction;
+	static Packet_KeyValue p_Key;
 	AHeroObj* pHero = (AHeroObj*)m_pParent;
-	m_curAction = eAction;
-	switch(eAction)
+	m_pCollider = (Collider*)m_pParent->GetComponentList(EComponent::Collider)->front();
+
+	if (m_curAction != eAction)
 	{
-	case EAction::Idle:
-	 {
-		m_isLoopAnim = false;
-	 	pHero->SetANIM(Guard_IDLE);
-	 }	break;
-	case EAction::Jump:
-	 {
-		m_isLoopAnim = false;
-	 	///pHero->SetANIM(Guard_DANCE3);
-	 }	break;
-	case EAction::Left:
-	 {
-		m_isLoopAnim = true;
-	 	pHero->SetANIM(Guard_LEFT);
-	 }	break;
-	case EAction::Right:
-	 {
-		m_isLoopAnim = true;
-	 	pHero->SetANIM(Guard_RIGHT);
-	 }	break;
-	case EAction::Forward:
-	 {
-		m_isLoopAnim = true;
-	 	//pHero->SetANIM(Guard_FORWARD);
-		pHero->SetANIM(Guard_HAPPYWALK);
-	 }	break;
-	case EAction::Backward:
-	 {
-		m_isLoopAnim = true;
-	 	pHero->SetANIM(Guard_BACKWARD);
-	 }	break;
-	case EAction::Dance1:
-	 {
-		m_isLoopAnim = false;
-	 	pHero->SetANIM(Guard_DANCE1);
-	 }	break;
-	case EAction::Dance2:
-	 {
-		m_isLoopAnim = false;
-	 	pHero->SetANIM(Guard_DANCE2);
-	 }	break;
-	case EAction::Dance3:
-	 {
-		m_isLoopAnim = false;
-	 	pHero->SetANIM(Guard_DANCE3);
-	 }	break;
+		switch (eAction)
+		{
+		case EAction::Idle:
+		{
+			m_pCollider->isMoving(false);
+			m_isLoopAnim = false;
+			pHero->SetANIM(Guard_IDLE);
+		}	break;
+		case EAction::Jump:
+		{
+			m_pParent->Translate(Vector3::Up * 15.0f);
+
+			m_pCollider->SetForce(Vector3::Up * m_jumpPower);
+			m_isLoopAnim = false;
+			///pHero->SetANIM(Guard_DANCE3);
+		}	break;
+		case EAction::Left:
+		{
+			m_isLoopAnim = true;
+			pHero->SetANIM(Guard_LEFT);
+		}	break;
+		case EAction::Right:
+		{
+			m_isLoopAnim = true;
+			pHero->SetANIM(Guard_RIGHT);
+		}	break;
+		case EAction::Forward:
+		case EAction::ForwardLeft:
+		case EAction::ForwardRight:
+		{
+			m_isLoopAnim = true;
+			pHero->SetANIM(Guard_HAPPYWALK);
+		}	break;
+		case EAction::Backward:
+		case EAction::BackwardLeft:
+		case EAction::BackwardRight:
+		{
+			m_isLoopAnim = true;
+			pHero->SetANIM(Guard_BACKWARD);
+		}	break;
+		case EAction::Dance1:
+		{
+			m_isLoopAnim = false;
+			pHero->SetANIM(Guard_DANCE1);
+		}	break;
+		case EAction::Dance2:
+		{
+			m_isLoopAnim = false;
+			pHero->SetANIM(Guard_DANCE2);
+		}	break;
+		case EAction::Dance3:
+		{
+			m_isLoopAnim = false;
+			pHero->SetANIM(Guard_DANCE3);
+		}	break;
+		}
 	}
+	else
+	{
+		switch (eAction)
+		{
+		 case EAction::Left:
+		 {
+		 	m_pCollider->SetDirectionForce(m_pParent->GetLeft() * m_moveSpeed);
+		 }	break;
+		 case EAction::Right:
+		 {
+		 	m_pCollider->SetDirectionForce(m_pParent->GetRight() * m_moveSpeed);
+		 }	break;
+		 case EAction::Forward:
+		 {
+		 	m_pCollider->SetDirectionForce(m_pParent->GetForward() * m_moveSpeed);
+		 }	break;
+		 case EAction::ForwardLeft:
+		 {
+		 	m_pCollider->SetDirectionForce((m_pParent->GetForward() + m_pParent->GetLeft()) * 0.7f * m_moveSpeed);
+		 }	break;
+		 case EAction::ForwardRight:
+		 {
+		 	m_pCollider->SetDirectionForce((m_pParent->GetForward() + m_pParent->GetRight()) * 0.7f * m_moveSpeed);
+		 }	break;
+		 case EAction::Backward:
+		 {
+			 m_pCollider->SetDirectionForce(m_pParent->GetBackward() * m_moveSpeed);
+		 }	break;
+		 case EAction::BackwardLeft:
+		 {
+		 	m_pCollider->SetDirectionForce((m_pParent->GetBackward() + m_pParent->GetLeft()) * 0.7f * m_moveSpeed);
+		 }	break;
+		 case EAction::BackwardRight:
+		 {
+		 	m_pCollider->SetDirectionForce((m_pParent->GetBackward() + m_pParent->GetRight()) * 0.7f * m_moveSpeed);
+		 }	break;
+		}
+	}
+	m_curAction = eAction;
 }
+
 
 void PlayerController::PlayerInput(const float& spf) noexcept
 {
 	if (Input::GetKeyState(VK_SHIFT) != EKeyState::HOLD)
 	{
-		static Packet_Position format;
+		static Packet_AnimState p_AnimState;
 		m_toIdle = true;
+		EAction eAction = EAction::Idle;
+		m_direction = Vector3::Zero;
 		if (Input::GetKeyState('W') == EKeyState::HOLD)
 		{
-			format.KeyValue = m_pParent->m_keyValue;
-			format.position = m_pParent->GetForward() * m_moveSpeed * Timer::SPF;
-			PacketManager::Get().SendPacket((char*)&format, PACKET_Translate);
-			SetAnimation(EAction::Forward);
-			//m_pParent->Translate(m_pParent->GetForward() * m_moveSpeed * Timer::SPF);
+			eAction = (EAction)(eAction + EAction::Forward);
 		}
 		if (Input::GetKeyState('S') == EKeyState::HOLD)
 		{
-			SetAnimation(EAction::Backward);
-			m_pParent->Translate(m_pParent->GetBackward() * m_moveSpeed * Timer::SPF);
+			eAction = (EAction)(eAction + EAction::Backward);
 		}
 		if (Input::GetKeyState('A') == EKeyState::HOLD)
 		{
-			SetAnimation(EAction::Left);
-			m_pParent->Translate(m_pParent->GetLeft() * m_moveSpeed * Timer::SPF);
+			eAction = (EAction)(eAction + EAction::Left);
 		}
 		if (Input::GetKeyState('D') == EKeyState::HOLD)
 		{
-			SetAnimation(EAction::Right);
-			m_pParent->Translate(m_pParent->GetRight() * m_moveSpeed * Timer::SPF);
+			eAction = (EAction)(eAction + EAction::Right);
 		}
-		///if (Input::GetKeyState('Q') == EKeyState::HOLD)
-		///{
-		///	m_pParent->Rotate(Quaternion::Left * m_moveSpeed * Timer::SPF);
-		///}
-		///if (Input::GetKeyState('E') == EKeyState::HOLD)
-		///{
-		///	m_pParent->Rotate(Quaternion::Right * m_moveSpeed * Timer::SPF);
-		///}
-		if (Input::GetKeyState('1') == EKeyState::HOLD)
+		if (Input::GetKeyState('1') == EKeyState::DOWN)
 		{
-			SetAnimation(EAction::Dance1);
+			eAction = EAction::Dance1;
 		}
-		if (Input::GetKeyState('2') == EKeyState::HOLD)
+		if (Input::GetKeyState('2') == EKeyState::DOWN)
 		{
-			SetAnimation(EAction::Dance2);
+			eAction = EAction::Dance2;
 		}
-		if (Input::GetKeyState('3') == EKeyState::HOLD)
+		if (Input::GetKeyState('3') == EKeyState::DOWN)
 		{
-			SetAnimation(EAction::Dance3);
+			eAction = EAction::Dance3;
 		}
 		if (Input::GetKeyState(VK_SPACE) == EKeyState::DOWN)
 		{
-			SetAnimation(EAction::Dance3);
-			m_pParent->Translate(Vector3::Up * 5.0f);
-			
-			m_pCollider = (Collider*)m_pParent->GetComponentList(EComponent::Collider)->front();
-			if (m_pCollider != nullptr)
-			{
-				m_pCollider->SetForce(Vector3::Up * m_jumpPower);
-			}
+			eAction = EAction::Jump;
 		}
-		// 입력 없을시 Idle
-		if (m_toIdle && m_isLoopAnim)
+
+		//if (eAction != EAction::Idle)
 		{
-			SetAnimation(EAction::Idle);
+			p_AnimState.KeyValue = m_keyValue;
+			p_AnimState.EAnimState = eAction;
+			PacketManager::Get().SendPacket((char*)&p_AnimState, PACKET_SetAnimation);
 		}
+		//// 입력 없을시 Idle
+		//if (m_toIdle && m_isLoopAnim)
+		//{
+		//	SetAnimation(EAction::Idle);
+		//}
 	}
 	spf;
 }
@@ -170,7 +209,7 @@ void PlayerController::PlayerInput(const float& spf) noexcept
 void PlayerController::CameraInput(const float& spf) noexcept
 {
 	static const float MinCameraY = -PI * 0.2f;
-	static const float MaxCameraY =  PI * 0.4f;
+	static const float MaxCameraY = PI * 0.4f;
 
 	if (!Input::isDebug)
 	{
@@ -186,6 +225,10 @@ void PlayerController::CameraInput(const float& spf) noexcept
 		// 회전
 		m_pCamera->SetRotationX(std::clamp(m_pCamera->GetRotation().x + Input::GetMouseMovePos().y * 0.002f, MinCameraY, MaxCameraY));
 		m_pParent->Rotate(0.0f, Input::GetMouseMovePos().x * 0.002f);
+		static Packet_Quaternion p_rotate;
+		p_rotate.KeyValue = m_pParent->m_keyValue;
+		p_rotate.Quat = m_pParent->GetRotation();
+		PacketManager::Get().SendPacket((char*)&p_rotate, PACKET_SetRotation);
 		// 초기화
 		if (Input::GetInstance().GetKeyState('R') == EKeyState::DOWN)
 		{
@@ -203,9 +246,9 @@ void PlayerController::ResetOption() noexcept
 	m_pCamera = ObjectManager::Cameras[ECamera::Main];
 	m_pCamera->SetPosition(Vector3::Up * 75.0f);
 	m_pCamera->SetRotation(Quaternion::Left * PI + Quaternion::Up * PI * 0.2f);
-	m_pCamera->m_armLength		 = 6.0f;
-	m_pCamera->m_lerpMoveSpeed   = 5.0f;
-	m_pCamera->m_lerpRotateSpeed = 6.0f;
+	m_pCamera->m_armLength = 6.0f;
+	m_pCamera->m_lerpMoveSpeed = 7.0f;
+	m_pCamera->m_lerpRotateSpeed = 7.0f;
 }
 
 

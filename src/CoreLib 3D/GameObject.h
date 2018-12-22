@@ -35,6 +35,7 @@ protected:
 	bool  m_isStatic	= false;	// SRT 갱신 여부
 	bool  m_isBillBoard = false;	// 빌보드 행렬 적용 여부
 	bool  m_isNotDelete = false;	// 삭제 가능 여부(툴용)
+	bool  m_isMoved     = true;		// 이동 했는지 여부
 public:
 	UINT m_keyValue;								// 유일한 키값
 	wstring	 m_myName;								// 객체 이름
@@ -78,6 +79,8 @@ public:
 	void isBillBoard(const bool& isBillBoard)	noexcept;
 	bool isNotDelete()							noexcept;
 	void isNotDelete(const bool& isNotDelete)	noexcept;
+	bool isMoved()								noexcept;
+	void isMoved(const bool& m_isMoved)			noexcept;
 
 	virtual bool Init()											noexcept override;
 	virtual bool Frame(const float& spf, const float& accTime)	noexcept override;

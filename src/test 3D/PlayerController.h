@@ -1,22 +1,25 @@
 #pragma once
 #include "GameObject.h"
 
-enum class EAction {
-	Idle = 0, Jump,
-	Left, Right, Forward, Backward, 
-	Dance1, Dance2, Dance3,
-};
 
 class Collider;
 class Camera;
 
 class PlayerController : public GameObject
 {
+public:
+	enum EAction : char {
+		Idle = 0, 
+		Left = 1, Forward = 2, ForwardLeft = 3, 
+		Right = 4, ForwardRight = 6, 
+		Backward = 8, BackwardLeft = 9, BackwardRight = 12,
+		Jump = 100, Dance1, Dance2, Dance3,
+	};
 private:
 	EAction		m_curAction;
-	Collider*	m_pCollider		= nullptr;
 	Camera*		m_pCamera		= nullptr;
 
+	D3DXVECTOR3 m_direction;
 	float		m_moveSpeed = 100.0f;
 	float		m_jumpPower = 180.0f;
 
@@ -27,6 +30,7 @@ private:
 	POINT		m_setMouseScreen;
 	POINT		m_setMouseClient;
 public:
+	Collider*	m_pCollider		= nullptr;
 
 public:
 	void SetAnimation(const EAction& eAction) noexcept;

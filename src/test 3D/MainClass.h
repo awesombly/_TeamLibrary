@@ -78,6 +78,7 @@ public:
 public:
 	// ¾À ¼³Á¤
 	void SetScene(const ESceneName& sceneName, const bool& useRelease = true) noexcept;
+	void SendMovedObject()	noexcept;
 
 	virtual bool Init()		noexcept override;
 	virtual bool Frame()	noexcept override;

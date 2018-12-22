@@ -137,7 +137,6 @@ bool ColliderSphere::CollisionCheck(Collider* pCollider) noexcept
 		{
 			return true;
 		}
-		//ErrorMessage(to_string(D3DXVec3Length(&vDistance) - GetWorldRadius()));
 	}	break;
 	case ECollider::Sphere:
 	{

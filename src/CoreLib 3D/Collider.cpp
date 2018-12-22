@@ -35,8 +35,19 @@ bool Collider::Frame(const float& spf, const float& accTime)	noexcept
 	m_force -= m_force * m_damping * spf;
 
 	// 힘 적용
-	if(GetVelocitySq() > 10.0f)
-		m_pParent->GetRoot()->Translate(m_force * spf);
+	if (isHost)
+	{
+		if (GetVelocitySq() > 20.0f)
+		{
+			m_pParent->isMoved(true);
+			m_pParent->GetRoot()->Translate(m_force * spf);
+		}
+		if (m_isMoving)
+		{
+			m_pParent->isMoved(true);
+			m_pParent->GetRoot()->Translate(m_direction * spf);
+		}
+	}
 
 	// 충돌 체크
 	CollisionAllCheck(spf);
@@ -123,6 +134,12 @@ void Collider::SetForce(const D3DXVECTOR3& vForce) noexcept
 	m_force = vForce;
 }
 
+void Collider::SetDirectionForce(const D3DXVECTOR3& vForce) noexcept
+{
+	m_isMoving = true;
+	m_direction = vForce;
+}
+
 D3DXVECTOR3 Collider::GetCenter() noexcept
 {
 	return m_pParent->GetWorldPosition() + m_pivot;
@@ -156,4 +173,13 @@ void Collider::usePhysics(const bool& usePhysics) noexcept
 bool Collider::usePhysics()	noexcept
 {
 	return m_usePhysics;
+}
+
+void Collider::isMoving(const bool& isMoving) noexcept
+{
+	m_isMoving = isMoving;
+}
+bool Collider::isMoving() noexcept
+{
+	return m_isMoving;
 }

@@ -12,8 +12,10 @@ private:
 	bool m_useGravity = true;
 	bool m_usePhysics = true;
 	//bool m_isGround	  = false;
+	bool m_isMoving   = false;
 
-	D3DXVECTOR3 m_force = Vector3::Zero;	// 적용중인 힘
+	D3DXVECTOR3 m_force		= Vector3::Zero;	// 적용중인 힘
+	D3DXVECTOR3 m_direction = Vector3::Zero;	// 이동 힘
 public:
 	ECollider m_eCollider;
 	forward_list<Collider*> m_CollisionList;
@@ -26,19 +28,22 @@ public:
 	//float m_angularDamping = 0.2f;			// 회전 항력
 
 protected:
-	bool CollisionAllCheck(const float& spf) noexcept;
-public:
-	void AddForce(const D3DXVECTOR3& vForce) noexcept;
-	void SetForce(const D3DXVECTOR3& vForce) noexcept;
+	bool CollisionAllCheck(const float& spf)		  noexcept;
+public:												  
+	void AddForce(const D3DXVECTOR3& vForce)		  noexcept;
+	void SetForce(const D3DXVECTOR3& vForce)		  noexcept;
+	void SetDirectionForce(const D3DXVECTOR3& vForce) noexcept;
 											 
-	D3DXVECTOR3 GetCenter()					 noexcept;
-	float GetVelocity()						 noexcept;
-	float GetVelocitySq()					 noexcept;
-											 
-	void useGravity(const bool& useGravity)  noexcept;
-	bool useGravity()						 noexcept;
-	void usePhysics(const bool& usePhysics)  noexcept;
-	bool usePhysics()						 noexcept;
+	D3DXVECTOR3 GetCenter()							  noexcept;
+	float GetVelocity()								  noexcept;
+	float GetVelocitySq()							  noexcept;
+													  
+	void useGravity(const bool& useGravity)			  noexcept;
+	bool useGravity()								  noexcept;
+	void usePhysics(const bool& usePhysics)			  noexcept;
+	bool usePhysics()								  noexcept;
+	void isMoving(const bool& isMoving)			      noexcept;
+	bool isMoving()									  noexcept;
 
 	virtual bool CollisionCheck(Collider* pCollider)			noexcept = 0;
 	//void OnCollision(Collider* pCollider) noexcept;
