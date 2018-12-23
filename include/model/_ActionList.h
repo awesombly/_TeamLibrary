@@ -12,6 +12,7 @@
 //Guard
 //ANIM_COUNT  9
 #define  Guard				L"guard"
+#define	 Guard_THROW		L"HERO_THROW.Mat"
 #define	 Guard_HAPPYWALK	L"HERO_HAPPYWALK.Mat"
 #define	 Guard_LEFT			L"HERO_LEFT.Mat"
 #define	 Guard_RIGHT		L"HERO_RIGHT.Mat"
