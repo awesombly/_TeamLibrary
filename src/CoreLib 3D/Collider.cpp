@@ -27,6 +27,9 @@ bool Collider::Frame(const float& spf, const float& accTime)	noexcept
 {
 	if (!m_isEnable)	return false;
 
+	// 충돌 체크
+	CollisionAllCheck(spf);
+
 	if (m_useGravity)
 	{
 		m_force += Vector3::Down * GravityPower * spf;
@@ -37,20 +40,12 @@ bool Collider::Frame(const float& spf, const float& accTime)	noexcept
 	// 힘 적용
 	if (isHost)
 	{
-		if (GetVelocitySq() > 20.0f)
+		if (GetVelocitySq() > 100.0f)
 		{
 			m_pParent->isMoved(true);
-			m_pParent->GetRoot()->Translate(m_force * spf);
-		}
-		if (m_isMoving)
-		{
-			m_pParent->isMoved(true);
-			m_pParent->GetRoot()->Translate(m_direction * spf);
+			m_pParent->GetRoot()->Translate((GetTotalForce() + Vector3::Up * 5.0f) * spf);
 		}
 	}
-
-	// 충돌 체크
-	CollisionAllCheck(spf);
 	return true;
 	accTime;
 }
@@ -84,40 +79,52 @@ bool Collider::CollisionAllCheck(const float& spf) noexcept
 			// 상대 충돌 목록 추가
 			iter->m_CollisionList.push_front(this);
 
-			// 반작용
-			D3DXVECTOR3 vDirection		= Vector3::Zero;
+			//D3DXVECTOR3 vDirection		= Vector3::Zero;
 			D3DXVECTOR3 vForceDis		= Vector3::Zero;
 			D3DXVECTOR3 vForceDisOther	= Vector3::Zero;
-			//if (m_usePhysics)
-			//{
-			//	vDirection = GetCenter() - iter->GetCenter();
-			//	D3DXVec3Normalize(&vDirection, &vDirection);
-			//	vForceDis = iter->m_force - m_force;
-			//	vForceDis = vDirection * (iter->m_mass / m_mass) * D3DXVec3Length(&vForceDis);
-			//}
-			//if (iter->m_usePhysics)
-			//{
-			//	vDirection = iter->GetCenter() - GetCenter();
-			//	D3DXVec3Normalize(&vDirection, &vDirection);
-			//	vForceDisOther = m_force - iter->m_force;
-			//	vForceDisOther = vDirection * (m_mass / iter->m_mass) * D3DXVec3Length(&vForceDisOther);
-			//}
+			
+			//// 반작용
+			//vForceDis = iter->GetTotalForce();
+			//
+			//vForceDisOther = GetTotalForce();
+			////vDirection = iter->GetCenter() - GetCenter();
+			////D3DXVec3Normalize(&vDirection, &vDirection);
+			////vForceDisOther = -iter->GetTotalForce();
+			////vForceDisOther = D3DXVec3Dot(&vForceDis, &vDirection) * 2.0f * vDirection - vForceDis;
+			//
+			//
+			////vDirection = iter->GetCenter() - GetCenter();
+			////D3DXVec3Normalize(&vDirection, &vDirection);
+			////vForceDisOther = m_force - iter->m_force;
+			////vForceDisOther = vDirection * (m_mass / iter->m_mass) * D3DXVec3Length(&vForceDisOther);
+			//
+			//
 
-
+			vForceDis = iter->GetTotalForce();
+			vForceDisOther = GetTotalForce();
 			if (m_usePhysics)
 			{
-				m_force += vForceDis;
+				//m_force += vForceDis;
+				//D3DXVec3Normalize(&vForceDis, &m_force);
 				// 반발력
-				m_force *= -(m_repulsion + iter->m_repulsion) * 0.5f;
+				m_force = vForceDis + -m_force * (m_repulsion + iter->m_repulsion) * 0.5f;
+				m_pParent->Translate(-m_force * 0.001f);
+				//m_pParent->Translate(Vector3::Up * spf);
 			}
 			if (iter->m_usePhysics)
 			{
-				iter->m_force += vForceDisOther;
-				iter->m_force *= -(m_repulsion + iter->m_repulsion) * 0.5f;	
+				//iter->m_force += vForceDisOther;
+				//D3DXVec3Normalize(&vForceDisOther, &iter->m_force);
+				iter->m_force = vForceDisOther + -iter->m_force * (m_repulsion + iter->m_repulsion) * 0.5f;
+				iter->m_pParent->Translate(-iter->m_force * 0.001f);
+				//iter->m_pParent->Translate(Vector3::Up * spf);
 			}
 			// 마찰력
 			m_force		  -= m_force	   * (m_drag + iter->m_drag) * 0.5f  * spf;
 			iter->m_force -= iter->m_force * (m_drag + iter->m_drag) * 0.5f  * spf;
+
+			//m_force = Vector3::Zero;
+			//iter->m_force = Vector3::Zero;
 		}
 	}
 	return true;
@@ -140,6 +147,11 @@ void Collider::SetDirectionForce(const D3DXVECTOR3& vForce) noexcept
 	m_direction = vForce;
 }
 
+D3DXVECTOR3 Collider::GetTotalForce() noexcept
+{
+	return m_force + m_direction;
+}
+
 D3DXVECTOR3 Collider::GetCenter() noexcept
 {
 	return m_pParent->GetWorldPosition() + m_pivot;
@@ -148,12 +160,12 @@ D3DXVECTOR3 Collider::GetCenter() noexcept
 
 float Collider::GetVelocity() noexcept
 {
-	return D3DXVec3Length(&m_force);
+	return VectorLength(m_force + m_direction);
 }
 
 float Collider::GetVelocitySq() noexcept
 {
-	return D3DXVec3LengthSq(&m_force);
+	return VectorLengthSq(m_force + m_direction);
 }
 
 
@@ -178,6 +190,8 @@ bool Collider::usePhysics()	noexcept
 void Collider::isMoving(const bool& isMoving) noexcept
 {
 	m_isMoving = isMoving;
+	if (!m_isMoving)
+		m_direction = Vector3::Zero;
 }
 bool Collider::isMoving() noexcept
 {

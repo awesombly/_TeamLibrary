@@ -97,12 +97,17 @@ bool GameObject::Release() noexcept
 	{
 		for (auto& inIter : outIter.second)
 		{
+			if (outIter.first == EComponent::Collider)
+			{
+				ObjectManager::Get().GetColliderList().remove((Collider*)inIter);
+			}
 			inIter->Release();
 			delete inIter;
 		}
 	}
 	m_childList.clear();
 	m_components.clear();
+	//delete this;
 	return true;
 }
 

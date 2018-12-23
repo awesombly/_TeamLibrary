@@ -37,9 +37,12 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 	static Packet_Quaternion	p_Quaternion;
 	static Packet_Vec3Quat		p_Vec3Quat;
 	static Packet_AnimState		p_AnimState;
+
+	memcpy(&p_KeyValue, data, sizeof(Packet_KeyValue));
+	if (ObjectManager::KeyObjects[p_KeyValue.KeyValue] == nullptr) return;
+
 	switch (sendMode)
 	{
-		
 	case PACKET_SetPositionRotation:
 		{
 			memcpy(&p_Vec3Quat, data, sizeof(Packet_Vec3Quat));
@@ -88,7 +91,7 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 	 }	break;
 	 case PACKET_SetMoveStop:
 	 {
-		 memcpy(&p_KeyValue, data, sizeof(Packet_KeyValue));
+		 //memcpy(&p_KeyValue, data, sizeof(Packet_KeyValue));
 		 ((PlayerController*)ObjectManager::KeyObjects[p_KeyValue.KeyValue])->m_pCollider->isMoving(false);
 	 }	break;
 		

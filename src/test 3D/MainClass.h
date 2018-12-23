@@ -65,16 +65,11 @@ enum class ESceneName : char {
 class MainClass : public Core 
 {
 public:
-	PlayerController* m_pPlayer = nullptr;		// 컨트롤러
-
-	AHeroObj	m_Hero;							// 캐릭터 본체
-	AHeroObj	m_Zombi;						// 
-	AHeroObj	m_Bird;							// 
-	
-
 	static GameObject* m_pSkyBox;
 	static map<ESceneName, MainClass*> m_SceneList;
 	static MainClass* m_curScene;
+
+	bool m_isFirstInit = true;
 public:
 	// 씬 설정
 	void SetScene(const ESceneName& sceneName, const bool& useRelease = true) noexcept;

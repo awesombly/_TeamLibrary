@@ -65,6 +65,9 @@ bool ColliderSphere::CollisionCheck(Collider* pCollider) noexcept
 		auto vDistance = GetCenter() - nearPoint;
 		if ((D3DXVec3Length(&vDistance) - GetWorldRadius()) <= 0)
 		{
+			m_normal = pAABB->GetCenter() - nearPoint;
+			D3DXVec3Normalize(&m_normal, &m_normal);
+			pAABB->m_normal = -m_normal;
 			return true;
 		}
 	}	break;
@@ -111,6 +114,9 @@ bool ColliderSphere::CollisionCheck(Collider* pCollider) noexcept
 		auto vDistance = newCenter - nearPoint;
 		if ((D3DXVec3Length(&vDistance) - GetWorldRadius()) <= 0)
 		{
+			m_normal = pOBB->GetCenter() - nearPoint;
+			D3DXVec3Normalize(&m_normal, &m_normal);
+			pOBB->m_normal = -m_normal;
 			return true;
 		}
 	}	break;
@@ -123,6 +129,9 @@ bool ColliderSphere::CollisionCheck(Collider* pCollider) noexcept
 		// Ãæµ¹
 		if (distance < (GetWorldRadius() + pSphere->GetWorldRadius()))
 		{
+			m_normal = pSphere->GetCenter() - GetCenter();
+			D3DXVec3Normalize(&m_normal, &m_normal);
+			pSphere->m_normal = -m_normal;
 			return true;
 		}
 	}	break;

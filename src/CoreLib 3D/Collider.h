@@ -27,6 +27,7 @@ public:
 	float m_damping		= 0.2f;				// 항력
 	//float m_angularDamping = 0.2f;			// 회전 항력
 
+	D3DXVECTOR3 m_normal = Vector3::Zero;	// 계산용 노말
 protected:
 	bool CollisionAllCheck(const float& spf)		  noexcept;
 public:												  
@@ -34,6 +35,7 @@ public:
 	void SetForce(const D3DXVECTOR3& vForce)		  noexcept;
 	void SetDirectionForce(const D3DXVECTOR3& vForce) noexcept;
 											 
+	D3DXVECTOR3 GetTotalForce()						  noexcept;
 	D3DXVECTOR3 GetCenter()							  noexcept;
 	float GetVelocity()								  noexcept;
 	float GetVelocitySq()							  noexcept;

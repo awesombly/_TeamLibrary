@@ -20,17 +20,23 @@ bool ObjectManager::Init() noexcept
 	// 카메라 생성
 	Cameras[ECamera::Main] = new Camera(L"MainCamera");
 	Cameras[ECamera::Main]->SetMainCamera();
+	Cameras[ECamera::Main]->isGlobal(true);
 	Cameras[ECamera::UI] = new Camera(L"UICamera", false);
+	Cameras[ECamera::UI]->isGlobal(true);
 	Cameras[ECamera::Screen] = new Camera(L"Screen", false);
 	Cameras[ECamera::Screen]->SetOrthoWH(1.0f, 1.0f);
+	Cameras[ECamera::Screen]->isGlobal(true);
 	D3DXMatrixIdentity(&Cameras[ECamera::Screen]->m_matWorld);
 	Cameras[ECamera::MiniMap] = new Camera(L"MiniMap", true);
 	//Cameras[ECamera::MiniMap]->SetOrthoWH(700.0f, 700.0f);
 	Cameras[ECamera::MiniMap]->SetPosition(Vector3::Up * 300);
 	Cameras[ECamera::MiniMap]->SetRotation(Quaternion::Up * PI * 0.5f);
+	Cameras[ECamera::MiniMap]->isGlobal(true);
 	Cameras[ECamera::MiniMap]->Frame(0.0f, 0.0f);
+
 	Camera::SelectCamera = Cameras[ECamera::Main];
 	CurCamera = Cameras[ECamera::Main];
+
 	// RenderTarget 초기화
 	DxManager::GetInstance().InitRTView();
 
@@ -182,7 +188,9 @@ bool ObjectManager::Render(ID3D11DeviceContext* pDContext) noexcept
 		if (pBox == nullptr)
 		{
 			pBox	= new GameObject(L"DebugBox", TakeComponent(L"Cube"));
+			pBox->isGlobal(true);
 			pSphere = new GameObject(L"DebugSphere", TakeComponent(L"Sphere"));
+			pSphere->isGlobal(true);
 		}
 
 		DxManager::Get().SetRasterizerState(ERasterS::Wireframe);
@@ -252,14 +260,34 @@ bool ObjectManager::Render(ID3D11DeviceContext* pDContext) noexcept
 
 bool ObjectManager::Release() noexcept
 {
-	// Global이 아닌 오브젝트 비활성화
+	// Global이 아닌 오브젝트 제거
+	//static auto releaseEvent = [](void* pVoid, void*) {
+	//	for (auto&& outIter = ObjectManager::Get().m_ObjectList.begin(); outIter != ObjectManager::Get().m_ObjectList.end(); outIter++)
+	//	{
+	//		outIter->second.remove_if([&](GameObject* pObj) {
+	//			if (pObj->isGlobal())
+	//				return false;
+	//			pObj->isEnable(false);
+	//			pObj->GameObject::Release();
+	//			//delete pObj;
+	//			//m_DisabledPull[pObj->m_myName].push(pObj);
+	//			return true;
+	//		});
+	//	}
+	//};
+	//
+	//PostFrameEvent.emplace(releaseEvent, this, nullptr);
+	
 	for (auto&& outIter = m_ObjectList.begin(); outIter != m_ObjectList.end(); outIter++)
 	{
 		outIter->second.remove_if([&](GameObject* pObj) {
 			if (pObj->isGlobal())
 				return false;
 			pObj->isEnable(false);
-			m_DisabledPull[pObj->m_myName].push(pObj);
+			RemoveObject(pObj);
+			//pObj->Release();
+			//delete pObj;
+			//m_DisabledPull[pObj->m_myName].push(pObj);
 			return true;
 		});
 	}
