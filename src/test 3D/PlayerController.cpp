@@ -46,59 +46,59 @@ void PlayerController::SetAnimation(const EAction& eAction) noexcept
 
 	static Packet_Vector3 p_direction;
 	static Packet_KeyValue p_Key;
-	m_pHero		= (AHeroObj*)m_pParent;
+	m_pHero = (AHeroObj*)m_pParent;
 	m_pCollider = (Collider*)m_pParent->GetComponentList(EComponent::Collider)->front();
 
 	if (m_curAction != eAction)
 	{
 		switch (m_curCharacter)
 		{
-		 case ECharacter::EGuard:
-		 {
-		 	AnimationGuard(eAction);
-		 }	break;
-		 case ECharacter::EZombie:
-		 {
-		 	AnimationZombi(eAction);
-		 }	break;
+		case ECharacter::EGuard:
+		{
+			AnimationGuard(eAction);
+		}	break;
+		case ECharacter::EZombie:
+		{
+			AnimationZombi(eAction);
+		}	break;
 		}
 	}
 	else
 	{
 		switch (eAction)
 		{
-		 case EAction::Left:
-		 {
-		 	m_pCollider->SetDirectionForce(m_pParent->GetLeft() * m_moveSpeed);
-		 }	break;
-		 case EAction::Right:
-		 {
-		 	m_pCollider->SetDirectionForce(m_pParent->GetRight() * m_moveSpeed);
-		 }	break;
-		 case EAction::Forward:
-		 {
-		 	m_pCollider->SetDirectionForce(m_pParent->GetForward() * m_moveSpeed);
-		 }	break;
-		 case EAction::ForwardLeft:
-		 {
-		 	m_pCollider->SetDirectionForce((m_pParent->GetForward() + m_pParent->GetLeft()) * 0.7f * m_moveSpeed);
-		 }	break;
-		 case EAction::ForwardRight:
-		 {
-		 	m_pCollider->SetDirectionForce((m_pParent->GetForward() + m_pParent->GetRight()) * 0.7f * m_moveSpeed);
-		 }	break;
-		 case EAction::Backward:
-		 {
-			 m_pCollider->SetDirectionForce(m_pParent->GetBackward() * m_moveSpeed);
-		 }	break;
-		 case EAction::BackwardLeft:
-		 {
-		 	m_pCollider->SetDirectionForce((m_pParent->GetBackward() + m_pParent->GetLeft()) * 0.7f * m_moveSpeed);
-		 }	break;
-		 case EAction::BackwardRight:
-		 {
-		 	m_pCollider->SetDirectionForce((m_pParent->GetBackward() + m_pParent->GetRight()) * 0.7f * m_moveSpeed);
-		 }	break;
+		case EAction::Left:
+		{
+			m_pCollider->SetDirectionForce(m_pParent->GetLeft() * m_moveSpeed);
+		}	break;
+		case EAction::Right:
+		{
+			m_pCollider->SetDirectionForce(m_pParent->GetRight() * m_moveSpeed);
+		}	break;
+		case EAction::Forward:
+		{
+			m_pCollider->SetDirectionForce(m_pParent->GetForward() * m_moveSpeed);
+		}	break;
+		case EAction::ForwardLeft:
+		{
+			m_pCollider->SetDirectionForce((m_pParent->GetForward() + m_pParent->GetLeft()) * 0.7f * m_moveSpeed);
+		}	break;
+		case EAction::ForwardRight:
+		{
+			m_pCollider->SetDirectionForce((m_pParent->GetForward() + m_pParent->GetRight()) * 0.7f * m_moveSpeed);
+		}	break;
+		case EAction::Backward:
+		{
+			m_pCollider->SetDirectionForce(m_pParent->GetBackward() * m_moveSpeed);
+		}	break;
+		case EAction::BackwardLeft:
+		{
+			m_pCollider->SetDirectionForce((m_pParent->GetBackward() + m_pParent->GetLeft()) * 0.7f * m_moveSpeed);
+		}	break;
+		case EAction::BackwardRight:
+		{
+			m_pCollider->SetDirectionForce((m_pParent->GetBackward() + m_pParent->GetRight()) * 0.7f * m_moveSpeed);
+		}	break;
 		}
 	}
 	m_curAction = eAction;
@@ -172,47 +172,47 @@ void PlayerController::AnimationZombi(const EAction& eAction) noexcept
 {
 	switch (eAction)
 	{
-	 case EAction::Idle:
-	 {
-	 	if (m_isLoopAnim)
-	 	{
-	 		m_pCollider->isMoving(false);
-	 		m_isLoopAnim = false;
-	 		m_pHero->SetANIM(Zombie_IDLE);
-	 	}
-	 }	break;
-	 case EAction::Jump:
-	 {
-	 	m_pParent->Translate(Vector3::Up * 15.0f);
-	 
-	 	m_pCollider->SetForce(Vector3::Up * m_jumpPower);
-	 	m_isLoopAnim = false;
-	 	m_pHero->SetANIM(Zombie_FLY);
-	 }	break;
-	 case EAction::Left:
-	 case EAction::ForwardLeft:
-	 case EAction::BackwardLeft:
-	 {
-	 	m_isLoopAnim = true;
-	 	m_pHero->SetANIM(Zombie_LEFT);
-	 }	break;
-	 case EAction::Right:
-	 case EAction::ForwardRight:
-	 case EAction::BackwardRight:
-	 {
-	 	m_isLoopAnim = true;
-	 	m_pHero->SetANIM(Zombie_RIGHT);
-	 }	break;
-	 case EAction::Forward:
-	 {
-	 	m_isLoopAnim = true;
-	 	m_pHero->SetANIM(Zombie_FORWARD);
-	 }	break;
-	 case EAction::Backward:
-	 {
-	 	m_isLoopAnim = true;
-	 	m_pHero->SetANIM(Zombie_BACKWARD);
-	 }	break;
+	case EAction::Idle:
+	{
+		if (m_isLoopAnim)
+		{
+			m_pCollider->isMoving(false);
+			m_isLoopAnim = false;
+			m_pHero->SetANIM(Zombie_IDLE);
+		}
+	}	break;
+	case EAction::Jump:
+	{
+		m_pParent->Translate(Vector3::Up * 15.0f);
+
+		m_pCollider->SetForce(Vector3::Up * m_jumpPower);
+		m_isLoopAnim = false;
+		m_pHero->SetANIM(Zombie_FLY);
+	}	break;
+	case EAction::Left:
+	case EAction::ForwardLeft:
+	case EAction::BackwardLeft:
+	{
+		m_isLoopAnim = true;
+		m_pHero->SetANIM(Zombie_LEFT);
+	}	break;
+	case EAction::Right:
+	case EAction::ForwardRight:
+	case EAction::BackwardRight:
+	{
+		m_isLoopAnim = true;
+		m_pHero->SetANIM(Zombie_RIGHT);
+	}	break;
+	case EAction::Forward:
+	{
+		m_isLoopAnim = true;
+		m_pHero->SetANIM(Zombie_FORWARD);
+	}	break;
+	case EAction::Backward:
+	{
+		m_isLoopAnim = true;
+		m_pHero->SetANIM(Zombie_BACKWARD);
+	}	break;
 	}
 }
 
@@ -286,21 +286,21 @@ void PlayerController::CameraInput(const float& spf) noexcept
 		SetCursorPos((int)m_setMouseScreen.x, (int)m_setMouseScreen.y);
 
 		Input::OperMoveMousePos({ (float)(-m_setMouseClient.x + prevPoint.x), (float)(-m_setMouseClient.y + prevPoint.y) });
+	}
 
-		// 카메라 Arm 조절
-		m_pCamera->m_armLength = std::clamp(m_pCamera->m_armLength - Input::GetWheelScroll() * 0.3f * spf, 0.0f, 40.0f);
-		// 회전
-		m_pCamera->SetRotationX(std::clamp(m_pCamera->GetRotation().x + Input::GetMouseMovePos().y * 0.002f, MinCameraY, MaxCameraY));
-		m_pParent->Rotate(0.0f, Input::GetMouseMovePos().x * 0.002f);
-		static Packet_Quaternion p_rotate;
-		p_rotate.KeyValue = m_pParent->m_keyValue;
-		p_rotate.Quat = m_pParent->GetRotation();
-		PacketManager::Get().SendPacket((char*)&p_rotate, PACKET_SetRotation);
-		// 초기화
-		if (Input::GetInstance().GetKeyState('R') == EKeyState::DOWN)
-		{
-			ResetOption();
-		}
+	// 카메라 Arm 조절
+	m_pCamera->m_armLength = std::clamp(m_pCamera->m_armLength - Input::GetWheelScroll() * 0.3f * spf, 0.0f, 50.0f);
+	// 회전
+	m_pCamera->SetRotationX(std::clamp(m_pCamera->GetRotation().x + Input::GetMouseMovePos().y * 0.002f, MinCameraY, MaxCameraY));
+	m_pParent->Rotate(0.0f, Input::GetMouseMovePos().x * 0.002f);
+	static Packet_Quaternion p_rotate;
+	p_rotate.KeyValue = m_pParent->m_keyValue;
+	p_rotate.Quat = m_pParent->GetRotation();
+	PacketManager::Get().SendPacket((char*)&p_rotate, PACKET_SetRotation);
+	// 초기화
+	if (Input::GetInstance().GetKeyState('R') == EKeyState::DOWN)
+	{
+		ResetOption();
 	}
 }
 

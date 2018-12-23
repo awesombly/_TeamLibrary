@@ -102,7 +102,7 @@ bool IntroScene::Init() noexcept
 	pRenderer->SetEnviromentMap(L"CubeMap/grassenvmap1024.dds", EEnviType::Fresnel);
 	pCollider = (Collider*)ObjectManager::Get().TakeComponent(L"ColliderOBB");
 	pObject = new GameObject(L"Object2", { pRenderer, pCollider }, EObjType::Object);
-	pObject->Translate(Vector3::Backward * 30.0f + Vector3::Left * 80.0f + Vector3::Up * 300);
+	pObject->Translate(Vector3::Backward * 30.0f + Vector3::Left * 140.0f + Vector3::Up * 300);
 	pObject->SetScale(Vector3::One * 10);
 	//ObjectManager::Get().PushObject(pObject);
 	ObjectManager::Get().SetProtoObject(pObject);
@@ -112,7 +112,7 @@ bool IntroScene::Init() noexcept
 	pRenderer->SetEnviromentMap(L"CubeMap/grassenvmap1024.dds", EEnviType::Basic);
 	pCollider = (Collider*)ObjectManager::Get().TakeComponent(L"ColliderSphere");
 	pObject = new GameObject(L"Object3", { pRenderer, pCollider }, EObjType::Object);
-	pObject->Translate(Vector3::Backward * 30.0f + Vector3::Right * 75.0f + Vector3::Up * 250);
+	pObject->Translate(Vector3::Backward * 30.0f + Vector3::Right * 140.0f + Vector3::Up * 250);
 	pObject->SetScale(Vector3::One * 15);
 	ObjectManager::Get().SetProtoObject(pObject);
 	//ObjectManager::Get().PushObject(pObject);
@@ -137,9 +137,9 @@ bool IntroScene::Frame() noexcept
 {
 	if (m_pTakeObject != nullptr)
 	{
-		m_pTakeObject->Scaling(Vector3::One * 0.5f * Timer::SPF);
-		//m_pTakeObject2->Translate(Vector3::Left * Timer::SPF * 5.0f);
-		//m_pTakeObject3->Translate(Vector3::Right * Timer::SPF * 5.0f);
+		m_pTakeObject->Scaling(Vector3::One * Timer::SPF);
+		m_pTakeObject2->Scaling(Vector3::One * Timer::SPF);
+		m_pTakeObject3->Scaling(Vector3::One * Timer::SPF);
 	}
 	DxManager::Get().Frame();
 	ObjectManager::Get().Frame(Timer::SPF, Timer::AccumulateTime);

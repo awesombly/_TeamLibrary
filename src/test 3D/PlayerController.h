@@ -22,7 +22,6 @@ public:
 private:
 	AHeroObj*   m_pHero			= nullptr;
 	Camera*		m_pCamera		= nullptr;
-	Collider*	m_pCollider		= nullptr;
 	EAction		m_curAction;
 
 	D3DXVECTOR3 m_direction;
@@ -36,6 +35,7 @@ private:
 	POINT		m_setMouseScreen;
 	POINT		m_setMouseClient;
 public:
+	Collider*	m_pCollider		= nullptr;
 	ECharacter  m_curCharacter;
 public:
 	void SetAnimation(const EAction& eAction)			noexcept;

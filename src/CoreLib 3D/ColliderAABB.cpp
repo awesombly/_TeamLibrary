@@ -60,13 +60,13 @@ bool ColliderAABB::CollisionCheck(Collider* pCollider) noexcept
 		thisMin += pOBB->GetCenter();
 		// AABB -> OBB ÁÂÇ¥ º¯È¯(max)
 		D3DXVECTOR3 tempMax = preMax - pOBB->GetCenter();
-		D3DXVECTOR3 thisMax = { D3DXVec3Dot(&tempMax, &pOBB->m_pParent->GetRight()),
+		D3DXVECTOR3 thisMax = {   D3DXVec3Dot(&tempMax, &pOBB->m_pParent->GetRight()),
 								  D3DXVec3Dot(&tempMax, &pOBB->m_pParent->GetUp()),
 								  D3DXVec3Dot(&tempMax, &pOBB->m_pParent->GetForward()) };
 		thisMax += pOBB->GetCenter();
 		//
-		auto otherMin = pOBB->GetCenter() - pOBB->GetLength();
-		auto otherMax = pOBB->GetCenter() + pOBB->GetLength();
+		auto otherMin = pOBB->GetCenter() - pOBB->GetExtents();
+		auto otherMax = pOBB->GetCenter() + pOBB->GetExtents();
 		if (std::max<float>(thisMin.x, otherMin.x) < std::min<float>(thisMax.x, otherMax.x) &&
 			std::max<float>(thisMin.y, otherMin.y) < std::min<float>(thisMax.y, otherMax.y) &&
 			std::max<float>(thisMin.z, otherMin.z) < std::min<float>(thisMax.z, otherMax.z))

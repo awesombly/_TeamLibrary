@@ -201,10 +201,10 @@ bool ObjectManager::Render(ID3D11DeviceContext* pDContext) noexcept
 			}	break;
 			case ECollider::OBB:
 			{
-				auto scale = ((ColliderOBB*)iter)->m_extents;
+				//auto scale = ((ColliderOBB*)iter)->m_extents;
 				pBox->SetPosition(iter->GetCenter());
 				pBox->SetRotation(iter->m_pParent->GetRotation());
-				pBox->SetScale(Product(scale, iter->m_pParent->GetScale()));
+				pBox->SetScale(((ColliderOBB*)iter)->GetExtents());
 				pBox->Frame(0.0f, 0.0f);
 				pBox->Render(pDContext);
 			}	break;

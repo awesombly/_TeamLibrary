@@ -36,39 +36,27 @@ bool ColliderSphere::CollisionCheck(Collider* pCollider) noexcept
 
 		// x 비교
 		if (GetCenter().x < (nearPoint.x = pAABB->GetCenter().x - pAABB->GetLength().x * 0.5f))
-		{
-			//nearPoint.x = pAABB->GetCenter().x - pAABB->GetLength().x * 0.5f;
-		}
+		{		}
 		else if (GetCenter().x > (nearPoint.x = pAABB->GetCenter().x + pAABB->GetLength().x * 0.5f))
-		{
-			//nearPoint.x = pAABB->GetCenter().x - pAABB->GetLength().x * 0.5f;
-		}
+		{		}
 		else
 		{
 			nearPoint.x = GetCenter().x;
 		}
 		// y 비교
 		if (GetCenter().y < (nearPoint.y = pAABB->GetCenter().y - pAABB->GetLength().y * 0.5f))
-		{
-			//nearPoint.y = pAABB->GetCenter().y - pAABB->GetLength().y * 0.5f;
-		}
+		{		}
 		else if (GetCenter().y > (nearPoint.y = pAABB->GetCenter().y + pAABB->GetLength().y * 0.5f))
-		{
-			//nearPoint.y = pAABB->GetCenter().y - pAABB->GetLength().y * 0.5f;
-		}
+		{		}
 		else
 		{
 			nearPoint.y = GetCenter().y;
 		}
 		// z 비교
 		if (GetCenter().z < (nearPoint.z = pAABB->GetCenter().z - pAABB->GetLength().z * 0.5f))
-		{
-			//nearPoint.z = pAABB->GetCenter().z - pAABB->GetLength().z * 0.5f;
-		}
+		{		}
 		else if (GetCenter().z > (nearPoint.z = pAABB->GetCenter().z + pAABB->GetLength().z * 0.5f))
-		{
-			//nearPoint.z = pAABB->GetCenter().z - pAABB->GetLength().z * 0.5f;
-		}
+		{		}
 		else
 		{
 			nearPoint.z = GetCenter().z;
@@ -87,46 +75,34 @@ bool ColliderSphere::CollisionCheck(Collider* pCollider) noexcept
 		D3DXVECTOR3 nearPoint = Vector3::Zero;
 		// 구 -> OBB 박스 좌표계 변환
 		D3DXVECTOR3 tempCenter = GetCenter() - pOBB->GetCenter();
-		D3DXVECTOR3 newCenter = { D3DXVec3Dot(&tempCenter, &pOBB->m_pParent->GetRight()),
-								  D3DXVec3Dot(&tempCenter, &pOBB->m_pParent->GetUp()),
-								  D3DXVec3Dot(&tempCenter, &pOBB->m_pParent->GetForward()) };
+		D3DXVECTOR3 newCenter = { D3DXVec3Dot(&tempCenter, &pOBB->m_rotate[0]),
+								  D3DXVec3Dot(&tempCenter, &pOBB->m_rotate[1]),
+								  D3DXVec3Dot(&tempCenter, &pOBB->m_rotate[2]) };
 		newCenter += pOBB->GetCenter();
 
 		// x 비교
-		if (newCenter.x < (nearPoint.x = pOBB->GetCenter().x - pOBB->GetLength().x))
-		{
-			//nearPoint.x = pAABB->GetCenter().x - pAABB->GetLength().x * 0.5f;
-		}
-		else if (newCenter.x > (nearPoint.x = pOBB->GetCenter().x + pOBB->GetLength().x))
-		{
-			//nearPoint.x = pAABB->GetCenter().x - pAABB->GetLength().x * 0.5f;
-		}
+		if (newCenter.x < (nearPoint.x = pOBB->GetCenter().x - pOBB->GetExtents().x))
+		{		}
+		else if (newCenter.x > (nearPoint.x = pOBB->GetCenter().x + pOBB->GetExtents().x))
+		{		}
 		else
 		{
 			nearPoint.x = newCenter.x;
 		}
 		// y 비교
-		if (newCenter.y < (nearPoint.y = pOBB->GetCenter().y - pOBB->GetLength().y))
-		{
-			//nearPoint.y = pAABB->GetCenter().y - pAABB->GetLength().y * 0.5f;
-		}
-		else if (newCenter.y > (nearPoint.y = pOBB->GetCenter().y + pOBB->GetLength().y))
-		{
-			//nearPoint.y = pAABB->GetCenter().y - pAABB->GetLength().y * 0.5f;
-		}
+		if (newCenter.y < (nearPoint.y = pOBB->GetCenter().y - pOBB->GetExtents().y))
+		{		}
+		else if (newCenter.y > (nearPoint.y = pOBB->GetCenter().y + pOBB->GetExtents().y))
+		{		}
 		else
 		{
 			nearPoint.y = newCenter.y;
 		}
 		// z 비교
-		if (newCenter.z < (nearPoint.z = pOBB->GetCenter().z - pOBB->GetLength().z))
-		{
-			//nearPoint.z = pAABB->GetCenter().z - pAABB->GetLength().z * 0.5f;
-		}
-		else if (newCenter.z > (nearPoint.z = pOBB->GetCenter().z + pOBB->GetLength().z))
-		{
-			//nearPoint.z = pAABB->GetCenter().z - pAABB->GetLength().z * 0.5f;
-		}
+		if (newCenter.z < (nearPoint.z = pOBB->GetCenter().z - pOBB->GetExtents().z))
+		{		}
+		else if (newCenter.z > (nearPoint.z = pOBB->GetCenter().z + pOBB->GetExtents().z))
+		{		}
 		else
 		{
 			nearPoint.z = newCenter.z;

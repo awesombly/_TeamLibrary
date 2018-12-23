@@ -10,11 +10,6 @@ ColliderOBB::ColliderOBB(const D3DXVECTOR3& minPos, const D3DXVECTOR3& maxPos)
 {
 	Init();
 	SetMinMax(minPos, maxPos);
-	//m_extents = (maxPos - minPos) * 0.5f;
-	//m_center = minPos + m_extents;
-	//m_rotate[0] = { 1, 0, 0 };
-	//m_rotate[1] = { 0, 1, 0 };
-	//m_rotate[2] = { 0, 0, 1 };
 }
 
 bool ColliderOBB::Init() noexcept
@@ -29,9 +24,9 @@ bool ColliderOBB::Frame(const float& spf, const float& accTime) noexcept
 {
 	Collider::Frame(spf, accTime);
 
-	m_rotate[0] = m_pParent->GetRight(); 
-	m_rotate[1] = m_pParent->GetUp();
-	m_rotate[2] = m_pParent->GetForward();
+	m_rotate[0] = Divide(m_pParent->GetRight(),		m_pParent->GetWorldScale());
+	m_rotate[1] = Divide(m_pParent->GetUp(),		m_pParent->GetWorldScale());
+	m_rotate[2] = Divide(m_pParent->GetForward(),	m_pParent->GetWorldScale());
 	return true;
 }
 
@@ -55,15 +50,16 @@ bool ColliderOBB::CollisionCheck(Collider* pCollider) noexcept
 		//translation, in parent frame (note: A = this, B = obb)
 		ColliderOBB* pOBB = (ColliderOBB*)pCollider;
 		//translation, in A's frame
-		D3DXVECTOR3 v = (pOBB->GetCenter() + pOBB->m_center) - (GetCenter() + m_center);
-		D3DXVECTOR3 T = { D3DXVec3Dot(&v, &m_rotate[0]), 
-						  D3DXVec3Dot(&v, &m_rotate[1]), 
+
+		D3DXVECTOR3 v = pOBB->GetCenter() - GetCenter();
+		D3DXVECTOR3 T = { D3DXVec3Dot(&v, &m_rotate[0]),
+						  D3DXVec3Dot(&v, &m_rotate[1]),
 						  D3DXVec3Dot(&v, &m_rotate[2]) };
 		//B's basis with respect to A's local frame
 		float R[3][3];
 		float FR[3][3];
 		float ra, rb, t;
-		
+
 		//calculate rotation matrix from "obb" to "this" - palso recomputes the fabs matrix
 		for (int out = 0; out < 3; ++out)
 		{
@@ -75,17 +71,18 @@ bool ColliderOBB::CollisionCheck(Collider* pCollider) noexcept
 			}
 		}
 
+		
 		// Separating axis theorem: test of all 15 potential separating axes
 		// These axes are always parallel to each OBB edges or its normal plane
-		const D3DXVECTOR3 &a = m_extents;
-		const D3DXVECTOR3 &b = pOBB->m_extents;
+		D3DXVECTOR3 a = GetExtents();
+		D3DXVECTOR3 b = pOBB->GetExtents();
 
 		// First stage: each obb's axis!
 		//A's basis vectors
 		for (int i = 0; i < 3; i++)
 		{
 			ra = a[i];
-			rb = b.x*FR[i][0] + b.y*FR[i][1] + b.z*FR[i][2];
+			rb = b.x * FR[i][0] + b.y * FR[i][1] + b.z * FR[i][2];
 			t = abs(T[i]);
 
 			if (t > ra + rb) return false;
@@ -94,7 +91,7 @@ bool ColliderOBB::CollisionCheck(Collider* pCollider) noexcept
 		//B's basis vectors
 		for (int i = 0; i < 3; i++)
 		{
-			ra = a.x*FR[0][i] + a.y*FR[1][i] + a.z*FR[2][i];
+			ra = a.x * FR[0][i] + a.y * FR[1][i] + a.z * FR[2][i];
 			rb = b[i];
 			t = abs(T[0] * R[0][i] + T[1] * R[1][i] + T[2] * R[2][i]);
 
@@ -170,15 +167,15 @@ bool ColliderOBB::CollisionCheck(Collider* pCollider) noexcept
 	return false;
 }
 
-D3DXVECTOR3 ColliderOBB::GetLength() noexcept
+D3DXVECTOR3 ColliderOBB::GetExtents() noexcept
 {
-	return Product(m_extents, m_pParent->GetScale());
+	return Product(m_extents, m_pParent->GetWorldScale());
 }
 
 void ColliderOBB::SetMinMax(const D3DXVECTOR3& minPos, const D3DXVECTOR3& maxPos) noexcept
 {
 	m_extents = (maxPos - minPos) * 0.5f;
-	m_center = minPos + m_extents;
+	m_pivot = minPos + m_extents;
 	m_rotate[0] = { 1, 0, 0 };
 	m_rotate[1] = { 0, 1, 0 };
 	m_rotate[2] = { 0, 0, 1 };
