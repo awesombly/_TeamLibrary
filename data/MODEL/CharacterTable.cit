@@ -5,7 +5,8 @@
 *CHARACTERNAME		guard
 *SHADERFILENMAE		..\..\data\model\Character.hlsl
 
-*MATRIXMATRIXCOUNT  9
+*MATRIXMATRIXCOUNT  10
+*MATRIXFILENAME		..\..\data\model\Guard_02\HERO_THROW.Mat
 *MATRIXFILENAME		..\..\data\model\Guard_02\HERO_HAPPYWALK.Mat
 *MATRIXFILENAME		..\..\data\model\Guard_02\HERO_DANCE3.Mat
 *MATRIXFILENAME		..\..\data\model\Guard_02\HERO_DANCE2.Mat
