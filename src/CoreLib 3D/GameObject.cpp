@@ -1,34 +1,39 @@
 #include "GameObject.h"
 #include "ObjectManager.h"
 
-GameObject::GameObject()
-{
-	m_keyValue = ++ObjectKeyCount;
-	ObjectManager::KeyObjects[m_keyValue] = this;
-}
+//GameObject::GameObject()
+//{
+//	
+//}
 
 //GameObject::~GameObject() noexcept
 //{
 //	ObjectManager::KeyObjects.erase(m_keyValue);
 //}
 
-GameObject::GameObject(const wstring_view& myName, const EObjType& eType) : GameObject::GameObject()
+GameObject::GameObject(const wstring_view& myName, const EObjType& eType)
 {
+	m_keyValue = ++ObjectKeyCount;
+	ObjectManager::KeyObjects[m_keyValue] = this;
 	m_myName = myName;
 	m_objType = eType;
 	Init();
 }
 
-GameObject::GameObject(const wstring_view& myName, const std::initializer_list<Component*>& components, const EObjType& eType) : GameObject::GameObject()
+GameObject::GameObject(const wstring_view& myName, const std::initializer_list<Component*>& components, const EObjType& eType)
 {
+	m_keyValue = ++ObjectKeyCount;
+	ObjectManager::KeyObjects[m_keyValue] = this;
 	m_myName = myName;
 	m_objType = eType;
 	AddComponent(components);
 	Init();
 }
 
-GameObject::GameObject(const wstring_view& myName, Component* pComponent, const EObjType& eType) : GameObject::GameObject()
+GameObject::GameObject(const wstring_view& myName, Component* pComponent, const EObjType& eType)
 {
+	m_keyValue = ++ObjectKeyCount;
+	ObjectManager::KeyObjects[m_keyValue] = this;
 	m_myName = myName;
 	m_objType = eType;
 	AddComponent(pComponent);
