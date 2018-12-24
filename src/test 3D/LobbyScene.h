@@ -4,7 +4,8 @@
 class LobbyScene : public MainClass
 {
 public:
-
+	JPanel* m_toGuest = nullptr;
+	JPanel* m_toHost  = nullptr;
 public:
 	virtual bool Init()		noexcept override;
 	virtual bool Frame()	noexcept override;

@@ -1,0 +1,86 @@
+^Type 777
+^NodeName Root
+^ParentName 
+^Position 0.000000 0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 1.000000 1.000000 1.000000
+
+^Type 778
+^NodeName background
+^ParentName Root
+^Position 0.000000 0.000000 0.999999
+^Rotate 0.000000 0.000000 0.000000
+^Scale 400.000000 300.000000 1.000000
+^tx_Normal title_bg-05e446bbfaa506e40a842a116a783d3d-1.png
+^tx_Hover title_bg-05e446bbfaa506e40a842a116a783d3d-1.png
+^tx_Press title_bg-05e446bbfaa506e40a842a116a783d3d-1.png
+
+^Type 778
+^NodeName panel0
+^ParentName Root
+^Position 0.000000 0.000000 0.999998
+^Rotate 0.000000 0.000000 0.000000
+^Scale 100.000000 100.000000 1.000000
+^tx_Normal gray_wdim10.png
+^tx_Hover gray_wdim10.png
+^tx_Press gray_wdim10.png
+
+^Type 783
+^NodeName txt_Guest
+^ParentName Root
+^Position 0.000000 -35.000000 0.999997
+^Rotate 0.000000 0.000000 0.000000
+^Scale 60.000000 20.000000 1.000000
+^strText Guest
+^tx_Normal btn_000.png
+^tx_Hover btn_001.png
+^tx_Press btn_001.png
+
+^Type 783
+^NodeName txt_Host
+^ParentName Root
+^Position 0.000000 35.000000 0.999996
+^Rotate 0.000000 0.000000 0.000000
+^Scale 60.000000 20.000000 1.000000
+^strText Host
+^tx_Normal btn_000.png
+^tx_Hover btn_001.png
+^tx_Press btn_001.png
+
+^Type 777
+^NodeName panel1
+^ParentName Root
+^Position 0.000000 0.000000 0.999995
+^Rotate 0.000000 0.000000 0.000000
+^Scale 1.000000 1.000000 1.000000
+
+^Type 778
+^NodeName panel_Guest
+^ParentName panel1
+^Position 250.000000 -0.000000 0.999994
+^Rotate 0.000000 0.000000 0.000000
+^Scale 100.000000 100.000000 1.000000
+^tx_Normal black_wdim10.png
+^tx_Hover black_wdim10.png
+^tx_Press black_wdim10.png
+
+^Type 783
+^NodeName Guest_IP_9
+^ParentName panel1
+^Position 250.000000 35.000000 0.999993
+^Rotate 0.000000 0.000000 0.000000
+^Scale 60.000000 20.000000 1.000000
+^strText KGCA_Server
+^tx_Normal btn_000.png
+^tx_Hover btn_001.png
+^tx_Press btn_001.png
+
+^Type 778
+^NodeName Guest_Exit
+^ParentName panel1
+^Position 332.000000 83.000000 0.999992
+^Rotate 0.000000 0.000000 0.000000
+^Scale 15.000000 15.000000 1.000000
+^tx_Normal btn_175.png
+^tx_Hover btn_174.png
+^tx_Press btn_174.png

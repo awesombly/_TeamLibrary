@@ -20,7 +20,7 @@ void PacketManager::SendPacket(char* data, const USHORT& packeyType, const PP::P
 	packet.m_socketSession = 0;
 	packet.m_SendMode = sendMode;
 	packet.m_Packet.m_Header.m_type = (PP::PPPacketType)packeyType;
-	packet.m_Packet.m_Header.m_len = (USHORT)(strlen(packet.m_Packet.m_Payload) + PACKET_HEADER_SIZE);
+	packet.m_Packet.m_Header.m_len = (USHORT)(sizeof(data) + PACKET_HEADER_SIZE);
 
 	pSender->Broadcast(packet);
 }
@@ -80,7 +80,7 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 	 }	break;
 	 case PACKET_SetAnimation:
 	 {
-		 memcpy(&p_AnimState, data, sizeof(Packet_Vector3));
+		 memcpy(&p_AnimState, data, sizeof(Packet_AnimState));
 		 ((PlayerController*)ObjectManager::KeyObjects[p_AnimState.KeyValue])->SetAnimation((PlayerController::EAction)(p_AnimState.EAnimState));
 	 }	break;
 	 case PACKET_SetDirectionForce:

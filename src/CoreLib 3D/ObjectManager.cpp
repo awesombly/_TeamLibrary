@@ -278,18 +278,22 @@ bool ObjectManager::Release() noexcept
 	//
 	//PostFrameEvent.emplace(releaseEvent, this, nullptr);
 	
-	for (auto&& outIter = m_ObjectList.begin(); outIter != m_ObjectList.end(); outIter++)
+	//for (auto&& outIter = m_ObjectList.begin(); outIter != m_ObjectList.end(); outIter++)
+	//{
+		//outIter->second.remove_if([&](GameObject* pObj) {
+	for (auto& outIter : m_ObjectList)
 	{
-		outIter->second.remove_if([&](GameObject* pObj) {
-			if (pObj->isGlobal())
-				return false;
-			pObj->isEnable(false);
-			RemoveObject(pObj);
+		for (auto& inIter : outIter.second)
+		{
+			if (inIter->isGlobal())
+				continue;
+			inIter->isEnable(false);
+			RemoveObject(inIter);
 			//pObj->Release();
 			//delete pObj;
 			//m_DisabledPull[pObj->m_myName].push(pObj);
-			return true;
-		});
+			//return true;
+		}
 	}
 	return true;
 }

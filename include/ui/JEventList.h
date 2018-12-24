@@ -4,6 +4,16 @@
 namespace UI
 {
 	/* 각종 이벤트들 JEvent에서 생성된 객체를 바탕을 돌아감 */
+	static void E_INTRO_SHOW_GUEST(void* vp)
+	{
+		JPanel* pPanel = (JPanel*)vp;
+		pPanel->m_bRender = true;
+	}
+	static void E_INTRO_NOTSHOW_GUEST(void* vp)
+	{
+		JPanel* pPanel = (JPanel*)vp;
+		pPanel->m_bRender = false;
+	}
 	static void SHOW_PANEL(void* vp)
 	{
 		JPanel* pPanel = (JPanel*)vp;

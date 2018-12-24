@@ -136,7 +136,7 @@ bool IntroScene::Init() noexcept
 // «¡∑π¿”
 bool IntroScene::Frame() noexcept
 {
-	SetScene(ESceneName::Main);
+	SetScene(ESceneName::Lobby);
 	DxManager::Get().Frame();
 	ObjectManager::Get().Frame(Timer::SPF, Timer::AccumulateTime);
 	SoundManager::Get().Frame();
