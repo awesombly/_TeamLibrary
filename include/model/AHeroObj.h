@@ -35,9 +35,6 @@ public:
 	bool					m_bBoneRender;
 
 public:
-	//bool		aabbCollide = false;
-	//void		CheckAABB(A_Box targetBox);
-	//void		CheckOBBInPlane(A_Box&  pBox);
 
 	bool		SetANIM(const TCHAR* szName);
 	void		SetBoneMatrices(vector<D3DXMATRIX>* pList);
