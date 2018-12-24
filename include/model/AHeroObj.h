@@ -52,7 +52,7 @@ public:
 
 
 
-	//bool		SetANIM_OneTime(const TCHAR* szName);
+	bool		SetANIM_OneTime(const TCHAR* szName);
 	//D3DXVECTOR3 GetPlayerPos();
 	//INT GetPlayerPosX();
 	//INT GetPlayerPosY();

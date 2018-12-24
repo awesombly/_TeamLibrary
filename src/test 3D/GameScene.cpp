@@ -81,15 +81,15 @@ bool GameScene::Frame() noexcept
 		else if (m_pPlayer->GetParent() == m_pZombi)
 		{
 			m_pPlayer->SetParent(m_pBird);
-			m_pPlayer->m_curCharacter = PlayerController::ECharacter::EGuard;
+			m_pPlayer->m_curCharacter = PlayerController::ECharacter::Dummy;
 		}
-		//else if (m_pPlayer->GetParent() == m_pBird)
-		//{
-		//	m_pPlayer->SetParent(m_pHero);
-		//	m_pPlayer->m_curCharacter = PlayerController::ECharacter::Dummy;
-		//	//m_pPlayer->isCharacter(false);
-		//}
-		//m_pBird->Translate(Vector3::Left);
+		else if (m_pPlayer->GetParent() == m_pBird)
+		{
+			m_pPlayer->SetParent(m_pHero);
+			m_pPlayer->m_curCharacter = PlayerController::ECharacter::EGuard;
+			//m_pPlayer->isCharacter(false);
+		}
+		m_pBird->Translate(Vector3::Left);
 		m_pPlayer->ResetOption();
 	}
 
