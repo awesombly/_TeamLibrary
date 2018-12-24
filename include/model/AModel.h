@@ -112,7 +112,7 @@ public:
 	virtual void		UpdateCollisionData(D3DXVECTOR3 position);
 	virtual void		UpdateMatrix() noexcept override;
 
-	virtual GameObject* clone() noexcept override;
+	//virtual GameObject* clone() noexcept override;
 
 public:
 	AModel() ;

@@ -53,7 +53,10 @@
 #define	 NPC_Bird_IDLE		L"NPC_bird.Mat"
 
 
-
+//NPC_Chicken
+//ANIM_COUNT  1
+#define	 NPC_Chicken			L"NPC_Chicken"
+#define	 NPC_Chicken_IDLE		L"chicken.Mat"
 
 
 //참고 2 : 추가 방법 및 예제
