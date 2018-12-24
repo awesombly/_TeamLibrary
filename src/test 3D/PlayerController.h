@@ -17,7 +17,7 @@ public:
 		Jump = 100, Dance1, Dance2, Dance3,
 	};
 	enum class ECharacter : char {
-		EGuard = 0, EZombie,
+		Dummy = 0, EGuard, EZombie,
 	};
 private:
 	AHeroObj*   m_pHero			= nullptr;

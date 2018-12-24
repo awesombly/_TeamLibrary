@@ -1,13 +1,6 @@
 #include "GameScene.h"
 
 
-////////////////////////////////////////////////////////
-// 메쉬가 GameObject로 되어있고, Release시 KeyObject에서 삭제되지 않음,, 
-// 위가 원인인진 모르나, 씬 전환시 기사 재생성때 에러가 뜸
-
-// ++ 인트로 화면 호스트, 게스트 전환
-// 게스트시 호스트 오브젝트 정보 로딩
-// 충돌 물리 처리
 
 bool GameScene::Init() noexcept
 {
@@ -15,14 +8,13 @@ bool GameScene::Init() noexcept
 	m_pPlayer = new PlayerController(L"Player", EObjType::Object);
 	ObjectManager::Cameras[ECamera::Main]->SetParent(m_pPlayer);
 	
-	// 기사
+	// 기사 
 	m_pHero = new AHeroObj();
 	m_pHero->SetPlayerCharacter(Guard, 0.0f, 0.0f, 0.0f);
 	m_pHero->SetANIM(Guard_IDLE);
 	m_pHero->m_myName = L"Hero";
 	m_pHero->m_objType = EObjType::Object;
 	auto pCollider = new ColliderOBB({ -13.0f, 0.0f , -13.0f }, { 13.0f, 80.0f , 13.0f });//m_pHero.m_CollsionBox.vMin, m_pHero.m_CollsionBox.vMax));
-	//pCollider->m_pivot = Vector3::Up * 40.0f;
 	m_pHero->AddComponent(pCollider);
 	m_pPlayer->isCharacter(true);
 	m_pPlayer->SetParent(m_pHero);
@@ -36,9 +28,7 @@ bool GameScene::Init() noexcept
 	m_pZombi->SetANIM(Zombie_IDLE);
 	m_pZombi->m_myName = L"Zombi";
 	m_pZombi->m_objType = EObjType::Object;
-	//m_pZombi->SetScale(Vector3::One * 1.5f);
 	pCollider = new ColliderOBB({ -13.0f, 0.0f , -13.0f }, { 13.0f, 80.0f , 13.0f });
-	//pCollider->m_pivot *= 1.5f;
 	m_pZombi->AddComponent(pCollider);
 	ObjectManager::Get().PushObject(m_pZombi);
 
@@ -61,6 +51,19 @@ bool GameScene::Init() noexcept
 	ObjectManager::Get().TakeObject(L"Object2");
 	ObjectManager::Get().TakeObject(L"Object3");
 #pragma endregion
+	// ======================== 맵 생성 =========================================
+	if (m_isFirstInit)
+	{
+		m_isFirstInit = false;
+		m_Importer.Import();
+		m_pMap = new XMap;
+		m_pMap->Create(DxManager::Get().GetDevice(), DxManager::Get().GetDContext(), &m_Importer, _T("../../Data/Map/Shader/MapShader_Specular.hlsl"), _T("../../Data/Map/Shader/MapShader_Color_Specular.hlsl"), "VS", "PS");
+		m_pMapTree = new XQuadTreeIndex;
+		m_pMapTree->Build(m_pMap);
+		m_pMap->m_objType = EObjType::Map;
+		m_pMap->isGlobal();
+		ObjectManager::Get().PushObject(m_pMap);
+	}
 	return true;
 }
 
@@ -68,6 +71,7 @@ bool GameScene::Init() noexcept
 // 프레임
 bool GameScene::Frame() noexcept
 {
+
 	if (Input::GetKeyState(VK_TAB) == EKeyState::DOWN)
 	{
 		if (m_pPlayer->GetParent() == m_pHero)
@@ -77,32 +81,38 @@ bool GameScene::Frame() noexcept
 		}
 		else if (m_pPlayer->GetParent() == m_pZombi)
 		{
-			m_pPlayer->SetParent(m_pHero);
+			m_pPlayer->SetParent(m_pBird);
 			m_pPlayer->m_curCharacter = PlayerController::ECharacter::EGuard;
 		}
-		//else if (m_pPlayer->GetParent() == &m_pBird)
+		//else if (m_pPlayer->GetParent() == m_pBird)
 		//{
-		//	m_pPlayer->SetParent(&m_pHero);
-		//	m_pPlayer->isCharacter(false);
+		//	m_pPlayer->SetParent(m_pHero);
+		//	m_pPlayer->m_curCharacter = PlayerController::ECharacter::Dummy;
+		//	//m_pPlayer->isCharacter(false);
 		//}
+		//m_pBird->Translate(Vector3::Left);
 		m_pPlayer->ResetOption();
 	}
 
+	m_pMapTree->Frame();
 	DxManager::Get().Frame();
 	ObjectManager::Get().Frame(Timer::SPF, Timer::AccumulateTime);
 	SoundManager::Get().Frame();
+
 	return true;
 }
 
 // 랜더
 bool GameScene::Render() noexcept
 {
-	if (m_pBird != nullptr)
-	{
-		m_pHero->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);//	(월드,뷰,투영)
-		m_pZombi->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);//	(월드,뷰,투영)
-		m_pBird->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);//	(월드,뷰,투영)
-	}
+	//if (m_pBird != nullptr)
+	//{
+		m_pMap->SetMatrix(NULL, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+
+		m_pHero->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+		m_pZombi->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+		m_pBird->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+	//}
 
 	DxManager::Get().Render();
 	ObjectManager::Get().Render(DxManager::Get().GetDContext());
@@ -113,8 +123,8 @@ bool GameScene::Render() noexcept
 // 릴리즈
 bool GameScene::Release() noexcept
 {
-	I_CHARMGR.Release();
-	I_OBJMGR.Release();
+	if (m_pMapTree) m_pMapTree->Release();
+
 	m_pHero = m_pZombi = m_pBird = nullptr;
 	ObjectManager::Cameras[ECamera::Main]->CutParent();
 	ObjectManager::Get().PopObject(ObjectManager::Cameras[ECamera::Main]);
