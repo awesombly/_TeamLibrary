@@ -44,6 +44,10 @@ bool Collider::Frame(const float& spf, const float& accTime)	noexcept
 		{
 			m_pParent->isMoved(true);
 			m_pParent->GetRoot()->Translate((GetTotalForce() + Vector3::Up * 5.0f) * spf);
+			//if (m_pParent->GetWorldPosition().y < *m_pMapHeight)
+			//{
+			//	m_pParent->SetPositionY(*m_pMapHeight);
+			//}
 		}
 	//}
 	return true;

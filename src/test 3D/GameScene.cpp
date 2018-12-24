@@ -45,6 +45,20 @@ bool GameScene::Init() noexcept
 	m_pBird->AddComponent(pCollider);
 	ObjectManager::Get().PushObject(m_pBird);
 
+	// ´ß »ý¼º
+	m_pChicken = new AHeroObj();
+	m_pChicken->SetPlayerCharacter(NPC_Chicken, 0.0f, 300.0f, -150.0f);
+	m_pChicken->SetANIM(NPC_Chicken_IDLE);
+	m_pChicken->m_myName = L"Chicken";
+	m_pChicken->m_objType = EObjType::Object;
+	//m_pChicken->SetScale(Vector3::One * 15.0f);
+	pCollider = new ColliderOBB({ -15.0f, 0.0f , -15.0f }, { 15.0f, 30.0f , 15.0f });
+	//pCollider->m_pivot *= 15.0f;
+	pCollider->useGravity(true);
+	m_pChicken->AddComponent(pCollider);
+	ObjectManager::Get().PushObject(m_pChicken);
+
+
 	ObjectManager::Get().TakeObject(L"HeightMap");
 	ObjectManager::Get().TakeObject(L"ParticleSystem");
 	ObjectManager::Get().TakeObject(L"Object1");
@@ -81,15 +95,20 @@ bool GameScene::Frame() noexcept
 		else if (m_pPlayer->GetParent() == m_pZombi)
 		{
 			m_pPlayer->SetParent(m_pBird);
-			m_pPlayer->m_curCharacter = PlayerController::ECharacter::Dummy;
+			m_pPlayer->m_curCharacter = PlayerController::ECharacter::EDummy;
 		}
 		else if (m_pPlayer->GetParent() == m_pBird)
+		{
+			m_pPlayer->SetParent(m_pChicken);
+			m_pPlayer->m_curCharacter = PlayerController::ECharacter::EDummy;
+			//m_pPlayer->isCharacter(false);
+		}
+		else if (m_pPlayer->GetParent() == m_pChicken)
 		{
 			m_pPlayer->SetParent(m_pHero);
 			m_pPlayer->m_curCharacter = PlayerController::ECharacter::EGuard;
 			//m_pPlayer->isCharacter(false);
 		}
-		m_pBird->Translate(Vector3::Left);
 		m_pPlayer->ResetOption();
 	}
 
@@ -111,6 +130,7 @@ bool GameScene::Render() noexcept
 		m_pHero->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
 		m_pZombi->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
 		m_pBird->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+		m_pChicken->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
 	//}
 
 	DxManager::Get().Render();
@@ -124,7 +144,7 @@ bool GameScene::Release() noexcept
 {
 	if (m_pMapTree) m_pMapTree->Release();
 
-	m_pHero = m_pZombi = m_pBird = nullptr;
+	m_pHero = m_pZombi = m_pBird = m_pChicken = nullptr;
 	ObjectManager::Cameras[ECamera::Main]->CutParent();
 	ObjectManager::Get().PopObject(ObjectManager::Cameras[ECamera::Main]);
 	ObjectManager::Get().Release();

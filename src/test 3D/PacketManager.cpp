@@ -6,10 +6,10 @@
 
 void PacketManager::SendPacket(char* data, const USHORT& packeyType, const PP::PPSendMode& sendMode) noexcept
 {
-	if (pSender == nullptr)
+	if (isHost)
 	{
 		InterceptPacket((PP::PPPacketType)packeyType, data);
-		return;
+		//return;
 	}
 	
 	///pSender->BroadcastWString(L"Hello, Server!");	//서버에게 문자열 전송(함수명은 바꿀 예정)
@@ -36,13 +36,14 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 	static Packet_Quaternion	p_Quaternion;
 	static Packet_Vec3Quat		p_Vec3Quat;
 	static Packet_AnimState		p_AnimState;
+	static Packet_AnimTransform p_AnimTransform;
 
 	memcpy(&p_KeyValue, data, sizeof(Packet_KeyValue));
 	if (ObjectManager::KeyObjects[p_KeyValue.KeyValue] == nullptr) return;
 
 	switch (sendMode)
 	{
-	 case PACKET_SetPositionRotation:
+	 case PACKET_SetTransform:
 	 {
 	 	memcpy(&p_Vec3Quat, data, sizeof(Packet_Vec3Quat));
 	 	ObjectManager::KeyObjects[p_Vec3Quat.KeyValue]->SetPosition(p_Vec3Quat.Vec3);
@@ -78,21 +79,28 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 		 memcpy(&p_Vector3, data, sizeof(Packet_Vector3));
 		 ObjectManager::KeyObjects[p_Vector3.KeyValue]->Scaling(p_Vector3.Vec3);
 	 }	break;
-	 case PACKET_SetAnimation:
+	 //case PACKET_SetAnimation:
+	 //{
+	//	 memcpy(&p_AnimState, data, sizeof(Packet_AnimState));
+	//	 ((PlayerController*)ObjectManager::KeyObjects[p_AnimState.KeyValue])->SetAnimation((PlayerController::EAction)(p_AnimState.EAnimState));
+	 //}	break;
+	 case PACKET_SetAnimTransform:
 	 {
-		 memcpy(&p_AnimState, data, sizeof(Packet_AnimState));
-		 ((PlayerController*)ObjectManager::KeyObjects[p_AnimState.KeyValue])->SetAnimation((PlayerController::EAction)(p_AnimState.EAnimState));
+		 memcpy(&p_AnimTransform, data, sizeof(Packet_AnimTransform));
+		 PlayerController::SetAnim((AHeroObj*)ObjectManager::KeyObjects[p_AnimTransform.KeyValue], (PlayerController::ECharacter)p_AnimTransform.ECharacter, (PlayerController::EAction)p_AnimTransform.EAnimState);
+		 ObjectManager::KeyObjects[p_AnimTransform.KeyValue]->SetPosition(p_AnimTransform.Vec3);
+		 ObjectManager::KeyObjects[p_AnimTransform.KeyValue]->SetRotation(p_AnimTransform.Quat);
 	 }	break;
-	 case PACKET_SetDirectionForce:
-	 {
-		 memcpy(&p_Vector3, data, sizeof(Packet_Vector3));
-		 ((PlayerController*)ObjectManager::KeyObjects[p_Vector3.KeyValue])->m_pCollider->SetDirectionForce(p_Vector3.Vec3);
-	 }	break;
-	 case PACKET_SetMoveStop:
-	 {
-		 //memcpy(&p_KeyValue, data, sizeof(Packet_KeyValue));
-		 ((PlayerController*)ObjectManager::KeyObjects[p_KeyValue.KeyValue])->m_pCollider->isMoving(false);
-	 }	break;
+	//case PACKET_SetDirectionForce:
+	//{
+	//	 memcpy(&p_Vector3, data, sizeof(Packet_Vector3));
+	//	 //((PlayerController*)ObjectManager::KeyObjects[p_Vector3.KeyValue])->m_pCollider->SetDirectionForce(p_Vector3.Vec3);
+	//}	break;
+	//case PACKET_SetMoveStop:
+	//{
+	//	 //memcpy(&p_KeyValue, data, sizeof(Packet_KeyValue));
+	//	 //((PlayerController*)ObjectManager::KeyObjects[p_KeyValue.KeyValue])->m_pCollider->isMoving(false);
+	//}	break;
 	 case PACKET_RequestSync:
 	 {
 	 }	break;

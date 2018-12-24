@@ -26,6 +26,7 @@ public:
 	float m_drag		= 1.0f;				// 마찰력
 	float m_damping		= 0.2f;				// 항력
 	//float m_angularDamping = 0.2f;			// 회전 항력
+	float* m_pMapHeight = nullptr;
 
 	D3DXVECTOR3 m_normal = Vector3::Zero;	// 계산용 노말
 protected:

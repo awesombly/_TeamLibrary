@@ -13,6 +13,7 @@ public:
 	AHeroObj*	m_pHero			= nullptr;		// 캐릭터 본체
 	AHeroObj*	m_pZombi		= nullptr;		// 
 	AHeroObj*	m_pBird			= nullptr;		// 
+	AHeroObj*	m_pChicken		= nullptr;		// 
 
 
 	//XCamera			m_Camera;					// 프러스텀 카메라

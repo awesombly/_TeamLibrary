@@ -1,12 +1,12 @@
 #pragma once
 #include "GameObject.h"
-
+#include "ISingleton.h"
 
 class Collider;
 class Camera;
 class AHeroObj;
 
-class PlayerController : public GameObject
+class PlayerController : public GameObject, public ISingleton<PlayerController>
 {
 public:
 	enum EAction : char {
@@ -14,10 +14,10 @@ public:
 		Left = 1, Forward = 2, ForwardLeft = 3, 
 		Right = 4, ForwardRight = 6, 
 		Backward = 8, BackwardLeft = 9, BackwardRight = 12,
-		Jump = 100, Dance1, Dance2, Dance3,
+		Jump = 100, Dance1, Dance2, Dance3, Throw
 	};
-	enum class ECharacter : char {
-		Dummy = 0, EGuard, EZombie,
+	enum ECharacter : char {
+		EDummy = 0, EGuard, EZombie,
 	};
 private:
 	AHeroObj*   m_pHero			= nullptr;
@@ -38,9 +38,11 @@ public:
 	Collider*	m_pCollider		= nullptr;
 	ECharacter  m_curCharacter;
 public:
-	void SetAnimation(const EAction& eAction)			noexcept;
-	void AnimationGuard(const EAction& eAction)			noexcept;
-	void AnimationZombi(const EAction& eAction)			noexcept;
+	static void SetAnim(AHeroObj* pObject, const ECharacter& eCharacter, const EAction& eAction) noexcept;
+
+	//void SetAnimation(const EAction& eAction)			noexcept;
+	//void AnimationGuard(const EAction& eAction)			noexcept;
+	//void AnimationZombi(const EAction& eAction)			noexcept;
 	void PlayerInput(const float& spf)					noexcept;
 	void CameraInput(const float& spf)					noexcept;
 	void ResetOption()									noexcept;
@@ -53,7 +55,8 @@ public:
 	bool Render(ID3D11DeviceContext* pDContext)			noexcept override;
 	bool Release()										noexcept override;
 public:
-	//PlayerController() = default;
+	friend class ISingleton<PlayerController>;
+	PlayerController() = default;
 	using GameObject::GameObject;
 	virtual ~PlayerController() = default;
 };

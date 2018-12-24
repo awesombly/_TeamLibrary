@@ -416,6 +416,8 @@ GameObject* ObjectManager::SetProtoObject(GameObject* pObject) noexcept
 	m_ProtoPull[pObject->m_myName] = pObject;
 	//pObject->isEnable(false);
 
+	// KeyObject 제거
+	KeyObjects.erase(pObject->m_keyValue);
 	// 충돌체 있을시 리스트 제거
 	auto pColliders = pObject->GetComponentList(EComponent::Collider);
 	if (pColliders != nullptr)

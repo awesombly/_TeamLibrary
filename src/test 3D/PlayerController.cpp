@@ -38,145 +38,97 @@ bool PlayerController::Release() noexcept
 
 
 
-void PlayerController::SetAnimation(const EAction& eAction) noexcept
+
+void PlayerController::SetAnim(AHeroObj* pObject, const ECharacter& eCharacter, const EAction& eAction) noexcept
 {
-	//m_toIdle = false;
-	if (!m_isCharacter ||
-		m_pParent == nullptr)	return;
-
-	//static Packet_Vector3 p_direction;
-	//static Packet_KeyValue p_Key;
-	m_pHero = (AHeroObj*)m_pParent;
-
-	m_curAction = eAction;
-	//if (m_curAction != eAction)
-	//{
-	switch (m_curCharacter)
+	switch (eCharacter)
 	{
-	 case ECharacter::EGuard:
-	 {
-	 	AnimationGuard(eAction);
-	 }	break;
-	 case ECharacter::EZombie:
-	 {
-	 	AnimationZombi(eAction);
-	 }	break;
-	}
-	//}
-}
-
-void PlayerController::AnimationGuard(const EAction& eAction) noexcept
-{
-	switch (eAction)
+	case ECharacter::EGuard:
 	{
-	case EAction::Idle:
-	{
-		if (m_isLoopAnim)
+		switch (eAction)
 		{
-			m_pCollider->isMoving(false);
-			m_isLoopAnim = false;
-			m_pHero->SetANIM(Guard_IDLE);
+		case EAction::Idle:
+		{
+			pObject->SetANIM(Guard_IDLE);
+		}	break;
+		case EAction::Jump:
+		{
+			///
+		}	break;
+		case EAction::Left:
+		case EAction::BackwardLeft:
+		{
+			pObject->SetANIM(Guard_LEFT);
+		}	break;
+		case EAction::Right:
+		case EAction::BackwardRight:
+		{
+			pObject->SetANIM(Guard_RIGHT);
+		}	break;
+		case EAction::Forward:
+		case EAction::ForwardLeft:
+		case EAction::ForwardRight:
+		{
+			pObject->SetANIM(Guard_HAPPYWALK);
+		}	break;
+		case EAction::Backward:
+		{
+			pObject->SetANIM(Guard_BACKWARD);
+		}	break;
+		case EAction::Dance1:
+		{
+			pObject->SetANIM(Guard_DANCE1);
+		}	break;
+		case EAction::Dance2:
+		{
+			pObject->SetANIM(Guard_DANCE2);
+		}	break;
+		case EAction::Dance3:
+		{
+			pObject->SetANIM(Guard_DANCE3);
+		}	break;
+		case EAction::Throw:
+		{
+			pObject->SetANIM_OneTime(Guard_THROW);
+		}	break;
 		}
 	}	break;
-	case EAction::Jump:
+	case ECharacter::EZombie:
 	{
-		m_pParent->Translate(Vector3::Up * 15.0f);
-
-		m_pCollider->SetForce(Vector3::Up * m_jumpPower);
-		m_isLoopAnim = false;
-		///m_pHero->SetANIM(Guard_DANCE3);
-	}	break;
-	case EAction::Left:
-	case EAction::BackwardLeft:
-	{
-		m_isLoopAnim = true;
-		m_pHero->SetANIM(Guard_LEFT);
-	}	break;
-	case EAction::Right:
-	case EAction::BackwardRight:
-	{
-		m_isLoopAnim = true;
-		m_pHero->SetANIM(Guard_RIGHT);
-	}	break;
-	case EAction::Forward:
-	case EAction::ForwardLeft:
-	case EAction::ForwardRight:
-	{
-		m_isLoopAnim = true;
-		m_pHero->SetANIM(Guard_HAPPYWALK);
-	}	break;
-	case EAction::Backward:
-	{
-		m_isLoopAnim = true;
-		m_pHero->SetANIM(Guard_BACKWARD);
-	}	break;
-	case EAction::Dance1:
-	{
-		m_isLoopAnim = false;
-		m_pHero->SetANIM(Guard_DANCE1);
-	}	break;
-	case EAction::Dance2:
-	{
-		m_isLoopAnim = false;
-		m_pHero->SetANIM(Guard_DANCE2);
-	}	break;
-	case EAction::Dance3:
-	{
-		m_isLoopAnim = false;
-		m_pHero->SetANIM(Guard_DANCE3);
-	}	break;
-	}
-}
-
-
-void PlayerController::AnimationZombi(const EAction& eAction) noexcept
-{
-	switch (eAction)
-	{
-	case EAction::Idle:
-	{
-		if (m_isLoopAnim)
+		switch (eAction)
 		{
-			m_pCollider->isMoving(false);
-			m_isLoopAnim = false;
-			m_pHero->SetANIM(Zombie_IDLE);
+		case EAction::Idle:
+		{
+			pObject->SetANIM(Zombie_IDLE);
+		}	break;
+		case EAction::Jump:
+		{
+			pObject->SetANIM(Zombie_FLY);
+		}	break;
+		case EAction::Left:
+		case EAction::ForwardLeft:
+		case EAction::BackwardLeft:
+		{
+			pObject->SetANIM(Zombie_LEFT);
+		}	break;
+		case EAction::Right:
+		case EAction::ForwardRight:
+		case EAction::BackwardRight:
+		{
+			pObject->SetANIM(Zombie_RIGHT);
+		}	break;
+		case EAction::Forward:
+		{
+			pObject->SetANIM(Zombie_FORWARD);
+		}	break;
+		case EAction::Backward:
+		{
+			pObject->SetANIM(Zombie_BACKWARD);
+		}	break;
 		}
 	}	break;
-	case EAction::Jump:
-	{
-		m_pParent->Translate(Vector3::Up * 15.0f);
-
-		m_pCollider->SetForce(Vector3::Up * m_jumpPower);
-		m_isLoopAnim = false;
-		m_pHero->SetANIM(Zombie_FLY);
-	}	break;
-	case EAction::Left:
-	case EAction::ForwardLeft:
-	case EAction::BackwardLeft:
-	{
-		m_isLoopAnim = true;
-		m_pHero->SetANIM(Zombie_LEFT);
-	}	break;
-	case EAction::Right:
-	case EAction::ForwardRight:
-	case EAction::BackwardRight:
-	{
-		m_isLoopAnim = true;
-		m_pHero->SetANIM(Zombie_RIGHT);
-	}	break;
-	case EAction::Forward:
-	{
-		m_isLoopAnim = true;
-		m_pHero->SetANIM(Zombie_FORWARD);
-	}	break;
-	case EAction::Backward:
-	{
-		m_isLoopAnim = true;
-		m_pHero->SetANIM(Zombie_BACKWARD);
-	}	break;
 	}
 }
-
 
 void PlayerController::PlayerInput(const float& spf) noexcept
 {
@@ -220,55 +172,275 @@ void PlayerController::PlayerInput(const float& spf) noexcept
 		{
 			eAction = EAction::Jump;
 		}
+		if (Input::GetMouseState(EMouseButton::Left) == EKeyState::DOWN)
+		{
+			eAction = EAction::Throw;
+		}
 
-		//if (eAction != EAction::Idle)
 		if (eAction != m_curAction)
 		{
-			static Packet_AnimState p_AnimState;
-			p_AnimState.KeyValue = m_keyValue;
-			p_AnimState.EAnimState = eAction;
-			PacketManager::Get().SendPacket((char*)&p_AnimState, PACKET_SetAnimation);
+			//static Packet_AnimState p_AnimState;
+			//p_AnimState.KeyValue = m_keyValue;
+			//p_AnimState.EAnimState = eAction;
+			//PacketManager::Get().SendPacket((char*)&p_AnimState, PACKET_SetAnimation);
+			if (m_curCharacter == ECharacter::EDummy)
+			{
+				static Packet_Vec3Quat p_transform;
+				p_transform.KeyValue = m_pParent->m_keyValue;
+				p_transform.Vec3 = m_pParent->GetPosition();
+				p_transform.Quat = m_pParent->GetRotation();
+				PacketManager::Get().SendPacket((char*)&p_transform, PACKET_SetTransform);
+			}
+			else
+			{
+				static Packet_AnimTransform p_AnimState;
+				p_AnimState.KeyValue = m_pParent->m_keyValue;
+				p_AnimState.Vec3 = m_pParent->GetPosition();
+				p_AnimState.Quat = m_pParent->GetRotation();
+				p_AnimState.EAnimState = eAction;
+				p_AnimState.ECharacter = m_curCharacter;
+				PacketManager::Get().SendPacket((char*)&p_AnimState, PACKET_SetAnimTransform);
+			}
 		}
+
+		m_pHero = (AHeroObj*)m_pParent;
+		m_curAction = eAction;
 
 		// 이동 처리
 		switch (eAction)
 		{
+		case EAction::Idle:
+		{
+			if (m_isLoopAnim)
+			{
+				m_pCollider->isMoving(false);
+				m_isLoopAnim = false;
+			}
+		}	break;
+		case EAction::Jump:
+		{
+			m_pParent->Translate(Vector3::Up * 15.0f);
+			m_pCollider->SetForce(Vector3::Up * m_jumpPower);
+			m_isLoopAnim = false;
+		}	break;
+		case EAction::Dance1:
+		case EAction::Dance2:
+		case EAction::Dance3:
+		case EAction::Throw:
+		{
+			m_isLoopAnim = false;
+		}	break;
 		case EAction::Left:
 		{
 			m_pCollider->SetDirectionForce(m_pParent->GetLeft() * m_moveSpeed);
+			m_isLoopAnim = true;
 		}	break;
 		case EAction::Right:
 		{
 			m_pCollider->SetDirectionForce(m_pParent->GetRight() * m_moveSpeed);
+			m_isLoopAnim = true;
 		}	break;
 		case EAction::Forward:
 		{
 			m_pCollider->SetDirectionForce(m_pParent->GetForward() * m_moveSpeed);
+			m_isLoopAnim = true;
 		}	break;
 		case EAction::ForwardLeft:
 		{
 			m_pCollider->SetDirectionForce((m_pParent->GetForward() + m_pParent->GetLeft()) * 0.7f * m_moveSpeed);
+			m_isLoopAnim = true;
 		}	break;
 		case EAction::ForwardRight:
 		{
 			m_pCollider->SetDirectionForce((m_pParent->GetForward() + m_pParent->GetRight()) * 0.7f * m_moveSpeed);
+			m_isLoopAnim = true;
 		}	break;
 		case EAction::Backward:
 		{
 			m_pCollider->SetDirectionForce(m_pParent->GetBackward() * m_moveSpeed);
+			m_isLoopAnim = true;
 		}	break;
 		case EAction::BackwardLeft:
 		{
 			m_pCollider->SetDirectionForce((m_pParent->GetBackward() + m_pParent->GetLeft()) * 0.7f * m_moveSpeed);
+			m_isLoopAnim = true;
 		}	break;
 		case EAction::BackwardRight:
 		{
 			m_pCollider->SetDirectionForce((m_pParent->GetBackward() + m_pParent->GetRight()) * 0.7f * m_moveSpeed);
+			m_isLoopAnim = true;
 		}	break;
 		}
 	}
 	spf;
 }
+
+
+//void PlayerController::SetAnimation(const EAction& eAction) noexcept
+//{
+//	//m_toIdle = false;
+//	if (!m_isCharacter ||
+//		m_pParent == nullptr)	return;
+//
+//	//static Packet_Vector3 p_direction;
+//	//static Packet_KeyValue p_Key;
+//	m_pHero = (AHeroObj*)m_pParent;
+//
+//	m_curAction = eAction;
+//	//if (m_curAction != eAction)
+//	//{
+//	switch (m_curCharacter)
+//	{
+//	 case ECharacter::EGuard:
+//	 {
+//	 	AnimationGuard(eAction);
+//	 }	break;
+//	 case ECharacter::EZombie:
+//	 {
+//	 	AnimationZombi(eAction);
+//	 }	break;
+//	 case ECharacter::EDummy:
+//	 {
+//	 	switch (eAction)
+//	 	 {
+//	 	 case EAction::Idle:
+//	 	 {
+//	 	 	if (m_isLoopAnim)
+//	 	 	{
+//	 	 		m_pCollider->isMoving(false);
+//	 	 		m_isLoopAnim = false;
+//	 	 	}
+//	 	 }	break;
+//	 	 case EAction::Jump:
+//	 	 {
+//	 	 	m_pParent->Translate(Vector3::Up * 15.0f);
+//	 	 	m_pCollider->SetForce(Vector3::Up * m_jumpPower);
+//	 	 	m_isLoopAnim = false;
+//	 	 }	break;
+//		 default:
+//		 {
+//		 	m_isLoopAnim = true;
+//		 }	break;
+//	 	}
+//	 }	break;
+//	}
+//}
+//
+//void PlayerController::AnimationGuard(const EAction& eAction) noexcept
+//{
+//	switch (eAction)
+//	{
+//	case EAction::Idle:
+//	{
+//		if (m_isLoopAnim)
+//		{
+//			m_pCollider->isMoving(false);
+//			m_isLoopAnim = false;
+//			m_pHero->SetANIM(Guard_IDLE);
+//		}
+//	}	break;
+//	case EAction::Jump:
+//	{
+//		m_pParent->Translate(Vector3::Up * 15.0f);
+//
+//		m_pCollider->SetForce(Vector3::Up * m_jumpPower);
+//		m_isLoopAnim = false;
+//		///m_pHero->SetANIM(Guard_DANCE3);
+//	}	break;
+//	case EAction::Left:
+//	case EAction::BackwardLeft:
+//	{
+//		m_isLoopAnim = true;
+//		m_pHero->SetANIM(Guard_LEFT);
+//	}	break;
+//	case EAction::Right:
+//	case EAction::BackwardRight:
+//	{
+//		m_isLoopAnim = true;
+//		m_pHero->SetANIM(Guard_RIGHT);
+//	}	break;
+//	case EAction::Forward:
+//	case EAction::ForwardLeft:
+//	case EAction::ForwardRight:
+//	{
+//		m_isLoopAnim = true;
+//		m_pHero->SetANIM(Guard_HAPPYWALK);
+//	}	break;
+//	case EAction::Backward:
+//	{
+//		m_isLoopAnim = true;
+//		m_pHero->SetANIM(Guard_BACKWARD);
+//	}	break;
+//	case EAction::Dance1:
+//	{
+//		m_isLoopAnim = false;
+//		m_pHero->SetANIM(Guard_DANCE1);
+//	}	break;
+//	case EAction::Dance2:
+//	{
+//		m_isLoopAnim = false;
+//		m_pHero->SetANIM(Guard_DANCE2);
+//	}	break;
+//	case EAction::Dance3:
+//	{
+//		m_isLoopAnim = false;
+//		m_pHero->SetANIM(Guard_DANCE3);
+//	}	break;
+//	case EAction::Throw:
+//	{
+//		m_isLoopAnim = false;
+//		m_pHero->SetANIM_OneTime(Guard_THROW);
+//	}	break;
+//	}
+//}
+//
+//void PlayerController::AnimationZombi(const EAction& eAction) noexcept
+//{
+//	switch (eAction)
+//	{
+//	case EAction::Idle:
+//	{
+//		if (m_isLoopAnim)
+//		{
+//			m_pCollider->isMoving(false);
+//			m_isLoopAnim = false;
+//			m_pHero->SetANIM(Zombie_IDLE);
+//		}
+//	}	break;
+//	case EAction::Jump:
+//	{
+//		m_pParent->Translate(Vector3::Up * 15.0f);
+//
+//		m_pCollider->SetForce(Vector3::Up * m_jumpPower);
+//		m_isLoopAnim = false;
+//		m_pHero->SetANIM(Zombie_FLY);
+//	}	break;
+//	case EAction::Left:
+//	case EAction::ForwardLeft:
+//	case EAction::BackwardLeft:
+//	{
+//		m_isLoopAnim = true;
+//		m_pHero->SetANIM(Zombie_LEFT);
+//	}	break;
+//	case EAction::Right:
+//	case EAction::ForwardRight:
+//	case EAction::BackwardRight:
+//	{
+//		m_isLoopAnim = true;
+//		m_pHero->SetANIM(Zombie_RIGHT);
+//	}	break;
+//	case EAction::Forward:
+//	{
+//		m_isLoopAnim = true;
+//		m_pHero->SetANIM(Zombie_FORWARD);
+//	}	break;
+//	case EAction::Backward:
+//	{
+//		m_isLoopAnim = true;
+//		m_pHero->SetANIM(Zombie_BACKWARD);
+//	}	break;
+//	}
+//}
 
 void PlayerController::CameraInput(const float& spf) noexcept
 {
