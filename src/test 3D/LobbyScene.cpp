@@ -1,16 +1,10 @@
 #include "LobbyScene.h"
 #include "JParser.h"
 #include "JState.h"
+#include "JEventList.h"
 
 bool LobbyScene::Init() noexcept
 {
-	JState::SetState(DxManager::GetDevice());
-	JPanel* pRoot = new JPanel(L"IntroRoot");
-	//pRoot->isGlobal();
-	JParser Par;
-	Par.FileLoad(DxManager::GetDevice(), L"../../data/ui/ui_intro_test.txt", *pRoot);
-	ObjectManager::Get().PushObject(pRoot);
-	
 	static auto pToGuest = [](void* pScene) {
 		isHost = false;
 		((MainClass*)pScene)->SetScene(ESceneName::Main);
@@ -19,15 +13,29 @@ bool LobbyScene::Init() noexcept
 		isHost = true;
 		((MainClass*)pScene)->SetScene(ESceneName::Main);
 	};
-	// to 게스트
-	m_toGuest = pRoot->find_child(L"txt_Guest");
-	m_toGuest->EventClick.first = pToGuest;
-	m_toGuest->EventClick.second = this;
+
+	JState::SetState(DxManager::GetDevice());
+	JPanel* pUIRoot = new JPanel(L"UI_IntroRoot");
+	pUIRoot->m_objType = EObjType::UI;
+	JParser par;
+	par.FileLoad(DxManager::GetDevice(), L"../../data/ui/test_1.txt", *pUIRoot);
+	pUIRoot->find_child(L"panel1")->m_bRender = false;
+	pUIRoot->find_child(L"txt_Guest")->EventClick.first = UI::E_INTRO_SHOW_GUEST;
+	pUIRoot->find_child(L"txt_Guest")->EventClick.second = pUIRoot->find_child(L"panel1");
+
+	pUIRoot->find_child(L"Guest_Exit")->EventClick.first = UI::E_INTRO_NOTSHOW_GUEST;
+	pUIRoot->find_child(L"Guest_Exit")->EventClick.second = pUIRoot->find_child(L"panel1");
+
 	// to 호스트
-	m_toHost = pRoot->find_child(L"txt_Host");
+	m_toHost = pUIRoot->find_child(L"txt_Host");
 	m_toHost->EventClick.first = pToHost;
 	m_toHost->EventClick.second = this;
+	// to 게스트
+	m_toGuest = pUIRoot->find_child(L"Guest_IP_9");
+	m_toGuest->EventClick.first = pToGuest;
+	m_toGuest->EventClick.second = this;
 
+	ObjectManager::Get().PushObject(pUIRoot);
 	return true;
 }
 

@@ -81,7 +81,6 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 	 case PACKET_SetAnimation:
 	 {
 		 memcpy(&p_AnimState, data, sizeof(Packet_AnimState));
-		 ErrorMessage("3 : "s + to_string(((int)p_AnimState.EAnimState)));
 		 ((PlayerController*)ObjectManager::KeyObjects[p_AnimState.KeyValue])->SetAnimation((PlayerController::EAction)(p_AnimState.EAnimState));
 	 }	break;
 	 case PACKET_SetDirectionForce:

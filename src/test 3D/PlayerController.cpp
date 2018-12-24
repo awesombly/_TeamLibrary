@@ -40,8 +40,6 @@ bool PlayerController::Release() noexcept
 
 void PlayerController::SetAnimation(const EAction& eAction) noexcept
 {
-	ErrorMessage("CurAnim : "s + to_string(((int)m_curAction)));
-	ErrorMessage("Action : "s + to_string(((int)eAction)));
 	//m_toIdle = false;
 	if (!m_isCharacter ||
 		m_pParent == nullptr)	return;
@@ -229,7 +227,6 @@ void PlayerController::PlayerInput(const float& spf) noexcept
 			static Packet_AnimState p_AnimState;
 			p_AnimState.KeyValue = m_keyValue;
 			p_AnimState.EAnimState = eAction;
-			ErrorMessage("2 : "s + to_string(((int)p_AnimState.EAnimState)));
 			PacketManager::Get().SendPacket((char*)&p_AnimState, PACKET_SetAnimation);
 		}
 
