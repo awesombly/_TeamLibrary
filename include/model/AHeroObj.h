@@ -1,9 +1,9 @@
 #pragma once
 #include "ACharMgr.h"
 //#include "ACamera.h"
-#define MAX_BONE_MATRICES 255
+#include "GameObject.h"
 
-#define HERO_IDLE L"HERO_IDLE.Mat" 
+#define MAX_BONE_MATRICES 255
 
 
 struct CBConstBoneWorld
@@ -16,7 +16,7 @@ struct CBConstBoneWorld
 class AHeroObj : public AModel
 {
 public:
-	bool obbCollide = false;
+	//bool obbCollide = false;
 	int						m_iObjectIndex;
 	ACharacter*				m_pChar;
 	T_STR					m_szName;
@@ -33,6 +33,9 @@ public:
 	ComPtr<ID3D11Buffer>    m_pCBConstBoneWorld;
 	int						m_iMatrixIndex;
 	bool					m_bBoneRender;
+	
+	
+	GameObject* clone() noexcept override;
 
 public:
 

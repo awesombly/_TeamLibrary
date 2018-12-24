@@ -1,5 +1,5 @@
 
-*NUMCHARACTER		3
+*NUMCHARACTER		4
 
 //////////////////////////////////////////////////////////////////////////
 *CHARACTERNAME		guard
@@ -53,6 +53,16 @@
 
 
 
+
+*CHARACTERNAME		NPC_Chicken
+*SHADERFILENMAE		..\..\data\model\Character.hlsl
+
+*MATRIXMATRIXCOUNT  1
+*MATRIXFILENAME		..\..\data\model\NPC_Chicken\chicken.Mat
+
+*SKIN_UPPER_BODY_COUNT	1
+*SKIN_UPPER_BODY	..\..\data\model\NPC_Chicken\chicken.skm		null
+*SKIN_LOWER_BODY_COUNT	0
 
 
 
