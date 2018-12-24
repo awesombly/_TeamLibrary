@@ -6,12 +6,12 @@ SkyBox::SkyBox(const wstring_view& myName, const wstring_view& srcName,
 {
 	SetInfo(myName, EComponent::Etc, srcName, vertexShaderName, pixelShaderName);
 	Create();
-	m_pSRViews[0] = m_curSprite->m_pTexture->GetSRView();
-	m_pSRViews[1] = ObjectManager::GetInstance().GetSpriteList(m_srcName + L"right")->front().m_pTexture->GetSRView();
-	m_pSRViews[2] = ObjectManager::GetInstance().GetSpriteList(m_srcName + L"back")->front().m_pTexture->GetSRView();
-	m_pSRViews[3] = ObjectManager::GetInstance().GetSpriteList(m_srcName + L"left")->front().m_pTexture->GetSRView();
-	m_pSRViews[4] = ObjectManager::GetInstance().GetSpriteList(m_srcName + L"top")->front().m_pTexture->GetSRView();
-	m_pSRViews[5] = ObjectManager::GetInstance().GetSpriteList(m_srcName + L"bottom")->front().m_pTexture->GetSRView();
+	m_pSRViews[0] = ObjectManager::GetInstance().GetSpriteList(m_srcName + L"front.jpg")->front().m_pTexture->GetSRView();//m_curSprite->m_pTexture->GetSRView();
+	m_pSRViews[1] = ObjectManager::GetInstance().GetSpriteList(m_srcName + L"right.jpg")->front().m_pTexture->GetSRView();
+	m_pSRViews[2] = ObjectManager::GetInstance().GetSpriteList(m_srcName + L"back.jpg")->front().m_pTexture->GetSRView();
+	m_pSRViews[3] = ObjectManager::GetInstance().GetSpriteList(m_srcName + L"left.jpg")->front().m_pTexture->GetSRView();
+	m_pSRViews[4] = ObjectManager::GetInstance().GetSpriteList(m_srcName + L"up.jpg")->front().m_pTexture->GetSRView();
+	m_pSRViews[5] = ObjectManager::GetInstance().GetSpriteList(m_srcName + L"down.jpg")->front().m_pTexture->GetSRView();
 }
 
 bool SkyBox::Init() noexcept

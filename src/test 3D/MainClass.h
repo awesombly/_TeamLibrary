@@ -7,6 +7,7 @@
 ///
 
 #include "SkySphere.h"
+#include "SkyBox.h"
 #include "MaxImporter.h"
 #include "ParticleSystem.h"
 #include "Raycast.h"

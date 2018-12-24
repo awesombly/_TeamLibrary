@@ -38,14 +38,14 @@ bool Collider::Frame(const float& spf, const float& accTime)	noexcept
 	m_force -= m_force * m_damping * spf;
 
 	// Èû Àû¿ë
-	if (isHost)
-	{
-		if (GetVelocitySq() > 100.0f)
+	//if (isHost)
+	//{
+		if (GetVelocitySq() > 80.0f)
 		{
-			m_pParent->isMoved(true);
+			//m_pParent->isMoved(true);
 			m_pParent->GetRoot()->Translate((GetTotalForce() + Vector3::Up * 5.0f) * spf);
 		}
-	}
+	//}
 	return true;
 	accTime;
 }
