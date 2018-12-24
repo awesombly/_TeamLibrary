@@ -12,7 +12,7 @@ void PacketManager::SendPacket(char* data, const USHORT& packeyType, const PP::P
 		return;
 	}
 	
-	//pSender->BroadcastWString(L"Hello, Server!");	//서버에게 문자열 전송(함수명은 바꿀 예정)
+	///pSender->BroadcastWString(L"Hello, Server!");	//서버에게 문자열 전송(함수명은 바꿀 예정)
 	static PP::PPPacketForProcess packet;
 
 	memcpy(packet.m_Packet.m_Payload, (void*)data, sizeof(data));
@@ -29,7 +29,6 @@ void PacketManager::SendPacket(char* data, const USHORT& packeyType, const PP::P
 
 void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char* data) noexcept
 {
-	
 	static Packet_KeyValue		p_KeyValue;
 	static Packet_Bool			p_Bool;
 	static Packet_Vector3		p_Vector3;

@@ -2,10 +2,12 @@
 //#pragma comment( lib, "_CoreLib D3D.lib")
 #pragma comment( lib, "ACoreLibTEAM.lib")
 #pragma comment( lib, "libppnetwork.lib")
+
 #include "CoreDX.h"
 ///
 
 #include "SkySphere.h"
+#include "SkyBox.h"
 #include "MaxImporter.h"
 #include "ParticleSystem.h"
 #include "Raycast.h"
@@ -22,7 +24,7 @@
 #include "PlayerController.h"
 
 #include "AHeroObj.h"
-
+#include "JPanel.h"
 
 
 // =====================================================================

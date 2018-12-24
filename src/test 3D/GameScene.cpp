@@ -71,7 +71,6 @@ bool GameScene::Init() noexcept
 // ÇÁ·¹ÀÓ
 bool GameScene::Frame() noexcept
 {
-
 	if (Input::GetKeyState(VK_TAB) == EKeyState::DOWN)
 	{
 		if (m_pPlayer->GetParent() == m_pHero)

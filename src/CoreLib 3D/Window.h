@@ -12,8 +12,6 @@ public:
 	static HWND				m_hWnd;				// 윈도우 핸들
 	static HINSTANCE		m_hInstance;		// 실행 객체 핸들
 	static Window*			Instance;			// 접근용
-
-	//static MyVector2		DrawPoint;
 public:
 	static void ResizeWindow(const RECT& rect) noexcept;
 	static RECT& getClientRect();

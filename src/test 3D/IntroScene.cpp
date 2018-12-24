@@ -1,7 +1,6 @@
 #include "IntroScene.h"
 
 
-
 bool IntroScene::Init() noexcept
 {
 	// ====================================================================================================
@@ -130,7 +129,6 @@ bool IntroScene::Init() noexcept
 #pragma endregion
 	// ====================================================================================================
 
-
 	return true;
 }
 
@@ -149,7 +147,7 @@ bool IntroScene::Frame() noexcept
 bool IntroScene::Render() noexcept
 {
 	DxManager::Get().Render();
-	ObjectManager::Get().Render(DxManager::Get().GetDContext());
+	ObjectManager::Get().Render(DxManager::GetDContext());
 	SoundManager::Get().Render();
 	return true;
 }
