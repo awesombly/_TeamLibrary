@@ -43,12 +43,12 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 
 	switch (sendMode)
 	{
-	case PACKET_SetPositionRotation:
-		{
-			memcpy(&p_Vec3Quat, data, sizeof(Packet_Vec3Quat));
-			ObjectManager::KeyObjects[p_Vec3Quat.KeyValue]->SetPosition(p_Vec3Quat.Vec3);
-			ObjectManager::KeyObjects[p_Vec3Quat.KeyValue]->SetRotation(p_Vec3Quat.Quat);
-		}	break;
+	 case PACKET_SetPositionRotation:
+	 {
+	 	memcpy(&p_Vec3Quat, data, sizeof(Packet_Vec3Quat));
+	 	ObjectManager::KeyObjects[p_Vec3Quat.KeyValue]->SetPosition(p_Vec3Quat.Vec3);
+	 	ObjectManager::KeyObjects[p_Vec3Quat.KeyValue]->SetRotation(p_Vec3Quat.Quat);
+	 }	break;
 	 case PACKET_SetPosition:
 	 {
 	 	memcpy(&p_Vector3, data, sizeof(Packet_Vector3));
@@ -94,6 +94,5 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 		 //memcpy(&p_KeyValue, data, sizeof(Packet_KeyValue));
 		 ((PlayerController*)ObjectManager::KeyObjects[p_KeyValue.KeyValue])->m_pCollider->isMoving(false);
 	 }	break;
-		
 	}
 }
