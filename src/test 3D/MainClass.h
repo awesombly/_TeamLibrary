@@ -2,6 +2,7 @@
 //#pragma comment( lib, "_CoreLib D3D.lib")
 #pragma comment( lib, "ACoreLibTEAM.lib")
 #pragma comment( lib, "libppnetwork.lib")
+
 #include "CoreDX.h"
 ///
 
@@ -22,7 +23,7 @@
 #include "PlayerController.h"
 
 #include "AHeroObj.h"
-
+#include "JPanel.h"
 
 
 // =====================================================================
