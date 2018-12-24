@@ -7,10 +7,12 @@ bool LobbyScene::Init() noexcept
 {
 	static auto pToGuest = [](void* pScene) {
 		isHost = false;
+		((MainClass*)pScene)->StartupClient();
 		((MainClass*)pScene)->SetScene(ESceneName::Main);
 	};
 	static auto pToHost = [](void* pScene) {
 		isHost = true;
+		((MainClass*)pScene)->StartupServer();
 		((MainClass*)pScene)->SetScene(ESceneName::Main);
 	};
 

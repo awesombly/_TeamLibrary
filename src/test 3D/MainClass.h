@@ -86,4 +86,11 @@ public:
 public:
 	MainClass() = default;
 	~MainClass() = default;
+public:
+	
+	int StartupServer();
+	int StartupClient();
 };
+
+int ProcessServerPacket();
+int ProcessClientPacket();
