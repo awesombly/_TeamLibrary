@@ -6,7 +6,7 @@ namespace UI
 	class JImageCtrl : public JPanel
 	{
 	public:
-		virtual bool Create(ID3D11Device* pDevice, const char* PSName = "PS", const TCHAR* szShaderName = L"../../Data/Shader/DefaultUI.hlsl");
+		virtual bool Create(ID3D11Device* pDevice, const char* PSName = "PS", const TCHAR* szShaderName = L"../../data/ui/shader/DefaultUI.hlsl");
 		bool SetTexture(ID3D11Device* pDevice, const TCHAR* txName = NULL);
 	public:
 		bool Frame(const float& spf, const float& accTime)noexcept override;

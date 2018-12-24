@@ -11,7 +11,7 @@ namespace UI
 	public:
 		void SetValue(const float& fValue);
 		bool Create(ID3D11Device* pDevice, const TCHAR* szBack, const TCHAR* szFront, 
-			const char* PSName = "PS", const TCHAR* szShaderName = L"../../Data/Shader/DefaultUI.hlsl");
+			const char* PSName = "PS", const TCHAR* szShaderName = L"../../data/ui/shader/DefaultUI.hlsl");
 	public:
 		void Update();
 		bool Frame(const float& spf, const float& accTime) noexcept override;

@@ -15,7 +15,7 @@ namespace UI
 		D3DXMATRIX				 m_matProj;
 	public:
 		void SetMatrix(D3DXMATRIX* matWorld, D3DXMATRIX* matView, D3DXMATRIX* matProj);
-		bool Create(ID3D11Device* pDevice, const char* PSName = "PS_Sphere", const TCHAR* szShaderName = L"../../Data/Shader/DefaultUI.hlsl");
+		bool Create(ID3D11Device* pDevice, const char* PSName = "PS_Sphere", const TCHAR* szShaderName = L"../../data/ui/shader/DefaultUI.hlsl");
 	public:
 		bool PreRender(ID3D11DeviceContext* pContext);
 		bool Render(ID3D11DeviceContext* pContext);

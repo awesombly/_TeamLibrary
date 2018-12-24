@@ -19,7 +19,7 @@ namespace UI
 		bool Clicked(RECT& rt, POINT& pt);
 		bool Hovered(RECT& rt, POINT& pt);
 		bool Pressed(RECT& rt, POINT& pt);
-		bool Create(ID3D11Device* pDevice, const char* PSName = "PS", const TCHAR* szShaderName = L"../../Data/Shader/DefaultUI.hlsl");
+		bool Create(ID3D11Device* pDevice, const char* PSName = "PS", const TCHAR* szShaderName = L"../../data/ui/shader/DefaultUI.hlsl");
 	public:
 		bool Frame();
 		bool PreRender(ID3D11DeviceContext* pContext);
