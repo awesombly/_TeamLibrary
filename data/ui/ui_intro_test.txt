@@ -1,0 +1,66 @@
+^Type 777
+^NodeName Root
+^ParentName 
+^Position 0.000000 0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 1.000000 1.000000 1.000000
+
+^Type 778
+^NodeName UI_BackGround
+^ParentName Root
+^Position 0.000000 0.000000 0.999999
+^Rotate 0.000000 0.000000 0.000000
+^Scale 400.000000 300.000000 1.000000
+^tx_Normal title_bg-05e446bbfaa506e40a842a116a783d3d-1.png
+^tx_Hover title_bg-05e446bbfaa506e40a842a116a783d3d-1.png
+^tx_Press title_bg-05e446bbfaa506e40a842a116a783d3d-1.png
+
+^Type 778
+^NodeName PANEL_0
+^ParentName Root
+^Position -0.000000 0.000000 0.999998
+^Rotate 0.000000 0.000000 0.000000
+^Scale 150.000000 100.000000 1.000000
+^tx_Normal black_wdim10.png
+^tx_Hover black_wdim10.png
+^tx_Press black_wdim10.png
+
+^Type 783
+^NodeName txt_Guest
+^ParentName Root
+^Position 70.000000 0.000000 0.999997
+^Rotate 0.000000 0.000000 0.000000
+^Scale 50.000000 15.000000 1.000000
+^strText Guest
+^tx_Normal btn_000.png
+^tx_Hover btn_001.png
+^tx_Press btn_001.png
+
+^Type 783
+^NodeName txt_Host
+^ParentName Root
+^Position -70.000000 0.000000 0.999996
+^Rotate 0.000000 0.000000 0.000000
+^Scale 50.000000 15.000000 1.000000
+^strText Host
+^tx_Normal btn_000.png
+^tx_Hover btn_001.png
+^tx_Press btn_001.png
+
+^Type 782
+^NodeName Sprite_zz
+^ParentName Root
+^Position 350.000000 250.000000 0.999995
+^Rotate 0.000000 0.000000 0.000000
+^Scale 50.000000 50.000000 1.000000
+^AnimTime 3.000000
+^SPRITESTART 8 
+^icn_crime.png
+^icn_drug.png
+^icn_gamble.png
+^icn_horror.png
+^icn_ment.png
+^icn_rate_18.png
+^icn_sensation.png
+^icn_violence.png
+^SPRITEEND
