@@ -113,6 +113,8 @@ bool GameScene::Render() noexcept
 // ¸±¸®Áî
 bool GameScene::Release() noexcept
 {
+	I_CHARMGR.Release();
+	I_OBJMGR.Release();
 	m_pHero = m_pZombi = m_pBird = nullptr;
 	ObjectManager::Cameras[ECamera::Main]->CutParent();
 	ObjectManager::Get().PopObject(ObjectManager::Cameras[ECamera::Main]);
