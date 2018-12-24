@@ -44,64 +44,25 @@ void PlayerController::SetAnimation(const EAction& eAction) noexcept
 	if (!m_isCharacter ||
 		m_pParent == nullptr)	return;
 
-	static Packet_Vector3 p_direction;
-	static Packet_KeyValue p_Key;
+	//static Packet_Vector3 p_direction;
+	//static Packet_KeyValue p_Key;
 	m_pHero = (AHeroObj*)m_pParent;
-	m_pCollider = (Collider*)m_pParent->GetComponentList(EComponent::Collider)->front();
 
-	if (m_curAction != eAction)
-	{
-		switch (m_curCharacter)
-		{
-		case ECharacter::EGuard:
-		{
-			AnimationGuard(eAction);
-		}	break;
-		case ECharacter::EZombie:
-		{
-			AnimationZombi(eAction);
-		}	break;
-		}
-	}
-	else
-	{
-		switch (eAction)
-		{
-		case EAction::Left:
-		{
-			m_pCollider->SetDirectionForce(m_pParent->GetLeft() * m_moveSpeed);
-		}	break;
-		case EAction::Right:
-		{
-			m_pCollider->SetDirectionForce(m_pParent->GetRight() * m_moveSpeed);
-		}	break;
-		case EAction::Forward:
-		{
-			m_pCollider->SetDirectionForce(m_pParent->GetForward() * m_moveSpeed);
-		}	break;
-		case EAction::ForwardLeft:
-		{
-			m_pCollider->SetDirectionForce((m_pParent->GetForward() + m_pParent->GetLeft()) * 0.7f * m_moveSpeed);
-		}	break;
-		case EAction::ForwardRight:
-		{
-			m_pCollider->SetDirectionForce((m_pParent->GetForward() + m_pParent->GetRight()) * 0.7f * m_moveSpeed);
-		}	break;
-		case EAction::Backward:
-		{
-			m_pCollider->SetDirectionForce(m_pParent->GetBackward() * m_moveSpeed);
-		}	break;
-		case EAction::BackwardLeft:
-		{
-			m_pCollider->SetDirectionForce((m_pParent->GetBackward() + m_pParent->GetLeft()) * 0.7f * m_moveSpeed);
-		}	break;
-		case EAction::BackwardRight:
-		{
-			m_pCollider->SetDirectionForce((m_pParent->GetBackward() + m_pParent->GetRight()) * 0.7f * m_moveSpeed);
-		}	break;
-		}
-	}
 	m_curAction = eAction;
+	//if (m_curAction != eAction)
+	//{
+	switch (m_curCharacter)
+	{
+	 case ECharacter::EGuard:
+	 {
+	 	AnimationGuard(eAction);
+	 }	break;
+	 case ECharacter::EZombie:
+	 {
+	 	AnimationZombi(eAction);
+	 }	break;
+	}
+	//}
 }
 
 void PlayerController::AnimationGuard(const EAction& eAction) noexcept
@@ -221,10 +182,12 @@ void PlayerController::PlayerInput(const float& spf) noexcept
 {
 	if (Input::GetKeyState(VK_SHIFT) != EKeyState::HOLD)
 	{
-		static Packet_AnimState p_AnimState;
 		//m_toIdle = true;
-		EAction eAction = EAction::Idle;
+		static EAction eAction;
+		eAction = EAction::Idle;
 		m_direction = Vector3::Zero;
+		m_pCollider = (Collider*)m_pParent->GetComponentList(EComponent::Collider)->front();
+
 		if (Input::GetKeyState('W') == EKeyState::HOLD)
 		{
 			eAction = (EAction)(eAction + EAction::Forward);
@@ -259,16 +222,50 @@ void PlayerController::PlayerInput(const float& spf) noexcept
 		}
 
 		//if (eAction != EAction::Idle)
+		if (eAction != m_curAction)
 		{
+			static Packet_AnimState p_AnimState;
 			p_AnimState.KeyValue = m_keyValue;
 			p_AnimState.EAnimState = eAction;
 			PacketManager::Get().SendPacket((char*)&p_AnimState, PACKET_SetAnimation);
 		}
-		//// 입력 없을시 Idle
-		//if (m_toIdle && m_isLoopAnim)
-		//{
-		//	SetAnimation(EAction::Idle);
-		//}
+
+		// 이동 처리
+		switch (eAction)
+		{
+		case EAction::Left:
+		{
+			m_pCollider->SetDirectionForce(m_pParent->GetLeft() * m_moveSpeed);
+		}	break;
+		case EAction::Right:
+		{
+			m_pCollider->SetDirectionForce(m_pParent->GetRight() * m_moveSpeed);
+		}	break;
+		case EAction::Forward:
+		{
+			m_pCollider->SetDirectionForce(m_pParent->GetForward() * m_moveSpeed);
+		}	break;
+		case EAction::ForwardLeft:
+		{
+			m_pCollider->SetDirectionForce((m_pParent->GetForward() + m_pParent->GetLeft()) * 0.7f * m_moveSpeed);
+		}	break;
+		case EAction::ForwardRight:
+		{
+			m_pCollider->SetDirectionForce((m_pParent->GetForward() + m_pParent->GetRight()) * 0.7f * m_moveSpeed);
+		}	break;
+		case EAction::Backward:
+		{
+			m_pCollider->SetDirectionForce(m_pParent->GetBackward() * m_moveSpeed);
+		}	break;
+		case EAction::BackwardLeft:
+		{
+			m_pCollider->SetDirectionForce((m_pParent->GetBackward() + m_pParent->GetLeft()) * 0.7f * m_moveSpeed);
+		}	break;
+		case EAction::BackwardRight:
+		{
+			m_pCollider->SetDirectionForce((m_pParent->GetBackward() + m_pParent->GetRight()) * 0.7f * m_moveSpeed);
+		}	break;
+		}
 	}
 	spf;
 }
@@ -293,10 +290,10 @@ void PlayerController::CameraInput(const float& spf) noexcept
 	// 회전
 	m_pCamera->SetRotationX(std::clamp(m_pCamera->GetRotation().x + Input::GetMouseMovePos().y * 0.002f, MinCameraY, MaxCameraY));
 	m_pParent->Rotate(0.0f, Input::GetMouseMovePos().x * 0.002f);
-	static Packet_Quaternion p_rotate;
-	p_rotate.KeyValue = m_pParent->m_keyValue;
-	p_rotate.Quat = m_pParent->GetRotation();
-	PacketManager::Get().SendPacket((char*)&p_rotate, PACKET_SetRotation);
+	//static Packet_Quaternion p_rotate;
+	//p_rotate.KeyValue = m_pParent->m_keyValue;
+	//p_rotate.Quat = m_pParent->GetRotation();
+	//PacketManager::Get().SendPacket((char*)&p_rotate, PACKET_Rotate);
 	// 초기화
 	if (Input::GetInstance().GetKeyState('R') == EKeyState::DOWN)
 	{
