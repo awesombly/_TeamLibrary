@@ -35,7 +35,7 @@ public:
 	bool					m_bBoneRender;
 
 public:
-	bool		aabbCollide = false;
+	//bool		aabbCollide = false;
 	//void		CheckAABB(A_Box targetBox);
 	//void		CheckOBBInPlane(A_Box&  pBox);
 
@@ -55,7 +55,7 @@ public:
 
 
 
-
+	//bool		SetANIM_OneTime(const TCHAR* szName);
 	//D3DXVECTOR3 GetPlayerPos();
 	//INT GetPlayerPosX();
 	//INT GetPlayerPosY();

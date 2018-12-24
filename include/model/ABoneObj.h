@@ -37,7 +37,7 @@ public:
 	D3DXVECTOR3**				m_ppTransVector;
 	ID3D11Buffer*               m_pBoneBuffer;
 	ID3D11ShaderResourceView*	m_pBoneBufferRV;
-
+	bool m_bOneTime;
 public:
 	// 상수 버퍼 및 에니메이션 보간
 	void		SetBoneMatrices(ID3D11DeviceContext*    pContext);						//멤버 변수인 m_pMatrix를 사용하여 상수버퍼를 갱신
@@ -47,6 +47,7 @@ public:
 	bool		AniFrame(FLOAT fCurFrame, FLOAT fElapsedTime,
 		int iFirstFrame, int iLastFrame,
 		D3DXMATRIX* pMatrix);
+
 
 public:
 	bool		Init()noexcept override;

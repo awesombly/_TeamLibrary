@@ -1,6 +1,6 @@
 #pragma once
 //#include "ADxObjStd.h"
-#include "AFrustum.h"
+//#include "AFrustum.h"
 
 class ABaseObj
 {

@@ -21,32 +21,6 @@ struct TriListSame
 	}
 };
 
-//struct DescendingFaceSort
-//{
-//	bool operator()(PNCT_VERTEX& rpStart, PNCT_VERTEX& rpEnd)
-//	{
-//		return rpStart.iSubIndex < rpEnd.iSubIndex;
-//	}
-//};
-//
-//struct DescendingPNCTSort
-//{
-//	bool operator()(PNCT_VERTEX& rpStart, PNCT_VERTEX& rpEnd)
-//	{
-//		return rpStart.iSubIndex < rpEnd.iSubIndex;
-//	}
-//};
-//
-//struct IsiSubSame
-//{
-//	PNCT_VERTEX			m_Tri;
-//	IsiSubSame(PNCT_VERTEX data) : m_Tri(data) {}
-//	bool operator()(PNCT_VERTEX& value)
-//	{
-//		return value.iSubIndex == m_Tri.iSubIndex;
-//	}
-//};
-
 struct DescendingTriSort
 {
 	bool operator()(ATri& rpStart, ATri& rpEnd)
@@ -76,8 +50,9 @@ struct IsTriangleSame5
 };
 
 
-struct AMesh : public AModel
+class AMesh : public AModel
 {
+public:
 	int						m_iIndex;
 
 	T_STR								m_strNodeName;
@@ -108,7 +83,8 @@ struct AMesh : public AModel
 
 	D3DXMATRIX				m_matInverse;		//역행렬
 
-	D3DXMATRIX				m_matLocal;
+	//D3DXMATRIX				m_matLocal;
+	D3DXMATRIX				m_matLocalMesh;
 	D3DXMATRIX				m_matWorldScale;	//신축행렬
 	D3DXMATRIX				m_matWorldRotate;	//회전행렬
 	D3DXMATRIX				m_matWorldTrans;	//월등동행렬
@@ -142,22 +118,23 @@ public:
 	int IsEqulVertex(vector<PNCT_VERTEX>&  VertexArray, PNCT_VERTEX& Vertex);
 	int IsEqulVertexList(vector<PNCT_VERTEX>&  VertexArray, PNCT_VERTEX& Vertex);
 	
-	void MakeBuffer();
-	int MakeSubBuffer(vector<PNCT_VERTEX>& vVertex,int isub,int addcnt=0);
+//	void MakeBuffer();
+//	int MakeSubBuffer(vector<PNCT_VERTEX>& vVertex,int isub,int addcnt=0);
 	int SetUniqueBuffer(vector <ATri>& TriList, int iMtrl, int iStartTri);
 
+	AMesh();
+	virtual ~AMesh();
 
-	AMesh()
-	{
-		m_pParent = NULL;
-		D3DXMatrixIdentity(&m_matLocal);
-		D3DXMatrixIdentity(&m_matWorldTrans);
-		D3DXMatrixIdentity(&m_matWorldRotate);
-		D3DXMatrixIdentity(&m_matWorldScale);
-		D3DXMatrixIdentity(&m_matCalculation);
-		m_bUnAnimObj = false;
-		m_bSelect = false;
-		//D3DXMatrixIdentity(&m_matXFormToWorld);
-	}
+	//{
+	//	m_pParent = NULL;
+	//	D3DXMatrixIdentity(&m_matLocal);
+	//	D3DXMatrixIdentity(&m_matWorldTrans);
+	//	D3DXMatrixIdentity(&m_matWorldRotate);
+	//	D3DXMatrixIdentity(&m_matWorldScale);
+	//	D3DXMatrixIdentity(&m_matCalculation);
+	//	m_bUnAnimObj = false;
+	//	m_bSelect = false;
+	//}
+
 };
 
