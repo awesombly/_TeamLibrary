@@ -13,6 +13,9 @@
 #define PACKET_SetAnimation			1007
 #define PACKET_SetDirectionForce	1008
 #define PACKET_SetMoveStop			1009
+#define PACKET_RequestSync			1010
+//#define PACKET_Sync					1011
+#define PACKET_AddPlayer			1012
 
 
 struct Packet_KeyValue

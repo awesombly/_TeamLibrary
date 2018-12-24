@@ -93,5 +93,11 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 		 //memcpy(&p_KeyValue, data, sizeof(Packet_KeyValue));
 		 ((PlayerController*)ObjectManager::KeyObjects[p_KeyValue.KeyValue])->m_pCollider->isMoving(false);
 	 }	break;
+	 case PACKET_RequestSync:
+	 {
+	 }	break;
+	 case PACKET_AddPlayer:
+	 {
+	 }	break;
 	}
 }
