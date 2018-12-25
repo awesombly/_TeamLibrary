@@ -16,7 +16,6 @@ bool GameScene::Init() noexcept
 	m_pHero->m_objType = EObjType::Object;
 	auto pCollider = new ColliderOBB({ -13.0f, 0.0f , -13.0f }, { 13.0f, 80.0f , 13.0f });//m_pHero.m_CollsionBox.vMin, m_pHero.m_CollsionBox.vMax));
 	m_pHero->AddComponent(pCollider);
-	m_pPlayer->isCharacter(true);
 	m_pPlayer->SetParent(m_pHero);
 	m_pPlayer->ResetOption();
 	m_pPlayer->m_curCharacter = PlayerController::ECharacter::EGuard;
@@ -101,13 +100,11 @@ bool GameScene::Frame() noexcept
 		{
 			m_pPlayer->SetParent(m_pChicken);
 			m_pPlayer->m_curCharacter = PlayerController::ECharacter::EDummy;
-			//m_pPlayer->isCharacter(false);
 		}
 		else if (m_pPlayer->GetParent() == m_pChicken)
 		{
 			m_pPlayer->SetParent(m_pHero);
 			m_pPlayer->m_curCharacter = PlayerController::ECharacter::EGuard;
-			//m_pPlayer->isCharacter(false);
 		}
 		m_pPlayer->ResetOption();
 	}
