@@ -113,7 +113,6 @@ bool GameScene::Frame() noexcept
 	DxManager::Get().Frame();
 	ObjectManager::Get().Frame(Timer::SPF, Timer::AccumulateTime);
 	SoundManager::Get().Frame();
-
 	return true;
 }
 

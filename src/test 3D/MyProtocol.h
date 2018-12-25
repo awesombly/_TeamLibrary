@@ -14,16 +14,21 @@
 #define PACKET_ReqAddPlayer			1010
 #define PACKET_AckAddPlayer			1011
 #define PACKET_SetAnimTransform		1012
+#define PACKET_TakeObject			1013
 
 
 
 
 
 #pragma pack(push, 1)
-struct Packet_AddPlayer
+struct Packet_TakeObject
 {
 	UINT KeyValue;
+	
 	D3DXVECTOR3 Position;
+	D3DXVECTOR3 Scale;
+	D3DXQUATERNION Rotation;
+	char ProtoNum;
 };
 
 struct Packet_KeyValue

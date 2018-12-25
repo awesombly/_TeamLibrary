@@ -6,7 +6,7 @@ static std::wofstream debugStream(L"../../debugOut.txt", std::ios::app);
 #endif
 
 
-char * WCharToChar(wchar_t* str) noexcept
+char * WCharToChar(const wchar_t* str) noexcept
 {
 	//반환할 char* 변수 선언
 	char* pStr;
@@ -19,7 +19,7 @@ char * WCharToChar(wchar_t* str) noexcept
 	return pStr;
 }
 
-wchar_t* CharToWChar(char* str) noexcept
+wchar_t* CharToWChar(const char* str) noexcept
 {
 	//wchar_t형 변수 선언
 	wchar_t* pStr;

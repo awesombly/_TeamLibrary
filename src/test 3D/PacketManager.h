@@ -10,8 +10,10 @@ class PacketManager : public ISingleton<PacketManager>
 public:
 	bool isHost;
 	PP::PPSender* pSender;
+
+	wstring m_inputIP;
 public:
-	void InterceptPacket(const PP::PPPacketType& sendMode, const char* data)										  noexcept;
+	void InterceptPacket(const PP::PPPacketType& sendMode, const char* data) noexcept;
 	void SendPacket(char* data, const USHORT& size, const USHORT& packeyType/*, const PP::PPSendMode& sendMode = PP::PPSendMode::BROADCAST*/) noexcept;
 public:
 	friend class ISingleton<PacketManager>;

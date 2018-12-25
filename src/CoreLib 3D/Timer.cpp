@@ -41,10 +41,6 @@ bool Timer::Frame() noexcept
 		// 실질적인 프레임 부
 		if (m_ElapseTime >= m_kDirTick)
 		{
-			///if ()
-			///{
-			///	isPlaying = !isPlaying;
-			///}
 			if (FPS < m_DirFrame)
 				m_kDirTick -= SPF * 0.00001f;
 			else if (FPS > m_DirFrame)

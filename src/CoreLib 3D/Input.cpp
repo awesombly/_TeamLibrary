@@ -40,12 +40,17 @@ bool Input::Frame() noexcept
 	KeyCheck(VK_NUMPAD4);	KeyCheck(VK_NUMPAD5);	KeyCheck(VK_NUMPAD6);	KeyCheck(VK_NUMPAD7);
 	KeyCheck(VK_NUMPAD8);	KeyCheck(VK_NUMPAD9);	KeyCheck(VK_NUMLOCK);
 	KeyCheck(VK_ADD);		KeyCheck(VK_SUBTRACT);	KeyCheck(VK_DIVIDE);
-	KeyCheck(VK_RETURN);	KeyCheck(VK_CONTROL);
+	KeyCheck(VK_RETURN);	KeyCheck(VK_CONTROL);	KeyCheck(VK_BACK);
 	
 	KeyCheck('1');		KeyCheck('2');		KeyCheck('3');		KeyCheck('4');
+	KeyCheck('5');		KeyCheck('6');		KeyCheck('7');		KeyCheck('8');
+	KeyCheck('9');		KeyCheck('0');		
 	KeyCheck('Q');		KeyCheck('W');		KeyCheck('E');		KeyCheck('R');
+	KeyCheck('T');		KeyCheck('Y');		KeyCheck('U');		KeyCheck('I');
 	KeyCheck('A');		KeyCheck('S');		KeyCheck('D');		KeyCheck('F');
+	KeyCheck('G');		KeyCheck('H');		KeyCheck('J');		KeyCheck('K');
 	KeyCheck('Z');		KeyCheck('X');		KeyCheck('C');		KeyCheck('V');
+	KeyCheck('B');		KeyCheck('N');		KeyCheck('M');
 
 
 	if (GetKeyState(VK_ESCAPE) == EKeyState::DOWN)

@@ -91,9 +91,10 @@ void PlayerController::SetAnim(AHeroObj* pObject, const ECharacter& eCharacter, 
 		{
 			pObject->SetANIM_OneTime(Guard_THROW);
 			auto pDagger = ObjectManager::Get().TakeObject(L"Dagger");
-			pDagger->SetPosition(pObject->GetPosition() + pObject->GetUp() * 70.0f + pObject->GetForward() * 40.0f);
+			pDagger->SetPosition(pObject->GetPosition() + pObject->GetForward() * 40.0f + pObject->GetUp() * 65.0f + pObject->GetRight() * 20.0f);
+			pDagger->SetRotation(pObject->GetRotation() + Quaternion::Up * 0.5f);
 			pDagger->SetScale(Vector3::One * 4.0f);
-			((Collider*)pDagger->GetComponentList(EComponent::Collider)->front())->SetForce((pObject->GetForward() + Vector3::Up * 0.4f) * 300.0f);
+			((Collider*)pDagger->GetComponentList(EComponent::Collider)->front())->SetForce((pObject->GetForward() + Vector3::Up * 0.5f) * 350.0f);
 		}	break;
 		}
 	}	break;

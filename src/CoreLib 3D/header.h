@@ -109,8 +109,8 @@ namespace Matrix {
 };
 
 
-char * WCharToChar(wchar_t* str)	noexcept;
-wchar_t* CharToWChar(char* str)		noexcept;
+char * WCharToChar(const wchar_t* str)	noexcept;
+wchar_t* CharToWChar(const char* str)		noexcept;
 void ErrorMessage(const string_view& msg, const bool& useLoop = false)	noexcept;
 void ErrorMessage(const wstring_view& msg, const bool& useLoop = false) noexcept;
 static constexpr float DegreeToRadian(const float& degree) noexcept
