@@ -40,7 +40,7 @@ bool Collider::Frame(const float& spf, const float& accTime)	noexcept
 	// Èû Àû¿ë
 	//if (isHost)
 	//{
-		if (GetVelocitySq() > 80.0f)
+		if (GetVelocitySq() > 60.0f)
 		{
 			m_pParent->isMoved(true);
 			m_pParent->GetRoot()->Translate((GetTotalForce() + Vector3::Up * 5.0f) * spf);

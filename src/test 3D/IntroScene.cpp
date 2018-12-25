@@ -126,6 +126,16 @@ bool IntroScene::Init() noexcept
 		pObject->SetScale(Vector3::One * 15);
 		ObjectManager::Get().SetProtoObject(pObject);
 		//ObjectManager::Get().PushObject(pObject);
+
+		// ´Ü°Ë
+		//auto pDagger = new AHeroObj();
+		auto pDagger = new GameObject(L"Dagger", ObjectManager::Get().TakeComponent(L"Cube"));
+		//pDagger->SetPlayerCharacter(ITEM_Dagger, 0.0f, 300.0f, -300.0f);
+		//pDagger->m_myName = L"Dagger";
+		pDagger->m_objType = EObjType::Object;
+		pCollider = new ColliderSphere(1.0f);
+		pDagger->AddComponent(pCollider);
+		ObjectManager::Get().SetProtoObject(pDagger);
 	}
 #pragma endregion
 	// ====================================================================================================

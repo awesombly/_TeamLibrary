@@ -90,6 +90,10 @@ void PlayerController::SetAnim(AHeroObj* pObject, const ECharacter& eCharacter, 
 		case EAction::Throw:
 		{
 			pObject->SetANIM_OneTime(Guard_THROW);
+			auto pDagger = ObjectManager::Get().TakeObject(L"Dagger");
+			pDagger->SetPosition(pObject->GetPosition() + pObject->GetUp() * 70.0f + pObject->GetForward() * 40.0f);
+			pDagger->SetScale(Vector3::One * 4.0f);
+			((Collider*)pDagger->GetComponentList(EComponent::Collider)->front())->SetForce((pObject->GetForward() + Vector3::Up * 0.4f) * 300.0f);
 		}	break;
 		}
 	}	break;
@@ -247,7 +251,7 @@ void PlayerController::PlayerInput(const float& spf) noexcept
 		if (!PacketManager::Get().isHost &&
 			Input::GetKeyState(VK_CONTROL) == EKeyState::DOWN)
 		{
-			PacketManager::Get().SendPacket((char*)&PI, sizeof(PI), PACKET_RequestSync);
+			PacketManager::Get().SendPacket((char*)&PI, sizeof(PI), PACKET_ReqSync);
 		}
 
 

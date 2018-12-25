@@ -57,16 +57,6 @@ bool GameScene::Init() noexcept
 	m_pChicken->AddComponent(pCollider);
 	ObjectManager::Get().PushObject(m_pChicken);
 
-	m_Dagger = new AHeroObj();
-	m_Dagger->SetPlayerCharacter(ITEM_Dagger, 0.0f, 300.0f, -300.0f);
-	m_Dagger->m_myName = L"Dagger";
-	m_Dagger->m_objType = EObjType::Object;
-	pCollider = new ColliderOBB({ -15.0f, 0.0f , -15.0f }, { 15.0f, 30.0f , 15.0f });
-	//pCollider->SetDirectionForce(Vector3::Forward * 200.0f);
-	pCollider->useGravity(true);
-	m_Dagger->AddComponent(pCollider);
-	ObjectManager::Get().PushObject(m_Dagger);
-
 
 	ObjectManager::Get().TakeObject(L"HeightMap");
 	ObjectManager::Get().TakeObject(L"ParticleSystem");
@@ -136,7 +126,6 @@ bool GameScene::Render() noexcept
 	m_pZombi->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
 	m_pBird->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
 	m_pChicken->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-	m_Dagger->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
 
 	DxManager::Get().Render();
 	ObjectManager::Get().Render(DxManager::Get().GetDContext());
@@ -149,7 +138,7 @@ bool GameScene::Release() noexcept
 {
 	if (m_pMapTree) m_pMapTree->Release();
 
-	m_pHero = m_pZombi = m_pBird = m_pChicken = m_Dagger = nullptr;
+	m_pHero = m_pZombi = m_pBird = m_pChicken = nullptr;
 	ObjectManager::Cameras[ECamera::Main]->CutParent();
 	ObjectManager::Get().PopObject(ObjectManager::Cameras[ECamera::Main]);
 	ObjectManager::Get().Release();

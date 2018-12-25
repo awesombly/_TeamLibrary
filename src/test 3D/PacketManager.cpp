@@ -52,36 +52,36 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 	 	ObjectManager::KeyObjects[p_Transform.KeyValue]->SetRotation(p_Transform.Rotation);
 		ObjectManager::KeyObjects[p_Transform.KeyValue]->SetScale(p_Transform.Scale);
 	 }	break;
-	 //case PACKET_SetPosition:
-	 //{
-	 //	memcpy(&p_Vector3, data, sizeof(Packet_Vector3));
-	 //	ObjectManager::KeyObjects[p_Vector3.KeyValue]->SetPosition(p_Vector3.Vec3);
-	 //}	break;
-	 //case PACKET_SetRotation:
-	 //{
-	//	 memcpy(&p_Quaternion, data, sizeof(Packet_Quaternion));
-	//	 ObjectManager::KeyObjects[p_Quaternion.KeyValue]->SetRotation(p_Quaternion.Quat);
-	 //}	break;
-	 //case PACKET_SetScale:
-	 //{
-	//	 memcpy(&p_Vector3, data, sizeof(Packet_Vector3));
-	//	 ObjectManager::KeyObjects[p_Vector3.KeyValue]->SetScale(p_Vector3.Vec3);
-	 //}	break;
-	 //case PACKET_Translate:
-	 //{
-	 //	memcpy(&p_Vector3, data, sizeof(Packet_Vector3));
-	 //	ObjectManager::KeyObjects[p_Vector3.KeyValue]->Translate(p_Vector3.Vec3);
-	 //}	break;
-	 //case PACKET_Rotate:
-	 //{
-	//	 memcpy(&p_Quaternion, data, sizeof(Packet_Quaternion));
-	//	 ObjectManager::KeyObjects[p_Quaternion.KeyValue]->Rotate(p_Quaternion.Quat);
-	 //}	break;
-	 //case PACKET_Scaling:
-	 //{
-	//	 memcpy(&p_Vector3, data, sizeof(Packet_Vector3));
-	//	 ObjectManager::KeyObjects[p_Vector3.KeyValue]->Scaling(p_Vector3.Vec3);
-	 //}	break;
+	 case PACKET_SetPosition:
+	 {
+	 	memcpy(&p_Vector3, data, sizeof(Packet_Vector3));
+	 	ObjectManager::KeyObjects[p_Vector3.KeyValue]->SetPosition(p_Vector3.Vec3);
+	 }	break;
+	 case PACKET_SetRotation:
+	 {
+		memcpy(&p_Quaternion, data, sizeof(Packet_Quaternion));
+		ObjectManager::KeyObjects[p_Quaternion.KeyValue]->SetRotation(p_Quaternion.Quat);
+	 }	break;
+	 case PACKET_SetScale:
+	 {
+		 memcpy(&p_Vector3, data, sizeof(Packet_Vector3));
+		 ObjectManager::KeyObjects[p_Vector3.KeyValue]->SetScale(p_Vector3.Vec3);
+	 }	break;
+	 case PACKET_Translate:
+	 {
+	 	memcpy(&p_Vector3, data, sizeof(Packet_Vector3));
+	 	ObjectManager::KeyObjects[p_Vector3.KeyValue]->Translate(p_Vector3.Vec3);
+	 }	break;
+	 case PACKET_Rotate:
+	 {
+		 memcpy(&p_Quaternion, data, sizeof(Packet_Quaternion));
+		 ObjectManager::KeyObjects[p_Quaternion.KeyValue]->Rotate(p_Quaternion.Quat);
+	 }	break;
+	 case PACKET_Scaling:
+	 {
+		memcpy(&p_Vector3, data, sizeof(Packet_Vector3));
+		ObjectManager::KeyObjects[p_Vector3.KeyValue]->Scaling(p_Vector3.Vec3);
+	 }	break;
 	 case PACKET_SetAnimTransform:
 	 {
 		 memcpy(&p_AnimTransform, data, sizeof(Packet_AnimTransform));

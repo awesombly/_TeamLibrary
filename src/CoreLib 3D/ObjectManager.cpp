@@ -399,9 +399,10 @@ GameObject* ObjectManager::TakeObject(const wstring_view& objName, const bool& p
 	}
 	//myObj->Init();
 	myObj->isEnable(true);
+	
 	if (pushObject)
 	{
-		m_ObjectList[myObj->m_objType].push_front(myObj);
+		PushObject(myObj);
 	}
 	return myObj;
 }
@@ -435,9 +436,14 @@ GameObject* ObjectManager::PushObject(GameObject* pObject) noexcept
 	if (find(m_ObjectList[pObject->m_objType].begin(), m_ObjectList[pObject->m_objType].end(), pObject)
 		== m_ObjectList[pObject->m_objType].end())
 	{
-		m_ObjectList[pObject->m_objType].push_front(pObject);
+		static auto pushEvent = [](void* pVoid, void*) {
+			GameObject* pObj = (GameObject*)pVoid;
+			ObjectManager::Get().m_ObjectList[pObj->m_objType].push_front(pObj);
+			pObj->isEnable(true);
+		};
+
+		PostFrameEvent.emplace(pushEvent, pObject, nullptr);
 	}
-	pObject->isEnable(true);
 	return pObject;
 }
 
