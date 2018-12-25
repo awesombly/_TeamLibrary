@@ -14,6 +14,7 @@ public:
 	AHeroObj*	m_pZombi		= nullptr;		// 
 	AHeroObj*	m_pBird			= nullptr;		// 
 	AHeroObj*	m_pChicken		= nullptr;		// 
+	AHeroObj*	m_Dagger		= nullptr;
 
 
 	//XCamera			m_Camera;					// 프러스텀 카메라
