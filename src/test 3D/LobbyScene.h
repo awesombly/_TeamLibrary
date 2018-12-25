@@ -8,8 +8,10 @@ class LobbyScene : public MainClass
 public:
 
 public:
-	JTextCtrl*	m_toGuest = nullptr;
-	JPanel*		m_toHost  = nullptr;
+	JPanel*		m_toHost		= nullptr;
+	JTextCtrl*	m_toGuestIP		= nullptr;
+	JPanel*		m_toGuest		= nullptr;
+	JPanel*		m_toGuestPanel	= nullptr;
 public:
 	void InputIP()			noexcept;
 

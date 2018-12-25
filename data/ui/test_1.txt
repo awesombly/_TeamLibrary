@@ -84,3 +84,14 @@
 ^tx_Normal btn_175.png
 ^tx_Hover btn_174.png
 ^tx_Press btn_174.png
+
+^Type 783
+^NodeName Guest_Enter
+^ParentName panel1
+^Position 251.000000 -35.000000 0.999991
+^Rotate 0.000000 0.000000 0.000000
+^Scale 60.000000 20.000000 1.000000
+^strText Enter
+^tx_Normal btn_000.png
+^tx_Hover btn_001.png
+^tx_Press btn_001.png
