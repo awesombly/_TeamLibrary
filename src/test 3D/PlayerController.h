@@ -20,7 +20,7 @@ public:
 		EDummy = 0, EGuard, EZombie,
 	};
 private:
-	AHeroObj*   m_pHero			= nullptr;
+	//AHeroObj*   m_pHero			= nullptr;
 	Camera*		m_pCamera		= nullptr;
 	EAction		m_curAction;
 
@@ -28,14 +28,14 @@ private:
 	float		m_moveSpeed = 100.0f;
 	float		m_jumpPower = 180.0f;
 
-	bool		m_isCharacter	= false;
+	//bool		m_isCharacter	= false;
 	//bool		m_toIdle		= false;
-	bool		m_isLoopAnim	= false;
+	//bool		m_isLoopAnim	= false;
 	// 마우스 고정용
 	POINT		m_setMouseScreen;
 	POINT		m_setMouseClient;
 public:
-	Collider*	m_pCollider		= nullptr;
+	//Collider*	m_pCollider		= nullptr;
 	ECharacter  m_curCharacter;
 public:
 	static void SetAnim(AHeroObj* pObject, const ECharacter& eCharacter, const EAction& eAction) noexcept;
@@ -47,8 +47,8 @@ public:
 	void CameraInput(const float& spf)					noexcept;
 	void ResetOption()									noexcept;
 
-	bool isCharacter()									noexcept;
-	void isCharacter(const bool& isCharacter)			noexcept;
+	//bool isCharacter()									noexcept;
+	//void isCharacter(const bool& isCharacter)			noexcept;
 
 	bool Init()											noexcept override;
 	bool Frame(const float& spf, const float& accTime)	noexcept override;

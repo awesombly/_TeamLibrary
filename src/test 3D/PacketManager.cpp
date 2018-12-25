@@ -35,7 +35,7 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 	static Packet_Vector2		p_Vector2;
 	static Packet_Quaternion	p_Quaternion;
 	static Packet_Vec3Quat		p_Vec3Quat;
-	static Packet_AnimState		p_AnimState;
+	//static Packet_AnimState		p_AnimState;
 	static Packet_AnimTransform p_AnimTransform;
 
 	memcpy(&p_KeyValue, data, sizeof(Packet_KeyValue));
@@ -88,8 +88,28 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 	 {
 		 memcpy(&p_AnimTransform, data, sizeof(Packet_AnimTransform));
 		 PlayerController::SetAnim((AHeroObj*)ObjectManager::KeyObjects[p_AnimTransform.KeyValue], (PlayerController::ECharacter)p_AnimTransform.ECharacter, (PlayerController::EAction)p_AnimTransform.EAnimState);
-		 ObjectManager::KeyObjects[p_AnimTransform.KeyValue]->SetPosition(p_AnimTransform.Vec3);
-		 ObjectManager::KeyObjects[p_AnimTransform.KeyValue]->SetRotation(p_AnimTransform.Quat);
+		 ObjectManager::KeyObjects[p_AnimTransform.KeyValue]->SetPosition(p_AnimTransform.Position);
+		 ObjectManager::KeyObjects[p_AnimTransform.KeyValue]->SetRotation(p_AnimTransform.Rotation);
+		 switch ((PlayerController::EAction)p_AnimTransform.EAnimState)
+		 {
+		  case PlayerController::EAction::Idle:
+		  {
+		 	 ((Collider*)ObjectManager::KeyObjects[p_AnimTransform.KeyValue]->GetComponentList(EComponent::Collider)->front())->isMoving(false);
+		  }	break;
+		  case PlayerController::EAction::Jump:
+		  {
+		 	 ((Collider*)ObjectManager::KeyObjects[p_AnimTransform.KeyValue]->GetComponentList(EComponent::Collider)->front())->SetForce(p_AnimTransform.Direction);
+		  }	break;
+		  case PlayerController::EAction::Dance1:
+		  case PlayerController::EAction::Dance2:
+		  case PlayerController::EAction::Dance3:
+		  case PlayerController::EAction::Throw:
+		  {} break;
+		  default:
+		  {
+		 	((Collider*)ObjectManager::KeyObjects[p_AnimTransform.KeyValue]->GetComponentList(EComponent::Collider)->front())->SetDirectionForce(p_AnimTransform.Direction);
+		  }	break;
+		 }
 	 }	break;
 	//case PACKET_SetDirectionForce:
 	//{

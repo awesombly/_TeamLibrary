@@ -137,8 +137,8 @@ void PlayerController::PlayerInput(const float& spf) noexcept
 		//m_toIdle = true;
 		static EAction eAction;
 		eAction = EAction::Idle;
-		m_direction = Vector3::Zero;
-		m_pCollider = (Collider*)m_pParent->GetComponentList(EComponent::Collider)->front();
+		//m_direction = Vector3::Zero;
+		//m_pCollider = (Collider*)m_pParent->GetComponentList(EComponent::Collider)->front();
 
 		if (Input::GetKeyState('W') == EKeyState::HOLD)
 		{
@@ -177,100 +177,210 @@ void PlayerController::PlayerInput(const float& spf) noexcept
 			eAction = EAction::Throw;
 		}
 
+
+
 		if (eAction != m_curAction)
 		{
-			//static Packet_AnimState p_AnimState;
-			//p_AnimState.KeyValue = m_keyValue;
-			//p_AnimState.EAnimState = eAction;
-			//PacketManager::Get().SendPacket((char*)&p_AnimState, PACKET_SetAnimation);
 			if (m_curCharacter == ECharacter::EDummy)
 			{
-				static Packet_Vec3Quat p_transform;
+				static Packet_Transform p_transform;
+				// 捞悼 贸府
+				switch (eAction)
+				{
+				case EAction::Idle:
+				case EAction::Dance1:
+				case EAction::Dance2:
+				case EAction::Dance3:
+				case EAction::Throw:
+				{
+					p_transform.Position = m_pParent->GetPosition();
+				}	break;
+				case EAction::Jump:
+				{
+					p_transform.Position = m_pParent->GetPosition() + Vector3::Up * 15.0f;
+					p_transform.Scale = Vector3::Up * m_jumpPower;
+				}	break;
+				case EAction::Left:
+				{
+					p_transform.Position = m_pParent->GetPosition();
+					p_transform.Scale = m_pParent->GetLeft() * m_moveSpeed;
+				}	break;
+				case EAction::Right:
+				{
+					p_transform.Position = m_pParent->GetPosition();
+					p_transform.Scale = m_pParent->GetRight() * m_moveSpeed;
+				}	break;
+				case EAction::Forward:
+				{
+					p_transform.Position = m_pParent->GetPosition();
+					p_transform.Scale = m_pParent->GetForward() * m_moveSpeed;
+				}	break;
+				case EAction::ForwardLeft:
+				{
+					p_transform.Position = m_pParent->GetPosition();
+					p_transform.Scale = (m_pParent->GetForward() + m_pParent->GetLeft()) * 0.7f * m_moveSpeed;
+				}	break;
+				case EAction::ForwardRight:
+				{
+					p_transform.Position = m_pParent->GetPosition();
+					p_transform.Scale = (m_pParent->GetForward() + m_pParent->GetRight()) * 0.7f * m_moveSpeed;
+				}	break;
+				case EAction::Backward:
+				{
+					p_transform.Position = m_pParent->GetPosition();
+					p_transform.Scale = m_pParent->GetBackward() * m_moveSpeed;
+				}	break;
+				case EAction::BackwardLeft:
+				{
+					p_transform.Position = m_pParent->GetPosition();
+					p_transform.Scale = (m_pParent->GetBackward() + m_pParent->GetLeft()) * 0.7f * m_moveSpeed;
+				}	break;
+				case EAction::BackwardRight:
+				{
+					p_transform.Position = m_pParent->GetPosition();
+					p_transform.Scale = (m_pParent->GetBackward() + m_pParent->GetRight()) * 0.7f * m_moveSpeed;
+				}	break;
+				}
 				p_transform.KeyValue = m_pParent->m_keyValue;
-				p_transform.Vec3 = m_pParent->GetPosition();
-				p_transform.Quat = m_pParent->GetRotation();
+				p_transform.Rotation = m_pParent->GetRotation();
 				PacketManager::Get().SendPacket((char*)&p_transform, PACKET_SetTransform);
 			}
 			else
 			{
-				static Packet_AnimTransform p_AnimState;
-				p_AnimState.KeyValue = m_pParent->m_keyValue;
-				p_AnimState.Vec3 = m_pParent->GetPosition();
-				p_AnimState.Quat = m_pParent->GetRotation();
-				p_AnimState.EAnimState = eAction;
-				p_AnimState.ECharacter = m_curCharacter;
-				PacketManager::Get().SendPacket((char*)&p_AnimState, PACKET_SetAnimTransform);
+				static Packet_AnimTransform p_transform;
+				// 捞悼 贸府
+				switch (eAction)
+				{
+				case EAction::Idle:
+				case EAction::Dance1:
+				case EAction::Dance2:
+				case EAction::Dance3:
+				case EAction::Throw:
+				{
+					p_transform.Position = m_pParent->GetPosition();
+				}	break;
+				case EAction::Jump:
+				{
+					p_transform.Position = m_pParent->GetPosition() + Vector3::Up * 15.0f;
+					p_transform.Direction = Vector3::Up * m_jumpPower;
+				}	break;
+				case EAction::Left:
+				{
+					p_transform.Position = m_pParent->GetPosition();
+					p_transform.Direction = m_pParent->GetLeft() * m_moveSpeed;
+				}	break;
+				case EAction::Right:
+				{
+					p_transform.Position = m_pParent->GetPosition();
+					p_transform.Direction = m_pParent->GetRight() * m_moveSpeed;
+				}	break;
+				case EAction::Forward:
+				{
+					p_transform.Position = m_pParent->GetPosition();
+					p_transform.Direction = m_pParent->GetForward() * m_moveSpeed;
+				}	break;
+				case EAction::ForwardLeft:
+				{
+					p_transform.Position = m_pParent->GetPosition();
+					p_transform.Direction = (m_pParent->GetForward() + m_pParent->GetLeft()) * 0.7f * m_moveSpeed;
+				}	break;
+				case EAction::ForwardRight:
+				{
+					p_transform.Position = m_pParent->GetPosition();
+					p_transform.Direction = (m_pParent->GetForward() + m_pParent->GetRight()) * 0.7f * m_moveSpeed;
+				}	break;
+				case EAction::Backward:
+				{
+					p_transform.Position = m_pParent->GetPosition();
+					p_transform.Direction = m_pParent->GetBackward() * m_moveSpeed;
+				}	break;
+				case EAction::BackwardLeft:
+				{
+					p_transform.Position = m_pParent->GetPosition();
+					p_transform.Direction = (m_pParent->GetBackward() + m_pParent->GetLeft()) * 0.7f * m_moveSpeed;
+				}	break;
+				case EAction::BackwardRight:
+				{
+					p_transform.Position = m_pParent->GetPosition();
+					p_transform.Direction = (m_pParent->GetBackward() + m_pParent->GetRight()) * 0.7f * m_moveSpeed;
+				}	break;
+				}
+				p_transform.KeyValue = m_pParent->m_keyValue;
+				p_transform.Rotation = m_pParent->GetRotation();
+				p_transform.EAnimState = eAction;
+				p_transform.ECharacter = m_curCharacter;
+				PacketManager::Get().SendPacket((char*)&p_transform, PACKET_SetAnimTransform);
 			}
 		}
-
-		m_pHero = (AHeroObj*)m_pParent;
 		m_curAction = eAction;
 
-		// 捞悼 贸府
-		switch (eAction)
-		{
-		case EAction::Idle:
-		{
-			if (m_isLoopAnim)
-			{
-				m_pCollider->isMoving(false);
-				m_isLoopAnim = false;
-			}
-		}	break;
-		case EAction::Jump:
-		{
-			m_pParent->Translate(Vector3::Up * 15.0f);
-			m_pCollider->SetForce(Vector3::Up * m_jumpPower);
-			m_isLoopAnim = false;
-		}	break;
-		case EAction::Dance1:
-		case EAction::Dance2:
-		case EAction::Dance3:
-		case EAction::Throw:
-		{
-			m_isLoopAnim = false;
-		}	break;
-		case EAction::Left:
-		{
-			m_pCollider->SetDirectionForce(m_pParent->GetLeft() * m_moveSpeed);
-			m_isLoopAnim = true;
-		}	break;
-		case EAction::Right:
-		{
-			m_pCollider->SetDirectionForce(m_pParent->GetRight() * m_moveSpeed);
-			m_isLoopAnim = true;
-		}	break;
-		case EAction::Forward:
-		{
-			m_pCollider->SetDirectionForce(m_pParent->GetForward() * m_moveSpeed);
-			m_isLoopAnim = true;
-		}	break;
-		case EAction::ForwardLeft:
-		{
-			m_pCollider->SetDirectionForce((m_pParent->GetForward() + m_pParent->GetLeft()) * 0.7f * m_moveSpeed);
-			m_isLoopAnim = true;
-		}	break;
-		case EAction::ForwardRight:
-		{
-			m_pCollider->SetDirectionForce((m_pParent->GetForward() + m_pParent->GetRight()) * 0.7f * m_moveSpeed);
-			m_isLoopAnim = true;
-		}	break;
-		case EAction::Backward:
-		{
-			m_pCollider->SetDirectionForce(m_pParent->GetBackward() * m_moveSpeed);
-			m_isLoopAnim = true;
-		}	break;
-		case EAction::BackwardLeft:
-		{
-			m_pCollider->SetDirectionForce((m_pParent->GetBackward() + m_pParent->GetLeft()) * 0.7f * m_moveSpeed);
-			m_isLoopAnim = true;
-		}	break;
-		case EAction::BackwardRight:
-		{
-			m_pCollider->SetDirectionForce((m_pParent->GetBackward() + m_pParent->GetRight()) * 0.7f * m_moveSpeed);
-			m_isLoopAnim = true;
-		}	break;
-		}
+		////m_pHero = (AHeroObj*)m_pParent;
+		//
+		//// 捞悼 贸府
+		//switch (eAction)
+		//{
+		//case EAction::Idle:
+		//{
+		//	if (m_isLoopAnim)
+		//	{
+		//		m_pCollider->isMoving(false);
+		//		m_isLoopAnim = false;
+		//	}
+		//}	break;
+		//case EAction::Jump:
+		//{
+		//	m_pParent->Translate(Vector3::Up * 15.0f);
+		//	m_pCollider->SetForce(Vector3::Up * m_jumpPower);
+		//	m_isLoopAnim = false;
+		//}	break;
+		//case EAction::Dance1:
+		//case EAction::Dance2:
+		//case EAction::Dance3:
+		//case EAction::Throw:
+		//{
+		//	m_isLoopAnim = false;
+		//}	break;
+		//case EAction::Left:
+		//{
+		//	m_pCollider->SetDirectionForce(m_pParent->GetLeft() * m_moveSpeed);
+		//	m_isLoopAnim = true;
+		//}	break;
+		//case EAction::Right:
+		//{
+		//	m_pCollider->SetDirectionForce(m_pParent->GetRight() * m_moveSpeed);
+		//	m_isLoopAnim = true;
+		//}	break;
+		//case EAction::Forward:
+		//{
+		//	m_pCollider->SetDirectionForce(m_pParent->GetForward() * m_moveSpeed);
+		//	m_isLoopAnim = true;
+		//}	break;
+		//case EAction::ForwardLeft:
+		//{
+		//	m_pCollider->SetDirectionForce((m_pParent->GetForward() + m_pParent->GetLeft()) * 0.7f * m_moveSpeed);
+		//	m_isLoopAnim = true;
+		//}	break;
+		//case EAction::ForwardRight:
+		//{
+		//	m_pCollider->SetDirectionForce((m_pParent->GetForward() + m_pParent->GetRight()) * 0.7f * m_moveSpeed);
+		//	m_isLoopAnim = true;
+		//}	break;
+		//case EAction::Backward:
+		//{
+		//	m_pCollider->SetDirectionForce(m_pParent->GetBackward() * m_moveSpeed);
+		//	m_isLoopAnim = true;
+		//}	break;
+		//case EAction::BackwardLeft:
+		//{
+		//	m_pCollider->SetDirectionForce((m_pParent->GetBackward() + m_pParent->GetLeft()) * 0.7f * m_moveSpeed);
+		//	m_isLoopAnim = true;
+		//}	break;
+		//case EAction::BackwardRight:
+		//{
+		//	m_pCollider->SetDirectionForce((m_pParent->GetBackward() + m_pParent->GetRight()) * 0.7f * m_moveSpeed);
+		//	m_isLoopAnim = true;
+		//}	break;
+		//}
 	}
 	spf;
 }
@@ -491,11 +601,11 @@ void PlayerController::ResetOption() noexcept
 
 
 
-bool PlayerController::isCharacter() noexcept
-{
-	return m_isCharacter;
-}
-void PlayerController::isCharacter(const bool& isCharacter) noexcept
-{
-	m_isCharacter = isCharacter;
-}
+////bool PlayerController::isCharacter() noexcept
+//{
+//	return m_isCharacter;
+//}
+////void PlayerController::isCharacter(const bool& isCharacter) noexcept
+//{
+//	m_isCharacter = isCharacter;
+//}

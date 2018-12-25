@@ -19,6 +19,7 @@
 #define PACKET_SetAnimTransform		1013
 
 
+#pragma pack(push, 1)
 struct Packet_KeyValue
 {
 	UINT KeyValue;
@@ -55,17 +56,28 @@ struct Packet_Vec3Quat
 	D3DXQUATERNION Quat;
 };
 
-struct Packet_AnimState
+//struct Packet_AnimState
+//{
+//	UINT KeyValue;
+//	D3DXVECTOR3 Direction;
+//	char EAnimState;
+//};
+
+struct Packet_Transform
 {
 	UINT KeyValue;
-	char EAnimState;
+	D3DXVECTOR3 Position;
+	D3DXVECTOR3 Scale;
+	D3DXQUATERNION Rotation;
 };
 
 struct Packet_AnimTransform
 {
 	UINT KeyValue;
-	D3DXVECTOR3 Vec3;
-	D3DXQUATERNION Quat;
+	D3DXVECTOR3 Position;
+	D3DXVECTOR3 Direction;
+	D3DXQUATERNION Rotation;
 	char EAnimState;
 	char ECharacter;
 };
+#pragma pack(pop)
