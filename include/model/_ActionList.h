@@ -30,6 +30,7 @@
 //Zombie
 //ANIM_COUNT  6
 #define  Zombie				L"zombie"
+#define	 Zombie_RUN			L"zombie_run.Mat"
 #define	 Zombie_FLY			L"zombie_fly.Mat"
 #define	 Zombie_LEFT		L"zombie_left.Mat"
 #define	 Zombie_RIGHT		L"zombie_right.Mat"
