@@ -2,16 +2,18 @@
 #include "JParser.h"
 #include "JState.h"
 #include "JEventList.h"
+#include "PacketManager.h"
 
 bool LobbyScene::Init() noexcept
 {
 	static auto pToGuest = [](void* pScene) {
-		isHost = false;
+		PacketManager::Get().isHost = false;
 		((MainClass*)pScene)->StartupClient();
 		((MainClass*)pScene)->SetScene(ESceneName::Main);
+		PacketManager::Get().SendPacket((char*)&PI, PACKET_RequestSync);
 	};
 	static auto pToHost = [](void* pScene) {
-		isHost = true;
+		PacketManager::Get().isHost = true;
 		((MainClass*)pScene)->StartupServer();
 		((MainClass*)pScene)->SetScene(ESceneName::Main);
 	};

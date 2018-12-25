@@ -28,6 +28,9 @@ private:
 	float		m_moveSpeed = 100.0f;
 	float		m_jumpPower = 180.0f;
 
+	float		m_HP = 1.0f;
+	float		m_MP = 1.0f;
+
 	//bool		m_isCharacter	= false;
 	//bool		m_toIdle		= false;
 	//bool		m_isLoopAnim	= false;

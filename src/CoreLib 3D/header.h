@@ -44,10 +44,7 @@
 #pragma comment( lib, "dxgi.lib")
 #pragma comment( lib, "dxguid.lib" )
 #pragma comment( lib, "winmm.lib")		// +timeGetTime()
-#pragma comment( lib, "msimg32.lib")	// +TransparentBlt()
-
-// 호스트 여부 : 호스트 아닐시 연산 무시
-static bool isHost = true;	
+#pragma comment( lib, "msimg32.lib")	// +TransparentBlt()	
 
 using namespace std;
 

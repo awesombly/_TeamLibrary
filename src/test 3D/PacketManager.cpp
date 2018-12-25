@@ -4,7 +4,7 @@
 #include "Collider.h"
 
 
-void PacketManager::SendPacket(char* data, const USHORT& packeyType, const PP::PPSendMode& sendMode) noexcept
+void PacketManager::SendPacket(char* data, const USHORT& packeyType/*, const PP::PPSendMode& sendMode*/) noexcept
 {
 	if (isHost)
 	{
@@ -16,13 +16,14 @@ void PacketManager::SendPacket(char* data, const USHORT& packeyType, const PP::P
 	static PP::PPPacketForProcess packet;
 
 	memcpy(packet.m_Packet.m_Payload, (void*)data, sizeof(data));
-
+	
 	packet.m_socketSession = 0;
-	packet.m_SendMode = sendMode;
+	//packet.m_SendMode = sendMode;
 	packet.m_Packet.m_Header.m_type = (PP::PPPacketType)packeyType;
 	packet.m_Packet.m_Header.m_len = (USHORT)(sizeof(data) + PACKET_HEADER_SIZE);
 
 	pSender->Broadcast(packet);
+	//pSender->BroadcastExcept()
 }
 
 
@@ -37,6 +38,7 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 	static Packet_Vec3Quat		p_Vec3Quat;
 	//static Packet_AnimState		p_AnimState;
 	static Packet_AnimTransform p_AnimTransform;
+	static Packet_Transform		p_Transform;
 
 	memcpy(&p_KeyValue, data, sizeof(Packet_KeyValue));
 	if (ObjectManager::KeyObjects[p_KeyValue.KeyValue] == nullptr) return;
@@ -45,9 +47,10 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 	{
 	 case PACKET_SetTransform:
 	 {
-	 	memcpy(&p_Vec3Quat, data, sizeof(Packet_Vec3Quat));
-	 	ObjectManager::KeyObjects[p_Vec3Quat.KeyValue]->SetPosition(p_Vec3Quat.Vec3);
-	 	ObjectManager::KeyObjects[p_Vec3Quat.KeyValue]->SetRotation(p_Vec3Quat.Quat);
+	 	memcpy(&p_Transform, data, sizeof(Packet_Transform));
+	 	ObjectManager::KeyObjects[p_Transform.KeyValue]->SetPosition(p_Transform.Position);
+	 	ObjectManager::KeyObjects[p_Transform.KeyValue]->SetRotation(p_Transform.Rotation);
+		ObjectManager::KeyObjects[p_Transform.KeyValue]->SetPosition(p_Transform.Scale);
 	 }	break;
 	 case PACKET_SetPosition:
 	 {
@@ -79,15 +82,13 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 		 memcpy(&p_Vector3, data, sizeof(Packet_Vector3));
 		 ObjectManager::KeyObjects[p_Vector3.KeyValue]->Scaling(p_Vector3.Vec3);
 	 }	break;
-	 //case PACKET_SetAnimation:
-	 //{
-	//	 memcpy(&p_AnimState, data, sizeof(Packet_AnimState));
-	//	 ((PlayerController*)ObjectManager::KeyObjects[p_AnimState.KeyValue])->SetAnimation((PlayerController::EAction)(p_AnimState.EAnimState));
-	 //}	break;
 	 case PACKET_SetAnimTransform:
 	 {
 		 memcpy(&p_AnimTransform, data, sizeof(Packet_AnimTransform));
-		 PlayerController::SetAnim((AHeroObj*)ObjectManager::KeyObjects[p_AnimTransform.KeyValue], (PlayerController::ECharacter)p_AnimTransform.ECharacter, (PlayerController::EAction)p_AnimTransform.EAnimState);
+		 if (p_AnimTransform.ECharacter != PlayerController::ECharacter::EDummy)
+		 {
+			 PlayerController::SetAnim((AHeroObj*)ObjectManager::KeyObjects[p_AnimTransform.KeyValue], (PlayerController::ECharacter)p_AnimTransform.ECharacter, (PlayerController::EAction)p_AnimTransform.EAnimState);
+		 }
 		 ObjectManager::KeyObjects[p_AnimTransform.KeyValue]->SetPosition(p_AnimTransform.Position);
 		 ObjectManager::KeyObjects[p_AnimTransform.KeyValue]->SetRotation(p_AnimTransform.Rotation);
 		 switch ((PlayerController::EAction)p_AnimTransform.EAnimState)

@@ -77,15 +77,15 @@ void PlayerController::SetAnim(AHeroObj* pObject, const ECharacter& eCharacter, 
 		}	break;
 		case EAction::Dance1:
 		{
-			pObject->SetANIM(Guard_DANCE1);
+			pObject->SetANIM_OneTime(Guard_DANCE1);
 		}	break;
 		case EAction::Dance2:
 		{
-			pObject->SetANIM(Guard_DANCE2);
+			pObject->SetANIM_OneTime(Guard_DANCE2);
 		}	break;
 		case EAction::Dance3:
 		{
-			pObject->SetANIM(Guard_DANCE3);
+			pObject->SetANIM_OneTime(Guard_DANCE3);
 		}	break;
 		case EAction::Throw:
 		{
@@ -103,7 +103,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const ECharacter& eCharacter, 
 		}	break;
 		case EAction::Jump:
 		{
-			pObject->SetANIM(Zombie_FLY);
+			//pObject->SetANIM_OneTime(Zombie_FLY);
 		}	break;
 		case EAction::Left:
 		case EAction::ForwardLeft:
@@ -181,138 +181,71 @@ void PlayerController::PlayerInput(const float& spf) noexcept
 
 		if (eAction != m_curAction)
 		{
-			if (m_curCharacter == ECharacter::EDummy)
+			static Packet_AnimTransform p_AnimTransform;
+			// 捞悼 贸府
+			switch (eAction)
 			{
-				static Packet_Transform p_transform;
-				// 捞悼 贸府
-				switch (eAction)
-				{
-				case EAction::Idle:
-				case EAction::Dance1:
-				case EAction::Dance2:
-				case EAction::Dance3:
-				case EAction::Throw:
-				{
-					p_transform.Position = m_pParent->GetPosition();
-				}	break;
-				case EAction::Jump:
-				{
-					p_transform.Position = m_pParent->GetPosition() + Vector3::Up * 15.0f;
-					p_transform.Scale = Vector3::Up * m_jumpPower;
-				}	break;
-				case EAction::Left:
-				{
-					p_transform.Position = m_pParent->GetPosition();
-					p_transform.Scale = m_pParent->GetLeft() * m_moveSpeed;
-				}	break;
-				case EAction::Right:
-				{
-					p_transform.Position = m_pParent->GetPosition();
-					p_transform.Scale = m_pParent->GetRight() * m_moveSpeed;
-				}	break;
-				case EAction::Forward:
-				{
-					p_transform.Position = m_pParent->GetPosition();
-					p_transform.Scale = m_pParent->GetForward() * m_moveSpeed;
-				}	break;
-				case EAction::ForwardLeft:
-				{
-					p_transform.Position = m_pParent->GetPosition();
-					p_transform.Scale = (m_pParent->GetForward() + m_pParent->GetLeft()) * 0.7f * m_moveSpeed;
-				}	break;
-				case EAction::ForwardRight:
-				{
-					p_transform.Position = m_pParent->GetPosition();
-					p_transform.Scale = (m_pParent->GetForward() + m_pParent->GetRight()) * 0.7f * m_moveSpeed;
-				}	break;
-				case EAction::Backward:
-				{
-					p_transform.Position = m_pParent->GetPosition();
-					p_transform.Scale = m_pParent->GetBackward() * m_moveSpeed;
-				}	break;
-				case EAction::BackwardLeft:
-				{
-					p_transform.Position = m_pParent->GetPosition();
-					p_transform.Scale = (m_pParent->GetBackward() + m_pParent->GetLeft()) * 0.7f * m_moveSpeed;
-				}	break;
-				case EAction::BackwardRight:
-				{
-					p_transform.Position = m_pParent->GetPosition();
-					p_transform.Scale = (m_pParent->GetBackward() + m_pParent->GetRight()) * 0.7f * m_moveSpeed;
-				}	break;
-				}
-				p_transform.KeyValue = m_pParent->m_keyValue;
-				p_transform.Rotation = m_pParent->GetRotation();
-				PacketManager::Get().SendPacket((char*)&p_transform, PACKET_SetTransform);
-			}
-			else
+			case EAction::Jump:
 			{
-				static Packet_AnimTransform p_transform;
-				// 捞悼 贸府
-				switch (eAction)
-				{
-				case EAction::Idle:
-				case EAction::Dance1:
-				case EAction::Dance2:
-				case EAction::Dance3:
-				case EAction::Throw:
-				{
-					p_transform.Position = m_pParent->GetPosition();
-				}	break;
-				case EAction::Jump:
-				{
-					p_transform.Position = m_pParent->GetPosition() + Vector3::Up * 15.0f;
-					p_transform.Direction = Vector3::Up * m_jumpPower;
-				}	break;
-				case EAction::Left:
-				{
-					p_transform.Position = m_pParent->GetPosition();
-					p_transform.Direction = m_pParent->GetLeft() * m_moveSpeed;
-				}	break;
-				case EAction::Right:
-				{
-					p_transform.Position = m_pParent->GetPosition();
-					p_transform.Direction = m_pParent->GetRight() * m_moveSpeed;
-				}	break;
-				case EAction::Forward:
-				{
-					p_transform.Position = m_pParent->GetPosition();
-					p_transform.Direction = m_pParent->GetForward() * m_moveSpeed;
-				}	break;
-				case EAction::ForwardLeft:
-				{
-					p_transform.Position = m_pParent->GetPosition();
-					p_transform.Direction = (m_pParent->GetForward() + m_pParent->GetLeft()) * 0.7f * m_moveSpeed;
-				}	break;
-				case EAction::ForwardRight:
-				{
-					p_transform.Position = m_pParent->GetPosition();
-					p_transform.Direction = (m_pParent->GetForward() + m_pParent->GetRight()) * 0.7f * m_moveSpeed;
-				}	break;
-				case EAction::Backward:
-				{
-					p_transform.Position = m_pParent->GetPosition();
-					p_transform.Direction = m_pParent->GetBackward() * m_moveSpeed;
-				}	break;
-				case EAction::BackwardLeft:
-				{
-					p_transform.Position = m_pParent->GetPosition();
-					p_transform.Direction = (m_pParent->GetBackward() + m_pParent->GetLeft()) * 0.7f * m_moveSpeed;
-				}	break;
-				case EAction::BackwardRight:
-				{
-					p_transform.Position = m_pParent->GetPosition();
-					p_transform.Direction = (m_pParent->GetBackward() + m_pParent->GetRight()) * 0.7f * m_moveSpeed;
-				}	break;
-				}
-				p_transform.KeyValue = m_pParent->m_keyValue;
-				p_transform.Rotation = m_pParent->GetRotation();
-				p_transform.EAnimState = eAction;
-				p_transform.ECharacter = m_curCharacter;
-				PacketManager::Get().SendPacket((char*)&p_transform, PACKET_SetAnimTransform);
+				p_AnimTransform.Position = m_pParent->GetPosition() + Vector3::Up * 15.0f;
+				p_AnimTransform.Direction = Vector3::Up * m_jumpPower;
+			}	break;
+			case EAction::Left:
+			{
+				p_AnimTransform.Position = m_pParent->GetPosition();
+				p_AnimTransform.Direction = m_pParent->GetLeft() * m_moveSpeed;
+			}	break;
+			case EAction::Right:
+			{
+				p_AnimTransform.Position = m_pParent->GetPosition();
+				p_AnimTransform.Direction = m_pParent->GetRight() * m_moveSpeed;
+			}	break;
+			case EAction::Forward:
+			{
+				p_AnimTransform.Position = m_pParent->GetPosition();
+				p_AnimTransform.Direction = m_pParent->GetForward() * m_moveSpeed;
+			}	break;
+			case EAction::ForwardLeft:
+			{
+				p_AnimTransform.Position = m_pParent->GetPosition();
+				p_AnimTransform.Direction = (m_pParent->GetForward() + m_pParent->GetLeft()) * 0.7f * m_moveSpeed;
+			}	break;
+			case EAction::ForwardRight:
+			{
+				p_AnimTransform.Position = m_pParent->GetPosition();
+				p_AnimTransform.Direction = (m_pParent->GetForward() + m_pParent->GetRight()) * 0.7f * m_moveSpeed;
+			}	break;
+			case EAction::Backward:
+			{
+				p_AnimTransform.Position = m_pParent->GetPosition();
+				p_AnimTransform.Direction = m_pParent->GetBackward() * m_moveSpeed;
+			}	break;
+			case EAction::BackwardLeft:
+			{
+				p_AnimTransform.Position = m_pParent->GetPosition();
+				p_AnimTransform.Direction = (m_pParent->GetBackward() + m_pParent->GetLeft()) * 0.7f * m_moveSpeed;
+			}	break;
+			case EAction::BackwardRight:
+			{
+				p_AnimTransform.Position = m_pParent->GetPosition();
+				p_AnimTransform.Direction = (m_pParent->GetBackward() + m_pParent->GetRight()) * 0.7f * m_moveSpeed;
+			}	break;
+			default:
+			{
+				p_AnimTransform.Position = m_pParent->GetPosition();
+				p_AnimTransform.Direction = Vector3::Zero;
+			}	break;
 			}
+			p_AnimTransform.KeyValue = m_pParent->m_keyValue;
+			p_AnimTransform.Rotation = m_pParent->GetRotation();
+			p_AnimTransform.EAnimState = eAction;
+			p_AnimTransform.ECharacter = m_curCharacter;
+			PacketManager::Get().SendPacket((char*)&p_AnimTransform, PACKET_SetAnimTransform);
+			PacketManager::Get().SendPacket((char*)&PI, PACKET_RequestSync);
 		}
 		m_curAction = eAction;
+
+
 
 		////m_pHero = (AHeroObj*)m_pParent;
 		//
