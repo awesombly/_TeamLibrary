@@ -28,8 +28,10 @@
 
 //////////////////////////////////////////////////////////////////////////
 //Zombie
-//ANIM_COUNT  6
+//ANIM_COUNT  9
 #define  Zombie				L"zombie"
+#define	 Zombie_DANCE1		L"zombie_dance1.Mat"
+#define	 Zombie_DANCE2		L"zombie_dance2.Mat"
 #define	 Zombie_RUN			L"zombie_run.Mat"
 #define	 Zombie_FLY			L"zombie_fly.Mat"
 #define	 Zombie_LEFT		L"zombie_left.Mat"
