@@ -6,7 +6,7 @@ class Collider;
 class Camera;
 class AHeroObj;
 
-class PlayerController : public GameObject, public ISingleton<PlayerController>
+class PlayerController : public GameObject
 {
 public:
 	enum EAction : char {
@@ -14,7 +14,7 @@ public:
 		Left = 1, Forward = 2, ForwardLeft = 3, 
 		Right = 4, ForwardRight = 6, 
 		Backward = 8, BackwardLeft = 9, BackwardRight = 12,
-		Jump = 100, Dance1, Dance2, Dance3, Throw
+		Jump = 100, Dance1, Dance2, Dance3, Throw, RUN, FLY 
 	};
 	enum ECharacter : char {
 		EDummy = 0, EGuard, EZombie,
@@ -58,8 +58,6 @@ public:
 	bool Render(ID3D11DeviceContext* pDContext)			noexcept override;
 	bool Release()										noexcept override;
 public:
-	friend class ISingleton<PlayerController>;
-	PlayerController() = default;
 	using GameObject::GameObject;
 	virtual ~PlayerController() = default;
 };

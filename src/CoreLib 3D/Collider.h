@@ -22,7 +22,7 @@ public:
 
 	D3DXVECTOR3 m_pivot = Vector3::Zero;	// 부모 상대 피벗
 	float m_mass		= 1.0f;				// 질량
-	float m_repulsion	= 0.7f;				// 반발 계수
+	float m_repulsion	= 0.5f;				// 반발 계수
 	float m_drag		= 1.0f;				// 마찰력
 	float m_damping		= 0.2f;				// 항력
 	//float m_angularDamping = 0.2f;			// 회전 항력

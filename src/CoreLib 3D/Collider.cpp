@@ -40,7 +40,7 @@ bool Collider::Frame(const float& spf, const float& accTime)	noexcept
 	// 힘 적용
 	//if (isHost)
 	//{
-		if (GetVelocitySq() > 60.0f)
+		if (GetVelocitySq() > 80.0f)
 		{
 			m_pParent->isMoved(true);
 			m_pParent->GetRoot()->Translate((GetTotalForce() + Vector3::Up * 5.0f) * spf);
@@ -112,7 +112,7 @@ bool Collider::CollisionAllCheck(const float& spf) noexcept
 				//D3DXVec3Normalize(&vForceDis, &m_force);
 				// 반발력
 				m_force = vForceDis + -m_force * (m_repulsion + iter->m_repulsion) * 0.5f;
-				m_pParent->Translate(-m_force * 0.001f);
+				//m_pParent->Translate(-m_force * 0.001f);
 				//m_pParent->Translate(Vector3::Up * spf);
 			}
 			if (iter->m_usePhysics)
@@ -120,7 +120,7 @@ bool Collider::CollisionAllCheck(const float& spf) noexcept
 				//iter->m_force += vForceDisOther;
 				//D3DXVec3Normalize(&vForceDisOther, &iter->m_force);
 				iter->m_force = vForceDisOther + -iter->m_force * (m_repulsion + iter->m_repulsion) * 0.5f;
-				iter->m_pParent->Translate(-iter->m_force * 0.001f);
+				//iter->m_pParent->Translate(-iter->m_force * 0.001f);
 				//iter->m_pParent->Translate(Vector3::Up * spf);
 			}
 			// 마찰력

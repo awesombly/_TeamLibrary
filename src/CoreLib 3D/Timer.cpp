@@ -61,12 +61,12 @@ bool Timer::Frame() noexcept
 				prevTick.QuadPart = m_CurrentTick.QuadPart;
 				FPS = m_FrameCnt;
 				m_FrameCnt = 0;
-				if (Input::isDebug)
-				{
-					m_InfoStream.str(L"");
-					m_InfoStream << L"Time : " << AccumulateTime << L",   FPS : " << FPS << endl;
-					OutputDebugString(m_InfoStream.str().c_str());
-				}
+				//if (Input::isDebug)
+				//{
+				//	m_InfoStream.str(L"");
+				//	m_InfoStream << L"Time : " << AccumulateTime << L",   FPS : " << FPS << endl;
+				//	OutputDebugString(m_InfoStream.str().c_str());
+				//}
 			}
 			m_BeforeTick.QuadPart = m_CurrentTick.QuadPart;
 			///if (!isPlaying)

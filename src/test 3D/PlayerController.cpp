@@ -119,11 +119,19 @@ void PlayerController::SetAnim(AHeroObj* pObject, const ECharacter& eCharacter, 
 		}	break;
 		case EAction::Forward:
 		{
-			pObject->SetANIM(Zombie_FORWARD);
+			pObject->SetANIM(Zombie_RUN);
 		}	break;
 		case EAction::Backward:
 		{
 			pObject->SetANIM(Zombie_BACKWARD);
+		}	break;
+		case EAction::Dance1:
+		{
+			pObject->SetANIM_OneTime(Zombie_DANCE1);
+		}	break;
+		case EAction::Dance2:
+		{
+			pObject->SetANIM_OneTime(Zombie_DANCE2);
 		}	break;
 		}
 	}	break;
@@ -183,56 +191,48 @@ void PlayerController::PlayerInput(const float& spf) noexcept
 		{
 			static Packet_AnimTransform p_AnimTransform;
 			// 이동 처리
+			p_AnimTransform.Position = m_pParent->GetPosition();
 			switch (eAction)
 			{
 			case EAction::Jump:
 			{
-				p_AnimTransform.Position = m_pParent->GetPosition() + Vector3::Up * 15.0f;
+				p_AnimTransform.Position += Vector3::Up * 15.0f;
 				p_AnimTransform.Direction = Vector3::Up * m_jumpPower;
 			}	break;
 			case EAction::Left:
 			{
-				p_AnimTransform.Position = m_pParent->GetPosition();
 				p_AnimTransform.Direction = m_pParent->GetLeft() * m_moveSpeed;
 			}	break;
 			case EAction::Right:
 			{
-				p_AnimTransform.Position = m_pParent->GetPosition();
 				p_AnimTransform.Direction = m_pParent->GetRight() * m_moveSpeed;
 			}	break;
 			case EAction::Forward:
 			{
-				p_AnimTransform.Position = m_pParent->GetPosition();
 				p_AnimTransform.Direction = m_pParent->GetForward() * m_moveSpeed;
 			}	break;
 			case EAction::ForwardLeft:
 			{
-				p_AnimTransform.Position = m_pParent->GetPosition();
 				p_AnimTransform.Direction = (m_pParent->GetForward() + m_pParent->GetLeft()) * 0.7f * m_moveSpeed;
 			}	break;
 			case EAction::ForwardRight:
 			{
-				p_AnimTransform.Position = m_pParent->GetPosition();
 				p_AnimTransform.Direction = (m_pParent->GetForward() + m_pParent->GetRight()) * 0.7f * m_moveSpeed;
 			}	break;
 			case EAction::Backward:
 			{
-				p_AnimTransform.Position = m_pParent->GetPosition();
 				p_AnimTransform.Direction = m_pParent->GetBackward() * m_moveSpeed;
 			}	break;
 			case EAction::BackwardLeft:
 			{
-				p_AnimTransform.Position = m_pParent->GetPosition();
 				p_AnimTransform.Direction = (m_pParent->GetBackward() + m_pParent->GetLeft()) * 0.7f * m_moveSpeed;
 			}	break;
 			case EAction::BackwardRight:
 			{
-				p_AnimTransform.Position = m_pParent->GetPosition();
 				p_AnimTransform.Direction = (m_pParent->GetBackward() + m_pParent->GetRight()) * 0.7f * m_moveSpeed;
 			}	break;
 			default:
 			{
-				p_AnimTransform.Position = m_pParent->GetPosition();
 				p_AnimTransform.Direction = Vector3::Zero;
 			}	break;
 			}
@@ -240,11 +240,15 @@ void PlayerController::PlayerInput(const float& spf) noexcept
 			p_AnimTransform.Rotation = m_pParent->GetRotation();
 			p_AnimTransform.EAnimState = eAction;
 			p_AnimTransform.ECharacter = m_curCharacter;
-			PacketManager::Get().SendPacket((char*)&p_AnimTransform, PACKET_SetAnimTransform);
-			PacketManager::Get().SendPacket((char*)&PI, PACKET_RequestSync);
+			PacketManager::Get().SendPacket((char*)&p_AnimTransform, sizeof(Packet_AnimTransform), PACKET_SetAnimTransform);
 		}
 		m_curAction = eAction;
 
+		if (!PacketManager::Get().isHost &&
+			Input::GetKeyState(VK_CONTROL) == EKeyState::DOWN)
+		{
+			PacketManager::Get().SendPacket((char*)&PI, sizeof(PI), PACKET_RequestSync);
+		}
 
 
 		////m_pHero = (AHeroObj*)m_pParent;
@@ -510,8 +514,9 @@ void PlayerController::CameraInput(const float& spf) noexcept
 	//p_rotate.Quat = m_pParent->GetRotation();
 	//PacketManager::Get().SendPacket((char*)&p_rotate, PACKET_Rotate);
 	// 초기화
-	if (Input::GetInstance().GetKeyState('R') == EKeyState::DOWN)
+	if (Input::GetKeyState('R') == EKeyState::DOWN)
 	{
+		Input::isDebug = true;
 		ResetOption();
 	}
 }

@@ -10,7 +10,7 @@ bool LobbyScene::Init() noexcept
 		PacketManager::Get().isHost = false;
 		((MainClass*)pScene)->StartupClient();
 		((MainClass*)pScene)->SetScene(ESceneName::Main);
-		PacketManager::Get().SendPacket((char*)&PI, PACKET_RequestSync);
+		PacketManager::Get().SendPacket((char*)&PI, sizeof(PI), PACKET_RequestSync);
 	};
 	static auto pToHost = [](void* pScene) {
 		PacketManager::Get().isHost = true;

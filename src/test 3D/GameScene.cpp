@@ -10,11 +10,12 @@ bool GameScene::Init() noexcept
 	
 	// 扁荤 
 	m_pHero = new AHeroObj();
-	m_pHero->SetPlayerCharacter(Guard, 0.0f, 0.0f, 0.0f);
+	m_pHero->SetPlayerCharacter(Guard, 0.0f, 0.0f, 500.0f);
 	m_pHero->SetANIM(Guard_IDLE);
 	m_pHero->m_myName = L"Hero";
 	m_pHero->m_objType = EObjType::Object;
 	auto pCollider = new ColliderOBB({ -13.0f, 0.0f , -13.0f }, { 13.0f, 80.0f , 13.0f });//m_pHero.m_CollsionBox.vMin, m_pHero.m_CollsionBox.vMax));
+	//pCollider->usePhysics(false);
 	m_pHero->AddComponent(pCollider);
 	m_pPlayer->SetParent(m_pHero);
 	m_pPlayer->ResetOption();
@@ -23,17 +24,18 @@ bool GameScene::Init() noexcept
 
 	// 粱厚
 	m_pZombi = new AHeroObj();
-	m_pZombi->SetPlayerCharacter(Zombie, 80.0f, 200.0f, -100.0f);
+	m_pZombi->SetPlayerCharacter(Zombie, 80.0f, 200.0f, -300.0f);
 	m_pZombi->SetANIM(Zombie_IDLE);
 	m_pZombi->m_myName = L"Zombi";
 	m_pZombi->m_objType = EObjType::Object;
 	pCollider = new ColliderOBB({ -13.0f, 0.0f , -13.0f }, { 13.0f, 80.0f , 13.0f });
+	//pCollider->usePhysics(false);
 	m_pZombi->AddComponent(pCollider);
 	ObjectManager::Get().PushObject(m_pZombi);
 
 	// 货 积己
 	m_pBird = new AHeroObj();
-	m_pBird->SetPlayerCharacter(NPC_Bird, 0.0f, 80.0f, -100.0f);
+	m_pBird->SetPlayerCharacter(NPC_Bird, 0.0f, 80.0f, 300.0f);
 	m_pBird->m_myName = L"Bird";
 	m_pBird->m_objType = EObjType::Object;
 	m_pBird->SetScale(Vector3::One * 15.0f);
@@ -45,7 +47,7 @@ bool GameScene::Init() noexcept
 
 	// 催 积己
 	m_pChicken = new AHeroObj();
-	m_pChicken->SetPlayerCharacter(NPC_Chicken, 0.0f, 300.0f, -150.0f);
+	m_pChicken->SetPlayerCharacter(NPC_Chicken, 0.0f, 300.0f, -400.0f);
 	m_pChicken->m_myName = L"Chicken";
 	m_pChicken->m_objType = EObjType::Object;
 	//m_pChicken->SetScale(Vector3::One * 15.0f);
@@ -60,7 +62,7 @@ bool GameScene::Init() noexcept
 	m_Dagger->m_myName = L"Dagger";
 	m_Dagger->m_objType = EObjType::Object;
 	pCollider = new ColliderOBB({ -15.0f, 0.0f , -15.0f }, { 15.0f, 30.0f , 15.0f });
-	pCollider->SetDirectionForce(Vector3::Forward * 200.0f);
+	//pCollider->SetDirectionForce(Vector3::Forward * 200.0f);
 	pCollider->useGravity(true);
 	m_Dagger->AddComponent(pCollider);
 	ObjectManager::Get().PushObject(m_Dagger);

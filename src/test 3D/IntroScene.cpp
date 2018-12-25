@@ -55,13 +55,14 @@ bool IntroScene::Init() noexcept
 		//pCollider->m_pivot = Vector3::Up * 25.0f;
 		pCollider->useGravity(false);
 		pCollider->usePhysics(false);
-		((ColliderOBB*)pCollider)->SetMinMax({ -300.0f, -50.0f, -300.0f }, { 300.0f, 50.0f, 300.0f });
+		((ColliderOBB*)pCollider)->SetMinMax({ -300.0f, -53.0f, -300.0f }, { 300.0f, 53.0f, 300.0f });
 		auto mapMap = new HeightMap(L"HeightMap", EComponent::Renderer, L"mounds.jpg");
 		auto pHeightMap = new GameObject(L"HeightMap", { mapMap, pCollider }, EObjType::Map);
 		mapMap->CreateHeightMap(DxManager::GetDContext(), L"HeightMap/HEIGHT_MOUNDS.bmp", 10, 1.0f);
 		mapMap->SetNormalMap(L"NormalMap/wall_NM_height.dds");
 		mapMap->SetEnviromentMap(L"CubeMap/grassenvmap1024.dds", EEnviType::Fresnel);
-		pHeightMap->Translate(Vector3::Down * 100.0f);
+		pHeightMap->SetPosition(Vector3::Down * 900.0f);
+		pHeightMap->SetScale(Vector3::One * 10.0f);
 		//ObjectManager::Get().PushObject(pHeightMap);
 		ObjectManager::Get().SetProtoObject(pHeightMap);
 

@@ -4,7 +4,7 @@
 #include "Collider.h"
 
 
-void PacketManager::SendPacket(char* data, const USHORT& packeyType/*, const PP::PPSendMode& sendMode*/) noexcept
+void PacketManager::SendPacket(char* data, const USHORT& size, const USHORT& packeyType/*, const PP::PPSendMode& sendMode*/) noexcept
 {
 	if (isHost)
 	{
@@ -15,12 +15,12 @@ void PacketManager::SendPacket(char* data, const USHORT& packeyType/*, const PP:
 	///pSender->BroadcastWString(L"Hello, Server!");	//서버에게 문자열 전송(함수명은 바꿀 예정)
 	static PP::PPPacketForProcess packet;
 
-	memcpy(packet.m_Packet.m_Payload, (void*)data, sizeof(data));
+	memcpy(packet.m_Packet.m_Payload, (void*)data, size);
 	
 	packet.m_socketSession = 0;
 	//packet.m_SendMode = sendMode;
 	packet.m_Packet.m_Header.m_type = (PP::PPPacketType)packeyType;
-	packet.m_Packet.m_Header.m_len = (USHORT)(sizeof(data) + PACKET_HEADER_SIZE);
+	packet.m_Packet.m_Header.m_len = (USHORT)(size + PACKET_HEADER_SIZE);
 
 	pSender->Broadcast(packet);
 	//pSender->BroadcastExcept()
@@ -50,38 +50,38 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 	 	memcpy(&p_Transform, data, sizeof(Packet_Transform));
 	 	ObjectManager::KeyObjects[p_Transform.KeyValue]->SetPosition(p_Transform.Position);
 	 	ObjectManager::KeyObjects[p_Transform.KeyValue]->SetRotation(p_Transform.Rotation);
-		ObjectManager::KeyObjects[p_Transform.KeyValue]->SetPosition(p_Transform.Scale);
+		ObjectManager::KeyObjects[p_Transform.KeyValue]->SetScale(p_Transform.Scale);
 	 }	break;
-	 case PACKET_SetPosition:
-	 {
-	 	memcpy(&p_Vector3, data, sizeof(Packet_Vector3));
-	 	ObjectManager::KeyObjects[p_Vector3.KeyValue]->SetPosition(p_Vector3.Vec3);
-	 }	break;
-	 case PACKET_SetRotation:
-	 {
-		 memcpy(&p_Quaternion, data, sizeof(Packet_Quaternion));
-		 ObjectManager::KeyObjects[p_Quaternion.KeyValue]->SetRotation(p_Quaternion.Quat);
-	 }	break;
-	 case PACKET_SetScale:
-	 {
-		 memcpy(&p_Vector3, data, sizeof(Packet_Vector3));
-		 ObjectManager::KeyObjects[p_Vector3.KeyValue]->SetScale(p_Vector3.Vec3);
-	 }	break;
-	 case PACKET_Translate:
-	 {
-	 	memcpy(&p_Vector3, data, sizeof(Packet_Vector3));
-	 	ObjectManager::KeyObjects[p_Vector3.KeyValue]->Translate(p_Vector3.Vec3);
-	 }	break;
-	 case PACKET_Rotate:
-	 {
-		 memcpy(&p_Quaternion, data, sizeof(Packet_Quaternion));
-		 ObjectManager::KeyObjects[p_Quaternion.KeyValue]->Rotate(p_Quaternion.Quat);
-	 }	break;
-	 case PACKET_Scaling:
-	 {
-		 memcpy(&p_Vector3, data, sizeof(Packet_Vector3));
-		 ObjectManager::KeyObjects[p_Vector3.KeyValue]->Scaling(p_Vector3.Vec3);
-	 }	break;
+	 //case PACKET_SetPosition:
+	 //{
+	 //	memcpy(&p_Vector3, data, sizeof(Packet_Vector3));
+	 //	ObjectManager::KeyObjects[p_Vector3.KeyValue]->SetPosition(p_Vector3.Vec3);
+	 //}	break;
+	 //case PACKET_SetRotation:
+	 //{
+	//	 memcpy(&p_Quaternion, data, sizeof(Packet_Quaternion));
+	//	 ObjectManager::KeyObjects[p_Quaternion.KeyValue]->SetRotation(p_Quaternion.Quat);
+	 //}	break;
+	 //case PACKET_SetScale:
+	 //{
+	//	 memcpy(&p_Vector3, data, sizeof(Packet_Vector3));
+	//	 ObjectManager::KeyObjects[p_Vector3.KeyValue]->SetScale(p_Vector3.Vec3);
+	 //}	break;
+	 //case PACKET_Translate:
+	 //{
+	 //	memcpy(&p_Vector3, data, sizeof(Packet_Vector3));
+	 //	ObjectManager::KeyObjects[p_Vector3.KeyValue]->Translate(p_Vector3.Vec3);
+	 //}	break;
+	 //case PACKET_Rotate:
+	 //{
+	//	 memcpy(&p_Quaternion, data, sizeof(Packet_Quaternion));
+	//	 ObjectManager::KeyObjects[p_Quaternion.KeyValue]->Rotate(p_Quaternion.Quat);
+	 //}	break;
+	 //case PACKET_Scaling:
+	 //{
+	//	 memcpy(&p_Vector3, data, sizeof(Packet_Vector3));
+	//	 ObjectManager::KeyObjects[p_Vector3.KeyValue]->Scaling(p_Vector3.Vec3);
+	 //}	break;
 	 case PACKET_SetAnimTransform:
 	 {
 		 memcpy(&p_AnimTransform, data, sizeof(Packet_AnimTransform));
@@ -122,11 +122,10 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 	//	 //memcpy(&p_KeyValue, data, sizeof(Packet_KeyValue));
 	//	 //((PlayerController*)ObjectManager::KeyObjects[p_KeyValue.KeyValue])->m_pCollider->isMoving(false);
 	//}	break;
-	 case PACKET_RequestSync:
+	 default:
 	 {
-	 }	break;
-	 case PACKET_AddPlayer:
-	 {
+		 ErrorMessage("처리되지 않은 패킷 : "s + to_string(sendMode));
+		 return;
 	 }	break;
 	}
 }
