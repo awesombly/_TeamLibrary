@@ -1,5 +1,5 @@
 
-*NUMCHARACTER		4
+*NUMCHARACTER		5
 
 //////////////////////////////////////////////////////////////////////////
 *CHARACTERNAME		guard
@@ -54,7 +54,7 @@
 
 
 
-
+//////////////////////////////////////////////////////////////////////////
 *CHARACTERNAME		NPC_Chicken
 *SHADERFILENMAE		..\..\data\model\Character.hlsl
 
@@ -65,6 +65,19 @@
 *SKIN_UPPER_BODY	..\..\data\model\NPC_Chicken\chicken.skm		null
 *SKIN_LOWER_BODY_COUNT	0
 
+
+
+
+//////////////////////////////////////////////////////////////////////////
+*CHARACTERNAME		ITEM_Dagger
+*SHADERFILENMAE		..\..\data\model\Character.hlsl
+
+*MATRIXMATRIXCOUNT  1
+*MATRIXFILENAME		..\..\data\model\dagger\dagger.Mat
+
+*SKIN_UPPER_BODY_COUNT	1
+*SKIN_UPPER_BODY	..\..\data\model\dagger\dagger.skm		null
+*SKIN_LOWER_BODY_COUNT	0
 
 
 

@@ -51,13 +51,25 @@
 //NPC_BIRD
 //ANIM_COUNT  1
 #define	 NPC_Bird			L"NPC_bird"
-#define	 NPC_Bird_IDLE		L"NPC_bird.Mat"
+//#define	 NPC_Bird_IDLE		L"NPC_bird.Mat"
 
 
 //NPC_Chicken
 //ANIM_COUNT  1
 #define	 NPC_Chicken			L"NPC_Chicken"
-#define	 NPC_Chicken_IDLE		L"chicken.Mat"
+//#define	 NPC_Chicken_IDLE		L"chicken.Mat"
+
+
+
+
+
+//ITEM_Dagger
+//ANIM_COUNT  1
+#define	 ITEM_Dagger			L"ITEM_Dagger"
+
+//#define	 NPC_Chicken_IDLE		L"dagger.Mat"
+
+
 
 
 //참고 2 : 추가 방법 및 예제
