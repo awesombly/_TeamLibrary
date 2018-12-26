@@ -21,7 +21,7 @@ bool GameScene::Init() noexcept
 	//pCollider->usePhysics(false);
 	m_pHero->AddComponent(pCollider);
 	ObjectManager::Get().SetProtoObject(m_pHero);
-	m_pHero = ObjectManager::Get().TakeObject(L"Guard");
+	m_pHero = (AHeroObj*)ObjectManager::Get().TakeObject(L"Guard");
 	m_pPlayer->SetParent(m_pHero);
 	m_pPlayer->m_curCharacter = PlayerController::ECharacter::EGuard;
 	m_pPlayer->ResetOption();
@@ -107,6 +107,10 @@ bool GameScene::Frame() noexcept
 	if (Input::GetKeyState('Q') == EKeyState::DOWN)
 	{
 		SendPlaySound("dead.mp3", Vector3::Zero, 2000.0f);
+	}
+	if (Input::GetKeyState('E') == EKeyState::DOWN)
+	{
+		SendPlaySound("SE_Click01.mp3", Vector3::Zero, 2000.0f);
 	}
 	static D3DXVECTOR3 ListenPosition;
 	SoundManager::Get().m_pListenerPos = &ListenPosition;
