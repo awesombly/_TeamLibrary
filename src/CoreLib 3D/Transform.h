@@ -52,11 +52,11 @@ public:
 	const D3DXVECTOR3&		GetScale()						   const noexcept;
 	float					GetScaleAverage()				   const noexcept;
 	
-	const D3DXVECTOR3&	GetForward()						   const noexcept;
+	const D3DXVECTOR3	GetForward()						   const noexcept;
 	const D3DXVECTOR3	GetBackward()						   const noexcept;
-	const D3DXVECTOR3&	GetRight()							   const noexcept;
+	const D3DXVECTOR3	GetRight()							   const noexcept;
 	const D3DXVECTOR3	GetLeft()							   const noexcept;
-	const D3DXVECTOR3&	GetUp()								   const noexcept;
+	const D3DXVECTOR3	GetUp()								   const noexcept;
 	const D3DXVECTOR3	GetDown()							   const noexcept;
 public:
 	Transform() = default;

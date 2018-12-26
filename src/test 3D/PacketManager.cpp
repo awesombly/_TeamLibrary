@@ -132,6 +132,7 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 	 }	break;
 	 case PACKET_PlaySound:
 	 {
+		 ZeroMemory(&p_SoundData, sizeof(p_SoundData));
 		 memcpy(&p_SoundData, data, 21);
 		 memcpy(((char*)&p_SoundData + 21), ((char*)data + 21), p_SoundData.NameSize);
 		 SoundManager::Get().PlayQueue(p_SoundData.SoundName, p_SoundData.Position, p_SoundData.MaxDistance);

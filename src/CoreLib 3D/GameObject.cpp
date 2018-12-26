@@ -149,6 +149,10 @@ void GameObject::UpdateMatrix() noexcept
 		m_matLocal = matBill * m_matLocal;
 	}
 
+	//m_Side	= { m_matRotation._11, m_matRotation._12, m_matRotation._13 };
+	//m_Up	= { m_matRotation._21, m_matRotation._22, m_matRotation._23 };
+	//m_Look	= { m_matRotation._31, m_matRotation._32, m_matRotation._33 };
+
 	m_Side	= { m_matLocal._11, m_matLocal._21, m_matLocal._31 };
 	m_Up	= { m_matLocal._12, m_matLocal._22, m_matLocal._32 };
 	m_Look	= { m_matLocal._13, m_matLocal._23, m_matLocal._33 };

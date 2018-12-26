@@ -217,41 +217,42 @@ void PlayerController::PlayerInput(const float& spf) noexcept
 			}	break;
 			case EAction::Left:
 			{
-				p_AnimTransform.Direction = m_pParent->GetLeft() * m_moveSpeed;
+				p_AnimTransform.Direction = m_pParent->GetLeft();
 			}	break;
 			case EAction::Right:
 			{
-				p_AnimTransform.Direction = m_pParent->GetRight() * m_moveSpeed;
+				p_AnimTransform.Direction = m_pParent->GetRight();
 			}	break;
 			case EAction::Forward:
 			{
-				p_AnimTransform.Direction = m_pParent->GetForward() * m_moveSpeed;
+				p_AnimTransform.Direction = m_pParent->GetForward();
 			}	break;
 			case EAction::ForwardLeft:
 			{
-				p_AnimTransform.Direction = (m_pParent->GetForward() + m_pParent->GetLeft()) * 0.7f * m_moveSpeed;
+				p_AnimTransform.Direction = m_pParent->GetForward() + m_pParent->GetLeft();
 			}	break;
 			case EAction::ForwardRight:
 			{
-				p_AnimTransform.Direction = (m_pParent->GetForward() + m_pParent->GetRight()) * 0.7f * m_moveSpeed;
+				p_AnimTransform.Direction = m_pParent->GetForward() + m_pParent->GetRight();
 			}	break;
 			case EAction::Backward:
 			{
-				p_AnimTransform.Direction = m_pParent->GetBackward() * m_moveSpeed;
+				p_AnimTransform.Direction = m_pParent->GetBackward();
 			}	break;
 			case EAction::BackwardLeft:
 			{
-				p_AnimTransform.Direction = (m_pParent->GetBackward() + m_pParent->GetLeft()) * 0.7f * m_moveSpeed;
+				p_AnimTransform.Direction = m_pParent->GetBackward() + m_pParent->GetLeft();
 			}	break;
 			case EAction::BackwardRight:
 			{
-				p_AnimTransform.Direction = (m_pParent->GetBackward() + m_pParent->GetRight()) * 0.7f * m_moveSpeed;
+				p_AnimTransform.Direction = m_pParent->GetBackward() + m_pParent->GetRight();
 			}	break;
 			default:
 			{
 				p_AnimTransform.Direction = Vector3::Zero;
 			}	break;
 			}
+			p_AnimTransform.Direction = Normalize(p_AnimTransform.Direction) * m_moveSpeed;
 			p_AnimTransform.KeyValue = m_pParent->m_keyValue;
 			p_AnimTransform.Rotation = m_pParent->GetRotation();
 			p_AnimTransform.EAnimState = m_curAnim = eAction;
@@ -521,7 +522,7 @@ void PlayerController::CameraInput(const float& spf) noexcept
 	}
 
 	// 카메라 Arm 조절
-	m_pCamera->m_armLength = std::clamp(m_pCamera->m_armLength - Input::GetWheelScroll() * 0.3f * spf, 0.0f, 50.0f);
+	m_pCamera->m_armLength = std::clamp(m_pCamera->m_armLength - Input::GetWheelScroll() * 0.5f * spf, 0.0f, 65.0f);
 	// 회전
 	m_pCamera->SetRotationX(std::clamp(m_pCamera->GetRotation().x + Input::GetMouseMovePos().y * 0.002f, MinCameraY, MaxCameraY));
 	m_pParent->Rotate(0.0f, Input::GetMouseMovePos().x * 0.002f);

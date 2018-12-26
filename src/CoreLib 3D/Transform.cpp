@@ -70,25 +70,12 @@ void Transform::SetFocus(const D3DXVECTOR3& target) noexcept
 	D3DXVec3Normalize(&forward, &forward);
 	D3DXVec3Normalize(&dirTarget, &dirTarget);
 	float fRadian = acosf(D3DXVec3Dot(&dirTarget, &forward));
-
-	if(D3DXVec3Dot(&GetRight(), &dirTarget) > 0.0f)
+	
+	auto vRight = GetRight();
+	if(D3DXVec3Dot(&vRight, &dirTarget) > 0.0f)
 		m_rotation.y = fRadian;
 	else
 		m_rotation.y = -fRadian;
-
-	//static D3DXMATRIX matFocus;
-	//D3DXVECTOR3 dir;
-	//dir = target - m_position;
-	//D3DXVec3Normalize(&dir, &dir);
-
-	//D3DXMatrixLookAtLH(&matFocus, &m_position, &dir, &GetUp());
-	//D3DXVECTOR3 a;
-	//D3DXQUATERNION rot;
-	//D3DXMatrixDecompose(&m_scale, &rot, &a, &matFocus);
-	//m_rotation *= rot;
-	//float angle;
-	//D3DXQuaternionToAxisAngle(&rot, &a, &angle);
-	//D3DXMatrixRotationAxis()
 }
 
 void Transform::SetTransform(const Transform& transform) noexcept
@@ -182,7 +169,7 @@ float Transform::GetScaleAverage() const noexcept
 	return (m_scale.x + m_scale.y + m_scale.z) / 3.0f;
 }
 
-const D3DXVECTOR3& Transform::GetForward()	const noexcept
+const D3DXVECTOR3 Transform::GetForward()	const noexcept
 {
 	return m_Look;
 }
@@ -190,7 +177,7 @@ const D3DXVECTOR3  Transform::GetBackward()	const noexcept
 {
 	return -m_Look;
 }
-const D3DXVECTOR3& Transform::GetRight()	const noexcept
+const D3DXVECTOR3 Transform::GetRight()	const noexcept
 {
 	return m_Side;
 }
@@ -198,7 +185,7 @@ const D3DXVECTOR3  Transform::GetLeft()		const noexcept
 {
 	return -m_Side;
 }
-const D3DXVECTOR3& Transform::GetUp()	const noexcept
+const D3DXVECTOR3 Transform::GetUp()	const noexcept
 {
 	return m_Up;
 }

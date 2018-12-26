@@ -12,7 +12,7 @@ public:
 	PlayerController* m_pPlayer = &PlayerController::Get();		// 컨트롤러
 
 	AHeroObj*	m_pHero			= nullptr;		// 캐릭터 본체
-	AHeroObj*	m_pZombi		= nullptr;		// 
+	AHeroObj*	m_pZombie		= nullptr;		// 
 	AHeroObj*	m_pBird			= nullptr;		// 
 	AHeroObj*	m_pChicken		= nullptr;		// 
 

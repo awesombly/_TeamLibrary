@@ -15,27 +15,29 @@ bool GameScene::Init() noexcept
 	m_pHero->SetPlayerCharacter(Guard, 0.0f, 0.0f, 500.0f);
 	m_pHero->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
 	m_pHero->SetANIM(Guard_IDLE);
-	m_pHero->m_myName = L"Hero";
+	m_pHero->m_myName = L"Guard";
 	m_pHero->m_objType = EObjType::Object;
 	auto pCollider = new ColliderOBB(60.0f, { -13.0f, 0.0f , -13.0f }, { 13.0f, 80.0f , 13.0f });
 	//pCollider->usePhysics(false);
 	m_pHero->AddComponent(pCollider);
+	ObjectManager::Get().SetProtoObject(m_pHero);
+	m_pHero = ObjectManager::Get().TakeObject(L"Guard");
 	m_pPlayer->SetParent(m_pHero);
-	m_pPlayer->ResetOption();
 	m_pPlayer->m_curCharacter = PlayerController::ECharacter::EGuard;
-	ObjectManager::Get().PushObject(m_pHero);
+	m_pPlayer->ResetOption();
+	//ObjectManager::Get().PushObject(m_pHero);
 
 	// 좀비
-	m_pZombi = new AHeroObj();
-	m_pZombi->SetPlayerCharacter(Zombie, 80.0f, 200.0f, -300.0f);
-	m_pZombi->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-	m_pZombi->SetANIM(Zombie_IDLE);
-	m_pZombi->m_myName = L"Zombi";
-	m_pZombi->m_objType = EObjType::Object;
+	m_pZombie = new AHeroObj();
+	m_pZombie->SetPlayerCharacter(Zombie, 80.0f, 200.0f, -300.0f);
+	m_pZombie->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+	m_pZombie->SetANIM(Zombie_IDLE);
+	m_pZombie->m_myName = L"Zombie";
+	m_pZombie->m_objType = EObjType::Object;
 	pCollider = new ColliderOBB(60.0f, { -13.0f, 0.0f , -13.0f }, { 13.0f, 80.0f , 13.0f });
 	//pCollider->usePhysics(false);
-	m_pZombi->AddComponent(pCollider);
-	ObjectManager::Get().PushObject(m_pZombi);
+	m_pZombie->AddComponent(pCollider);
+	ObjectManager::Get().PushObject(m_pZombie);
 
 	// 새 생성
 	m_pBird = new AHeroObj();
@@ -89,8 +91,6 @@ bool GameScene::Init() noexcept
 	JParser par;
 	par.FileLoad(DxManager::GetDevice(), L"../../data/ui/test", *pUIRoot);
 	JProgressBar* pProj = (JProgressBar*)pUIRoot->find_child(L"HP_Progress");
-	// HP = HP_Progress
-	// MP = MP_Progress
 	pProj->SetValue(m_pPlayer->m_HP); // 값 bind
 
 	pProj = (JProgressBar*)pUIRoot->find_child(L"MP_Progress");
@@ -114,26 +114,38 @@ bool GameScene::Frame() noexcept
 
 	if (Input::GetKeyState(VK_TAB) == EKeyState::DOWN)
 	{
-		if (m_pPlayer->GetParent() == m_pHero)
+		static auto curCollider = ObjectManager::Get().GetColliderList().begin();
+		if (++curCollider == ObjectManager::Get().GetColliderList().end())
 		{
-			m_pPlayer->SetParent(m_pZombi);
-			m_pPlayer->m_curCharacter = PlayerController::ECharacter::EZombie;
+			curCollider = ObjectManager::Get().GetColliderList().begin();
 		}
-		else if (m_pPlayer->GetParent() == m_pZombi)
-		{
-			m_pPlayer->SetParent(m_pBird);
-			m_pPlayer->m_curCharacter = PlayerController::ECharacter::EDummy;
-		}
-		else if (m_pPlayer->GetParent() == m_pBird)
-		{
-			m_pPlayer->SetParent(m_pChicken);
-			m_pPlayer->m_curCharacter = PlayerController::ECharacter::EDummy;
-		}
-		else if (m_pPlayer->GetParent() == m_pChicken)
-		{
-			m_pPlayer->SetParent(m_pHero);
+		m_pPlayer->SetParent((*curCollider)->m_pParent);
+		if((*curCollider)->m_pParent->m_myName == L"Guard")
 			m_pPlayer->m_curCharacter = PlayerController::ECharacter::EGuard;
-		}
+		else if ((*curCollider)->m_pParent->m_myName == L"Zombie")
+			m_pPlayer->m_curCharacter = PlayerController::ECharacter::EZombie;
+		else
+			m_pPlayer->m_curCharacter = PlayerController::ECharacter::EDummy;
+		//if (m_pPlayer->GetParent() == m_pHero)
+		//{
+		//	m_pPlayer->SetParent(m_pZombie);
+		//	m_pPlayer->m_curCharacter = PlayerController::ECharacter::EZombie;
+		//}
+		//else if (m_pPlayer->GetParent() == m_pZombie)
+		//{
+		//	m_pPlayer->SetParent(m_pBird);
+		//	m_pPlayer->m_curCharacter = PlayerController::ECharacter::EDummy;
+		//}
+		//else if (m_pPlayer->GetParent() == m_pBird)
+		//{
+		//	m_pPlayer->SetParent(m_pChicken);
+		//	m_pPlayer->m_curCharacter = PlayerController::ECharacter::EDummy;
+		//}
+		//else if (m_pPlayer->GetParent() == m_pChicken)
+		//{
+		//	m_pPlayer->SetParent(m_pHero);
+		//	m_pPlayer->m_curCharacter = PlayerController::ECharacter::EGuard;
+		//}
 		m_pPlayer->ResetOption();
 	}
 

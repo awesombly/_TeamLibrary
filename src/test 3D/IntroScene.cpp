@@ -103,9 +103,9 @@ bool IntroScene::Init() noexcept
 		pRenderer->SetNormalMap(L"NormalMap/tileADOT3.jpg");
 		pRenderer->SetEnviromentMap(L"CubeMap/grassenvmap1024.dds", EEnviType::Refraction);
 		pCollider = (Collider*)ObjectManager::Get().TakeComponent(L"ColliderOBB");
-		pObject = new GameObject(L"Object1", { pRenderer, pCollider, new CTransformer(Vector3::Zero, Quaternion::Right * 2.0f, Vector3::One) }, EObjType::Object);
+		pObject = new GameObject(L"Object1", { pRenderer, pCollider/*, new CTransformer(Vector3::Zero, Quaternion::Right * 2.0f, Vector3::One)*/ }, EObjType::Object);
 		pObject->Translate(Vector3::Backward * 30.0f + Vector3::Up * 200.0f);
-		pObject->SetScale(Vector3::One * 4);
+		pObject->SetScale(Vector3::One * 20.0f);
 		//ObjectManager::Get().PushObject(pObject);
 		ObjectManager::Get().SetProtoObject(pObject);
 
@@ -113,9 +113,9 @@ bool IntroScene::Init() noexcept
 		pRenderer->SetNormalMap(L"NormalMap/wall_NM_height.dds");
 		pRenderer->SetEnviromentMap(L"CubeMap/grassenvmap1024.dds", EEnviType::Fresnel);
 		pCollider = (Collider*)ObjectManager::Get().TakeComponent(L"ColliderOBB");
-		pObject = new GameObject(L"Object2", { pRenderer, pCollider, new CTransformer(Vector3::Zero, Quaternion::Up, Vector3::One) }, EObjType::Object);
+		pObject = new GameObject(L"Object2", { pRenderer, pCollider/*, new CTransformer(Vector3::Zero, Quaternion::Up, Vector3::One)*/ }, EObjType::Object);
 		pObject->Translate(Vector3::Backward * 30.0f + Vector3::Left * 140.0f + Vector3::Up * 300);
-		pObject->SetScale(Vector3::One * 10);
+		pObject->SetScale(Vector3::One * 10.0f);
 		//ObjectManager::Get().PushObject(pObject);
 		ObjectManager::Get().SetProtoObject(pObject);
 
@@ -123,9 +123,9 @@ bool IntroScene::Init() noexcept
 		pRenderer->SetNormalMap(L"NormalMap/Earth_NormalMap.dds");
 		pRenderer->SetEnviromentMap(L"CubeMap/grassenvmap1024.dds", EEnviType::Basic);
 		pCollider = (Collider*)ObjectManager::Get().TakeComponent(L"ColliderSphere");
-		pObject = new GameObject(L"Object3", { pRenderer, pCollider, new CTransformer(Vector3::Up, Quaternion::Base, Vector3::One) }, EObjType::Object);
+		pObject = new GameObject(L"Object3", { pRenderer, pCollider/*, new CTransformer(Vector3::Up, Quaternion::Base, Vector3::One)*/ }, EObjType::Object);
 		pObject->Translate(Vector3::Backward * 30.0f + Vector3::Right * 140.0f + Vector3::Up * 250);
-		pObject->SetScale(Vector3::One * 15);
+		pObject->SetScale(Vector3::One * 15.0f);
 		ObjectManager::Get().SetProtoObject(pObject);
 		//ObjectManager::Get().PushObject(pObject);
 
