@@ -1,0 +1,187 @@
+^Type 777
+^NodeName Root
+^ParentName 
+^Position 0.000000 0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 1.000000 1.000000 1.000000
+
+^Type 778
+^NodeName BackGround
+^ParentName Root
+^bRender 1
+^Position 0.000000 0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 400.000000 300.000000 1.000000
+^tx_Normal landscape-image-background-wallpapers-shanty-zombie-mukai-120557.jpg
+^tx_Hover landscape-image-background-wallpapers-shanty-zombie-mukai-120557.jpg
+^tx_Press landscape-image-background-wallpapers-shanty-zombie-mukai-120557.jpg
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 777
+^NodeName Default
+^ParentName Root
+^bRender 1
+^Position 0.000000 0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 1.000000 1.000000 1.000000
+
+^Type 778
+^NodeName D_BackGround
+^ParentName Default
+^bRender 1
+^Position -300.000000 122.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 80.000000 100.000000 1.000000
+^tx_Normal gray_wdim10.png
+^tx_Hover gray_wdim10.png
+^tx_Press gray_wdim10.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 783
+^NodeName D_Host
+^ParentName Default
+^bRender 1
+^Position -300.000000 155.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 50.000000 20.000000 1.000000
+^strText Host
+^tx_Normal btn_177.png
+^tx_Hover btn_176.png
+^tx_Press btn_176.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 783
+^NodeName D_Guest
+^ParentName Default
+^bRender 1
+^Position -300.000000 85.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 50.000000 20.000000 1.000000
+^strText Guest
+^tx_Normal btn_177.png
+^tx_Hover btn_176.png
+^tx_Press btn_176.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7277
+^vpEventClick Guest
+
+^Type 777
+^NodeName Guest
+^ParentName Root
+^bRender 0
+^Position 0.000000 0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 1.000000 1.000000 1.000000
+
+^Type 778
+^NodeName G_BackGround
+^ParentName Guest
+^bRender 1
+^Position 0.000000 0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 80.000000 80.000000 1.000000
+^tx_Normal gray_wdim10.png
+^tx_Hover gray_wdim10.png
+^tx_Press gray_wdim10.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 783
+^NodeName G_IP
+^ParentName Guest
+^bRender 1
+^Position 0.000000 28.992517 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 50.000000 10.000000 1.000000
+^strText IP:___.___.___.___
+^tx_Normal tile-6b2a1a39575b98c45936cc0169a9010f-1.png
+^tx_Hover tile-6b2a1a39575b98c45936cc0169a9010f-1.png
+^tx_Press tile-6b2a1a39575b98c45936cc0169a9010f-1.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 783
+^NodeName G_Enter
+^ParentName Guest
+^bRender 1
+^Position 0.000000 -26.501709 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 50.000000 20.000000 1.000000
+^strText Enter
+^tx_Normal btn_177.png
+^tx_Hover btn_176.png
+^tx_Press btn_176.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 778
+^NodeName G_Exit
+^ParentName Guest
+^bRender 1
+^Position 67.000000 65.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 15.000000 15.000000 1.000000
+^tx_Normal btn_175.png
+^tx_Hover btn_174.png
+^tx_Press btn_174.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7276
+^vpEventClick Guest
+
+^Type 782
+^NodeName Icon_Sprite
+^ParentName Root
+^bRender 1
+^Position 357.049255 178.286285 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 40.000000 40.000000 1.000000
+^AnimTime 8.000000
+^SPRITESTART 8 
+^icn_crime.png
+^icn_drug.png
+^icn_gamble.png
+^icn_horror.png
+^icn_ment.png
+^icn_sensation.png
+^icn_violence.png
+^icn_rate_18.png
+^SPRITEEND
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 

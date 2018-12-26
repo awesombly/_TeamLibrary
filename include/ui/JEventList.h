@@ -1,20 +1,27 @@
 #pragma once
-#include "JEvent.h"
+#include "JPanel.h"
 #include "Timer.h"
+/*
+	Event 추가시 ==
+	:: Lib Panel(enum EVENT_LIST)
+	:: Tool InfoEventInit() -> ComboBox String 추가
+	:: Tool Load(JParser)   -> EventBind
+	:: Tool Sample() 	EVENT_LIST FindPointerFunc(wstring Event); -> Tool 내에서 Event 변환 DWORD <-> wstring
+						wstring FindPointerFunc(EVENT_LIST Event); -> Tool 내에서 Event 변환 DWORD <-> wstring
+*/
 namespace UI
 {
-	/* 각종 이벤트들 JEvent에서 생성된 객체를 바탕을 돌아감 */
-	static void E_INTRO_SHOW_GUEST(void* vp)
+	static void E_SHOW(void* vp)
 	{
 		JPanel* pPanel = (JPanel*)vp;
 		pPanel->m_bRender = true;
 	}
-	static void E_INTRO_NOTSHOW_GUEST(void* vp)
+	static void E_NOTSHOW(void* vp)
 	{
 		JPanel* pPanel = (JPanel*)vp;
 		pPanel->m_bRender = false;
 	}
-	static void SHOW_PANEL(void* vp)
+	static void E_REVERSE_SHOW(void* vp)
 	{
 		JPanel* pPanel = (JPanel*)vp;
 		pPanel->m_bRender = !pPanel->m_bRender;

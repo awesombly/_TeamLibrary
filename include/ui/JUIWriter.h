@@ -10,6 +10,7 @@ namespace UI
 		wstring m_strFileName; // 출력 파일명
 	public:
 		bool RunWrite(JPanel* pRoot, wstring SaveFileName);
+		bool WriteCircuit(JPanel* pChild);
 	public:
 		void PanelWrite(JPanel* pChild);
 		void ButtonWrite(JPanel* pChild);

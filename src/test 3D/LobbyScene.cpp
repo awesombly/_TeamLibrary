@@ -28,25 +28,27 @@ bool LobbyScene::Init() noexcept
 	JPanel* pUIRoot = new JPanel(L"UI_IntroRoot");
 	pUIRoot->m_objType = EObjType::UI;
 	JParser par;
-	par.FileLoad(DxManager::GetDevice(), L"../../data/ui/test_1.txt", *pUIRoot);
-	pUIRoot->find_child(L"panel1")->m_bRender = false;
-	pUIRoot->find_child(L"txt_Guest")->EventClick.first = UI::E_INTRO_SHOW_GUEST;
-	pUIRoot->find_child(L"txt_Guest")->EventClick.second = pUIRoot->find_child(L"panel1");
+	par.FileLoad(DxManager::GetDevice(), L"../../data/ui/UI_Intro", *pUIRoot);
+	//ObjectManager::Get().PushObject(pUIRoot);
 
-	pUIRoot->find_child(L"Guest_Exit")->EventClick.first = UI::E_INTRO_NOTSHOW_GUEST;
-	pUIRoot->find_child(L"Guest_Exit")->EventClick.second = pUIRoot->find_child(L"panel1");
+	// Host = D_Host
+	// IP = G_IP
+	// Enter = G_Enter
 
 	// to 호스트
-	m_toHost = pUIRoot->find_child(L"txt_Host");
+	//m_toHost = pUIRoot->find_child(L"txt_Host"); // D_Host
+	m_toHost = pUIRoot->find_child(L"D_Host"); // D_Host
 	m_toHost->EventClick.first = pToHost;
 	m_toHost->EventClick.second = this;
 
 	// to 게스트
-	m_toGuest = (JTextCtrl*)pUIRoot->find_child(L"Guest_Enter");
+	//m_toGuest = (JTextCtrl*)pUIRoot->find_child(L"Guest_Enter"); // G_Enter
+	m_toGuest = (JTextCtrl*)pUIRoot->find_child(L"G_Enter"); // G_Enter
 	m_toGuest->EventClick.first = pToGuest;
 	m_toGuest->EventClick.second = this;
 	// IP 창
-	m_toGuestIP = (JTextCtrl*)pUIRoot->find_child(L"Guest_IP_9");
+	//m_toGuestIP = (JTextCtrl*)pUIRoot->find_child(L"Guest_IP_9"); // G_IP
+	m_toGuestIP = (JTextCtrl*)pUIRoot->find_child(L"G_IP"); // G_IP
 	m_toGuestIP->m_Text = L"IP : ~." + PacketManager::Get().m_inputIP;
 	// 패널창
 	m_toGuestPanel = m_toGuest->m_pParent;

@@ -6,7 +6,11 @@ namespace UI
 	class JParser : public JToken
 	{
 	public:
+		JPanel* m_pRoot;
+	public:
 		bool FileLoad(ID3D11Device* pDevice, const TCHAR* szFileName, JPanel& pRoot, wstring plusPath = L"../../data/ui/");
+		bool EventLoad(JPanel& pRoot);
+		bool EventBind(JPanel& pRoot);
 	public:
 		void PanelRead(JPanel& pRoot);
 		void ButtonRead(ID3D11Device* pDevice, JPanel& pRoot, wstring plusPath);
