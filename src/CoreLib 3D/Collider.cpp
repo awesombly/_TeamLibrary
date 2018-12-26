@@ -159,11 +159,10 @@ bool Collider::CollisionCheck(Collider* pCollider) noexcept
 		if (SphereToOBB(this, (ColliderOBB*)pCollider))
 			return true;
 	}	break;
-	//case ECollider::Sphere:
-	//{
-	//	if (SphereToSphere(this, pCollider))
-	//		return true;
-	//}	break;
+	case ECollider::Sphere:
+	{
+		return true;
+	}	break;
 	}
 
 	return false;

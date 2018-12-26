@@ -15,6 +15,7 @@
 #define PACKET_PossessPlayer		1011
 #define PACKET_PlaySound			1012
 //#define PACKET_TakeObject			1013
+#define PACKET_ReqSyncSpawns		1015
 
 #define PACKET_ReqAddPlayer			2000
 

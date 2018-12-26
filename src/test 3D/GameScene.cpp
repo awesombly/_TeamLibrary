@@ -89,15 +89,26 @@ bool GameScene::Init() noexcept
 	JParser par;
 	par.FileLoad(DxManager::GetDevice(), L"../../data/ui/UI_InGame", *pUIRoot);
 	JProgressBar* pProj = (JProgressBar*)pUIRoot->find_child(L"HP_Progress");
-	// HP = HP_Progress
-	// MP = MP_Progress
-	static float fSample = 1.0f;
-	//pProj->m_fValue = &fSample;
-	pProj->SetValue(fSample); // 값 bind
-	ObjectManager::Get().PushObject(pUIRoot);
-
+	pProj->SetValue(m_pPlayer->m_HP); // 값 bind
 	pProj = (JProgressBar*)pUIRoot->find_child(L"MP_Progress");
 	pProj->SetValue(m_pPlayer->m_MP); // 값 bind
+
+	//////////////////////////////////////// slider
+	JSliderCtrl* pSlider = (JSliderCtrl*)pUIRoot->find_child(L"Set_Volum");
+	//pSlider->GetValue();
+
+	pSlider = (JSliderCtrl*)pUIRoot->find_child(L"Set_Mouse");
+	//float SoundValue = *pSlider->GetValue(); // 값 pSlider->m_fValue 0 ~ 1
+
+	static auto pGameExit = [](void* pScene) {
+		((MainClass*)pScene)->SetScene(ESceneName::Lobby);
+	};
+	auto pExit = (JTextCtrl*)pUIRoot->find_child(L"Set_GameExit");
+	pExit->EventClick.first = pGameExit;
+	pExit->EventClick.second = this;
+
+	m_pCheckBox = (JCheckCtrl*)pUIRoot->find_child(L"temp_Check0");
+	//m_pCheckBox->m_bCheck =
 
 	ObjectManager::Get().PushObject(pUIRoot);
 	return true;

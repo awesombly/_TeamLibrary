@@ -40,6 +40,7 @@ private:
 	POINT		m_setMouseScreen;
 	POINT		m_setMouseClient;
 public:
+	float		m_mouseSense = 0.5f;
 	float		m_HP = 1.0f;
 	float		m_MP = 1.0f;
 	//Collider*	m_pCollider		= nullptr;

@@ -17,6 +17,7 @@ public:
 	AHeroObj*	m_pBird			= nullptr;		// 
 	AHeroObj*	m_pChicken		= nullptr;		// 
 
+	JCheckCtrl* m_pCheckBox		= nullptr;
 
 	//XCamera			m_Camera;					// ÇÁ·¯½ºÅÒ Ä«¸Þ¶ó
 	XMap*			m_pMap;						// ¸Ê
