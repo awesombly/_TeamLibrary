@@ -169,7 +169,7 @@ float Transform::GetScaleAverage() const noexcept
 	return (m_scale.x + m_scale.y + m_scale.z) / 3.0f;
 }
 
-const D3DXVECTOR3 Transform::GetForward()	const noexcept
+const D3DXVECTOR3& Transform::GetForward()	const noexcept
 {
 	return m_Look;
 }
@@ -177,7 +177,7 @@ const D3DXVECTOR3  Transform::GetBackward()	const noexcept
 {
 	return -m_Look;
 }
-const D3DXVECTOR3 Transform::GetRight()	const noexcept
+const D3DXVECTOR3& Transform::GetRight()	const noexcept
 {
 	return m_Side;
 }
@@ -185,7 +185,7 @@ const D3DXVECTOR3  Transform::GetLeft()		const noexcept
 {
 	return -m_Side;
 }
-const D3DXVECTOR3 Transform::GetUp()	const noexcept
+const D3DXVECTOR3& Transform::GetUp()	const noexcept
 {
 	return m_Up;
 }

@@ -151,8 +151,9 @@ void SoundManager::OperVolume(const string_view& soundName, const float& value) 
 
 void SoundManager::SetMasterVolume(const float& value) noexcept
 {
-	for (auto& iter : m_SoundList)
+	m_masterVolume = value;
+	/*for (auto& iter : m_SoundList)
 	{
 		iter.second.SetVolume(value);
-	}
+	}*/
 }
