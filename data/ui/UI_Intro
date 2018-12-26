@@ -9,12 +9,12 @@
 ^NodeName BackGround
 ^ParentName Root
 ^bRender 1
-^Position 0.000000 0.000000 0.000000
+^Position -0.000000 -0.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 400.000000 300.000000 1.000000
-^tx_Normal landscape-image-background-wallpapers-shanty-zombie-mukai-120557.jpg
-^tx_Hover landscape-image-background-wallpapers-shanty-zombie-mukai-120557.jpg
-^tx_Press landscape-image-background-wallpapers-shanty-zombie-mukai-120557.jpg
+^tx_Normal KakaoTalk_20181226_182056873.jpg
+^tx_Hover KakaoTalk_20181226_182056873.jpg
+^tx_Press KakaoTalk_20181226_182056873.jpg
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -34,9 +34,9 @@
 ^NodeName D_BackGround
 ^ParentName Default
 ^bRender 1
-^Position -300.000000 122.000000 0.000000
+^Position -320.000000 144.020157 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 80.000000 100.000000 1.000000
+^Scale 80.000000 80.000000 1.000000
 ^tx_Normal gray_wdim10.png
 ^tx_Hover gray_wdim10.png
 ^tx_Press gray_wdim10.png
@@ -51,7 +51,7 @@
 ^NodeName D_Host
 ^ParentName Default
 ^bRender 1
-^Position -300.000000 155.000000 0.000000
+^Position -320.000000 185.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 50.000000 20.000000 1.000000
 ^strText Host
@@ -69,7 +69,7 @@
 ^NodeName D_Guest
 ^ParentName Default
 ^bRender 1
-^Position -300.000000 85.000000 0.000000
+^Position -320.000000 145.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 50.000000 20.000000 1.000000
 ^strText Guest
@@ -179,6 +179,24 @@
 ^icn_violence.png
 ^icn_rate_18.png
 ^SPRITEEND
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 783
+^NodeName D_Exit
+^ParentName Root
+^bRender 1
+^Position -320.000000 105.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 50.000000 20.000000 1.000000
+^strText Exit
+^tx_Normal btn_177.png
+^tx_Hover btn_176.png
+^tx_Press btn_176.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274

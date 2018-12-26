@@ -57,6 +57,18 @@ float4 PS_COLOR(VS_OUTPUT vIn) : SV_Target
 {
 	return vIn.c;
 }
+float4 PS_Sphere(VS_OUTPUT vIn) : SV_Target
+{
+	float fdist = (vIn.t.x * vIn.t.x) + (vIn.t.y * vIn.t.y);
+	if (fdist < 1.0f)
+	{
+		return vIn.c;
+	}
+	else
+	{
+		return  float4(0,0,0,0);
+	}
+}
 float4 PS_BLACK(VS_OUTPUT vIn) : SV_Target
 {
 	return float4(0,0,0,1);
