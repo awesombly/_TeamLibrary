@@ -4,7 +4,8 @@
 bool GameScene::Init() noexcept
 {
 #pragma region Basic
-	m_pPlayer = new PlayerController(L"Player", EObjType::Object);
+	m_pPlayer->m_myName  = L"Player";// = new PlayerController(L"Player", EObjType::Object);
+	m_pPlayer->m_objType = EObjType::Object;
 	ObjectManager::Cameras[ECamera::Main]->SetParent(m_pPlayer);
 	
 	// 기사 
@@ -12,27 +13,29 @@ bool GameScene::Init() noexcept
 	m_pHero->SetPlayerCharacter(Guard, 0.0f, 0.0f, 500.0f);
 	m_pHero->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
 	m_pHero->SetANIM(Guard_IDLE);
-	m_pHero->m_myName = L"Hero";
+	m_pHero->m_myName = L"Guard";
 	m_pHero->m_objType = EObjType::Object;
 	auto pCollider = new ColliderOBB(60.0f, { -13.0f, 0.0f , -13.0f }, { 13.0f, 80.0f , 13.0f });
 	//pCollider->usePhysics(false);
 	m_pHero->AddComponent(pCollider);
+	ObjectManager::Get().SetProtoObject(m_pHero);
+	m_pHero = (AHeroObj*)ObjectManager::Get().TakeObject(L"Guard");
 	m_pPlayer->SetParent(m_pHero);
-	m_pPlayer->ResetOption();
 	m_pPlayer->m_curCharacter = PlayerController::ECharacter::EGuard;
-	ObjectManager::Get().PushObject(m_pHero);
+	m_pPlayer->ResetOption();
+	//ObjectManager::Get().PushObject(m_pHero);
 
 	// 좀비
-	m_pZombi = new AHeroObj();
-	m_pZombi->SetPlayerCharacter(Zombie, 80.0f, 200.0f, -300.0f);
-	m_pZombi->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-	m_pZombi->SetANIM(Zombie_IDLE);
-	m_pZombi->m_myName = L"Zombi";
-	m_pZombi->m_objType = EObjType::Object;
+	m_pZombie = new AHeroObj();
+	m_pZombie->SetPlayerCharacter(Zombie, 80.0f, 200.0f, -300.0f);
+	m_pZombie->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+	m_pZombie->SetANIM(Zombie_IDLE);
+	m_pZombie->m_myName = L"Zombie";
+	m_pZombie->m_objType = EObjType::Object;
 	pCollider = new ColliderOBB(60.0f, { -13.0f, 0.0f , -13.0f }, { 13.0f, 80.0f , 13.0f });
 	//pCollider->usePhysics(false);
-	m_pZombi->AddComponent(pCollider);
-	ObjectManager::Get().PushObject(m_pZombi);
+	m_pZombie->AddComponent(pCollider);
+	ObjectManager::Get().PushObject(m_pZombie);
 
 	// 새 생성
 	m_pBird = new AHeroObj();
@@ -80,7 +83,7 @@ bool GameScene::Init() noexcept
 		m_pMap->isGlobal();
 		ObjectManager::Get().PushObject(m_pMap);
 	}
-	// ============= UI
+	// =================================== UI ========================================
 	JPanel* pUIRoot = new JPanel(L"UI_IntroRoot");
 	pUIRoot->m_objType = EObjType::UI;
 	JParser par;
@@ -91,12 +94,12 @@ bool GameScene::Init() noexcept
 	static float fSample = 1.0f;
 	//pProj->m_fValue = &fSample;
 	pProj->SetValue(fSample); // 값 bind
-	//////////////////////////////////////// slider
-	JSliderCtrl* pSlider = (JSliderCtrl*)pUIRoot->find_child(L"Set_Volum");
-	pSlider = (JSliderCtrl*)pUIRoot->find_child(L"Set_Mouse");
-	//float SoundValue = *pSlider->GetValue(); // 값 pSlider->m_fValue 0 ~ 1
 	ObjectManager::Get().PushObject(pUIRoot);
 
+	pProj = (JProgressBar*)pUIRoot->find_child(L"MP_Progress");
+	pProj->SetValue(m_pPlayer->m_MP); // 값 bind
+
+	ObjectManager::Get().PushObject(pUIRoot);
 	return true;
 }
 
@@ -104,28 +107,52 @@ bool GameScene::Init() noexcept
 // 프레임
 bool GameScene::Frame() noexcept
 {
+	if (Input::GetKeyState('Q') == EKeyState::DOWN)
+	{
+		SendPlaySound("dead.mp3", Vector3::Zero, 2000.0f);
+	}
+	if (Input::GetKeyState('E') == EKeyState::DOWN)
+	{
+		SendPlaySound("SE_Click01.mp3", Vector3::Zero, 2000.0f);
+	}
+	static D3DXVECTOR3 ListenPosition;
+	SoundManager::Get().m_pListenerPos = &ListenPosition;
+	ListenPosition = m_pPlayer->GetWorldPosition();
+
 	if (Input::GetKeyState(VK_TAB) == EKeyState::DOWN)
 	{
-		if (m_pPlayer->GetParent() == m_pHero)
+		static auto curCollider = ObjectManager::Get().GetColliderList().begin();
+		if (++curCollider == ObjectManager::Get().GetColliderList().end())
 		{
-			m_pPlayer->SetParent(m_pZombi);
-			m_pPlayer->m_curCharacter = PlayerController::ECharacter::EZombie;
+			curCollider = ObjectManager::Get().GetColliderList().begin();
 		}
-		else if (m_pPlayer->GetParent() == m_pZombi)
-		{
-			m_pPlayer->SetParent(m_pBird);
-			m_pPlayer->m_curCharacter = PlayerController::ECharacter::EDummy;
-		}
-		else if (m_pPlayer->GetParent() == m_pBird)
-		{
-			m_pPlayer->SetParent(m_pChicken);
-			m_pPlayer->m_curCharacter = PlayerController::ECharacter::EDummy;
-		}
-		else if (m_pPlayer->GetParent() == m_pChicken)
-		{
-			m_pPlayer->SetParent(m_pHero);
+		m_pPlayer->SetParent((*curCollider)->m_pParent);
+		if((*curCollider)->m_pParent->m_myName == L"Guard")
 			m_pPlayer->m_curCharacter = PlayerController::ECharacter::EGuard;
-		}
+		else if ((*curCollider)->m_pParent->m_myName == L"Zombie")
+			m_pPlayer->m_curCharacter = PlayerController::ECharacter::EZombie;
+		else
+			m_pPlayer->m_curCharacter = PlayerController::ECharacter::EDummy;
+		//if (m_pPlayer->GetParent() == m_pHero)
+		//{
+		//	m_pPlayer->SetParent(m_pZombie);
+		//	m_pPlayer->m_curCharacter = PlayerController::ECharacter::EZombie;
+		//}
+		//else if (m_pPlayer->GetParent() == m_pZombie)
+		//{
+		//	m_pPlayer->SetParent(m_pBird);
+		//	m_pPlayer->m_curCharacter = PlayerController::ECharacter::EDummy;
+		//}
+		//else if (m_pPlayer->GetParent() == m_pBird)
+		//{
+		//	m_pPlayer->SetParent(m_pChicken);
+		//	m_pPlayer->m_curCharacter = PlayerController::ECharacter::EDummy;
+		//}
+		//else if (m_pPlayer->GetParent() == m_pChicken)
+		//{
+		//	m_pPlayer->SetParent(m_pHero);
+		//	m_pPlayer->m_curCharacter = PlayerController::ECharacter::EGuard;
+		//}
 		m_pPlayer->ResetOption();
 	}
 

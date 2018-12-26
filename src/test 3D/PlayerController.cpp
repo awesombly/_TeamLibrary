@@ -93,8 +93,8 @@ void PlayerController::SetAnim(AHeroObj* pObject, const ECharacter& eCharacter, 
 			auto pDagger = ObjectManager::Get().TakeObject(L"Dagger");
 			pDagger->SetPosition(pObject->GetPosition() + pObject->GetForward() * 40.0f + pObject->GetUp() * 65.0f + pObject->GetRight() * 20.0f);
 			pDagger->SetRotation(pObject->GetRotation() + Quaternion::Up * 0.5f);
-			pDagger->SetScale(Vector3::One * 4.0f);
-			((Collider*)pDagger->GetComponentList(EComponent::Collider)->front())->SetForce((pObject->GetForward() + Vector3::Up * 0.5f) * 300.0f);
+			//pDagger->SetScale(Vector3::One * 1.0f);
+			((Collider*)pDagger->GetComponentList(EComponent::Collider)->front())->SetForce((pObject->GetForward() + Vector3::Up * 0.5f) * 250.0f);
 		}	break;
 		}
 	}	break;
@@ -189,10 +189,13 @@ void PlayerController::PlayerInput(const float& spf) noexcept
 		m_curDelayThrow += spf;
 		if (m_curDelayThrow > m_DelayThrow)
 		{
-			if (m_curAnim == EAction::Idle)
-				SetAnim((AHeroObj*)m_pParent, m_curCharacter, EAction::Idle);
-			if (Input::GetMouseState(EMouseButton::Left) == EKeyState::DOWN)
+			m_MP = min(m_MP + spf * 0.2f, 1.0f);
+			//if (m_curAnim == EAction::Idle)
+				//SetAnim((AHeroObj*)m_pParent, m_curCharacter, EAction::Idle);
+			if (Input::GetMouseState(EMouseButton::Left) == EKeyState::DOWN &&
+				m_MP >= 0.15f)
 			{
+				m_MP -= 0.15f;
 				m_curDelayThrow = 0.0f;
 				eAction = EAction::Throw;
 			}
@@ -214,41 +217,42 @@ void PlayerController::PlayerInput(const float& spf) noexcept
 			}	break;
 			case EAction::Left:
 			{
-				p_AnimTransform.Direction = m_pParent->GetLeft() * m_moveSpeed;
+				p_AnimTransform.Direction = m_pParent->GetLeft();
 			}	break;
 			case EAction::Right:
 			{
-				p_AnimTransform.Direction = m_pParent->GetRight() * m_moveSpeed;
+				p_AnimTransform.Direction = m_pParent->GetRight();
 			}	break;
 			case EAction::Forward:
 			{
-				p_AnimTransform.Direction = m_pParent->GetForward() * m_moveSpeed;
+				p_AnimTransform.Direction = m_pParent->GetForward();
 			}	break;
 			case EAction::ForwardLeft:
 			{
-				p_AnimTransform.Direction = (m_pParent->GetForward() + m_pParent->GetLeft()) * 0.7f * m_moveSpeed;
+				p_AnimTransform.Direction = m_pParent->GetForward() + m_pParent->GetLeft();
 			}	break;
 			case EAction::ForwardRight:
 			{
-				p_AnimTransform.Direction = (m_pParent->GetForward() + m_pParent->GetRight()) * 0.7f * m_moveSpeed;
+				p_AnimTransform.Direction = m_pParent->GetForward() + m_pParent->GetRight();
 			}	break;
 			case EAction::Backward:
 			{
-				p_AnimTransform.Direction = m_pParent->GetBackward() * m_moveSpeed;
+				p_AnimTransform.Direction = m_pParent->GetBackward();
 			}	break;
 			case EAction::BackwardLeft:
 			{
-				p_AnimTransform.Direction = (m_pParent->GetBackward() + m_pParent->GetLeft()) * 0.7f * m_moveSpeed;
+				p_AnimTransform.Direction = m_pParent->GetBackward() + m_pParent->GetLeft();
 			}	break;
 			case EAction::BackwardRight:
 			{
-				p_AnimTransform.Direction = (m_pParent->GetBackward() + m_pParent->GetRight()) * 0.7f * m_moveSpeed;
+				p_AnimTransform.Direction = m_pParent->GetBackward() + m_pParent->GetRight();
 			}	break;
 			default:
 			{
 				p_AnimTransform.Direction = Vector3::Zero;
 			}	break;
 			}
+			p_AnimTransform.Direction = Normalize(p_AnimTransform.Direction) * m_moveSpeed;
 			p_AnimTransform.KeyValue = m_pParent->m_keyValue;
 			p_AnimTransform.Rotation = m_pParent->GetRotation();
 			p_AnimTransform.EAnimState = m_curAnim = eAction;
@@ -518,7 +522,7 @@ void PlayerController::CameraInput(const float& spf) noexcept
 	}
 
 	// 카메라 Arm 조절
-	m_pCamera->m_armLength = std::clamp(m_pCamera->m_armLength - Input::GetWheelScroll() * 0.3f * spf, 0.0f, 50.0f);
+	m_pCamera->m_armLength = std::clamp(m_pCamera->m_armLength - Input::GetWheelScroll() * 0.5f * spf, 0.0f, 65.0f);
 	// 회전
 	m_pCamera->SetRotationX(std::clamp(m_pCamera->GetRotation().x + Input::GetMouseMovePos().y * 0.002f, MinCameraY, MaxCameraY));
 	m_pParent->Rotate(0.0f, Input::GetMouseMovePos().x * 0.002f);

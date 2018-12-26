@@ -103,9 +103,9 @@ bool IntroScene::Init() noexcept
 		pRenderer->SetNormalMap(L"NormalMap/tileADOT3.jpg");
 		pRenderer->SetEnviromentMap(L"CubeMap/grassenvmap1024.dds", EEnviType::Refraction);
 		pCollider = (Collider*)ObjectManager::Get().TakeComponent(L"ColliderOBB");
-		pObject = new GameObject(L"Object1", { pRenderer, pCollider, new CTransformer(Vector3::Zero, Quaternion::Right * 2.0f, Vector3::One) }, EObjType::Object);
+		pObject = new GameObject(L"Object1", { pRenderer, pCollider/*, new CTransformer(Vector3::Zero, Quaternion::Right * 2.0f, Vector3::One)*/ }, EObjType::Object);
 		pObject->Translate(Vector3::Backward * 30.0f + Vector3::Up * 200.0f);
-		pObject->SetScale(Vector3::One * 4);
+		pObject->SetScale(Vector3::One * 20.0f);
 		//ObjectManager::Get().PushObject(pObject);
 		ObjectManager::Get().SetProtoObject(pObject);
 
@@ -113,9 +113,9 @@ bool IntroScene::Init() noexcept
 		pRenderer->SetNormalMap(L"NormalMap/wall_NM_height.dds");
 		pRenderer->SetEnviromentMap(L"CubeMap/grassenvmap1024.dds", EEnviType::Fresnel);
 		pCollider = (Collider*)ObjectManager::Get().TakeComponent(L"ColliderOBB");
-		pObject = new GameObject(L"Object2", { pRenderer, pCollider, new CTransformer(Vector3::Zero, Quaternion::Up, Vector3::One) }, EObjType::Object);
+		pObject = new GameObject(L"Object2", { pRenderer, pCollider/*, new CTransformer(Vector3::Zero, Quaternion::Up, Vector3::One)*/ }, EObjType::Object);
 		pObject->Translate(Vector3::Backward * 30.0f + Vector3::Left * 140.0f + Vector3::Up * 300);
-		pObject->SetScale(Vector3::One * 10);
+		pObject->SetScale(Vector3::One * 10.0f);
 		//ObjectManager::Get().PushObject(pObject);
 		ObjectManager::Get().SetProtoObject(pObject);
 
@@ -123,24 +123,29 @@ bool IntroScene::Init() noexcept
 		pRenderer->SetNormalMap(L"NormalMap/Earth_NormalMap.dds");
 		pRenderer->SetEnviromentMap(L"CubeMap/grassenvmap1024.dds", EEnviType::Basic);
 		pCollider = (Collider*)ObjectManager::Get().TakeComponent(L"ColliderSphere");
-		pObject = new GameObject(L"Object3", { pRenderer, pCollider, new CTransformer(Vector3::Up, Quaternion::Base, Vector3::One) }, EObjType::Object);
+		pObject = new GameObject(L"Object3", { pRenderer, pCollider/*, new CTransformer(Vector3::Up, Quaternion::Base, Vector3::One)*/ }, EObjType::Object);
 		pObject->Translate(Vector3::Backward * 30.0f + Vector3::Right * 140.0f + Vector3::Up * 250);
-		pObject->SetScale(Vector3::One * 15);
+		pObject->SetScale(Vector3::One * 15.0f);
 		ObjectManager::Get().SetProtoObject(pObject);
 		//ObjectManager::Get().PushObject(pObject);
 
 		// ´Ü°Ë
 		auto pDagger = new AHeroObj();
 		//auto pDagger = new GameObject(L"Dagger", ObjectManager::Get().TakeComponent(L"Cube"));
-		pDagger->SetPlayerCharacter(ITEM_Dagger, 0.0f, 0.0f, 0.0f);
+		pDagger->SetPlayerCharacter(ITEM_Dagger);
 		pDagger->m_myName = L"Dagger";
 		pDagger->m_objType = EObjType::Object;
-		//pDagger->SetScale(Vector3::)
+		//pDagger->SetScale(Vector3::One * 0.5f);
 		pDagger->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-		pCollider = new Collider(1.0f);
+		pCollider = new Collider(15.0f);
+		pCollider->m_pivot = Vector3::Up * 10.0f + Vector3::Forward * 5.0f;
 		pDagger->AddComponent(pCollider);
 		ObjectManager::Get().SetProtoObject(pDagger);
 	}
+
+	//SoundManager::Get().Play("bgm_Title01.mp3");
+
+	SoundManager::Get().SetBGM("bgm_Title01.mp3");
 #pragma endregion
 	// ====================================================================================================
 
@@ -181,8 +186,36 @@ void IntroScene::LoadSound() noexcept
 	//SoundManager::Get().Load("BGM/Sandbag Mini Game", false, FMOD_LOOP_NORMAL);
 	//SoundManager::Get().Load("BGM/Brawl Breaks", false, FMOD_LOOP_NORMAL);
 	//SoundManager::Get().Load("BGM/Lobby", false, FMOD_LOOP_NORMAL);
-	SoundManager::Get().Load("BGM/PLAY ROUGH", false, FMOD_LOOP_NORMAL);
-	SoundManager::Get().SetBGM("BGM/PLAY ROUGH");
+	SoundManager::Get().Load("BGM/PLAY ROUGH.mp3", false, FMOD_LOOP_NORMAL);
+	//SoundManager::Get().SetBGM("BGM/PLAY ROUGH.mp3");
+	
+
+	//SoundManager::Get().SetBGM("bgm_Title01.mp3");
+
 	//
-	SoundManager::Get().Load("bash1");
+	SoundManager::Get().Load("dead.mp3");
+
+	SoundManager::Get().Load("bgm_ingame01.mp3");
+	SoundManager::Get().Load("bgm_ingame02.mp3");
+	SoundManager::Get().Load("bgm_Title01.mp3");
+	SoundManager::Get().Load("bgm_Title02.mp3");
+	SoundManager::Get().Load("SE_bird_01.mp3");
+	SoundManager::Get().Load("SE_Click01.mp3");
+	SoundManager::Get().Load("SE_Click02.mp3");
+	SoundManager::Get().Load("SE_Dance01.mp3");
+	SoundManager::Get().Load("SE_Dance02.mp3");
+	SoundManager::Get().Load("SE_footstep.mp3");
+	SoundManager::Get().Load("SE_game_win.mp3");
+	SoundManager::Get().Load("SE_game_lose.mp3");
+	SoundManager::Get().Load("SE_game_time_start.mp3");
+	SoundManager::Get().Load("SE_game_time_end.mp3");
+	SoundManager::Get().Load("SE_jajan.mp3");
+	SoundManager::Get().Load("SE_jump01.mp3");
+	SoundManager::Get().Load("SE_jump02.mp3");
+	SoundManager::Get().Load("SE_throw01.mp3");
+	SoundManager::Get().Load("SE_throw02.mp3");
+	SoundManager::Get().Load("SE_throw03.mp3");
+	SoundManager::Get().Load("SE_zombie_fly.mp3");
+	SoundManager::Get().Load("SE_zombie_hit01.mp3");
+	SoundManager::Get().Load("SE_zombie_hit02.mp3");
 }

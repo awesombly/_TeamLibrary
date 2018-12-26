@@ -4,7 +4,7 @@
 bool LobbyScene::Init() noexcept
 {
 	static auto pToGuest = [](void* pScene) {
-		if (PacketManager::Get().m_inputIP.empty())
+		if (PacketManager::Get().InputIP.empty())
 		{
 			MessageBox(Window::m_hWnd, L"IP 뒷자리를 입력하세염.", L"삐빅-", 0);
 			return;
@@ -12,6 +12,8 @@ bool LobbyScene::Init() noexcept
 		PacketManager::Get().isHost = false;
 		((MainClass*)pScene)->StartupClient();
 		((MainClass*)pScene)->SetScene(ESceneName::Main);
+
+		PacketManager::Get().SendPacket((char*)&PI, sizeof(PI), PACKET_ReqAddPlayer);
 		PacketManager::Get().SendPacket((char*)&PI, sizeof(PI), PACKET_ReqSync);
 	};
 	static auto pToHost = [](void* pScene) {
@@ -45,7 +47,7 @@ bool LobbyScene::Init() noexcept
 	// IP 창
 	//m_toGuestIP = (JTextCtrl*)pUIRoot->find_child(L"Guest_IP_9"); // G_IP
 	m_toGuestIP = (JTextCtrl*)pUIRoot->find_child(L"G_IP"); // G_IP
-	m_toGuestIP->m_Text = L"IP : ~." + PacketManager::Get().m_inputIP;
+	m_toGuestIP->m_Text = L"IP : ~." + PacketManager::Get().InputIP;
 	// 패널창
 	m_toGuestPanel = m_toGuest->m_pParent;
 	
@@ -63,7 +65,7 @@ bool LobbyScene::Frame() noexcept
 	//// 엔터 체크
 	//if (Input::GetKeyState(VK_RETURN) == EKeyState::DOWN)
 	//{
-	//	if (!PacketManager::Get().m_inputIP.empty())
+	//	if (!PacketManager::Get().InputIP.empty())
 	//	{
 	//		//return;
 	//	}
@@ -71,20 +73,20 @@ bool LobbyScene::Frame() noexcept
 	if (m_toGuestPanel->m_bRender == true)
 	{
 		if (Input::GetKeyState(VK_BACK) == EKeyState::DOWN &&
-			!PacketManager::Get().m_inputIP.empty())
+			!PacketManager::Get().InputIP.empty())
 		{
-			PacketManager::Get().m_inputIP.erase(--PacketManager::Get().m_inputIP.end());
-			m_toGuestIP->m_Text = L"IP : ~." + PacketManager::Get().m_inputIP;
+			PacketManager::Get().InputIP.erase(--PacketManager::Get().InputIP.end());
+			m_toGuestIP->m_Text = L"IP : ~." + PacketManager::Get().InputIP;
 		}
 		// 채팅 입력
-		if (PacketManager::Get().m_inputIP.size() < 3)
+		if (PacketManager::Get().InputIP.size() < 3)
 		{
 			for (char i = '0'; i <= '9'; i++)
 			{
 				if (Input::GetKeyState(i) == EKeyState::DOWN)
 				{
-					PacketManager::Get().m_inputIP += (char)i;
-					m_toGuestIP->m_Text = L"IP : ~." + PacketManager::Get().m_inputIP;
+					PacketManager::Get().InputIP += (char)i;
+					m_toGuestIP->m_Text = L"IP : ~." + PacketManager::Get().InputIP;
 				}
 			}
 			for (char i = VK_NUMPAD0; i <= VK_NUMPAD9; i++)
@@ -94,37 +96,37 @@ bool LobbyScene::Frame() noexcept
 					switch (i)
 					{
 					case VK_NUMPAD0:
-						PacketManager::Get().m_inputIP += '0';
+						PacketManager::Get().InputIP += '0';
 						break;
 					case VK_NUMPAD1:
-						PacketManager::Get().m_inputIP += '1';
+						PacketManager::Get().InputIP += '1';
 						break;
 					case VK_NUMPAD2:
-						PacketManager::Get().m_inputIP += '2';
+						PacketManager::Get().InputIP += '2';
 						break;
 					case VK_NUMPAD3:
-						PacketManager::Get().m_inputIP += '3';
+						PacketManager::Get().InputIP += '3';
 						break;
 					case VK_NUMPAD4:
-						PacketManager::Get().m_inputIP += '4';
+						PacketManager::Get().InputIP += '4';
 						break;
 					case VK_NUMPAD5:
-						PacketManager::Get().m_inputIP += '5';
+						PacketManager::Get().InputIP += '5';
 						break;
 					case VK_NUMPAD6:
-						PacketManager::Get().m_inputIP += '6';
+						PacketManager::Get().InputIP += '6';
 						break;
 					case VK_NUMPAD7:
-						PacketManager::Get().m_inputIP += '7';
+						PacketManager::Get().InputIP += '7';
 						break;
 					case VK_NUMPAD8:
-						PacketManager::Get().m_inputIP += '8';
+						PacketManager::Get().InputIP += '8';
 						break;
 					case VK_NUMPAD9:
-						PacketManager::Get().m_inputIP += '9';
+						PacketManager::Get().InputIP += '9';
 						break;
 					}
-					m_toGuestIP->m_Text = L"IP : ~." + PacketManager::Get().m_inputIP;
+					m_toGuestIP->m_Text = L"IP : ~." + PacketManager::Get().InputIP;
 				}
 			}
 		}
