@@ -132,13 +132,13 @@ bool IntroScene::Init() noexcept
 		// ´Ü°Ë
 		auto pDagger = new AHeroObj();
 		//auto pDagger = new GameObject(L"Dagger", ObjectManager::Get().TakeComponent(L"Cube"));
-		pDagger->SetPlayerCharacter(ITEM_Dagger, 0.0f, 0.0f, 0.0f);
+		pDagger->SetPlayerCharacter(ITEM_Dagger);
 		pDagger->m_myName = L"Dagger";
 		pDagger->m_objType = EObjType::Object;
-		pDagger->SetScale(Vector3::One * 0.5f)
+		//pDagger->SetScale(Vector3::One * 0.5f);
 		pDagger->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-		pCollider = new Collider(5.0f);
-		pCollider->m_pivot += Vector3::Up * 2.5f;
+		pCollider = new Collider(15.0f);
+		pCollider->m_pivot = Vector3::Up * 10.0f + Vector3::Forward * 5.0f;
 		pDagger->AddComponent(pCollider);
 		ObjectManager::Get().SetProtoObject(pDagger);
 	}
@@ -182,8 +182,9 @@ void IntroScene::LoadSound() noexcept
 	//SoundManager::Get().Load("BGM/Sandbag Mini Game", false, FMOD_LOOP_NORMAL);
 	//SoundManager::Get().Load("BGM/Brawl Breaks", false, FMOD_LOOP_NORMAL);
 	//SoundManager::Get().Load("BGM/Lobby", false, FMOD_LOOP_NORMAL);
-	SoundManager::Get().Load("BGM/PLAY ROUGH", false, FMOD_LOOP_NORMAL);
-	SoundManager::Get().SetBGM("BGM/PLAY ROUGH");
+	SoundManager::Get().Load("BGM/PLAY ROUGH.mp3", false, FMOD_LOOP_NORMAL);
+	SoundManager::Get().SetBGM("BGM/PLAY ROUGH.mp3");
+	
 	//
-	SoundManager::Get().Load("bash1");
+	SoundManager::Get().Load("dead.mp3");
 }

@@ -1,5 +1,6 @@
 #include "PacketManager.h"
 #include "ObjectManager.h"
+#include "SoundManager.h"
 #include "PlayerController.h"
 #include "Collider.h"
 
@@ -39,6 +40,8 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 	//static Packet_AnimState		p_AnimState;
 	static Packet_AnimTransform p_AnimTransform;
 	static Packet_Transform		p_Transform;
+	static Packet_PossessPlayer	p_PossessPlayer;
+	static Packet_SoundData		p_SoundData;
 
 	memcpy(&p_KeyValue, data, sizeof(Packet_KeyValue));
 	if (ObjectManager::KeyObjects[p_KeyValue.KeyValue] == nullptr) return;
@@ -111,6 +114,27 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 		 	((Collider*)ObjectManager::KeyObjects[p_AnimTransform.KeyValue]->GetComponentList(EComponent::Collider)->front())->SetDirectionForce(p_AnimTransform.Direction);
 		  }	break;
 		 }
+	 }	break;
+	 case PACKET_ReqAddPlayer:
+	 {
+		 memcpy(&p_Vector3, data, sizeof(Packet_Vector3));
+		 //UINT tempCount = ObjectKeyCount;
+		 ObjectKeyCount = p_Vector3.KeyValue;
+		 auto pObject = ObjectManager::Get().TakeObject(L"Guard");
+		 pObject->SetPosition(p_Vector3.Vec3);
+		 //ObjectKeyCount = tempCount;
+	 }	break;
+	 case PACKET_PossessPlayer:
+	 {
+		 memcpy(&p_PossessPlayer, data, sizeof(Packet_PossessPlayer));
+		 PlayerController::Get().SetParent(ObjectManager::KeyObjects[p_PossessPlayer.KeyValue]);
+		 PlayerController::Get().m_curCharacter = (PlayerController::ECharacter)p_PossessPlayer.ECharacter;
+	 }	break;
+	 case PACKET_PlaySound:
+	 {
+		 memcpy(&p_SoundData, data, 21);
+		 memcpy(((char*)&p_SoundData + 21), ((char*)data + 21), p_SoundData.NameSize);
+		 SoundManager::Get().PlayQueue(p_SoundData.SoundName, p_SoundData.Position, p_SoundData.MaxDistance);
 	 }	break;
 	 default:
 	 {

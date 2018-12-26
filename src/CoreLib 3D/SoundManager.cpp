@@ -86,7 +86,7 @@ bool SoundManager::Release() noexcept
 void SoundManager::Load(const string_view& soundName, const bool& isPlay, const int& option) noexcept
 {
 	m_SoundList[soundName.data()].m_SoundName = soundName.data();
-	string soundPath = "../../data/sound/"s + soundName.data() + ".mp3";
+	string soundPath = "../../data/sound/"s + soundName.data();
 	m_pSystem->createSound(soundPath.c_str(), option, 0, &(m_SoundList[soundName.data()].m_Sound));
 
 	if (isPlay)
@@ -125,6 +125,11 @@ void SoundManager::PlayVariation(string&& soundName, const bool& isPlay, const i
 {
 	soundName = soundName + (char)('1' + (rand() % vCount));
 	Play(soundName, isPlay);
+}
+
+void SoundManager::PlayQueue(const string_view& soundName, const D3DXVECTOR3& position, const float& maxDistance) noexcept
+{
+	m_SoundQueue.emplace(soundName.data(), position, maxDistance);
 }
 
 void SoundManager::Stop(const string_view& soundName) noexcept

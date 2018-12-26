@@ -77,6 +77,8 @@ public:
 	// ¾À ¼³Á¤
 	void SetScene(const ESceneName& sceneName, const bool& useRelease = true) noexcept;
 	void SendMovedObject()	noexcept;
+	
+	void SendPlaySound(const string_view& soundName, const D3DXVECTOR3& position, const float& maxDistance) noexcept;
 
 	virtual bool Init()		noexcept override;
 	virtual bool Frame()	noexcept override;

@@ -145,6 +145,8 @@ bool Collider::CollisionAllCheck(const float& spf) noexcept
 
 bool Collider::CollisionCheck(Collider* pCollider) noexcept
 {
+	if (!SphereToSphere(this, pCollider))
+		return false;
 	switch (pCollider->m_eCollider)
 	{
 	case ECollider::AABB:
@@ -157,11 +159,11 @@ bool Collider::CollisionCheck(Collider* pCollider) noexcept
 		if (SphereToOBB(this, (ColliderOBB*)pCollider))
 			return true;
 	}	break;
-	case ECollider::Sphere:
-	{
-		if (SphereToSphere(this, pCollider))
-			return true;
-	}	break;
+	//case ECollider::Sphere:
+	//{
+	//	if (SphereToSphere(this, pCollider))
+	//		return true;
+	//}	break;
 	}
 
 	return false;

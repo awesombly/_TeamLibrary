@@ -17,7 +17,7 @@ bool LobbyScene::Init() noexcept
 		((MainClass*)pScene)->StartupClient();
 		((MainClass*)pScene)->SetScene(ESceneName::Main);
 
-		PacketManager::Get().SendPacket((char*)&Vector3::Up, sizeof(D3DXVECTOR3), PACKET_ReqAddPlayer);
+		PacketManager::Get().SendPacket((char*)&PI, sizeof(PI), PACKET_ReqAddPlayer);
 		PacketManager::Get().SendPacket((char*)&PI, sizeof(PI), PACKET_ReqSync);
 	};
 	static auto pToHost = [](void* pScene) {

@@ -93,8 +93,8 @@ void PlayerController::SetAnim(AHeroObj* pObject, const ECharacter& eCharacter, 
 			auto pDagger = ObjectManager::Get().TakeObject(L"Dagger");
 			pDagger->SetPosition(pObject->GetPosition() + pObject->GetForward() * 40.0f + pObject->GetUp() * 65.0f + pObject->GetRight() * 20.0f);
 			pDagger->SetRotation(pObject->GetRotation() + Quaternion::Up * 0.5f);
-			pDagger->SetScale(Vector3::One * 4.0f);
-			((Collider*)pDagger->GetComponentList(EComponent::Collider)->front())->SetForce((pObject->GetForward() + Vector3::Up * 0.5f) * 300.0f);
+			//pDagger->SetScale(Vector3::One * 1.0f);
+			((Collider*)pDagger->GetComponentList(EComponent::Collider)->front())->SetForce((pObject->GetForward() + Vector3::Up * 0.5f) * 250.0f);
 		}	break;
 		}
 	}	break;
@@ -189,10 +189,13 @@ void PlayerController::PlayerInput(const float& spf) noexcept
 		m_curDelayThrow += spf;
 		if (m_curDelayThrow > m_DelayThrow)
 		{
+			m_MP = min(m_MP + spf * 0.2f, 1.0f);
 			//if (m_curAnim == EAction::Idle)
 				//SetAnim((AHeroObj*)m_pParent, m_curCharacter, EAction::Idle);
-			if (Input::GetMouseState(EMouseButton::Left) == EKeyState::DOWN)
+			if (Input::GetMouseState(EMouseButton::Left) == EKeyState::DOWN &&
+				m_MP >= 0.15f)
 			{
+				m_MP -= 0.15f;
 				m_curDelayThrow = 0.0f;
 				eAction = EAction::Throw;
 			}

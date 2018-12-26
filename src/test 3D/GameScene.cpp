@@ -6,7 +6,8 @@
 bool GameScene::Init() noexcept
 {
 #pragma region Basic
-	m_pPlayer = new PlayerController(L"Player", EObjType::Object);
+	m_pPlayer->m_myName  = L"Player";// = new PlayerController(L"Player", EObjType::Object);
+	m_pPlayer->m_objType = EObjType::Object;
 	ObjectManager::Cameras[ECamera::Main]->SetParent(m_pPlayer);
 	
 	// 기사 
@@ -80,9 +81,9 @@ bool GameScene::Init() noexcept
 		m_pMapTree->Build(m_pMap);
 		m_pMap->m_objType = EObjType::Map;
 		m_pMap->isGlobal();
-		//ObjectManager::Get().PushObject(m_pMap);
+		ObjectManager::Get().PushObject(m_pMap);
 	}
-	// ============= UI
+	// =================================== UI ========================================
 	JPanel* pUIRoot = new JPanel(L"UI_IntroRoot");
 	pUIRoot->m_objType = EObjType::UI;
 	JParser par;
@@ -90,11 +91,12 @@ bool GameScene::Init() noexcept
 	JProgressBar* pProj = (JProgressBar*)pUIRoot->find_child(L"HP_Progress");
 	// HP = HP_Progress
 	// MP = MP_Progress
-	static float fSample = 1.0f;
-	//pProj->m_fValue = &fSample;
-	pProj->SetValue(fSample); // 값 bind
-	ObjectManager::Get().PushObject(pUIRoot);
+	pProj->SetValue(m_pPlayer->m_HP); // 값 bind
 
+	pProj = (JProgressBar*)pUIRoot->find_child(L"MP_Progress");
+	pProj->SetValue(m_pPlayer->m_MP); // 값 bind
+
+	ObjectManager::Get().PushObject(pUIRoot);
 	return true;
 }
 
@@ -102,6 +104,14 @@ bool GameScene::Init() noexcept
 // 프레임
 bool GameScene::Frame() noexcept
 {
+	if (Input::GetKeyState('Q') == EKeyState::DOWN)
+	{
+		SendPlaySound("dead.mp3", Vector3::Zero, 3000.0f);
+	}
+	static D3DXVECTOR3 ListenPosition;
+	SoundManager::Get().m_pListenerPos = &ListenPosition;
+	ListenPosition = m_pPlayer->GetWorldPosition();
+
 	if (Input::GetKeyState(VK_TAB) == EKeyState::DOWN)
 	{
 		if (m_pPlayer->GetParent() == m_pHero)

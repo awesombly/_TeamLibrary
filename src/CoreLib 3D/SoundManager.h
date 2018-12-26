@@ -13,15 +13,17 @@ private:
 	map<string, MySound>	m_SoundList;
 	MySound*				m_curBGM;
 	float					m_masterVolume = 1.0f;
-public:
+
 	// 사운드 이름, 위치, 사거리
 	queue<tuple<string, D3DXVECTOR3, float> > m_SoundQueue;
-	D3DXVECTOR3* m_pListenerPos = nullptr;
+public:
+	D3DXVECTOR3* m_pListenerPos = nullptr;						// 듣는 위치
 public:
 	void	Load(const string_view& soundName, const bool& isPlay = false, const int& option = FMOD_DEFAULT) noexcept;
 	void	SetBGM(const string_view& soundName) noexcept;
 	void	Play(const string_view& soundName, const bool& isPlay = false) noexcept;
 	void    PlayVariation(string&& soundName, const bool& isPlay, const int& vCount) noexcept;
+	void	PlayQueue(const string_view& soundName, const D3DXVECTOR3& position, const float& maxDistance) noexcept;
 	void	Stop(const string_view& soundName)	 noexcept;
 	void	Paused(const string_view& soundName) noexcept;
 	void	OperVolume(const string_view& soundName, const float& value) noexcept;

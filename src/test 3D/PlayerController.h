@@ -6,7 +6,7 @@ class Collider;
 class Camera;
 class AHeroObj;
 
-class PlayerController : public GameObject
+class PlayerController : public GameObject, public ISingleton<PlayerController>
 {
 public:
 	enum EAction : char {
@@ -26,14 +26,12 @@ private:
 	EAction		m_curAnim;		// 실제 애니메이션
 
 	D3DXVECTOR3 m_direction;
-	float		m_moveSpeed		= 150.0f;
+	float		m_moveSpeed		= 250.0f;
 	float		m_jumpPower		= 180.0f;
 
 	const float	m_DelayThrow	= 0.3f;
 	float		m_curDelayThrow = 0.0f;
 
-	float		m_HP = 1.0f;
-	float		m_MP = 1.0f;
 
 	//bool		m_isCharacter	= false;
 	//bool		m_toIdle		= false;
@@ -42,6 +40,8 @@ private:
 	POINT		m_setMouseScreen;
 	POINT		m_setMouseClient;
 public:
+	float		m_HP = 1.0f;
+	float		m_MP = 1.0f;
 	//Collider*	m_pCollider		= nullptr;
 	ECharacter  m_curCharacter;
 public:
@@ -61,7 +61,9 @@ public:
 	bool Frame(const float& spf, const float& accTime)	noexcept override;
 	bool Render(ID3D11DeviceContext* pDContext)			noexcept override;
 	bool Release()										noexcept override;
-public:
+private:
+	friend class ISingleton<PlayerController>;
 	using GameObject::GameObject;
+public:
 	virtual ~PlayerController() = default;
 };

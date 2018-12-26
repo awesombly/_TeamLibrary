@@ -14,6 +14,8 @@
 #define PACKET_SetAnimTransform		1008
 #define PACKET_ReqAddPlayer			1009
 #define PACKET_AckAddPlayer			1010
+#define PACKET_PossessPlayer		1011
+#define PACKET_PlaySound			1012
 //#define PACKET_TakeObject			1013
 
 
@@ -30,6 +32,22 @@
 //	D3DXQUATERNION Rotation;
 //	char ProtoNum;
 //};
+
+struct Packet_SoundData
+{
+	UINT KeyValue;
+	D3DXVECTOR3 Position;
+	float MaxDistance;
+	char NameSize;
+	char SoundName[100];
+};
+
+
+struct Packet_PossessPlayer
+{
+	UINT KeyValue;
+	char ECharacter;
+};
 
 struct Packet_KeyValue
 {
