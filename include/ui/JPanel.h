@@ -22,6 +22,7 @@ namespace UI
 		EVENT_SHOW,
 		EVENT_NOT_SHOW,
 		EVENT_REVERSE_SHOW,
+		EVENT_ROTATEZ,
 	};
 	/* JPanel 개념 */
 	/* 하나의 이벤트에 실행되는 UI 또는 한번에 보여주는 UI 단위 */

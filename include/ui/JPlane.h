@@ -12,9 +12,11 @@ namespace UI
 		bool				m_bHovered = false;
 		bool				m_bPressed = false;
 		bool				m_bClicked = false;
-	private:
-		bool				m_bClickedTemp = false;
 	public:
+		D3DXMATRIX			m_matWorld;
+		D3DXVECTOR3         m_vRot;
+	public:
+		void SetMatrix(D3DXMATRIX* pWorld, D3DXMATRIX* pView, D3DXMATRIX* pProj);
 		//bool CheckPicking(D3DXMATRIX* pWorld, D3DXMATRIX* pView, D3DXMATRIX* pProj);
 		bool Clicked(RECT& rt, POINT& pt);
 		bool Hovered(RECT& rt, POINT& pt);

@@ -1,6 +1,4 @@
 #include "GameScene.h"
-#include "JParser.h"
-#include "JProgressBar.h"
 
 
 bool GameScene::Init() noexcept
@@ -86,13 +84,17 @@ bool GameScene::Init() noexcept
 	JPanel* pUIRoot = new JPanel(L"UI_IntroRoot");
 	pUIRoot->m_objType = EObjType::UI;
 	JParser par;
-	par.FileLoad(DxManager::GetDevice(), L"../../data/ui/test", *pUIRoot);
+	par.FileLoad(DxManager::GetDevice(), L"../../data/ui/UI_InGame", *pUIRoot);
 	JProgressBar* pProj = (JProgressBar*)pUIRoot->find_child(L"HP_Progress");
 	// HP = HP_Progress
 	// MP = MP_Progress
 	static float fSample = 1.0f;
 	//pProj->m_fValue = &fSample;
 	pProj->SetValue(fSample); // °ª bind
+	//////////////////////////////////////// slider
+	JSliderCtrl* pSlider = (JSliderCtrl*)pUIRoot->find_child(L"Set_Volum");
+	pSlider = (JSliderCtrl*)pUIRoot->find_child(L"Set_Mouse");
+	//float SoundValue = *pSlider->GetValue(); // °ª pSlider->m_fValue 0 ~ 1
 	ObjectManager::Get().PushObject(pUIRoot);
 
 	return true;

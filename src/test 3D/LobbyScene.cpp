@@ -1,10 +1,6 @@
 #include "LobbyScene.h"
 #include "PacketManager.h"
-
-#include "JParser.h"
 #include "JState.h"
-#include "JEventList.h"
-
 bool LobbyScene::Init() noexcept
 {
 	static auto pToGuest = [](void* pScene) {

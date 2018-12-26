@@ -1,6 +1,6 @@
 #pragma once
 #include "MainClass.h"
-#include "JTextCtrl.h"
+#include "uiheader.h"
 
 
 class LobbyScene : public MainClass

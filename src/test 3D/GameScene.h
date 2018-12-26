@@ -5,6 +5,7 @@
 //#include "XCamera.h"
 #include "XMapImporter.h"
 #include "XObjectManager.h"
+#include "uiheader.h"
 
 class GameScene : public MainClass
 {
