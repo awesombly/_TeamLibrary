@@ -142,6 +142,10 @@ bool IntroScene::Init() noexcept
 		pDagger->AddComponent(pCollider);
 		ObjectManager::Get().SetProtoObject(pDagger);
 	}
+
+	//SoundManager::Get().Play("bgm_Title01.mp3");
+
+	SoundManager::Get().SetBGM("bgm_Title01.mp3");
 #pragma endregion
 	// ====================================================================================================
 
@@ -183,8 +187,11 @@ void IntroScene::LoadSound() noexcept
 	//SoundManager::Get().Load("BGM/Brawl Breaks", false, FMOD_LOOP_NORMAL);
 	//SoundManager::Get().Load("BGM/Lobby", false, FMOD_LOOP_NORMAL);
 	SoundManager::Get().Load("BGM/PLAY ROUGH.mp3", false, FMOD_LOOP_NORMAL);
-	SoundManager::Get().SetBGM("BGM/PLAY ROUGH.mp3");
+	//SoundManager::Get().SetBGM("BGM/PLAY ROUGH.mp3");
 	
+
+	//SoundManager::Get().SetBGM("bgm_Title01.mp3");
+
 	//
 	SoundManager::Get().Load("dead.mp3");
 
