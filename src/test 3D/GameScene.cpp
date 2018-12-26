@@ -106,7 +106,7 @@ bool GameScene::Frame() noexcept
 {
 	if (Input::GetKeyState('Q') == EKeyState::DOWN)
 	{
-		SendPlaySound("dead.mp3", Vector3::Zero, 3000.0f);
+		SendPlaySound("dead.mp3", Vector3::Zero, 2000.0f);
 	}
 	static D3DXVECTOR3 ListenPosition;
 	SoundManager::Get().m_pListenerPos = &ListenPosition;
