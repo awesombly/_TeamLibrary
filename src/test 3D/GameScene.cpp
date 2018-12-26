@@ -11,10 +11,11 @@ bool GameScene::Init() noexcept
 	// 扁荤 
 	m_pHero = new AHeroObj();
 	m_pHero->SetPlayerCharacter(Guard, 0.0f, 0.0f, 500.0f);
+	m_pHero->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
 	m_pHero->SetANIM(Guard_IDLE);
 	m_pHero->m_myName = L"Hero";
 	m_pHero->m_objType = EObjType::Object;
-	auto pCollider = new ColliderOBB({ -13.0f, 0.0f , -13.0f }, { 13.0f, 80.0f , 13.0f });//m_pHero.m_CollsionBox.vMin, m_pHero.m_CollsionBox.vMax));
+	auto pCollider = new ColliderOBB(60.0f, { -13.0f, 0.0f , -13.0f }, { 13.0f, 80.0f , 13.0f });
 	//pCollider->usePhysics(false);
 	m_pHero->AddComponent(pCollider);
 	m_pPlayer->SetParent(m_pHero);
@@ -25,10 +26,11 @@ bool GameScene::Init() noexcept
 	// 粱厚
 	m_pZombi = new AHeroObj();
 	m_pZombi->SetPlayerCharacter(Zombie, 80.0f, 200.0f, -300.0f);
+	m_pZombi->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
 	m_pZombi->SetANIM(Zombie_IDLE);
 	m_pZombi->m_myName = L"Zombi";
 	m_pZombi->m_objType = EObjType::Object;
-	pCollider = new ColliderOBB({ -13.0f, 0.0f , -13.0f }, { 13.0f, 80.0f , 13.0f });
+	pCollider = new ColliderOBB(60.0f, { -13.0f, 0.0f , -13.0f }, { 13.0f, 80.0f , 13.0f });
 	//pCollider->usePhysics(false);
 	m_pZombi->AddComponent(pCollider);
 	ObjectManager::Get().PushObject(m_pZombi);
@@ -36,10 +38,11 @@ bool GameScene::Init() noexcept
 	// 货 积己
 	m_pBird = new AHeroObj();
 	m_pBird->SetPlayerCharacter(NPC_Bird, 0.0f, 80.0f, 300.0f);
+	m_pBird->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
 	m_pBird->m_myName = L"Bird";
 	m_pBird->m_objType = EObjType::Object;
 	m_pBird->SetScale(Vector3::One * 15.0f);
-	pCollider = new ColliderOBB({ -1.0f, 0.0f , -1.0f }, { 1.0f, 2.0f , 1.0f });
+	pCollider = new ColliderOBB(1.5f, { -1.0f, 0.0f , -1.0f }, { 1.0f, 2.0f , 1.0f });
 	pCollider->m_pivot *= 15.0f;
 	pCollider->useGravity(false);
 	m_pBird->AddComponent(pCollider);
@@ -48,10 +51,11 @@ bool GameScene::Init() noexcept
 	// 催 积己
 	m_pChicken = new AHeroObj();
 	m_pChicken->SetPlayerCharacter(NPC_Chicken, 0.0f, 300.0f, -400.0f);
+	m_pChicken->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
 	m_pChicken->m_myName = L"Chicken";
 	m_pChicken->m_objType = EObjType::Object;
 	//m_pChicken->SetScale(Vector3::One * 15.0f);
-	pCollider = new ColliderOBB({ -15.0f, 0.0f , -15.0f }, { 15.0f, 30.0f , 15.0f });
+	pCollider = new ColliderOBB(23.0f, { -15.0f, 0.0f , -15.0f }, { 15.0f, 30.0f , 15.0f });
 	//pCollider->m_pivot *= 15.0f;
 	pCollider->useGravity(true);
 	m_pChicken->AddComponent(pCollider);
@@ -120,11 +124,6 @@ bool GameScene::Frame() noexcept
 bool GameScene::Render() noexcept
 {
 	m_pMap->SetMatrix(NULL, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-
-	m_pHero->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-	m_pZombi->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-	m_pBird->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-	m_pChicken->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
 
 	DxManager::Get().Render();
 	ObjectManager::Get().Render(DxManager::Get().GetDContext());

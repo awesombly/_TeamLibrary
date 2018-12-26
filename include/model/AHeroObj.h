@@ -53,15 +53,12 @@ public:
 
 	bool		SetPlayerCharacter(const TCHAR* fileName, float x=0,float y=0, float z=0);
 
-
-
 	bool		SetANIM_OneTime(const TCHAR* szName);
 	//D3DXVECTOR3 GetPlayerPos();
 	//INT GetPlayerPosX();
 	//INT GetPlayerPosY();
 	//INT GetPlayerPosZ();
-
-//	bool CollRect_Rect(A_Box& Dest, A_Box& Src);
+	//bool CollRect_Rect(A_Box& Dest, A_Box& Src);
 
 public:
 	AHeroObj();

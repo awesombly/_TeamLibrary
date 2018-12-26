@@ -20,7 +20,6 @@
 #include "CTransformer.h"
 #include "ColliderAABB.h"
 #include "ColliderOBB.h"
-#include "ColliderSphere.h"
 #include "PlayerController.h"
 
 #include "AHeroObj.h"

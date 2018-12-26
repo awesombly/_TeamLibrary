@@ -1,12 +1,11 @@
 #include "ColliderAABB.h"
 #include "ObjectManager.h"
 #include "ColliderOBB.h"
-#include "ColliderSphere.h"
 
 
 
-ColliderAABB::ColliderAABB(const D3DXVECTOR3& minPos, const D3DXVECTOR3& maxPos)
-	: Collider(), m_minPos(minPos), m_maxPos(maxPos)
+ColliderAABB::ColliderAABB(const float& radius, const D3DXVECTOR3& minPos, const D3DXVECTOR3& maxPos)
+	: Collider(radius), m_minPos(minPos), m_maxPos(maxPos)
 {
 	Init();
 }
@@ -29,67 +28,49 @@ Component* ColliderAABB::clone() noexcept
 
 bool ColliderAABB::CollisionCheck(Collider* pCollider) noexcept
 {
+	if (!SphereToSphere(this, pCollider))
+		return false;
+
 	switch (pCollider->m_eCollider)
 	{
 	case ECollider::AABB:
 	{
-		ColliderAABB* pAABB = (ColliderAABB*)pCollider;
-		// Ãæµ¹
-		auto thisMin  =		   GetCenter() + Product(m_minPos, m_pParent->GetScale());
-		auto thisMax  =		   GetCenter() + Product(m_maxPos, m_pParent->GetScale());
-		auto otherMin = pAABB->GetCenter() + Product(pAABB->m_minPos, pAABB->m_pParent->GetScale());
-		auto otherMax = pAABB->GetCenter() + Product(pAABB->m_maxPos, pAABB->m_pParent->GetScale());
-		if (std::max<float>(thisMin.x, otherMin.x) < std::min<float>(thisMax.x, otherMax.x) &&
-			std::max<float>(thisMin.y, otherMin.y) < std::min<float>(thisMax.y, otherMax.y) &&
-			std::max<float>(thisMin.z, otherMin.z) < std::min<float>(thisMax.z, otherMax.z) )
-		{
+		if (AABBToAABB(this, (ColliderAABB*)pCollider))
 			return true;
-		}
 	}	break;
 	case ECollider::OBB:
 	{
-		ColliderOBB* pOBB = (ColliderOBB*)pCollider;
-
-		D3DXVECTOR3 preMin = GetCenter() + Product(m_minPos, m_pParent->GetScale());
-		D3DXVECTOR3 preMax = GetCenter() + Product(m_maxPos, m_pParent->GetScale());
-		// AABB -> OBB ÁÂÇ¥ º¯È¯(min)
-		D3DXVECTOR3 tempMin = preMin - pOBB->GetCenter();
-		D3DXVECTOR3 thisMin = {   D3DXVec3Dot(&tempMin, &pOBB->m_pParent->GetRight()),
-								  D3DXVec3Dot(&tempMin, &pOBB->m_pParent->GetUp()),
-								  D3DXVec3Dot(&tempMin, &pOBB->m_pParent->GetForward()) };
-		thisMin += pOBB->GetCenter();
-		// AABB -> OBB ÁÂÇ¥ º¯È¯(max)
-		D3DXVECTOR3 tempMax = preMax - pOBB->GetCenter();
-		D3DXVECTOR3 thisMax = {   D3DXVec3Dot(&tempMax, &pOBB->m_pParent->GetRight()),
-								  D3DXVec3Dot(&tempMax, &pOBB->m_pParent->GetUp()),
-								  D3DXVec3Dot(&tempMax, &pOBB->m_pParent->GetForward()) };
-		thisMax += pOBB->GetCenter();
-		//
-		auto otherMin = pOBB->GetCenter() - pOBB->GetExtents();
-		auto otherMax = pOBB->GetCenter() + pOBB->GetExtents();
-		if (std::max<float>(thisMin.x, otherMin.x) < std::min<float>(thisMax.x, otherMax.x) &&
-			std::max<float>(thisMin.y, otherMin.y) < std::min<float>(thisMax.y, otherMax.y) &&
-			std::max<float>(thisMin.z, otherMin.z) < std::min<float>(thisMax.z, otherMax.z))
-		{
+		if (AABBToOBB(this, (ColliderOBB*)pCollider))
 			return true;
-		}
 	}	break;
 	case ECollider::Sphere:
 	{
-		///
+		if (SphereToAABB(pCollider, this))
+			return true;
 	}	break;
 	}
 
 	return false;
 }
 
-D3DXVECTOR3 ColliderAABB::GetLength() noexcept
-{
-	return Product((m_maxPos - m_minPos), m_pParent->GetScale());
-}
 
 void ColliderAABB::SetMinMax(const D3DXVECTOR3& minPos, const D3DXVECTOR3& maxPos) noexcept
 {
 	m_minPos = minPos;
 	m_maxPos = maxPos;
+}
+
+D3DXVECTOR3 ColliderAABB::GetMin() noexcept
+{
+	return Product(m_minPos, m_pParent->GetWorldScale());
+}
+
+D3DXVECTOR3 ColliderAABB::GetMax() noexcept
+{
+	return Product(m_maxPos, m_pParent->GetWorldScale());
+}
+
+D3DXVECTOR3 ColliderAABB::GetLength() noexcept
+{
+	return Product((m_maxPos - m_minPos), m_pParent->GetWorldScale());
 }
