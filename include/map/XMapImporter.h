@@ -8,6 +8,7 @@ public:
 	void ImportVertexData();
 	void ImportIndexData();
 	void ImportTexturePath();
+	bool ImportObject();
 public:
 	XMapImporter();
 	virtual ~XMapImporter();
