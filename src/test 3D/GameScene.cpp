@@ -136,7 +136,6 @@ bool GameScene::Release() noexcept
 {
 	if (m_pMapTree) m_pMapTree->Release();
 
-	m_pHero = m_pZombi = m_pBird = m_pChicken = nullptr;
 	ObjectManager::Cameras[ECamera::Main]->CutParent();
 	ObjectManager::Get().PopObject(ObjectManager::Cameras[ECamera::Main]);
 	ObjectManager::Get().Release();

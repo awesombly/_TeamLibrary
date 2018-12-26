@@ -135,6 +135,7 @@ bool IntroScene::Init() noexcept
 		pDagger->SetPlayerCharacter(ITEM_Dagger, 0.0f, 0.0f, 0.0f);
 		pDagger->m_myName = L"Dagger";
 		pDagger->m_objType = EObjType::Object;
+		//pDagger->SetScale(Vector3::)
 		pDagger->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
 		pCollider = new Collider(1.0f);
 		pDagger->AddComponent(pCollider);

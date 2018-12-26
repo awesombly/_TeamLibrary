@@ -112,16 +112,6 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 		  }	break;
 		 }
 	 }	break;
-	//case PACKET_SetDirectionForce:
-	//{
-	//	 memcpy(&p_Vector3, data, sizeof(Packet_Vector3));
-	//	 //((PlayerController*)ObjectManager::KeyObjects[p_Vector3.KeyValue])->m_pCollider->SetDirectionForce(p_Vector3.Vec3);
-	//}	break;
-	//case PACKET_SetMoveStop:
-	//{
-	//	 //memcpy(&p_KeyValue, data, sizeof(Packet_KeyValue));
-	//	 //((PlayerController*)ObjectManager::KeyObjects[p_KeyValue.KeyValue])->m_pCollider->isMoving(false);
-	//}	break;
 	 default:
 	 {
 		 ErrorMessage("처리되지 않은 패킷 : "s + to_string(sendMode));

@@ -11,10 +11,10 @@
 #define PACKET_Rotate				1005
 #define PACKET_Scaling				1006
 #define PACKET_ReqSync				1007
-#define PACKET_ReqAddPlayer			1010
-#define PACKET_AckAddPlayer			1011
 #define PACKET_SetAnimTransform		1012
-#define PACKET_TakeObject			1013
+//#define PACKET_ReqAddPlayer			1010
+//#define PACKET_AckAddPlayer			1011
+//#define PACKET_TakeObject			1013
 
 
 
