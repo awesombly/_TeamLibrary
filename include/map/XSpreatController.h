@@ -1,12 +1,13 @@
 #pragma once
 #include "XMapController.h"
 
-enum SpreatView { SpreatView_Alpha = 0, SpreatView_Texture};
+enum SpreatView { SpreatView_Alpha = 0, SpreatView_Texture };
 enum AlphaColor { Spreat_Red = 0, Spreat_Green, Spreat_Blue, Spreat_Alpha, Spreat_None };
 
-class XSpreatController: public XMapController
+class XSpreatController : public XMapController, public XSingleton<XSpreatController>
 {
 private:
+	friend class XSingleton<XSpreatController>;
 	SpreatView						m_SpreatView = SpreatView_Alpha;
 	ComPtr<ID3D11PixelShader>		m_AlphaPS;
 	D3D11_TEXTURE2D_DESC			m_TextureDesc;
@@ -27,6 +28,9 @@ public:
 	void	Spreating(ID3D11DeviceContext* pContext, X_Box CollisionBox, D3DXVECTOR3 vCrash, float fRadius, int iColor);
 	// RGBA마다 컬러값에 Texture를 부여, 랜더에서 필요시 XTileRender class로 이전
 	HRESULT RGBA_TextureLoad(ID3D11Device* pDevice, const TCHAR* szFile, AlphaColor Color);
+
+	void SetMapTexture();
+	ID3D11Texture2D* GetSpreatTex() { return m_SpreatTexture; }
 public:
 	virtual void Start()	override;
 public:
@@ -39,3 +43,4 @@ public:
 	virtual ~XSpreatController();
 };
 
+#define I_SpreatCtrl XSingleton<XSpreatController>::Get()

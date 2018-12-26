@@ -114,6 +114,7 @@ bool GameScene::Frame() noexcept
 	}
 
 	m_pMapTree->Frame();
+	I_Object.Frame(Timer::SPF, Timer::AccumulateTime);
 	DxManager::Get().Frame();
 	ObjectManager::Get().Frame(Timer::SPF, Timer::AccumulateTime);
 	SoundManager::Get().Frame();
@@ -124,6 +125,8 @@ bool GameScene::Frame() noexcept
 bool GameScene::Render() noexcept
 {
 	m_pMap->SetMatrix(NULL, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+	I_Object.SetMatrix(&ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+	I_Object.Render(DxManager::Get().GetDContext());
 
 	DxManager::Get().Render();
 	ObjectManager::Get().Render(DxManager::Get().GetDContext());
