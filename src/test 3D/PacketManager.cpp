@@ -44,7 +44,11 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 	static Packet_SoundData		p_SoundData;
 
 	memcpy(&p_KeyValue, data, sizeof(Packet_KeyValue));
-	if (ObjectManager::KeyObjects[p_KeyValue.KeyValue] == nullptr) return;
+	if (ObjectManager::KeyObjects[p_KeyValue.KeyValue] == nullptr)
+	{
+		ErrorMessage("KeyObject is Null : " + to_string(p_KeyValue.KeyValue));
+		return;
+	}
 
 	switch (sendMode)
 	{
@@ -119,9 +123,12 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 	 {
 		 memcpy(&p_Vector3, data, sizeof(Packet_Vector3));
 		 //UINT tempCount = ObjectKeyCount;
-		 ObjectKeyCount = p_Vector3.KeyValue;
+		 
+		 //PacketManager::Get().PlayerKeyCount = p_Vector3.KeyValue;
 		 auto pObject = ObjectManager::Get().TakeObject(L"Guard");
 		 pObject->SetPosition(p_Vector3.Vec3);
+		 pObject->SetKeyValue(++PlayerKeyCount);
+		 
 		 //ObjectKeyCount = tempCount;
 	 }	break;
 	 case PACKET_PossessPlayer:

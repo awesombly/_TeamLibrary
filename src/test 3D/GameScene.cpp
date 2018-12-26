@@ -93,22 +93,18 @@ bool GameScene::Init() noexcept
 	pProj = (JProgressBar*)pUIRoot->find_child(L"MP_Progress");
 	pProj->SetValue(m_pPlayer->m_MP); // 값 bind
 
-	//////////////////////////////////////// slider
-	JSliderCtrl* pSlider = (JSliderCtrl*)pUIRoot->find_child(L"Set_Volum");
-	//pSlider->GetValue();
-
-	pSlider = (JSliderCtrl*)pUIRoot->find_child(L"Set_Mouse");
-	//float SoundValue = *pSlider->GetValue(); // 값 pSlider->m_fValue 0 ~ 1
-
+	// Slider
+	m_pVolume = (JSliderCtrl*)pUIRoot->find_child(L"Set_Volum");
+	m_pMouseSense = (JSliderCtrl*)pUIRoot->find_child(L"Set_Mouse");
+	// Exit
 	static auto pGameExit = [](void* pScene) {
 		((MainClass*)pScene)->SetScene(ESceneName::Lobby);
 	};
 	auto pExit = (JTextCtrl*)pUIRoot->find_child(L"Set_GameExit");
 	pExit->EventClick.first = pGameExit;
 	pExit->EventClick.second = this;
-
+	// 체크 박스
 	m_pCheckBox = (JCheckCtrl*)pUIRoot->find_child(L"temp_Check0");
-	//m_pCheckBox->m_bCheck =
 
 	ObjectManager::Get().PushObject(pUIRoot);
 	return true;
@@ -130,6 +126,7 @@ bool GameScene::Frame() noexcept
 	SoundManager::Get().m_pListenerPos = &ListenPosition;
 	ListenPosition = m_pPlayer->GetWorldPosition();
 
+	// 플레이어 변경
 	if (Input::GetKeyState(VK_TAB) == EKeyState::DOWN)
 	{
 		static auto curCollider = ObjectManager::Get().GetColliderList().begin();
@@ -144,34 +141,23 @@ bool GameScene::Frame() noexcept
 			m_pPlayer->m_curCharacter = PlayerController::ECharacter::EZombie;
 		else
 			m_pPlayer->m_curCharacter = PlayerController::ECharacter::EDummy;
-		//if (m_pPlayer->GetParent() == m_pHero)
-		//{
-		//	m_pPlayer->SetParent(m_pZombie);
-		//	m_pPlayer->m_curCharacter = PlayerController::ECharacter::EZombie;
-		//}
-		//else if (m_pPlayer->GetParent() == m_pZombie)
-		//{
-		//	m_pPlayer->SetParent(m_pBird);
-		//	m_pPlayer->m_curCharacter = PlayerController::ECharacter::EDummy;
-		//}
-		//else if (m_pPlayer->GetParent() == m_pBird)
-		//{
-		//	m_pPlayer->SetParent(m_pChicken);
-		//	m_pPlayer->m_curCharacter = PlayerController::ECharacter::EDummy;
-		//}
-		//else if (m_pPlayer->GetParent() == m_pChicken)
-		//{
-		//	m_pPlayer->SetParent(m_pHero);
-		//	m_pPlayer->m_curCharacter = PlayerController::ECharacter::EGuard;
-		//}
+
 		m_pPlayer->ResetOption();
 	}
+	// 설정 동기화
+	SoundManager::Get().SetMasterVolume(*m_pVolume->GetValue());
+	m_pPlayer->m_mouseSense = *m_pMouseSense->GetValue();
 
 	m_pMapTree->Frame();
 	I_Object.Frame(Timer::SPF, Timer::AccumulateTime);
 	DxManager::Get().Frame();
 	ObjectManager::Get().Frame(Timer::SPF, Timer::AccumulateTime);
 	SoundManager::Get().Frame();
+
+	for (auto& iter : ObjectManager::Get().GetColliderList())
+	{
+		iter->m_mapHeight = m_pMap->GetHeight(iter->m_pParent->GetWorldPosition().x, iter->m_pParent->GetWorldPosition().z);
+	}
 	return true;
 }
 
@@ -185,6 +171,53 @@ bool GameScene::Render() noexcept
 	DxManager::Get().Render();
 	ObjectManager::Get().Render(DxManager::Get().GetDContext());
 	SoundManager::Get().Render();
+
+	// 바운딩 박스 표시
+	if (m_pCheckBox->m_bCheck)
+	{
+		static GameObject* pBox = nullptr;
+		static GameObject* pSphere = nullptr;
+		if (pBox == nullptr)
+		{
+			pBox = new GameObject(L"DebugBox", ObjectManager::Get().TakeComponent(L"Cube"));
+			pBox->isGlobal(true);
+			pSphere = new GameObject(L"DebugSphere", ObjectManager::Get().TakeComponent(L"RowSphere"));
+			pSphere->isGlobal(true);
+		}
+
+		DxManager::Get().SetRasterizerState(ERasterS::Wireframe);
+		for (auto& iter : ObjectManager::Get().GetColliderList())
+		{
+			switch (iter->m_eCollider)
+			{
+			case ECollider::AABB:
+			{
+				pBox->SetPosition(iter->GetCenter());
+				pBox->SetRotation(Quaternion::Base);
+				pBox->SetScale(((ColliderAABB*)iter)->GetLength() * 0.5f);
+				pBox->Frame(0.0f, 0.0f);
+				pBox->Render(DxManager::GetDContext());
+			}	break;
+			case ECollider::OBB:
+			{
+				pBox->SetPosition(iter->GetCenter());
+				pBox->SetRotation(iter->m_pParent->GetRotation());
+				pBox->SetScale(((ColliderOBB*)iter)->GetExtents());
+				pBox->Frame(0.0f, 0.0f);
+				pBox->Render(DxManager::GetDContext());
+			}	break;
+			case ECollider::Sphere:
+			{
+			}	break;
+			}
+			pSphere->SetPosition(iter->GetCenter());
+			pSphere->SetRotation(Quaternion::Base);
+			pSphere->SetScale(iter->GetWorldRadius() * Vector3::One);
+			pSphere->Frame(0.0f, 0.0f);
+			pSphere->Render(DxManager::GetDContext());
+		}
+		DxManager::Get().SetRasterizerState(ERasterS::Current);
+	}
 	return true;
 }
 

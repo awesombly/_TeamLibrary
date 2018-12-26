@@ -69,6 +69,8 @@ public:
 	const D3DXMATRIX& GetScaleMatrix()				const noexcept;
 	const D3DXMATRIX& GetRotationMatrix()			const noexcept;
 
+	void SetKeyValue(const UINT& keyValue)		noexcept;
+
 	bool isEnable()								noexcept;
 	void isEnable(const bool& isEnable, const bool& putDisablePool = false) noexcept;
 	bool isGlobal()								noexcept;

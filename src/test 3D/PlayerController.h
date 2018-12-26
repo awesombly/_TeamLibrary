@@ -14,7 +14,7 @@ public:
 		Left = 1, Forward = 2, ForwardLeft = 3, 
 		Right = 4, ForwardRight = 6, 
 		Backward = 8, BackwardLeft = 9, BackwardRight = 12,
-		Jump = 100, Dance1, Dance2, Dance3, Throw, RUN, FLY 
+		Jump = 100, Dance1, Dance2, Dance3, Throw, Run, Fly 
 	};
 	enum ECharacter : char {
 		EDummy = 0, EGuard, EZombie,
@@ -32,31 +32,23 @@ private:
 	const float	m_DelayThrow	= 0.3f;
 	float		m_curDelayThrow = 0.0f;
 
-
-	//bool		m_isCharacter	= false;
 	//bool		m_toIdle		= false;
-	//bool		m_isLoopAnim	= false;
 	// 마우스 고정용
 	POINT		m_setMouseScreen;
 	POINT		m_setMouseClient;
 public:
+	ECharacter  m_curCharacter;
+	//Collider*	m_pCollider		= nullptr;
+
 	float		m_mouseSense = 0.5f;
 	float		m_HP = 1.0f;
 	float		m_MP = 1.0f;
-	//Collider*	m_pCollider		= nullptr;
-	ECharacter  m_curCharacter;
 public:
 	static void SetAnim(AHeroObj* pObject, const ECharacter& eCharacter, const EAction& eAction) noexcept;
 
-	//void SetAnimation(const EAction& eAction)			noexcept;
-	//void AnimationGuard(const EAction& eAction)			noexcept;
-	//void AnimationZombi(const EAction& eAction)			noexcept;
 	void PlayerInput(const float& spf)					noexcept;
 	void CameraInput(const float& spf)					noexcept;
 	void ResetOption()									noexcept;
-
-	//bool isCharacter()									noexcept;
-	//void isCharacter(const bool& isCharacter)			noexcept;
 
 	bool Init()											noexcept override;
 	bool Frame(const float& spf, const float& accTime)	noexcept override;

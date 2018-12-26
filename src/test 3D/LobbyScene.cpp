@@ -28,32 +28,22 @@ bool LobbyScene::Init() noexcept
 	pUIRoot->m_objType = EObjType::UI;
 	JParser par;
 	par.FileLoad(DxManager::GetDevice(), L"../../data/ui/UI_Intro", *pUIRoot);
-	//ObjectManager::Get().PushObject(pUIRoot);
-
-	// Host = D_Host
-	// IP = G_IP
-	// Enter = G_Enter
 
 	// to 호스트
-	//m_toHost = pUIRoot->find_child(L"txt_Host"); // D_Host
 	m_toHost = pUIRoot->find_child(L"D_Host"); // D_Host
 	m_toHost->EventClick.first = pToHost;
 	m_toHost->EventClick.second = this;
-
 	// to 게스트
-	//m_toGuest = (JTextCtrl*)pUIRoot->find_child(L"Guest_Enter"); // G_Enter
 	m_toGuest = (JTextCtrl*)pUIRoot->find_child(L"G_Enter"); // G_Enter
 	m_toGuest->EventClick.first = pToGuest;
 	m_toGuest->EventClick.second = this;
 	// IP 창
-	//m_toGuestIP = (JTextCtrl*)pUIRoot->find_child(L"Guest_IP_9"); // G_IP
 	m_toGuestIP = (JTextCtrl*)pUIRoot->find_child(L"G_IP"); // G_IP
 	m_toGuestIP->m_Text = L"IP : ~." + PacketManager::Get().InputIP;
 	// 패널창
 	m_toGuestPanel = m_toGuest->m_pParent;
 	
 	ObjectManager::Get().PushObject(pUIRoot);
-
 	return true;
 }
 
@@ -76,6 +66,7 @@ bool LobbyScene::Frame() noexcept
 		if (Input::GetKeyState(VK_BACK) == EKeyState::DOWN &&
 			!PacketManager::Get().InputIP.empty())
 		{
+			// 글자 지우기
 			PacketManager::Get().InputIP.erase(--PacketManager::Get().InputIP.end());
 			m_toGuestIP->m_Text = L"IP : ~." + PacketManager::Get().InputIP;
 		}

@@ -298,6 +298,25 @@ const D3DXMATRIX& GameObject::GetRotationMatrix() const noexcept
 	return m_matRotation;
 }
 
+void GameObject::SetKeyValue(const UINT& keyValue) noexcept
+{
+	auto finder = ObjectManager::KeyObjects.find(m_keyValue);
+	if (finder != ObjectManager::KeyObjects.end())
+	{
+		if (finder->second == this)
+		{
+			ObjectManager::KeyObjects.erase(m_keyValue);
+		}
+		//else
+		//{
+		//	ErrorMessage(""s + __FUNCTION__ + " -> 중복된 키값!");
+		//	return;
+		//}
+	}
+	ObjectManager::KeyObjects[keyValue] = this;
+}
+
+
 
 void GameObject::isEnable(const bool& isEnable, const bool& putDisable) noexcept
 {

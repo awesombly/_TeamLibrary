@@ -180,79 +180,79 @@ bool ObjectManager::Render(ID3D11DeviceContext* pDContext) noexcept
 		iter->Render(pDContext);
 	}
 
-	// 바운딩 박스 표시
-	if (Input::isDebug)
-	{
-		static GameObject* pBox	   = nullptr;
-		static GameObject* pSphere = nullptr;
-		if (pBox == nullptr)
-		{
-			pBox	= new GameObject(L"DebugBox", TakeComponent(L"Cube"));
-			pBox->isGlobal(true);
-			pSphere = new GameObject(L"DebugSphere", TakeComponent(L"RowSphere"));
-			pSphere->isGlobal(true);
-		}
+	//// 바운딩 박스 표시
+	//if (Input::isDebug)
+	//{
+	//	static GameObject* pBox	   = nullptr;
+	//	static GameObject* pSphere = nullptr;
+	//	if (pBox == nullptr)
+	//	{
+	//		pBox	= new GameObject(L"DebugBox", TakeComponent(L"Cube"));
+	//		pBox->isGlobal(true);
+	//		pSphere = new GameObject(L"DebugSphere", TakeComponent(L"RowSphere"));
+	//		pSphere->isGlobal(true);
+	//	}
 
-		DxManager::Get().SetRasterizerState(ERasterS::Wireframe);
-		for (auto& iter : m_ColliderList)
-		{
-			switch (iter->m_eCollider)
-			{
-			 case ECollider::AABB:
-			 {
-			 	pBox->SetPosition(iter->GetCenter());
-			 	pBox->SetRotation(Quaternion::Base);
-			 	pBox->SetScale(((ColliderAABB*)iter)->GetLength() * 0.5f);
-			 	pBox->Frame(0.0f, 0.0f);
-			 	pBox->Render(pDContext);
-			 }	break;
-			 case ECollider::OBB:
-			 {
-			 	pBox->SetPosition(iter->GetCenter());
-			 	pBox->SetRotation(iter->m_pParent->GetRotation());
-			 	pBox->SetScale(((ColliderOBB*)iter)->GetExtents());
-			 	pBox->Frame(0.0f, 0.0f);
-			 	pBox->Render(pDContext);
-			 }	break;
-			 case ECollider::Sphere:
-			 {
-			 }	break;
-			}
-			pSphere->SetPosition(iter->GetCenter());
-			pSphere->SetRotation(Quaternion::Base);
-			pSphere->SetScale(iter->GetWorldRadius() * Vector3::One);
-			pSphere->Frame(0.0f, 0.0f);
-			pSphere->Render(pDContext);
-		}
-		DxManager::Get().SetRasterizerState(ERasterS::Current);
-	}
+	//	DxManager::Get().SetRasterizerState(ERasterS::Wireframe);
+	//	for (auto& iter : m_ColliderList)
+	//	{
+	//		switch (iter->m_eCollider)
+	//		{
+	//		 case ECollider::AABB:
+	//		 {
+	//		 	pBox->SetPosition(iter->GetCenter());
+	//		 	pBox->SetRotation(Quaternion::Base);
+	//		 	pBox->SetScale(((ColliderAABB*)iter)->GetLength() * 0.5f);
+	//		 	pBox->Frame(0.0f, 0.0f);
+	//		 	pBox->Render(pDContext);
+	//		 }	break;
+	//		 case ECollider::OBB:
+	//		 {
+	//		 	pBox->SetPosition(iter->GetCenter());
+	//		 	pBox->SetRotation(iter->m_pParent->GetRotation());
+	//		 	pBox->SetScale(((ColliderOBB*)iter)->GetExtents());
+	//		 	pBox->Frame(0.0f, 0.0f);
+	//		 	pBox->Render(pDContext);
+	//		 }	break;
+	//		 case ECollider::Sphere:
+	//		 {
+	//		 }	break;
+	//		}
+	//		pSphere->SetPosition(iter->GetCenter());
+	//		pSphere->SetRotation(Quaternion::Base);
+	//		pSphere->SetScale(iter->GetWorldRadius() * Vector3::One);
+	//		pSphere->Frame(0.0f, 0.0f);
+	//		pSphere->Render(pDContext);
+	//	}
+	//	DxManager::Get().SetRasterizerState(ERasterS::Current);
+	//}
 
 	// ========================== 미니맵 =============================
-	if (Input::isDebug)
-	{
-		DxManager::GetInstance().ClearDepthStencilView();
-		DxManager::GetInstance().SetViewPort(EViewPort::MiniMap);
-		CurCamera = Cameras[ECamera::MiniMap];
-		for (auto& iter : Lights)
-		{
-			iter->Render(pDContext);
-		}
-		for (auto&[type, objects] : m_ObjectList)
-		{
-			if (type == EObjType::UI)
-				continue;
-			for (auto& iter : objects)
-			{
-				iter->Render(pDContext);
-			}
-		}
-		for (auto& iter : m_InstanceList)
-		{
-			iter->Render(pDContext);
-		}
-		CurCamera = Cameras[ECamera::Main];
-		DxManager::GetInstance().SetViewPort(EViewPort::Main);
-	}
+	//if (Input::isDebug)
+	//{
+	//	DxManager::GetInstance().ClearDepthStencilView();
+	//	DxManager::GetInstance().SetViewPort(EViewPort::MiniMap);
+	//	CurCamera = Cameras[ECamera::MiniMap];
+	//	for (auto& iter : Lights)
+	//	{
+	//		iter->Render(pDContext);
+	//	}
+	//	for (auto&[type, objects] : m_ObjectList)
+	//	{
+	//		if (type == EObjType::UI)
+	//			continue;
+	//		for (auto& iter : objects)
+	//		{
+	//			iter->Render(pDContext);
+	//		}
+	//	}
+	//	for (auto& iter : m_InstanceList)
+	//	{
+	//		iter->Render(pDContext);
+	//	}
+	//	CurCamera = Cameras[ECamera::Main];
+	//	DxManager::GetInstance().SetViewPort(EViewPort::Main);
+	//}
 	return true;
 }
 

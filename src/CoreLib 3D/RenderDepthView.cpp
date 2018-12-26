@@ -19,7 +19,7 @@ HRESULT RenderDepthView::Create(ID3D11DeviceContext* pDContext, IDXGISwapChain* 
 	else
 	{
 		m_RTViewCount = 2;
-		m_pScreen = new PlaneUI(L"ScreenView", L"None.png", "VS_MRT", "PS_MRT");
+		m_pScreen = new PlaneUI(L"ScreenView", L"None.png", "VS_MRT", "PS_MRT_None");
 	}
 	m_pScreen->SetCamera(&ObjectManager::Cameras[ECamera::Screen]);
 

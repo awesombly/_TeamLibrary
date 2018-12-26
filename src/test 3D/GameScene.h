@@ -17,7 +17,9 @@ public:
 	AHeroObj*	m_pBird			= nullptr;		// 
 	AHeroObj*	m_pChicken		= nullptr;		// 
 
-	JCheckCtrl* m_pCheckBox		= nullptr;
+	JCheckCtrl*  m_pCheckBox	= nullptr;
+	JSliderCtrl* m_pVolume		= nullptr;
+	JSliderCtrl* m_pMouseSense  = nullptr;
 
 	//XCamera			m_Camera;					// ÇÁ·¯½ºÅÒ Ä«¸Þ¶ó
 	XMap*			m_pMap;						// ¸Ê

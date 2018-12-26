@@ -12,6 +12,7 @@ public:
 	PP::PPSender* pSender;
 
 	wstring InputIP;
+	UINT	PlayerKeyCount = 10000;
 	queue< PP::PPPacketForProcess> PacketHistory;
 public:
 	void InterceptPacket(const PP::PPPacketType& sendMode, const char* data) noexcept;
@@ -21,4 +22,3 @@ public:
 	PacketManager()			 = default;
 	virtual ~PacketManager() = default;
 };
-
