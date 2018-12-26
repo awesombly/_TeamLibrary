@@ -185,9 +185,17 @@ void PlayerController::PlayerInput(const float& spf) noexcept
 		{
 			eAction = EAction::Jump;
 		}
-		if (Input::GetMouseState(EMouseButton::Left) == EKeyState::DOWN)
+
+		m_curDelayThrow += spf;
+		if (m_curDelayThrow > m_DelayThrow)
 		{
-			eAction = EAction::Throw;
+			if (m_curAnim == EAction::Idle)
+				SetAnim((AHeroObj*)m_pParent, m_curCharacter, EAction::Idle);
+			if (Input::GetMouseState(EMouseButton::Left) == EKeyState::DOWN)
+			{
+				m_curDelayThrow = 0.0f;
+				eAction = EAction::Throw;
+			}
 		}
 
 
@@ -243,7 +251,7 @@ void PlayerController::PlayerInput(const float& spf) noexcept
 			}
 			p_AnimTransform.KeyValue = m_pParent->m_keyValue;
 			p_AnimTransform.Rotation = m_pParent->GetRotation();
-			p_AnimTransform.EAnimState = eAction;
+			p_AnimTransform.EAnimState = m_curAnim = eAction;
 			p_AnimTransform.ECharacter = m_curCharacter;
 			PacketManager::Get().SendPacket((char*)&p_AnimTransform, sizeof(Packet_AnimTransform), PACKET_SetAnimTransform);
 		}

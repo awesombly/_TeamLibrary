@@ -22,11 +22,15 @@ public:
 private:
 	//AHeroObj*   m_pHero			= nullptr;
 	Camera*		m_pCamera		= nullptr;
-	EAction		m_curAction;
+	EAction		m_curAction;	// 현재 눌린 액션
+	EAction		m_curAnim;		// 실제 애니메이션
 
 	D3DXVECTOR3 m_direction;
-	float		m_moveSpeed = 150.0f;
-	float		m_jumpPower = 180.0f;
+	float		m_moveSpeed		= 150.0f;
+	float		m_jumpPower		= 180.0f;
+
+	const float	m_DelayThrow	= 0.3f;
+	float		m_curDelayThrow = 0.0f;
 
 	float		m_HP = 1.0f;
 	float		m_MP = 1.0f;

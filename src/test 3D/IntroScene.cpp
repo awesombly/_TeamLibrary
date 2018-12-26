@@ -17,10 +17,11 @@ bool IntroScene::Init() noexcept
 		ObjectManager::Get().SetProtoComponent(new RPlane(L"Plane", L"None.png"));
 		ObjectManager::Get().SetProtoComponent(new RCube(L"Cube", L"None.png"));
 		ObjectManager::Get().SetProtoComponent(new RSphere(20, L"Sphere", L"None.png"));
+		ObjectManager::Get().SetProtoComponent(new RSphere(10, L"RowSphere", L"None.png"));
 		ObjectManager::Get().SetProtoComponent(new RLine(L"Line"));
-		ObjectManager::Get().SetProtoComponent(new ColliderAABB(-Vector3::One, Vector3::One));
-		ObjectManager::Get().SetProtoComponent(new ColliderOBB(-Vector3::One, Vector3::One));
-		ObjectManager::Get().SetProtoComponent(new ColliderSphere(1));
+		ObjectManager::Get().SetProtoComponent(new ColliderAABB(2.0f, -Vector3::One, Vector3::One));
+		ObjectManager::Get().SetProtoComponent(new ColliderOBB(2.0f, -Vector3::One, Vector3::One));
+		ObjectManager::Get().SetProtoComponent(new Collider(1));
 
 		// 월드 중심축
 		RLine*		pSelectLines[3];
@@ -55,6 +56,7 @@ bool IntroScene::Init() noexcept
 		//pCollider->m_pivot = Vector3::Up * 25.0f;
 		pCollider->useGravity(false);
 		pCollider->usePhysics(false);
+		pCollider->SetRadius(500.0f);
 		((ColliderOBB*)pCollider)->SetMinMax({ -300.0f, -53.0f, -300.0f }, { 300.0f, 53.0f, 300.0f });
 		auto mapMap = new HeightMap(L"HeightMap", EComponent::Renderer, L"mounds.jpg");
 		auto pHeightMap = new GameObject(L"HeightMap", { mapMap, pCollider }, EObjType::Map);
@@ -130,10 +132,11 @@ bool IntroScene::Init() noexcept
 		// 단검
 		auto pDagger = new AHeroObj();
 		//auto pDagger = new GameObject(L"Dagger", ObjectManager::Get().TakeComponent(L"Cube"));
-		pDagger->SetPlayerCharacter(NPC_Bird, 0.0f, 0.0f, 0.0f);
+		pDagger->SetPlayerCharacter(ITEM_Dagger, 0.0f, 0.0f, 0.0f);
 		pDagger->m_myName = L"Dagger";
 		pDagger->m_objType = EObjType::Object;
-		pCollider = new ColliderSphere(1.0f);
+		pDagger->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+		pCollider = new Collider(1.0f);
 		pDagger->AddComponent(pCollider);
 		ObjectManager::Get().SetProtoObject(pDagger);
 	}

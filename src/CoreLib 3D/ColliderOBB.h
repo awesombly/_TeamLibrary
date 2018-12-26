@@ -17,7 +17,7 @@ public:
 	bool Frame(const float& spf, const float& accTime)	noexcept override;
 	Component* clone()									noexcept override;
 public:
-	friend class ObjectManager;
-	ColliderOBB(const D3DXVECTOR3& minPos, const D3DXVECTOR3& maxPos);
+	//friend class ObjectManager;
+	ColliderOBB(const float& radius, const D3DXVECTOR3& minPos, const D3DXVECTOR3& maxPos);
 	virtual ~ColliderOBB() = default;
 };

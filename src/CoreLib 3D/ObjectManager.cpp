@@ -189,7 +189,7 @@ bool ObjectManager::Render(ID3D11DeviceContext* pDContext) noexcept
 		{
 			pBox	= new GameObject(L"DebugBox", TakeComponent(L"Cube"));
 			pBox->isGlobal(true);
-			pSphere = new GameObject(L"DebugSphere", TakeComponent(L"Sphere"));
+			pSphere = new GameObject(L"DebugSphere", TakeComponent(L"RowSphere"));
 			pSphere->isGlobal(true);
 		}
 
@@ -198,33 +198,31 @@ bool ObjectManager::Render(ID3D11DeviceContext* pDContext) noexcept
 		{
 			switch (iter->m_eCollider)
 			{
-			case ECollider::AABB:
-			{
-				auto scale = (((ColliderAABB*)iter)->m_maxPos - ((ColliderAABB*)iter)->m_minPos) * 0.5f;
-				pBox->SetPosition(iter->GetCenter());
-				pBox->SetRotation(Quaternion::Base);
-				pBox->SetScale(Product(scale, iter->m_pParent->GetScale()));
-				pBox->Frame(0.0f, 0.0f);
-				pBox->Render(pDContext);
-			}	break;
-			case ECollider::OBB:
-			{
-				//auto scale = ((ColliderOBB*)iter)->m_extents;
-				pBox->SetPosition(iter->GetCenter());
-				pBox->SetRotation(iter->m_pParent->GetRotation());
-				pBox->SetScale(((ColliderOBB*)iter)->GetExtents());
-				pBox->Frame(0.0f, 0.0f);
-				pBox->Render(pDContext);
-			}	break;
-			case ECollider::Sphere:
-			{
-				pSphere->SetPosition(iter->GetCenter());
-				pSphere->SetRotation(Quaternion::Base);
-				pSphere->SetScale(Vector3::One * iter->m_pParent->GetScaleAverage() * ((ColliderSphere*)iter)->m_radius);
-				pSphere->Frame(0.0f, 0.0f);
-				pSphere->Render(pDContext);
-			}	break;
+			 case ECollider::AABB:
+			 {
+			 	pBox->SetPosition(iter->GetCenter());
+			 	pBox->SetRotation(Quaternion::Base);
+			 	pBox->SetScale(((ColliderAABB*)iter)->GetLength() * 0.5f);
+			 	pBox->Frame(0.0f, 0.0f);
+			 	pBox->Render(pDContext);
+			 }	break;
+			 case ECollider::OBB:
+			 {
+			 	pBox->SetPosition(iter->GetCenter());
+			 	pBox->SetRotation(iter->m_pParent->GetRotation());
+			 	pBox->SetScale(((ColliderOBB*)iter)->GetExtents());
+			 	pBox->Frame(0.0f, 0.0f);
+			 	pBox->Render(pDContext);
+			 }	break;
+			 case ECollider::Sphere:
+			 {
+			 }	break;
 			}
+			pSphere->SetPosition(iter->GetCenter());
+			pSphere->SetRotation(Quaternion::Base);
+			pSphere->SetScale(iter->GetWorldRadius() * Vector3::One);
+			pSphere->Frame(0.0f, 0.0f);
+			pSphere->Render(pDContext);
 		}
 		DxManager::Get().SetRasterizerState(ERasterS::Current);
 	}
