@@ -128,10 +128,10 @@ bool IntroScene::Init() noexcept
 		//ObjectManager::Get().PushObject(pObject);
 
 		// ´Ü°Ë
-		//auto pDagger = new AHeroObj();
-		auto pDagger = new GameObject(L"Dagger", ObjectManager::Get().TakeComponent(L"Cube"));
-		//pDagger->SetPlayerCharacter(ITEM_Dagger, 0.0f, 300.0f, -300.0f);
-		//pDagger->m_myName = L"Dagger";
+		auto pDagger = new AHeroObj();
+		//auto pDagger = new GameObject(L"Dagger", ObjectManager::Get().TakeComponent(L"Cube"));
+		pDagger->SetPlayerCharacter(NPC_Bird, 0.0f, 0.0f, 0.0f);
+		pDagger->m_myName = L"Dagger";
 		pDagger->m_objType = EObjType::Object;
 		pCollider = new ColliderSphere(1.0f);
 		pDagger->AddComponent(pCollider);
