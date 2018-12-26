@@ -12,12 +12,11 @@
 #define PACKET_Scaling				1006
 #define PACKET_ReqSync				1007
 #define PACKET_SetAnimTransform		1008
-#define PACKET_ReqAddPlayer			1009
-#define PACKET_AckAddPlayer			1010
 #define PACKET_PossessPlayer		1011
 #define PACKET_PlaySound			1012
 //#define PACKET_TakeObject			1013
 
+#define PACKET_ReqAddPlayer			2000
 
 
 
