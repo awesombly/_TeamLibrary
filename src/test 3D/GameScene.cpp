@@ -1,5 +1,6 @@
 #include "GameScene.h"
-
+#include "JParser.h"
+#include "JProgressBar.h"
 
 
 bool GameScene::Init() noexcept
@@ -81,6 +82,19 @@ bool GameScene::Init() noexcept
 		m_pMap->isGlobal();
 		ObjectManager::Get().PushObject(m_pMap);
 	}
+	// ============= UI
+	JPanel* pUIRoot = new JPanel(L"UI_IntroRoot");
+	pUIRoot->m_objType = EObjType::UI;
+	JParser par;
+	par.FileLoad(DxManager::GetDevice(), L"../../data/ui/test", *pUIRoot);
+	JProgressBar* pProj = (JProgressBar*)pUIRoot->find_child(L"HP_Progress");
+	// HP = HP_Progress
+	// MP = MP_Progress
+	static float fSample = 1.0f;
+	//pProj->m_fValue = &fSample;
+	pProj->SetValue(fSample); // °ª bind
+	ObjectManager::Get().PushObject(pUIRoot);
+
 	return true;
 }
 

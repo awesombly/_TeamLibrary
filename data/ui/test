@@ -1,0 +1,106 @@
+^Type 777
+^NodeName Root
+^ParentName 
+^Position 0.000000 0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 1.000000 1.000000 1.000000
+
+^Type 780
+^NodeName MP_Progress
+^ParentName Root
+^bRender 1
+^Position -314.000000 -253.500031 0.000000
+^Rotate 0.000000 0.000000 1.570796
+^Scale 37.000000 50.000000 1.000000
+^tx_BackGround black.png
+^tx_FrontGround blue.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 780
+^NodeName HP_Progress
+^ParentName Root
+^bRender 1
+^Position 317.166931 -252.833359 0.000000
+^Rotate 0.000000 0.000000 1.570796
+^Scale 37.000000 50.000000 1.000000
+^tx_BackGround black.png
+^tx_FrontGround red.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 778
+^NodeName Back_HP
+^ParentName Root
+^bRender 1
+^Position 190.000000 -250.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 210.000000 50.000000 1.000000
+^tx_Normal AngerBG-a29fe88540a9de447a36082397fc4248-1.png
+^tx_Hover AngerBG-a29fe88540a9de447a36082397fc4248-1.png
+^tx_Press AngerBG-a29fe88540a9de447a36082397fc4248-1.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 778
+^NodeName Back_MP
+^ParentName Root
+^bRender 1
+^Position -190.000000 -250.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale -210.000000 50.000000 1.000000
+^tx_Normal AngerBG-a29fe88540a9de447a36082397fc4248-1.png
+^tx_Hover AngerBG-a29fe88540a9de447a36082397fc4248-1.png
+^tx_Press AngerBG-a29fe88540a9de447a36082397fc4248-1.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 778
+^NodeName temp0
+^ParentName Root
+^bRender 1
+^Position 16.164721 -278.847229 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 50.000000 18.501091 1.000000
+^tx_Normal black.png
+^tx_Hover black.png
+^tx_Press black.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 778
+^NodeName Skill_0
+^ParentName Root
+^bRender 1
+^Position 368.666443 -270.000671 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 25.667080 19.329370 1.000000
+^tx_Normal axe_mobile-d4d9e8a208f1f964783b426340fc8c29-1.png
+^tx_Hover axe_mobile-d4d9e8a208f1f964783b426340fc8c29-1.png
+^tx_Press axe_mobile-d4d9e8a208f1f964783b426340fc8c29-1.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
