@@ -4,6 +4,7 @@
 #include "XQuadTreeIndex.h"
 //#include "XCamera.h"
 #include "XMapImporter.h"
+#include "XObjectManager.h"
 
 class GameScene : public MainClass
 {
