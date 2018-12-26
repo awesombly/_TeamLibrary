@@ -71,14 +71,14 @@ bool GameScene::Init() noexcept
 	// ======================== ¸Ê »ý¼º =========================================
 	if (m_isFirstInit)
 	{
-		m_isFirstInit = false;
-		m_Importer.Import();
-		m_pMap = new XMap;
-		m_pMap->Create(DxManager::Get().GetDevice(), DxManager::Get().GetDContext(), &m_Importer, _T("../../Data/Map/Shader/MapShader_Specular.hlsl"), _T("../../Data/Map/Shader/MapShader_Color_Specular.hlsl"), "VS", "PS");
-		m_pMapTree = new XQuadTreeIndex;
-		m_pMapTree->Build(m_pMap);
-		m_pMap->m_objType = EObjType::Map;
-		m_pMap->isGlobal();
+		//m_isFirstInit = false;
+		//m_Importer.Import();
+		//m_pMap = new XMap;
+		//m_pMap->Create(DxManager::Get().GetDevice(), DxManager::Get().GetDContext(), &m_Importer, _T("../../Data/Map/Shader/MapShader_Specular.hlsl"), _T("../../Data/Map/Shader/MapShader_Color_Specular.hlsl"), "VS", "PS");
+		//m_pMapTree = new XQuadTreeIndex;
+		//m_pMapTree->Build(m_pMap);
+		//m_pMap->m_objType = EObjType::Map;
+		//m_pMap->isGlobal();
 		//ObjectManager::Get().PushObject(m_pMap);
 	}
 	return true;
@@ -113,8 +113,8 @@ bool GameScene::Frame() noexcept
 		m_pPlayer->ResetOption();
 	}
 
-	m_pMapTree->Frame();
-	I_Object.Frame(Timer::SPF, Timer::AccumulateTime);
+	//m_pMapTree->Frame();
+	//I_Object.Frame(Timer::SPF, Timer::AccumulateTime);
 	DxManager::Get().Frame();
 	ObjectManager::Get().Frame(Timer::SPF, Timer::AccumulateTime);
 	SoundManager::Get().Frame();
@@ -124,9 +124,9 @@ bool GameScene::Frame() noexcept
 // ·£´õ
 bool GameScene::Render() noexcept
 {
-	m_pMap->SetMatrix(NULL, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-	I_Object.SetMatrix(&ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-	I_Object.Render(DxManager::Get().GetDContext());
+	//m_pMap->SetMatrix(NULL, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+	//I_Object.SetMatrix(&ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+	//I_Object.Render(DxManager::Get().GetDContext());
 
 	DxManager::Get().Render();
 	ObjectManager::Get().Render(DxManager::Get().GetDContext());

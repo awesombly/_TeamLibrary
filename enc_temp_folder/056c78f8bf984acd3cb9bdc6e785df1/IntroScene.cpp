@@ -137,8 +137,7 @@ bool IntroScene::Init() noexcept
 		pDagger->m_objType = EObjType::Object;
 		pDagger->SetScale(Vector3::One * 0.5f)
 		pDagger->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-		pCollider = new Collider(5.0f);
-		pCollider->m_pivot += Vector3::Up * 2.5f;
+		pCollider = new Collider(1.0f);
 		pDagger->AddComponent(pCollider);
 		ObjectManager::Get().SetProtoObject(pDagger);
 	}

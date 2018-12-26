@@ -189,8 +189,8 @@ void PlayerController::PlayerInput(const float& spf) noexcept
 		m_curDelayThrow += spf;
 		if (m_curDelayThrow > m_DelayThrow)
 		{
-			if (m_curAnim == EAction::Idle)
-				SetAnim((AHeroObj*)m_pParent, m_curCharacter, EAction::Idle);
+			//if (m_curAnim == EAction::Idle)
+				//SetAnim((AHeroObj*)m_pParent, m_curCharacter, EAction::Idle);
 			if (Input::GetMouseState(EMouseButton::Left) == EKeyState::DOWN)
 			{
 				m_curDelayThrow = 0.0f;
