@@ -107,11 +107,21 @@ struct Packet_Transform
 	D3DXQUATERNION Rotation;
 };
 
+//struct Packet_Collider
+//{
+//	UINT KeyValue;
+//	D3DXVECTOR3 Position;
+//	//D3DXVECTOR3 Force;
+//	D3DXQUATERNION Rotation;
+//};		콜라이더 리스트에서 동기화?
+
+
 struct Packet_AnimTransform
 {
 	UINT KeyValue;
 	D3DXVECTOR3 Position;
 	D3DXVECTOR3 Force;
+	D3DXVECTOR3 Direction;
 	D3DXQUATERNION Rotation;
 	char EAnimState;
 	char ECharacter;

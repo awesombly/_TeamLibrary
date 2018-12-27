@@ -165,10 +165,10 @@ bool GameScene::Frame() noexcept
 	ObjectManager::Get().Frame(Timer::SPF, Timer::AccumulateTime);
 	SoundManager::Get().Frame();
 
-	//for (auto& iter : ObjectManager::Get().GetColliderList())
-	//{
-	//	iter->m_mapHeight = m_pMap->GetHeight(iter->m_pParent->GetWorldPosition().x, iter->m_pParent->GetWorldPosition().z);
-	//}
+	for (auto& iter : ObjectManager::Get().GetColliderList())
+	{
+		iter->m_mapHeight = m_pMap->GetHeight(iter->m_pParent->GetWorldPosition().x, iter->m_pParent->GetWorldPosition().z);
+	}
 	return true;
 }
 

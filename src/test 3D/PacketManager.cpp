@@ -98,22 +98,25 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 		 }
 		 ObjectManager::KeyObjects[p_AnimTransform.KeyValue]->SetPosition(p_AnimTransform.Position);
 		 ObjectManager::KeyObjects[p_AnimTransform.KeyValue]->SetRotation(p_AnimTransform.Rotation);
+		 ((Collider*)ObjectManager::KeyObjects[p_AnimTransform.KeyValue]->GetComponentList(EComponent::Collider)->front())->SetForce(p_AnimTransform.Force);
+		 //if ((PlayerController::EAction)p_AnimTransform.EAnimState == PlayerController::EAction::Idle)
+		 //{
+		 //	 ((Collider*)ObjectManager::KeyObjects[p_AnimTransform.KeyValue]->GetComponentList(EComponent::Collider)->front())->isMoving(false);
+		 //}
 		 switch ((PlayerController::EAction)p_AnimTransform.EAnimState)
 		 {
 		  case PlayerController::EAction::Idle:
 		  {
 		 	 ((Collider*)ObjectManager::KeyObjects[p_AnimTransform.KeyValue]->GetComponentList(EComponent::Collider)->front())->isMoving(false);
 		  }	break;
-		  case PlayerController::EAction::Jump:
-		  {
-		 	 ((Collider*)ObjectManager::KeyObjects[p_AnimTransform.KeyValue]->GetComponentList(EComponent::Collider)->front())->SetForce(p_AnimTransform.Direction);
-		  }	break;
-		  case PlayerController::EAction::Dance1:
-		  case PlayerController::EAction::Dance2:
-		  case PlayerController::EAction::Dance3:
-		  case PlayerController::EAction::Throw:
-		  {} break;
-		  default:
+		  case PlayerController::EAction::Forward:
+		  case PlayerController::EAction::ForwardLeft:
+		  case PlayerController::EAction::ForwardRight:
+		  case PlayerController::EAction::Backward:
+		  case PlayerController::EAction::BackwardLeft:
+		  case PlayerController::EAction::BackwardRight:
+		  case PlayerController::EAction::Left:
+		  case PlayerController::EAction::Right:
 		  {
 		 	((Collider*)ObjectManager::KeyObjects[p_AnimTransform.KeyValue]->GetComponentList(EComponent::Collider)->front())->SetDirectionForce(p_AnimTransform.Direction);
 		  }	break;

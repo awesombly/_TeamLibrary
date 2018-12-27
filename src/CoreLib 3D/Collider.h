@@ -41,6 +41,7 @@ public:
 	void SetForce(const D3DXVECTOR3& vForce)		  noexcept;
 	void SetDirectionForce(const D3DXVECTOR3& vForce) noexcept;
 
+	D3DXVECTOR3 GetForce()							  noexcept;
 	D3DXVECTOR3 GetTotalForce()						  noexcept;
 	D3DXVECTOR3 GetCenter()							  noexcept;
 	float GetVelocity()								  noexcept;

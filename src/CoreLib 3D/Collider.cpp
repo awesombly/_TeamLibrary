@@ -454,6 +454,11 @@ void Collider::SetDirectionForce(const D3DXVECTOR3& vForce) noexcept
 	m_direction = vForce;
 }
 
+D3DXVECTOR3 Collider::GetForce() noexcept
+{
+	return m_force;
+}
+
 D3DXVECTOR3 Collider::GetTotalForce() noexcept
 {
 	return m_force + m_direction;

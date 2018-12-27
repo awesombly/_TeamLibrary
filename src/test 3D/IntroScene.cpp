@@ -63,7 +63,7 @@ bool IntroScene::Init() noexcept
 		mapMap->CreateHeightMap(DxManager::GetDContext(), L"HeightMap/HEIGHT_MOUNDS.bmp", 10, 1.0f);
 		mapMap->SetNormalMap(L"NormalMap/wall_NM_height.dds");
 		mapMap->SetEnviromentMap(L"CubeMap/grassenvmap1024.dds", EEnviType::Fresnel);
-		pHeightMap->SetPosition(Vector3::Down * 2000.0f);
+		pHeightMap->SetPosition(Vector3::Down * 2500.0f);
 		pHeightMap->SetScale(Vector3::One * 10.0f);
 		//ObjectManager::Get().PushObject(pHeightMap);
 		ObjectManager::Get().SetProtoObject(pHeightMap);
