@@ -198,8 +198,8 @@ void PlayerController::PlayerInput(const float& spf) noexcept
 			PacketManager::Get().SendPlaySound("SE_jump01.mp3", PlayerController::Get().GetWorldPosition(), 1000.0f);
 		}
 
-		m_curDelayThrow += spf;
-		if (m_curDelayThrow > m_DelayThrow)
+		m_curDelayThrow = max(m_curDelayThrow - spf, 0.0f);
+		if (m_curDelayThrow <= 0.0f)
 		{
 			m_MP = min(m_MP + spf * 0.2f, 1.0f);
 			//if (m_curAnim == EAction::Idle)
@@ -208,7 +208,7 @@ void PlayerController::PlayerInput(const float& spf) noexcept
 				m_MP >= 0.15f)
 			{
 				m_MP -= 0.15f;
-				m_curDelayThrow = 0.0f;
+				m_curDelayThrow = m_DelayThrow;
 				eAction = EAction::Throw;
 			}
 		}

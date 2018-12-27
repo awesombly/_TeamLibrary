@@ -13,7 +13,7 @@ bool GameScene::Init() noexcept
 		ObjectManager::Cameras[ECamera::Main]->SetParent(m_pPlayer);
 		// 기사 
 		m_pHero = new AHeroObj();
-		m_pHero->SetPlayerCharacter(Guard, 0.0f, 0.0f, 500.0f);
+		m_pHero->SetPlayerCharacter(Guard, 0.0f, 100.0f, 0.0f);
 		m_pHero->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
 		m_pHero->SetANIM(Guard_IDLE);
 		m_pHero->m_myName = L"Guard";
@@ -68,8 +68,6 @@ bool GameScene::Init() noexcept
 	m_pChicken->AddComponent(pCollider);
 	ObjectManager::Get().PushObject(m_pChicken);
 
-
-	m_pHeightCollider = (Collider*)ObjectManager::Get().TakeObject(L"HeightMap")->GetComponentList(EComponent::Collider)->front();
 	ObjectManager::Get().TakeObject(L"ParticleSystem");
 	ObjectManager::Get().TakeObject(L"Object1");
 	ObjectManager::Get().TakeObject(L"Object2");
@@ -86,6 +84,10 @@ bool GameScene::Init() noexcept
 	pProj = (JProgressBar*)pUIRoot->find_child(L"MP_Progress");
 	pProj->SetValue(m_pPlayer->m_MP, 1.0f); // 값 bind
 
+
+	// 오른쪽 스킬
+	auto pIcon = (JProgressBar*)pUIRoot->find_child(L"Skill_0");
+	pIcon->SetValue(PlayerController::Get().m_curDelayThrow, PlayerController::Get().m_DelayThrow);
 	// Slider
 	m_pVolume = (JSliderCtrl*)pUIRoot->find_child(L"Set_Volum");
 	m_pVolume->SetValue(0.5f);
@@ -130,10 +132,8 @@ bool GameScene::Frame() noexcept
 	if (Input::GetKeyState(VK_TAB) == EKeyState::DOWN)
 	{
 		static auto curCollider = ObjectManager::Get().GetColliderList().begin();
-		++curCollider;
-		if (*curCollider == m_pHeightCollider)
-			++curCollider;
-		if (curCollider == ObjectManager::Get().GetColliderList().end())
+
+		if (++curCollider == ObjectManager::Get().GetColliderList().end())
 			curCollider  = ObjectManager::Get().GetColliderList().begin();
 
 		m_pPlayer->SetParent((*curCollider)->m_pParent);
@@ -152,7 +152,7 @@ bool GameScene::Frame() noexcept
 	m_TimerText->m_Text = to_wstring(Timer::AccumulateTime).substr(0, 5);
 
 	m_pMapTree->Frame();
-	I_Object.Frame(Timer::SPF, Timer::AccumulateTime);
+
 	DxManager::Get().Frame();
 	ObjectManager::Get().Frame(Timer::SPF, Timer::AccumulateTime);
 	SoundManager::Get().Frame();
@@ -160,13 +160,7 @@ bool GameScene::Frame() noexcept
 	// 맵 높이
 	for (auto& iter : ObjectManager::Get().GetColliderList())
 	{
-		if (iter == m_pHeightCollider)
-		{
-			continue;
-		}
 		iter->m_mapHeight = m_pMap->GetHeight(iter->m_pParent->GetWorldPosition().x, iter->m_pParent->GetWorldPosition().z);
-		//ErrorMessage(iter->m_pParent->m_myName + L" : " + to_wstring(iter->m_mapHeight));
-		//iter->m_mapHeight = 0.0f;
 	}
 	return true;
 }

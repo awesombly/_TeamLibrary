@@ -51,15 +51,9 @@ bool Collider::Frame(const float& spf, const float& accTime)	noexcept
 		m_pParent->GetRoot()->Translate((GetTotalForce() + Vector3::Up * 5.0f) * spf);
 		if (m_pParent->GetPosition().y < m_mapHeight)
 		{
-			m_pParent->SetPositionY(m_mapHeight /*+ m_pivot.y*/);
+			m_pParent->SetPositionY(m_mapHeight);
 			m_force *= -m_drag * m_repulsion * spf;
-			
 		}
-	}
-	if (Input::isDebug)
-	{
-		m_pParent->SetPositionY(m_mapHeight);
-		m_force = Vector3::Zero;
 	}
 	return true;
 	accTime;
