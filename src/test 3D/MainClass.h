@@ -76,8 +76,12 @@ public:
 	static map<ESceneName, MainClass*> m_SceneList;
 	static MainClass* m_curScene;
 
+	static GameObject* m_LoadingImage;
+	static GameObject* m_LoadingIcon;
+	static GameObject* m_LoadingIcon2;
+	static GameObject* m_LoadingIcon3;
+	static bool m_isLoading;
 	bool m_isFirstInit = true;
-
 
 
 	static XMap*			m_pMap;						// ¸Ê

@@ -68,6 +68,7 @@ bool LobbyScene::Init() noexcept
 		m_pMap->isStatic();
 		//ObjectManager::Get().PushObject(m_pMap);
 	}
+	m_isLoading = false;
 	return true;
 }
 
@@ -77,14 +78,6 @@ bool LobbyScene::Init() noexcept
 // 프레임
 bool LobbyScene::Frame() noexcept
 {
-	//// 엔터 체크
-	//if (Input::GetKeyState(VK_RETURN) == EKeyState::DOWN)
-	//{
-	//	if (!PacketManager::Get().InputIP.empty())
-	//	{
-	//		//return;
-	//	}
-	//}
 	if (m_toGuestPanel->m_bRender == true)
 	{
 		if (Input::GetKeyState(VK_BACK) == EKeyState::DOWN &&
@@ -147,8 +140,6 @@ bool LobbyScene::Frame() noexcept
 			}
 		}
 	}
-
-
 
 
 

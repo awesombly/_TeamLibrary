@@ -6,7 +6,7 @@ bool IntroScene::Init() noexcept
 	// ====================================================================================================
 #pragma region Basic
 	GameObject* pObject = nullptr;
-	Renderer*	pRenderer = nullptr;
+	//Renderer*	pRenderer = nullptr;
 	Collider*   pCollider = nullptr;
 
 	if (m_isFirstInit)
@@ -51,24 +51,6 @@ bool IntroScene::Init() noexcept
 		pObject->SetScale(Vector3::One * 7);
 		pObject->SetParent(ObjectManager::Get().Lights.front());
 
-		//// 높이 맵
-		//pCollider = (Collider*)ObjectManager::Get().TakeComponent(L"ColliderOBB");
-		////pCollider->m_pivot = Vector3::Up * 25.0f;
-		////pCollider->useGravity(false);
-		//pCollider->SetGravityScale(0.0f);
-		//pCollider->usePhysics(false);
-		//pCollider->SetRadius(500.0f);
-		//((ColliderOBB*)pCollider)->SetMinMax({ -300.0f, -53.0f, -300.0f }, { 300.0f, 53.0f, 300.0f });
-		//auto mapMap = new HeightMap(L"HeightMap", EComponent::Renderer, L"mounds.jpg");
-		//auto pHeightMap = new GameObject(L"HeightMap", { mapMap, pCollider }, EObjType::Map);
-		//mapMap->CreateHeightMap(DxManager::GetDContext(), L"HeightMap/HEIGHT_MOUNDS.bmp", 10, 1.0f);
-		//mapMap->SetNormalMap(L"NormalMap/wall_NM_height.dds");
-		//mapMap->SetEnviromentMap(L"CubeMap/grassenvmap1024.dds", EEnviType::Fresnel);
-		//pHeightMap->SetPosition(Vector3::Down * 2500.0f);
-		//pHeightMap->SetScale(Vector3::One * 10.0f);
-		////ObjectManager::Get().PushObject(pHeightMap);
-		//ObjectManager::Get().SetProtoObject(pHeightMap);
-
 		// 파티클
 		auto pParticle = new ParticleSystem(L"ParticleSystem", new Particle(), L"UI/cat.png");
 		pParticle->m_maxParticleCount = 9999;
@@ -99,40 +81,8 @@ bool IntroScene::Init() noexcept
 		//ObjectManager::Get().PushObject(pParticleObject);
 		ObjectManager::Get().SetProtoObject(pParticleObject);
 
-		// 노말 환경
-		pRenderer = (Renderer*)ObjectManager::Get().TakeComponent(L"Cube");
-		pRenderer->SetNormalMap(L"NormalMap/tileADOT3.jpg");
-		pRenderer->SetEnviromentMap(L"CubeMap/grassenvmap1024.dds", EEnviType::Refraction);
-		pCollider = (Collider*)ObjectManager::Get().TakeComponent(L"ColliderOBB");
-		pObject = new GameObject(L"Object1", { pRenderer, pCollider/*, new CTransformer(Vector3::Zero, Quaternion::Right * 2.0f, Vector3::One)*/ }, EObjType::Object);
-		pObject->Translate(Vector3::Backward * 30.0f + Vector3::Up * 200.0f);
-		pObject->SetScale(Vector3::One * 20.0f);
-		//ObjectManager::Get().PushObject(pObject);
-		ObjectManager::Get().SetProtoObject(pObject);
-
-		pRenderer = (Renderer*)ObjectManager::Get().TakeComponent(L"Cube");
-		pRenderer->SetNormalMap(L"NormalMap/wall_NM_height.dds");
-		pRenderer->SetEnviromentMap(L"CubeMap/grassenvmap1024.dds", EEnviType::Fresnel);
-		pCollider = (Collider*)ObjectManager::Get().TakeComponent(L"ColliderOBB");
-		pObject = new GameObject(L"Object2", { pRenderer, pCollider/*, new CTransformer(Vector3::Zero, Quaternion::Up, Vector3::One)*/ }, EObjType::Object);
-		pObject->Translate(Vector3::Backward * 30.0f + Vector3::Left * 140.0f + Vector3::Up * 300);
-		pObject->SetScale(Vector3::One * 10.0f);
-		//ObjectManager::Get().PushObject(pObject);
-		ObjectManager::Get().SetProtoObject(pObject);
-
-		pRenderer = (Renderer*)ObjectManager::Get().TakeComponent(L"Sphere");
-		pRenderer->SetNormalMap(L"NormalMap/Earth_NormalMap.dds");
-		pRenderer->SetEnviromentMap(L"CubeMap/grassenvmap1024.dds", EEnviType::Basic);
-		pCollider = (Collider*)ObjectManager::Get().TakeComponent(L"ColliderSphere");
-		pObject = new GameObject(L"Object3", { pRenderer, pCollider/*, new CTransformer(Vector3::Up, Quaternion::Base, Vector3::One)*/ }, EObjType::Object);
-		pObject->Translate(Vector3::Backward * 30.0f + Vector3::Right * 140.0f + Vector3::Up * 250);
-		pObject->SetScale(Vector3::One * 15.0f);
-		ObjectManager::Get().SetProtoObject(pObject);
-		//ObjectManager::Get().PushObject(pObject);
-
 		// 단검
 		auto pDagger = new AHeroObj();
-		//auto pDagger = new GameObject(L"Dagger", ObjectManager::Get().TakeComponent(L"Cube"));
 		pDagger->SetPlayerCharacter(ITEM_Dagger);
 		pDagger->m_myName = L"Dagger";
 		pDagger->m_objType = EObjType::Object;
@@ -143,13 +93,9 @@ bool IntroScene::Init() noexcept
 		pDagger->AddComponent(pCollider);
 		ObjectManager::Get().SetProtoObject(pDagger);
 	}
-
-	//SoundManager::Get().Play("bgm_Title01.mp3");
-
-	//SoundManager::Get().SetBGM("bgm_Title01.mp3");
 #pragma endregion
 	// ====================================================================================================
-
+	m_isLoading = false;
 	return true;
 }
 
@@ -170,8 +116,6 @@ bool IntroScene::Render() noexcept
 	DxManager::Get().Render();
 	ObjectManager::Get().Render(DxManager::GetDContext());
 	SoundManager::Get().Render();
-
-	
 	return true;
 }
 
@@ -186,12 +130,6 @@ bool IntroScene::Release() noexcept
 void IntroScene::LoadSound() noexcept
 {
 	SoundManager::Get().Load("BGM/PLAY ROUGH.mp3", false, FMOD_LOOP_NORMAL);
-	
-	//SoundManager::Get().SetBGM("bgm_Title01.mp3");
-
-	//
-	SoundManager::Get().Load("dead.mp3");
-
 	SoundManager::Get().Load("bgm_ingame01.mp3", false, FMOD_LOOP_NORMAL);
 	SoundManager::Get().Load("bgm_ingame02.mp3", false, FMOD_LOOP_NORMAL);
 	SoundManager::Get().Load("bgm_Title01.mp3", false, FMOD_LOOP_NORMAL);

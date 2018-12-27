@@ -8,6 +8,9 @@ bool GameScene::Init() noexcept
 	if (m_isFirstInit)
 	{
 		m_isFirstInit = false;
+		// 甘 仟浆
+		ObjectManager::Get().PushObject(m_pMap);
+		///
 		m_pPlayer->m_myName  = L"Player";
 		m_pPlayer->m_objType = EObjType::Object;
 		ObjectManager::Cameras[ECamera::Main]->SetParent(m_pPlayer);
@@ -22,56 +25,63 @@ bool GameScene::Init() noexcept
 		//pCollider->usePhysics(false);
 		m_pHero->AddComponent(pCollider);
 		ObjectManager::Get().SetProtoObject(m_pHero);
-		// 甘 仟浆
-		ObjectManager::Get().PushObject(m_pMap);
+
+		// 粱厚
+		m_pZombie = new AHeroObj();
+		m_pZombie->SetPlayerCharacter(Zombie, 80.0f, 200.0f, -300.0f);
+		m_pZombie->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+		m_pZombie->SetANIM(Zombie_IDLE);
+		m_pZombie->m_myName = L"Zombie";
+		m_pZombie->m_objType = EObjType::Object;
+		pCollider = new ColliderOBB(60.0f, { -13.0f, 0.0f , -13.0f }, { 13.0f, 80.0f , 13.0f });
+		//pCollider->usePhysics(false);
+		m_pZombie->AddComponent(pCollider);
+		ObjectManager::Get().SetProtoObject(m_pZombie);
+
+		// 货 积己
+		m_pBird = new AHeroObj();
+		m_pBird->SetPlayerCharacter(NPC_Bird, 0.0f, 80.0f, 300.0f);
+		m_pBird->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+		m_pBird->m_myName = L"Bird";
+		m_pBird->m_objType = EObjType::Object;
+		m_pBird->SetScale(Vector3::One * 15.0f);
+		pCollider = new ColliderOBB(1.5f, { -1.0f, 0.0f , -1.0f }, { 1.0f, 2.0f , 1.0f });
+		pCollider->m_pivot *= 15.0f;
+		pCollider->SetGravityScale(0.3f);
+		m_pBird->AddComponent(pCollider);
+		ObjectManager::Get().SetProtoObject(m_pBird);
+
+		// 催 积己
+		m_pChicken = new AHeroObj();
+		m_pChicken->SetPlayerCharacter(NPC_Chicken, 0.0f, 300.0f, -400.0f);
+		m_pChicken->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+		m_pChicken->m_myName = L"Chicken";
+		m_pChicken->m_objType = EObjType::Object;
+		//m_pChicken->SetScale(Vector3::One * 15.0f);
+		pCollider = new ColliderOBB(23.0f, { -15.0f, 0.0f , -15.0f }, { 15.0f, 30.0f , 15.0f });
+		//pCollider->m_pivot *= 15.0f;
+		m_pChicken->AddComponent(pCollider);
+		ObjectManager::Get().SetProtoObject(m_pChicken);
 	}
 	m_pHero = (AHeroObj*)ObjectManager::Get().TakeObject(L"Guard");
 	m_pPlayer->SetParent(m_pHero);
 	m_pPlayer->m_curCharacter = PlayerController::ECharacter::EGuard;
 	m_pPlayer->ResetOption();
-
-	// 粱厚
-	m_pZombie = new AHeroObj();
-	m_pZombie->SetPlayerCharacter(Zombie, 80.0f, 200.0f, -300.0f);
-	m_pZombie->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-	m_pZombie->SetANIM(Zombie_IDLE);
-	m_pZombie->m_myName = L"Zombie";
-	m_pZombie->m_objType = EObjType::Object;
-	auto pCollider = new ColliderOBB(60.0f, { -13.0f, 0.0f , -13.0f }, { 13.0f, 80.0f , 13.0f });
-	//pCollider->usePhysics(false);
-	m_pZombie->AddComponent(pCollider);
-	ObjectManager::Get().PushObject(m_pZombie);
-
-	// 货 积己
-	m_pBird = new AHeroObj();
-	m_pBird->SetPlayerCharacter(NPC_Bird, 0.0f, 80.0f, 300.0f);
-	m_pBird->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-	m_pBird->m_myName = L"Bird";
-	m_pBird->m_objType = EObjType::Object;
-	m_pBird->SetScale(Vector3::One * 15.0f);
-	pCollider = new ColliderOBB(1.5f, { -1.0f, 0.0f , -1.0f }, { 1.0f, 2.0f , 1.0f });
-	pCollider->m_pivot *= 15.0f;
-	//pCollider->useGravity(false);
-	pCollider->SetGravityScale(0.4f);
-	m_pBird->AddComponent(pCollider);
-	ObjectManager::Get().PushObject(m_pBird);
-
-	// 催 积己
-	m_pChicken = new AHeroObj();
-	m_pChicken->SetPlayerCharacter(NPC_Chicken, 0.0f, 300.0f, -400.0f);
-	m_pChicken->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-	m_pChicken->m_myName = L"Chicken";
-	m_pChicken->m_objType = EObjType::Object;
-	//m_pChicken->SetScale(Vector3::One * 15.0f);
-	pCollider = new ColliderOBB(23.0f, { -15.0f, 0.0f , -15.0f }, { 15.0f, 30.0f , 15.0f });
-	//pCollider->m_pivot *= 15.0f;
-	m_pChicken->AddComponent(pCollider);
-	ObjectManager::Get().PushObject(m_pChicken);
+	
 
 	ObjectManager::Get().TakeObject(L"ParticleSystem");
-	ObjectManager::Get().TakeObject(L"Object1");
-	ObjectManager::Get().TakeObject(L"Object2");
-	ObjectManager::Get().TakeObject(L"Object3");
+	ObjectManager::Get().TakeObject(L"Zombie") ->SetPosition(RandomNormal() * 500.0f, 500.0f, RandomNormal() * 500.0f );
+	ObjectManager::Get().TakeObject(L"Zombie") ->SetPosition(RandomNormal() * 500.0f, 500.0f, RandomNormal() * 500.0f);;
+	ObjectManager::Get().TakeObject(L"Zombie") ->SetPosition(RandomNormal() * 500.0f, 500.0f, RandomNormal() * 500.0f);;
+	ObjectManager::Get().TakeObject(L"Zombie") ->SetPosition(RandomNormal() * 500.0f, 500.0f, RandomNormal() * 500.0f);;
+	ObjectManager::Get().TakeObject(L"Chicken")->SetPosition(RandomNormal()	* 500.0f, 500.0f, RandomNormal() * 500.0f);;
+	ObjectManager::Get().TakeObject(L"Chicken")->SetPosition(RandomNormal()	* 500.0f, 500.0f, RandomNormal() * 500.0f);;
+	ObjectManager::Get().TakeObject(L"Chicken")->SetPosition(RandomNormal()	* 500.0f, 500.0f, RandomNormal() * 500.0f);;
+	ObjectManager::Get().TakeObject(L"Chicken")->SetPosition(RandomNormal()	* 500.0f, 500.0f, RandomNormal() * 500.0f);;
+	ObjectManager::Get().TakeObject(L"Bird")   ->SetPosition(RandomNormal()	* 500.0f, 500.0f, RandomNormal() * 500.0f);;
+	ObjectManager::Get().TakeObject(L"Bird")   ->SetPosition(RandomNormal()	* 500.0f, 500.0f, RandomNormal() * 500.0f);;
+	ObjectManager::Get().TakeObject(L"Bird")   ->SetPosition(RandomNormal()	* 500.0f, 500.0f, RandomNormal() * 500.0f);;
+	ObjectManager::Get().TakeObject(L"Bird")   ->SetPosition(RandomNormal()	* 500.0f, 500.0f, RandomNormal() * 500.0f);;
 #pragma endregion
 	
 	// =================================== UI ========================================
@@ -108,6 +118,7 @@ bool GameScene::Init() noexcept
 
 	ObjectManager::Get().PushObject(pUIRoot);
 	SoundManager::Get().SetBGM("bgm_ingame01.mp3");
+	m_isLoading = false;
 	return true;
 }
 
