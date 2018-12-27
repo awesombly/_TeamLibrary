@@ -83,6 +83,24 @@
 ^pfEventClick 7277
 ^vpEventClick Guest
 
+^Type 783
+^NodeName D_Exit
+^ParentName Default
+^bRender 1
+^Position -320.000000 105.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 50.000000 20.000000 1.000000
+^strText Exit
+^tx_Normal btn_177.png
+^tx_Hover btn_176.png
+^tx_Press btn_176.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
 ^Type 777
 ^NodeName Guest
 ^ParentName Root
@@ -186,17 +204,16 @@
 ^pfEventClick 7274
 ^vpEventClick 
 
-^Type 783
-^NodeName D_Exit
+^Type 778
+^NodeName Back_Title
 ^ParentName Root
 ^bRender 1
-^Position -320.000000 105.000000 0.000000
+^Position 0.000000 180.844269 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 50.000000 20.000000 1.000000
-^strText Exit
-^tx_Normal btn_177.png
-^tx_Hover btn_176.png
-^tx_Press btn_176.png
+^Scale 150.000000 50.000000 1.000000
+^tx_Normal Title.png
+^tx_Hover Title.png
+^tx_Press Title.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274

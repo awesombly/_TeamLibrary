@@ -5,13 +5,45 @@
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 1.000000 1.000000 1.000000
 
+^Type 784
+^NodeName tempParticle0
+^ParentName Root
+^bRender 1
+^Position 0.000000 0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 50.000000 50.000000 1.000000
+^AnimTime 1.000000
+^ParticleSize 128
+^ParticleScale 2.500000 5.000000
+^MinStartPos -400.000000 300.000000 1.000000
+^MaxStartPos 400.000000 300.000000 1.000000
+^TurnDir 0 0 0
+^MinColor 1.000000 1.000000 1.000000 1.000000
+^MaxColor 1.000000 1.000000 1.000000 1.000000
+^LifeTime 10.000000 10.000000
+^MinDir -1.000000 -1.000000 0.000000
+^MaxDir 1.000000 -1.000000 0.000000
+^MinDirAngle 0.000000 0.000000 -1.000000 1.000000
+^MaxDirAngle 0.000000 0.000000 1.000000 1.000000
+^MoveSpeed 50.000000 80.000000
+^RotSpeed 1.000000 1.000000
+^SPRITESTART 1
+^PropertyButtonFavouriteFill-468cdd1c31f3046448a59ed378113993-1.png
+^SPRITEEND
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
 ^Type 780
 ^NodeName MP_Progress
 ^ParentName Root
 ^bRender 1
-^Position -314.000000 -253.500031 0.000000
+^Position 320.000000 -240.000000 0.000000
 ^Rotate 0.000000 0.000000 1.570796
-^Scale 37.000000 50.000000 1.000000
+^Scale 50.000000 50.000000 1.000000
 ^tx_BackGround black.png
 ^tx_FrontGround blue.png
 ^pfEventHover 7274
@@ -25,9 +57,9 @@
 ^NodeName HP_Progress
 ^ParentName Root
 ^bRender 1
-^Position 317.166931 -252.833359 0.000000
+^Position -320.000000 -240.000000 0.000000
 ^Rotate 0.000000 0.000000 1.570796
-^Scale 37.000000 50.000000 1.000000
+^Scale 50.000000 50.000000 1.000000
 ^tx_BackGround black.png
 ^tx_FrontGround red.png
 ^pfEventHover 7274
@@ -41,9 +73,9 @@
 ^NodeName Back_HP
 ^ParentName Root
 ^bRender 1
-^Position 190.000000 -250.000000 0.000000
+^Position 190.000000 -235.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 210.000000 50.000000 1.000000
+^Scale 210.000000 65.000000 1.000000
 ^tx_Normal AngerBG-a29fe88540a9de447a36082397fc4248-1.png
 ^tx_Hover AngerBG-a29fe88540a9de447a36082397fc4248-1.png
 ^tx_Press AngerBG-a29fe88540a9de447a36082397fc4248-1.png
@@ -58,9 +90,9 @@
 ^NodeName Back_MP
 ^ParentName Root
 ^bRender 1
-^Position -190.000000 -250.000000 0.000000
+^Position -190.000000 -235.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale -210.000000 50.000000 1.000000
+^Scale -210.000000 65.000000 1.000000
 ^tx_Normal AngerBG-a29fe88540a9de447a36082397fc4248-1.png
 ^tx_Hover AngerBG-a29fe88540a9de447a36082397fc4248-1.png
 ^tx_Press AngerBG-a29fe88540a9de447a36082397fc4248-1.png
@@ -75,9 +107,9 @@
 ^NodeName temp0
 ^ParentName Root
 ^bRender 1
-^Position 16.164721 -278.847229 0.000000
+^Position 16.164721 -273.014801 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 50.000000 18.501091 1.000000
+^Scale 50.000000 24.667202 1.000000
 ^tx_Normal black.png
 ^tx_Hover black.png
 ^tx_Press black.png
@@ -92,12 +124,250 @@
 ^NodeName Skill_0
 ^ParentName Root
 ^bRender 1
-^Position 368.666443 -270.000671 0.000000
+^Position 368.503723 -260.656647 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 25.667080 19.329370 1.000000
+^Scale 26.000000 26.000000 1.000000
 ^tx_Normal axe_mobile-d4d9e8a208f1f964783b426340fc8c29-1.png
 ^tx_Hover axe_mobile-d4d9e8a208f1f964783b426340fc8c29-1.png
 ^tx_Press axe_mobile-d4d9e8a208f1f964783b426340fc8c29-1.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 778
+^NodeName Setting
+^ParentName Root
+^bRender 1
+^Position -371.671509 271.670654 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 25.000000 25.000000 1.000000
+^tx_Normal settings-cogwheel-button_icon-icons.com_72559.png
+^tx_Hover settings-cogwheel-button_icon-icons.com_72559.png
+^tx_Press settings-cogwheel-button_icon-icons.com_72559.png
+^pfEventHover 7278
+^vpEventHover Setting
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7277
+^vpEventClick Set_Panel
+
+^Type 778
+^NodeName Timer_Img
+^ParentName Root
+^bRender 1
+^Position -30.315331 275.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 20.000000 20.000000 1.000000
+^tx_Normal clock-with-white-face_icon-icons.com_72804.png
+^tx_Hover clock-with-white-face_icon-icons.com_72804.png
+^tx_Press clock-with-white-face_icon-icons.com_72804.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 783
+^NodeName Timer_Text
+^ParentName Root
+^bRender 1
+^Position 27.516222 275.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 30.000000 15.000000 1.000000
+^strText Timer
+^tx_Normal tile-6b2a1a39575b98c45936cc0169a9010f-1.png
+^tx_Hover tile-6b2a1a39575b98c45936cc0169a9010f-1.png
+^tx_Press tile-6b2a1a39575b98c45936cc0169a9010f-1.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 782
+^NodeName temp_Sprite0
+^ParentName Root
+^bRender 1
+^Position 205.000000 -271.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 25.000000 25.000000 1.000000
+^AnimTime 0.200000
+^SPRITESTART 2 
+^train_scoop_02-sharedassets2.assets.split0-185.png
+^train_scoop_03-sharedassets2.assets.split0-199.png
+^SPRITEEND
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 779
+^NodeName temp_Check0
+^ParentName Root
+^bRender 1
+^Position 167.000000 -271.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 25.000000 25.000000 1.000000
+^tx_Disable common_btn_check_selected.png
+^tx_Enable common_btn_check_unselected.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 782
+^NodeName temp_sprite1
+^ParentName Root
+^bRender 1
+^Position -368.659546 -261.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 27.000000 27.000000 1.000000
+^AnimTime 6.000000
+^SPRITESTART 8 
+^icn_crime.png
+^icn_drug.png
+^icn_gamble.png
+^icn_horror.png
+^icn_ment.png
+^icn_sensation.png
+^icn_violence.png
+^icn_rate_18.png
+^SPRITEEND
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 777
+^NodeName Set_Panel
+^ParentName Root
+^bRender 0
+^Position 0.000000 0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 1.000000 1.000000 1.000000
+
+^Type 778
+^NodeName Set_BackGround
+^ParentName Set_Panel
+^bRender 1
+^Position 0.000000 0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 200.000000 200.000000 1.000000
+^tx_Normal icn_rate_18.png
+^tx_Hover icn_rate_18.png
+^tx_Press icn_rate_18.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 781
+^NodeName Set_Volum
+^ParentName Set_Panel
+^bRender 1
+^Position 40.000000 120.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 120.000000 5.000000 1.000000
+^tx_Bar blue.png
+^tx_Handle filled-circle_icon-icons.com_72757.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 778
+^NodeName Set_Volum_Img
+^ParentName Set_Panel
+^bRender 1
+^Position -120.000000 120.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 30.000000 30.000000 1.000000
+^tx_Normal icn_crime.png
+^tx_Hover icn_crime.png
+^tx_Press icn_crime.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 781
+^NodeName Set_Mouse
+^ParentName Set_Panel
+^bRender 1
+^Position 40.000000 40.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 120.000000 5.000000 1.000000
+^tx_Bar blue.png
+^tx_Handle filled-circle_icon-icons.com_72757.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 778
+^NodeName Set_Mouse_Img
+^ParentName Set_Panel
+^bRender 1
+^Position -120.000000 40.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 30.000000 30.000000 1.000000
+^tx_Normal icn_drug.png
+^tx_Hover icn_drug.png
+^tx_Press icn_drug.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 778
+^NodeName Set_Exit
+^ParentName Set_Panel
+^bRender 1
+^Position 175.000000 173.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 20.000000 20.000000 1.000000
+^tx_Normal btn_175.png
+^tx_Hover btn_174.png
+^tx_Press btn_174.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7276
+^vpEventClick Set_Panel
+
+^Type 783
+^NodeName Set_GameExit
+^ParentName Set_Panel
+^bRender 1
+^Position 121.177338 -142.675186 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 50.000000 20.000000 1.000000
+^strText GameExit
+^tx_Normal btn_076.png
+^tx_Hover btn_077.png
+^tx_Press btn_077.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274

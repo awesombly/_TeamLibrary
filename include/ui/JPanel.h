@@ -23,6 +23,8 @@ namespace UI
 		EVENT_NOT_SHOW,
 		EVENT_REVERSE_SHOW,
 		EVENT_ROTATEZ,
+		EVENT_SHOW_SCL,
+		EVENT_NOTSHOW_SCL,
 	};
 	/* JPanel 개념 */
 	/* 하나의 이벤트에 실행되는 UI 또는 한번에 보여주는 UI 단위 */
@@ -45,7 +47,8 @@ namespace UI
 		/* 실행되는 Event */
 		std::pair<void(*)(void*), void*> EventHover;
 		std::pair<void(*)(void*), void*> EventPress;
-		std::pair<void(*)(void*), void*> EventClick;
+		std::pair<void(*)(void*), void*> EventClick; 
+		std::pair<void(*)(void*), void*> EventDefault;
 	public:
 		bool				m_bRender = true; // Render 여부 확인
 		JPanel*				m_pParent = nullptr;

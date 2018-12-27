@@ -12,7 +12,7 @@ class ColliderOBB;
 class Collider : public Component
 {
 private:
-	bool m_useGravity = true;
+	//bool m_useGravity = true;
 	bool m_usePhysics = true;
 	//bool m_isGround	  = false;
 	bool m_isMoving   = false;
@@ -21,6 +21,7 @@ private:
 	D3DXVECTOR3 m_direction = Vector3::Zero;	// 이동 힘
 
 	float m_radius;								// 반지름
+	float m_GravityScale = 1.0f;				// 중력크기
 public:
 	ECollider m_eCollider;
 	forward_list<Collider*> m_CollisionList;
@@ -31,7 +32,7 @@ public:
 	float m_drag		= 1.0f;					// 마찰력
 	float m_damping		= 0.2f;					// 항력
 	//float m_angularDamping = 0.2f;			// 회전 항력
-	float m_mapHeight = -99999.0f;
+	float m_mapHeight   = -9999.0f;
 
 	D3DXVECTOR3 m_normal = Vector3::Zero;		// 계산용 노말
 protected:
@@ -59,8 +60,10 @@ public:
 	virtual bool CollisionCheck(Collider* pCollider)				  noexcept;
 	//void OnCollision(Collider* pCollider) noexcept;
 
-	void useGravity(const bool& useGravity)			  noexcept;
-	bool useGravity()								  noexcept;
+	void SetGravityScale(const float& gravityRate)	  noexcept;
+
+	//void useGravity(const bool& useGravity)			  noexcept;
+	//bool useGravity()								  noexcept;
 	void usePhysics(const bool& usePhysics)			  noexcept;
 	bool usePhysics()								  noexcept;
 	void isMoving(const bool& isMoving)			      noexcept;

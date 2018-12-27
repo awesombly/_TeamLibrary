@@ -41,14 +41,14 @@ bool Timer::Frame() noexcept
 		// 실질적인 프레임 부
 		if (m_ElapseTime >= m_kDirTick)
 		{
-			if (FPS < m_DirFrame)
-				m_kDirTick -= SPF * 0.00001f;
-			else if (FPS > m_DirFrame)
-				m_kDirTick += SPF * 0.00001f;
+			//if (FPS < m_DirFrame)
+			//	m_kDirTick -= SPF * 0.00001f;
+			//else if (FPS > m_DirFrame)
+			//	m_kDirTick += SPF * 0.00001f;
 
 			m_FrameCnt++;
 			AccumulateTime += SPF = m_ElapseTime;
-			SPF *= m_GameSpeed;
+			//SPF *= m_GameSpeed;
 
 			// 1초마다 프레임 갱신
 			static LARGE_INTEGER prevTick = { 0,0 };
@@ -87,11 +87,11 @@ bool Timer::Frame() noexcept
 
 bool Timer::Render() noexcept
 {
-	if (Input::isDebug)
-	{
-		WriteManager::Get().SetFontSize(5);
-		WriteManager::Get().DrawTextW({ 10, 10, 400, 100 }, m_InfoStream.str());
-	}
+	//if (Input::isDebug)
+	//{
+	//	WriteManager::Get().SetFontSize(5);
+	//	WriteManager::Get().DrawTextW({ 10, 10, 400, 100 }, m_InfoStream.str());
+	//}
 	return true;
 }
 
@@ -109,4 +109,14 @@ void Timer::setGameSpeed(const float& speedRate)
 bool  Timer::Release() noexcept
 {
 	return true;
+}
+
+
+void Timer::ResetSPF() noexcept
+{
+	m_CurrentTick.QuadPart = 0;
+	m_BeforeTick.QuadPart = 0;
+	m_ElapseTime = 0.0f;
+	SPF = 0.0f;
+	//AccumulateTime = 0.0f;
 }

@@ -37,27 +37,30 @@ bool Collider::Frame(const float& spf, const float& accTime)	noexcept
 	// 충돌 체크
 	CollisionAllCheck(spf);
 
-	if (m_useGravity)
-	{
-		m_force += Vector3::Down * GravityPower * spf;
-	}
+	//if (m_useGravity)
+	//{
+		m_force += Vector3::Down * m_GravityScale * GravityPower * spf;
+	//}
 	// 항력
 	m_force -= m_force * m_damping * spf;
 
 	// 힘 적용
-	//if (isHost)
-	//{
-		if (GetVelocitySq() > 60.0f)
+	if (GetVelocitySq() > 60.0f)
+	{
+		//m_pParent->isMoved(true);
+		m_pParent->GetRoot()->Translate((GetTotalForce() + Vector3::Up * 5.0f) * spf);
+		if (m_pParent->GetPosition().y < m_mapHeight)
 		{
-			m_pParent->isMoved(true);
-			m_pParent->GetRoot()->Translate((GetTotalForce() + Vector3::Up * 5.0f) * spf);
-			if (m_pParent->GetWorldPosition().y < m_mapHeight)
-			{
-				m_pParent->SetPositionY(m_mapHeight /*+ m_pivot.y*/);
-				m_force *= -m_drag * m_repulsion * spf;
-			}
+			m_pParent->SetPositionY(m_mapHeight /*+ m_pivot.y*/);
+			m_force *= -m_drag * m_repulsion * spf;
+			
 		}
-	//}
+	}
+	if (Input::isDebug)
+	{
+		m_pParent->SetPositionY(m_mapHeight);
+		m_force = Vector3::Zero;
+	}
 	return true;
 	accTime;
 }
@@ -491,15 +494,19 @@ void Collider::SetRadius(const float& radius) noexcept
 }
 
 
+void Collider::SetGravityScale(const float& gravityRate) noexcept
+{
+	m_GravityScale = gravityRate;
+}
 
-void Collider::useGravity(const bool& useGravity) noexcept
-{
-	m_useGravity = useGravity;
-}
-bool Collider::useGravity() noexcept
-{
-	return m_useGravity;
-}
+//void Collider::useGravity(const bool& useGravity) noexcept
+//{
+//	m_useGravity = useGravity;
+//}
+//bool Collider::useGravity() noexcept
+//{
+//	return m_useGravity;
+//}
 
 void Collider::usePhysics(const bool& usePhysics) noexcept
 {

@@ -8,8 +8,7 @@ bool GameScene::Init() noexcept
 	if (m_isFirstInit)
 	{
 		m_isFirstInit = false;
-		//m_pPlayer->isEnable(true);
-		m_pPlayer->m_myName  = L"Player";// = new PlayerController(L"Player", EObjType::Object);
+		m_pPlayer->m_myName  = L"Player";
 		m_pPlayer->m_objType = EObjType::Object;
 		ObjectManager::Cameras[ECamera::Main]->SetParent(m_pPlayer);
 		// ±â»ç 
@@ -23,22 +22,13 @@ bool GameScene::Init() noexcept
 		//pCollider->usePhysics(false);
 		m_pHero->AddComponent(pCollider);
 		ObjectManager::Get().SetProtoObject(m_pHero);
-
-		// =============================== ¸Ê »ı¼º =================================
-		m_Importer.Import();
-		m_pMap = new XMap;
-		m_pMap->Create(DxManager::Get().GetDevice(), DxManager::Get().GetDContext(), &m_Importer, _T("../../Data/Map/Shader/MapShader_Specular.hlsl"), _T("../../Data/Map/Shader/MapShader_Color_Specular.hlsl"), "VS", "PS");
-		m_pMapTree = new XQuadTreeIndex;
-		m_pMapTree->Build(m_pMap);
-		m_pMap->m_objType = EObjType::Map;
-		m_pMap->isGlobal();
+		// ¸Ê Çª½¬
 		ObjectManager::Get().PushObject(m_pMap);
 	}
 	m_pHero = (AHeroObj*)ObjectManager::Get().TakeObject(L"Guard");
 	m_pPlayer->SetParent(m_pHero);
 	m_pPlayer->m_curCharacter = PlayerController::ECharacter::EGuard;
 	m_pPlayer->ResetOption();
-	//ObjectManager::Get().PushObject(m_pHero);
 
 	// Á»ºñ
 	m_pZombie = new AHeroObj();
@@ -61,7 +51,8 @@ bool GameScene::Init() noexcept
 	m_pBird->SetScale(Vector3::One * 15.0f);
 	pCollider = new ColliderOBB(1.5f, { -1.0f, 0.0f , -1.0f }, { 1.0f, 2.0f , 1.0f });
 	pCollider->m_pivot *= 15.0f;
-	pCollider->useGravity(false);
+	//pCollider->useGravity(false);
+	pCollider->SetGravityScale(0.01f);
 	m_pBird->AddComponent(pCollider);
 	ObjectManager::Get().PushObject(m_pBird);
 
@@ -74,7 +65,6 @@ bool GameScene::Init() noexcept
 	//m_pChicken->SetScale(Vector3::One * 15.0f);
 	pCollider = new ColliderOBB(23.0f, { -15.0f, 0.0f , -15.0f }, { 15.0f, 30.0f , 15.0f });
 	//pCollider->m_pivot *= 15.0f;
-	pCollider->useGravity(true);
 	m_pChicken->AddComponent(pCollider);
 	ObjectManager::Get().PushObject(m_pChicken);
 
@@ -103,6 +93,8 @@ bool GameScene::Init() noexcept
 	m_pMouseSense->SetValue(0.5f);
 	// Exit
 	static auto pGameExit = [](void* pScene) {
+		PlayerController::Get().CutParent();
+		PacketManager::Get().pSender->Release();
 		((MainClass*)pScene)->SetScene(ESceneName::Lobby);
 	};
 	auto pExit = (JTextCtrl*)pUIRoot->find_child(L"Set_GameExit");
@@ -138,10 +130,12 @@ bool GameScene::Frame() noexcept
 	if (Input::GetKeyState(VK_TAB) == EKeyState::DOWN)
 	{
 		static auto curCollider = ObjectManager::Get().GetColliderList().begin();
-		if (++curCollider == ObjectManager::Get().GetColliderList().end())
-		{
-			curCollider = ObjectManager::Get().GetColliderList().begin();
-		}
+		++curCollider;
+		if (*curCollider == m_pHeightCollider)
+			++curCollider;
+		if (curCollider == ObjectManager::Get().GetColliderList().end())
+			curCollider  = ObjectManager::Get().GetColliderList().begin();
+
 		m_pPlayer->SetParent((*curCollider)->m_pParent);
 		if((*curCollider)->m_pParent->m_myName == L"Guard")
 			m_pPlayer->m_curCharacter = PlayerController::ECharacter::EGuard;
@@ -156,8 +150,6 @@ bool GameScene::Frame() noexcept
 	SoundManager::Get().SetMasterVolume(*m_pVolume->GetValue());
 	m_pPlayer->m_mouseSense = *m_pMouseSense->GetValue();
 	m_TimerText->m_Text = to_wstring(Timer::AccumulateTime).substr(0, 5);
-	//m_TimerText->m_Text.at(4) = '\0';
-	//m_TimerText->m_Text;
 
 	m_pMapTree->Frame();
 	I_Object.Frame(Timer::SPF, Timer::AccumulateTime);
@@ -168,9 +160,13 @@ bool GameScene::Frame() noexcept
 	// ¸Ê ³ôÀÌ
 	for (auto& iter : ObjectManager::Get().GetColliderList())
 	{
-		if (iter == m_pHeightCollider) 
+		if (iter == m_pHeightCollider)
+		{
 			continue;
+		}
 		iter->m_mapHeight = m_pMap->GetHeight(iter->m_pParent->GetWorldPosition().x, iter->m_pParent->GetWorldPosition().z);
+		//ErrorMessage(iter->m_pParent->m_myName + L" : " + to_wstring(iter->m_mapHeight));
+		//iter->m_mapHeight = 0.0f;
 	}
 	return true;
 }

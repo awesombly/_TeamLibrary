@@ -29,9 +29,7 @@ public:
 	std::condition_variable m_FrameEvent;		// 쓰레드 이벤트 대기, 알림 발생시 대기중인 쓰레드 가동
 	std::condition_variable m_RenderEvent;
 public:
-	Timer();
-	virtual ~Timer();
-
+	void ResetSPF()			noexcept;
 	void setDirFrame(const int& dirFrame);
 	void setGameSpeed(const float& speedRate);
 
@@ -39,4 +37,7 @@ public:
 	virtual bool Frame()	noexcept override;
 	virtual bool Render()	noexcept override;
 	virtual bool Release()	noexcept override;
+
+	Timer();
+	virtual ~Timer();
 };

@@ -54,7 +54,8 @@ bool IntroScene::Init() noexcept
 		// 높이 맵
 		pCollider = (Collider*)ObjectManager::Get().TakeComponent(L"ColliderOBB");
 		//pCollider->m_pivot = Vector3::Up * 25.0f;
-		pCollider->useGravity(false);
+		//pCollider->useGravity(false);
+		pCollider->SetGravityScale(0.0f);
 		pCollider->usePhysics(false);
 		pCollider->SetRadius(500.0f);
 		((ColliderOBB*)pCollider)->SetMinMax({ -300.0f, -53.0f, -300.0f }, { 300.0f, 53.0f, 300.0f });
@@ -156,12 +157,10 @@ bool IntroScene::Init() noexcept
 // 프레임
 bool IntroScene::Frame() noexcept
 {
-	SetScene(ESceneName::Lobby);
 	DxManager::Get().Frame();
 	ObjectManager::Get().Frame(Timer::SPF, Timer::AccumulateTime);
 	SoundManager::Get().Frame();
-
-
+	SetScene(ESceneName::Lobby);
 	return true;
 }
  
@@ -186,14 +185,8 @@ bool IntroScene::Release() noexcept
 
 void IntroScene::LoadSound() noexcept
 {
-	//SoundManager::Get().Load("BGM/Mischievous Masquerade", false, FMOD_LOOP_NORMAL);
-	//SoundManager::Get().Load("BGM/Sandbag Mini Game", false, FMOD_LOOP_NORMAL);
-	//SoundManager::Get().Load("BGM/Brawl Breaks", false, FMOD_LOOP_NORMAL);
-	//SoundManager::Get().Load("BGM/Lobby", false, FMOD_LOOP_NORMAL);
 	SoundManager::Get().Load("BGM/PLAY ROUGH.mp3", false, FMOD_LOOP_NORMAL);
-	//SoundManager::Get().SetBGM("BGM/PLAY ROUGH.mp3");
 	
-
 	//SoundManager::Get().SetBGM("bgm_Title01.mp3");
 
 	//

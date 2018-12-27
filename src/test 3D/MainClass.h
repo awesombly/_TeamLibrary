@@ -25,6 +25,10 @@
 #include "AHeroObj.h"
 #include "JPanel.h"
 
+#include "XQuadTreeIndex.h"
+//#include "XCamera.h"
+#include "XMapImporter.h"
+
 
 // =====================================================================
 // 카메라 조작(Shift 누르고)
@@ -73,6 +77,12 @@ public:
 	static MainClass* m_curScene;
 
 	bool m_isFirstInit = true;
+
+
+
+	static XMap*			m_pMap;						// 맵
+	static XQuadTreeIndex*	m_pMapTree;					// 맵->공간분할, LOD시 수정 예정
+	static XMapImporter		m_Importer;					// 세이브 데이터 로더
 public:
 	// 씬 설정
 	void SetScene(const ESceneName& sceneName, const bool& useRelease = true) noexcept;
