@@ -7,9 +7,11 @@ namespace UI
 	public:
 		JImageCtrl* m_pBackGround;
 		JImageCtrl* m_pFrontGround;
-		const float*		m_fValue;
+		const float*		m_fCurValue;
+		float			    m_fMaxValue = 1.0f;
+		float				m_fValue;
 	public:
-		void SetValue(const float& fValue);
+		void SetValue(const float& fValue, float fMaxValue);
 		bool Create(ID3D11Device* pDevice, const TCHAR* szBack, const TCHAR* szFront, 
 			const char* PSName = "PS", const TCHAR* szShaderName = L"../../data/ui/shader/DefaultUI.hlsl");
 	public:
