@@ -33,6 +33,13 @@
 //	char ProtoNum;
 //};
 
+struct Packet_StartRotate
+{
+	UINT KeyValue;
+	float MouseSense;
+	bool isRight;
+};
+
 struct Packet_SoundData
 {
 	UINT KeyValue;

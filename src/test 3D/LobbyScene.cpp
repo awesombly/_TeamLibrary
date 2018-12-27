@@ -22,6 +22,9 @@ bool LobbyScene::Init() noexcept
 		((MainClass*)pScene)->StartupServer();
 		((MainClass*)pScene)->SetScene(ESceneName::Main);
 	};
+	static auto pToExit = [](void* pScene) {
+		exit(0);
+	};
 
 	JState::SetState(DxManager::GetDevice());
 	JPanel* pUIRoot = new JPanel(L"UI_IntroRoot");
@@ -30,18 +33,22 @@ bool LobbyScene::Init() noexcept
 	par.FileLoad(DxManager::GetDevice(), L"../../data/ui/UI_Intro", *pUIRoot);
 
 	// to 호스트
-	m_toHost = pUIRoot->find_child(L"D_Host"); // D_Host
-	m_toHost->EventClick.first = pToHost;
-	m_toHost->EventClick.second = this;
-	// to 게스트
-	m_toGuest = (JTextCtrl*)pUIRoot->find_child(L"G_Enter"); // G_Enter
-	m_toGuest->EventClick.first = pToGuest;
-	m_toGuest->EventClick.second = this;
+	auto pPanel = pUIRoot->find_child(L"D_Host"); // D_Host
+	pPanel->EventClick.first = pToHost;
+	pPanel->EventClick.second = this;
+	// 게스트 입장
+	pPanel = (JTextCtrl*)pUIRoot->find_child(L"G_Enter"); // G_Enter
+	pPanel->EventClick.first = pToGuest;
+	pPanel->EventClick.second = this;
+	// Exit
+	pPanel = (JTextCtrl*)pUIRoot->find_child(L"D_Exit"); 
+	pPanel->EventClick.first = pToExit;
+	pPanel->EventClick.second = this;
 	// IP 창
 	m_toGuestIP = (JTextCtrl*)pUIRoot->find_child(L"G_IP"); // G_IP
 	m_toGuestIP->m_Text = L"IP : ~." + PacketManager::Get().InputIP;
 	// 패널창
-	m_toGuestPanel = m_toGuest->m_pParent;
+	m_toGuestPanel = m_toGuestIP->m_pParent;
 	
 	ObjectManager::Get().PushObject(pUIRoot);
 	return true;
