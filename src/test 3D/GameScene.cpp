@@ -79,7 +79,7 @@ bool GameScene::Init() noexcept
 	ObjectManager::Get().PushObject(m_pChicken);
 
 
-	ObjectManager::Get().TakeObject(L"HeightMap");
+	m_pHeightCollider = (Collider*)ObjectManager::Get().TakeObject(L"HeightMap")->GetComponentList(EComponent::Collider)->front();
 	ObjectManager::Get().TakeObject(L"ParticleSystem");
 	ObjectManager::Get().TakeObject(L"Object1");
 	ObjectManager::Get().TakeObject(L"Object2");
@@ -165,8 +165,11 @@ bool GameScene::Frame() noexcept
 	ObjectManager::Get().Frame(Timer::SPF, Timer::AccumulateTime);
 	SoundManager::Get().Frame();
 
+	// ¸Ê ³ôÀÌ
 	for (auto& iter : ObjectManager::Get().GetColliderList())
 	{
+		if (iter == m_pHeightCollider) 
+			continue;
 		iter->m_mapHeight = m_pMap->GetHeight(iter->m_pParent->GetWorldPosition().x, iter->m_pParent->GetWorldPosition().z);
 	}
 	return true;

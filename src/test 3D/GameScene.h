@@ -12,6 +12,8 @@ class GameScene : public MainClass
 public:
 	PlayerController* m_pPlayer = &PlayerController::Get();		// 컨트롤러
 
+	Collider*	m_pHeightCollider = nullptr;
+
 	AHeroObj*	m_pHero			= nullptr;		// 캐릭터 본체
 	AHeroObj*	m_pZombie		= nullptr;		// 
 	AHeroObj*	m_pBird			= nullptr;		// 
