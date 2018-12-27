@@ -105,6 +105,8 @@ bool GameScene::Init() noexcept
 	pExit->EventClick.second = this;
 	// 체크 박스
 	m_pCheckBox = (JCheckCtrl*)pUIRoot->find_child(L"temp_Check0");
+	// 타이머
+	m_TimerText = (JTextCtrl*)pUIRoot->find_child(L"Timer_Text");
 
 	ObjectManager::Get().PushObject(pUIRoot);
 	return true;
@@ -147,6 +149,7 @@ bool GameScene::Frame() noexcept
 	// 설정 동기화
 	SoundManager::Get().SetMasterVolume(*m_pVolume->GetValue());
 	m_pPlayer->m_mouseSense = *m_pMouseSense->GetValue();
+	m_TimerText->m_Text = Timer::AccumulateTime;
 
 	m_pMapTree->Frame();
 	I_Object.Frame(Timer::SPF, Timer::AccumulateTime);
