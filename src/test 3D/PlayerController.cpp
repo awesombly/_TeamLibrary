@@ -82,19 +82,19 @@ void PlayerController::SetAnim(AHeroObj* pObject, const ECharacter& eCharacter, 
 		case EAction::Dance1:
 		{
 			pObject->SetANIM_OneTime(Guard_DANCE1);
-			PacketManager::Get().SendPlaySound("SE_Dance05.mp3", PlayerController::Get().GetWorldPosition(), 1000.0f);
+			PacketManager::Get().SendPlaySound("SE_Dance01.mp3", PlayerController::Get().GetWorldPosition(), 1000.0f);
 
 		}	break;
 		case EAction::Dance2:
 		{
 			pObject->SetANIM_OneTime(Guard_DANCE2);
-			PacketManager::Get().SendPlaySound("SE_Dance04.mp3", PlayerController::Get().GetWorldPosition(), 1000.0f);
+			PacketManager::Get().SendPlaySound("SE_Dance02.mp3", PlayerController::Get().GetWorldPosition(), 1000.0f);
 
 		}	break;
 		case EAction::Dance3:
 		{
 			pObject->SetANIM_OneTime(Guard_DANCE3);
-			PacketManager::Get().SendPlaySound("SE_Dance03.mp3", PlayerController::Get().GetWorldPosition(), 1000.0f);
+			PacketManager::Get().SendPlaySound("SE_Dance04.mp3", PlayerController::Get().GetWorldPosition(), 1000.0f);
 
 		}	break;
 		case EAction::Throw:
