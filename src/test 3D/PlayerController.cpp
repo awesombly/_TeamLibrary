@@ -290,40 +290,36 @@ void PlayerController::CameraInput(const float& spf) noexcept
 	m_pCamera->SetRotationX(std::clamp(m_pCamera->GetRotation().x + Input::GetMouseMovePos().y * m_mouseSense * 0.004f, MinCameraY, MaxCameraY));
 
 	m_pParent->Rotate(0.0f, Input::GetMouseMovePos().x * m_mouseSense * 0.004f);
-	static Packet_MouseRotate p_MouseRotate;
-	if (Input::GetMouseMovePos().x > 0.0f &&
-		m_MouseDirection != EDirection::Right)
-	{
-		m_MouseDirection = EDirection::Right;
-		m_prevMouseDir = p_MouseRotate.RotateSpeed = m_mouseSense * 0.1f;
-		p_MouseRotate.KeyValue = m_pParent->m_keyValue;
-		PacketManager::Get().SendPacket((char*)&p_MouseRotate, sizeof(Packet_MouseRotate), PACKET_MouseRotate);
-		
-		ErrorMessage("회전 : " + to_string(Input::GetMouseMovePos().x));
-	}
-	else if (Input::GetMouseMovePos().x < 0.0f &&
-			 m_MouseDirection != EDirection::Left)
-	{
-		m_MouseDirection = EDirection::Left;
-		m_prevMouseDir = p_MouseRotate.RotateSpeed = -m_mouseSense * 0.1f;
-		p_MouseRotate.KeyValue = m_pParent->m_keyValue;
-		PacketManager::Get().SendPacket((char*)&p_MouseRotate, sizeof(Packet_MouseRotate), PACKET_MouseRotate);
-		ErrorMessage("회전 : " + to_string(Input::GetMouseMovePos().x));
-	}
-	else if (Input::GetMouseMovePos().x == 0.0f &&
-			 m_MouseDirection != EDirection::Middle)
-	{
-		m_MouseDirection = EDirection::Middle;
-		m_prevMouseDir = p_MouseRotate.RotateSpeed = 0.0f;
-		p_MouseRotate.KeyValue = m_pParent->m_keyValue;
-		PacketManager::Get().SendPacket((char*)&p_MouseRotate, sizeof(Packet_MouseRotate), PACKET_MouseRotate);
-		ErrorMessage("회전 : " + to_string(Input::GetMouseMovePos().x));
-	}
-	//
-	//p_MouseRotate.KeyValue = m_pParent->m_keyValue;
-	//m_prevMouseDir = p_MouseRotate.RotateSpeed = 0.0f;
-	//PacketManager::Get().SendPacket((char*)&p_MouseRotate, sizeof(Packet_MouseRotate), PACKET_MouseRotate);
-	//ErrorMessage("회전 : " + to_string(Input::GetMouseMovePos().x));
+
+	//static Packet_MouseRotate p_MouseRotate;
+	//if (Input::GetMouseMovePos().x > 0.0f &&
+	//	m_MouseDirection != EDirection::Right)
+	//{
+	//	m_MouseDirection = EDirection::Right;
+	//	m_prevMouseDir = p_MouseRotate.RotateSpeed = m_mouseSense * 0.1f;
+	//	p_MouseRotate.KeyValue = m_pParent->m_keyValue;
+	//	PacketManager::Get().SendPacket((char*)&p_MouseRotate, sizeof(Packet_MouseRotate), PACKET_MouseRotate);
+	//	
+	//	ErrorMessage("회전 : " + to_string(Input::GetMouseMovePos().x));
+	//}
+	//else if (Input::GetMouseMovePos().x < 0.0f &&
+	//		 m_MouseDirection != EDirection::Left)
+	//{
+	//	m_MouseDirection = EDirection::Left;
+	//	m_prevMouseDir = p_MouseRotate.RotateSpeed = -m_mouseSense * 0.1f;
+	//	p_MouseRotate.KeyValue = m_pParent->m_keyValue;
+	//	PacketManager::Get().SendPacket((char*)&p_MouseRotate, sizeof(Packet_MouseRotate), PACKET_MouseRotate);
+	//	ErrorMessage("회전 : " + to_string(Input::GetMouseMovePos().x));
+	//}
+	//else if (Input::GetMouseMovePos().x == 0.0f &&
+	//		 m_MouseDirection != EDirection::Middle)
+	//{
+	//	m_MouseDirection = EDirection::Middle;
+	//	m_prevMouseDir = p_MouseRotate.RotateSpeed = 0.0f;
+	//	p_MouseRotate.KeyValue = m_pParent->m_keyValue;
+	//	PacketManager::Get().SendPacket((char*)&p_MouseRotate, sizeof(Packet_MouseRotate), PACKET_MouseRotate);
+	//	ErrorMessage("회전 : " + to_string(Input::GetMouseMovePos().x));
+	//}
 
 	//static Packet_Quaternion p_rotate;
 	//p_rotate.KeyValue = m_pParent->m_keyValue;
