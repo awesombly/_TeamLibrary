@@ -15,6 +15,8 @@ public:
 	UINT	PlayerKeyCount = 10000;
 	queue< PP::PPPacketForProcess> PacketHistory;
 public:
+	void SendPlaySound(const string_view& soundName, const D3DXVECTOR3& position, const float& maxDistance) noexcept;
+
 	void InterceptPacket(const PP::PPPacketType& sendMode, const char* data) noexcept;
 	void SendPacket(char* data, const USHORT& size, const USHORT& packeyType/*, const PP::PPSendMode& sendMode = PP::PPSendMode::BROADCAST*/) noexcept;
 public:

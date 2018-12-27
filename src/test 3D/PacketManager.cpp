@@ -151,3 +151,16 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 	 }	break;
 	}
 }
+
+
+void PacketManager::SendPlaySound(const string_view& soundName, const D3DXVECTOR3& position, const float& maxDistance) noexcept
+{
+	Packet_SoundData p_SoundData;
+	p_SoundData.KeyValue = ObjectManager::KeyObjects.begin()->first;// PlayerController::Get().m_keyValue;
+	p_SoundData.Position = position;
+	p_SoundData.MaxDistance = maxDistance;
+	memcpy(p_SoundData.SoundName, soundName.data(), soundName.size());
+	p_SoundData.NameSize = (char)soundName.size();
+
+	SendPacket((char*)&p_SoundData, (USHORT)(21 + soundName.size()), PACKET_PlaySound);
+}

@@ -20,10 +20,15 @@ public:
 		EDummy = 0, EGuard, EZombie,
 	};
 private:
+	enum class EDirection : char {
+		Middle = 0, Left, Right, 
+	};
+
 	//AHeroObj*   m_pHero			= nullptr;
 	Camera*		m_pCamera		= nullptr;
 	EAction		m_curAction;	// 현재 눌린 액션
 	EAction		m_curAnim;		// 실제 애니메이션
+	EDirection  m_MouseDirection;
 
 	D3DXVECTOR3 m_direction;
 	float		m_moveSpeed		= 250.0f;
@@ -33,7 +38,7 @@ private:
 	float		m_curDelayThrow = 0.0f;
 
 	//bool		m_toIdle		= false;
-	float		m_prevMouseDir = 0.0f;
+	float		m_prevMouseDir = 1.0f;
 	// 마우스 고정용
 	POINT		m_setMouseScreen;
 	POINT		m_setMouseClient;
