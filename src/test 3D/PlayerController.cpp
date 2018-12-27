@@ -133,6 +133,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const ECharacter& eCharacter, 
 		case EAction::Dance1:
 		{
 			pObject->SetANIM_OneTime(Zombie_DANCE1);
+			PacketManager::Get().SendPlaySound("SE_Dance01.mp3", PlayerController::Get().GetWorldPosition(), 1000.0f);
 		}	break;
 		case EAction::Dance2:
 		{
