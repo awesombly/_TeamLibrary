@@ -59,33 +59,43 @@ void PlayerController::SetAnim(AHeroObj* pObject, const ECharacter& eCharacter, 
 		case EAction::BackwardLeft:
 		{
 			pObject->SetANIM(Guard_LEFT);
+			PacketManager::Get().SendPlaySound("SE_footstep.mp3", PlayerController::Get().GetWorldPosition(), 3000.0f);
 		}	break;
 		case EAction::Right:
 		case EAction::BackwardRight:
 		{
 			pObject->SetANIM(Guard_RIGHT);
+			PacketManager::Get().SendPlaySound("SE_footstep.mp3", PlayerController::Get().GetWorldPosition(),3000.0f);
 		}	break;
 		case EAction::Forward:
 		case EAction::ForwardLeft:
 		case EAction::ForwardRight:
 		{
 			pObject->SetANIM(Guard_HAPPYWALK);
+			PacketManager::Get().SendPlaySound("SE_footstep.mp3", PlayerController::Get().GetWorldPosition(), 3000.0f);
 		}	break;
 		case EAction::Backward:
 		{
 			pObject->SetANIM(Guard_BACKWARD);
+			PacketManager::Get().SendPlaySound("SE_footstep.mp3", PlayerController::Get().GetWorldPosition(), 3000.0f);
 		}	break;
 		case EAction::Dance1:
 		{
 			pObject->SetANIM_OneTime(Guard_DANCE1);
+			PacketManager::Get().SendPlaySound("SE_Dance05.mp3", PlayerController::Get().GetWorldPosition(), 1000.0f);
+
 		}	break;
 		case EAction::Dance2:
 		{
 			pObject->SetANIM_OneTime(Guard_DANCE2);
+			PacketManager::Get().SendPlaySound("SE_Dance04.mp3", PlayerController::Get().GetWorldPosition(), 1000.0f);
+
 		}	break;
 		case EAction::Dance3:
 		{
 			pObject->SetANIM_OneTime(Guard_DANCE3);
+			PacketManager::Get().SendPlaySound("SE_Dance03.mp3", PlayerController::Get().GetWorldPosition(), 1000.0f);
+
 		}	break;
 		case EAction::Throw:
 		{
@@ -95,6 +105,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const ECharacter& eCharacter, 
 			pDagger->SetRotation(pObject->GetRotation() + Quaternion::Up * 0.5f);
 			//pDagger->SetScale(Vector3::One * 1.0f);
 			((Collider*)pDagger->GetComponentList(EComponent::Collider)->front())->SetForce((pObject->GetForward() + Vector3::Up * 0.5f) * 250.0f);
+			PacketManager::Get().SendPlaySound("SE_throw01.mp3", PlayerController::Get().GetWorldPosition(), 2000.0f);
 		}	break;
 		}
 	}	break;
@@ -138,6 +149,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const ECharacter& eCharacter, 
 		case EAction::Dance2:
 		{
 			pObject->SetANIM_OneTime(Zombie_DANCE2);
+			PacketManager::Get().SendPlaySound("SE_Dance02.mp3", PlayerController::Get().GetWorldPosition(), 1000.0f);
 		}	break;
 		}
 	}	break;
@@ -183,6 +195,7 @@ void PlayerController::PlayerInput(const float& spf) noexcept
 		if (Input::GetKeyState(VK_SPACE) == EKeyState::DOWN)
 		{
 			eAction = EAction::Jump;
+			PacketManager::Get().SendPlaySound("SE_jump01.mp3", PlayerController::Get().GetWorldPosition(), 1000.0f);
 		}
 
 		m_curDelayThrow += spf;
