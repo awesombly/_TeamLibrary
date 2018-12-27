@@ -10,7 +10,6 @@ namespace PP {
 		PPReceiver m_Receiver;
 		PPSender m_Sender;
 		bool bIsServer;
-		wchar_t wcharVersion[64] = L"libppnetwork [Version 0.1.0003]\n";
 	public:
 		HANDLE m_hIOCP;
 	public:
@@ -21,8 +20,8 @@ namespace PP {
 		virtual int Run();
 		virtual int Release();
 	private:
-		int DispatchRecv(PPSession& Session, DWORD dwTransferred);
-		int DispatchSend(PPSession& Session, DWORD dwTransferred);
+		int DispatchRecv(PPSession Session, DWORD dwTransferred);
+		int DispatchSend(PPSession Session, DWORD dwTransferred);
 	public:
 		int SetServer(bool boolean);
 		int SetNumberOfWorkers(unsigned short iNumberOfThreads);
