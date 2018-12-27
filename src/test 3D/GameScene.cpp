@@ -4,21 +4,36 @@
 bool GameScene::Init() noexcept
 {
 #pragma region Basic
-	m_pPlayer->m_myName  = L"Player";// = new PlayerController(L"Player", EObjType::Object);
-	m_pPlayer->m_objType = EObjType::Object;
-	ObjectManager::Cameras[ECamera::Main]->SetParent(m_pPlayer);
 	
-	// 기사 
-	m_pHero = new AHeroObj();
-	m_pHero->SetPlayerCharacter(Guard, 0.0f, 0.0f, 500.0f);
-	m_pHero->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-	m_pHero->SetANIM(Guard_IDLE);
-	m_pHero->m_myName = L"Guard";
-	m_pHero->m_objType = EObjType::Object;
-	auto pCollider = new ColliderOBB(60.0f, { -13.0f, 0.0f , -13.0f }, { 13.0f, 80.0f , 13.0f });
-	//pCollider->usePhysics(false);
-	m_pHero->AddComponent(pCollider);
-	ObjectManager::Get().SetProtoObject(m_pHero);
+	if (m_isFirstInit)
+	{
+		m_isFirstInit = false;
+		//m_pPlayer->isEnable(true);
+		m_pPlayer->m_myName  = L"Player";// = new PlayerController(L"Player", EObjType::Object);
+		m_pPlayer->m_objType = EObjType::Object;
+		ObjectManager::Cameras[ECamera::Main]->SetParent(m_pPlayer);
+		// 기사 
+		m_pHero = new AHeroObj();
+		m_pHero->SetPlayerCharacter(Guard, 0.0f, 0.0f, 500.0f);
+		m_pHero->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+		m_pHero->SetANIM(Guard_IDLE);
+		m_pHero->m_myName = L"Guard";
+		m_pHero->m_objType = EObjType::Object;
+		auto pCollider = new ColliderOBB(60.0f, { -13.0f, 0.0f , -13.0f }, { 13.0f, 80.0f , 13.0f });
+		//pCollider->usePhysics(false);
+		m_pHero->AddComponent(pCollider);
+		ObjectManager::Get().SetProtoObject(m_pHero);
+
+		// =============================== 맵 생성 =================================
+		m_Importer.Import();
+		m_pMap = new XMap;
+		m_pMap->Create(DxManager::Get().GetDevice(), DxManager::Get().GetDContext(), &m_Importer, _T("../../Data/Map/Shader/MapShader_Specular.hlsl"), _T("../../Data/Map/Shader/MapShader_Color_Specular.hlsl"), "VS", "PS");
+		m_pMapTree = new XQuadTreeIndex;
+		m_pMapTree->Build(m_pMap);
+		m_pMap->m_objType = EObjType::Map;
+		m_pMap->isGlobal();
+		ObjectManager::Get().PushObject(m_pMap);
+	}
 	m_pHero = (AHeroObj*)ObjectManager::Get().TakeObject(L"Guard");
 	m_pPlayer->SetParent(m_pHero);
 	m_pPlayer->m_curCharacter = PlayerController::ECharacter::EGuard;
@@ -32,7 +47,7 @@ bool GameScene::Init() noexcept
 	m_pZombie->SetANIM(Zombie_IDLE);
 	m_pZombie->m_myName = L"Zombie";
 	m_pZombie->m_objType = EObjType::Object;
-	pCollider = new ColliderOBB(60.0f, { -13.0f, 0.0f , -13.0f }, { 13.0f, 80.0f , 13.0f });
+	auto pCollider = new ColliderOBB(60.0f, { -13.0f, 0.0f , -13.0f }, { 13.0f, 80.0f , 13.0f });
 	//pCollider->usePhysics(false);
 	m_pZombie->AddComponent(pCollider);
 	ObjectManager::Get().PushObject(m_pZombie);
@@ -70,19 +85,7 @@ bool GameScene::Init() noexcept
 	ObjectManager::Get().TakeObject(L"Object2");
 	ObjectManager::Get().TakeObject(L"Object3");
 #pragma endregion
-	// ======================== 맵 생성 =========================================
-	if (m_isFirstInit)
-	{
-		m_isFirstInit = false;
-		m_Importer.Import();
-		m_pMap = new XMap;
-		m_pMap->Create(DxManager::Get().GetDevice(), DxManager::Get().GetDContext(), &m_Importer, _T("../../Data/Map/Shader/MapShader_Specular.hlsl"), _T("../../Data/Map/Shader/MapShader_Color_Specular.hlsl"), "VS", "PS");
-		m_pMapTree = new XQuadTreeIndex;
-		m_pMapTree->Build(m_pMap);
-		m_pMap->m_objType = EObjType::Map;
-		m_pMap->isGlobal();
-		ObjectManager::Get().PushObject(m_pMap);
-	}
+	
 	// =================================== UI ========================================
 	JPanel* pUIRoot = new JPanel(L"UI_IntroRoot");
 	pUIRoot->m_objType = EObjType::UI;
@@ -95,7 +98,9 @@ bool GameScene::Init() noexcept
 
 	// Slider
 	m_pVolume = (JSliderCtrl*)pUIRoot->find_child(L"Set_Volum");
+	m_pVolume->SetValue(0.5f);
 	m_pMouseSense = (JSliderCtrl*)pUIRoot->find_child(L"Set_Mouse");
+	m_pMouseSense->SetValue(0.5f);
 	// Exit
 	static auto pGameExit = [](void* pScene) {
 		((MainClass*)pScene)->SetScene(ESceneName::Lobby);
@@ -149,7 +154,9 @@ bool GameScene::Frame() noexcept
 	// 설정 동기화
 	SoundManager::Get().SetMasterVolume(*m_pVolume->GetValue());
 	m_pPlayer->m_mouseSense = *m_pMouseSense->GetValue();
-	m_TimerText->m_Text = Timer::AccumulateTime;
+	m_TimerText->m_Text = to_wstring(Timer::AccumulateTime).substr(0, 5);
+	//m_TimerText->m_Text.at(4) = '\0';
+	//m_TimerText->m_Text;
 
 	m_pMapTree->Frame();
 	I_Object.Frame(Timer::SPF, Timer::AccumulateTime);

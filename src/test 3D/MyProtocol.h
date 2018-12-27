@@ -10,14 +10,15 @@
 #define PACKET_Translate			1004
 #define PACKET_Rotate				1005
 #define PACKET_Scaling				1006
-#define PACKET_ReqSync				1007
 #define PACKET_SetAnimTransform		1008
 #define PACKET_PossessPlayer		1011
 #define PACKET_PlaySound			1012
 //#define PACKET_TakeObject			1013
-#define PACKET_ReqSyncSpawns		1015
+#define PACKET_MouseRotate			1014
 
-#define PACKET_ReqAddPlayer			2000
+#define PACKET_ReqSync				2000
+#define PACKET_ReqSyncSpawns		2001
+#define PACKET_ReqAddPlayer			2002
 
 
 
@@ -33,11 +34,10 @@
 //	char ProtoNum;
 //};
 
-struct Packet_StartRotate
+struct Packet_MouseRotate
 {
 	UINT KeyValue;
-	float MouseSense;
-	bool isRight;
+	float RotateSpeed;
 };
 
 struct Packet_SoundData

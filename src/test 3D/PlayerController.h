@@ -33,6 +33,7 @@ private:
 	float		m_curDelayThrow = 0.0f;
 
 	//bool		m_toIdle		= false;
+	float		m_prevMouseDir = 0.0f;
 	// 마우스 고정용
 	POINT		m_setMouseScreen;
 	POINT		m_setMouseClient;

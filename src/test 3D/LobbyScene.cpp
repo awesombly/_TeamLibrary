@@ -23,7 +23,7 @@ bool LobbyScene::Init() noexcept
 		((MainClass*)pScene)->SetScene(ESceneName::Main);
 	};
 	static auto pToExit = [](void* pScene) {
-		exit(0);
+		exit(0); pScene;
 	};
 
 	JState::SetState(DxManager::GetDevice());

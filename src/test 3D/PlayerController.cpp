@@ -288,7 +288,30 @@ void PlayerController::CameraInput(const float& spf) noexcept
 	m_pCamera->m_armLength = std::clamp(m_pCamera->m_armLength - Input::GetWheelScroll() * m_mouseSense * spf, 0.0f, 65.0f);
 	// 회전
 	m_pCamera->SetRotationX(std::clamp(m_pCamera->GetRotation().x + Input::GetMouseMovePos().y * m_mouseSense * 0.004f, MinCameraY, MaxCameraY));
-	m_pParent->Rotate(0.0f, Input::GetMouseMovePos().x * m_mouseSense * 0.004f);
+
+	if (m_prevMouseDir * Input::GetMouseMovePos().x >= 0.0f)
+	{
+		static Packet_MouseRotate p_MouseRotate;
+		if (m_prevMouseDir != 0.0f && 
+			Input::GetMouseMovePos().x == 0.0f)
+		{
+			p_MouseRotate.KeyValue = m_pParent->m_keyValue;
+			m_prevMouseDir = p_MouseRotate.RotateSpeed = 0.0f;
+			PacketManager::Get().SendPacket((char*)&p_MouseRotate, sizeof(Packet_MouseRotate), PACKET_MouseRotate);
+		}
+		else
+		{
+			if(Input::GetMouseMovePos().x > 0.0f)
+				m_prevMouseDir = p_MouseRotate.RotateSpeed = m_mouseSense * 0.1f;
+			else
+				m_prevMouseDir = p_MouseRotate.RotateSpeed = -m_mouseSense * 0.1f;
+			p_MouseRotate.KeyValue = m_pParent->m_keyValue;
+			PacketManager::Get().SendPacket((char*)&p_MouseRotate, sizeof(Packet_MouseRotate), PACKET_MouseRotate);
+		}
+		//m_pParent->Rotate(0.0f, Input::GetMouseMovePos().x * m_mouseSense * 0.004f);
+		ErrorMessage("회전 : " + to_string(m_prevMouseDir));
+	}
+
 	//static Packet_Quaternion p_rotate;
 	//p_rotate.KeyValue = m_pParent->m_keyValue;
 	//p_rotate.Quat = m_pParent->GetRotation();
