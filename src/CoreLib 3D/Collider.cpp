@@ -51,15 +51,9 @@ bool Collider::Frame(const float& spf, const float& accTime)	noexcept
 		m_pParent->GetRoot()->Translate((GetTotalForce() + Vector3::Up * 5.0f) * spf);
 		if (m_pParent->GetPosition().y < m_mapHeight)
 		{
-			m_pParent->SetPositionY(m_mapHeight /*+ m_pivot.y*/);
+			m_pParent->SetPositionY(m_mapHeight);
 			m_force *= -m_drag * m_repulsion * spf;
-			
 		}
-	}
-	if (Input::isDebug)
-	{
-		m_pParent->SetPositionY(m_mapHeight);
-		m_force = Vector3::Zero;
 	}
 	return true;
 	accTime;
@@ -135,8 +129,8 @@ bool Collider::CollisionAllCheck(const float& spf) noexcept
 				//iter->m_pParent->Translate(Vector3::Up * spf);
 			}
 			// ¸¶Âû·Â
-			m_force		  -= m_force	   * (m_drag + iter->m_drag) * 0.5f  * spf;
-			iter->m_force -= iter->m_force * (m_drag + iter->m_drag) * 0.5f  * spf;
+			m_force		  -= (m_force		* 0.4f) * (m_drag + iter->m_drag) * 0.5f  * spf;
+			iter->m_force -= (iter->m_force * 0.4f) * (m_drag + iter->m_drag) * 0.5f  * spf;
 
 			//m_force = Vector3::Zero;
 			//iter->m_force = Vector3::Zero;

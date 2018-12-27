@@ -313,7 +313,8 @@ void GameObject::SetKeyValue(const UINT& keyValue) noexcept
 		//	return;
 		//}
 	}
-	ObjectManager::KeyObjects[keyValue] = this;
+	
+	ObjectManager::KeyObjects[m_keyValue = keyValue] = this;
 }
 
 

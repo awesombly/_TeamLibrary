@@ -34,15 +34,14 @@ private:
 	float		m_moveSpeed		= 250.0f;
 	float		m_jumpPower		= 180.0f;
 
-	const float	m_DelayThrow	= 0.3f;
-	float		m_curDelayThrow = 0.0f;
-
 	//bool		m_toIdle		= false;
 	float		m_prevMouseDir = 1.0f;
 	// 마우스 고정용
 	POINT		m_setMouseScreen;
 	POINT		m_setMouseClient;
 public:
+	const float	m_DelayThrow	= 0.3f;
+	float		m_curDelayThrow = 0.0f;
 	ECharacter  m_curCharacter;
 	//Collider*	m_pCollider		= nullptr;
 

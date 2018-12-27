@@ -47,7 +47,7 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 	if (ObjectManager::KeyObjects[p_KeyValue.KeyValue] == nullptr)
 	{
 		ErrorMessage("KeyObject is Null : " + to_string(p_KeyValue.KeyValue));
-		return;
+		//return;
 	}
 
 	switch (sendMode)
@@ -130,7 +130,7 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 		 //PacketManager::Get().PlayerKeyCount = p_Vector3.KeyValue;
 		 auto pObject = ObjectManager::Get().TakeObject(L"Guard");
 		 pObject->SetPosition(p_Vector3.Vec3);
-		 pObject->SetKeyValue(++PlayerKeyCount);
+		 pObject->SetKeyValue(p_Vector3.KeyValue);
 		 
 		 //ObjectKeyCount = tempCount;
 	 }	break;
