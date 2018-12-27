@@ -208,6 +208,12 @@ void IntroScene::LoadSound() noexcept
 	SoundManager::Get().Load("SE_Click02.mp3");
 	SoundManager::Get().Load("SE_Dance01.mp3");
 	SoundManager::Get().Load("SE_Dance02.mp3");
+	SoundManager::Get().Load("SE_Dance03.mp3");
+	SoundManager::Get().Load("SE_Dance04.mp3");
+	SoundManager::Get().Load("SE_Dance05.mp3");
+	SoundManager::Get().Load("SE_Dance06.mp3");
+	SoundManager::Get().Load("SE_Dance07.mp3");
+	SoundManager::Get().Load("SE_Dance08.mp3");
 	SoundManager::Get().Load("SE_footstep.mp3");
 	SoundManager::Get().Load("SE_game_win.mp3");
 	SoundManager::Get().Load("SE_game_lose.mp3");
