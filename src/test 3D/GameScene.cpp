@@ -92,9 +92,9 @@ bool GameScene::Init() noexcept
 	JParser par;
 	par.FileLoad(DxManager::GetDevice(), L"../../data/ui/UI_InGame", *pUIRoot);
 	JProgressBar* pProj = (JProgressBar*)pUIRoot->find_child(L"HP_Progress");
-	pProj->SetValue(m_pPlayer->m_HP); // 값 bind
+	pProj->SetValue(m_pPlayer->m_HP, 1.0f); // 값 bind
 	pProj = (JProgressBar*)pUIRoot->find_child(L"MP_Progress");
-	pProj->SetValue(m_pPlayer->m_MP); // 값 bind
+	pProj->SetValue(m_pPlayer->m_MP, 1.0f); // 값 bind
 
 	// Slider
 	m_pVolume = (JSliderCtrl*)pUIRoot->find_child(L"Set_Volum");
