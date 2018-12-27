@@ -109,6 +109,7 @@ bool GameScene::Init() noexcept
 	m_TimerText = (JTextCtrl*)pUIRoot->find_child(L"Timer_Text");
 
 	ObjectManager::Get().PushObject(pUIRoot);
+	SoundManager::Get().SetBGM("bgm_ingame01.mp3");
 	return true;
 }
 
