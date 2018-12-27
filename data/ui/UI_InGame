@@ -31,6 +31,8 @@
 ^vpEventClick 
 
 ^Type 781
+
+^VHType 1447
 ^NodeName Set_Volum
 ^ParentName Set_Panel
 ^bRender 1
@@ -64,6 +66,8 @@
 ^vpEventClick 
 
 ^Type 781
+
+^VHType 1447
 ^NodeName Set_Mouse
 ^ParentName Set_Panel
 ^bRender 1
@@ -189,6 +193,8 @@
 ^vpEventClick 
 
 ^Type 780
+
+^VHType 1447
 ^NodeName MP_Progress
 ^ParentName Root
 ^bRender 1
@@ -205,6 +211,8 @@
 ^vpEventClick 
 
 ^Type 780
+
+^VHType 1447
 ^NodeName HP_Progress
 ^ParentName Root
 ^bRender 1
@@ -359,6 +367,8 @@
 ^vpEventClick 
 
 ^Type 780
+
+^VHType 1447
 ^NodeName Skill_0
 ^ParentName Root
 ^bRender 1

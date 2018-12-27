@@ -9,6 +9,7 @@ namespace UI
 		float m_fValue;
 		JImageCtrl* m_pSliderBar;
 		JImageCtrl* m_pSliderHandle;
+		VHType      m_VHType = Horizontal;
 	public:
 		bool Create(ID3D11Device* pDevice, const TCHAR* szBar, const TCHAR* szHandle, const char* PSName = "PS", const TCHAR* szShaderName = L"../../data/ui/shader/DefaultUI.hlsl");
 		bool SetTexture(ID3D11Device* pDevice, const TCHAR* szBar, const TCHAR* szHandle);

@@ -12,6 +12,12 @@ namespace UI
 		txHOVER,      // 올린상태
 		txPRESS,      // 누른상태
 	};
+	enum VHType
+	{
+		Vertical = 1446, // 수직, 세로
+		Horizontal,      // 수평, 가로
+		NONE,
+	};
 	enum UIType
 	{
 		PANEL = 777, BUTTON, CHECK, PROGRESS, SLIDER, SPRITE, TEXT, PARTICLE,

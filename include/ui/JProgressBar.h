@@ -5,9 +5,11 @@ namespace UI
 	class JProgressBar : public JPanel
 	{
 	public:
-		JImageCtrl* m_pBackGround;
-		JImageCtrl* m_pFrontGround;
+		JImageCtrl*			m_pBackGround;
+		JImageCtrl*			m_pFrontGround;
+		VHType				m_VHType = Horizontal;
 		const float*		m_fCurValue;
+		float				m_fTemp = 0.5f; // 초기에 넣어놓는 값..
 		float			    m_fMaxValue = 1.0f;
 		float				m_fValue;
 	public:
