@@ -44,6 +44,7 @@ bool LobbyScene::Init() noexcept
 	m_toGuestPanel = m_toGuest->m_pParent;
 	
 	ObjectManager::Get().PushObject(pUIRoot);
+	SoundManager::Get().SetBGM("bgm_Title01.mp3");
 	return true;
 }
 
@@ -122,6 +123,15 @@ bool LobbyScene::Frame() noexcept
 				}
 			}
 		}
+	}
+
+
+
+
+
+	if (Input::GetMouseState(EMouseButton::Left) == EKeyState::DOWN)
+	{
+		SoundManager::Get().Play("SE_Click01.mp3");
 	}
 
 	DxManager::Get().Frame();
