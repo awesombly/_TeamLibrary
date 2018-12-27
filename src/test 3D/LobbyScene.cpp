@@ -52,6 +52,7 @@ bool LobbyScene::Init() noexcept
 	
 	ObjectManager::Get().PushObject(pUIRoot);
 	SoundManager::Get().SetBGM("bgm_Title01.mp3");
+
 	return true;
 }
 
