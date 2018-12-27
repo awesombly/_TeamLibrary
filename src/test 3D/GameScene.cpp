@@ -52,7 +52,7 @@ bool GameScene::Init() noexcept
 	pCollider = new ColliderOBB(1.5f, { -1.0f, 0.0f , -1.0f }, { 1.0f, 2.0f , 1.0f });
 	pCollider->m_pivot *= 15.0f;
 	//pCollider->useGravity(false);
-	pCollider->SetGravityScale(0.01f);
+	pCollider->SetGravityScale(0.4f);
 	m_pBird->AddComponent(pCollider);
 	ObjectManager::Get().PushObject(m_pBird);
 
@@ -83,7 +83,6 @@ bool GameScene::Init() noexcept
 	pProj->SetValue(m_pPlayer->m_HP, 1.0f); // 값 bind
 	pProj = (JProgressBar*)pUIRoot->find_child(L"MP_Progress");
 	pProj->SetValue(m_pPlayer->m_MP, 1.0f); // 값 bind
-
 
 	// 오른쪽 스킬
 	auto pIcon = (JProgressBar*)pUIRoot->find_child(L"Skill_0");
@@ -116,14 +115,7 @@ bool GameScene::Init() noexcept
 // 프레임
 bool GameScene::Frame() noexcept
 {
-	if (Input::GetKeyState('Q') == EKeyState::DOWN)
-	{
-		PacketManager::Get().SendPlaySound("dead.mp3", Vector3::Zero, 2000.0f);
-	}
-	if (Input::GetKeyState('E') == EKeyState::DOWN)
-	{
-		PacketManager::Get().SendPlaySound("SE_Click01.mp3", Vector3::Zero, 2000.0f);
-	}
+	// 듣는 위치
 	static D3DXVECTOR3 ListenPosition;
 	SoundManager::Get().m_pListenerPos = &ListenPosition;
 	ListenPosition = m_pPlayer->GetWorldPosition();

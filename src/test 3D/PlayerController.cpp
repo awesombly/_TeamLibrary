@@ -122,18 +122,18 @@ void PlayerController::SetAnim(AHeroObj* pObject, const ECharacter& eCharacter, 
 			//pObject->SetANIM_OneTime(Zombie_FLY);
 		}	break;
 		case EAction::Left:
-		case EAction::ForwardLeft:
 		case EAction::BackwardLeft:
 		{
 			pObject->SetANIM(Zombie_LEFT);
 		}	break;
 		case EAction::Right:
-		case EAction::ForwardRight:
 		case EAction::BackwardRight:
 		{
 			pObject->SetANIM(Zombie_RIGHT);
 		}	break;
 		case EAction::Forward:
+		case EAction::ForwardLeft:
+		case EAction::ForwardRight:
 		{
 			pObject->SetANIM(Zombie_RUN);
 		}	break;
@@ -198,18 +198,21 @@ void PlayerController::PlayerInput(const float& spf) noexcept
 			PacketManager::Get().SendPlaySound("SE_jump01.mp3", PlayerController::Get().GetWorldPosition(), 1000.0f);
 		}
 
-		m_curDelayThrow = max(m_curDelayThrow - spf, 0.0f);
-		if (m_curDelayThrow <= 0.0f)
+		if (m_curCharacter == ECharacter::EGuard)
 		{
-			m_MP = min(m_MP + spf * 0.2f, 1.0f);
-			//if (m_curAnim == EAction::Idle)
-				//SetAnim((AHeroObj*)m_pParent, m_curCharacter, EAction::Idle);
-			if (Input::GetMouseState(EMouseButton::Left) == EKeyState::DOWN &&
-				m_MP >= 0.15f)
+			m_curDelayThrow = max(m_curDelayThrow - spf, 0.0f);
+			if (m_curDelayThrow <= 0.0f)
 			{
-				m_MP -= 0.15f;
-				m_curDelayThrow = m_DelayThrow;
-				eAction = EAction::Throw;
+				m_MP = min(m_MP + spf * 0.2f, 1.0f);
+				//if (m_curAnim == EAction::Idle)
+					//SetAnim((AHeroObj*)m_pParent, m_curCharacter, EAction::Idle);
+				if (Input::GetMouseState(EMouseButton::Left) == EKeyState::DOWN &&
+					m_MP >= 0.15f)
+				{
+					m_MP -= 0.15f;
+					m_curDelayThrow = m_DelayThrow;
+					eAction = EAction::Throw;
+				}
 			}
 		}
 

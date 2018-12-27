@@ -55,8 +55,14 @@ public:
 	D3DXMATRIX GetProjMatrix() { return m_matProj; }
 public:
 	virtual bool Init() noexcept { return true; }
-	virtual bool Frame(const float& spf, const float& accTime) noexcept { return true; }
-	virtual bool Render(ID3D11DeviceContext* pContext) noexcept { return true; }
+	virtual bool Frame(const float& spf, const float& accTime) noexcept {
+		return true; spf
+			; accTime;
+	}
+	virtual bool Render(ID3D11DeviceContext* pContext) noexcept {
+		return true; pContext
+			;
+	}
 	virtual bool Release() noexcept { return true; }
 public:
 	XShape();

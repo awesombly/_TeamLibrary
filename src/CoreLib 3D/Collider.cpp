@@ -129,8 +129,8 @@ bool Collider::CollisionAllCheck(const float& spf) noexcept
 				//iter->m_pParent->Translate(Vector3::Up * spf);
 			}
 			// ¸¶Âû·Â
-			m_force		  -= m_force	   * (m_drag + iter->m_drag) * 0.5f  * spf;
-			iter->m_force -= iter->m_force * (m_drag + iter->m_drag) * 0.5f  * spf;
+			m_force		  -= (m_force		* 0.4f) * (m_drag + iter->m_drag) * 0.5f  * spf;
+			iter->m_force -= (iter->m_force * 0.4f) * (m_drag + iter->m_drag) * 0.5f  * spf;
 
 			//m_force = Vector3::Zero;
 			//iter->m_force = Vector3::Zero;
