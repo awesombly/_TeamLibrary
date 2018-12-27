@@ -145,7 +145,7 @@ bool IntroScene::Init() noexcept
 
 	//SoundManager::Get().Play("bgm_Title01.mp3");
 
-	SoundManager::Get().SetBGM("bgm_Title01.mp3");
+	//SoundManager::Get().SetBGM("bgm_Title01.mp3");
 #pragma endregion
 	// ====================================================================================================
 
@@ -160,6 +160,8 @@ bool IntroScene::Frame() noexcept
 	DxManager::Get().Frame();
 	ObjectManager::Get().Frame(Timer::SPF, Timer::AccumulateTime);
 	SoundManager::Get().Frame();
+
+
 	return true;
 }
  
@@ -169,6 +171,8 @@ bool IntroScene::Render() noexcept
 	DxManager::Get().Render();
 	ObjectManager::Get().Render(DxManager::GetDContext());
 	SoundManager::Get().Render();
+
+	
 	return true;
 }
 
