@@ -53,6 +53,21 @@ bool LobbyScene::Init() noexcept
 	ObjectManager::Get().PushObject(pUIRoot);
 	SoundManager::Get().SetBGM("bgm_Title01.mp3");
 
+
+	if (m_isFirstInit)
+	{
+		m_isFirstInit = false;
+		// =============================== ¸Ê »ý¼º =================================
+		m_Importer.Import();
+		m_pMap = new XMap;
+		m_pMap->Create(DxManager::Get().GetDevice(), DxManager::Get().GetDContext(), &m_Importer, _T("../../Data/Map/Shader/MapShader_Specular.hlsl"), _T("../../Data/Map/Shader/MapShader_Color_Specular.hlsl"), "VS", "PS");
+		m_pMapTree = new XQuadTreeIndex;
+		m_pMapTree->Build(m_pMap);
+		m_pMap->m_objType = EObjType::Map;
+		m_pMap->isGlobal();
+		m_pMap->isStatic();
+		//ObjectManager::Get().PushObject(m_pMap);
+	}
 	return true;
 }
 
