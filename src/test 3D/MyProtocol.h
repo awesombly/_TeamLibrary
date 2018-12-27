@@ -111,7 +111,7 @@ struct Packet_AnimTransform
 {
 	UINT KeyValue;
 	D3DXVECTOR3 Position;
-	D3DXVECTOR3 Direction;
+	D3DXVECTOR3 Force;
 	D3DXQUATERNION Rotation;
 	char EAnimState;
 	char ECharacter;

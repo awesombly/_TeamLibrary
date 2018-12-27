@@ -322,10 +322,6 @@ void PlayerController::CameraInput(const float& spf) noexcept
 	//	ErrorMessage("회전 : " + to_string(Input::GetMouseMovePos().x));
 	//}
 
-	//static Packet_Quaternion p_rotate;
-	//p_rotate.KeyValue = m_pParent->m_keyValue;
-	//p_rotate.Quat = m_pParent->GetRotation();
-	//PacketManager::Get().SendPacket((char*)&p_rotate, PACKET_Rotate);
 	// 초기화
 	if (Input::GetKeyState('R') == EKeyState::DOWN)
 	{
