@@ -199,10 +199,10 @@ void IntroScene::LoadSound() noexcept
 	//
 	SoundManager::Get().Load("dead.mp3");
 
-	SoundManager::Get().Load("bgm_ingame01.mp3");
-	SoundManager::Get().Load("bgm_ingame02.mp3");
-	SoundManager::Get().Load("bgm_Title01.mp3");
-	SoundManager::Get().Load("bgm_Title02.mp3");
+	SoundManager::Get().Load("bgm_ingame01.mp3", false, FMOD_LOOP_NORMAL);
+	SoundManager::Get().Load("bgm_ingame02.mp3", false, FMOD_LOOP_NORMAL);
+	SoundManager::Get().Load("bgm_Title01.mp3", false, FMOD_LOOP_NORMAL);
+	SoundManager::Get().Load("bgm_Title02.mp3", false, FMOD_LOOP_NORMAL);
 	SoundManager::Get().Load("SE_bird_01.mp3");
 	SoundManager::Get().Load("SE_Click01.mp3");
 	SoundManager::Get().Load("SE_Click02.mp3");
