@@ -13,6 +13,7 @@ namespace UI
 		bool Create(ID3D11Device* pDevice, const TCHAR* szBar, const TCHAR* szHandle, const char* PSName = "PS", const TCHAR* szShaderName = L"../../data/ui/shader/DefaultUI.hlsl");
 		bool SetTexture(ID3D11Device* pDevice, const TCHAR* szBar, const TCHAR* szHandle);
 		const float* GetValue();
+		void SetValue(float fValue);
 	public:
 		void Update();
 		bool Frame(const float& spf, const float& accTime) noexcept override;
