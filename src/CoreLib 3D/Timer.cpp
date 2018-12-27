@@ -10,7 +10,7 @@ float Timer::AccumulateTime = 0.0f;
 bool  Timer::isPlaying = true;
 Timer*	Timer::Instance = nullptr;
 
-Timer::Timer() : m_kDirTick(1.0f / 120), m_ElapseTime(0.0f), m_FrameCnt(0),
+Timer::Timer() : m_kDirTick(1.0f / 60), m_ElapseTime(0.0f), m_FrameCnt(0),
 				m_CurrentTick({ 0,0 }), m_BeforeTick({ 0,0 }), m_GameSpeed(1.0f)
 {
 	Instance = this;

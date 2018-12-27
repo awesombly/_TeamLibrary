@@ -45,21 +45,22 @@ bool Collider::Frame(const float& spf, const float& accTime)	noexcept
 	m_force -= m_force * m_damping * spf;
 
 	// Èû Àû¿ë
-	//if (isHost)
-	//{
 	if (GetVelocitySq() > 60.0f)
 	{
 		//m_pParent->isMoved(true);
 		m_pParent->GetRoot()->Translate((GetTotalForce() + Vector3::Up * 5.0f) * spf);
-		//if (m_pParent->GetPosition().y < m_mapHeight)
-		//{
-		//	m_pParent->SetPositionY(m_mapHeight /*+ m_pivot.y*/);
-		//	//m_force *= -m_drag * m_repulsion * spf;
-			m_force = Vector3::Zero;
-		//}
+		if (m_pParent->GetPosition().y < m_mapHeight)
+		{
+			m_pParent->SetPositionY(m_mapHeight /*+ m_pivot.y*/);
+			m_force *= -m_drag * m_repulsion * spf;
+			
+		}
 	}
-	m_pParent->SetPositionY(m_mapHeight /*+ m_pivot.y*/);
-	//}
+	if (Input::isDebug)
+	{
+		m_pParent->SetPositionY(m_mapHeight);
+		m_force = Vector3::Zero;
+	}
 	return true;
 	accTime;
 }
