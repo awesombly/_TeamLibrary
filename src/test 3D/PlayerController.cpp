@@ -166,7 +166,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const ECharacter& eCharacter, 
 		}	break;
 		case EAction::Throw:
 		{
-			//pObject->SetANIM_OneTime(Guard_THROW);
+			pObject->SetANIM_OneTime(Zombie_THROW);
 			auto pChicken = ObjectManager::Get().TakeObject(L"Chicken");
 			pChicken->SetPosition(pObject->GetPosition() + pObject->GetForward() * 40.0f + pObject->GetUp() * 65.0f + pObject->GetRight() * 20.0f);
 			pChicken->SetRotation(pObject->GetRotation() + Quaternion::Up * 0.5f);

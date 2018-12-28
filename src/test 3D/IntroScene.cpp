@@ -90,7 +90,7 @@ bool IntroScene::Init() noexcept
 			if (pB != nullptr)
 			{
 				pB->OperHP(-0.15f);
-				pB->SetForce(Normalize((pB->GetCenter() - pA->GetCenter()) + Vector3::Up * 0.4f) * 200.0f);
+				pB->SetForce(Normalize((pB->GetCenter() - pA->GetCenter()) + Vector3::Up) * 200.0f);
 			}
 			ObjectManager::Get().DisableObject(pA->m_pParent);
 			//ObjectManager::Get().RemoveComponent(pA);

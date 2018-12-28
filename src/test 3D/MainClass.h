@@ -1,11 +1,17 @@
 #pragma once
 //#pragma comment( lib, "_CoreLib D3D.lib")
-#pragma comment( lib, "ACoreLibTEAM.lib")
-#pragma comment( lib, "libppnetwork.lib")
+#ifdef _DEBUG
+	#pragma comment( lib, "ACoreLibTEAM_d.lib")
+	#pragma comment( lib, "libppnetwork_d.lib")
+	#pragma comment( lib, "UIToolLib_d.lib")
+#else
+	#pragma comment( lib, "ACoreLibTEAM.lib")
+	#pragma comment( lib, "libppnetwork.lib")
+	#pragma comment( lib, "UIToolLib.lib")
+#endif
 
 #include "CoreDX.h"
 ///
-
 #include "SkySphere.h"
 #include "SkyBox.h"
 #include "MaxImporter.h"
