@@ -10,7 +10,7 @@
 //참고 1 : 액션리스트
 //////////////////////////////////////////////////////////////////////////
 //Guard
-//ANIM_COUNT  9
+//ANIM_COUNT  10
 #define  Guard				L"guard"
 #define	 Guard_THROW		L"HERO_THROW.Mat"
 #define	 Guard_HAPPYWALK	L"HERO_HAPPYWALK.Mat"
@@ -28,8 +28,9 @@
 
 //////////////////////////////////////////////////////////////////////////
 //Zombie
-//ANIM_COUNT  9
+//ANIM_COUNT  10
 #define  Zombie				L"zombie"
+#define	 Zombie_THROW		L"zombie_throw.Mat"
 #define	 Zombie_DANCE1		L"zombie_dance1.Mat"
 #define	 Zombie_DANCE2		L"zombie_dance2.Mat"
 #define	 Zombie_RUN			L"zombie_run.Mat"

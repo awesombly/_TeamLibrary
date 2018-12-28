@@ -26,7 +26,8 @@
 *CHARACTERNAME		zombie
 *SHADERFILENMAE		..\..\data\model\Character.hlsl
 
-*MATRIXMATRIXCOUNT  9
+*MATRIXMATRIXCOUNT  10
+*MATRIXFILENAME		..\..\data\model\zombie\zombie_throw.Mat
 *MATRIXFILENAME		..\..\data\model\zombie\zombie_dance1.Mat
 *MATRIXFILENAME		..\..\data\model\zombie\zombie_dance2.Mat
 *MATRIXFILENAME		..\..\data\model\zombie\zombie_run.Mat
