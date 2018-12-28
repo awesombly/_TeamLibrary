@@ -22,7 +22,7 @@
 #include <d3d11.h>
 #include <dxgi.h>
 #include <d2d1.h>
-#include <dinput.h>
+#include <dinput.h>	
 #include <dwrite.h>
 /////////다이렉트 컴파일러헤더///////////
 #include "D3DX11.h"
@@ -31,10 +31,22 @@
 #include <wrl.h>
 
 
+#ifdef NDEBUG
+#ifdef _DEBUG
+#undef _DEBUG
+#endif
+#endif
 
-#pragma comment(lib, "winmm.lib")
+#ifdef _DEBUG
+#pragma comment(lib, "XDxMapLibrary_d.lib")
+#pragma comment(lib, "_CoreLib D3D_d.lib")
+#else
 #pragma comment(lib, "XDxMapLibrary.lib")
 #pragma comment(lib, "_CoreLib D3D.lib")  // engine lib
+
+#endif // DEBUG
+
+#pragma comment(lib, "winmm.lib")
 #pragma comment(lib, "d3d11.lib")
 #pragma comment(lib, "dxgi.lib")
 #pragma comment(lib, "d2d1.lib")
