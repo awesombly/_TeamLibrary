@@ -10,7 +10,7 @@
 //#pragma comment(lib, "DWrite.lib")
 //#pragma comment(lib, "dinput8.lib") // dxInput
 //#pragma comment(lib, "dxguid.lib") // guid
-#pragma comment(lib, "UIToolLib.lib")
+//#pragma comment(lib, "UIToolLib.lib")
 #define SAMPLE_BUFFER_SIZE 16
 #define KEYSTATECOUNT 256
 
