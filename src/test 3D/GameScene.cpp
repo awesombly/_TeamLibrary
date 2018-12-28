@@ -71,17 +71,17 @@ bool GameScene::Init() noexcept
 
 	ObjectManager::Get().TakeObject(L"ParticleSystem");
 	ObjectManager::Get().TakeObject(L"Guard")  ->SetPosition(RandomNormal() * 500.0f, 500.0f, RandomNormal() * 500.0f);
-	ObjectManager::Get().TakeObject(L"Guard")  ->SetPosition(RandomNormal() * 500.0f, 500.0f, RandomNormal() * 500.0f);
-	ObjectManager::Get().TakeObject(L"Guard")  ->SetPosition(RandomNormal() * 500.0f, 500.0f, RandomNormal() * 500.0f);
 	ObjectManager::Get().TakeObject(L"Zombie") ->SetPosition(RandomNormal() * 500.0f, 500.0f, RandomNormal() * 500.0f );
+	ObjectManager::Get().TakeObject(L"Bird")   ->SetPosition(RandomNormal()	* 500.0f, 500.0f, RandomNormal() * 500.0f);;
+	ObjectManager::Get().TakeObject(L"Guard")  ->SetPosition(RandomNormal() * 500.0f, 500.0f, RandomNormal() * 500.0f);
 	ObjectManager::Get().TakeObject(L"Zombie") ->SetPosition(RandomNormal() * 500.0f, 500.0f, RandomNormal() * 500.0f);;
+	ObjectManager::Get().TakeObject(L"Bird")   ->SetPosition(RandomNormal()	* 500.0f, 500.0f, RandomNormal() * 500.0f);;
+	ObjectManager::Get().TakeObject(L"Guard")  ->SetPosition(RandomNormal() * 500.0f, 500.0f, RandomNormal() * 500.0f);
 	ObjectManager::Get().TakeObject(L"Zombie") ->SetPosition(RandomNormal() * 500.0f, 500.0f, RandomNormal() * 500.0f);;
+	ObjectManager::Get().TakeObject(L"Bird")   ->SetPosition(RandomNormal()	* 500.0f, 500.0f, RandomNormal() * 500.0f);;
 	//ObjectManager::Get().TakeObject(L"Chicken")->SetPosition(RandomNormal()	* 500.0f, 500.0f, RandomNormal() * 500.0f);;
 	//ObjectManager::Get().TakeObject(L"Chicken")->SetPosition(RandomNormal()	* 500.0f, 500.0f, RandomNormal() * 500.0f);;
 	//ObjectManager::Get().TakeObject(L"Chicken")->SetPosition(RandomNormal()	* 500.0f, 500.0f, RandomNormal() * 500.0f);;
-	ObjectManager::Get().TakeObject(L"Bird")   ->SetPosition(RandomNormal()	* 500.0f, 500.0f, RandomNormal() * 500.0f);;
-	ObjectManager::Get().TakeObject(L"Bird")   ->SetPosition(RandomNormal()	* 500.0f, 500.0f, RandomNormal() * 500.0f);;
-	ObjectManager::Get().TakeObject(L"Bird")   ->SetPosition(RandomNormal()	* 500.0f, 500.0f, RandomNormal() * 500.0f);;
 #pragma endregion
 	
 	// =================================== UI ========================================
@@ -137,6 +137,8 @@ bool GameScene::Frame() noexcept
 	{
 		static auto curCollider = ObjectManager::Get().GetColliderList().begin();
 
+		if (curCollider == ObjectManager::Get().GetColliderList().end())
+			curCollider = ObjectManager::Get().GetColliderList().begin();
 		if (++curCollider == ObjectManager::Get().GetColliderList().end())
 			curCollider = ObjectManager::Get().GetColliderList().begin();
 
