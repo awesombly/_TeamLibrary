@@ -270,3 +270,4 @@ debugOut.txt
 /include/core/
 !DX/Lib/x64/
 !DX/Lib/x86/
+/lib/XDxMapLibrary.lib
