@@ -173,7 +173,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const ECharacter& eCharacter, 
 			//pDagger->SetScale(Vector3::One * 1.0f);
 			((Collider*)pChicken->GetComponentList(EComponent::Collider)->front())->SetForce((pObject->GetForward() + Vector3::Up * 0.5f) * 250.0f);
 			//PacketManager::Get().SendPlaySound("SE_throw01.mp3", PlayerController::Get().GetWorldPosition(), 2000.0f);
-			SoundManager::Get().PlayQueue("SE_throw01.mp3", pObject->GetWorldPosition(), 1000.0f);
+			SoundManager::Get().PlayQueue("SE_chicken.mp3", pObject->GetWorldPosition(), 1000.0f);
 		}	break;
 		}
 	}	break;
