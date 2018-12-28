@@ -12,7 +12,8 @@
 #include "ParticleSystem.h"
 #include "Raycast.h"
 #include "Light.h"
-#include "PlaneUI.h"
+//#include "PlaneUI.h"
+#include "BoundingUI.h"
 #include "RLine.h"
 #include "RSphere.h"
 #include "RCube.h"
@@ -76,9 +77,10 @@ public:
 	static MainClass* m_curScene;
 
 	static GameObject* m_LoadingImage;
-	static GameObject* m_LoadingIcon;
-	static GameObject* m_LoadingIcon2;
-	static GameObject* m_LoadingIcon3;
+	static GameObject* m_Icon;
+	static GameObject* m_Icon2;
+	static GameObject* m_Icon3;
+	static GameObject* m_Icon4;
 	static bool m_isLoading;
 	bool m_isFirstInit = true;
 

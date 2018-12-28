@@ -266,6 +266,7 @@ __pycache__/
 output/
 debugOut.txt
 /lib/_CoreLib D3D.lib
+/lib/_CoreLib D3D_d.lib
 /include/core/
 !DX/Lib/x64/
 !DX/Lib/x86/

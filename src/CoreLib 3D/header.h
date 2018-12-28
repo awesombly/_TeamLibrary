@@ -34,7 +34,11 @@
 //#include <functional>					// 범용비교함수, 함수포인터..
 
 // 라이브러리 링크를 전처리 해준다
-#pragma comment( lib, "_CoreLib D3D.lib")
+#ifdef _DEBUG
+	#pragma comment( lib, "_CoreLib D3D_d.lib")
+#else
+	#pragma comment( lib, "_CoreLib D3D.lib")
+#endif
 //#pragma comment( lib, "ServerLib.lib")
 #pragma comment( lib, "d2d1.lib")
 #pragma comment( lib, "dwrite.lib")
