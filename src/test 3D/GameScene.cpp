@@ -51,17 +51,17 @@ bool GameScene::Init() noexcept
 		m_pBird->AddComponent(pCollider);
 		ObjectManager::Get().SetProtoObject(m_pBird);
 
-		// 닭 생성
-		m_pChicken = new AHeroObj();
-		m_pChicken->SetPlayerCharacter(NPC_Chicken, 0.0f, 300.0f, -400.0f);
-		m_pChicken->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-		m_pChicken->m_myName = L"Chicken";
-		m_pChicken->m_objType = EObjType::Object;
-		//m_pChicken->SetScale(Vector3::One * 15.0f);
-		pCollider = new ColliderOBB(23.0f, { -15.0f, 0.0f , -15.0f }, { 15.0f, 30.0f , 15.0f });
-		//pCollider->m_pivot *= 15.0f;
-		m_pChicken->AddComponent(pCollider);
-		ObjectManager::Get().SetProtoObject(m_pChicken);
+		//// 닭 생성
+		//m_pChicken = new AHeroObj();
+		//m_pChicken->SetPlayerCharacter(NPC_Chicken, 0.0f, 300.0f, -400.0f);
+		//m_pChicken->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+		//m_pChicken->m_myName = L"Chicken";
+		//m_pChicken->m_objType = EObjType::Object;
+		////m_pChicken->SetScale(Vector3::One * 15.0f);
+		//pCollider = new ColliderOBB(23.0f, { -15.0f, 0.0f , -15.0f }, { 15.0f, 30.0f , 15.0f });
+		////pCollider->m_pivot *= 15.0f;
+		//m_pChicken->AddComponent(pCollider);
+		//ObjectManager::Get().SetProtoObject(m_pChicken);
 	}
 	m_pHero = (AHeroObj*)ObjectManager::Get().TakeObject(L"Guard");
 	m_pPlayer->SetParent(m_pHero);
@@ -70,15 +70,15 @@ bool GameScene::Init() noexcept
 	
 
 	ObjectManager::Get().TakeObject(L"ParticleSystem");
+	ObjectManager::Get().TakeObject(L"Guard")  ->SetPosition(RandomNormal() * 500.0f, 500.0f, RandomNormal() * 500.0f);
+	ObjectManager::Get().TakeObject(L"Guard")  ->SetPosition(RandomNormal() * 500.0f, 500.0f, RandomNormal() * 500.0f);
+	ObjectManager::Get().TakeObject(L"Guard")  ->SetPosition(RandomNormal() * 500.0f, 500.0f, RandomNormal() * 500.0f);
 	ObjectManager::Get().TakeObject(L"Zombie") ->SetPosition(RandomNormal() * 500.0f, 500.0f, RandomNormal() * 500.0f );
 	ObjectManager::Get().TakeObject(L"Zombie") ->SetPosition(RandomNormal() * 500.0f, 500.0f, RandomNormal() * 500.0f);;
 	ObjectManager::Get().TakeObject(L"Zombie") ->SetPosition(RandomNormal() * 500.0f, 500.0f, RandomNormal() * 500.0f);;
-	ObjectManager::Get().TakeObject(L"Zombie") ->SetPosition(RandomNormal() * 500.0f, 500.0f, RandomNormal() * 500.0f);;
-	ObjectManager::Get().TakeObject(L"Chicken")->SetPosition(RandomNormal()	* 500.0f, 500.0f, RandomNormal() * 500.0f);;
-	ObjectManager::Get().TakeObject(L"Chicken")->SetPosition(RandomNormal()	* 500.0f, 500.0f, RandomNormal() * 500.0f);;
-	ObjectManager::Get().TakeObject(L"Chicken")->SetPosition(RandomNormal()	* 500.0f, 500.0f, RandomNormal() * 500.0f);;
-	ObjectManager::Get().TakeObject(L"Chicken")->SetPosition(RandomNormal()	* 500.0f, 500.0f, RandomNormal() * 500.0f);;
-	ObjectManager::Get().TakeObject(L"Bird")   ->SetPosition(RandomNormal()	* 500.0f, 500.0f, RandomNormal() * 500.0f);;
+	//ObjectManager::Get().TakeObject(L"Chicken")->SetPosition(RandomNormal()	* 500.0f, 500.0f, RandomNormal() * 500.0f);;
+	//ObjectManager::Get().TakeObject(L"Chicken")->SetPosition(RandomNormal()	* 500.0f, 500.0f, RandomNormal() * 500.0f);;
+	//ObjectManager::Get().TakeObject(L"Chicken")->SetPosition(RandomNormal()	* 500.0f, 500.0f, RandomNormal() * 500.0f);;
 	ObjectManager::Get().TakeObject(L"Bird")   ->SetPosition(RandomNormal()	* 500.0f, 500.0f, RandomNormal() * 500.0f);;
 	ObjectManager::Get().TakeObject(L"Bird")   ->SetPosition(RandomNormal()	* 500.0f, 500.0f, RandomNormal() * 500.0f);;
 	ObjectManager::Get().TakeObject(L"Bird")   ->SetPosition(RandomNormal()	* 500.0f, 500.0f, RandomNormal() * 500.0f);;
@@ -89,9 +89,9 @@ bool GameScene::Init() noexcept
 	pUIRoot->m_objType = EObjType::UI;
 	JParser par;
 	par.FileLoad(DxManager::GetDevice(), L"../../data/ui/UI_InGame", *pUIRoot);
-	JProgressBar* pProj = (JProgressBar*)pUIRoot->find_child(L"HP_Progress");
-	pProj->SetValue(m_pPlayer->m_HP, 1.0f); // 값 bind
-	pProj = (JProgressBar*)pUIRoot->find_child(L"MP_Progress");
+	PlayerController::Get().m_pHpBar = (JProgressBar*)pUIRoot->find_child(L"HP_Progress");
+	//pProj->SetValue(m_pPlayer->m_HP, 1.0f); // 값 bind
+	auto pProj = (JProgressBar*)pUIRoot->find_child(L"MP_Progress");
 	pProj->SetValue(m_pPlayer->m_MP, 1.0f); // 값 bind
 
 	// 오른쪽 스킬
@@ -118,6 +118,7 @@ bool GameScene::Init() noexcept
 
 	ObjectManager::Get().PushObject(pUIRoot);
 	SoundManager::Get().SetBGM("bgm_ingame01.mp3");
+	Timer::AccumulateTime = 0.0f;
 	m_isLoading = false;
 	return true;
 }
@@ -137,17 +138,9 @@ bool GameScene::Frame() noexcept
 		static auto curCollider = ObjectManager::Get().GetColliderList().begin();
 
 		if (++curCollider == ObjectManager::Get().GetColliderList().end())
-			curCollider  = ObjectManager::Get().GetColliderList().begin();
+			curCollider = ObjectManager::Get().GetColliderList().begin();
 
-		m_pPlayer->SetParent((*curCollider)->m_pParent);
-		if((*curCollider)->m_pParent->m_myName == L"Guard")
-			m_pPlayer->m_curCharacter = PlayerController::ECharacter::EGuard;
-		else if ((*curCollider)->m_pParent->m_myName == L"Zombie")
-			m_pPlayer->m_curCharacter = PlayerController::ECharacter::EZombie;
-		else
-			m_pPlayer->m_curCharacter = PlayerController::ECharacter::EDummy;
-
-		m_pPlayer->ResetOption();
+		m_pPlayer->Possess(*curCollider);
 	}
 	// 설정 동기화
 	SoundManager::Get().SetMasterVolume(*m_pVolume->GetValue());

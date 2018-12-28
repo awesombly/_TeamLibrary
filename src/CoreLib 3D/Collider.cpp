@@ -53,6 +53,8 @@ bool Collider::Frame(const float& spf, const float& accTime)	noexcept
 		{
 			m_pParent->SetPositionY(m_mapHeight);
 			m_force *= -m_drag * m_repulsion * spf;
+			if(CollisionEvent != nullptr)
+				CollisionEvent(this, nullptr);
 		}
 	}
 	return true;
@@ -134,6 +136,12 @@ bool Collider::CollisionAllCheck(const float& spf) noexcept
 
 			//m_force = Vector3::Zero;
 			//iter->m_force = Vector3::Zero;
+
+			// 충돌 이벤트
+			if (CollisionEvent != nullptr)
+				CollisionEvent(this, iter);
+			if (iter->CollisionEvent != nullptr)
+				iter->CollisionEvent(iter, this);
 		}
 	}
 	return true;
@@ -269,9 +277,9 @@ bool Collider::SphereToOBB(Collider* pSphere, ColliderOBB* pOBB) const noexcept
 	auto vDistance = newCenter - nearPoint;
 	if ((D3DXVec3Length(&vDistance) - pSphere->GetWorldRadius()) <= 0)
 	{
-		pSphere->m_normal = pOBB->GetCenter() - nearPoint;
-		D3DXVec3Normalize(&pSphere->m_normal, &pSphere->m_normal);
-		pOBB->m_normal = -pSphere->m_normal;
+		//pSphere->m_normal = pOBB->GetCenter() - nearPoint;
+		//D3DXVec3Normalize(&pSphere->m_normal, &pSphere->m_normal);
+		//pOBB->m_normal = -pSphere->m_normal;
 		return true;
 	}
 	return false;
@@ -449,6 +457,34 @@ void Collider::SetDirectionForce(const D3DXVECTOR3& vForce) noexcept
 {
 	m_isMoving = true;
 	m_direction = vForce;
+}
+
+void Collider::OperHP(const float& value) noexcept
+{
+	m_HP += value;
+	if (m_HP <= 0.0f)
+	{
+		ObjectManager::Get().DisableObject(m_pParent);
+		//m_pParent->isEnable(false);
+		//ObjectManager::Get().PopCollider(this);
+		//ObjectManager::Get().RemoveObject(m_pParent);
+	}
+}
+
+void Collider::SetHP(const float& value) noexcept
+{
+	m_HP = value;
+	if (m_HP <= 0.0f)
+	{
+		m_pParent->isEnable(false);
+		ObjectManager::Get().PopCollider(this);
+		//ObjectManager::Get().RemoveObject(m_pParent);
+	}
+}
+
+const float& Collider::GetHP() noexcept
+{
+	return m_HP;
 }
 
 D3DXVECTOR3 Collider::GetForce() noexcept

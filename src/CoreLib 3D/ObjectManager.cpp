@@ -394,6 +394,14 @@ GameObject* ObjectManager::TakeObject(const wstring_view& objName, const bool& p
 		// ´ë±â Ç®ÀÌ ÀÖ´Ù¸é ²¨³»¿È
 		myObj = m_DisabledPull[objName].top();
 		m_DisabledPull[objName].pop();
+		auto pColliders = myObj->GetComponentList(EComponent::Collider);
+		if (pColliders != nullptr)
+		{
+			for (auto& iter : *pColliders)
+			{
+				PushCollider((Collider*)iter);
+			}
+		}
 	}
 	//myObj->Init();
 	myObj->isEnable(true);
@@ -459,9 +467,34 @@ void ObjectManager::PopObject(GameObject* pObject) noexcept
 
 void ObjectManager::DisableObject(GameObject* pObject) noexcept
 {
-	pObject->isEnable(false);
-	PopObject(pObject);
-	m_DisabledPull[pObject->m_myName].push(pObject);
+	//pObject->isEnable(false);
+	//PopObject(pObject);
+	//m_DisabledPull[pObject->m_myName].push(pObject);
+	//auto pColliders = pObject->GetComponentList(EComponent::Collider);
+	//if (pColliders != nullptr)
+	//{
+	//	for (auto& iter : *pColliders)
+	//	{
+	//		PopCollider((Collider*)iter);
+	//	}
+	//}
+
+	static auto disableEvent = [](void* pVoid, void*) {
+		GameObject* pObj = (GameObject*)pVoid;
+		pObj->isEnable(false);
+		ObjectManager::Get().PopObject(pObj);
+		ObjectManager::Get().m_DisabledPull[pObj->m_myName].push(pObj);
+		auto pColliders = pObj->GetComponentList(EComponent::Collider);
+		if (pColliders != nullptr)
+		{
+			for (auto& iter : *pColliders)
+			{
+				ObjectManager::Get().PopCollider((Collider*)iter);
+			}
+		}
+	};
+
+	PostFrameEvent.emplace(disableEvent, pObject, nullptr);
 }
 
 bool ObjectManager::RemoveObject(GameObject* pObject) noexcept

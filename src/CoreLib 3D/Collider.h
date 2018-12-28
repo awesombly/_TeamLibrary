@@ -22,7 +22,9 @@ private:
 
 	float m_radius;								// 반지름
 	float m_GravityScale = 1.0f;				// 중력크기
+	float m_HP = 1.0f;
 public:
+	void (*CollisionEvent)(Collider*, Collider*) = nullptr;
 	ECollider m_eCollider;
 	forward_list<Collider*> m_CollisionList;
 
@@ -51,6 +53,10 @@ public:
 	float GetWorldRadius()							  noexcept;
 	void  SetRadius(const float& radius)			  noexcept;
 													  
+	void OperHP(const float& value)					  noexcept;
+	void SetHP(const float& value)					  noexcept;
+	const float& GetHP()							  noexcept;
+
 	bool SphereToSphere(Collider* pSphereA, Collider* pSphereB)	const noexcept;
 	bool SphereToAABB(Collider* pSphere, ColliderAABB* pAABB)	const noexcept;
 	bool SphereToOBB(Collider* pSphere, ColliderOBB* pOBB)		const noexcept;

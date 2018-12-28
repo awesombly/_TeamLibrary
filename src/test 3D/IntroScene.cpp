@@ -55,43 +55,70 @@ bool IntroScene::Init() noexcept
 		auto pParticle = new ParticleSystem(L"ParticleSystem", new Particle(), L"UI/cat.png");
 		pParticle->m_maxParticleCount = 9999;
 		pParticle->m_spawnInterval = 0.013f;
-		pParticle->m_minLifeCycle = 7.0f;
-		pParticle->m_maxLifeCycle = 7.0f;
-		pParticle->m_minInitPosition = Vector3::One * 200;
-		pParticle->m_maxInitPosition = -Vector3::One * 200;
-		pParticle->m_minDirection = -Vector3::One;
-		pParticle->m_maxDirection = Vector3::One;
-		pParticle->m_minMaxMoveSpeed = 2.0;
-		pParticle->m_maxMaxMoveSpeed = 20.0;
-		pParticle->m_minAccMoveSpeed = 1.0f;
-		pParticle->m_maxAccMoveSpeed = 2.0f;
-		pParticle->m_minCurMoveSpeed = 1.0f;
-		pParticle->m_maxCurMoveSpeed = 10.0f;
+		pParticle->m_minLifeCycle = 5.0f;
+		pParticle->m_maxLifeCycle = 6.0f;
+		pParticle->m_minInitPosition = Vector3::Zero;// *200;
+		pParticle->m_maxInitPosition = Vector3::Zero;// *200;
+		pParticle->m_minDirection = Vector3::Forward;
+		pParticle->m_maxDirection = Vector3::Backward;
+		pParticle->m_minMaxMoveSpeed = 100.0;
+		pParticle->m_maxMaxMoveSpeed = 100.0;
+		pParticle->m_minAccMoveSpeed = 5.0f;
+		pParticle->m_maxAccMoveSpeed = 10.0f;
+		pParticle->m_minCurMoveSpeed = 20.0f;
+		pParticle->m_maxCurMoveSpeed = 40.0f;
 		pParticle->m_minDirAngle = Quaternion::Zero;
 		pParticle->m_maxDirAngle = Quaternion::Zero;
 		pParticle->m_minRotateSpeed = 0.0f;
 		pParticle->m_maxRotateSpeed = 0.0f;
 		pParticle->m_minColor = { 0.5f, 0.5f, 0.5f, 0.5f };
 		pParticle->m_maxColor = Color::White * 2;
-		pParticle->m_minGravityPower = 5.0f;
-		pParticle->m_maxGravityPower = 10.0f;
+		pParticle->m_minGravityPower = 15.0f;
+		pParticle->m_maxGravityPower = 25.0f;
+		pParticle->m_minInitScale = Vector3::One * 5.0f;
+		pParticle->m_minInitScale = Vector3::One * 5.0f;
+		pParticle->m_minScalePerLife = Vector3::Zero;
+		pParticle->m_maxScalePerLife = Vector3::Zero;
 
-		auto pParticleObject = new GameObject(L"ParticleSystem", { pParticle });
-		pParticleObject->Translate(Vector3::Up * 200);
+		auto pParticleObject = new GameObject(L"ParticleSystem", { pParticle, new CTransformer(Vector3::Zero, Quaternion::Left * 1.5f) });
+		pParticleObject->Translate(Vector3::Up * 250);
 		//ObjectManager::Get().PushObject(pParticleObject);
 		ObjectManager::Get().SetProtoObject(pParticleObject);
 
+		// 단검 충돌시
+		static auto pDaggerHit = [](Collider* pA, Collider* pB) {
+			if (pB != nullptr)
+			{
+				pB->OperHP(-0.15f);
+				pB->SetForce(Normalize((pB->GetCenter() - pA->GetCenter()) + Vector3::Up * 0.3f) * 150.0f);
+			}
+			ObjectManager::Get().DisableObject(pA->m_pParent);
+			//ObjectManager::Get().RemoveComponent(pA);
+			//ObjectManager::Get().PopCollider(pA);
+		};
 		// 단검
 		auto pDagger = new AHeroObj();
 		pDagger->SetPlayerCharacter(ITEM_Dagger);
+		pDagger->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
 		pDagger->m_myName = L"Dagger";
 		pDagger->m_objType = EObjType::Object;
-		//pDagger->SetScale(Vector3::One * 0.5f);
-		pDagger->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
 		pCollider = new Collider(15.0f);
 		pCollider->m_pivot = Vector3::Up * 10.0f + Vector3::Forward * 5.0f;
+		pCollider->CollisionEvent = pDaggerHit;
 		pDagger->AddComponent(pCollider);
 		ObjectManager::Get().SetProtoObject(pDagger);
+
+		// 닭 생성
+		auto pChicken = new AHeroObj();
+		pChicken->SetPlayerCharacter(NPC_Chicken);
+		pChicken->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+		pChicken->m_myName = L"Chicken";
+		pChicken->m_objType = EObjType::Object;
+		pCollider = new Collider(15.0f);//new ColliderOBB(23.0f, { -15.0f, 0.0f , -15.0f }, { 15.0f, 30.0f , 15.0f });
+		pCollider->m_pivot = Vector3::Up * 10.0f + Vector3::Forward * 5.0f;
+		pCollider->CollisionEvent = pDaggerHit;
+		pChicken->AddComponent(pCollider);
+		ObjectManager::Get().SetProtoObject(pChicken);
 	}
 #pragma endregion
 	// ====================================================================================================

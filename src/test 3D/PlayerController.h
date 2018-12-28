@@ -46,14 +46,17 @@ public:
 	//Collider*	m_pCollider		= nullptr;
 
 	float		m_mouseSense = 0.5f;
-	float		m_HP = 1.0f;
+	//float		m_HP = 1.0f;
 	float		m_MP = 1.0f;
+
+	void* m_pHpBar = nullptr;
 public:
 	static void SetAnim(AHeroObj* pObject, const ECharacter& eCharacter, const EAction& eAction) noexcept;
 
 	void PlayerInput(const float& spf)					noexcept;
 	void CameraInput(const float& spf)					noexcept;
 	void ResetOption()									noexcept;
+	void Possess(Collider* pObject)						noexcept;
 
 	bool Init()											noexcept override;
 	bool Frame(const float& spf, const float& accTime)	noexcept override;

@@ -3,6 +3,7 @@
 
 #include "XObjectManager.h"
 #include "uiheader.h"
+#include "PlayerController.h"
 
 class GameScene : public MainClass
 {
