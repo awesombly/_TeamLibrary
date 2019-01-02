@@ -16,6 +16,7 @@ namespace UI
 		void Update();
 		bool Frame(const float& spf, const float& accTime) noexcept override;
 		bool Render(ID3D11DeviceContext* pContext)noexcept override;
+		bool Release()noexcept override;
 	public:
 		JTextCtrl(wstring NodeName) : JButtonCtrl(NodeName) { m_Type = UI::TEXT; };
 		virtual ~JTextCtrl() {};

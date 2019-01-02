@@ -8,5 +8,7 @@
 #include "JSpriteCtrl.h"
 #include "JTextCtrl.h"
 #include "JParticleSystem.h"
+#include "JListCtrl.h"
 #include "JEventList.h"
 #include "JParser.h"
+#include "ime.h"

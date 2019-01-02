@@ -1,6 +1,5 @@
 #pragma once
-#include "stdui.h"
-#include "JPanel.h"
+#include "uiheader.h"
 namespace UI
 {
 	class JUIWriter
@@ -20,6 +19,7 @@ namespace UI
 		void SpriteWrite(JPanel* pChild);
 		void TextWrite(JPanel* pChild);
 		void ParticleWrite(JPanel* pChild);
+		void ListWrite(JPanel* pChild);
 	public:
 		JUIWriter() {};
 		virtual ~JUIWriter() {};

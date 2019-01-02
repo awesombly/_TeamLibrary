@@ -5,6 +5,7 @@
 #pragma comment(lib, "d3d11.lib")
 #pragma comment(lib, "d3dx11.lib") //확장 버전
 #pragma comment(lib,"winmm.lib")   // timeGetTime
+#pragma comment( lib, "IMM32.lib" ) // ime
 
 //#pragma comment(lib,"D2D1.lib")
 //#pragma comment(lib, "DWrite.lib")

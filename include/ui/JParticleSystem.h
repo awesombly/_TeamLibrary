@@ -39,6 +39,7 @@ namespace UI
 		bool Frame(const float& spf, const float& accTime) noexcept override;
 		bool Render(ID3D11DeviceContext* pContext)noexcept override;
 		bool Release()noexcept override;
+		bool ParticleRelease();
 	public:
 		void SetScale(const float fMin, const float fMax);
 		void SetColor(const D3DXVECTOR4 vMin, const D3DXVECTOR4 vMax);

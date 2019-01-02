@@ -55,6 +55,7 @@
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 50.000000 20.000000 1.000000
 ^strText Host
+^TextSize 15.000000
 ^tx_Normal btn_177.png
 ^tx_Hover btn_176.png
 ^tx_Press btn_176.png
@@ -73,6 +74,7 @@
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 50.000000 20.000000 1.000000
 ^strText Guest
+^TextSize 15.000000
 ^tx_Normal btn_177.png
 ^tx_Hover btn_176.png
 ^tx_Press btn_176.png
@@ -91,6 +93,7 @@
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 50.000000 20.000000 1.000000
 ^strText Exit
+^TextSize 15.000000
 ^tx_Normal btn_177.png
 ^tx_Hover btn_176.png
 ^tx_Press btn_176.png
@@ -134,6 +137,7 @@
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 50.000000 10.000000 1.000000
 ^strText IP:___.___.___.___
+^TextSize 15.000000
 ^tx_Normal tile-6b2a1a39575b98c45936cc0169a9010f-1.png
 ^tx_Hover tile-6b2a1a39575b98c45936cc0169a9010f-1.png
 ^tx_Press tile-6b2a1a39575b98c45936cc0169a9010f-1.png
@@ -152,6 +156,7 @@
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 50.000000 20.000000 1.000000
 ^strText Enter
+^TextSize 15.000000
 ^tx_Normal btn_177.png
 ^tx_Hover btn_176.png
 ^tx_Press btn_176.png
@@ -180,6 +185,8 @@
 ^vpEventClick Guest
 
 ^Type 782
+
+^SpriteType 6429
 ^NodeName Icon_Sprite
 ^ParentName Root
 ^bRender 1
@@ -187,6 +194,7 @@
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 40.000000 40.000000 1.000000
 ^AnimTime 8.000000
+^AnimUV 0 0 
 ^SPRITESTART 8 
 ^icn_crime.png
 ^icn_drug.png

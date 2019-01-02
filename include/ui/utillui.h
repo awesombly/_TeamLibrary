@@ -27,6 +27,7 @@ namespace UI
 	typedef basic_string<wchar_t> W_STR;
 	typedef basic_string<char>  C_STR;
 	typedef vector<T_STR>		T_STR_VECTOR;
+	typedef basic_string<TCHAR>::iterator	T_ITOR;
 
 	class JDxHelper
 	{

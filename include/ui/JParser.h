@@ -1,6 +1,6 @@
 #pragma once
 #include "JToken.h"
-#include "JPanel.h"
+#include "uiheader.h"
 namespace UI
 {
 	class JParser : public JToken
@@ -20,6 +20,7 @@ namespace UI
 		void SpriteRead(ID3D11Device* pDevice, JPanel& pRoot, wstring plusPath);
 		void TextRead(ID3D11Device* pDevice, JPanel& pRoot, wstring plusPath);
 		void ParticleRead(ID3D11Device* pDevice, JPanel& pRoot, wstring plusPath);
+		void ListRead(ID3D11Device* pDevice, JPanel& pRoot, wstring plusPath);
 	public:
 		JParser() {};
 		virtual ~JParser() {};

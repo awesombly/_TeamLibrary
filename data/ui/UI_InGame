@@ -5,6 +5,279 @@
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 1.000000 1.000000 1.000000
 
+^Type 784
+
+^SpriteType 6429
+^NodeName tempParticle0
+^ParentName Root
+^bRender 1
+^Position -3.000000 3.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 0.000000 0.000000 1.000000
+^AnimTime 1.000000
+^AnimUV 0 0 
+^ParticleSize 128
+^ParticleScale 2.500000 5.000000
+^MinStartPos -400.000000 300.000000 1.000000
+^MaxStartPos 400.000000 300.000000 1.000000
+^TurnDir 0 0 0
+^MinColor 1.000000 1.000000 1.000000 1.000000
+^MaxColor 1.000000 1.000000 1.000000 1.000000
+^LifeTime 10.000000 10.000000
+^MinDir -1.000000 -1.000000 0.000000
+^MaxDir 1.000000 -1.000000 0.000000
+^MinDirAngle 0.000000 0.000000 -1.000000 1.000000
+^MaxDirAngle 0.000000 0.000000 1.000000 1.000000
+^MoveSpeed 50.000000 80.000000
+^RotSpeed 1.000000 1.000000
+^SPRITESTART 1
+^PropertyButtonFavouriteFill-468cdd1c31f3046448a59ed378113993-1.png
+^SPRITEEND
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 778
+^NodeName Setting
+^ParentName Root
+^bRender 1
+^Position -376.173706 276.362976 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 20.000000 20.000000 1.000000
+^tx_Normal settings-cogwheel-button_icon-icons.com_72559.png
+^tx_Hover settings-cogwheel-button_icon-icons.com_72559.png
+^tx_Press settings-cogwheel-button_icon-icons.com_72559.png
+^pfEventHover 7278
+^vpEventHover Setting
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7277
+^vpEventClick Set_Panel
+
+^Type 777
+^NodeName Time_Panel
+^ParentName Root
+^bRender 1
+^Position 0.000000 0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 1.000000 1.000000 1.000000
+
+^Type 783
+^NodeName Timer_Text
+^ParentName Time_Panel
+^bRender 1
+^Position 23.014229 279.001953 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 30.000000 15.000000 1.000000
+^strText Timer
+^TextSize 15.000000
+^tx_Normal White.png
+^tx_Hover White.png
+^tx_Press White.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 778
+^NodeName Timer_Img
+^ParentName Time_Panel
+^bRender 1
+^Position -25.979631 278.835205 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale -15.000000 15.000000 1.000000
+^tx_Normal icon_455.png
+^tx_Hover icon_455.png
+^tx_Press icon_455.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 782
+
+^SpriteType 6429
+^NodeName temp_Sprite0
+^ParentName Root
+^bRender 1
+^Position 120.000000 276.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 25.000000 25.000000 1.000000
+^AnimTime 0.200000
+^AnimUV 0 0 
+^SPRITESTART 2 
+^train_scoop_02-sharedassets2.assets.split0-185.png
+^train_scoop_03-sharedassets2.assets.split0-199.png
+^SPRITEEND
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 779
+^NodeName temp_Check0
+^ParentName Root
+^bRender 1
+^Position 81.000000 280.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 25.000000 25.000000 1.000000
+^tx_Disable common_btn_check_selected.png
+^tx_Enable common_btn_check_unselected.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 777
+^NodeName Game_Panel
+^ParentName Root
+^bRender 1
+^Position 0.000000 0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 1.000000 1.000000 1.000000
+
+^Type 780
+
+^VHType 1447
+^NodeName MP_Progress
+^ParentName Game_Panel
+^bRender 1
+^Position 320.000000 -240.000000 0.000000
+^Rotate 0.000000 0.000000 1.570796
+^Scale 50.000000 50.000000 1.000000
+^tx_BackGround black.png
+^tx_FrontGround blue.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 780
+
+^VHType 1447
+^NodeName HP_Progress
+^ParentName Game_Panel
+^bRender 1
+^Position -320.000000 -240.000000 0.000000
+^Rotate 0.000000 0.000000 1.570796
+^Scale 50.000000 50.000000 1.000000
+^tx_BackGround black.png
+^tx_FrontGround red.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 778
+^NodeName Back_HP
+^ParentName Game_Panel
+^bRender 1
+^Position 190.000000 -235.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 210.000000 65.000000 1.000000
+^tx_Normal AngerBG-a29fe88540a9de447a36082397fc4248-1.png
+^tx_Hover AngerBG-a29fe88540a9de447a36082397fc4248-1.png
+^tx_Press AngerBG-a29fe88540a9de447a36082397fc4248-1.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 778
+^NodeName Back_MP
+^ParentName Game_Panel
+^bRender 1
+^Position -190.000000 -235.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale -210.000000 65.000000 1.000000
+^tx_Normal AngerBG-a29fe88540a9de447a36082397fc4248-1.png
+^tx_Hover AngerBG-a29fe88540a9de447a36082397fc4248-1.png
+^tx_Press AngerBG-a29fe88540a9de447a36082397fc4248-1.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 777
+^NodeName Chat_Panel
+^ParentName Game_Panel
+^bRender 1
+^Position 0.000000 0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 1.000000 1.000000 1.000000
+
+^Type 785
+^NodeName Chat_Log
+^ParentName Chat_Panel
+^bRender 1
+^Position 0.000000 -271.834656 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 229.333893 23.333754 1.000000
+^TextSize 15.000000
+^RectColumn 4
+^tx_Normal White.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 781
+
+^VHType 1446
+^NodeName Chat_Slider
+^ParentName Chat_Panel
+^bRender 1
+^Position 226.000000 -272.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 3.000000 23.000000 1.000000
+^tx_Bar White.png
+^tx_Handle Shadow-1ea2ccfcbd09d4bab993293b98e2aafd-1.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 780
+
+^VHType 1447
+^NodeName Skill_0
+^ParentName Game_Panel
+^bRender 1
+^Position 368.333008 -261.166260 0.000000
+^Rotate 0.000000 0.000000 1.570796
+^Scale 26.000000 26.000000 1.000000
+^tx_BackGround axe_mobile-d4d9e8a208f1f964783b426340fc8c29-1.png
+^tx_FrontGround black.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
 ^Type 777
 ^NodeName Set_Panel
 ^ParentName Root
@@ -125,6 +398,7 @@
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 50.000000 20.000000 1.000000
 ^strText GameExit
+^TextSize 15.000000
 ^tx_Normal btn_076.png
 ^tx_Hover btn_077.png
 ^tx_Press btn_077.png
@@ -136,6 +410,8 @@
 ^vpEventClick 
 
 ^Type 782
+
+^SpriteType 6429
 ^NodeName temp_sprite1
 ^ParentName Set_Panel
 ^bRender 1
@@ -143,6 +419,7 @@
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 27.000000 27.000000 1.000000
 ^AnimTime 1.600000
+^AnimUV 0 0 
 ^SPRITESTART 8 
 ^icn_crime.png
 ^icn_drug.png
@@ -153,230 +430,6 @@
 ^icn_violence.png
 ^icn_rate_18.png
 ^SPRITEEND
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick 
-
-^Type 784
-^NodeName tempParticle0
-^ParentName Root
-^bRender 1
-^Position -3.000000 3.000000 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 50.000000 50.000000 1.000000
-^AnimTime 1.000000
-^ParticleSize 128
-^ParticleScale 2.500000 5.000000
-^MinStartPos -400.000000 300.000000 1.000000
-^MaxStartPos 400.000000 300.000000 1.000000
-^TurnDir 0 0 0
-^MinColor 1.000000 1.000000 1.000000 1.000000
-^MaxColor 1.000000 1.000000 1.000000 1.000000
-^LifeTime 10.000000 10.000000
-^MinDir -1.000000 -1.000000 0.000000
-^MaxDir 1.000000 -1.000000 0.000000
-^MinDirAngle 0.000000 0.000000 -1.000000 1.000000
-^MaxDirAngle 0.000000 0.000000 1.000000 1.000000
-^MoveSpeed 50.000000 80.000000
-^RotSpeed 1.000000 1.000000
-^SPRITESTART 1
-^PropertyButtonFavouriteFill-468cdd1c31f3046448a59ed378113993-1.png
-^SPRITEEND
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick 
-
-^Type 780
-
-^VHType 1447
-^NodeName MP_Progress
-^ParentName Root
-^bRender 1
-^Position 320.000000 -240.000000 0.000000
-^Rotate 0.000000 0.000000 1.570796
-^Scale 50.000000 50.000000 1.000000
-^tx_BackGround black.png
-^tx_FrontGround blue.png
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick 
-
-^Type 780
-
-^VHType 1447
-^NodeName HP_Progress
-^ParentName Root
-^bRender 1
-^Position -320.000000 -240.000000 0.000000
-^Rotate 0.000000 0.000000 1.570796
-^Scale 50.000000 50.000000 1.000000
-^tx_BackGround black.png
-^tx_FrontGround red.png
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick 
-
-^Type 778
-^NodeName Back_HP
-^ParentName Root
-^bRender 1
-^Position 190.000000 -235.000000 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 210.000000 65.000000 1.000000
-^tx_Normal AngerBG-a29fe88540a9de447a36082397fc4248-1.png
-^tx_Hover AngerBG-a29fe88540a9de447a36082397fc4248-1.png
-^tx_Press AngerBG-a29fe88540a9de447a36082397fc4248-1.png
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick 
-
-^Type 778
-^NodeName Back_MP
-^ParentName Root
-^bRender 1
-^Position -190.000000 -235.000000 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale -210.000000 65.000000 1.000000
-^tx_Normal AngerBG-a29fe88540a9de447a36082397fc4248-1.png
-^tx_Hover AngerBG-a29fe88540a9de447a36082397fc4248-1.png
-^tx_Press AngerBG-a29fe88540a9de447a36082397fc4248-1.png
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick 
-
-^Type 778
-^NodeName temp0
-^ParentName Root
-^bRender 1
-^Position 16.164721 -273.014801 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 50.000000 24.667202 1.000000
-^tx_Normal black.png
-^tx_Hover black.png
-^tx_Press black.png
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick 
-
-^Type 778
-^NodeName Setting
-^ParentName Root
-^bRender 1
-^Position -376.173706 276.362976 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 20.000000 20.000000 1.000000
-^tx_Normal settings-cogwheel-button_icon-icons.com_72559.png
-^tx_Hover settings-cogwheel-button_icon-icons.com_72559.png
-^tx_Press settings-cogwheel-button_icon-icons.com_72559.png
-^pfEventHover 7278
-^vpEventHover Setting
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7277
-^vpEventClick Set_Panel
-
-^Type 778
-^NodeName Timer_Img
-^ParentName Root
-^bRender 1
-^Position -25.979631 278.835205 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale -15.000000 15.000000 1.000000
-^tx_Normal icon_455.png
-^tx_Hover icon_455.png
-^tx_Press icon_455.png
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick 
-
-^Type 783
-^NodeName Timer_Text
-^ParentName Root
-^bRender 1
-^Position 23.014229 279.001953 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 30.000000 15.000000 1.000000
-^strText Timer
-^tx_Normal TimelineEventMarker-826126c5b0f57b241b1e479230571015-1.png
-^tx_Hover TimelineEventMarker-826126c5b0f57b241b1e479230571015-1.png
-^tx_Press TimelineEventMarker-826126c5b0f57b241b1e479230571015-1.png
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick 
-
-^Type 782
-^NodeName temp_Sprite0
-^ParentName Root
-^bRender 1
-^Position 205.000000 -271.000000 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 25.000000 25.000000 1.000000
-^AnimTime 0.200000
-^SPRITESTART 2 
-^train_scoop_02-sharedassets2.assets.split0-185.png
-^train_scoop_03-sharedassets2.assets.split0-199.png
-^SPRITEEND
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick 
-
-^Type 779
-^NodeName temp_Check0
-^ParentName Root
-^bRender 1
-^Position 167.000000 -271.000000 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 25.000000 25.000000 1.000000
-^tx_Disable common_btn_check_selected.png
-^tx_Enable common_btn_check_unselected.png
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick 
-
-^Type 780
-
-^VHType 1447
-^NodeName Skill_0
-^ParentName Root
-^bRender 1
-^Position 368.333008 -261.166260 0.000000
-^Rotate 0.000000 0.000000 1.570796
-^Scale 26.000000 26.000000 1.000000
-^tx_BackGround axe_mobile-d4d9e8a208f1f964783b426340fc8c29-1.png
-^tx_FrontGround black.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
