@@ -17,15 +17,15 @@ enum EMouseButton : char {
 class Input : public ISingleton<Input>, public IBasis
 {
 public:
-	static bool	 isDebug;
+	static bool			isDebug;
 private:
-	static short m_WheelScroll;
-	static short m_tempWheelScroll;
-	static POINT m_Cursor;
-	static POINT m_prevCursor;
-	static D3DXVECTOR2 m_moveCursorPos;
-	static EKeyState m_KeyState[256];
-	static EKeyState m_MousePrevState[3];
+	static short		m_WheelScroll;
+	static short		m_tempWheelScroll;
+	static POINT		m_Cursor;
+	static POINT		m_prevCursor;
+	static D3DXVECTOR2	m_moveCursorPos;
+	static EKeyState	m_KeyState[256];
+	static EKeyState	m_MousePrevState[3];
 private:
 	void			   KeyCheck(const WORD& key);			// 키 검사(1회만)
 public:

@@ -176,7 +176,7 @@ void Input::MouseUpdate()
 	// 마우스 상태 갱신
 	for (int i = 0; i < 3; i++)
 	{
-		if (m_KeyState[i] == EKeyState::FREE)
+		if (m_MousePrevState[i] == EKeyState::FREE)
 		{
 			if (m_KeyState[i] == EKeyState::DOWN)
 			{
