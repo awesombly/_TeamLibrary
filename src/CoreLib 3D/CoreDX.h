@@ -20,8 +20,8 @@ public:
 	static bool isPlaying;		// 프로그램 종료 플래그
 public:
 	virtual bool GameRun()		noexcept final;
-	void MsgEvent(const MSG& message) override;
 private:
+	void MsgEvent(const MSG& message) override;
 	virtual bool GameInit()		noexcept final;
 	virtual bool GameFrame()	noexcept final;
 	virtual bool GameRender()	noexcept final;
