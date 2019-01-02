@@ -118,9 +118,7 @@ bool GameScene::Init() noexcept
 		if (abs(Input::GetWheelScroll()) >= EPSILON)
 		{
 			auto pList = (JListCtrl*)pVoid;
-			pList->AddValue(Input::GetWheelScroll() * 0.003f);
-			ErrorMessage("wheel : " + std::to_string(Input::GetWheelScroll()));
-			//ErrorMessage("value : " + std::to_string(*m_pList->GetValue()));
+			pList->AddValue(Input::GetWheelScroll() * 0.002f);
 		}
 	};
 	
