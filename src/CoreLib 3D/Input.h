@@ -18,7 +18,6 @@ class Input : public ISingleton<Input>, public IBasis
 {
 public:
 	static bool	 isDebug;
-	//static bool	 isChatting;
 private:
 	static short m_WheelScroll;
 	static short m_tempWheelScroll;
@@ -26,12 +25,13 @@ private:
 	static POINT m_prevCursor;
 	static D3DXVECTOR2 m_moveCursorPos;
 	static EKeyState m_KeyState[256];
-	static EKeyState m_MouseState[3];
+	//static EKeyState m_MouseState[3];
 	static EKeyState m_MousePrevState[3];
 private:
 	void			   KeyCheck(const WORD& key);			// 키 검사(1회만)
 public:
 	static POINT	   GetCursor();
+	///
 	static EKeyState   GetMouseState(const EMouseButton& mouseButton);
 	static short	   GetWheelScroll();
 	static EKeyState   GetKeyState(const WORD& keyValue);

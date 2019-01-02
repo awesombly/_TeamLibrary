@@ -34,7 +34,11 @@ bool DxManager::Init() noexcept
 	// Writer 초기화
 	IDXGISurface1* pBackBuffer = nullptr;
 	m_pSwapChain->GetBuffer(0, __uuidof(IDXGISurface), (void**)&pBackBuffer);
-	WriteManager::GetInstance().Init(pBackBuffer);
+	if (!WriteManager::GetInstance().Init(pBackBuffer))
+	{
+		ErrorMessage(""s + __FUNCTION__ + " -> Write Init Failed!");
+		return false;
+	}
 
 	// 화면 변경 막기
 	if (FAILED(m_pGIFactory->MakeWindowAssociation(Window::m_hWnd, 

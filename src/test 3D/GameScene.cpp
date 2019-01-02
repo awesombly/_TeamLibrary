@@ -142,15 +142,17 @@ bool GameScene::Init() noexcept
 // 프레임
 bool GameScene::Frame() noexcept
 {
-	ErrorMessage(to_string((char)1));
-	ErrorMessage(to_string((char)2));
-	ErrorMessage(to_string((char)0));
 	// IME
-	if (Input::GetKeyState(VK_ADD) == EKeyState::DOWN)
+	static wstring strChatting;
+	if (PlayerController::Get().isChatting())
+	{
+		strChatting = ime::Get()->GetString();
+	}
+	if (Input::GetKeyState(VK_RETURN) == EKeyState::DOWN)
 	{
 		if (PlayerController::Get().isChatting())
 		{
-			m_pList->push_string(ime::Get()->GetString());
+			m_pList->push_string(strChatting);
 			ime::Get()->imeEnd();
 			PlayerController::Get().isChatting(false);
 		}
@@ -195,8 +197,7 @@ bool GameScene::Frame() noexcept
 bool GameScene::Render() noexcept
 {
 	// 채팅
-	wstring str = ime::Get()->GetString();
-	WriteManager::Get().DrawTextW({ 400,300,800,600 }, str);
+	WriteManager::Get().Draw({ 400,300,800,600 }, ime::Get()->GetString());
 
 	m_pMap->SetMatrix(NULL, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
 	I_Object.SetMatrix(&ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);

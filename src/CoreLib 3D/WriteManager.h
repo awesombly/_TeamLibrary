@@ -4,6 +4,7 @@
 #include <dwrite.h>
 #include "ISingleton.h"
 
+
 #pragma once
 class WriteManager : public ISingleton<WriteManager>
 {
@@ -28,22 +29,21 @@ private:
 public:
 	IDWriteTextFormat*		m_pTextFormat;
 private:
-	bool CreateIndependentResource();
-	bool CreateDeviceResource(IDXGISurface1* pSurface);
-	bool ReleaseDeviceResource();
-
-	bool Init(IDXGISurface1* pSurface);
-	bool Begin();
-	bool End();
-	bool Release();
+	bool CreateIndependentResource()							 noexcept;
+	bool CreateDeviceResource(IDXGISurface1* pSurface)			 noexcept;
+	bool ReleaseDeviceResource()								 noexcept;
+																 
+	bool Init(IDXGISurface1* pSurface)							 noexcept;
+	bool Begin()												 noexcept;
+	bool End()													 noexcept;
+	bool Release()												 noexcept;
 public:
-	void DrawText(const D3DXVECTOR4& rect, const wstring_view& text);
-	void SetText(const D2D1_POINT_2F& layoutSize, const wstring_view& text, const D2D1::ColorF& color, const float& fontSize, const wstring_view& fontFamily);
-	void SetFontSize(const float& fontSzie);
-	void SetFontColor(const D2D1::ColorF& fontColor);
-	void SetFontFamily(const wstring_view& fontFamily);
-	void SetOriginSetting();
-
+	void Draw(const D3DXVECTOR4& rect, const wstring_view& text) noexcept;
+	void SetText(const D2D1_POINT_2F& layoutSize, const wstring_view& text, const D2D1::ColorF& color, const float& fontSize, const wstring_view& fontFamily) noexcept;
+	void SetFontSize(const float& fontSize)						 noexcept;
+	void SetFontColor(const D2D1::ColorF& fontColor)			 noexcept;
+	void SetFontFamily(const wstring_view& fontFamily)			 noexcept;
+	//void SetOriginSetting();
 private:
 	WriteManager() = default;
 	friend class ISingleton<WriteManager>;

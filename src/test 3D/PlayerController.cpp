@@ -219,7 +219,7 @@ void PlayerController::PlayerInput(const float& spf) noexcept
 				m_MP = min(m_MP + spf * 0.2f, 1.0f);
 				//if (m_curAnim == EAction::Idle)
 					//SetAnim((AHeroObj*)m_pParent, m_curCharacter, EAction::Idle);
-				if (Input::GetMouseState(EMouseButton::Left) == EKeyState::DOWN &&
+				if (Input::GetKeyState(EMouseButton::Left) == EKeyState::DOWN &&
 					m_MP >= 0.15f)
 				{
 					m_MP -= 0.15f;

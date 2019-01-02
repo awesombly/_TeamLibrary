@@ -145,8 +145,7 @@ bool LobbyScene::Frame() noexcept
 	}
 
 
-
-	if (Input::GetMouseState(EMouseButton::Left) == EKeyState::DOWN)
+	if (Input::GetKeyState(EMouseButton::Left) == EKeyState::DOWN)
 	{
 		SoundManager::Get().Play("SE_Click01.mp3");
 	}

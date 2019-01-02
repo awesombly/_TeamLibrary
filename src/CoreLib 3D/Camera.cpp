@@ -55,11 +55,11 @@ bool Camera::Frame(const float& spf, const float& accTime)	noexcept
 #pragma region MouseCheck
 		// 마우스 휠,좌,우 버튼 이동
 		Translate(m_Look * Input::GetWheelScroll() * spf * 3);
-		if (Input::GetMouseState(EMouseButton::Left) == EKeyState::HOLD)
+		if (Input::GetKeyState(EMouseButton::Left) == EKeyState::HOLD)
 		{
 			Translate((-m_Side * Input::GetMouseMovePos().x + m_Up * Input::GetMouseMovePos().y) * 0.18f);
 		}
-		if (Input::GetMouseState(EMouseButton::Right) == EKeyState::HOLD)
+		if (Input::GetKeyState(EMouseButton::Right) == EKeyState::HOLD)
 		{
 			Rotate(Input::GetMouseMovePos().y * 0.005f, Input::GetMouseMovePos().x * 0.005f);
 		}

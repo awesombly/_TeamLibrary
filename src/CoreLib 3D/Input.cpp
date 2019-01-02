@@ -9,7 +9,7 @@ POINT	  Input::m_Cursor			= { 0, };
 POINT	  Input::m_prevCursor		= { 0, };
 D3DXVECTOR2 Input::m_moveCursorPos = { 0.0f, 0.0f };
 EKeyState Input::m_KeyState[256]	 = { EKeyState::FREE, };
-EKeyState Input::m_MouseState[3]	 = { EKeyState::FREE, };
+//EKeyState Input::m_MouseState[3]	 = { EKeyState::FREE, };
 EKeyState Input::m_MousePrevState[3] = { EKeyState::FREE, };
 
 bool Input::Init() noexcept
@@ -56,7 +56,6 @@ bool Input::Frame() noexcept
 	if (GetKeyState(VK_ESCAPE) == EKeyState::DOWN)
 	{
 		isDebug = !isDebug;
-		//isChatting = false;
 	}
 	//if (GetKeyState(VK_CONTROL) == EKeyState::DOWN)
 	//{
@@ -83,7 +82,7 @@ POINT Input::GetCursor()
 
 EKeyState Input::GetMouseState(const EMouseButton& mouseButton)
 {
-	return m_MouseState[mouseButton];
+	return m_KeyState[mouseButton];
 }
 
 short Input::GetWheelScroll()
@@ -104,8 +103,6 @@ void Input::OperMoveMousePos(const D3DXVECTOR2& vector2)
 
 EKeyState Input::GetKeyState(const WORD& keyValue)
 {
-	//if (isChatting)
-	//return EKeyState::FREE;
 	return m_KeyState[keyValue];
 }
 
@@ -113,6 +110,7 @@ void Input::KeyCheck(const WORD& keyValue)
 {
 	// GetKeyState()		// 동기식
 	// GetAsyncKeyState()	// 비동기식
+
 	short sKey = GetAsyncKeyState(keyValue);
 	// 클릭 상태일시 최상위 비트를 1로 바꿔줌
 	if (sKey & 0x8000)		// 눌림			
@@ -135,39 +133,37 @@ void Input::KeyCheck(const WORD& keyValue)
 // 이벤트 핸들러, 윈도우에서 인자를 받아 대신 처리를 수행
 void Input::MsgEvent(const MSG& message) noexcept
 {
-	//_stprintf_s(m_Buffer, L"x : %d,  y : %d", m_Cursor.x, m_Cursor.y);
-
 	switch (message.message)
 	{
 	 case WM_LBUTTONDOWN:
 	 {
 	 	m_MousePrevState[0] = EKeyState::FREE;
-	 	m_MouseState[0] = EKeyState::DOWN;
+		m_KeyState[0] = EKeyState::DOWN;
 	 } break;
 	 case WM_LBUTTONUP:
 	 {
 	 	m_MousePrevState[0] = EKeyState::HOLD;
-	 	m_MouseState[0] = EKeyState::UP;
+		m_KeyState[0] = EKeyState::UP;
 	 } break;
 	 case WM_RBUTTONDOWN:
 	 {
 	 	m_MousePrevState[1] = EKeyState::FREE;
-	 	m_MouseState[1] = EKeyState::DOWN;
+		m_KeyState[1] = EKeyState::DOWN;
 	 } break;
 	 case WM_RBUTTONUP:
 	 {
 	 	m_MousePrevState[1] = EKeyState::HOLD;
-	 	m_MouseState[1] = EKeyState::UP;
+		m_KeyState[1] = EKeyState::UP;
 	 } break;
 	 case WM_MBUTTONDOWN:
 	 {
 	 	m_MousePrevState[2] = EKeyState::FREE;
-	 	m_MouseState[2] = EKeyState::DOWN;
+		m_KeyState[2] = EKeyState::DOWN;
 	 } break;
 	 case WM_MBUTTONUP:
 	 {
 	 	m_MousePrevState[2] = EKeyState::HOLD;
-	 	m_MouseState[2] = EKeyState::UP;
+		m_KeyState[2] = EKeyState::UP;
 	 } break;
 	 case WM_MOUSEWHEEL: 
 	 {
@@ -181,20 +177,20 @@ void Input::MouseUpdate()
 	// 마우스 상태 갱신
 	for (int i = 0; i < 3; i++)
 	{
-		if (m_MousePrevState[i] == EKeyState::FREE)
+		if (m_KeyState[i] == EKeyState::FREE)
 		{
-			if (m_MouseState[i] == EKeyState::DOWN)
+			if (m_KeyState[i] == EKeyState::DOWN)
 			{
 				m_MousePrevState[i] = EKeyState::DOWN;
-				m_MouseState[i] = EKeyState::HOLD;
+				m_KeyState[i] = EKeyState::HOLD;
 			}
 		}
 		else if (m_MousePrevState[i] == EKeyState::HOLD)
 		{
-			if (m_MouseState[i] == EKeyState::UP)
+			if (m_KeyState[i] == EKeyState::UP)
 			{
 				m_MousePrevState[i] = EKeyState::FREE;
-				m_MouseState[i] = EKeyState::FREE;
+				m_KeyState[i] = EKeyState::FREE;
 			}
 		}
 	}
