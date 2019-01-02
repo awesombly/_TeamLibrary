@@ -75,6 +75,43 @@ void WriteManager::Draw(const D3DXVECTOR4& rect, const wstring_view& text) noexc
 	m_pRT->DrawTextW(text.data(), (UINT)text.size(), m_pTextFormat, layoutRect, m_pFontBrush);
 }
 
+void WriteManager::SetFontSizeAlign(const float& fontSize, const EAlign& eHorizontal, const EAlign& eVertical) noexcept
+{
+	if (m_pTextFormat != nullptr)
+	{
+		m_pTextFormat->Release();
+		m_fontSize = fontSize;
+		m_pWriteFactory->CreateTextFormat(m_fontFamily.c_str(), nullptr, m_fontWeight, m_fontStyle, DWRITE_FONT_STRETCH_NORMAL, m_fontSize, L"en-us", &m_pTextFormat);
+		switch (eHorizontal)
+		{
+		case EAlign::Near:
+			m_preAlign = DWRITE_TEXT_ALIGNMENT_LEADING;
+			break;
+		case EAlign::Far:
+			m_preAlign = DWRITE_TEXT_ALIGNMENT_TRAILING;
+			break;
+		case EAlign::Center:
+			m_preAlign = DWRITE_TEXT_ALIGNMENT_CENTER;
+			break;
+		}
+		m_pTextFormat->SetTextAlignment(m_preAlign);
+
+		switch (eVertical)
+		{
+		case EAlign::Near:
+			m_preParaAlign = DWRITE_PARAGRAPH_ALIGNMENT_NEAR;
+			break;
+		case EAlign::Far:
+			m_preParaAlign = DWRITE_PARAGRAPH_ALIGNMENT_FAR;
+			break;
+		case EAlign::Center:
+			m_preParaAlign = DWRITE_PARAGRAPH_ALIGNMENT_CENTER;
+			break;
+		}
+		m_pTextFormat->SetParagraphAlignment(m_preParaAlign);
+	}
+}
+
 void WriteManager::SetText(const D2D1_POINT_2F& layoutSize, const wstring_view& text, const D2D1::ColorF& color, const float& fontSize, const wstring_view& fontFamily) noexcept
 {
 	int textLength = (int)text.size();
@@ -83,6 +120,7 @@ void WriteManager::SetText(const D2D1_POINT_2F& layoutSize, const wstring_view& 
 	//m_fontColor = color;
 	m_fontSize = fontSize;
 	m_fontFamily = fontFamily;
+	SetFontFamily(fontFamily);
 	if (FAILED(m_pWriteFactory->CreateTextLayout(text.data(), textLength, m_pTextFormat, layoutSize.x, layoutSize.y, &m_pTextLayout)))
 	{
 		ErrorMessage(""s + __FUNCTION__ + " -> TextLayout Error!");
@@ -100,7 +138,6 @@ void WriteManager::SetText(const D2D1_POINT_2F& layoutSize, const wstring_view& 
 		ErrorMessage(""s + __FUNCTION__ + " -> LayoutSetting Error!");
 	}
 	m_pFontBrush->SetColor(color);
-	
 	pTypography->Release();
 }
 
@@ -113,6 +150,8 @@ void WriteManager::SetFontSize(const float& fontSize)  noexcept
 		m_pTextFormat->Release();
 		m_fontSize = fontSize;
 		m_pWriteFactory->CreateTextFormat(m_fontFamily.c_str(), nullptr, m_fontWeight, m_fontStyle, DWRITE_FONT_STRETCH_NORMAL, m_fontSize, L"en-us", &m_pTextFormat);
+		m_pTextFormat->SetTextAlignment(m_preAlign);
+		m_pTextFormat->SetParagraphAlignment(m_preParaAlign);
 	}
 }
 
@@ -130,17 +169,10 @@ void WriteManager::SetFontFamily(const wstring_view& fontFamily) noexcept
 		m_pTextFormat->Release();
 		m_fontFamily = fontFamily;
 		m_pWriteFactory->CreateTextFormat(m_fontFamily.c_str(), nullptr, m_fontWeight, m_fontStyle, DWRITE_FONT_STRETCH_NORMAL, m_fontSize, L"en-us", &m_pTextFormat);
+		m_pTextFormat->SetTextAlignment(m_preAlign);
+		m_pTextFormat->SetParagraphAlignment(m_preParaAlign);
 	}
 }
-
-//void WriteManager::SetOriginSetting()
-//{
-//	SetFontSize(m_fontSize);
-//	SetFontFamily(m_fontFamily);
-//	//m_pTextLayout->SetFontSize(m_fontSize, { 0, 0 });
-//	//m_pFontBrush->SetColor(m_fontColor);
-//	//m_pTextLayout->SetFontFamilyName(m_fontFamily.data(), { 0, 100 });
-//}
 
 
 bool WriteManager::Begin() noexcept

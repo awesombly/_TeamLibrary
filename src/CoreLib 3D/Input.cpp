@@ -9,7 +9,6 @@ POINT	  Input::m_Cursor			= { 0, };
 POINT	  Input::m_prevCursor		= { 0, };
 D3DXVECTOR2 Input::m_moveCursorPos = { 0.0f, 0.0f };
 EKeyState Input::m_KeyState[256]	 = { EKeyState::FREE, };
-//EKeyState Input::m_MouseState[3]	 = { EKeyState::FREE, };
 EKeyState Input::m_MousePrevState[3] = { EKeyState::FREE, };
 
 bool Input::Init() noexcept

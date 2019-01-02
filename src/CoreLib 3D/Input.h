@@ -25,7 +25,6 @@ private:
 	static POINT m_prevCursor;
 	static D3DXVECTOR2 m_moveCursorPos;
 	static EKeyState m_KeyState[256];
-	//static EKeyState m_MouseState[3];
 	static EKeyState m_MousePrevState[3];
 private:
 	void			   KeyCheck(const WORD& key);			// 키 검사(1회만)
