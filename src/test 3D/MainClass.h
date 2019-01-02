@@ -1,5 +1,10 @@
 #pragma once
-//#pragma comment( lib, "_CoreLib D3D.lib")
+#ifdef NDEBUG
+	#ifdef _DEBUG
+		#undef _DEBUG
+	#endif
+#endif
+
 #ifdef _DEBUG
 	#pragma comment( lib, "ACoreLibTEAM_d.lib")
 	#pragma comment( lib, "libppnetwork_d.lib")
@@ -18,8 +23,8 @@
 #include "ParticleSystem.h"
 #include "Raycast.h"
 #include "Light.h"
-//#include "PlaneUI.h"
-#include "BoundingUI.h"
+#include "PlaneUI.h"
+//#include "BoundingUI.h"
 #include "RLine.h"
 #include "RSphere.h"
 #include "RCube.h"

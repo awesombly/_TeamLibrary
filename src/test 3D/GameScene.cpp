@@ -136,7 +136,6 @@ bool GameScene::Frame() noexcept
 	if (Input::GetKeyState(VK_TAB) == EKeyState::DOWN)
 	{
 		static auto curCollider = ObjectManager::Get().GetColliderList().begin();
-
 		if (curCollider == ObjectManager::Get().GetColliderList().end())
 			curCollider = ObjectManager::Get().GetColliderList().begin();
 		if (++curCollider == ObjectManager::Get().GetColliderList().end())

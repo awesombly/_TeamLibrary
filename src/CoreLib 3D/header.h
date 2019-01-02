@@ -2,6 +2,7 @@
 #pragma warning(disable : 4005)			// 매크로 재정의 경고 무시
 #pragma warning(disable : 4201)			// 
 #pragma warning(disable : 4099)			//
+
 #ifndef _WINSOCKAPI_
 #define _WINSOCKAPI_
 #endif

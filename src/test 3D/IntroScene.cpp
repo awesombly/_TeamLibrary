@@ -90,7 +90,7 @@ bool IntroScene::Init() noexcept
 			if (pB != nullptr)
 			{
 				pB->OperHP(-0.15f);
-				pB->SetForce(Normalize((pB->GetCenter() - pA->GetCenter()) + Vector3::Up) * 200.0f);
+				pB->SetForce(Normalize((pB->GetCenter() - pA->GetCenter()) + Vector3::Up * 1.5f) * 200.0f);
 			}
 			ObjectManager::Get().DisableObject(pA->m_pParent);
 			//ObjectManager::Get().RemoveComponent(pA);
@@ -156,7 +156,6 @@ bool IntroScene::Release() noexcept
 
 void IntroScene::LoadSound() noexcept
 {
-	SoundManager::Get().Load("BGM/PLAY ROUGH.mp3", false, FMOD_LOOP_NORMAL);
 	SoundManager::Get().Load("bgm_ingame01.mp3", false, FMOD_LOOP_NORMAL);
 	SoundManager::Get().Load("bgm_ingame02.mp3", false, FMOD_LOOP_NORMAL);
 	SoundManager::Get().Load("bgm_Title01.mp3", false, FMOD_LOOP_NORMAL);
