@@ -9,11 +9,11 @@ namespace UI
 		int							m_iCols; // 얼만큼쪼갤것인가
 		std::list<wstring>			m_pText; // text array
 		std::vector<D3DXVECTOR4>	m_pTextrt; // text rect  image rect / cols
-		const float*				m_fValue; // 0이면 맨앞의 string 1이면 맨뒤의 string
+		float				m_fValue; // 0이면 맨앞의 string 1이면 맨뒤의 string
 		float						m_fTemp;
 	public:
 		void SetColumn(const int iCols);
-		void SetValue(const float& value);
+		void AddValue(const float value);
 		void push_string(wstring str);
 		bool Create(ID3D11Device* pDevice, const TCHAR* szNORMAL, float fSize = 15, int iCols = 6,
 			 const char* PSName = "PS", const TCHAR* szShaderName = L"../../data/ui/shader/DefaultUI.hlsl");
