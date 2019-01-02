@@ -11,6 +11,8 @@ namespace UI
 		std::vector<D3DXVECTOR4>	m_pTextrt; // text rect  image rect / cols
 		float						m_fValue = 0.0f; // 0이면 맨앞의 string 1이면 맨뒤의 string
 		float						m_fTemp;
+		//
+		float fDivisionValue;       // CurValue Increase
 	public:
 		void SetColumn(const int iCols);
 		void AddValue(const float value);
