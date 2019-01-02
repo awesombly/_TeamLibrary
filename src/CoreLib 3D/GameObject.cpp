@@ -361,23 +361,14 @@ bool GameObject::isBillBoard() noexcept
 	return m_isBillBoard;
 }
 
-void GameObject::isNotDelete(const bool& isNotDelete) noexcept
-{
-	m_isNotDelete = isNotDelete;
-}
-bool GameObject::isNotDelete() noexcept
-{
-	return m_isNotDelete;
-}
-
-bool GameObject::isMoved() noexcept
-{
-	return m_isMoved;
-}
-void GameObject::isMoved(const bool& isMoved)	noexcept
-{
-	m_isMoved = isMoved;
-}
+//bool GameObject::isMoved() noexcept
+//{
+//	return m_isMoved;
+//}
+//void GameObject::isMoved(const bool& isMoved)	noexcept
+//{
+//	m_isMoved = isMoved;
+//}
 
 GameObject* GameObject::clone() noexcept
 {

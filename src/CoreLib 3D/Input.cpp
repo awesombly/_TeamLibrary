@@ -139,40 +139,40 @@ void Input::MsgEvent(const MSG& message)
 
 	switch (message.message)
 	{
-	case WM_LBUTTONDOWN:
-	{
-		m_MousePrevState[0] = EKeyState::FREE;
-		m_MouseState[0] = EKeyState::DOWN;
-	} break;
-	case WM_LBUTTONUP:
-	{
-		m_MousePrevState[0] = EKeyState::HOLD;
-		m_MouseState[0] = EKeyState::UP;
-	} break;
-	case WM_RBUTTONDOWN:
-	{
-		m_MousePrevState[1] = EKeyState::FREE;
-		m_MouseState[1] = EKeyState::DOWN;
-	} break;
-	case WM_RBUTTONUP:
-	{
-		m_MousePrevState[1] = EKeyState::HOLD;
-		m_MouseState[1] = EKeyState::UP;
-	} break;
-	case WM_MBUTTONDOWN:
-	{
-		m_MousePrevState[2] = EKeyState::FREE;
-		m_MouseState[2] = EKeyState::DOWN;
-	} break;
-	case WM_MBUTTONUP:
-	{
-		m_MousePrevState[2] = EKeyState::HOLD;
-		m_MouseState[2] = EKeyState::UP;
-	} break;
-	case WM_MOUSEWHEEL: 
-	{
-		m_tempWheelScroll = (short)HIWORD(message.wParam);
-	}
+	 case WM_LBUTTONDOWN:
+	 {
+	 	m_MousePrevState[0] = EKeyState::FREE;
+	 	m_MouseState[0] = EKeyState::DOWN;
+	 } break;
+	 case WM_LBUTTONUP:
+	 {
+	 	m_MousePrevState[0] = EKeyState::HOLD;
+	 	m_MouseState[0] = EKeyState::UP;
+	 } break;
+	 case WM_RBUTTONDOWN:
+	 {
+	 	m_MousePrevState[1] = EKeyState::FREE;
+	 	m_MouseState[1] = EKeyState::DOWN;
+	 } break;
+	 case WM_RBUTTONUP:
+	 {
+	 	m_MousePrevState[1] = EKeyState::HOLD;
+	 	m_MouseState[1] = EKeyState::UP;
+	 } break;
+	 case WM_MBUTTONDOWN:
+	 {
+	 	m_MousePrevState[2] = EKeyState::FREE;
+	 	m_MouseState[2] = EKeyState::DOWN;
+	 } break;
+	 case WM_MBUTTONUP:
+	 {
+	 	m_MousePrevState[2] = EKeyState::HOLD;
+	 	m_MouseState[2] = EKeyState::UP;
+	 } break;
+	 case WM_MOUSEWHEEL: 
+	 {
+	 	m_tempWheelScroll = (short)HIWORD(message.wParam);
+	 }
 	}
 }
 

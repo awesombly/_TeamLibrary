@@ -68,7 +68,7 @@ bool ObjectManager::Frame(const float& spf, const float& accTime) noexcept
 	// 충돌 리스트 초기화
 	for (auto& iter : m_ColliderList)
 	{
-		iter->m_CollisionList.clear();
+		iter->ClearCollisionList();
 	}
 
 	// 후처리 이벤트
@@ -180,53 +180,6 @@ bool ObjectManager::Render(ID3D11DeviceContext* pDContext) noexcept
 		iter->Render(pDContext);
 	}
 
-	//// 바운딩 박스 표시
-	//if (Input::isDebug)
-	//{
-	//	static GameObject* pBox	   = nullptr;
-	//	static GameObject* pSphere = nullptr;
-	//	if (pBox == nullptr)
-	//	{
-	//		pBox	= new GameObject(L"DebugBox", TakeComponent(L"Cube"));
-	//		pBox->isGlobal(true);
-	//		pSphere = new GameObject(L"DebugSphere", TakeComponent(L"RowSphere"));
-	//		pSphere->isGlobal(true);
-	//	}
-
-	//	DxManager::Get().SetRasterizerState(ERasterS::Wireframe);
-	//	for (auto& iter : m_ColliderList)
-	//	{
-	//		switch (iter->m_eCollider)
-	//		{
-	//		 case ECollider::AABB:
-	//		 {
-	//		 	pBox->SetPosition(iter->GetCenter());
-	//		 	pBox->SetRotation(Quaternion::Base);
-	//		 	pBox->SetScale(((ColliderAABB*)iter)->GetLength() * 0.5f);
-	//		 	pBox->Frame(0.0f, 0.0f);
-	//		 	pBox->Render(pDContext);
-	//		 }	break;
-	//		 case ECollider::OBB:
-	//		 {
-	//		 	pBox->SetPosition(iter->GetCenter());
-	//		 	pBox->SetRotation(iter->m_pParent->GetRotation());
-	//		 	pBox->SetScale(((ColliderOBB*)iter)->GetExtents());
-	//		 	pBox->Frame(0.0f, 0.0f);
-	//		 	pBox->Render(pDContext);
-	//		 }	break;
-	//		 case ECollider::Sphere:
-	//		 {
-	//		 }	break;
-	//		}
-	//		pSphere->SetPosition(iter->GetCenter());
-	//		pSphere->SetRotation(Quaternion::Base);
-	//		pSphere->SetScale(iter->GetWorldRadius() * Vector3::One);
-	//		pSphere->Frame(0.0f, 0.0f);
-	//		pSphere->Render(pDContext);
-	//	}
-	//	DxManager::Get().SetRasterizerState(ERasterS::Current);
-	//}
-
 	// ========================== 미니맵 =============================
 	//if (Input::isDebug)
 	//{
@@ -258,31 +211,12 @@ bool ObjectManager::Render(ID3D11DeviceContext* pDContext) noexcept
 
 bool ObjectManager::Release() noexcept
 {
-	// Global이 아닌 오브젝트 제거
-	//static auto releaseEvent = [](void* pVoid, void*) {
-	//	for (auto&& outIter = ObjectManager::Get().m_ObjectList.begin(); outIter != ObjectManager::Get().m_ObjectList.end(); outIter++)
-	//	{
-	//		outIter->second.remove_if([&](GameObject* pObj) {
-	//			if (pObj->isGlobal())
-	//				return false;
-	//			pObj->isEnable(false);
-	//			pObj->GameObject::Release();
-	//			//delete pObj;
-	//			//m_DisabledPull[pObj->m_myName].push(pObj);
-	//			return true;
-	//		});
-	//	}
-	//};
-	//
-	//PostFrameEvent.emplace(releaseEvent, this, nullptr);
-	
-	//for (auto&& outIter = m_ObjectList.begin(); outIter != m_ObjectList.end(); outIter++)
-	//{
-		//outIter->second.remove_if([&](GameObject* pObj) {
+
 	for (auto& outIter : m_ObjectList)
 	{
 		for (auto& inIter : outIter.second)
 		{
+			// Global이 아닌 오브젝트 제거
 			if (inIter->isGlobal())
 				continue;
 			inIter->isEnable(false);
@@ -467,18 +401,6 @@ void ObjectManager::PopObject(GameObject* pObject) noexcept
 
 void ObjectManager::DisableObject(GameObject* pObject) noexcept
 {
-	//pObject->isEnable(false);
-	//PopObject(pObject);
-	//m_DisabledPull[pObject->m_myName].push(pObject);
-	//auto pColliders = pObject->GetComponentList(EComponent::Collider);
-	//if (pColliders != nullptr)
-	//{
-	//	for (auto& iter : *pColliders)
-	//	{
-	//		PopCollider((Collider*)iter);
-	//	}
-	//}
-
 	static auto disableEvent = [](void* pVoid, void*) {
 		GameObject* pObj = (GameObject*)pVoid;
 		pObj->isEnable(false);
@@ -499,7 +421,7 @@ void ObjectManager::DisableObject(GameObject* pObject) noexcept
 
 bool ObjectManager::RemoveObject(GameObject* pObject) noexcept
 {
-	if (pObject == nullptr || pObject->isNotDelete())
+	if (pObject->isGlobal())
 	{
 		ErrorMessage(L""s + __FUNCTIONW__ + L" -> " + pObject->m_myName + L" : 삭제할 수 없는 오브젝트!");
 		return false;

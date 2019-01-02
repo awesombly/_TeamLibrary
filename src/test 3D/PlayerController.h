@@ -26,12 +26,12 @@ private:
 
 	//AHeroObj*   m_pHero			= nullptr;
 	Camera*		m_pCamera		= nullptr;
-	EAction		m_curAction;	// 현재 눌린 액션
-	EAction		m_curAnim;		// 실제 애니메이션
+	EAction		m_curAction;			// 현재 눌린 액션
+	EAction		m_curAnim;				// 실제 애니메이션
 	EDirection  m_MouseDirection;
-
+	///
 	D3DXVECTOR3 m_direction;
-	float		m_moveSpeed		= 250.0f;
+	float		m_moveSpeed		= 150.0f;
 	float		m_jumpPower		= 180.0f;
 
 	//bool		m_toIdle		= false;
@@ -48,8 +48,8 @@ public:
 	float		m_mouseSense = 0.5f;
 	//float		m_HP = 1.0f;
 	float		m_MP = 1.0f;
-
-	void* m_pHpBar = nullptr;
+	
+	void*		m_pHpBar = nullptr;		// 체력바
 public:
 	static void SetAnim(AHeroObj* pObject, const ECharacter& eCharacter, const EAction& eAction) noexcept;
 

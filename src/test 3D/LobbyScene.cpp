@@ -1,6 +1,8 @@
 #include "LobbyScene.h"
 #include "PacketManager.h"
 #include "JState.h"
+
+
 bool LobbyScene::Init() noexcept
 {
 	static auto pToGuest = [](void* pScene) {
@@ -59,9 +61,10 @@ bool LobbyScene::Init() noexcept
 		m_isFirstInit = false;
 		// =============================== ¸Ê »ý¼º =================================
 		m_Importer.Import();
-		m_pMap = new XMap;
+		m_pMap = new XMap();
+		//m_pMap = (XMap*)new GameObject(L"");
 		m_pMap->Create(DxManager::Get().GetDevice(), DxManager::Get().GetDContext(), &m_Importer, _T("../../Data/Map/Shader/MapShader_Specular.hlsl"), _T("../../Data/Map/Shader/MapShader_Color_Specular.hlsl"), "VS", "PS");
-		m_pMapTree = new XQuadTreeIndex;
+		m_pMapTree = new XQuadTreeIndex();
 		m_pMapTree->Build(m_pMap);
 		m_pMap->m_objType = EObjType::Map;
 		m_pMap->isGlobal();

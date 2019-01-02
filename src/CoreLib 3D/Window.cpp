@@ -24,8 +24,8 @@ bool Window::MessageProcess()
 			// 메세지->프로시져 전달
 			DispatchMessage(&message);
 
-			if (message.message == WM_QUIT)
-				break;
+			//if (message.message == WM_QUIT)
+			//	break;
 			MsgEvent(message);
 		}
 		else

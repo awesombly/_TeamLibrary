@@ -1,9 +1,9 @@
 #pragma once
-#ifdef NDEBUG
-	#ifdef _DEBUG
-		#undef _DEBUG
-	#endif
-#endif
+//#ifdef NDEBUG
+//	#ifdef _DEBUG
+//		#undef _DEBUG
+//	#endif
+//#endif
 
 #ifdef _DEBUG
 	#pragma comment( lib, "ACoreLibTEAM_d.lib")

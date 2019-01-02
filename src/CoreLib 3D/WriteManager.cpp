@@ -15,7 +15,7 @@ bool WriteManager::Init(IDXGISurface1* pSurface)
 	m_pRT = nullptr;
 	m_fontWeight = DWRITE_FONT_WEIGHT_NORMAL;
 	m_fontStyle = DWRITE_FONT_STYLE_NORMAL;
-	//m_fontSize = 72.0f;
+	m_fontSize = 50.0f;
 
 	m_fontFamily = L"Gabriola";
 

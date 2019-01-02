@@ -36,7 +36,7 @@ bool IntroScene::Init() noexcept
 		ObjectManager::Get().PushObject(pObject);
 
 		// 라이트
-		auto pTrans = new CTransformer(Vector3::Up * 150.0f, Quaternion::Up * PI * 0.35f, Vector3::One);
+		auto pTrans = new CTransformer(Vector3::Up * 400.0f, Quaternion::Up * PI * 0.35f, Vector3::One);
 		pTrans->TransEvent = [](Transform* pParent, Transform* pTrans, const float& spf, const float& accTime) {
 			pParent->SetTransform(*pTrans);
 			pParent->Translate({ cosf(0.5f * accTime) * 200.0f, 0.0f, sinf(0.5f * accTime) * 200.0f });
@@ -90,12 +90,12 @@ bool IntroScene::Init() noexcept
 			if (pB != nullptr)
 			{
 				pB->OperHP(-0.15f);
-				pB->SetForce(Normalize((pB->GetCenter() - pA->GetCenter()) + Vector3::Up * 1.5f) * 200.0f);
+				pB->SetForce((Normalize(-pA->GetTotalForce()) + Vector3::Up) * 200.0f);
 			}
+			pA->ClearIgnoreList();
 			ObjectManager::Get().DisableObject(pA->m_pParent);
-			//ObjectManager::Get().RemoveComponent(pA);
-			//ObjectManager::Get().PopCollider(pA);
 		};
+
 		// 단검
 		auto pDagger = new AHeroObj();
 		pDagger->SetPlayerCharacter(ITEM_Dagger);
@@ -114,7 +114,7 @@ bool IntroScene::Init() noexcept
 		pChicken->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
 		pChicken->m_myName = L"Chicken";
 		pChicken->m_objType = EObjType::Object;
-		pCollider = new Collider(15.0f);//new ColliderOBB(23.0f, { -15.0f, 0.0f , -15.0f }, { 15.0f, 30.0f , 15.0f });
+		pCollider = new Collider(15.0f);
 		pCollider->m_pivot = Vector3::Up * 10.0f + Vector3::Forward * 5.0f;
 		pCollider->CollisionEvent = pDaggerHit;
 		pChicken->AddComponent(pCollider);

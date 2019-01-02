@@ -34,16 +34,17 @@ protected:
 	bool  m_isGlobal	= false;	// ObjectManager 릴리즈시 유지 여부
 	bool  m_isStatic	= false;	// SRT 갱신 여부
 	bool  m_isBillBoard = false;	// 빌보드 행렬 적용 여부
-	bool  m_isNotDelete = false;	// 삭제 가능 여부(툴용)
+	/////////////////////////////////////////////////////////////////////////////////////////
+	bool  m_isNotDelete = false;	
 	bool  m_isMoved     = true;		// 이동 했는지 여부
+	virtual HRESULT Create()	noexcept { return S_OK; } ; // 하위호환용
+	/////////////////////////////////////////////////////////////////////////////////////////
 public:
 	UINT m_keyValue;								// 유일한 키값
 	wstring	 m_myName;								// 객체 이름
 	EObjType m_objType = EObjType::Dummy;			// 객체 타입
-protected:
-	virtual HRESULT Create()	noexcept { return S_OK; } ; // 하위호환용
-	virtual void UpdateMatrix()	noexcept;	// 행렬 갱신
 public:
+	virtual void UpdateMatrix()												noexcept;
 	// 컴포넌트 추가, 삭제, 검색
 	void AddComponent(Component* pComponent)								noexcept;
 	void AddComponent(const initializer_list<Component*>& components)		noexcept;
@@ -51,46 +52,44 @@ public:
 	forward_list<Component*>* GetComponentList(const EComponent& eCompType) noexcept;
 	map<EComponent, forward_list<Component*> >& GetComponentList()			noexcept;
 	// 부모 설정
-	virtual void SetParent(GameObject* pParent)			  noexcept;
-	GameObject*  GetParent()						const noexcept;
-	GameObject*  GetRoot()								  noexcept;
-	void		 CutParent()							  noexcept;
-	forward_list<GameObject*>* GetChildList()			  noexcept;
+	virtual void SetParent(GameObject* pParent)						  	    noexcept;
+	GameObject*  GetParent()										  const noexcept;
+	GameObject*  GetRoot()											  	    noexcept;
+	void		 CutParent()										  	    noexcept;
+	forward_list<GameObject*>* GetChildList()						  	    noexcept;
 	// 부모월드 * 자식로컬
-	void SetWorldPosition(const D3DXVECTOR3& position)	  noexcept;
-	void SetWorldRotation(const D3DXQUATERNION& rotation) noexcept;
-	void SetWorldScale(const D3DXVECTOR3& scale)		  noexcept;
-	D3DXVECTOR3	   GetWorldPosition()				const noexcept;
-	D3DXQUATERNION GetWorldRotation()				const noexcept;
-	D3DXVECTOR3	   GetWorldScale()					const noexcept;
+	void SetWorldPosition(const D3DXVECTOR3& position)						noexcept;
+	void SetWorldRotation(const D3DXQUATERNION& rotation)					noexcept;
+	void SetWorldScale(const D3DXVECTOR3& scale)							noexcept;
+	D3DXVECTOR3	   GetWorldPosition()								  const noexcept;
+	D3DXQUATERNION GetWorldRotation()								  const noexcept;
+	D3DXVECTOR3	   GetWorldScale()									  const noexcept;
 	// 행렬 설정, 반환
-	void  SetWorldMatrix(const D3DXMATRIX& matWorld)	  noexcept;
-	const D3DXMATRIX& GetWorldMatrix()				const noexcept;
-	const D3DXMATRIX& GetScaleMatrix()				const noexcept;
-	const D3DXMATRIX& GetRotationMatrix()			const noexcept;
+	void  SetWorldMatrix(const D3DXMATRIX& matWorld)						noexcept;
+	const D3DXMATRIX& GetWorldMatrix()								  const noexcept;
+	const D3DXMATRIX& GetScaleMatrix()								  const noexcept;
+	const D3DXMATRIX& GetRotationMatrix()							  const noexcept;
 
-	void SetKeyValue(const UINT& keyValue)		noexcept;
+	void SetKeyValue(const UINT& keyValue)									noexcept;
 
-	bool isEnable()								noexcept;
+	bool isEnable()															noexcept;
 	void isEnable(const bool& isEnable, const bool& putDisablePool = false) noexcept;
-	bool isGlobal()								noexcept;
-	void isGlobal(const bool& isGlobal)			noexcept;
-	bool isStatic()								noexcept;
-	void isStatic(const bool& isStatic)			noexcept;
-	bool isBillBoard()							noexcept;
-	void isBillBoard(const bool& isBillBoard)	noexcept;
-	bool isNotDelete()							noexcept;
-	void isNotDelete(const bool& isNotDelete)	noexcept;
-	bool isMoved()								noexcept;
-	void isMoved(const bool& m_isMoved)			noexcept;
+	bool isGlobal()															noexcept;
+	void isGlobal(const bool& isGlobal)										noexcept;
+	bool isStatic()															noexcept;
+	void isStatic(const bool& isStatic)										noexcept;
+	bool isBillBoard()														noexcept;
+	void isBillBoard(const bool& isBillBoard)								noexcept;
+	//bool isMoved()									noexcept;
+	//void isMoved(const bool& m_isMoved)				noexcept;
 
-	virtual bool Init()											noexcept override;
-	virtual bool Frame(const float& spf, const float& accTime)	noexcept override;
-	virtual bool Render(ID3D11DeviceContext* pDContext)			noexcept override;
-	virtual bool Release()										noexcept override;
-	virtual GameObject* clone()									noexcept;		// 자기 객체 복사 반환
+	virtual bool Init()														noexcept override;
+	virtual bool Frame(const float& spf, const float& accTime)				noexcept override;
+	virtual bool Render(ID3D11DeviceContext* pDContext)						noexcept override;
+	virtual bool Release()													noexcept override;
+	virtual GameObject* clone()												noexcept;		// 자기 객체 복사 반환
 protected:
-	GameObject* cloneChild(GameObject* pObject)					noexcept;		// 자식 복제용
+	GameObject* cloneChild(GameObject* pObject)								noexcept;		// 자식 복제용
 protected:
 	friend class AseParser;
 	friend class MaxImporter;

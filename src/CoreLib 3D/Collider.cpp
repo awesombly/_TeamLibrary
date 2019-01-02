@@ -25,11 +25,6 @@ bool Collider::Init() noexcept
 	return true;
 }
 
-//void Collider::Update() noexcept
-//{
-//
-//}
-
 bool Collider::Frame(const float& spf, const float& accTime)	noexcept
 {
 	if (!m_isEnable)	return false;
@@ -76,6 +71,7 @@ bool Collider::Release()	noexcept
 bool Collider::CollisionAllCheck(const float& spf) noexcept
 {
 	//m_CollisionList.clear();
+	m_CollisionList.assign(m_IgnoreList.begin(), m_IgnoreList.end());
 	m_CollisionList.push_front(this);
 	for (auto& iter : ObjectManager::Get().GetColliderList())
 	{
@@ -148,7 +144,6 @@ bool Collider::CollisionAllCheck(const float& spf) noexcept
 }
 
 
-
 bool Collider::CollisionCheck(Collider* pCollider) noexcept
 {
 	if (!SphereToSphere(this, pCollider))
@@ -173,8 +168,6 @@ bool Collider::CollisionCheck(Collider* pCollider) noexcept
 
 	return false;
 }
-
-
 
 
 bool Collider::SphereToSphere(Collider* pSphereA, Collider* pSphereB) const	noexcept
@@ -440,7 +433,30 @@ bool Collider::OBBToOBB(ColliderOBB* ApOBB, ColliderOBB* BpOBB) const noexcept
 	return true;
 }
 
+void Collider::AddIgnoreList(Collider* pCollider) noexcept
+{
+	m_IgnoreList.push_front(pCollider);
+	pCollider->m_IgnoreList.push_front(this);
+}
 
+void Collider::ClearIgnoreList() noexcept
+{
+	static auto pEvent = [](void* pVoid, void*) {
+		auto pCollider = (Collider*)pVoid;
+		for (auto& iter : pCollider->m_IgnoreList)
+		{
+			iter->m_IgnoreList.remove(pCollider);
+		}
+		pCollider->m_IgnoreList.clear();
+	};
+
+	ObjectManager::PostFrameEvent.emplace(pEvent, this, nullptr);
+}
+
+void Collider::ClearCollisionList() noexcept
+{
+	m_CollisionList.clear();
+}
 
 
 void Collider::AddForce(const D3DXVECTOR3& vForce) noexcept

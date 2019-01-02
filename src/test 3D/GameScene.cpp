@@ -22,7 +22,6 @@ bool GameScene::Init() noexcept
 		m_pHero->m_myName = L"Guard";
 		m_pHero->m_objType = EObjType::Object;
 		auto pCollider = new ColliderOBB(60.0f, { -13.0f, 0.0f , -13.0f }, { 13.0f, 80.0f , 13.0f });
-		//pCollider->usePhysics(false);
 		m_pHero->AddComponent(pCollider);
 		ObjectManager::Get().SetProtoObject(m_pHero);
 
@@ -34,7 +33,6 @@ bool GameScene::Init() noexcept
 		m_pZombie->m_myName = L"Zombie";
 		m_pZombie->m_objType = EObjType::Object;
 		pCollider = new ColliderOBB(60.0f, { -13.0f, 0.0f , -13.0f }, { 13.0f, 80.0f , 13.0f });
-		//pCollider->usePhysics(false);
 		m_pZombie->AddComponent(pCollider);
 		ObjectManager::Get().SetProtoObject(m_pZombie);
 
@@ -79,9 +77,7 @@ bool GameScene::Init() noexcept
 	ObjectManager::Get().TakeObject(L"Guard")  ->SetPosition(RandomNormal() * 500.0f, 500.0f, RandomNormal() * 500.0f);
 	ObjectManager::Get().TakeObject(L"Zombie") ->SetPosition(RandomNormal() * 500.0f, 500.0f, RandomNormal() * 500.0f);;
 	ObjectManager::Get().TakeObject(L"Bird")   ->SetPosition(RandomNormal()	* 500.0f, 500.0f, RandomNormal() * 500.0f);;
-	//ObjectManager::Get().TakeObject(L"Chicken")->SetPosition(RandomNormal()	* 500.0f, 500.0f, RandomNormal() * 500.0f);;
-	//ObjectManager::Get().TakeObject(L"Chicken")->SetPosition(RandomNormal()	* 500.0f, 500.0f, RandomNormal() * 500.0f);;
-	//ObjectManager::Get().TakeObject(L"Chicken")->SetPosition(RandomNormal()	* 500.0f, 500.0f, RandomNormal() * 500.0f);;
+
 #pragma endregion
 	
 	// =================================== UI ========================================
@@ -94,7 +90,7 @@ bool GameScene::Init() noexcept
 	auto pProj = (JProgressBar*)pUIRoot->find_child(L"MP_Progress");
 	pProj->SetValue(m_pPlayer->m_MP, 1.0f); // 값 bind
 
-	// 오른쪽 스킬
+	// 오른쪽 아이콘
 	auto pIcon = (JProgressBar*)pUIRoot->find_child(L"Skill_0");
 	pIcon->SetValue(PlayerController::Get().m_curDelayThrow, PlayerController::Get().m_DelayThrow);
 	// Slider

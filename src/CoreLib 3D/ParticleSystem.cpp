@@ -65,10 +65,6 @@ bool ParticleSystem::Init() noexcept
 
 bool ParticleSystem::Frame(const float& spf, const float& accTime) noexcept
 {
-	if (Input::GetKeyState(VK_DOWN) == EKeyState::DOWN)
-	{
-		m_isMultiTexture = !m_isMultiTexture;
-	}
 	if (!m_isEnable) return false;
 	Renderer::Frame(spf, accTime);
 	// ============================= 파티클, 인스턴싱부 =================================

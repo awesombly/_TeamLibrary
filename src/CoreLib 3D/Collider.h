@@ -12,21 +12,22 @@ class ColliderOBB;
 class Collider : public Component
 {
 private:
-	//bool m_useGravity = true;
 	bool m_usePhysics = true;
-	//bool m_isGround	  = false;
 	bool m_isMoving   = false;
+	//bool m_isGround	  = false;
 
 	D3DXVECTOR3 m_force		= Vector3::Zero;	// 적용중인 힘
 	D3DXVECTOR3 m_direction = Vector3::Zero;	// 이동 힘
 
 	float m_radius;								// 반지름
 	float m_GravityScale = 1.0f;				// 중력크기
-	float m_HP = 1.0f;
+	float m_HP			 = 1.0f;
+
+	forward_list<Collider*> m_CollisionList;	// 체크된 충돌체
+	forward_list<Collider*> m_IgnoreList;		// 충돌 제외 대상
 public:
 	void (*CollisionEvent)(Collider*, Collider*) = nullptr;
 	ECollider m_eCollider;
-	forward_list<Collider*> m_CollisionList;
 
 	D3DXVECTOR3 m_pivot = Vector3::Zero;		// 부모 상대 피벗
 	float m_mass		= 1.0f;					// 질량
@@ -34,15 +35,28 @@ public:
 	float m_drag		= 1.0f;					// 마찰력
 	float m_damping		= 0.2f;					// 항력
 	//float m_angularDamping = 0.2f;			// 회전 항력
-	float m_mapHeight   = -9999.0f;
+	float m_mapHeight   = -9999.0f;				// 맵 높이
 
-	D3DXVECTOR3 m_normal = Vector3::Zero;		// 계산용 노말
+	//D3DXVECTOR3 m_normal = Vector3::Zero;		// 계산용 노말
 protected:
 	bool CollisionAllCheck(const float& spf)		  noexcept;
 public:												  
+	virtual bool CollisionCheck(Collider* pCollider)				  noexcept;
+	bool SphereToSphere(Collider* pSphereA, Collider* pSphereB)	const noexcept;
+	bool SphereToAABB(Collider* pSphere, ColliderAABB* pAABB)	const noexcept;
+	bool SphereToOBB(Collider* pSphere, ColliderOBB* pOBB)		const noexcept;
+	bool AABBToAABB(ColliderAABB* ApAABB, ColliderAABB* BpAABB)	const noexcept;
+	bool AABBToOBB(ColliderAABB* pAABB, ColliderOBB* pOBB)		const noexcept;
+	bool OBBToOBB(ColliderOBB* ApOBB, ColliderOBB* BpOBB)		const noexcept;
+	///
+	void AddIgnoreList(Collider* pCollider)			  noexcept;
+	void ClearIgnoreList()							  noexcept;
+	void ClearCollisionList()						  noexcept;
+	///
 	void AddForce(const D3DXVECTOR3& vForce)		  noexcept;
 	void SetForce(const D3DXVECTOR3& vForce)		  noexcept;
 	void SetDirectionForce(const D3DXVECTOR3& vForce) noexcept;
+	void SetGravityScale(const float& gravityRate)	  noexcept;
 
 	D3DXVECTOR3 GetForce()							  noexcept;
 	D3DXVECTOR3 GetTotalForce()						  noexcept;
@@ -56,20 +70,7 @@ public:
 	void OperHP(const float& value)					  noexcept;
 	void SetHP(const float& value)					  noexcept;
 	const float& GetHP()							  noexcept;
-
-	bool SphereToSphere(Collider* pSphereA, Collider* pSphereB)	const noexcept;
-	bool SphereToAABB(Collider* pSphere, ColliderAABB* pAABB)	const noexcept;
-	bool SphereToOBB(Collider* pSphere, ColliderOBB* pOBB)		const noexcept;
-	bool AABBToAABB(ColliderAABB* ApAABB, ColliderAABB* BpAABB)	const noexcept;
-	bool AABBToOBB(ColliderAABB* pAABB, ColliderOBB* pOBB)		const noexcept;
-	bool OBBToOBB(ColliderOBB* ApOBB, ColliderOBB* BpOBB)		const noexcept;
-	virtual bool CollisionCheck(Collider* pCollider)				  noexcept;
-	//void OnCollision(Collider* pCollider) noexcept;
-
-	void SetGravityScale(const float& gravityRate)	  noexcept;
-
-	//void useGravity(const bool& useGravity)			  noexcept;
-	//bool useGravity()								  noexcept;
+	///
 	void usePhysics(const bool& usePhysics)			  noexcept;
 	bool usePhysics()								  noexcept;
 	void isMoving(const bool& isMoving)			      noexcept;
