@@ -5,14 +5,14 @@
 CTransformer::CTransformer()
 {
 	m_myName = L"Transformer";
-	m_comptType = EComponent::Phsics;
+	m_comptType = EComponent::Transformer;
 	Init();
 }
 
 CTransformer::CTransformer(const D3DXVECTOR3& position, const D3DXQUATERNION& rotation, const D3DXVECTOR3& scale)
 {
 	m_myName = L"Transformer";
-	m_comptType = EComponent::Phsics;
+	m_comptType = EComponent::Transformer;
 	Init();
 	SetTransform({ position, rotation, scale });
 }

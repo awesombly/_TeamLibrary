@@ -17,7 +17,7 @@ private:
 	// 사운드 이름, 위치, 사거리
 	queue<tuple<string, D3DXVECTOR3, float> > m_SoundQueue;
 public:
-	D3DXVECTOR3* m_pListenerPos = nullptr;						// 듣는 위치
+	const D3DXVECTOR3* m_pListenerPos = nullptr;						// 듣는 위치
 public:
 	void	Load(const string_view& soundName, const bool& isPlay = false, const int& option = FMOD_DEFAULT) noexcept;
 	void	SetBGM(const string_view& soundName) noexcept;

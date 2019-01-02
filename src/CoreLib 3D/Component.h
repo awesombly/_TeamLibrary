@@ -8,7 +8,7 @@ enum class EComponent : char {
 	Animation, 
 	Renderer, Instancer,
 	UI,
-	Collider, Phsics, 
+	Collider, Transformer, //Phsics,
 	Etc
 };
 

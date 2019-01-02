@@ -86,7 +86,7 @@ public:
 	static GameObject* m_pSkyBox;
 	static map<ESceneName, MainClass*> m_SceneList;
 	static MainClass* m_curScene;
-
+	// 로딩
 	static GameObject* m_LoadingImage;
 	static GameObject* m_Icon;
 	static GameObject* m_Icon2;
@@ -95,13 +95,15 @@ public:
 	static bool m_isLoading;
 	bool m_isFirstInit = true;
 
-
+	///
 	static XMap*			m_pMap;						// 맵
 	static XQuadTreeIndex*	m_pMapTree;					// 맵->공간분할, LOD시 수정 예정
 	static XMapImporter		m_Importer;					// 세이브 데이터 로더
 public:
 	// 씬 설정
 	void SetScene(const ESceneName& sceneName, const bool& useRelease = true) noexcept;
+
+	void MsgEvent(const MSG& _message) noexcept;
 	void SendMovedObject()	noexcept;
 	
 	virtual bool Init()		noexcept override;

@@ -65,22 +65,23 @@ bool GameScene::Init() noexcept
 	m_pPlayer->SetParent(m_pHero);
 	m_pPlayer->m_curCharacter = PlayerController::ECharacter::EGuard;
 	m_pPlayer->ResetOption();
+	SoundManager::Get().m_pListenerPos = &m_pHero->GetPosition();
 	
 
 	ObjectManager::Get().TakeObject(L"ParticleSystem");
-	ObjectManager::Get().TakeObject(L"Guard")  ->SetPosition(RandomNormal() * 500.0f, 500.0f, RandomNormal() * 500.0f);
-	ObjectManager::Get().TakeObject(L"Zombie") ->SetPosition(RandomNormal() * 500.0f, 500.0f, RandomNormal() * 500.0f );
-	ObjectManager::Get().TakeObject(L"Bird")   ->SetPosition(RandomNormal()	* 500.0f, 500.0f, RandomNormal() * 500.0f);;
-	ObjectManager::Get().TakeObject(L"Guard")  ->SetPosition(RandomNormal() * 500.0f, 500.0f, RandomNormal() * 500.0f);
-	ObjectManager::Get().TakeObject(L"Zombie") ->SetPosition(RandomNormal() * 500.0f, 500.0f, RandomNormal() * 500.0f);;
-	ObjectManager::Get().TakeObject(L"Bird")   ->SetPosition(RandomNormal()	* 500.0f, 500.0f, RandomNormal() * 500.0f);;
-	ObjectManager::Get().TakeObject(L"Guard")  ->SetPosition(RandomNormal() * 500.0f, 500.0f, RandomNormal() * 500.0f);
-	ObjectManager::Get().TakeObject(L"Zombie") ->SetPosition(RandomNormal() * 500.0f, 500.0f, RandomNormal() * 500.0f);;
-	ObjectManager::Get().TakeObject(L"Bird")   ->SetPosition(RandomNormal()	* 500.0f, 500.0f, RandomNormal() * 500.0f);;
+	ObjectManager::Get().TakeObject(L"Guard")  ->SetPosition(RandomNormal() * 500.0f, RandomNormal() * 500.0f, RandomNormal() * 500.0f);
+	ObjectManager::Get().TakeObject(L"Zombie") ->SetPosition(RandomNormal() * 500.0f, RandomNormal() * 500.0f, RandomNormal() * 500.0f);
+	ObjectManager::Get().TakeObject(L"Bird")   ->SetPosition(RandomNormal()	* 500.0f, RandomNormal() * 500.0f, RandomNormal() * 500.0f);
+	ObjectManager::Get().TakeObject(L"Guard")  ->SetPosition(RandomNormal() * 500.0f, RandomNormal() * 500.0f, RandomNormal() * 500.0f);
+	ObjectManager::Get().TakeObject(L"Zombie") ->SetPosition(RandomNormal() * 500.0f, RandomNormal() * 500.0f, RandomNormal() * 500.0f);
+	ObjectManager::Get().TakeObject(L"Bird")   ->SetPosition(RandomNormal()	* 500.0f, RandomNormal() * 500.0f, RandomNormal() * 500.0f);
+	ObjectManager::Get().TakeObject(L"Guard")  ->SetPosition(RandomNormal() * 500.0f, RandomNormal() * 500.0f, RandomNormal() * 500.0f);
+	ObjectManager::Get().TakeObject(L"Zombie") ->SetPosition(RandomNormal() * 500.0f, RandomNormal() * 500.0f, RandomNormal() * 500.0f);
+	ObjectManager::Get().TakeObject(L"Bird")   ->SetPosition(RandomNormal()	* 500.0f, RandomNormal() * 500.0f, RandomNormal() * 500.0f);
 
 #pragma endregion
 	
-	// =================================== UI ========================================
+	// ===================================== UI =========================================
 	JPanel* pUIRoot = new JPanel(L"UI_IntroRoot");
 	pUIRoot->m_objType = EObjType::UI;
 	JParser par;
@@ -112,7 +113,25 @@ bool GameScene::Init() noexcept
 	// 타이머
 	m_TimerText = (JTextCtrl*)pUIRoot->find_child(L"Timer_Text");
 
+	// chatting
+	static auto pChatWheel = [](void* pVoid) {
+		if (abs(Input::GetWheelScroll()) >= EPSILON)
+		{
+			auto pList = (JListCtrl*)pVoid;
+			pList->AddValue(Input::GetWheelScroll() * 0.003f);
+			ErrorMessage("wheel : " + std::to_string(Input::GetWheelScroll()));
+			//ErrorMessage("value : " + std::to_string(*m_pList->GetValue()));
+		}
+	};
+	
+	m_pList = (JListCtrl*)pUIRoot->find_child(L"Chat_Log");
+	//JSliderCtrl* pSlider = (JSliderCtrl*)pUIRoot->find_child(L"Chat_Slider");
+	//m_pList->m_fValue = pSlider->GetValue();
+	m_pList->EventHover.first = pChatWheel;
+	m_pList->EventHover.second = m_pList;
 	ObjectManager::Get().PushObject(pUIRoot);
+	// ==================================================================================
+
 	SoundManager::Get().SetBGM("bgm_ingame01.mp3");
 	Timer::AccumulateTime = 0.0f;
 	m_isLoading = false;
@@ -123,10 +142,24 @@ bool GameScene::Init() noexcept
 // 프레임
 bool GameScene::Frame() noexcept
 {
-	// 듣는 위치
-	static D3DXVECTOR3 ListenPosition;
-	SoundManager::Get().m_pListenerPos = &ListenPosition;
-	ListenPosition = m_pPlayer->GetWorldPosition();
+	ErrorMessage(to_string((char)1));
+	ErrorMessage(to_string((char)2));
+	ErrorMessage(to_string((char)0));
+	// IME
+	if (Input::GetKeyState(VK_ADD) == EKeyState::DOWN)
+	{
+		if (PlayerController::Get().isChatting())
+		{
+			m_pList->push_string(ime::Get()->GetString());
+			ime::Get()->imeEnd();
+			PlayerController::Get().isChatting(false);
+		}
+		else
+		{
+			PlayerController::Get().isChatting(true);
+			ime::Get()->imeStart();
+		}
+	}
 
 	// 플레이어 변경
 	if (Input::GetKeyState(VK_TAB) == EKeyState::DOWN)
@@ -138,14 +171,14 @@ bool GameScene::Frame() noexcept
 			curCollider = ObjectManager::Get().GetColliderList().begin();
 
 		m_pPlayer->Possess(*curCollider);
+		SoundManager::Get().m_pListenerPos = &(*curCollider)->m_pParent->GetRoot()->GetPosition();
 	}
 	// 설정 동기화
 	SoundManager::Get().SetMasterVolume(*m_pVolume->GetValue());
 	m_pPlayer->m_mouseSense = *m_pMouseSense->GetValue();
 	m_TimerText->m_Text = to_wstring(Timer::AccumulateTime).substr(0, 5);
-
+	///
 	m_pMapTree->Frame();
-
 	DxManager::Get().Frame();
 	ObjectManager::Get().Frame(Timer::SPF, Timer::AccumulateTime);
 	SoundManager::Get().Frame();
@@ -161,10 +194,14 @@ bool GameScene::Frame() noexcept
 // 랜더
 bool GameScene::Render() noexcept
 {
+	// 채팅
+	wstring str = ime::Get()->GetString();
+	WriteManager::Get().DrawTextW({ 400,300,800,600 }, str);
+
 	m_pMap->SetMatrix(NULL, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
 	I_Object.SetMatrix(&ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
 	I_Object.Render(DxManager::Get().GetDContext());
-
+	///
 	DxManager::Get().Render();
 	ObjectManager::Get().Render(DxManager::Get().GetDContext());
 	SoundManager::Get().Render();
@@ -172,48 +209,7 @@ bool GameScene::Render() noexcept
 	// 바운딩 박스 표시
 	if (m_pCheckBox->m_bCheck)
 	{
-		static GameObject* pBox = nullptr;
-		static GameObject* pSphere = nullptr;
-		if (pBox == nullptr)
-		{
-			pBox = new GameObject(L"DebugBox", ObjectManager::Get().TakeComponent(L"Cube"));
-			pBox->isGlobal(true);
-			pSphere = new GameObject(L"DebugSphere", ObjectManager::Get().TakeComponent(L"RowSphere"));
-			pSphere->isGlobal(true);
-		}
-
-		DxManager::Get().SetRasterizerState(ERasterS::Wireframe);
-		for (auto& iter : ObjectManager::Get().GetColliderList())
-		{
-			switch (iter->m_eCollider)
-			{
-			case ECollider::AABB:
-			{
-				pBox->SetPosition(iter->GetCenter());
-				pBox->SetRotation(Quaternion::Base);
-				pBox->SetScale(((ColliderAABB*)iter)->GetLength() * 0.5f);
-				pBox->Frame(0.0f, 0.0f);
-				pBox->Render(DxManager::GetDContext());
-			}	break;
-			case ECollider::OBB:
-			{
-				pBox->SetPosition(iter->GetCenter());
-				pBox->SetRotation(iter->m_pParent->GetRotation());
-				pBox->SetScale(((ColliderOBB*)iter)->GetExtents());
-				pBox->Frame(0.0f, 0.0f);
-				pBox->Render(DxManager::GetDContext());
-			}	break;
-			case ECollider::Sphere:
-			{
-			}	break;
-			}
-			pSphere->SetPosition(iter->GetCenter());
-			pSphere->SetRotation(Quaternion::Base);
-			pSphere->SetScale(iter->GetWorldRadius() * Vector3::One);
-			pSphere->Frame(0.0f, 0.0f);
-			pSphere->Render(DxManager::GetDContext());
-		}
-		DxManager::Get().SetRasterizerState(ERasterS::Current);
+		DrawBoundingBox();
 	}
 	return true;
 }
@@ -227,4 +223,51 @@ bool GameScene::Release() noexcept
 	ObjectManager::Get().PopObject(ObjectManager::Cameras[ECamera::Main]);
 	ObjectManager::Get().Release();
 	return true;
+}
+
+
+void GameScene::DrawBoundingBox()	noexcept
+{
+	static GameObject* pBox = nullptr;
+	static GameObject* pSphere = nullptr;
+	if (pBox == nullptr)
+	{
+		pBox = new GameObject(L"DebugBox", ObjectManager::Get().TakeComponent(L"Cube"));
+		pBox->isGlobal(true);
+		pSphere = new GameObject(L"DebugSphere", ObjectManager::Get().TakeComponent(L"RowSphere"));
+		pSphere->isGlobal(true);
+	}
+
+	DxManager::Get().SetRasterizerState(ERasterS::Wireframe);
+	for (auto& iter : ObjectManager::Get().GetColliderList())
+	{
+		switch (iter->m_eCollider)
+		{
+		case ECollider::AABB:
+		{
+			pBox->SetPosition(iter->GetCenter());
+			pBox->SetRotation(Quaternion::Base);
+			pBox->SetScale(((ColliderAABB*)iter)->GetLength() * 0.5f);
+			pBox->Frame(0.0f, 0.0f);
+			pBox->Render(DxManager::GetDContext());
+		}	break;
+		case ECollider::OBB:
+		{
+			pBox->SetPosition(iter->GetCenter());
+			pBox->SetRotation(iter->m_pParent->GetRotation());
+			pBox->SetScale(((ColliderOBB*)iter)->GetExtents());
+			pBox->Frame(0.0f, 0.0f);
+			pBox->Render(DxManager::GetDContext());
+		}	break;
+		case ECollider::Sphere:
+		{
+		}	break;
+		}
+		pSphere->SetPosition(iter->GetCenter());
+		pSphere->SetRotation(Quaternion::Base);
+		pSphere->SetScale(iter->GetWorldRadius() * Vector3::One);
+		pSphere->Frame(0.0f, 0.0f);
+		pSphere->Render(DxManager::GetDContext());
+	}
+	DxManager::Get().SetRasterizerState(ERasterS::Current);
 }

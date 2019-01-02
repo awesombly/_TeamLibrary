@@ -18,7 +18,8 @@ bool PlayerController::Frame(const float& spf, const float& accTime)	noexcept
 {
 	GameObject::Frame(spf, accTime);
 
-	if (m_pParent != nullptr)
+	if (!m_isChatting &&
+		m_pParent != nullptr)
 	{
 		PlayerInput(spf);
 		CameraInput(spf);
@@ -380,12 +381,39 @@ void PlayerController::ResetOption() noexcept
 void PlayerController::Possess(Collider* pCollider) noexcept
 {
 	SetParent(pCollider->m_pParent);
-	if (pCollider->m_pParent->m_myName == L"Guard")
-		m_curCharacter = PlayerController::ECharacter::EGuard;
-	else if (pCollider->m_pParent->m_myName == L"Zombie")
-		m_curCharacter = PlayerController::ECharacter::EZombie;
-	else
-		m_curCharacter = PlayerController::ECharacter::EDummy;
-	((JProgressBar*)m_pHpBar)->SetValue(pCollider->GetHP(), 1.0f);
-	ResetOption();
+
+	static auto pEvent = [](void* pVoid, void* pVoid2) {
+		auto pPlayer = (PlayerController*)pVoid;
+		auto pCollid = (Collider*)pVoid2;
+		if (pCollid->m_pParent->m_myName == L"Guard")
+			pPlayer->m_curCharacter = PlayerController::ECharacter::EGuard;
+		else if (pCollid->m_pParent->m_myName == L"Zombie")
+			pPlayer->m_curCharacter = PlayerController::ECharacter::EZombie;
+		else
+			pPlayer->m_curCharacter = PlayerController::ECharacter::EDummy;
+		((JProgressBar*)pPlayer->m_pHpBar)->SetValue(pCollid->GetHP(), 1.0f);
+		pPlayer->ResetOption();
+	};
+
+	ObjectManager::PostFrameEvent.emplace(pEvent, this, pCollider);
+
+	//if (pCollider->m_pParent->m_myName == L"Guard")
+	//	m_curCharacter = PlayerController::ECharacter::EGuard;
+	//else if (pCollider->m_pParent->m_myName == L"Zombie")
+	//	m_curCharacter = PlayerController::ECharacter::EZombie;
+	//else
+	//	m_curCharacter = PlayerController::ECharacter::EDummy;
+	//((JProgressBar*)m_pHpBar)->SetValue(pCollider->GetHP(), 1.0f);
+	//ResetOption();
+}
+
+
+void PlayerController::isChatting(const bool& isChat) noexcept
+{
+	m_isChatting = isChat;
+}
+
+bool PlayerController::isChatting() const noexcept
+{
+	return m_isChatting;
 }

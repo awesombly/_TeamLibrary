@@ -21,16 +21,16 @@ public:
 public:
 	virtual bool GameRun()		noexcept final;
 private:
-	void MsgEvent(const MSG& message) override;
 	virtual bool GameInit()		noexcept final;
 	virtual bool GameFrame()	noexcept final;
 	virtual bool GameRender()	noexcept final;
 	virtual bool GameRelease()	noexcept final;
 protected:
-	virtual bool Init()		noexcept = 0;
-	virtual bool Frame()	noexcept = 0;
-	virtual bool Render()	noexcept = 0;
-	virtual bool Release()	noexcept = 0;
+	virtual void MsgEvent(const MSG& message) noexcept override;
+	virtual bool Init()			noexcept = 0;
+	virtual bool Frame()		noexcept = 0;
+	virtual bool Render()		noexcept = 0;
+	virtual bool Release()		noexcept = 0;
 
 	Core() = default;
 	virtual ~Core() = default;

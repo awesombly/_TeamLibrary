@@ -127,7 +127,7 @@ bool Core::GameRelease() noexcept
 
 
 // 윈도우-인풋 핸들링
-void Core::MsgEvent(const MSG& _message)
+void Core::MsgEvent(const MSG& _message) noexcept
 {
 	m_Input.MsgEvent(_message);
 }

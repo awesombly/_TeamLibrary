@@ -133,7 +133,7 @@ void Input::KeyCheck(const WORD& keyValue)
 }
 
 // 이벤트 핸들러, 윈도우에서 인자를 받아 대신 처리를 수행
-void Input::MsgEvent(const MSG& message)
+void Input::MsgEvent(const MSG& message) noexcept
 {
 	//_stprintf_s(m_Buffer, L"x : %d,  y : %d", m_Cursor.x, m_Cursor.y);
 

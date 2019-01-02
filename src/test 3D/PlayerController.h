@@ -23,6 +23,7 @@ private:
 	enum class EDirection : char {
 		Middle = 0, Left, Right, 
 	};
+	bool		m_isChatting = false;
 
 	//AHeroObj*   m_pHero			= nullptr;
 	Camera*		m_pCamera		= nullptr;
@@ -57,6 +58,9 @@ public:
 	void CameraInput(const float& spf)					noexcept;
 	void ResetOption()									noexcept;
 	void Possess(Collider* pObject)						noexcept;
+
+	void isChatting(const bool& isChat)					noexcept;
+	bool isChatting()							  const noexcept;
 
 	bool Init()											noexcept override;
 	bool Frame(const float& spf, const float& accTime)	noexcept override;
