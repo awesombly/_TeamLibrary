@@ -1,6 +1,7 @@
 #pragma once
 #include "ISingleton.h"
 #include "MyProtocol.h"
+#include "uiheader.h"
 
 #include "../network/PPTCPIOCPClient.h"
 #include "../network/PPRecvPacketPool.h"
@@ -14,6 +15,8 @@ public:
 	wstring InputIP;
 	UINT	PlayerKeyCount = 10000;
 	queue< PP::PPPacketForProcess> PacketHistory;
+	///
+	JListCtrl*   m_pChatList = nullptr;
 public:
 	void SendPlaySound(const string_view& soundName, const D3DXVECTOR3& position, const float& maxDistance) noexcept;
 

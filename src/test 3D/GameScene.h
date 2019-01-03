@@ -1,9 +1,9 @@
 #pragma once
 #include "MainClass.h"
+#include "PlayerController.h"
 
 #include "XObjectManager.h"
 #include "uiheader.h"
-#include "PlayerController.h"
 
 class GameScene : public MainClass
 {
@@ -15,11 +15,11 @@ public:
 	AHeroObj*	m_pBird			= nullptr;		
 	AHeroObj*	m_pChicken		= nullptr;		
 	// UI
-	JListCtrl*   m_pList		= nullptr;		
 	JTextCtrl*	 m_TimerText	= nullptr;
 	JCheckCtrl*  m_pCheckBox	= nullptr;
 	JSliderCtrl* m_pVolume		= nullptr;
 	JSliderCtrl* m_pMouseSense  = nullptr;
+	wstring		 m_chatMessage;
 public:
 	void DrawBoundingBox()	noexcept;
 

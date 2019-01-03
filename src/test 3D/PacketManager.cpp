@@ -5,6 +5,8 @@
 #include "Collider.h"
 
 
+
+
 void PacketManager::SendPacket(char* data, const USHORT& size, const USHORT& packeyType/*, const PP::PPSendMode& sendMode*/) noexcept
 {
 	if (isHost)
@@ -42,6 +44,7 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 	static Packet_Transform		p_Transform;
 	static Packet_PossessPlayer	p_PossessPlayer;
 	static Packet_SoundData		p_SoundData;
+	static Packet_ChatMessage	p_ChatMessage;
 
 	memcpy(&p_KeyValue, data, sizeof(Packet_KeyValue));
 	if (ObjectManager::KeyObjects[p_KeyValue.KeyValue] == nullptr)
@@ -146,6 +149,14 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 		 memcpy(&p_SoundData, data, 21);
 		 memcpy(((char*)&p_SoundData + 21), ((char*)data + 21), p_SoundData.NameSize);
 		 SoundManager::Get().PlayQueue(p_SoundData.SoundName, p_SoundData.Position, p_SoundData.MaxDistance);
+	 }	break;
+	 case PACKET_ChatMessage:
+	 {
+		 ZeroMemory(&p_ChatMessage, sizeof(p_ChatMessage));
+		 memcpy(&p_ChatMessage, data, 5);
+		 memcpy(((char*)&p_ChatMessage + 5), ((char*)data + 5), p_ChatMessage.MsgSize);
+		 m_pChatList->push_string(p_ChatMessage.message);
+		 m_pChatList->m_fValue = 0.0f;
 	 }	break;
 	 default:
 	 {

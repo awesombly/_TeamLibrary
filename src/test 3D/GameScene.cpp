@@ -115,18 +115,28 @@ bool GameScene::Init() noexcept
 
 	// chatting
 	static auto pChatWheel = [](void* pVoid) {
-		if (abs(Input::GetWheelScroll()) >= EPSILON)
+		static short wheel = 0;
+		wheel = Input::GetWheelScroll();
+		if (wheel != 0)
 		{
 			auto pList = (JListCtrl*)pVoid;
-			pList->AddValue(Input::GetWheelScroll() * 0.002f);
+			if (wheel > 0)
+			{
+				pList->m_fValue = min(pList->m_fValue + pList->fDivisionValue, 1.0f);
+			}
+			else
+			{
+				pList->m_fValue = max(pList->m_fValue - pList->fDivisionValue, 0.0f);
+				//pList->AddValue(clamp(pList->m_fValue - pList->fDivisionValue, 0.0f, 1.0f) - pList->m_fValue);
+			}
 		}
 	};
 	
-	m_pList = (JListCtrl*)pUIRoot->find_child(L"Chat_Log");
+	PacketManager::Get().m_pChatList = (JListCtrl*)pUIRoot->find_child(L"Chat_Log");
+	PacketManager::Get().m_pChatList->EventHover.first = pChatWheel;
+	PacketManager::Get().m_pChatList->EventHover.second = PacketManager::Get().m_pChatList;
 	//JSliderCtrl* pSlider = (JSliderCtrl*)pUIRoot->find_child(L"Chat_Slider");
 	//m_pList->m_fValue = pSlider->GetValue();
-	m_pList->EventHover.first = pChatWheel;
-	m_pList->EventHover.second = m_pList;
 	ObjectManager::Get().PushObject(pUIRoot);
 	// ==================================================================================
 
@@ -141,16 +151,25 @@ bool GameScene::Init() noexcept
 bool GameScene::Frame() noexcept
 {
 	// IME
-	static wstring strChatting;
 	if (PlayerController::Get().isChatting())
 	{
-		strChatting = ime::Get()->GetString();
+		m_chatMessage = ime::Get()->GetString();
 	}
 	if (Input::GetKeyState(VK_RETURN) == EKeyState::DOWN)
 	{
 		if (PlayerController::Get().isChatting())
 		{
-			m_pList->push_string(strChatting);
+			static size_t strSize = 0;
+			strSize = m_chatMessage.size() * 2;
+			strSize = strSize > 200 ? 200 : strSize;
+
+			Packet_ChatMessage p_ChatMessage;
+			p_ChatMessage.KeyValue = ObjectManager::KeyObjects.begin()->first;// PlayerController::Get().m_keyValue;
+			memcpy(p_ChatMessage.message, m_chatMessage.data(), strSize);
+			p_ChatMessage.MsgSize = (UCHAR)strSize;
+			PacketManager::Get().SendPacket((char*)&p_ChatMessage, (USHORT)(5 + strSize), PACKET_ChatMessage);
+
+			m_chatMessage.clear();
 			ime::Get()->imeEnd();
 			PlayerController::Get().isChatting(false);
 		}
@@ -195,7 +214,10 @@ bool GameScene::Frame() noexcept
 bool GameScene::Render() noexcept
 {
 	// Ã¤ÆÃ
-	WriteManager::Get().Draw({ 400,300,800,600 }, ime::Get()->GetString());
+	if (PlayerController::Get().isChatting())
+	{
+		WriteManager::Get().Draw({ 330, 850, 900, 200 }, m_chatMessage);
+	}
 
 	m_pMap->SetMatrix(NULL, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
 	I_Object.SetMatrix(&ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
