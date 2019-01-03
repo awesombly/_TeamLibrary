@@ -13,11 +13,12 @@ public:
 	static HINSTANCE		m_hInstance;		// 실행 객체 핸들
 	static Window*			Instance;			// 접근용
 public:
-	static void ResizeWindow(const RECT& rect) noexcept;
-	static RECT& getClientRect();
-	static RECT& GetWinRect();
-	static D3DXVECTOR2 GetWinCenter();
-	static D3DXVECTOR2 GetClientCenter();
+	static void			ResizeWindow(const RECT& rect)	noexcept;
+	static RECT&		getClientRect();
+	static RECT&		GetWinRect();
+	static D3DXVECTOR2	GetWinCenter();
+	static D3DXVECTOR2	GetClientCenter();
+	static void			UpdateWindowRect()				noexcept;
 
 	static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);							// 메세지 처리 콜백함수
 	bool SetWindow(const HINSTANCE& hInstance, const int& nCmdShow, const TCHAR* title = L"SampleWin") noexcept;	// 윈도우 활성화

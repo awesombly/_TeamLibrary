@@ -369,6 +369,7 @@ void PlayerController::CameraInput(const float& spf) noexcept
 
 void PlayerController::ResetOption() noexcept
 {
+	Window::UpdateWindowRect();
 	m_setMouseScreen = { (LONG)Window::GetWinCenter().x, (LONG)Window::GetWinCenter().y };
 	m_setMouseClient = m_setMouseScreen;
 	ScreenToClient(Window::m_hWnd, &m_setMouseClient);

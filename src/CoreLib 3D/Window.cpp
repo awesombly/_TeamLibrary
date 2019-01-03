@@ -55,15 +55,7 @@ LRESULT CALLBACK Window::WndProc(HWND hWnd, UINT msg,
 
 			DxManager::Get().ResizeDevice(width, height);
 
-
-			RECT tempRect;
-			GetClientRect(Window::m_hWnd, &Instance->m_realWinRect);
-			//ScreenToClient(Window::m_hWnd, &Instance->m_realWinRect);
-			GetWindowRect(Window::m_hWnd, &tempRect);
-			Instance->m_realWinRect.left	+= tempRect.left;
-			Instance->m_realWinRect.right	+= tempRect.left;
-			Instance->m_realWinRect.top		+= tempRect.top;
-			Instance->m_realWinRect.bottom	+= tempRect.top;
+			UpdateWindowRect();
 		}
 	}	break;
 	case WM_PAINT:
@@ -173,4 +165,16 @@ D3DXVECTOR2 Window::GetWinCenter()
 D3DXVECTOR2 Window::GetClientCenter()
 {
 	return { (m_clientRect.left + m_clientRect.right) * 0.5f, (m_clientRect.top + m_clientRect.bottom) * 0.5f };
+}
+
+void Window::UpdateWindowRect() noexcept
+{
+	RECT tempRect;
+	GetClientRect(Window::m_hWnd, &Instance->m_realWinRect);
+	//ScreenToClient(Window::m_hWnd, &Instance->m_realWinRect);
+	GetWindowRect(Window::m_hWnd, &tempRect);
+	Instance->m_realWinRect.left += tempRect.left;
+	Instance->m_realWinRect.right += tempRect.left;
+	Instance->m_realWinRect.top += tempRect.top;
+	Instance->m_realWinRect.bottom += tempRect.top;
 }
