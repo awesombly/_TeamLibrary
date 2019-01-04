@@ -1,7 +1,6 @@
 #include "ObjectManager.h"
 #include "ColliderAABB.h"
 #include "ColliderOBB.h"
-#include "ColliderSphere.h"
 
 map<UINT, GameObject*> ObjectManager::KeyObjects;
 map<ECamera, Camera*> ObjectManager::Cameras;

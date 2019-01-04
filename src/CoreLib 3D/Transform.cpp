@@ -164,7 +164,7 @@ const D3DXVECTOR3& Transform::GetScale() const noexcept
 {
 	return m_scale;
 }
-float Transform::GetScaleAverage() const noexcept
+const float Transform::GetScaleAverage() const noexcept
 {
 	return (m_scale.x + m_scale.y + m_scale.z) / 3.0f;
 }
