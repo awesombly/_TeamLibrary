@@ -45,13 +45,14 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 	static Packet_PossessPlayer	p_PossessPlayer;
 	static Packet_SoundData		p_SoundData;
 	static Packet_ChatMessage	p_ChatMessage;
+	static Packet_TakeObject	p_TakeObject;
 
-	memcpy(&p_KeyValue, data, sizeof(Packet_KeyValue));
-	if (ObjectManager::KeyObjects[p_KeyValue.KeyValue] == nullptr)
-	{
-		ErrorMessage("KeyObject is Null : " + to_string(p_KeyValue.KeyValue));
-		//return;
-	}
+	//memcpy(&p_KeyValue, data, sizeof(Packet_KeyValue));
+	//if (ObjectManager::KeyObjects[p_KeyValue.KeyValue] == nullptr)
+	//{
+	//	ErrorMessage("KeyObject is Null : " + to_string(p_KeyValue.KeyValue));
+	//	//return;
+	//}
 
 	switch (sendMode)
 	{
@@ -125,17 +126,29 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 		  }	break;
 		 }
 	 }	break;
-	 case PACKET_ReqAddPlayer:
+	//case PACKET_ReqAddPlayer:
+	//{
+	//	 memcpy(&p_Vector3, data, sizeof(Packet_Vector3));
+	//	 //UINT tempCount = ObjectKeyCount;
+	//	 
+	//	 //PacketManager::Get().PlayerKeyCount = p_Vector3.KeyValue;
+	//	 auto pObject = ObjectManager::Get().TakeObject(L"Guard");
+	//	 pObject->SetPosition(p_Vector3.Vec3);
+	//	 pObject->SetKeyValue(p_Vector3.KeyValue);
+	//	 
+	//	 //ObjectKeyCount = tempCount;
+	//}	break;
+	 case PACKET_TakeObject:
 	 {
-		 memcpy(&p_Vector3, data, sizeof(Packet_Vector3));
-		 //UINT tempCount = ObjectKeyCount;
-		 
-		 //PacketManager::Get().PlayerKeyCount = p_Vector3.KeyValue;
-		 auto pObject = ObjectManager::Get().TakeObject(L"Guard");
-		 pObject->SetPosition(p_Vector3.Vec3);
-		 pObject->SetKeyValue(p_Vector3.KeyValue);
-		 
-		 //ObjectKeyCount = tempCount;
+		 ZeroMemory(&p_TakeObject, sizeof(Packet_TakeObject));
+		 memcpy(&p_TakeObject, data, PS_TakeObject);
+		 memcpy(((char*)&p_TakeObject + PS_TakeObject), ((char*)data + PS_TakeObject), p_TakeObject.MsgSize);
+
+		 auto pObject = ObjectManager::Get().TakeObject(p_TakeObject.ObjectName);
+		 pObject->SetKeyValue(p_TakeObject.KeyValue);
+		 pObject->SetPosition(p_TakeObject.Position);
+		 pObject->SetRotation(p_TakeObject.Rotation);
+		 pObject->SetScale(p_TakeObject.Scale);
 	 }	break;
 	 case PACKET_PossessPlayer:
 	 {
@@ -146,16 +159,16 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 	 case PACKET_PlaySound:
 	 {
 		 ZeroMemory(&p_SoundData, sizeof(p_SoundData));
-		 memcpy(&p_SoundData, data, 21);
-		 memcpy(((char*)&p_SoundData + 21), ((char*)data + 21), p_SoundData.NameSize);
+		 memcpy(&p_SoundData, data, PS_PlaySound);
+		 memcpy(((char*)&p_SoundData + PS_PlaySound), ((char*)data + PS_PlaySound), p_SoundData.NameSize);
 		 SoundManager::Get().PlayQueue(p_SoundData.SoundName, p_SoundData.Position, p_SoundData.MaxDistance);
 	 }	break;
 	 case PACKET_ChatMessage:
 	 {
 		 ZeroMemory(&p_ChatMessage, sizeof(p_ChatMessage));
-		 memcpy(&p_ChatMessage, data, 5);
-		 memcpy(((char*)&p_ChatMessage + 5), ((char*)data + 5), p_ChatMessage.MsgSize);
-		 m_pChatList->push_string(p_ChatMessage.message);
+		 memcpy(&p_ChatMessage, data, PS_ChatMessage);
+		 memcpy(((char*)&p_ChatMessage + PS_ChatMessage), ((char*)data + PS_ChatMessage), p_ChatMessage.MsgSize);
+		 m_pChatList->push_string(p_ChatMessage.Message);
 		 m_pChatList->m_fValue = 0.0f;
 	 }	break;
 	 default:
@@ -176,6 +189,6 @@ void PacketManager::SendPlaySound(const string_view& soundName, const D3DXVECTOR
 	memcpy(p_SoundData.SoundName, soundName.data(), soundName.size());
 	p_SoundData.NameSize = (char)soundName.size();
 
-	SendPacket((char*)&p_SoundData, (USHORT)(21 + soundName.size()), PACKET_PlaySound);
+	SendPacket((char*)&p_SoundData, (USHORT)(PS_PlaySound + soundName.size()), PACKET_PlaySound);
 }
 

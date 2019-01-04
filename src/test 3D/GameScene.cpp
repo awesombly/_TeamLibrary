@@ -43,7 +43,7 @@ bool GameScene::Init() noexcept
 		m_pBird->m_myName = L"Bird";
 		m_pBird->m_objType = EObjType::Object;
 		m_pBird->SetScale(Vector3::One * 15.0f);
-		pCollider = new ColliderOBB(1.5f, { -1.0f, 0.0f , -1.0f }, { 1.0f, 2.0f , 1.0f });
+		pCollider = new ColliderOBB(3.0f, { -1.0f, 0.0f , -1.0f }, { 1.0f, 2.0f , 1.0f });
 		pCollider->m_pivot *= 15.0f;
 		pCollider->SetGravityScale(0.3f);
 		m_pBird->AddComponent(pCollider);
@@ -62,22 +62,22 @@ bool GameScene::Init() noexcept
 		//ObjectManager::Get().SetProtoObject(m_pChicken);
 	}
 	m_pHero = (AHeroObj*)ObjectManager::Get().TakeObject(L"Guard");
-	m_pPlayer->SetParent(m_pHero);
+	m_pPlayer->Possess((Collider*)m_pHero->GetComponentList(EComponent::Collider));
 	m_pPlayer->m_curCharacter = PlayerController::ECharacter::EGuard;
 	m_pPlayer->ResetOption();
 	SoundManager::Get().m_pListenerPos = &m_pHero->GetPosition();
 	
 
 	ObjectManager::Get().TakeObject(L"ParticleSystem");
-	ObjectManager::Get().TakeObject(L"Guard")  ->SetPosition(RandomNormal() * 500.0f, RandomNormal() * 500.0f, RandomNormal() * 500.0f);
-	ObjectManager::Get().TakeObject(L"Zombie") ->SetPosition(RandomNormal() * 500.0f, RandomNormal() * 500.0f, RandomNormal() * 500.0f);
-	ObjectManager::Get().TakeObject(L"Bird")   ->SetPosition(RandomNormal()	* 500.0f, RandomNormal() * 500.0f, RandomNormal() * 500.0f);
-	ObjectManager::Get().TakeObject(L"Guard")  ->SetPosition(RandomNormal() * 500.0f, RandomNormal() * 500.0f, RandomNormal() * 500.0f);
-	ObjectManager::Get().TakeObject(L"Zombie") ->SetPosition(RandomNormal() * 500.0f, RandomNormal() * 500.0f, RandomNormal() * 500.0f);
-	ObjectManager::Get().TakeObject(L"Bird")   ->SetPosition(RandomNormal()	* 500.0f, RandomNormal() * 500.0f, RandomNormal() * 500.0f);
-	ObjectManager::Get().TakeObject(L"Guard")  ->SetPosition(RandomNormal() * 500.0f, RandomNormal() * 500.0f, RandomNormal() * 500.0f);
-	ObjectManager::Get().TakeObject(L"Zombie") ->SetPosition(RandomNormal() * 500.0f, RandomNormal() * 500.0f, RandomNormal() * 500.0f);
-	ObjectManager::Get().TakeObject(L"Bird")   ->SetPosition(RandomNormal()	* 500.0f, RandomNormal() * 500.0f, RandomNormal() * 500.0f);
+	ObjectManager::Get().TakeObject(L"Guard")  ->SetPosition(RandomNormal() * 1000.0f - 500.0f, RandomNormal() * 500.0f, RandomNormal() * 1000.0f - 500.0f);
+	ObjectManager::Get().TakeObject(L"Zombie") ->SetPosition(RandomNormal() * 1000.0f - 500.0f, RandomNormal() * 500.0f, RandomNormal() * 1000.0f - 500.0f);
+	ObjectManager::Get().TakeObject(L"Bird")   ->SetPosition(RandomNormal()	* 1000.0f - 500.0f, RandomNormal() * 500.0f, RandomNormal() * 1000.0f - 500.0f);
+	ObjectManager::Get().TakeObject(L"Guard")  ->SetPosition(RandomNormal() * 1000.0f - 500.0f, RandomNormal() * 500.0f, RandomNormal() * 1000.0f - 500.0f);
+	ObjectManager::Get().TakeObject(L"Zombie") ->SetPosition(RandomNormal() * 1000.0f - 500.0f, RandomNormal() * 500.0f, RandomNormal() * 1000.0f - 500.0f);
+	ObjectManager::Get().TakeObject(L"Bird")   ->SetPosition(RandomNormal()	* 1000.0f - 500.0f, RandomNormal() * 500.0f, RandomNormal() * 1000.0f - 500.0f);
+	ObjectManager::Get().TakeObject(L"Guard")  ->SetPosition(RandomNormal() * 1000.0f - 500.0f, RandomNormal() * 500.0f, RandomNormal() * 1000.0f - 500.0f);
+	ObjectManager::Get().TakeObject(L"Zombie") ->SetPosition(RandomNormal() * 1000.0f - 500.0f, RandomNormal() * 500.0f, RandomNormal() * 1000.0f - 500.0f);
+	ObjectManager::Get().TakeObject(L"Bird")   ->SetPosition(RandomNormal()	* 1000.0f - 500.0f, RandomNormal() * 500.0f, RandomNormal() * 1000.0f - 500.0f);
 
 #pragma endregion
 	
@@ -91,29 +91,43 @@ bool GameScene::Init() noexcept
 	auto pProj = (JProgressBar*)pUIRoot->find_child(L"MP_Progress");
 	pProj->SetValue(m_pPlayer->m_MP, 1.0f); // 값 bind
 
-	// 오른쪽 아이콘
+	// Right Icon
 	auto pIcon = (JProgressBar*)pUIRoot->find_child(L"Skill_0");
 	pIcon->SetValue(PlayerController::Get().m_curDelayThrow, PlayerController::Get().m_DelayThrow);
-	// Slider
+	// Option Slider
+	static auto pSetVolume = [](void* pSlider) {
+		SoundManager::Get().SetMasterVolume(*((JSliderCtrl*)pSlider)->GetValue());
+	};
 	m_pVolume = (JSliderCtrl*)pUIRoot->find_child(L"Set_Volum");
+	m_pVolume->EventPress.first  = pSetVolume;
+	m_pVolume->EventPress.second = m_pVolume;
 	m_pVolume->SetValue(0.5f);
+	SoundManager::Get().SetMasterVolume(*m_pVolume->GetValue());
+
+	static auto pSetMouseSense = [](void* pSlider) {
+		PlayerController::Get().m_mouseSense = *((JSliderCtrl*)pSlider)->GetValue();
+	};
 	m_pMouseSense = (JSliderCtrl*)pUIRoot->find_child(L"Set_Mouse");
+	m_pMouseSense->EventPress.first  = pSetMouseSense;
+	m_pMouseSense->EventPress.second = m_pMouseSense;
 	m_pMouseSense->SetValue(0.5f);
+	PlayerController::Get().m_mouseSense = *m_pMouseSense->GetValue();
 	// Exit
 	static auto pGameExit = [](void* pScene) {
-		PlayerController::Get().CutParent();
-		PacketManager::Get().pSender->Release();
-		((MainClass*)pScene)->SetScene(ESceneName::Lobby);
+		exit(0); pScene;
+		//PlayerController::Get().CutParent();
+		//PacketManager::Get().pSender->Release();
+		//((MainClass*)pScene)->SetScene(ESceneName::Lobby);
 	};
 	auto pExit = (JTextCtrl*)pUIRoot->find_child(L"Set_GameExit");
 	pExit->EventClick.first = pGameExit;
 	pExit->EventClick.second = this;
-	// 체크 박스
+	// CheckBox
 	m_pCheckBox = (JCheckCtrl*)pUIRoot->find_child(L"temp_Check0");
-	// 타이머
+	// Timer
 	m_TimerText = (JTextCtrl*)pUIRoot->find_child(L"Timer_Text");
 
-	// chatting
+	// Chatting
 	static auto pChatWheel = [](void* pVoid) {
 		static short wheel = 0;
 		wheel = Input::GetWheelScroll();
@@ -131,7 +145,6 @@ bool GameScene::Init() noexcept
 			}
 		}
 	};
-	
 	PacketManager::Get().m_pChatList = (JListCtrl*)pUIRoot->find_child(L"Chat_Log");
 	PacketManager::Get().m_pChatList->EventHover.first = pChatWheel;
 	PacketManager::Get().m_pChatList->EventHover.second = PacketManager::Get().m_pChatList;
@@ -150,7 +163,7 @@ bool GameScene::Init() noexcept
 // 프레임
 bool GameScene::Frame() noexcept
 {
-	// IME
+	// IME 채팅
 	if (PlayerController::Get().isChatting())
 	{
 		m_chatMessage = ime::Get()->GetString();
@@ -165,9 +178,9 @@ bool GameScene::Frame() noexcept
 
 			Packet_ChatMessage p_ChatMessage;
 			p_ChatMessage.KeyValue = ObjectManager::KeyObjects.begin()->first;// PlayerController::Get().m_keyValue;
-			memcpy(p_ChatMessage.message, m_chatMessage.data(), strSize);
+			memcpy(p_ChatMessage.Message, m_chatMessage.data(), strSize);
 			p_ChatMessage.MsgSize = (UCHAR)strSize;
-			PacketManager::Get().SendPacket((char*)&p_ChatMessage, (USHORT)(5 + strSize), PACKET_ChatMessage);
+			PacketManager::Get().SendPacket((char*)&p_ChatMessage, (USHORT)(PS_ChatMessage + strSize), PACKET_ChatMessage);
 
 			m_chatMessage.clear();
 			ime::Get()->imeEnd();
@@ -192,9 +205,7 @@ bool GameScene::Frame() noexcept
 		m_pPlayer->Possess(*curCollider);
 		SoundManager::Get().m_pListenerPos = &(*curCollider)->m_pParent->GetRoot()->GetPosition();
 	}
-	// 설정 동기화
-	SoundManager::Get().SetMasterVolume(*m_pVolume->GetValue());
-	m_pPlayer->m_mouseSense = *m_pMouseSense->GetValue();
+	// 시간 출력
 	m_TimerText->m_Text = to_wstring(Timer::AccumulateTime).substr(0, 5);
 	///
 	m_pMapTree->Frame();

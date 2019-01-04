@@ -13,41 +13,44 @@
 #define PACKET_SetAnimTransform		1008
 #define PACKET_PossessPlayer		1011
 #define PACKET_PlaySound			1012
-//#define PACKET_TakeObject			1013
-#define PACKET_MouseRotate			1014
-#define PACKET_ChatMessage		1015
+#define PACKET_TakeObject			1013
+//#define PACKET_MouseRotate			1014
+#define PACKET_ChatMessage			1015
 
 #define PACKET_ReqSync				2000
 #define PACKET_ReqSyncSpawns		2001
 #define PACKET_ReqAddPlayer			2002
 
-
-
+// 패킷 데이터 제외 사이즈
+#define PS_PlaySound				21
+#define PS_TakeObject				45
+#define PS_ChatMessage				5
 
 
 #pragma pack(push, 1)
+struct Packet_TakeObject
+{
+	UINT KeyValue;
+	D3DXVECTOR3 Position;
+	D3DXVECTOR3 Scale;
+	D3DXQUATERNION Rotation;
+
+	UCHAR MsgSize;
+	WCHAR ObjectName[51];
+};
+
 struct Packet_ChatMessage
 {
 	UINT KeyValue;
 	UCHAR MsgSize;
-	WCHAR message[101];
+	WCHAR Message[101];
 };
 
-//struct Packet_TakeObject
+//struct Packet_MouseRotate
 //{
 //	UINT KeyValue;
-//	
-//	D3DXVECTOR3 Position;
-//	D3DXVECTOR3 Scale;
-//	D3DXQUATERNION Rotation;
-//	char ProtoNum;
+//	float RotateSpeed;
 //};
-
-struct Packet_MouseRotate
-{
-	UINT KeyValue;
-	float RotateSpeed;
-};
 
 struct Packet_SoundData
 {
@@ -55,7 +58,7 @@ struct Packet_SoundData
 	D3DXVECTOR3 Position;
 	float MaxDistance;
 	char NameSize;
-	char SoundName[100];
+	char SoundName[101];
 };
 
 

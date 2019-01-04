@@ -18,16 +18,18 @@ private:
 	LARGE_INTEGER	m_CurrentTick;	// 현재 틱
 	LARGE_INTEGER   m_BeforeTick;	// 이전 프레임 틱
 
-	wostringstream  m_InfoStream;
+	//wostringstream  m_InfoStream;
 public:
 	static Timer*	Instance;
 	static float	SPF;			// 현재 프레임당 시간
 	static float	AccumulateTime;	// 총 누적 시간
-	static bool		isPlaying;		// 게임중?
 
 	std::mutex		m_mutex;
 	std::condition_variable m_FrameEvent;		// 쓰레드 이벤트 대기, 알림 발생시 대기중인 쓰레드 가동
 	std::condition_variable m_RenderEvent;
+
+	// 초당 발생 이벤트(함수, 인자, 인자)
+	static stack<tuple<void(*)(void*, void*), void*, void*> > SecondFrameEvent;
 public:
 	void ResetSPF()			noexcept;
 	void setDirFrame(const int& dirFrame);

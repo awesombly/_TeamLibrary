@@ -50,7 +50,7 @@ public:
 	const D3DXVECTOR3&		GetPosition()					   const noexcept;
 	const D3DXQUATERNION&	GetRotation()					   const noexcept;
 	const D3DXVECTOR3&		GetScale()						   const noexcept;
-	const float				GetScaleAverage()				   const noexcept;
+	float				GetScaleAverage()				   const noexcept;
 	
 	const D3DXVECTOR3&	GetForward()						   const noexcept;
 	const D3DXVECTOR3	GetBackward()						   const noexcept;

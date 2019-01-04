@@ -229,78 +229,110 @@ void PlayerController::PlayerInput(const float& spf) noexcept
 			}
 		}
 
-
-
 		if (eAction != m_curAction)
 		{
-			static Packet_AnimTransform p_AnimTransform;
-			// 이동 처리
-			if (eAction == EAction::Jump)
-			{
-				p_AnimTransform.Position = m_pParent->GetPosition() + Vector3::Up * 15.0f;
-				p_AnimTransform.Force = Vector3::Up * m_jumpPower;
-			}
-			else
-			{
-				p_AnimTransform.Position = m_pParent->GetPosition();
-				p_AnimTransform.Force = ((Collider*)m_pParent->GetComponentList(EComponent::Collider)->front())->GetForce();
-			}
-
-			switch (eAction)
-			{
-			case EAction::Left:
-			{
-				p_AnimTransform.Direction = m_pParent->GetLeft();
-			}	break;
-			case EAction::Right:
-			{
-				p_AnimTransform.Direction = m_pParent->GetRight();
-			}	break;
-			case EAction::Forward:
-			{
-				p_AnimTransform.Direction = m_pParent->GetForward();
-			}	break;
-			case EAction::ForwardLeft:
-			{
-				p_AnimTransform.Direction = m_pParent->GetForward() + m_pParent->GetLeft();
-			}	break;
-			case EAction::ForwardRight:
-			{
-				p_AnimTransform.Direction = m_pParent->GetForward() + m_pParent->GetRight();
-			}	break;
-			case EAction::Backward:
-			{
-				p_AnimTransform.Direction = m_pParent->GetBackward();
-			}	break;
-			case EAction::BackwardLeft:
-			{
-				p_AnimTransform.Direction = m_pParent->GetBackward() + m_pParent->GetLeft();
-			}	break;
-			case EAction::BackwardRight:
-			{
-				p_AnimTransform.Direction = m_pParent->GetBackward() + m_pParent->GetRight();
-			}	break;
-			default:
-			{
-				p_AnimTransform.Direction = Vector3::Zero;
-			}	break;
-			}
-			p_AnimTransform.Direction	= Normalize(p_AnimTransform.Direction) * m_moveSpeed;
-			p_AnimTransform.KeyValue	= m_pParent->m_keyValue;
-			p_AnimTransform.Rotation	= m_pParent->GetRotation();
-			p_AnimTransform.EAnimState	= m_curAnim = eAction;
-			p_AnimTransform.ECharacter	= m_curCharacter;
-			PacketManager::Get().SendPacket((char*)&p_AnimTransform, sizeof(Packet_AnimTransform), PACKET_SetAnimTransform);
+			// 정보 전송
+			SendAnimTransform(eAction, m_curCharacter);
 		}
 		m_curAction = eAction;
 		
 		if (!PacketManager::Get().isHost &&
 			Input::GetKeyState(VK_CONTROL) == EKeyState::DOWN)
 		{
-			PacketManager::Get().SendPacket((char*)&PI, sizeof(PI), PACKET_ReqSync);
+			PacketManager::Get().SendPacket('\0', 1, PACKET_ReqSync);
 		}
 	}
+
+
+	if (Input::GetKeyState('X') == EKeyState::DOWN)
+	{
+		static size_t strSize = 0;
+		wstring objName = L"Zombie";
+		strSize = objName.size() * 2;
+		strSize = strSize > 100 ? 100 : strSize;
+
+		Packet_TakeObject p_TakeObject;
+		p_TakeObject.KeyValue = ++PacketManager::Get().PlayerKeyCount;
+		memcpy(p_TakeObject.ObjectName, objName.data(), strSize);
+		p_TakeObject.MsgSize	= (UCHAR)strSize;
+		p_TakeObject.Position	= { RandomNormal() * 1000.0f - 500.0f, 800.0f, RandomNormal() * 1000.0f - 500.0f };
+		p_TakeObject.Rotation	= Quaternion::Base;
+		p_TakeObject.Scale		= Vector3::One;
+
+		PacketManager::Get().SendPacket((char*)&p_TakeObject, (USHORT)(PS_TakeObject + strSize), PACKET_TakeObject);
+
+		// 빙의 파트
+		static Packet_PossessPlayer p_character;
+		p_character.KeyValue	= p_TakeObject.KeyValue;
+		p_character.ECharacter	= PlayerController::ECharacter::EZombie;
+
+		PacketManager::Get().SendPacket((char*)&p_character, (USHORT)sizeof(Packet_PossessPlayer), PACKET_PossessPlayer);
+	}
+	
 	spf;
+}
+
+void PlayerController::SendAnimTransform(const EAction& eAction, const ECharacter& eCharacter) noexcept
+{
+	static Packet_AnimTransform p_AnimTransform;
+	// 이동 처리
+	if (eAction == EAction::Jump)
+	{
+		p_AnimTransform.Position = m_pParent->GetPosition() + Vector3::Up * 15.0f;
+		p_AnimTransform.Force = Vector3::Up * m_jumpPower;
+	}
+	else
+	{
+		p_AnimTransform.Position = m_pParent->GetPosition();
+		p_AnimTransform.Force = ((Collider*)m_pParent->GetComponentList(EComponent::Collider)->front())->GetForce();
+	}
+
+	switch (eAction)
+	{
+	case EAction::Left:
+	{
+		p_AnimTransform.Direction = m_pParent->GetLeft();
+	}	break;
+	case EAction::Right:
+	{
+		p_AnimTransform.Direction = m_pParent->GetRight();
+	}	break;
+	case EAction::Forward:
+	{
+		p_AnimTransform.Direction = m_pParent->GetForward();
+	}	break;
+	case EAction::ForwardLeft:
+	{
+		p_AnimTransform.Direction = m_pParent->GetForward() + m_pParent->GetLeft();
+	}	break;
+	case EAction::ForwardRight:
+	{
+		p_AnimTransform.Direction = m_pParent->GetForward() + m_pParent->GetRight();
+	}	break;
+	case EAction::Backward:
+	{
+		p_AnimTransform.Direction = m_pParent->GetBackward();
+	}	break;
+	case EAction::BackwardLeft:
+	{
+		p_AnimTransform.Direction = m_pParent->GetBackward() + m_pParent->GetLeft();
+	}	break;
+	case EAction::BackwardRight:
+	{
+		p_AnimTransform.Direction = m_pParent->GetBackward() + m_pParent->GetRight();
+	}	break;
+	default:
+	{
+		p_AnimTransform.Direction = Vector3::Zero;
+	}	break;
+	}
+	p_AnimTransform.Direction = Normalize(p_AnimTransform.Direction) * m_moveSpeed;
+	p_AnimTransform.KeyValue = m_pParent->m_keyValue;
+	p_AnimTransform.Rotation = m_pParent->GetRotation();
+	m_prevRotY = p_AnimTransform.Rotation.y;
+	p_AnimTransform.EAnimState = m_curAnim = eAction;
+	p_AnimTransform.ECharacter = eCharacter;
+	PacketManager::Get().SendPacket((char*)&p_AnimTransform, sizeof(Packet_AnimTransform), PACKET_SetAnimTransform);
 }
 
 
@@ -328,6 +360,11 @@ void PlayerController::CameraInput(const float& spf) noexcept
 	m_pCamera->SetRotationX(std::clamp(m_pCamera->GetRotation().x + Input::GetMouseMovePos().y * m_mouseSense * 0.004f, MinCameraY, MaxCameraY));
 
 	m_pParent->Rotate(0.0f, Input::GetMouseMovePos().x * m_mouseSense * 0.004f);
+
+	if (abs(m_prevRotY - m_pParent->GetRotation().y) > 0.08f)
+	{
+		SendAnimTransform(m_curAnim, ECharacter::EDummy);
+	}
 
 	//static Packet_MouseRotate p_MouseRotate;
 	//if (Input::GetMouseMovePos().x > 0.0f &&
@@ -384,6 +421,8 @@ void PlayerController::ResetOption() noexcept
 
 void PlayerController::Possess(Collider* pCollider) noexcept
 {
+	if (pCollider == nullptr)
+		return;
 	SetParent(pCollider->m_pParent);
 
 	static auto pEvent = [](void* pVoid, void* pVoid2) {

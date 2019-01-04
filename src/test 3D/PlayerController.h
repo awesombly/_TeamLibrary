@@ -36,7 +36,8 @@ private:
 	float		m_jumpPower		= 180.0f;
 
 	//bool		m_toIdle		= false;
-	float		m_prevMouseDir = 1.0f;
+	float		m_prevRotY		= 0.0f;
+	float		m_prevMouseDir	= 1.0f;
 	// 마우스 고정용
 	POINT		m_setMouseScreen;
 	POINT		m_setMouseClient;
@@ -54,18 +55,20 @@ public:
 public:
 	static void SetAnim(AHeroObj* pObject, const ECharacter& eCharacter, const EAction& eAction) noexcept;
 
-	void PlayerInput(const float& spf)					noexcept;
-	void CameraInput(const float& spf)					noexcept;
-	void ResetOption()									noexcept;
-	void Possess(Collider* pObject)						noexcept;
+	void PlayerInput(const float& spf)												noexcept;
+	void CameraInput(const float& spf)												noexcept;
+	void ResetOption()																noexcept;
+	void Possess(Collider* pObject)													noexcept;
 
-	void isChatting(const bool& isChat)					noexcept;
-	bool isChatting()							  const noexcept;
+	void SendAnimTransform(const EAction& eAction, const ECharacter& eCharacter)	noexcept;
 
-	bool Init()											noexcept override;
-	bool Frame(const float& spf, const float& accTime)	noexcept override;
-	bool Render(ID3D11DeviceContext* pDContext)			noexcept override;
-	bool Release()										noexcept override;
+	void isChatting(const bool& isChat)												noexcept;
+	bool isChatting()														  const noexcept;
+
+	bool Init()																		noexcept override;
+	bool Frame(const float& spf, const float& accTime)								noexcept override;
+	bool Render(ID3D11DeviceContext* pDContext)										noexcept override;
+	bool Release()																	noexcept override;
 private:
 	friend class ISingleton<PlayerController>;
 	using GameObject::GameObject;

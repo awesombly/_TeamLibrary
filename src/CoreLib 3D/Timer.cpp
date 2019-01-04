@@ -7,8 +7,8 @@
 float Timer::SPF = 0.0f;
 int	  Timer::FPS = 0;
 float Timer::AccumulateTime = 0.0f;
-bool  Timer::isPlaying = true;
 Timer*	Timer::Instance = nullptr;
+stack<tuple<void(*)(void*, void*), void*, void*> > Timer::SecondFrameEvent;
 
 Timer::Timer() : m_kDirTick(1.0f / 60), m_ElapseTime(0.0f), m_FrameCnt(0),
 				m_CurrentTick({ 0,0 }), m_BeforeTick({ 0,0 }), m_GameSpeed(1.0f)
@@ -57,20 +57,24 @@ bool Timer::Frame() noexcept
 				prevTick.QuadPart = m_CurrentTick.QuadPart;
 				FPS = m_FrameCnt;
 				m_FrameCnt = 0;
-				//if (Input::isDebug)
-				//{
-				//	m_InfoStream.str(L"");
-				//	m_InfoStream << L"Time : " << AccumulateTime << L",   FPS : " << FPS << endl;
-				//	OutputDebugString(m_InfoStream.str().c_str());
-				//}
+				if (Input::isDebug)
+				{
+					//m_InfoStream.str(L"");
+					//m_InfoStream << L"Time : " << AccumulateTime << L",   FPS : " << FPS << endl;
+					//OutputDebugString(m_InfoStream.str().c_str());
+					ErrorMessage("Time : " + to_string(AccumulateTime) + ",   FPS : " + to_string(FPS));
+				}
+
+				// 초당 발생 이벤트
+				while (!SecondFrameEvent.empty())
+				{
+					auto&[secondEvent, param1, param2] = SecondFrameEvent.top();
+					secondEvent(param1, param2);
+					SecondFrameEvent.pop();
+				}
 			}
 			m_BeforeTick.QuadPart = m_CurrentTick.QuadPart;
-			///if (!isPlaying)
-			///{
-			///	m_RenderEvent.notify_all();
-			///	std::this_thread::yield();
-			///	continue;
-			///}
+
 			m_FrameEvent.notify_all();
 			std::this_thread::yield();
 		}

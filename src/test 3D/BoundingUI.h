@@ -9,7 +9,8 @@
 //	D3DXVECTOR3 m_prevPosition;
 //	D3DXVECTOR3 m_direction;
 //
-//	float m_moveSpeed = 5.0f;
+//	float m_moveSpeed = 
+.0f;
 //public:
 //	virtual bool Init()											noexcept override;
 //	virtual bool Frame(const float& spf, const float& accTime)	noexcept override;
