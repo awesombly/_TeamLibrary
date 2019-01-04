@@ -62,7 +62,7 @@ bool GameScene::Init() noexcept
 		//ObjectManager::Get().SetProtoObject(m_pChicken);
 	}
 	m_pHero = (AHeroObj*)ObjectManager::Get().TakeObject(L"Guard");
-	m_pPlayer->Possess((Collider*)m_pHero->GetComponentList(EComponent::Collider));
+	m_pPlayer->Possess((Collider*)m_pHero->GetComponentList(EComponent::Collider)->front());
 	m_pPlayer->m_curCharacter = PlayerController::ECharacter::EGuard;
 	m_pPlayer->ResetOption();
 	SoundManager::Get().m_pListenerPos = &m_pHero->GetPosition();
