@@ -236,6 +236,7 @@ copy "*.h" "..\\..\\include\\core\\"</Command>
     <ClCompile Include="Instancer.cpp" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="PlaneUI.cpp" />
+    <ClCompile Include="q3Mat3.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="RCube.cpp" />
     <ClCompile Include="RLine.cpp" />
@@ -274,6 +275,7 @@ copy "*.h" "..\\..\\include\\core\\"</Command>
     <ClInclude Include="Instancer.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="PlaneUI.h" />
+    <ClInclude Include="q3Mat3.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="RCube.h" />
     <ClInclude Include="RLine.h" />

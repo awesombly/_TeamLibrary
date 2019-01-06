@@ -6,6 +6,32 @@ enum class ECollider : char {
 	AABB = 0, OBB, Sphere,
 };
 
+union q3FeaturePair
+{
+	struct
+	{
+		UCHAR inR;
+		UCHAR outR;
+		UCHAR inI;
+		UCHAR outI;
+	};
+	int key;
+};
+
+struct q3Contact
+{
+	D3DXVECTOR3 position;			// 접촉점 월드 좌표
+	float penetration;				// 충돌 침투 깊이
+	float normalImpulse;			// 누적 노말 충격
+	float tangentImpulse[2];		// 누적 마찰 충격
+	float bias;						// Restitution + baumgarte
+	float normalMass;				// 노말 제한 질량
+	float tangentMass[2];			// 접선 제한 질량
+	q3FeaturePair fp;				// 접점에 대한 A와 B의 기능?
+	UCHAR warmStarted;				// 디버그 랜더용?
+};
+
+
 class ColliderAABB;
 class ColliderOBB;
 
@@ -37,7 +63,11 @@ public:
 	//float m_angularDamping = 0.2f;			// 회전 항력
 	float m_mapHeight   = -9999.0f;				// 맵 높이
 
-	//D3DXVECTOR3 m_normal = Vector3::Zero;		// 계산용 노말
+	///
+	D3DXVECTOR3 m_normal;						// 충돌 노말
+	D3DXVECTOR3 m_tangent[2];					// 접선 벡터
+	q3Contact	m_contacts[8];					// 접점 정보?
+	int			m_contactCount;
 protected:
 	bool CollisionAllCheck(const float& spf)		  noexcept;
 public:												  

@@ -2,7 +2,7 @@
 #include "ColliderAABB.h"
 #include "ColliderOBB.h"
 #include "ObjectManager.h"
-
+#include "q3Mat3.h"
 
 
 Collider::Collider(const float& radius)
@@ -324,19 +324,19 @@ bool Collider::AABBToOBB(ColliderAABB* pAABB, ColliderOBB* pOBB) const noexcept
 
 bool Collider::OBBToOBB(ColliderOBB* ApOBB, ColliderOBB* BpOBB) const noexcept
 {
-	//translation, in parent frame (note: A = this, B = obb)
-	//translation, in A's frame
+	// translation, in parent frame (note: A = this, B = obb)
+	// translation, in A's frame
 
 	D3DXVECTOR3 v = BpOBB->GetCenter() - ApOBB->GetCenter();
 	D3DXVECTOR3 T = { D3DXVec3Dot(&v, &ApOBB->m_rotate[0]),
 					  D3DXVec3Dot(&v, &ApOBB->m_rotate[1]),
 					  D3DXVec3Dot(&v, &ApOBB->m_rotate[2]) };
-	//B's basis with respect to A's local frame
+	// B's basis with respect to A's local frame
 	float R[3][3];
 	float FR[3][3];
 	float ra, rb, t;
 
-	//calculate rotation matrix from "obb" to "this" - palso recomputes the fabs matrix
+	// calculate rotation matrix from "obb" to "this" - palso recomputes the fabs matrix
 	for (int out = 0; out < 3; ++out)
 	{
 		for (int in = 0; in < 3; ++in)
@@ -432,6 +432,282 @@ bool Collider::OBBToOBB(ColliderOBB* ApOBB, ColliderOBB* BpOBB) const noexcept
 	// Phew! No separating axis found, no overlap!
 	return true;
 }
+
+//bool Collider::OBBToOBB(ColliderOBB* ApOBB, ColliderOBB* BpOBB) const noexcept
+//{
+//	D3DXMATRIX atx = ApOBB->m_pParent->GetWorldMatrix();
+//	D3DXMATRIX btx = BpOBB->m_pParent->GetWorldMatrix();
+//	//D3DXMATRIX aL = ApOBB->local;
+//	//D3DXMATRIX bL = BpOBB->local;
+//	//atx = q3Mul(atx, aL);
+//	//btx = q3Mul(btx, bL);
+//	D3DXVECTOR3 eA = ApOBB->e;
+//	D3DXVECTOR3 eB = BpOBB->e;
+//
+//	D3DXVECTOR3 eA = ApOBB->GetExtents();
+//	D3DXVECTOR3 eB = BpOBB->GetExtents();
+//
+//	// B's frame in A's space
+//	q3Mat3 C = q3Transpose(atx.rotation) * btx.rotation;
+//
+//	q3Mat3 absC;
+//	bool parallel = false;
+//	const r32 kCosTol = r32(1.0e-6);
+//	for (i32 i = 0; i < 3; ++i)
+//	{
+//		for (i32 j = 0; j < 3; ++j)
+//		{
+//			r32 val = q3Abs(C[i][j]);
+//			absC[i][j] = val;
+//
+//			if (val + kCosTol >= r32(1.0))
+//				parallel = true;
+//		}
+//	}
+//
+//	// Vector from center A to center B in A's space
+//	D3DXVECTOR3 t = q3MulT(atx.rotation, btx.position - atx.position);
+//
+//	// Query states
+//	r32 s;
+//	r32 aMax = -Q3_R32_MAX;
+//	r32 bMax = -Q3_R32_MAX;
+//	r32 eMax = -Q3_R32_MAX;
+//	i32 aAxis = ~0;
+//	i32 bAxis = ~0;
+//	i32 eAxis = ~0;
+//	D3DXVECTOR3 nA;
+//	D3DXVECTOR3 nB;
+//	D3DXVECTOR3 nE;
+//
+//	// Face axis checks
+//
+//	// ApOBB's x axis
+//	s = q3Abs(t.x) - (eA.x + q3Dot(absC.Column0(), eB));
+//	if (q3TrackFaceAxis(&aAxis, 0, s, &aMax, atx.rotation.ex, &nA))
+//		return;
+//
+//	// ApOBB's y axis
+//	s = q3Abs(t.y) - (eA.y + q3Dot(absC.Column1(), eB));
+//	if (q3TrackFaceAxis(&aAxis, 1, s, &aMax, atx.rotation.ey, &nA))
+//		return;
+//
+//	// ApOBB's z axis
+//	s = q3Abs(t.z) - (eA.z + q3Dot(absC.Column2(), eB));
+//	if (q3TrackFaceAxis(&aAxis, 2, s, &aMax, atx.rotation.ez, &nA))
+//		return;
+//
+//	// BpOBB's x axis
+//	s = q3Abs(q3Dot(t, C.ex)) - (eB.x + q3Dot(absC.ex, eA));
+//	if (q3TrackFaceAxis(&bAxis, 3, s, &bMax, btx.rotation.ex, &nB))
+//		return;
+//
+//	// BpOBB's y axis
+//	s = q3Abs(q3Dot(t, C.ey)) - (eB.y + q3Dot(absC.ey, eA));
+//	if (q3TrackFaceAxis(&bAxis, 4, s, &bMax, btx.rotation.ey, &nB))
+//		return;
+//
+//	// BpOBB's z axis
+//	s = q3Abs(q3Dot(t, C.ez)) - (eB.z + q3Dot(absC.ez, eA));
+//	if (q3TrackFaceAxis(&bAxis, 5, s, &bMax, btx.rotation.ez, &nB))
+//		return;
+//
+//	if (!parallel)
+//	{
+//		// Edge axis checks
+//		r32 rA;
+//		r32 rB;
+//
+//		// Cross( ApOBB.x, BpOBB.x )
+//		rA = eA.y * absC[0][2] + eA.z * absC[0][1];
+//		rB = eB.y * absC[2][0] + eB.z * absC[1][0];
+//		s = q3Abs(t.z * C[0][1] - t.y * C[0][2]) - (rA + rB);
+//		if (q3TrackEdgeAxis(&eAxis, 6, s, &eMax, D3DXVECTOR3(r32(0.0), -C[0][2], C[0][1]), &nE))
+//			return;
+//
+//		// Cross( ApOBB.x, BpOBB.y )
+//		rA = eA.y * absC[1][2] + eA.z * absC[1][1];
+//		rB = eB.x * absC[2][0] + eB.z * absC[0][0];
+//		s = q3Abs(t.z * C[1][1] - t.y * C[1][2]) - (rA + rB);
+//		if (q3TrackEdgeAxis(&eAxis, 7, s, &eMax, D3DXVECTOR3(r32(0.0), -C[1][2], C[1][1]), &nE))
+//			return;
+//
+//		// Cross( ApOBB.x, BpOBB.z )
+//		rA = eA.y * absC[2][2] + eA.z * absC[2][1];
+//		rB = eB.x * absC[1][0] + eB.y * absC[0][0];
+//		s = q3Abs(t.z * C[2][1] - t.y * C[2][2]) - (rA + rB);
+//		if (q3TrackEdgeAxis(&eAxis, 8, s, &eMax, D3DXVECTOR3(r32(0.0), -C[2][2], C[2][1]), &nE))
+//			return;
+//
+//		// Cross( ApOBB.y, BpOBB.x )
+//		rA = eA.x * absC[0][2] + eA.z * absC[0][0];
+//		rB = eB.y * absC[2][1] + eB.z * absC[1][1];
+//		s = q3Abs(t.x * C[0][2] - t.z * C[0][0]) - (rA + rB);
+//		if (q3TrackEdgeAxis(&eAxis, 9, s, &eMax, D3DXVECTOR3(C[0][2], r32(0.0), -C[0][0]), &nE))
+//			return;
+//
+//		// Cross( ApOBB.y, BpOBB.y )
+//		rA = eA.x * absC[1][2] + eA.z * absC[1][0];
+//		rB = eB.x * absC[2][1] + eB.z * absC[0][1];
+//		s = q3Abs(t.x * C[1][2] - t.z * C[1][0]) - (rA + rB);
+//		if (q3TrackEdgeAxis(&eAxis, 10, s, &eMax, D3DXVECTOR3(C[1][2], r32(0.0), -C[1][0]), &nE))
+//			return;
+//
+//		// Cross( ApOBB.y, BpOBB.z )
+//		rA = eA.x * absC[2][2] + eA.z * absC[2][0];
+//		rB = eB.x * absC[1][1] + eB.y * absC[0][1];
+//		s = q3Abs(t.x * C[2][2] - t.z * C[2][0]) - (rA + rB);
+//		if (q3TrackEdgeAxis(&eAxis, 11, s, &eMax, D3DXVECTOR3(C[2][2], r32(0.0), -C[2][0]), &nE))
+//			return;
+//
+//		// Cross( ApOBB.z, BpOBB.x )
+//		rA = eA.x * absC[0][1] + eA.y * absC[0][0];
+//		rB = eB.y * absC[2][2] + eB.z * absC[1][2];
+//		s = q3Abs(t.y * C[0][0] - t.x * C[0][1]) - (rA + rB);
+//		if (q3TrackEdgeAxis(&eAxis, 12, s, &eMax, D3DXVECTOR3(-C[0][1], C[0][0], r32(0.0)), &nE))
+//			return;
+//
+//		// Cross( ApOBB.z, BpOBB.y )
+//		rA = eA.x * absC[1][1] + eA.y * absC[1][0];
+//		rB = eB.x * absC[2][2] + eB.z * absC[0][2];
+//		s = q3Abs(t.y * C[1][0] - t.x * C[1][1]) - (rA + rB);
+//		if (q3TrackEdgeAxis(&eAxis, 13, s, &eMax, D3DXVECTOR3(-C[1][1], C[1][0], r32(0.0)), &nE))
+//			return;
+//
+//		// Cross( ApOBB.z, BpOBB.z )
+//		rA = eA.x * absC[2][1] + eA.y * absC[2][0];
+//		rB = eB.x * absC[1][2] + eB.y * absC[0][2];
+//		s = q3Abs(t.y * C[2][0] - t.x * C[2][1]) - (rA + rB);
+//		if (q3TrackEdgeAxis(&eAxis, 14, s, &eMax, D3DXVECTOR3(-C[2][1], C[2][0], r32(0.0)), &nE))
+//			return;
+//	}
+//
+//	// Artificial axis bias to improve frame coherence
+//	const r32 kRelTol = r32(0.95);
+//	const r32 kAbsTol = r32(0.01);
+//	i32 axis;
+//	r32 sMax;
+//	D3DXVECTOR3 n;
+//	r32 faceMax = q3Max(aMax, bMax);
+//	if (kRelTol * eMax > faceMax + kAbsTol)
+//	{
+//		axis = eAxis;
+//		sMax = eMax;
+//		n = nE;
+//	}
+//
+//	else
+//	{
+//		if (kRelTol * bMax > aMax + kAbsTol)
+//		{
+//			axis = bAxis;
+//			sMax = bMax;
+//			n = nB;
+//		}
+//
+//		else
+//		{
+//			axis = aAxis;
+//			sMax = aMax;
+//			n = nA;
+//		}
+//	}
+//
+//	if (q3Dot(n, btx.position - atx.position) < r32(0.0))
+//		n = -n;
+//
+//	assert(axis != ~0);
+//
+//	if (axis < 6)
+//	{
+//		D3DXMATRIX rtx;
+//		D3DXMATRIX itx;
+//		D3DXVECTOR3 eR;
+//		D3DXVECTOR3 eI;
+//		bool flip;
+//
+//		if (axis < 3)
+//		{
+//			rtx = atx;
+//			itx = btx;
+//			eR = eA;
+//			eI = eB;
+//			flip = false;
+//		}
+//
+//		else
+//		{
+//			rtx = btx;
+//			itx = atx;
+//			eR = eB;
+//			eI = eA;
+//			flip = true;
+//			n = -n;
+//		}
+//
+//		// Compute reference and incident edge information necessary for clipping
+//		q3ClipVertex incident[4];
+//		q3ComputeIncidentFace(itx, eI, n, incident);
+//		u8 clipEdges[4];
+//		q3Mat3 basis;
+//		D3DXVECTOR3 e;
+//		q3ComputeReferenceEdgesAndBasis(eR, rtx, n, axis, clipEdges, &basis, &e);
+//
+//		// Clip the incident face against the reference face side planes
+//		q3ClipVertex out[8];
+//		r32 depths[8];
+//		i32 outNum;
+//		outNum = q3Clip(rtx.position, e, clipEdges, basis, incident, out, depths);
+//
+//		if (outNum)
+//		{
+//			m->contactCount = outNum;
+//			m->normal = flip ? -n : n;
+//
+//			for (i32 i = 0; i < outNum; ++i)
+//			{
+//				q3Contact* c = m->contacts + i;
+//
+//				q3FeaturePair pair = out[i].f;
+//
+//				if (flip)
+//				{
+//					std::swap(pair.inI, pair.inR);
+//					std::swap(pair.outI, pair.outR);
+//				}
+//
+//				c->fp = out[i].f;
+//				c->position = out[i].v;
+//				c->penetration = depths[i];
+//			}
+//		}
+//	}
+//	else
+//	{
+//		n = atx.rotation * n;
+//
+//		if (q3Dot(n, btx.position - atx.position) < r32(0.0))
+//			n = -n;
+//
+//		D3DXVECTOR3 PA, QA;
+//		D3DXVECTOR3 PB, QB;
+//		q3SupportEdge(atx, eA, n, &PA, &QA);
+//		q3SupportEdge(btx, eB, -n, &PB, &QB);
+//
+//		D3DXVECTOR3 CA, CB;
+//		q3EdgesContact(&CA, &CB, PA, QA, PB, QB);
+//
+//		m->normal = n;
+//		m->contactCount = 1;
+//
+//		q3Contact* c = m->contacts;
+//		q3FeaturePair pair;
+//		pair.key = axis;
+//		c->fp = pair;
+//		c->penetration = sMax;
+//		c->position = (CA + CB) * r32(0.5);
+//	}
+//}
 
 void Collider::AddIgnoreList(Collider* pCollider) noexcept
 {
