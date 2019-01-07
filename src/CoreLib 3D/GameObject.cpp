@@ -78,10 +78,10 @@ bool GameObject::Frame(const float& spf, const float& accTime) noexcept
 		m_pPhysics->m_force -= m_pPhysics->m_force * m_pPhysics->m_damping * spf;
 
 		// Èû Àû¿ë
-		if (GetVelocitySq() > 60.0f)
+		if (GetVelocitySq() > 20.0f)
 		{
 			//m_pParent->isMoved(true);
-			m_pParent->GetRoot()->Translate((GetTotalForce() + Vector3::Up * 5.0f) * spf);
+			GetRoot()->Translate((GetTotalForce() + Vector3::Up * 5.0f) * spf);
 		}
 	}
 	return true;
@@ -237,6 +237,7 @@ void GameObject::AddComponent(Component* pComponent) noexcept
 			m_pPhysics = new PhysicsInfo();
 		((Collider*)pComponent)->m_pPhysics = m_pPhysics;
 	}
+	pComponent->Update();
 }
 
 void GameObject::AddComponent(const initializer_list<Component*>& components) noexcept
@@ -252,6 +253,7 @@ void GameObject::AddComponent(const initializer_list<Component*>& components) no
 				m_pPhysics = new PhysicsInfo();
 			((Collider*)iter)->m_pPhysics = m_pPhysics;
 		}
+		iter->Update();
 	}
 }
 

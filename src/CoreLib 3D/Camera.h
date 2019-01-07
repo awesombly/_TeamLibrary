@@ -40,7 +40,7 @@ public:
 	D3DXMATRIX  m_matWorld;			// 월드
 	D3DXMATRIX  m_matView;			// 뷰
 	D3DXMATRIX  m_matProj;			// 투영
-	CB_VSMatrix		m_cbVS;			// 변환될 행렬
+	CB_VSMatrix	m_cbVS;				// 변환될 행렬
 protected:
 	// 뷰 행렬, 투영 행렬 세팅
 	void SetViewMatrix()										noexcept;

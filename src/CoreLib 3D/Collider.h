@@ -18,7 +18,6 @@ protected:
 	forward_list<Collider*> m_CollisionList;	// 체크된 충돌체
 	forward_list<Collider*> m_IgnoreList;		// 충돌 제외 대상
 public:
-	PhysicsInfo* m_pPhysics	= nullptr;
 	void (*CollisionEvent)(Collider*, Collider*) = nullptr;
 	ECollider	m_eCollider;
 
@@ -41,10 +40,11 @@ public:
 	void ClearIgnoreList()							  noexcept;
 	void ClearCollisionList()						  noexcept;
 	// 구판정
-	float GetWorldRadius()							  noexcept;
 	void  SetRadius(const float& radius)			  noexcept;
+	const float GetRadius()						const noexcept;
+	const float GetWorldRadius()				const noexcept;
+	const D3DXVECTOR3 GetCenter()				const noexcept;
 
-	D3DXVECTOR3 GetCenter()							  noexcept;
 
 	//void Update()												noexcept override;
 	virtual bool Init()											noexcept override;

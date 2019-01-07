@@ -27,30 +27,30 @@ private:
 
 	bool m_isEnable;
 public:
-	void SetLifeCycle(const float& minValue, const float& maxValue)		noexcept;
+	void SetLifeCycle(const float& minValue, const float& maxValue)					 noexcept;
 
-	void SetInitPosition(const D3DXVECTOR3& minValue, const D3DXVECTOR3& maxValue)	noexcept;
-	void SetInitRotation(const D3DXVECTOR3& minValue, const D3DXVECTOR3& maxValue)	noexcept;
-	
-	void SetInitScale(const float& minValue, const float& maxValue)					noexcept;
-	void SetInitScale(const D3DXVECTOR3& minValue, const D3DXVECTOR3& maxValue)		noexcept;
-	void SetScalePerLife(const float& minValue, const float& maxValue)				noexcept;
-	void SetScalePerLife(const D3DXVECTOR3& minValue, const D3DXVECTOR3& maxValue)	noexcept;
-
-	void SetDirection(const D3DXVECTOR3& direction)		noexcept;
-	void SetDirection(const D3DXVECTOR3& minValue, const D3DXVECTOR3& maxValue) noexcept;
-	void SetMaxMoveSpeed(const float& minValue, const float& maxValue) noexcept;
-	void SetAccMoveSpeed(const float& minValue, const float& maxValue) noexcept;
-	void SetCurMoveSpeed(const float& minValue, const float& maxValue) noexcept;
-
-	void SetDirAngle(const D3DXQUATERNION& dirAngle)	noexcept;
+	void SetInitPosition(const D3DXVECTOR3& minValue, const D3DXVECTOR3& maxValue)	 noexcept;
+	void SetInitRotation(const D3DXVECTOR3& minValue, const D3DXVECTOR3& maxValue)	 noexcept;
+																					 
+	void SetInitScale(const float& minValue, const float& maxValue)					 noexcept;
+	void SetInitScale(const D3DXVECTOR3& minValue, const D3DXVECTOR3& maxValue)		 noexcept;
+	void SetScalePerLife(const float& minValue, const float& maxValue)				 noexcept;
+	void SetScalePerLife(const D3DXVECTOR3& minValue, const D3DXVECTOR3& maxValue)	 noexcept;
+																					 
+	void SetDirection(const D3DXVECTOR3& direction)		noexcept;					 
+	void SetDirection(const D3DXVECTOR3& minValue, const D3DXVECTOR3& maxValue)		 noexcept;
+	void SetMaxMoveSpeed(const float& minValue, const float& maxValue) noexcept;	 
+	void SetAccMoveSpeed(const float& minValue, const float& maxValue) noexcept;	 
+	void SetCurMoveSpeed(const float& minValue, const float& maxValue) noexcept;	 
+																					 
+	void SetDirAngle(const D3DXQUATERNION& dirAngle)								 noexcept;
 	void SetDirAngle(const D3DXQUATERNION& minValue, const D3DXQUATERNION& maxValue) noexcept;
-	void SetRotateSpeed(const float& minValue, const float& maxValue)	noexcept;
+	void SetRotateSpeed(const float& minValue, const float& maxValue)				 noexcept;
 
 	void SetColor(const D3DXVECTOR4& color) noexcept;
-	void SetColor(const D3DXVECTOR4& minValue, const D3DXVECTOR4& maxValue) noexcept;
-
-	void SetGravityPower(const float& minValue, const float& maxValue)	noexcept;
+	void SetColor(const D3DXVECTOR4& minValue, const D3DXVECTOR4& maxValue)			 noexcept;
+																					 
+	void SetGravityPower(const float& minValue, const float& maxValue)				 noexcept;
 
 	bool IsEnable();
 	void IsEnable(const bool& isEnable);

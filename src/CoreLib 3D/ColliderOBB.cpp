@@ -17,7 +17,7 @@ ColliderOBB::ColliderOBB(const D3DXVECTOR3& minPos, const D3DXVECTOR3& maxPos)
 {
 	ObjectManager::Get().PushCollider(this);
 	Init();
-	auto length = maxPos - minPos;
+	auto length = (maxPos - minPos) * 0.5f;
 	m_radius = std::max<float>(std::max<float>(length.x, length.y), length.z) * 1.5f;
 	SetMinMax(minPos, maxPos);
 }

@@ -22,44 +22,6 @@ bool ParticleSystem::Init() noexcept
 	Strides[1] = sizeof(ParticleData);
 	Offsets[0] = 0;
 	Offsets[1] = 0;
-
-	// 멤버 초기화
-	m_frameCount = 0.0f;			
-
-	m_maxParticleCount = 0;
-	m_spawnInterval = 0.0f;		
-
-	m_minInitPosition = Vector3::Zero;
-	m_maxInitPosition = Vector3::Zero;
-	m_minInitScale = Vector3::One;
-	m_maxInitScale = Vector3::One;
-	m_minInitRotation = Vector3::Zero;
-	m_maxInitRotation = Vector3::Zero;
-
-	m_minScalePerLife = Vector3::One;
-	m_maxScalePerLife = Vector3::One;
-	//m_minLifePerColor = Vector4::One;
-	//m_maxLifePerColor = Vector4::One;
-
-	m_minLifeCycle = 0.0f;
-	m_maxLifeCycle = 0.0f;
-	m_minDirection = Vector3::Zero;
-	m_maxDirection = Vector3::Zero;
-	m_minMaxMoveSpeed = 0.0f;
-	m_maxMaxMoveSpeed = 0.0f;
-	m_minAccMoveSpeed = 0.0f;
-	m_maxAccMoveSpeed = 0.0f;
-	m_minCurMoveSpeed = 0.0f;
-	m_maxCurMoveSpeed = 0.0f;
-	m_minDirAngle = Quaternion::Base;
-	m_maxDirAngle = Quaternion::Base;
-	m_minRotateSpeed = 0.0f;
-	m_maxRotateSpeed = 0.0f;
-	m_minColor = Color::White;
-	m_maxColor = Color::White;
-	m_dirGravity = Vector3::Down;
-	m_minGravityPower = 0.0f;
-	m_maxGravityPower = 0.0f;
 	return true;
 }
 
@@ -75,62 +37,11 @@ bool ParticleSystem::Frame(const float& spf, const float& accTime) noexcept
 		if (m_maxParticleCount > (m_dataList.size() - m_disabledParticle.size()))
 		{
 			m_frameCount -= m_spawnInterval;
-			static Particle* pParticle = nullptr;
-			// 대기풀 없으면 복사, 있으면 빼옴
-			if (m_disabledParticle.empty())
-			{
-				// 파티클 복사, 추가
-				pParticle = m_pParticle->clone();
-				AddInstance(pParticle);
-			}
-			else
-			{
-				pParticle = m_disabledParticle.top();
-				m_disabledParticle.pop();
-				//pParticle->m_position = Vector3::Zero;
-				//pParticle->m_scale = Vector3::One;
-				//pParticle->m_rotation = Quaternion::Base;
-			}
-			// 초기화
-			pParticle->IsEnable(true);
-			pParticle->m_frameCount = 0.0f;
-			pParticle->m_curGravity = 0.0f;
-			pParticle->SetLifeCycle(m_minLifeCycle, m_maxLifeCycle);
-
-			// 크기
-			if (m_isScalarScale)
-			{
-				pParticle->SetInitScale(m_minInitScale.x, m_maxInitScale.x);
-				pParticle->SetScalePerLife(m_minScalePerLife.x, m_maxScalePerLife.x);
-			}
-			else
-			{
-				pParticle->SetInitScale(m_minInitScale, m_maxInitScale);
-				pParticle->SetScalePerLife(m_minScalePerLife, m_maxScalePerLife);
-			}
-			pParticle->m_scale = Product(pParticle->m_scale, m_pParent->GetWorldScale());
-			// 위치
-			pParticle->SetInitPosition(m_minInitPosition, m_maxInitPosition);
-			pParticle->m_position += m_pParent->GetWorldPosition();
-			// 방향
-			pParticle->SetDirection(m_minDirection, m_maxDirection);
-			D3DXVec3TransformNormal(&pParticle->m_direction, &pParticle->m_direction, &m_pParent->GetRotationMatrix());
-			// 이속
-			pParticle->SetMaxMoveSpeed(m_minMaxMoveSpeed, m_maxMaxMoveSpeed);
-			pParticle->SetAccMoveSpeed(m_minAccMoveSpeed, m_maxAccMoveSpeed);
-			pParticle->SetCurMoveSpeed(m_minCurMoveSpeed, m_maxCurMoveSpeed);
-			// 회전
-			pParticle->SetInitRotation(m_minInitRotation, m_maxInitRotation);
-			//pParticle->m_rotation -= m_pParent->GetWorldRotation();
-			pParticle->SetDirAngle(m_minDirAngle, m_maxDirAngle);
-			pParticle->SetRotateSpeed(m_minRotateSpeed, m_maxRotateSpeed);
-			 // 등등
-			pParticle->SetColor(m_minColor, m_maxColor);
-			pParticle->SetGravityPower(m_minGravityPower, m_maxGravityPower);
+			SpawnParticle();
 		}
 		else if (m_isRepeat)
 		{
-			Clear();
+			Update();
 		}
 	}
 #pragma endregion
@@ -225,6 +136,61 @@ bool ParticleSystem::Release() noexcept
 	return true;
 }
 
+void ParticleSystem::SpawnParticle() noexcept
+{
+	static Particle* pParticle = nullptr;
+	// 대기풀 없으면 복사, 있으면 빼옴
+	if (m_disabledParticle.empty())
+	{
+		// 파티클 복사, 추가
+		pParticle = m_pParticle->clone();
+		AddInstance(pParticle);
+	}
+	else
+	{
+		pParticle = m_disabledParticle.top();
+		m_disabledParticle.pop();
+		//pParticle->m_position = Vector3::Zero;
+		//pParticle->m_scale = Vector3::One;
+		//pParticle->m_rotation = Quaternion::Base;
+	}
+	// 초기화
+	pParticle->IsEnable(true);
+	pParticle->m_frameCount = 0.0f;
+	pParticle->m_curGravity = 0.0f;
+	pParticle->SetLifeCycle(m_minLifeCycle, m_maxLifeCycle);
+
+	// 크기
+	if (m_isScalarScale)
+	{
+		pParticle->SetInitScale(m_minInitScale.x, m_maxInitScale.x);
+		pParticle->SetScalePerLife(m_minScalePerLife.x, m_maxScalePerLife.x);
+	}
+	else
+	{
+		pParticle->SetInitScale(m_minInitScale, m_maxInitScale);
+		pParticle->SetScalePerLife(m_minScalePerLife, m_maxScalePerLife);
+	}
+	pParticle->m_scale = Product(pParticle->m_scale, m_pParent->GetWorldScale());
+	// 위치
+	pParticle->SetInitPosition(m_minInitPosition, m_maxInitPosition);
+	pParticle->m_position += m_pParent->GetWorldPosition();
+	// 방향
+	pParticle->SetDirection(m_minDirection, m_maxDirection);
+	D3DXVec3TransformNormal(&pParticle->m_direction, &pParticle->m_direction, &m_pParent->GetRotationMatrix());
+	// 이속
+	pParticle->SetMaxMoveSpeed(m_minMaxMoveSpeed, m_maxMaxMoveSpeed);
+	pParticle->SetAccMoveSpeed(m_minAccMoveSpeed, m_maxAccMoveSpeed);
+	pParticle->SetCurMoveSpeed(m_minCurMoveSpeed, m_maxCurMoveSpeed);
+	// 회전
+	pParticle->SetInitRotation(m_minInitRotation, m_maxInitRotation);
+	//pParticle->m_rotation -= m_pParent->GetWorldRotation();
+	pParticle->SetDirAngle(m_minDirAngle, m_maxDirAngle);
+	pParticle->SetRotateSpeed(m_minRotateSpeed, m_maxRotateSpeed);
+	// 등등
+	pParticle->SetColor(m_minColor, m_maxColor);
+	pParticle->SetGravityPower(m_minGravityPower, m_maxGravityPower);
+}
 
 HRESULT ParticleSystem::Create() noexcept
 {
@@ -361,7 +327,7 @@ Particle* ParticleSystem::GetParticle() noexcept
 	return m_pParticle;
 }
 
-void ParticleSystem::Clear() noexcept
+void ParticleSystem::Update() noexcept
 {
 	static auto clearEvent = [](void* pVoid, void*) {
 		auto pParticle = ((ParticleSystem*)pVoid);
@@ -373,6 +339,12 @@ void ParticleSystem::Clear() noexcept
 		pParticle->m_dataList.clear();
 		while (!pParticle->m_disabledParticle.empty())
 			pParticle->m_disabledParticle.pop();
+		///
+		auto count = (int)(RandomNormal() * (pParticle->m_maxInitCount - pParticle->m_minInitCount) + pParticle->m_minInitCount);
+		for (int i = 0; i < count; ++i)
+		{
+			pParticle->SpawnParticle();
+		}
 	};
 	ObjectManager::PostFrameEvent.emplace(clearEvent, this, nullptr);
 }

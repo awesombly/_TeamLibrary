@@ -38,17 +38,7 @@ bool Collider::Frame(const float& spf, const float& accTime)	noexcept
 
 	// 충돌 체크
 	CollisionAllCheck(spf);
-	//// 중력
-	//m_pPhysics->m_force += Vector3::Down * m_pPhysics->m_GravityScale * GravityPower * spf;
-	//// 항력
-	//m_pPhysics->m_force -= m_pPhysics->m_force * m_pPhysics->m_damping * spf;
 
-	//// 힘 적용
-	//if (GetVelocitySq() > 60.0f)
-	//{
-	//	//m_pParent->isMoved(true);
-	//	m_pParent->GetRoot()->Translate((GetTotalForce() + Vector3::Up * 5.0f) * spf);
-	//}
 	// 최소 높이
 	if (m_pParent->GetPosition().y < m_mapHeight)
 	{
@@ -120,7 +110,7 @@ bool Collider::CollisionAllCheck(const float& spf) noexcept
 				//m_force += vForceDis;
 				//D3DXVec3Normalize(&vForceDis, &m_force);
 				// 반발력
-				m_pPhysics->m_force = vForceDis + -m_pPhysics->m_force * (m_pPhysics->m_repulsion + iter->m_pPhysics->m_repulsion) * 0.5f;
+				m_pPhysics->m_force = /*vForceDis +*/ -m_pPhysics->m_force * (m_pPhysics->m_repulsion + iter->m_pPhysics->m_repulsion) * 0.5f;
 				//m_pParent->Translate(-m_force * 0.001f);
 				//m_pParent->Translate(Vector3::Up * spf);
 			}
@@ -128,7 +118,7 @@ bool Collider::CollisionAllCheck(const float& spf) noexcept
 			{
 				//iter->m_force += vForceDisOther;
 				//D3DXVec3Normalize(&vForceDisOther, &iter->m_force);
-				iter->m_pPhysics->m_force = vForceDisOther + -iter->m_pPhysics->m_force * (m_pPhysics->m_repulsion + iter->m_pPhysics->m_repulsion) * 0.5f;
+				iter->m_pPhysics->m_force = /*vForceDisOther +*/ -iter->m_pPhysics->m_force * (m_pPhysics->m_repulsion + iter->m_pPhysics->m_repulsion) * 0.5f;
 				//iter->m_pParent->Translate(-iter->m_force * 0.001f);
 				//iter->m_pParent->Translate(Vector3::Up * spf);
 			}
@@ -740,17 +730,22 @@ void Collider::ClearCollisionList() noexcept
 	m_CollisionList.clear();
 }
 
-float Collider::GetWorldRadius() noexcept
-{
-	return m_radius * m_pParent->GetScaleAverage();
-}
-
 void Collider::SetRadius(const float& radius) noexcept
 {
 	m_radius = radius;
 }
 
-D3DXVECTOR3 Collider::GetCenter() noexcept
+const float Collider::GetRadius() const noexcept
+{
+	return m_radius;
+}
+
+const float Collider::GetWorldRadius() const noexcept
+{
+	return m_radius * m_pParent->GetScaleAverage();
+}
+
+const D3DXVECTOR3 Collider::GetCenter() const noexcept
 {
 	return m_pParent->GetWorldPosition() + m_pivot;
 }

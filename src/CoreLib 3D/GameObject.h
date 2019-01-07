@@ -25,7 +25,7 @@ protected:
 	forward_list<GameObject*>		 m_childList;			 // 자식 리스트
 	map<EComponent, forward_list<Component*> > m_components; // 컴포넌트 리스트
 
-	D3DXMATRIX m_matLocal;			// 로컬 행렬(사실 월드ㅎ)
+	D3DXMATRIX m_matLocal;			// Local 행렬(사실 월드ㅎ)
 	D3DXMATRIX m_matScale;			// Scale 행렬
 	D3DXMATRIX m_matRotation;		// Rotation 행렬
 	
@@ -42,7 +42,7 @@ protected:
 	//virtual HRESULT Create()	noexcept { return S_OK; } ; // 하위호환용
 	/////////////////////////////////////////////////////////////////////////////////////////
 public:
-	UINT m_keyValue;								// 유일한 키값
+	UINT	 m_keyValue;							// 유일한 키값
 	wstring	 m_myName;								// 객체 이름
 	EObjType m_objType = EObjType::Dummy;			// 객체 타입
 public:

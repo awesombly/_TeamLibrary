@@ -12,7 +12,60 @@ struct ParticleData
 };
 #pragma pack(pop)
 
-class ParticleSystem : public Renderer
+struct ParticleInfo
+{
+	bool m_isBillBoard				= true;
+	bool m_isRepeat					= true;
+	bool m_isFollow					= false;
+	///bool m_isBounding  = false;
+	bool m_isScalarScale			= true;
+
+	float m_spawnInterval			= 0.0f;		// 생성 간격
+	UINT  m_maxParticleCount		= 0;
+	UINT  m_minInitCount			= 0;
+	UINT  m_maxInitCount			= 0;
+	// 초기 SRT
+	D3DXVECTOR3 m_minInitPosition	= Vector3::Zero;
+	D3DXVECTOR3 m_maxInitPosition	= Vector3::Zero;
+	D3DXVECTOR3 m_minInitScale		= Vector3::One;
+	D3DXVECTOR3 m_maxInitScale		= Vector3::One;
+	D3DXVECTOR3 m_minInitRotation	= Quaternion::Base;
+	D3DXVECTOR3 m_maxInitRotation	= Quaternion::Base;
+	// 생명주기별 크기, 색상
+	D3DXVECTOR3 m_minScalePerLife	= Vector3::One;
+	D3DXVECTOR3 m_maxScalePerLife	= Vector3::One;
+	//D3DXVECTOR4 m_minLifePerColor;
+	//D3DXVECTOR4 m_maxLifePerColor;
+
+	float m_minLifeCycle			= 0.0f;
+	float m_maxLifeCycle			= 0.0f;
+
+	D3DXVECTOR3 m_minDirection		= Vector3::Zero;
+	D3DXVECTOR3 m_maxDirection		= Vector3::Zero;
+	// 이속
+	float m_minMaxMoveSpeed			= 0.0f;
+	float m_maxMaxMoveSpeed			= 0.0f;
+	float m_minAccMoveSpeed			= 0.0f;
+	float m_maxAccMoveSpeed			= 0.0f;
+	float m_minCurMoveSpeed			= 0.0f;
+	float m_maxCurMoveSpeed			= 0.0f;
+	// 회전
+	D3DXQUATERNION m_minDirAngle	= Quaternion::Base;
+	D3DXQUATERNION m_maxDirAngle	= Quaternion::Base;
+	float m_minRotateSpeed			= 0.0f;
+	float m_maxRotateSpeed			= 0.0f;
+
+	D3DXVECTOR4 m_minColor			= Color::White;
+	D3DXVECTOR4 m_maxColor			= Color::White;
+
+	D3DXVECTOR3 m_dirGravity		= Vector3::Down;
+	float m_minGravityPower			= 0.0f;
+	float m_maxGravityPower			= 0.0f;
+};
+
+
+
+class ParticleSystem : public ParticleInfo, public Renderer
 {
 private:
 	Particle* m_pParticle;
@@ -25,69 +78,23 @@ private:
 	// 정점 버퍼 세팅용
 	UINT Strides[2];				// 정점 크기
 	UINT Offsets[2];				// 시작 오프셋
-
-	bool m_isBillBoard = true;
-	bool m_isRepeat    = true;
-	bool m_isFollow    = false;
-	///bool m_isBounding  = false;
-	bool m_isScalarScale = true;
-public:
-	UINT  m_maxParticleCount;
-	float m_spawnInterval;		// 생성 간격
-	// 초기 SRT
-	D3DXVECTOR3 m_minInitPosition;
-	D3DXVECTOR3 m_maxInitPosition;
-	D3DXVECTOR3 m_minInitScale;
-	D3DXVECTOR3 m_maxInitScale;
-	D3DXVECTOR3 m_minInitRotation;
-	D3DXVECTOR3 m_maxInitRotation;
-	/// 생명주기 크기, 색상
-	D3DXVECTOR3 m_minScalePerLife;
-	D3DXVECTOR3 m_maxScalePerLife;
-	//D3DXVECTOR4 m_minLifePerColor;
-	//D3DXVECTOR4 m_maxLifePerColor;
-	 
-	float m_minLifeCycle;
-	float m_maxLifeCycle;
-
-	D3DXVECTOR3 m_minDirection;
-	D3DXVECTOR3 m_maxDirection;
-	// 이속
-	float m_minMaxMoveSpeed;
-	float m_maxMaxMoveSpeed;
-	float m_minAccMoveSpeed;
-	float m_maxAccMoveSpeed;
-	float m_minCurMoveSpeed;
-	float m_maxCurMoveSpeed;
-	// 회전
-	D3DXQUATERNION m_minDirAngle;
-	D3DXQUATERNION m_maxDirAngle;
-	float m_minRotateSpeed;
-	float m_maxRotateSpeed;
-
-	D3DXVECTOR4 m_minColor;
-	D3DXVECTOR4 m_maxColor;
-
-	D3DXVECTOR3 m_dirGravity;
-	float m_minGravityPower;
-	float m_maxGravityPower;
 private:
-	HRESULT Create() noexcept override;
+	void	SpawnParticle()											noexcept;
+	HRESULT Create()												noexcept override;
 	// 버퍼 생성
-	HRESULT CreateInstanceBuffer() noexcept;
-	void	UpdateInstanceBuffer(ID3D11DeviceContext* pDContext) noexcept;
-	void	UpdateConstBuffer(ID3D11DeviceContext* pDContext) noexcept override;
-
+	HRESULT CreateInstanceBuffer()									noexcept;
+	void	UpdateInstanceBuffer(ID3D11DeviceContext* pDContext)	noexcept;
+	void	UpdateConstBuffer(ID3D11DeviceContext* pDContext)		noexcept override;
 	// 인스턴스 추가, 삭제
-	void AddInstance(Particle* pParticle)				noexcept;
-	void RemoveInstance(Particle* pParticle)			noexcept;
+	void	AddInstance(Particle* pParticle)						noexcept;
+	void	RemoveInstance(Particle* pParticle)						noexcept;
 
-	Component* cloneAddition()	noexcept override;
+	Component* cloneAddition()										noexcept override;
 public:
 	void SetParticle(Particle* pParticle, const bool& preParticleDelete = true)	noexcept;
-	Particle* GetParticle()		noexcept;
+	Particle* GetParticle()						noexcept;
 	// 리셋
-	void Clear()				noexcept;
+	void Update()								noexcept override;
 	// 빌보드, 반복여부
 	bool isBillBoard()							noexcept;
 	void isBillBoard(const bool& isBillBoard)	noexcept;

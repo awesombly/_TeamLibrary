@@ -65,18 +65,18 @@ protected:
 	ID3D11Buffer*		m_pMaterialCBuffer = nullptr;	// 쉐도우, 메테리얼 상수
 	CB_Material			m_cbMaterial;					// 쉐도우, 메테리얼 데이터
 	
-	wstring				m_srcName;					// 텍스처 이름 (default=객체이름)
 	vector<Sprite>*		m_pSpriteList = nullptr;	// 스프라이트(좌표, 프레임) 리스트
 	vector<Sprite>::iterator m_curSprite;			// 현재 스프라이트 이터레이터
-	float  m_frameCount = 0.0f;
+	float				m_frameCount = 0.0f;
 
 	bool m_isMultiTexture = false;	// 멀티 텍스쳐링 유무
 	// 정점 버퍼 세팅용
 	static UINT Stride;				// 정점 크기
 	static UINT Offset;				// 시작 오프셋
 public:
-	vector<Vertex_PNCT>	m_vertexList;		// 정점 배열
-	ERenderType m_eRenderType = ERenderType::Basic;
+	vector<Vertex_PNCT>	m_vertexList;				// 정점 배열
+	wstring				m_srcName;					// 텍스처 이름 (default=객체이름)
+	ERenderType			m_eRenderType = ERenderType::Basic;
 protected:
 	// 생성자->초기값 세팅
 	void SetInfo(const wstring_view& myName, const EComponent& eComType, const wstring_view& srcName = L"",

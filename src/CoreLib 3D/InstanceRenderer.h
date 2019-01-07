@@ -55,6 +55,6 @@ protected:
 	friend class MaxImporter;
 	//InstanceRenderer() = default;
 public:
-	InstanceRenderer(const wstring_view& myName, const EComponent& eComType, const string_view& vertexShaderName = "VS_Instance", const string_view& pixelShaderName = "PS_Instance") noexcept;
+	InstanceRenderer(const wstring_view& myName, const string_view& vertexShaderName = "VS_Instance", const string_view& pixelShaderName = "PS_Instance") noexcept;
 	virtual ~InstanceRenderer() = default;
 };

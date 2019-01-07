@@ -1,13 +1,13 @@
 #include "InstanceRenderer.h"
 #include "ObjectManager.h"
 
-InstanceRenderer::InstanceRenderer(const wstring_view& myName, const EComponent& eComType, const string_view& vertexShaderName, const string_view& pixelShaderName) noexcept
+InstanceRenderer::InstanceRenderer(const wstring_view& myName, const string_view& vertexShaderName, const string_view& pixelShaderName) noexcept
 {
 	m_ppCamera = &ObjectManager::CurCamera;
 	m_myName = m_srcName = myName;
-	m_comptType = eComType;
 	SetShaderLayout(vertexShaderName, pixelShaderName);
-	m_eRenderType = ERenderType::Instance;
+	m_comptType		= EComponent::Renderer;
+	m_eRenderType	= ERenderType::Instance;
 	m_isMultiTexture = true;
 }
 
