@@ -34,6 +34,9 @@ public:
 	vector<SkinMesh*>					m_pSkinMeshList;
 	vector<D3DXMATRIX>					m_matBipedList;
 
+
+	int m_SkinTest;
+
 	vector<D3DXMATRIX>* GetMatrix() 
 	{
 		return &m_matBipedList; 

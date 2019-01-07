@@ -18,7 +18,7 @@ bool GameScene::Init() noexcept
 		m_pHero = new AHeroObj();
 		m_pHero->SetPlayerCharacter(Guard, 0.0f, 100.0f, 0.0f);
 		m_pHero->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-		m_pHero->SetANIM(Guard_IDLE);
+		m_pHero->SetANIM_Loop(Guard_IDLE);
 		m_pHero->m_myName = L"Guard";
 		m_pHero->m_objType = EObjType::Object;
 		auto pCollider = new ColliderOBB(60.0f, { -13.0f, 0.0f , -13.0f }, { 13.0f, 80.0f , 13.0f });
@@ -29,7 +29,7 @@ bool GameScene::Init() noexcept
 		m_pZombie = new AHeroObj();
 		m_pZombie->SetPlayerCharacter(Zombie, 80.0f, 200.0f, -300.0f);
 		m_pZombie->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-		m_pZombie->SetANIM(Zombie_IDLE);
+		m_pZombie->SetANIM_Loop(Zombie_IDLE);
 		m_pZombie->m_myName = L"Zombie";
 		m_pZombie->m_objType = EObjType::Object;
 		pCollider = new ColliderOBB(60.0f, { -13.0f, 0.0f , -13.0f }, { 13.0f, 80.0f , 13.0f });
