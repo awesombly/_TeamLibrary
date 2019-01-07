@@ -58,7 +58,7 @@ public:
 	void PlayerInput(const float& spf)												noexcept;
 	void CameraInput(const float& spf)												noexcept;
 	void ResetOption()																noexcept;
-	void Possess(Collider* pObject)													noexcept;
+	void Possess(GameObject* pObject)													noexcept;
 
 	void SendAnimTransform(const EAction& eAction, const ECharacter& eCharacter)	noexcept;
 

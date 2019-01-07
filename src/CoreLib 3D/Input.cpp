@@ -79,10 +79,10 @@ POINT Input::GetCursor()
 	return m_Cursor;
 }
 
-EKeyState Input::GetMouseState(const EMouseButton& mouseButton)
-{
-	return m_KeyState[mouseButton];
-}
+//EKeyState Input::GetMouseState(const EMouseButton& mouseButton)
+//{
+//	return m_KeyState[mouseButton];
+//}
 
 short Input::GetWheelScroll()
 {

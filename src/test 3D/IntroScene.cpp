@@ -89,7 +89,7 @@ bool IntroScene::Init() noexcept
 		static auto pDaggerHit = [](Collider* pA, Collider* pB) {
 			if (pB != nullptr)
 			{
-				pB->OperHP(-0.15f);
+				pB->m_pParent->OperHP(-0.15f);
 				pB->SetForce((Normalize(-pA->GetTotalForce()) + Vector3::Up) * 200.0f);
 			}
 			pA->ClearIgnoreList();

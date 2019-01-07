@@ -21,7 +21,7 @@ bool GameScene::Init() noexcept
 		m_pHero->SetANIM(Guard_IDLE);
 		m_pHero->m_myName = L"Guard";
 		m_pHero->m_objType = EObjType::Object;
-		auto pCollider = new ColliderOBB(60.0f, { -13.0f, 0.0f , -13.0f }, { 13.0f, 80.0f , 13.0f });
+		auto pCollider = new ColliderOBB( { -13.0f, 0.0f , -13.0f }, { 13.0f, 80.0f , 13.0f });
 		m_pHero->AddComponent(pCollider);
 		ObjectManager::Get().SetProtoObject(m_pHero);
 
@@ -32,7 +32,7 @@ bool GameScene::Init() noexcept
 		m_pZombie->SetANIM(Zombie_IDLE);
 		m_pZombie->m_myName = L"Zombie";
 		m_pZombie->m_objType = EObjType::Object;
-		pCollider = new ColliderOBB(60.0f, { -13.0f, 0.0f , -13.0f }, { 13.0f, 80.0f , 13.0f });
+		pCollider = new ColliderOBB( { -13.0f, 0.0f , -13.0f }, { 13.0f, 80.0f , 13.0f });
 		m_pZombie->AddComponent(pCollider);
 		ObjectManager::Get().SetProtoObject(m_pZombie);
 
@@ -43,7 +43,7 @@ bool GameScene::Init() noexcept
 		m_pBird->m_myName = L"Bird";
 		m_pBird->m_objType = EObjType::Object;
 		m_pBird->SetScale(Vector3::One * 15.0f);
-		pCollider = new ColliderOBB(3.0f, { -1.0f, 0.0f , -1.0f }, { 1.0f, 2.0f , 1.0f });
+		pCollider = new ColliderOBB( { -1.0f, 0.0f , -1.0f }, { 1.0f, 2.0f , 1.0f });
 		pCollider->m_pivot *= 15.0f;
 		pCollider->SetGravityScale(0.3f);
 		m_pBird->AddComponent(pCollider);
@@ -62,7 +62,7 @@ bool GameScene::Init() noexcept
 		//ObjectManager::Get().SetProtoObject(m_pChicken);
 	}
 	m_pHero = (AHeroObj*)ObjectManager::Get().TakeObject(L"Guard");
-	m_pPlayer->Possess((Collider*)m_pHero->GetComponentList(EComponent::Collider)->front());
+	m_pPlayer->Possess(m_pHero);
 	m_pPlayer->m_curCharacter = PlayerController::ECharacter::EGuard;
 	m_pPlayer->ResetOption();
 	SoundManager::Get().m_pListenerPos = &m_pHero->GetPosition();
@@ -202,7 +202,7 @@ bool GameScene::Frame() noexcept
 		if (++curCollider == ObjectManager::Get().GetColliderList().end())
 			curCollider = ObjectManager::Get().GetColliderList().begin();
 
-		m_pPlayer->Possess(*curCollider);
+		m_pPlayer->Possess((*curCollider)->m_pParent);
 		SoundManager::Get().m_pListenerPos = &(*curCollider)->m_pParent->GetRoot()->GetPosition();
 	}
 	// 시간 출력

@@ -105,7 +105,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const ECharacter& eCharacter, 
 			pDagger->SetPosition(pObject->GetPosition() + pObject->GetForward() * 40.0f + pObject->GetUp() * 65.0f + pObject->GetRight() * 20.0f);
 			pDagger->SetRotation(pObject->GetRotation() + Quaternion::Up * 0.5f);
 			//pDagger->SetScale(Vector3::One * 1.0f);
-			((Collider*)pDagger->GetComponentList(EComponent::Collider)->front())->SetForce((pObject->GetForward() + Vector3::Up * 0.5f) * 200.0f);
+			pDagger->SetForce((pObject->GetForward() + Vector3::Up * 0.5f) * 200.0f);
 			((Collider*)pDagger->GetComponentList(EComponent::Collider)->front())->AddIgnoreList((Collider*)pObject->GetComponentList(EComponent::Collider)->front());
 			SoundManager::Get().PlayQueue("SE_throw01.mp3", pObject->GetWorldPosition(), 1000.0f);
 		}	break;
@@ -160,7 +160,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const ECharacter& eCharacter, 
 			pChicken->SetPosition(pObject->GetPosition() + pObject->GetForward() * 40.0f + pObject->GetUp() * 65.0f + pObject->GetRight() * 20.0f);
 			pChicken->SetRotation(pObject->GetRotation() + Quaternion::Up * 0.5f);
 			//pDagger->SetScale(Vector3::One * 1.0f);
-			((Collider*)pChicken->GetComponentList(EComponent::Collider)->front())->SetForce((pObject->GetForward() + Vector3::Up * 0.5f) * 200.0f);
+			pChicken->SetForce((pObject->GetForward() + Vector3::Up * 0.5f) * 200.0f);
 			((Collider*)pChicken->GetComponentList(EComponent::Collider)->front())->AddIgnoreList((Collider*)pObject->GetComponentList(EComponent::Collider)->front());
 			SoundManager::Get().PlayQueue("SE_chicken.mp3", pObject->GetWorldPosition(), 1000.0f);
 		}	break;
@@ -284,7 +284,7 @@ void PlayerController::SendAnimTransform(const EAction& eAction, const ECharacte
 	else
 	{
 		p_AnimTransform.Position = m_pParent->GetPosition();
-		p_AnimTransform.Force = ((Collider*)m_pParent->GetComponentList(EComponent::Collider)->front())->GetForce();
+		p_AnimTransform.Force = m_pParent->GetForce();
 	}
 
 	switch (eAction)
@@ -419,26 +419,28 @@ void PlayerController::ResetOption() noexcept
 	m_pCamera->m_lerpRotateSpeed = 7.0f;
 }
 
-void PlayerController::Possess(Collider* pCollider) noexcept
+void PlayerController::Possess(GameObject* pObject) noexcept
 {
-	if (pCollider == nullptr)
+	if (pObject == nullptr)
 		return;
-	SetParent(pCollider->m_pParent);
+	SetParent(pObject);
 
 	static auto pEvent = [](void* pVoid, void* pVoid2) {
 		auto pPlayer = (PlayerController*)pVoid;
-		auto pCollid = (Collider*)pVoid2;
-		if (pCollid->m_pParent->m_myName == L"Guard")
+		auto pObj	 = (GameObject*)pVoid2;
+
+		if (pObj->m_myName == L"Guard")
 			pPlayer->m_curCharacter = PlayerController::ECharacter::EGuard;
-		else if (pCollid->m_pParent->m_myName == L"Zombie")
+		else if (pObj->m_myName == L"Zombie")
 			pPlayer->m_curCharacter = PlayerController::ECharacter::EZombie;
 		else
 			pPlayer->m_curCharacter = PlayerController::ECharacter::EDummy;
-		((JProgressBar*)pPlayer->m_pHpBar)->SetValue(pCollid->GetHP(), 1.0f);
+
+		((JProgressBar*)pPlayer->m_pHpBar)->SetValue(pObj->GetHP(), 1.0f);
 		pPlayer->ResetOption();
 	};
 
-	ObjectManager::PostFrameEvent.emplace(pEvent, this, pCollider);
+	ObjectManager::PostFrameEvent.emplace(pEvent, this, pObject);
 
 	//if (pCollider->m_pParent->m_myName == L"Guard")
 	//	m_curCharacter = PlayerController::ECharacter::EGuard;

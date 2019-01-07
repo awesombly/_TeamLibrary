@@ -109,6 +109,9 @@
     <ClCompile Include="q3Mat3.cpp">
       <Filter>Component\Collider</Filter>
     </ClCompile>
+    <ClCompile Include="Physics.cpp">
+      <Filter>Component\Collider</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CoreDX.h">
@@ -232,6 +235,9 @@
       <Filter>Component\Renderer\Child</Filter>
     </ClInclude>
     <ClInclude Include="q3Mat3.h">
+      <Filter>Component\Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics.h">
       <Filter>Component\Collider</Filter>
     </ClInclude>
   </ItemGroup>

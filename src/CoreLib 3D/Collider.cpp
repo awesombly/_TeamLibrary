@@ -1,9 +1,16 @@
-#include "Collider.h"
+//#include "Collider.h"
 #include "ColliderAABB.h"
 #include "ColliderOBB.h"
 #include "ObjectManager.h"
 #include "q3Mat3.h"
 
+
+
+Collider::Collider()
+{
+	ObjectManager::Get().PushCollider(this);
+	Init();
+}
 
 Collider::Collider(const float& radius)
 	: m_radius(radius)
@@ -31,26 +38,25 @@ bool Collider::Frame(const float& spf, const float& accTime)	noexcept
 
 	// 충돌 체크
 	CollisionAllCheck(spf);
+	//// 중력
+	//m_pPhysics->m_force += Vector3::Down * m_pPhysics->m_GravityScale * GravityPower * spf;
+	//// 항력
+	//m_pPhysics->m_force -= m_pPhysics->m_force * m_pPhysics->m_damping * spf;
 
-	//if (m_useGravity)
+	//// 힘 적용
+	//if (GetVelocitySq() > 60.0f)
 	//{
-		m_force += Vector3::Down * m_GravityScale * GravityPower * spf;
+	//	//m_pParent->isMoved(true);
+	//	m_pParent->GetRoot()->Translate((GetTotalForce() + Vector3::Up * 5.0f) * spf);
 	//}
-	// 항력
-	m_force -= m_force * m_damping * spf;
-
-	// 힘 적용
-	if (GetVelocitySq() > 60.0f)
+	// 최소 높이
+	if (m_pParent->GetPosition().y < m_mapHeight)
 	{
-		//m_pParent->isMoved(true);
-		m_pParent->GetRoot()->Translate((GetTotalForce() + Vector3::Up * 5.0f) * spf);
-		if (m_pParent->GetPosition().y < m_mapHeight)
-		{
-			m_pParent->SetPositionY(m_mapHeight);
-			m_force *= -m_drag * m_repulsion * spf;
-			if(CollisionEvent != nullptr)
-				CollisionEvent(this, nullptr);
-		}
+		// Y 고정 말고 현재 Collider 피벗 따라 다르게 해야댐
+		m_pParent->SetPositionY(m_mapHeight);
+		m_pPhysics->m_force *= -m_pPhysics->m_drag * m_pPhysics->m_repulsion * spf;
+		if(CollisionEvent != nullptr)
+			CollisionEvent(this, nullptr);
 	}
 	return true;
 	accTime;
@@ -109,26 +115,26 @@ bool Collider::CollisionAllCheck(const float& spf) noexcept
 
 			vForceDis = iter->GetTotalForce();
 			vForceDisOther = GetTotalForce();
-			if (m_usePhysics)
+			if (m_pPhysics->m_usePhysics)
 			{
 				//m_force += vForceDis;
 				//D3DXVec3Normalize(&vForceDis, &m_force);
 				// 반발력
-				m_force = vForceDis + -m_force * (m_repulsion + iter->m_repulsion) * 0.5f;
+				m_pPhysics->m_force = vForceDis + -m_pPhysics->m_force * (m_pPhysics->m_repulsion + iter->m_pPhysics->m_repulsion) * 0.5f;
 				//m_pParent->Translate(-m_force * 0.001f);
 				//m_pParent->Translate(Vector3::Up * spf);
 			}
-			if (iter->m_usePhysics)
+			if (iter->m_pPhysics->m_usePhysics)
 			{
 				//iter->m_force += vForceDisOther;
 				//D3DXVec3Normalize(&vForceDisOther, &iter->m_force);
-				iter->m_force = vForceDisOther + -iter->m_force * (m_repulsion + iter->m_repulsion) * 0.5f;
+				iter->m_pPhysics->m_force = vForceDisOther + -iter->m_pPhysics->m_force * (m_pPhysics->m_repulsion + iter->m_pPhysics->m_repulsion) * 0.5f;
 				//iter->m_pParent->Translate(-iter->m_force * 0.001f);
 				//iter->m_pParent->Translate(Vector3::Up * spf);
 			}
 			// 마찰력
-			m_force		  -= (m_force		* 0.4f) * (m_drag + iter->m_drag) * 0.5f  * spf;
-			iter->m_force -= (iter->m_force * 0.4f) * (m_drag + iter->m_drag) * 0.5f  * spf;
+			m_pPhysics->m_force		  -= (m_pPhysics->m_force		* 0.4f) * (m_pPhysics->m_drag + iter->m_pPhysics->m_drag) * 0.5f  * spf;
+			iter->m_pPhysics->m_force -= (iter->m_pPhysics->m_force * 0.4f) * (m_pPhysics->m_drag + iter->m_pPhysics->m_drag) * 0.5f  * spf;
 
 			//m_force = Vector3::Zero;
 			//iter->m_force = Vector3::Zero;
@@ -734,77 +740,6 @@ void Collider::ClearCollisionList() noexcept
 	m_CollisionList.clear();
 }
 
-
-void Collider::AddForce(const D3DXVECTOR3& vForce) noexcept
-{
-	m_force += vForce;
-}
-
-void Collider::SetForce(const D3DXVECTOR3& vForce) noexcept
-{
-	m_force = vForce;
-}
-
-void Collider::SetDirectionForce(const D3DXVECTOR3& vForce) noexcept
-{
-	m_isMoving = true;
-	m_direction = vForce;
-}
-
-void Collider::OperHP(const float& value) noexcept
-{
-	m_HP += value;
-	if (m_HP <= 0.0f)
-	{
-		ObjectManager::Get().DisableObject(m_pParent);
-		//m_pParent->isEnable(false);
-		//ObjectManager::Get().PopCollider(this);
-		//ObjectManager::Get().RemoveObject(m_pParent);
-	}
-}
-
-void Collider::SetHP(const float& value) noexcept
-{
-	m_HP = value;
-	if (m_HP <= 0.0f)
-	{
-		m_pParent->isEnable(false);
-		ObjectManager::Get().PopCollider(this);
-		//ObjectManager::Get().RemoveObject(m_pParent);
-	}
-}
-
-const float& Collider::GetHP() noexcept
-{
-	return m_HP;
-}
-
-D3DXVECTOR3 Collider::GetForce() noexcept
-{
-	return m_force;
-}
-
-D3DXVECTOR3 Collider::GetTotalForce() noexcept
-{
-	return m_force + m_direction;
-}
-
-D3DXVECTOR3 Collider::GetCenter() noexcept
-{
-	return m_pParent->GetWorldPosition() + m_pivot;
-}
-
-
-float Collider::GetVelocity() noexcept
-{
-	return VectorLength(m_force + m_direction);
-}
-
-float Collider::GetVelocitySq() noexcept
-{
-	return VectorLengthSq(m_force + m_direction);
-}
-
 float Collider::GetWorldRadius() noexcept
 {
 	return m_radius * m_pParent->GetScaleAverage();
@@ -815,40 +750,11 @@ void Collider::SetRadius(const float& radius) noexcept
 	m_radius = radius;
 }
 
-
-void Collider::SetGravityScale(const float& gravityRate) noexcept
+D3DXVECTOR3 Collider::GetCenter() noexcept
 {
-	m_GravityScale = gravityRate;
+	return m_pParent->GetWorldPosition() + m_pivot;
 }
 
-//void Collider::useGravity(const bool& useGravity) noexcept
-//{
-//	m_useGravity = useGravity;
-//}
-//bool Collider::useGravity() noexcept
-//{
-//	return m_useGravity;
-//}
-
-void Collider::usePhysics(const bool& usePhysics) noexcept
-{
-	m_usePhysics = usePhysics;
-}
-bool Collider::usePhysics()	noexcept
-{
-	return m_usePhysics;
-}
-
-void Collider::isMoving(const bool& isMoving) noexcept
-{
-	m_isMoving = isMoving;
-	if (!m_isMoving)
-		m_direction = Vector3::Zero;
-}
-bool Collider::isMoving() noexcept
-{
-	return m_isMoving;
-}
 
 Component* Collider::clone() noexcept
 {

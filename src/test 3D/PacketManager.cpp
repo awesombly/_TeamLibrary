@@ -102,7 +102,7 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 		 }
 		 ObjectManager::KeyObjects[p_AnimTransform.KeyValue]->SetPosition(p_AnimTransform.Position);
 		 ObjectManager::KeyObjects[p_AnimTransform.KeyValue]->SetRotation(p_AnimTransform.Rotation);
-		 ((Collider*)ObjectManager::KeyObjects[p_AnimTransform.KeyValue]->GetComponentList(EComponent::Collider)->front())->SetForce(p_AnimTransform.Force);
+		 ObjectManager::KeyObjects[p_AnimTransform.KeyValue]->SetForce(p_AnimTransform.Force);
 		 //if ((PlayerController::EAction)p_AnimTransform.EAnimState == PlayerController::EAction::Idle)
 		 //{
 		 //	 ((Collider*)ObjectManager::KeyObjects[p_AnimTransform.KeyValue]->GetComponentList(EComponent::Collider)->front())->isMoving(false);
@@ -111,7 +111,7 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 		 {
 		  case PlayerController::EAction::Idle:
 		  {
-		 	 ((Collider*)ObjectManager::KeyObjects[p_AnimTransform.KeyValue]->GetComponentList(EComponent::Collider)->front())->isMoving(false);
+		 	 ObjectManager::KeyObjects[p_AnimTransform.KeyValue]->isMoving(false);
 		  }	break;
 		  case PlayerController::EAction::Forward:
 		  case PlayerController::EAction::ForwardLeft:
@@ -122,7 +122,7 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 		  case PlayerController::EAction::Left:
 		  case PlayerController::EAction::Right:
 		  {
-		 	((Collider*)ObjectManager::KeyObjects[p_AnimTransform.KeyValue]->GetComponentList(EComponent::Collider)->front())->SetDirectionForce(p_AnimTransform.Direction);
+		 	ObjectManager::KeyObjects[p_AnimTransform.KeyValue]->SetDirectionForce(p_AnimTransform.Direction);
 		  }	break;
 		 }
 	 }	break;
@@ -183,7 +183,7 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 void PacketManager::SendPlaySound(const string_view& soundName, const D3DXVECTOR3& position, const float& maxDistance) noexcept
 {
 	Packet_SoundData p_SoundData;
-	p_SoundData.KeyValue = ObjectManager::KeyObjects.begin()->first;// PlayerController::Get().m_keyValue;
+	p_SoundData.KeyValue = 0;// ObjectManager::KeyObjects.begin()->first;// PlayerController::Get().m_keyValue;
 	p_SoundData.Position = position;
 	p_SoundData.MaxDistance = maxDistance;
 	memcpy(p_SoundData.SoundName, soundName.data(), soundName.size());

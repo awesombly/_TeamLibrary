@@ -119,6 +119,7 @@ struct Packet_Transform
 	D3DXQUATERNION Rotation;
 };
 
+
 //struct Packet_Collider
 //{
 //	UINT KeyValue;
@@ -138,4 +139,22 @@ struct Packet_AnimTransform
 	char EAnimState;
 	char ECharacter;
 };
+
+
+struct Packet_SyncTransform
+{
+	UINT KeyValue;
+	D3DXVECTOR3 Position;
+	D3DXVECTOR3 Force;
+	D3DXQUATERNION Rotation;
+};
+
+struct Packet_SyncObjects
+{
+	UINT KeyValue;
+
+	WCHAR MsgSize;
+	Packet_SyncTransform Data[500];
+};
+
 #pragma pack(pop)

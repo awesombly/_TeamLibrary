@@ -106,6 +106,10 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
       <MinimalRebuild>false</MinimalRebuild>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -121,6 +125,7 @@ copy "*.h" "..\\..\\include\\core\\"</Command>
     </PostBuildEvent>
     <Lib>
       <AdditionalLibraryDirectories>../../fmod/lib;../../DX/Lib/x64;</AdditionalLibraryDirectories>
+      <LinkTimeCodeGeneration>true</LinkTimeCodeGeneration>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -135,6 +140,10 @@ copy "*.h" "..\\..\\include\\core\\"</Command>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <MinimalRebuild>false</MinimalRebuild>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -150,6 +159,7 @@ copy "*.h" "..\\..\\include\\core\\"</Command>
     </PostBuildEvent>
     <Lib>
       <AdditionalLibraryDirectories>../../fmod/lib;../../DX/Lib/x64;</AdditionalLibraryDirectories>
+      <LinkTimeCodeGeneration>true</LinkTimeCodeGeneration>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -235,6 +245,7 @@ copy "*.h" "..\\..\\include\\core\\"</Command>
     <ClCompile Include="CTransformer.cpp" />
     <ClCompile Include="Instancer.cpp" />
     <ClCompile Include="Light.cpp" />
+    <ClCompile Include="Physics.cpp" />
     <ClCompile Include="PlaneUI.cpp" />
     <ClCompile Include="q3Mat3.cpp" />
     <ClCompile Include="Renderer.cpp" />
@@ -274,6 +285,7 @@ copy "*.h" "..\\..\\include\\core\\"</Command>
     <ClInclude Include="CTransformer.h" />
     <ClInclude Include="Instancer.h" />
     <ClInclude Include="Light.h" />
+    <ClInclude Include="Physics.h" />
     <ClInclude Include="PlaneUI.h" />
     <ClInclude Include="q3Mat3.h" />
     <ClInclude Include="Renderer.h" />

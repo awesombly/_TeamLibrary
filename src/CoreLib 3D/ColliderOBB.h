@@ -19,5 +19,6 @@ public:
 public:
 	//friend class ObjectManager;
 	ColliderOBB(const float& radius, const D3DXVECTOR3& minPos, const D3DXVECTOR3& maxPos);
+	ColliderOBB(const D3DXVECTOR3& minPos, const D3DXVECTOR3& maxPos);
 	virtual ~ColliderOBB() = default;
 };

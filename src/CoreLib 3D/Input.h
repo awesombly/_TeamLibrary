@@ -31,7 +31,7 @@ private:
 public:
 	static POINT	   GetCursor();
 	///
-	static EKeyState   GetMouseState(const EMouseButton& mouseButton);
+	//static EKeyState   GetMouseState(const EMouseButton& mouseButton);
 	static short	   GetWheelScroll();
 	static EKeyState   GetKeyState(const WORD& keyValue);
 	static D3DXVECTOR2 GetMouseMovePos();

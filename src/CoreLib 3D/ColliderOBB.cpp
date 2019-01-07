@@ -5,9 +5,20 @@
 
 
 ColliderOBB::ColliderOBB(const float& radius, const D3DXVECTOR3& minPos, const D3DXVECTOR3& maxPos)
-	: Collider(radius)
 {
+	ObjectManager::Get().PushCollider(this);
 	Init();
+	m_radius = radius;
+	SetMinMax(minPos, maxPos);
+}
+
+
+ColliderOBB::ColliderOBB(const D3DXVECTOR3& minPos, const D3DXVECTOR3& maxPos)
+{
+	ObjectManager::Get().PushCollider(this);
+	Init();
+	auto length = maxPos - minPos;
+	m_radius = std::max<float>(std::max<float>(length.x, length.y), length.z) * 1.5f;
 	SetMinMax(minPos, maxPos);
 }
 

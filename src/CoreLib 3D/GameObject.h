@@ -1,8 +1,7 @@
 #pragma once
-//#include "header.h"
-//#include "IDxBasis.h"
 #include "Transform.h"
 #include "Component.h"
+#include "Physics.h"
 
 static UINT ObjectKeyCount = 0;
 
@@ -19,7 +18,7 @@ enum class EObjType : char {
 
 
 // 오브젝트로 기능 가능한 기본 클래스
-class GameObject : public Transform, public IDxBasis
+class GameObject : public Transform, public IDxBasis, public Physics
 {
 protected:
 	GameObject*						 m_pParent = nullptr;	 // 부모 포인터
@@ -34,18 +33,20 @@ protected:
 	bool  m_isGlobal	= false;	// ObjectManager 릴리즈시 유지 여부
 	bool  m_isStatic	= false;	// SRT 갱신 여부
 	bool  m_isBillBoard = false;	// 빌보드 행렬 적용 여부
+
+	float m_HP = 1.0f;
 	/////////////////////////////////////////////////////////////////////////////////////////
-	bool  m_isNotDelete = false;	
-	bool  m_isMoved     = true;		// 이동 했는지 여부
+	//bool  m_isNotDelete = false;	
+	//bool  m_isMoved     = true;		// 이동 했는지 여부
 protected:
-	virtual HRESULT Create()	noexcept { return S_OK; } ; // 하위호환용
+	//virtual HRESULT Create()	noexcept { return S_OK; } ; // 하위호환용
 	/////////////////////////////////////////////////////////////////////////////////////////
-	virtual void UpdateMatrix()												noexcept;
 public:
 	UINT m_keyValue;								// 유일한 키값
 	wstring	 m_myName;								// 객체 이름
 	EObjType m_objType = EObjType::Dummy;			// 객체 타입
 public:
+	virtual void UpdateMatrix()												noexcept;
 	// 컴포넌트 추가, 삭제, 검색
 	void AddComponent(Component* pComponent)								noexcept;
 	void AddComponent(const initializer_list<Component*>& components)		noexcept;
@@ -72,6 +73,9 @@ public:
 	const D3DXMATRIX& GetRotationMatrix()							  const noexcept;
 
 	void SetKeyValue(const UINT& keyValue)									noexcept;
+	void OperHP(const float& value)											noexcept;
+	void SetHP(const float& value)											noexcept;
+	const float& GetHP()											  const noexcept;
 
 	bool isEnable()															noexcept;
 	void isEnable(const bool& isEnable, const bool& putDisablePool = false) noexcept;

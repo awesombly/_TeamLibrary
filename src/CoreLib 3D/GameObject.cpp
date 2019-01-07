@@ -1,5 +1,6 @@
 #include "GameObject.h"
 #include "ObjectManager.h"
+#include "Collider.h"
 
 //GameObject::GameObject()
 //{
@@ -68,6 +69,20 @@ bool GameObject::Frame(const float& spf, const float& accTime) noexcept
 	for (auto& iter : m_childList)
 	{
 		iter->Frame(spf, accTime);
+	}
+	if (m_pPhysics != nullptr)
+	{
+		// 중력
+		m_pPhysics->m_force += Vector3::Down * m_pPhysics->m_GravityScale * GravityPower * spf;
+		// 항력
+		m_pPhysics->m_force -= m_pPhysics->m_force * m_pPhysics->m_damping * spf;
+
+		// 힘 적용
+		if (GetVelocitySq() > 60.0f)
+		{
+			//m_pParent->isMoved(true);
+			m_pParent->GetRoot()->Translate((GetTotalForce() + Vector3::Up * 5.0f) * spf);
+		}
 	}
 	return true;
 }
@@ -215,6 +230,13 @@ void GameObject::AddComponent(Component* pComponent) noexcept
 {
 	pComponent->m_pParent = this;
 	m_components[pComponent->m_comptType].push_front(pComponent);
+	// Collider 일시
+	if (pComponent->m_comptType == EComponent::Collider)
+	{
+		if(m_pPhysics == nullptr)
+			m_pPhysics = new PhysicsInfo();
+		((Collider*)pComponent)->m_pPhysics = m_pPhysics;
+	}
 }
 
 void GameObject::AddComponent(const initializer_list<Component*>& components) noexcept
@@ -223,6 +245,13 @@ void GameObject::AddComponent(const initializer_list<Component*>& components) no
 	{
 		iter->m_pParent = this;
 		m_components[iter->m_comptType].push_front(iter);
+		// Collider 일시
+		if (iter->m_comptType == EComponent::Collider)
+		{
+			if (m_pPhysics == nullptr)
+				m_pPhysics = new PhysicsInfo();
+			((Collider*)iter)->m_pPhysics = m_pPhysics;
+		}
 	}
 }
 
@@ -298,26 +327,6 @@ const D3DXMATRIX& GameObject::GetRotationMatrix() const noexcept
 	return m_matRotation;
 }
 
-void GameObject::SetKeyValue(const UINT& keyValue) noexcept
-{
-	auto finder = ObjectManager::KeyObjects.find(m_keyValue);
-	if (finder != ObjectManager::KeyObjects.end())
-	{
-		if (finder->second == this)
-		{
-			ObjectManager::KeyObjects.erase(m_keyValue);
-		}
-		//else
-		//{
-		//	ErrorMessage(""s + __FUNCTION__ + " -> 중복된 키값!");
-		//	return;
-		//}
-	}
-	
-	ObjectManager::KeyObjects[m_keyValue = keyValue] = this;
-}
-
-
 
 void GameObject::isEnable(const bool& isEnable, const bool& putDisable) noexcept
 {
@@ -361,14 +370,54 @@ bool GameObject::isBillBoard() noexcept
 	return m_isBillBoard;
 }
 
-//bool GameObject::isMoved() noexcept
-//{
-//	return m_isMoved;
-//}
-//void GameObject::isMoved(const bool& isMoved)	noexcept
-//{
-//	m_isMoved = isMoved;
-//}
+
+void GameObject::SetKeyValue(const UINT& keyValue) noexcept
+{
+	auto finder = ObjectManager::KeyObjects.find(m_keyValue);
+	if (finder != ObjectManager::KeyObjects.end())
+	{
+		if (finder->second == this)
+		{
+			ObjectManager::KeyObjects.erase(m_keyValue);
+		}
+		//else
+		//{
+		//	ErrorMessage(""s + __FUNCTION__ + " -> 중복된 키값!");
+		//	return;
+		//}
+	}
+	
+	ObjectManager::KeyObjects[m_keyValue = keyValue] = this;
+}
+
+void GameObject::OperHP(const float& value) noexcept
+{
+	m_HP += value;
+	if (m_HP <= 0.0f)
+	{
+		ObjectManager::Get().DisableObject(this);
+		//m_pParent->isEnable(false);
+		//ObjectManager::Get().PopCollider(this);
+		//ObjectManager::Get().RemoveObject(m_pParent);
+	}
+}
+
+void GameObject::SetHP(const float& value) noexcept
+{
+	m_HP = value;
+	if (m_HP <= 0.0f)
+	{
+		ObjectManager::Get().DisableObject(this);
+		//m_pParent->isEnable(false);
+		//ObjectManager::Get().PopCollider(this);
+		//ObjectManager::Get().RemoveObject(m_pParent);
+	}
+}
+
+const float& GameObject::GetHP() const noexcept
+{
+	return m_HP;
+}
 
 GameObject* GameObject::clone() noexcept
 {
