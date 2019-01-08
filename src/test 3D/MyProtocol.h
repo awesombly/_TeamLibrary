@@ -16,7 +16,7 @@
 #define PACKET_TakeObject			1013
 //#define PACKET_MouseRotate			1014
 #define PACKET_ChatMessage			1015
-#define PACKET_SyncObjects				1016
+#define PACKET_SyncObjects			1016
 
 #define PACKET_ReqSync				2000
 #define PACKET_ReqSyncSpawns		2001

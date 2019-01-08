@@ -102,7 +102,8 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 		 }
 		 ObjectManager::KeyObjects[p_AnimTransform.KeyValue]->SetPosition(p_AnimTransform.Position);
 		 ObjectManager::KeyObjects[p_AnimTransform.KeyValue]->SetRotation(p_AnimTransform.Rotation);
-		 ObjectManager::KeyObjects[p_AnimTransform.KeyValue]->SetForce(p_AnimTransform.Force);
+		 if(ObjectManager::KeyObjects[p_AnimTransform.KeyValue]->m_pPhysics != nullptr)
+			ObjectManager::KeyObjects[p_AnimTransform.KeyValue]->SetForce(p_AnimTransform.Force);
 		 //if ((PlayerController::EAction)p_AnimTransform.EAnimState == PlayerController::EAction::Idle)
 		 //{
 		 //	 ((Collider*)ObjectManager::KeyObjects[p_AnimTransform.KeyValue]->GetComponentList(EComponent::Collider)->front())->isMoving(false);
