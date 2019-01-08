@@ -124,7 +124,7 @@ bool GameScene::Init() noexcept
 	// CheckBox
 	m_pCheckBox = (JCheckCtrl*)pUIRoot->find_child(L"temp_Check0");
 	// Timer
-	m_TimerText = (JTextCtrl*)pUIRoot->find_child(L"Timer_Text");
+	m_Rule.m_TimerText = (JTextCtrl*)pUIRoot->find_child(L"Timer_Text");
 
 	// Chatting
 	static auto pChatWheel = [](void* pVoid) {
@@ -162,67 +162,64 @@ bool GameScene::Init() noexcept
 // 프레임
 bool GameScene::Frame() noexcept
 {
-	// IME 채팅
-	if (PlayerController::Get().isChatting())
-	{
-		m_chatMessage = ime::Get()->GetString();
-	}
-	if (Input::GetKeyState(VK_RETURN) == EKeyState::DOWN)
-	{
+
+		// IME 채팅
 		if (PlayerController::Get().isChatting())
 		{
-			static size_t strSize = 0;
-			strSize = m_chatMessage.size() * 2;
-			strSize = strSize > 200 ? 200 : strSize;
-			// 패킷 전송
-			Packet_ChatMessage p_ChatMessage;
-			p_ChatMessage.KeyValue = ObjectManager::KeyObjects.begin()->first;// PlayerController::Get().m_keyValue;
-			memcpy(p_ChatMessage.Message, m_chatMessage.data(), strSize);
-			p_ChatMessage.MsgSize = (UCHAR)strSize;
-			PacketManager::Get().SendPacket((char*)&p_ChatMessage, (USHORT)(PS_ChatMessage + strSize), PACKET_ChatMessage);
-
-			m_chatMessage.clear();
-			ime::Get()->imeEnd();
-			PlayerController::Get().isChatting(false);
+			m_chatMessage = ime::Get()->GetString();
 		}
-		else
+		if (Input::GetKeyState(VK_RETURN) == EKeyState::DOWN)
 		{
-			PlayerController::Get().isChatting(true);
-			ime::Get()->imeStart();
+			if (PlayerController::Get().isChatting())
+			{
+				static size_t strSize = 0;
+				strSize = m_chatMessage.size() * 2;
+				strSize = strSize > 200 ? 200 : strSize;
+				// 패킷 전송
+				Packet_ChatMessage p_ChatMessage;
+				p_ChatMessage.KeyValue = ObjectManager::KeyObjects.begin()->first;// PlayerController::Get().m_keyValue;
+				memcpy(p_ChatMessage.Message, m_chatMessage.data(), strSize);
+				p_ChatMessage.MsgSize = (UCHAR)strSize;
+				PacketManager::Get().SendPacket((char*)&p_ChatMessage, (USHORT)(PS_ChatMessage + strSize), PACKET_ChatMessage);
+
+				m_chatMessage.clear();
+				ime::Get()->imeEnd();
+				PlayerController::Get().isChatting(false);
+			}
+			else
+			{
+				PlayerController::Get().isChatting(true);
+				ime::Get()->imeStart();
+			}
 		}
-	}
 
-	// 플레이어 변경
-	if (Input::GetKeyState(VK_TAB) == EKeyState::DOWN)
-	{
-		static auto curCollider = ObjectManager::Get().GetColliderList().begin();
-		if (curCollider == ObjectManager::Get().GetColliderList().end())
-			curCollider = ObjectManager::Get().GetColliderList().begin();
-		if (++curCollider == ObjectManager::Get().GetColliderList().end())
-			curCollider = ObjectManager::Get().GetColliderList().begin();
+		// 플레이어 변경
+		if (Input::GetKeyState(VK_TAB) == EKeyState::DOWN)
+		{
+			static auto curCollider = ObjectManager::Get().GetColliderList().begin();
+			if (curCollider == ObjectManager::Get().GetColliderList().end())
+				curCollider = ObjectManager::Get().GetColliderList().begin();
+			if (++curCollider == ObjectManager::Get().GetColliderList().end())
+				curCollider = ObjectManager::Get().GetColliderList().begin();
 
-		m_pPlayer->Possess((*curCollider)->m_pParent);
-		//SoundManager::Get().m_pListenerPos = &(*curCollider)->m_pParent->GetRoot()->GetPosition();
-	}
+			m_pPlayer->Possess((*curCollider)->m_pParent);
+			//SoundManager::Get().m_pListenerPos = &(*curCollider)->m_pParent->GetRoot()->GetPosition();
+		}
+		
+
+
+	
+
+
+
+
 	// 시간 출력
-
-
-
-	if (m_Rule.m_bSeek==true)
-	{
-		m_TimerText->m_Text = to_wstring(m_Rule.GetPlayTime()-Timer::AccumulateTime).substr(0, 5);
-	}
-	else
-	{
-		m_TimerText->m_Text = to_wstring(m_Rule.GetHideTime()-Timer::AccumulateTime).substr(0, 5);
-	}
-
-	
-	
+	m_Rule.Frame();
 	///
 	m_pMapTree->Frame();
 	DxManager::Get().Frame();
 	ObjectManager::Get().Frame(Timer::SPF, Timer::AccumulateTime);
+
 	SoundManager::Get().Frame();
 
 	// 맵 높이
@@ -266,6 +263,7 @@ bool GameScene::Release() noexcept
 	ObjectManager::Cameras[ECamera::Main]->CutParent();
 	ObjectManager::Get().PopObject(ObjectManager::Cameras[ECamera::Main]);
 	ObjectManager::Get().Release();
+	m_Rule.Release();
 	return true;
 }
 
