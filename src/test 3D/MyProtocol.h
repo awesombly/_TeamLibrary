@@ -11,12 +11,11 @@
 #define PACKET_Rotate				1005
 #define PACKET_Scaling				1006
 #define PACKET_SetAnimTransform		1008
-//#define PACKET_MouseRotate			1014
-
+// ¿¹¿Ü
 #define PACKET_ReqSync				2000
 #define PACKET_ReqSyncSpawns		2001
 #define PACKET_ReqAddPlayer			2002
-
+// Key X
 #define PACKET_SyncObjects			3016
 #define PACKET_ChatMessage			3015
 #define PACKET_PlaySound			3012

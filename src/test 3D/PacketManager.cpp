@@ -46,9 +46,10 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 	static Packet_SoundData		p_SoundData;
 	static Packet_ChatMessage	p_ChatMessage;
 	static Packet_TakeObject	p_TakeObject;
+	static Packet_SyncObjects	p_SyncObjects;
 
 	memcpy(&p_KeyValue, data, sizeof(Packet_KeyValue));
-	if (sendMode			< 3000 &&
+	if (sendMode			< 2000 &&
 		p_KeyValue.KeyValue != (UINT)-1			 &&
 		ObjectManager::KeyObjects.find(p_KeyValue.KeyValue) == ObjectManager::KeyObjects.end())
 	{
@@ -129,18 +130,6 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 		  }	break;
 		 }
 	 }	break;
-	//case PACKET_ReqAddPlayer:
-	//{
-	//	 memcpy(&p_Vector3, data, sizeof(Packet_Vector3));
-	//	 //UINT tempCount = ObjectKeyCount;
-	//	 
-	//	 //PacketManager::Get().PlayerKeyCount = p_Vector3.KeyValue;
-	//	 auto pObject = ObjectManager::Get().TakeObject(L"Guard");
-	//	 pObject->SetPosition(p_Vector3.Vec3);
-	//	 pObject->SetKeyValue(p_Vector3.KeyValue);
-	//	 
-	//	 //ObjectKeyCount = tempCount;
-	//}	break;
 	 case PACKET_TakeObject:
 	 {
 		 ZeroMemory(&p_TakeObject, sizeof(Packet_TakeObject));
@@ -172,6 +161,19 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 		 memcpy(((char*)&p_ChatMessage + PS_ChatMessage), ((char*)data + PS_ChatMessage), p_ChatMessage.MsgSize);
 		 m_pChatList->push_string(p_ChatMessage.Message);
 		 m_pChatList->m_fValue = 0.0f;
+	 }	break;
+	 case PS_SyncObjects:
+	 {
+		 memcpy(&p_SyncObjects, data, PS_SyncObjects);
+		 memcpy(((char*)&p_SyncObjects + PS_SyncObjects), ((char*)data + PS_SyncObjects), p_SyncObjects.Count * sizeof(Packet_SyncTransform));
+		 
+		 for (int i = 0; i < p_SyncObjects.Count; ++i)
+		 {
+			 ObjectManager::KeyObjects[p_SyncObjects.Data[i].KeyValue]->SetPosition(p_SyncObjects.Data[i].Position);
+			 ObjectManager::KeyObjects[p_SyncObjects.Data[i].KeyValue]->SetRotation(p_SyncObjects.Data[i].Rotation);
+			 if(ObjectManager::KeyObjects[p_SyncObjects.Data[i].KeyValue]->m_pPhysics != nullptr)
+				ObjectManager::KeyObjects[p_SyncObjects.Data[i].KeyValue]->SetForce(p_SyncObjects.Data[i].Force);
+		 }
 	 }	break;
 	 default:
 	 {
