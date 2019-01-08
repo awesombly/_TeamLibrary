@@ -65,13 +65,16 @@ bool GameScene::Init() noexcept
 		//m_pChicken->AddComponent(pCollider);
 		//ObjectManager::Get().SetProtoObject(m_pChicken);
 	}
+	//ParticleSystem* pComp = nullptr;
+	//PlayerController::Get().m_Parser.CreateFromFile(&pComp, L"Fire.eff", L"../../data/script");
 	m_pHero = (AHeroObj*)ObjectManager::Get().TakeObject(L"Guard");
+	//m_pHero->AddComponent(pComp);
 	m_pPlayer->Possess(m_pHero);
 	m_pPlayer->ResetOption();
-	
+
 	GameObject* pEffect = nullptr;
 	PlayerController::Get().m_Parser.CreateFromFile(&pEffect, L"Snow.eff", L"../../data/script");
-	pEffect->SetPosition(Vector3::Up * 250.0f);
+	pEffect->SetPosition(Vector3::Up * 300.0f);
 	ObjectManager::Get().PushObject(pEffect);
 	ObjectManager::Get().TakeObject(L"Guard")  ->SetPosition(RandomNormal() * 1000.0f - 500.0f, RandomNormal() * 500.0f, RandomNormal() * 1000.0f - 500.0f);
 	ObjectManager::Get().TakeObject(L"Zombie") ->SetPosition(RandomNormal() * 1000.0f - 500.0f, RandomNormal() * 500.0f, RandomNormal() * 1000.0f - 500.0f);

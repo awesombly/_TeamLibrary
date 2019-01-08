@@ -33,7 +33,7 @@ struct MaterialData
 	MaterialData* pParent = nullptr;
 };
 
-
+class ParticleSystem;
 
 class MaxImporter
 {
@@ -71,6 +71,7 @@ private:
 public:
 	// 파일 불러오고 객체 생성후 반환
 	bool CreateFromFile(GameObject** ppReturnObj, const wstring_view& fileName, const wstring_view& directory = L"..\\..\\data") noexcept;
+	bool CreateFromFile(ParticleSystem** ppReturnObj, const wstring_view& fileName, const wstring_view& directory = L"..\\..\\data")	noexcept;
 public:
 	MaxImporter() noexcept;
 	virtual ~MaxImporter() = default;

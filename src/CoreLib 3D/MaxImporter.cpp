@@ -34,7 +34,6 @@ void MaxImporter::Clear() noexcept
 void MaxImporter::LoadParticleSystem(GameObject** ppReturnObj) noexcept
 {
 	m_curLineIter = m_LineBuffers.begin();
-	//m_curLineIter != m_LineBuffers.end();
 	// Particle
 	string objName, srcName;
 	(*++m_curLineIter) >> m_subString >> objName >> srcName;
@@ -50,6 +49,38 @@ void MaxImporter::LoadParticleSystem(GameObject** ppReturnObj) noexcept
 	(*ppReturnObj)->m_objType = EObjType::Object;
 	(*ppReturnObj)->AddComponent(pParticle);
 	pParticle->Update();
+}
+
+bool MaxImporter::CreateFromFile(ParticleSystem** ppReturnComp, const wstring_view& fileName, const wstring_view& directory)	noexcept
+{
+	Clear();
+	m_filePath = m_filePath / directory.data() / fileName.data();
+
+	// 연결
+	ifstream readStream(m_filePath);
+	if (!readStream.is_open())
+		return false;
+	// 파일 크기 얻기
+	readStream.seekg(0, ios::end);
+	m_fileSize = readStream.tellg();
+	readStream.seekg(0, ios::beg);
+
+	m_LineBuffers.emplace_front("");
+	m_curLineIter = m_LineBuffers.begin();
+	while (std::getline(readStream, m_subString))
+	{
+		m_LineBuffers.emplace_after(m_curLineIter, m_subString);
+		++m_curLineIter;
+	}
+
+	m_curLineIter = m_LineBuffers.begin();
+	// Particle
+	string objName, srcName;
+	(*++m_curLineIter) >> m_subString >> objName >> srcName;
+
+	*ppReturnComp = new ParticleSystem(CharToWChar(objName.c_str()), new Particle(), CharToWChar(srcName.c_str()));
+	(*++m_curLineIter).read((char*)(ParticleInfo*)(*ppReturnComp), sizeof(ParticleInfo));
+	return true;
 }
 
 bool MaxImporter::CreateFromFile(GameObject** ppReturnObj, const wstring_view& fileName, const wstring_view& directory) noexcept

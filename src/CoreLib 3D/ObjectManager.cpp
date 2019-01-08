@@ -420,7 +420,7 @@ void ObjectManager::DisableObject(GameObject* pObject) noexcept
 
 bool ObjectManager::RemoveObject(GameObject* pObject) noexcept
 {
-	if (pObject == nullptr || pObject->isGlobal())
+	if (pObject->isGlobal())
 	{
 		ErrorMessage(L""s + __FUNCTIONW__ + L" -> " + pObject->m_myName + L" : 삭제할 수 없는 오브젝트!");
 		return false;

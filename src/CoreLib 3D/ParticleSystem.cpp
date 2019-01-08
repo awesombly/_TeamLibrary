@@ -36,6 +36,7 @@ bool ParticleSystem::Frame(const float& spf, const float& accTime) noexcept
 	if (m_curLife >= m_lifeTime)
 	{
 		m_isEnable = false;
+		ObjectManager::Get().RemoveComponent(this);
 		return false;
 	}
 	if (m_frameCount >= m_spawnInterval)
