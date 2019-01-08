@@ -5,6 +5,8 @@
 #include "XObjectManager.h"
 #include "uiheader.h"
 
+#include "GameRule.h"
+
 class GameScene : public MainClass
 {
 public:
@@ -20,6 +22,9 @@ public:
 	JSliderCtrl* m_pVolume		= nullptr;
 	JSliderCtrl* m_pMouseSense  = nullptr;
 	wstring		 m_chatMessage;
+
+	GameRule	m_Rule;
+
 public:
 	void DrawBoundingBox()	noexcept;
 

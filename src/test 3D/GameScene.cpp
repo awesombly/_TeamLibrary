@@ -205,7 +205,20 @@ bool GameScene::Frame() noexcept
 		//SoundManager::Get().m_pListenerPos = &(*curCollider)->m_pParent->GetRoot()->GetPosition();
 	}
 	// 시간 출력
-	m_TimerText->m_Text = to_wstring(Timer::AccumulateTime).substr(0, 5);
+
+
+
+	if (m_Rule.m_bSeek==true)
+	{
+		m_TimerText->m_Text = to_wstring(m_Rule.GetPlayTime()-Timer::AccumulateTime).substr(0, 5);
+	}
+	else
+	{
+		m_TimerText->m_Text = to_wstring(m_Rule.GetHideTime()-Timer::AccumulateTime).substr(0, 5);
+	}
+
+	
+	
 	///
 	m_pMapTree->Frame();
 	DxManager::Get().Frame();

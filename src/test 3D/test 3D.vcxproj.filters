@@ -22,6 +22,7 @@
     <ClCompile Include="BoundingUI.cpp">
       <Filter>Etc</Filter>
     </ClCompile>
+    <ClCompile Include="GameRule.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainClass.h">
@@ -48,6 +49,7 @@
     <ClInclude Include="BoundingUI.h">
       <Filter>Etc</Filter>
     </ClInclude>
+    <ClInclude Include="GameRule.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="MainCore">
