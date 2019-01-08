@@ -47,12 +47,14 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 	static Packet_ChatMessage	p_ChatMessage;
 	static Packet_TakeObject	p_TakeObject;
 
-	//memcpy(&p_KeyValue, data, sizeof(Packet_KeyValue));
-	//if (ObjectManager::KeyObjects[p_KeyValue.KeyValue] == nullptr)
-	//{
-	//	ErrorMessage("KeyObject is Null : " + to_string(p_KeyValue.KeyValue));
-	//	//return;
-	//}
+	memcpy(&p_KeyValue, data, sizeof(Packet_KeyValue));
+	if (sendMode			< 3000 &&
+		p_KeyValue.KeyValue != (UINT)-1			 &&
+		ObjectManager::KeyObjects.find(p_KeyValue.KeyValue) == ObjectManager::KeyObjects.end())
+	{
+		ErrorMessage("KeyObject is Null : " + to_string(p_KeyValue.KeyValue));
+		//return;
+	}
 
 	switch (sendMode)
 	{

@@ -1,8 +1,8 @@
 #pragma once
-#include "MainClass.h"
+#include "IBasis.h"
 #include "uiheader.h"
 
-class GameRule : MainClass
+class GameRule : public IBasis
 {
 protected:
 	float m_fPlayTime;
@@ -11,9 +11,6 @@ protected:
 	bool  m_bGameEnd;
 public:
 	JTextCtrl*	 m_TimerText;
-
-
-
 public:
 	float GetPlayTime();
 	float GetHideTime();

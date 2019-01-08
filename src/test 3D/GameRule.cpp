@@ -1,4 +1,5 @@
 #include "GameRule.h"
+#include "WriteManager.h"
 
 
 bool GameRule::Init() noexcept

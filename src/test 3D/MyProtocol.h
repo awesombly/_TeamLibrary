@@ -11,16 +11,17 @@
 #define PACKET_Rotate				1005
 #define PACKET_Scaling				1006
 #define PACKET_SetAnimTransform		1008
-#define PACKET_PossessPlayer		1011
-#define PACKET_PlaySound			1012
-#define PACKET_TakeObject			1013
 //#define PACKET_MouseRotate			1014
-#define PACKET_ChatMessage			1015
-#define PACKET_SyncObjects			1016
 
 #define PACKET_ReqSync				2000
 #define PACKET_ReqSyncSpawns		2001
 #define PACKET_ReqAddPlayer			2002
+
+#define PACKET_SyncObjects			3016
+#define PACKET_ChatMessage			3015
+#define PACKET_PlaySound			3012
+#define PACKET_PossessPlayer		3011
+#define PACKET_TakeObject			3013
 
 // 패킷 데이터 제외 사이즈
 #define PS_PlaySound				21
