@@ -9,7 +9,7 @@ namespace UI
 		virtual bool Create(ID3D11Device* pDevice, const char* PSName = "PS", const TCHAR* szShaderName = L"../../data/ui/shader/DefaultUI.hlsl");
 		bool SetTexture(ID3D11Device* pDevice, const TCHAR* txName = NULL);
 	public:
-		bool Frame(const float& spf, const float& accTime)noexcept override;
+		//bool Frame(const float& spf, const float& accTime)noexcept override;
 		bool Render(ID3D11DeviceContext* pContext)noexcept override;
 		bool Release()noexcept override;
 	public:

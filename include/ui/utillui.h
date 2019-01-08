@@ -2,6 +2,8 @@
 #pragma warning (disable : 4005)
 #pragma warning (disable : 4477)
 #pragma warning (disable : 4172)
+#pragma warning (disable : 4505)
+#pragma warning (disable : 4100)
 #include <windows.h>
 #include <windowsx.h>
 #include "stdio.h"
@@ -20,6 +22,7 @@
 #include <random>
 #include <algorithm>
 #include <imm.h>
+#include <locale.h>
 using namespace std;
 
 namespace UI

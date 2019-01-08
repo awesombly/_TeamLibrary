@@ -9,12 +9,15 @@ namespace UI
 	public:
 		JSpriteCtrl* m_pSprite;
 		vector<JParticle*> m_pParticle;
+		list<JParticle*> m_pRealParticle;
 	public:
 		int	  m_iMaxParticle;
 	public:
 		bool m_bTurnX;
 		bool m_bTurnY;
 		bool m_bTurnZ;
+	public:
+		bool m_bStartPosRand = false;
 	public:
 		float m_fMinScale;
 		float m_fMaxScale;
@@ -33,6 +36,7 @@ namespace UI
 		D3DXVECTOR4 m_vMinColor;
 		D3DXVECTOR4 m_vMaxColor;
 	public:
+		void Play();
 		bool Create(ID3D11Device* pDevice, int iMaxParticle, float fAnimTime, vector<T_STR> FileList,
 			const char* PSName = "PS", const TCHAR* szShaderName = L"../../data/ui/shader/DefaultUI.hlsl");
 	public:

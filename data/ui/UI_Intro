@@ -55,7 +55,7 @@
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 50.000000 20.000000 1.000000
 ^strText Host
-^TextSize 15.000000
+^TextSize 25.000000
 ^tx_Normal btn_177.png
 ^tx_Hover btn_176.png
 ^tx_Press btn_176.png
@@ -74,7 +74,7 @@
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 50.000000 20.000000 1.000000
 ^strText Guest
-^TextSize 15.000000
+^TextSize 25.000000
 ^tx_Normal btn_177.png
 ^tx_Hover btn_176.png
 ^tx_Press btn_176.png
@@ -93,7 +93,7 @@
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 50.000000 20.000000 1.000000
 ^strText Exit
-^TextSize 15.000000
+^TextSize 25.000000
 ^tx_Normal btn_177.png
 ^tx_Hover btn_176.png
 ^tx_Press btn_176.png
@@ -190,6 +190,7 @@
 ^NodeName Icon_Sprite
 ^ParentName Root
 ^bRender 1
+^bLoop 1
 ^Position 357.049255 178.286285 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 40.000000 40.000000 1.000000

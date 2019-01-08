@@ -54,7 +54,10 @@ namespace UI
 		std::pair<void(*)(void*), void*> EventHover;
 		std::pair<void(*)(void*), void*> EventPress;
 		std::pair<void(*)(void*), void*> EventClick; 
-		std::pair<void(*)(void*), void*> EventDefault;
+		std::pair<void(*)(void*), void*> PreEvent;
+		std::pair<void(*)(void*), void*> PostEvent;
+	private:
+		static void E_DEFAULT(void* vp) {}
 	public:
 		bool				m_bRender = true; // Render 여부 확인
 		JPanel*				m_pParent = nullptr;
@@ -81,6 +84,8 @@ namespace UI
 		void rtUpdate();
 	public:
 		bool Init() noexcept override;
+		bool PreFrame(const float& spf, const float& accTime);
+		bool PostFrame(const float& spf, const float& accTime);
 		bool Frame(const float& spf, const float& accTime) noexcept override;
 		bool Render(ID3D11DeviceContext* pContext) noexcept override;
 		bool Release() noexcept override;

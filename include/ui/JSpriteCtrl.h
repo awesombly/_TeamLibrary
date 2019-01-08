@@ -12,6 +12,8 @@ namespace UI
 	{
 	public:
 		SpriteType m_SpriteType = TEXSPRITE;
+		bool m_bPlay = true;
+		bool m_bLoop = true;
 		int	m_iRows;
 		int m_iCols;
 		float m_fUVRows; //  1.0f / row;
@@ -25,6 +27,7 @@ namespace UI
 		float m_fChangeTime; // 텍스쳐가 바뀌는 시간 (m_fAnimTime / m_iNumTexture)
 		float m_fAnimTime; // Animation이 돌아가는 시간 (1초(animtime)에 10장의 텍스쳐를 교체해라.)
 	public:
+		void Play();
 		bool Create(ID3D11Device* pDevice, float fAnimTime, vector<T_STR> FileList, const char* PSName = "PS", const TCHAR* szShaderName = L"../../data/ui/shader/DefaultUI.hlsl");
 		void SetAnimTime(float fAnim);
 		void SetUV(int row, int col);

@@ -5,41 +5,6 @@
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 1.000000 1.000000 1.000000
 
-^Type 784
-
-^SpriteType 6429
-^NodeName tempParticle0
-^ParentName Root
-^bRender 1
-^Position -3.000000 3.000000 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 0.000000 0.000000 1.000000
-^AnimTime 1.000000
-^AnimUV 0 0 
-^ParticleSize 128
-^ParticleScale 2.500000 5.000000
-^MinStartPos -400.000000 300.000000 1.000000
-^MaxStartPos 400.000000 300.000000 1.000000
-^TurnDir 0 0 0
-^MinColor 1.000000 1.000000 1.000000 1.000000
-^MaxColor 1.000000 1.000000 1.000000 1.000000
-^LifeTime 10.000000 10.000000
-^MinDir -1.000000 -1.000000 0.000000
-^MaxDir 1.000000 -1.000000 0.000000
-^MinDirAngle 0.000000 0.000000 -1.000000 1.000000
-^MaxDirAngle 0.000000 0.000000 1.000000 1.000000
-^MoveSpeed 50.000000 80.000000
-^RotSpeed 1.000000 1.000000
-^SPRITESTART 1
-^PropertyButtonFavouriteFill-468cdd1c31f3046448a59ed378113993-1.png
-^SPRITEEND
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick 
-
 ^Type 778
 ^NodeName Setting
 ^ParentName Root
@@ -69,14 +34,14 @@
 ^NodeName Timer_Text
 ^ParentName Time_Panel
 ^bRender 1
-^Position 23.014229 279.001953 0.000000
+^Position 0.000000 277.166290 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 30.000000 15.000000 1.000000
-^strText Timer
-^TextSize 15.000000
-^tx_Normal White.png
-^tx_Hover White.png
-^tx_Press White.png
+^strText Å¸ÀÌ¹«!
+^TextSize 20.000000
+^tx_Normal Alpha.png
+^tx_Hover Alpha.png
+^tx_Press Alpha.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -88,12 +53,12 @@
 ^NodeName Timer_Img
 ^ParentName Time_Panel
 ^bRender 1
-^Position -25.979631 278.835205 0.000000
+^Position -50.000000 285.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale -15.000000 15.000000 1.000000
-^tx_Normal icon_455.png
-^tx_Hover icon_455.png
-^tx_Press icon_455.png
+^tx_Normal sdfsdfsdf57.png
+^tx_Hover sdfsdfsdf57.png
+^tx_Press sdfsdfsdf57.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -101,21 +66,33 @@
 ^pfEventClick 7274
 ^vpEventClick 
 
-^Type 782
-
-^SpriteType 6429
-^NodeName temp_Sprite0
-^ParentName Root
+^Type 778
+^NodeName Timer_Img2
+^ParentName Time_Panel
 ^bRender 1
-^Position 120.000000 276.000000 0.000000
+^Position 50.000000 285.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 25.000000 25.000000 1.000000
-^AnimTime 0.200000
-^AnimUV 0 0 
-^SPRITESTART 2 
-^train_scoop_02-sharedassets2.assets.split0-185.png
-^train_scoop_03-sharedassets2.assets.split0-199.png
-^SPRITEEND
+^Scale 15.000000 15.000000 1.000000
+^tx_Normal sdfsdfsdf57.png
+^tx_Hover sdfsdfsdf57.png
+^tx_Press sdfsdfsdf57.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 778
+^NodeName Timer_Img3
+^ParentName Time_Panel
+^bRender 1
+^Position 0.000000 259.500061 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 50.000000 10.000000 1.000000
+^tx_Normal dffdfdfdf.png
+^tx_Hover dffdfdfdf.png
+^tx_Press dffdfdfdf.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -127,7 +104,7 @@
 ^NodeName temp_Check0
 ^ParentName Root
 ^bRender 1
-^Position 81.000000 280.000000 0.000000
+^Position 365.000000 275.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 25.000000 25.000000 1.000000
 ^tx_Disable common_btn_check_selected.png
@@ -252,7 +229,7 @@
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 3.000000 23.000000 1.000000
 ^tx_Bar White.png
-^tx_Handle Shadow-1ea2ccfcbd09d4bab993293b98e2aafd-1.png
+^tx_Handle PropertyButtonFavouriteFilled-f49031973d301466f8844bd153a56efc-1.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -262,14 +239,14 @@
 
 ^Type 780
 
-^VHType 1447
+^VHType 1446
 ^NodeName Skill_0
 ^ParentName Game_Panel
 ^bRender 1
 ^Position 368.333008 -261.166260 0.000000
-^Rotate 0.000000 0.000000 1.570796
+^Rotate 0.000000 0.000000 0.000000
 ^Scale 26.000000 26.000000 1.000000
-^tx_BackGround axe_mobile-d4d9e8a208f1f964783b426340fc8c29-1.png
+^tx_BackGround UI_SP01-sharedassets1.assets.split0-108.png
 ^tx_FrontGround black.png
 ^pfEventHover 7274
 ^vpEventHover 
@@ -311,7 +288,7 @@
 ^bRender 1
 ^Position 40.000000 120.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 140.000000 5.000000 1.000000
+^Scale 140.000000 1.000000 1.000000
 ^tx_Bar blue.png
 ^tx_Handle filled-circle_icon-icons.com_72757.png
 ^pfEventHover 7274
@@ -346,7 +323,7 @@
 ^bRender 1
 ^Position 40.000000 40.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 140.000000 5.000000 1.000000
+^Scale 140.000000 1.000000 1.000000
 ^tx_Bar blue.png
 ^tx_Handle filled-circle_icon-icons.com_72757.png
 ^pfEventHover 7274
@@ -397,8 +374,8 @@
 ^Position 124.177338 -153.675186 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 50.000000 20.000000 1.000000
-^strText GameExit
-^TextSize 15.000000
+^strText Exit
+^TextSize 25.000000
 ^tx_Normal btn_076.png
 ^tx_Hover btn_077.png
 ^tx_Press btn_077.png
@@ -415,6 +392,7 @@
 ^NodeName temp_sprite1
 ^ParentName Set_Panel
 ^bRender 1
+^bLoop 1
 ^Position 42.340454 -149.452454 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 27.000000 27.000000 1.000000
@@ -429,6 +407,66 @@
 ^icn_sensation.png
 ^icn_violence.png
 ^icn_rate_18.png
+^SPRITEEND
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 777
+^NodeName ZombieWin
+^ParentName Root
+^bRender 0
+^Position 0.000000 0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 1.000000 1.000000 1.000000
+
+^Type 782
+
+^SpriteType 6429
+^NodeName Z_Win
+^ParentName ZombieWin
+^bRender 1
+^bLoop 1
+^Position 20.000000 300.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 512.000000 512.000000 1.000000
+^AnimTime 1.000000
+^AnimUV 0 0 
+^SPRITESTART 1 
+^Zombie Win.png
+^SPRITEEND
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 777
+^NodeName GuardWin
+^ParentName Root
+^bRender 0
+^Position 0.000000 0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 1.000000 1.000000 1.000000
+
+^Type 782
+
+^SpriteType 6429
+^NodeName G_Win
+^ParentName GuardWin
+^bRender 1
+^bLoop 1
+^Position 20.000000 300.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 512.000000 512.000000 1.000000
+^AnimTime 1.000000
+^AnimUV 0 0 
+^SPRITESTART 1 
+^Guard Win.png
 ^SPRITEEND
 ^pfEventHover 7274
 ^vpEventHover 

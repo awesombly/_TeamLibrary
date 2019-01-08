@@ -29,7 +29,7 @@ namespace UI
 	static void E_ROTATEZ(void* vp)
 	{
 		JPanel* pPanel = (JPanel*)vp;
-		pPanel->m_pShape->m_vRot.z += (float)D3DXToRadian(D3DXToDegree(Timer::SPF * 1.0f)); // 초당 30도
+		pPanel->m_pShape->m_vRot.z += (float)D3DXToRadian(D3DXToDegree(Timer::SPF * 1.0f)); 
 	}
 	static void E_SHOW_SCL(void* vp)
 	{
@@ -37,16 +37,16 @@ namespace UI
 		JPanel* pPanel = (JPanel*)vp;
 
 		pPanel->m_bRender = true;
-		pPanel->EventDefault.first = E_SHOW_SCL;
-		pPanel->EventDefault.second = pPanel;
+		pPanel->PreEvent.first = E_SHOW_SCL;
+		pPanel->PreEvent.second = pPanel;
 		pPanel->m_vScl.x += Timer::SPF * 4.0f;
 		pPanel->m_vScl.y += Timer::SPF * 4.0f;
 		if (pPanel->m_vScl.x >= 1.0f || pPanel->m_vScl.y >= 1.0f)
 		{
 			pPanel->m_vScl.x = 1.0f;
 			pPanel->m_vScl.y = 1.0f;
-			pPanel->EventDefault.first = nullptr;
-			pPanel->EventDefault.second = nullptr;
+			pPanel->PreEvent.first = nullptr;
+			pPanel->PreEvent.second = nullptr;
 		}
 	}
 	static void E_NOTSHOW_SCL(void* vp)
@@ -54,8 +54,8 @@ namespace UI
 		/* SRT가 1 인 부모격 Panel만 넣으세용 */
 		JPanel* pPanel = (JPanel*)vp;
 
-		pPanel->EventDefault.first = E_NOTSHOW_SCL;
-		pPanel->EventDefault.second = pPanel;
+		pPanel->PreEvent.first = E_NOTSHOW_SCL;
+		pPanel->PreEvent.second = pPanel;
 		pPanel->m_vScl.x -= Timer::SPF * 4.0f;
 		pPanel->m_vScl.y -= Timer::SPF * 4.0f;
 		if (pPanel->m_vScl.x <= 0.0f || pPanel->m_vScl.y <= 0.0f)
@@ -63,8 +63,8 @@ namespace UI
 			pPanel->m_bRender = false;
 			pPanel->m_vScl.x = 0.0f;
 			pPanel->m_vScl.y = 0.0f;
-			pPanel->EventDefault.first = nullptr;
-			pPanel->EventDefault.second = nullptr;
+			pPanel->PreEvent.first = nullptr;
+			pPanel->PreEvent.second = nullptr;
 		}
 	}
 }
