@@ -196,6 +196,10 @@ void PlayerController::PlayerInput(const float& spf) noexcept
 		if (Input::GetKeyState('1') == EKeyState::DOWN)
 		{
 			eAction = EAction::Dance1;
+			GameObject* pParticle = nullptr;
+			m_Parser.CreateFromFile(&pParticle, L"Snow.eff", L"../../data/script");
+			pParticle->SetPosition(GetRoot()->GetPosition());
+			ObjectManager::Get().PushObject(pParticle);
 		}
 		if (Input::GetKeyState('2') == EKeyState::DOWN)
 		{

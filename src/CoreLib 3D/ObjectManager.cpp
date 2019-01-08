@@ -180,31 +180,31 @@ bool ObjectManager::Render(ID3D11DeviceContext* pDContext) noexcept
 	}
 
 	// ========================== ¹Ì´Ï¸Ê =============================
-	//if (Input::isDebug)
-	{
-		DxManager::GetInstance().ClearDepthStencilView();
-		DxManager::GetInstance().SetViewPort(EViewPort::MiniMap);
-		CurCamera = Cameras[ECamera::MiniMap];
-		for (auto& iter : Lights)
-		{
-			iter->Render(pDContext);
-		}
-		for (auto&[type, objects] : m_ObjectList)
-		{
-			if (type == EObjType::UI)
-				continue;
-			for (auto& iter : objects)
-			{
-				iter->Render(pDContext);
-			}
-		}
-		for (auto& iter : m_InstanceList)
-		{
-			iter->Render(pDContext);
-		}
-		CurCamera = Cameras[ECamera::Main];
-		DxManager::GetInstance().SetViewPort(EViewPort::Main);
-	}
+	////if (Input::isDebug)
+	//{
+	//	DxManager::GetInstance().ClearDepthStencilView();
+	//	DxManager::GetInstance().SetViewPort(EViewPort::MiniMap);
+	//	CurCamera = Cameras[ECamera::MiniMap];
+	//	for (auto& iter : Lights)
+	//	{
+	//		iter->Render(pDContext);
+	//	}
+	//	for (auto&[type, objects] : m_ObjectList)
+	//	{
+	//		if (type == EObjType::UI)
+	//			continue;
+	//		for (auto& iter : objects)
+	//		{
+	//			iter->Render(pDContext);
+	//		}
+	//	}
+	//	for (auto& iter : m_InstanceList)
+	//	{
+	//		iter->Render(pDContext);
+	//	}
+	//	CurCamera = Cameras[ECamera::Main];
+	//	DxManager::GetInstance().SetViewPort(EViewPort::Main);
+	//}
 	return true;
 }
 

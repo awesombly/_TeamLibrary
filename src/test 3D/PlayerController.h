@@ -1,6 +1,7 @@
 #pragma once
 #include "GameObject.h"
 #include "ISingleton.h"
+#include "MaxImporter.h"
 
 class Collider;
 class Camera;
@@ -23,6 +24,7 @@ private:
 	enum class EDirection : char {
 		Middle = 0, Left, Right, 
 	};
+	MaxImporter m_Parser;
 	bool		m_isChatting = false;
 
 	//AHeroObj*   m_pHero			= nullptr;

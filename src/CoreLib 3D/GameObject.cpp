@@ -431,7 +431,11 @@ GameObject* GameObject::cloneChild(GameObject* pObject) noexcept
 {
 	vector<GameObject*> addObjects;
 	vector<Component*> addComponents;
-
+	// Physics 재생성
+	if (pObject->m_pPhysics != nullptr)
+	{
+		pObject->m_pPhysics = new PhysicsInfo();
+	}
 	// 자식들 복사
 	for (auto& iter : pObject->m_childList)
 	{
