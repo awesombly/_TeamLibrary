@@ -65,7 +65,6 @@ bool GameScene::Init() noexcept
 	m_pPlayer->Possess(m_pHero);
 	m_pPlayer->m_curCharacter = PlayerController::ECharacter::EGuard;
 	m_pPlayer->ResetOption();
-	SoundManager::Get().m_pListenerPos = &m_pHero->GetPosition();
 	
 
 	ObjectManager::Get().TakeObject(L"ParticleSystem");
@@ -175,7 +174,7 @@ bool GameScene::Frame() noexcept
 			static size_t strSize = 0;
 			strSize = m_chatMessage.size() * 2;
 			strSize = strSize > 200 ? 200 : strSize;
-
+			// 패킷 전송
 			Packet_ChatMessage p_ChatMessage;
 			p_ChatMessage.KeyValue = ObjectManager::KeyObjects.begin()->first;// PlayerController::Get().m_keyValue;
 			memcpy(p_ChatMessage.Message, m_chatMessage.data(), strSize);
@@ -203,7 +202,7 @@ bool GameScene::Frame() noexcept
 			curCollider = ObjectManager::Get().GetColliderList().begin();
 
 		m_pPlayer->Possess((*curCollider)->m_pParent);
-		SoundManager::Get().m_pListenerPos = &(*curCollider)->m_pParent->GetRoot()->GetPosition();
+		//SoundManager::Get().m_pListenerPos = &(*curCollider)->m_pParent->GetRoot()->GetPosition();
 	}
 	// 시간 출력
 	m_TimerText->m_Text = to_wstring(Timer::AccumulateTime).substr(0, 5);

@@ -29,7 +29,6 @@
 #include "CTransformer.h"
 #include "ColliderAABB.h"
 #include "ColliderOBB.h"
-//#include "BoundingUI.h"
 
 #include "AHeroObj.h"
 #include "JPanel.h"

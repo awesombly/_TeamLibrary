@@ -112,6 +112,12 @@
     <ClCompile Include="Physics.cpp">
       <Filter>Component\Collider</Filter>
     </ClCompile>
+    <ClCompile Include="MaxImporter.cpp">
+      <Filter>Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="CAnimation.cpp">
+      <Filter>Utility</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CoreDX.h">
@@ -239,6 +245,12 @@
     </ClInclude>
     <ClInclude Include="Physics.h">
       <Filter>Component\Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="MaxImporter.h">
+      <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="CAnimation.h">
+      <Filter>Utility</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

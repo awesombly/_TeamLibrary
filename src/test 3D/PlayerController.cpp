@@ -438,6 +438,7 @@ void PlayerController::Possess(GameObject* pObject) noexcept
 
 		((JProgressBar*)pPlayer->m_pHpBar)->SetValue(pObj->GetHP(), 1.0f);
 		pPlayer->ResetOption();
+		SoundManager::Get().m_pListenerPos = &pObj->GetRoot()->GetPosition();
 	};
 
 	ObjectManager::PostFrameEvent.emplace(pEvent, this, pObject);

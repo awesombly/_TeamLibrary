@@ -16,6 +16,7 @@
 #define PACKET_TakeObject			1013
 //#define PACKET_MouseRotate			1014
 #define PACKET_ChatMessage			1015
+#define PACKET_SyncObjects				1016
 
 #define PACKET_ReqSync				2000
 #define PACKET_ReqSyncSpawns		2001
@@ -25,6 +26,7 @@
 #define PS_PlaySound				21
 #define PS_TakeObject				45
 #define PS_ChatMessage				5
+#define PS_SyncObjects				6
 
 
 #pragma pack(push, 1)
@@ -153,8 +155,8 @@ struct Packet_SyncObjects
 {
 	UINT KeyValue;
 
-	WCHAR MsgSize;
-	Packet_SyncTransform Data[500];
+	WCHAR Count;
+	Packet_SyncTransform Data[45];
 };
 
 #pragma pack(pop)

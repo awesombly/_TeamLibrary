@@ -99,12 +99,6 @@ bool ParticleSystem::Frame(const float& spf, const float& accTime) noexcept
 		//m_dataList[curData].numTexture += 1.0f;
 		//if(m_dataList[curData].numTexture >= m_pSpriteList->size())
 //			m_dataList[curData].numTexture = 0.1f;
-		if (Input::GetKeyState(VK_DOWN) == EKeyState::UP)
-		{
-			m_dataList[curData].numTexture += 1.0f;
-			if (m_dataList[curData].numTexture >= m_pSpriteList->size())
-				m_dataList[curData].numTexture = 0.1f;
-		}
 		m_dataList[curData].color = iter->m_color;
 	}
 #pragma endregion
@@ -395,10 +389,11 @@ Component* ParticleSystem::cloneAddition() noexcept
 {
 	Renderer::cloneAddition();
 	// 파티클 초기화
-	m_particleList.clear();
-	m_dataList.clear();
-	while (!m_disabledParticle.empty())
-		m_disabledParticle.pop();
+	//m_particleList.clear();
+	//m_dataList.clear();
+	//while (!m_disabledParticle.empty())
+	//	m_disabledParticle.pop();
+	Update();
 
 	m_pInstanceBuffer = nullptr;
 	CreateInstanceBuffer();
