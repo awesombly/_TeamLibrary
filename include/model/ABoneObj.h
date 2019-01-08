@@ -39,6 +39,7 @@ public:
 	ID3D11ShaderResourceView*	m_pBoneBufferRV;
 	bool m_bOneTime;
 	bool m_bAnimPlay;
+	bool m_NoneANIM;
 public:
 	// 상수 버퍼 및 에니메이션 보간
 	void		SetBoneMatrices(ID3D11DeviceContext*    pContext);						//멤버 변수인 m_pMatrix를 사용하여 상수버퍼를 갱신

@@ -53,7 +53,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const ECharacter& eCharacter, 
 		{
 		case EAction::Idle:
 		{
-			pObject->SetANIM(Guard_IDLE);
+			pObject->SetANIM_Loop(Guard_IDLE);
 		}	break;
 		case EAction::Jump:
 		{
@@ -62,25 +62,25 @@ void PlayerController::SetAnim(AHeroObj* pObject, const ECharacter& eCharacter, 
 		case EAction::Left:
 		case EAction::BackwardLeft:
 		{
-			pObject->SetANIM(Guard_LEFT);
+			pObject->SetANIM_Loop(Guard_LEFT);
 			SoundManager::Get().PlayQueue("SE_footstep.mp3", pObject->GetWorldPosition(), 1000.0f);
 		}	break;
 		case EAction::Right:
 		case EAction::BackwardRight:
 		{
-			pObject->SetANIM(Guard_RIGHT);
+			pObject->SetANIM_Loop(Guard_RIGHT);
 			SoundManager::Get().PlayQueue("SE_footstep.mp3", pObject->GetWorldPosition(), 1000.0f);
 		}	break;
 		case EAction::Forward:
 		case EAction::ForwardLeft:
 		case EAction::ForwardRight:
 		{
-			pObject->SetANIM(Guard_HAPPYWALK);
+			pObject->SetANIM_Loop(Guard_HAPPYWALK);
 			SoundManager::Get().PlayQueue("SE_footstep.mp3", pObject->GetWorldPosition(), 1000.0f);
 		}	break;
 		case EAction::Backward:
 		{
-			pObject->SetANIM(Guard_BACKWARD);
+			pObject->SetANIM_Loop(Guard_BACKWARD);
 			SoundManager::Get().PlayQueue("SE_footstep.mp3", pObject->GetWorldPosition(), 1000.0f);
 		}	break;
 		case EAction::Dance1:
@@ -117,7 +117,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const ECharacter& eCharacter, 
 		{
 		case EAction::Idle:
 		{
-			pObject->SetANIM(Zombie_IDLE);
+			pObject->SetANIM_Loop(Zombie_IDLE);
 		}	break;
 		case EAction::Jump:
 		{
@@ -126,22 +126,22 @@ void PlayerController::SetAnim(AHeroObj* pObject, const ECharacter& eCharacter, 
 		case EAction::Left:
 		case EAction::BackwardLeft:
 		{
-			pObject->SetANIM(Zombie_LEFT);
+			pObject->SetANIM_Loop(Zombie_LEFT);
 		}	break;
 		case EAction::Right:
 		case EAction::BackwardRight:
 		{
-			pObject->SetANIM(Zombie_RIGHT);
+			pObject->SetANIM_Loop(Zombie_RIGHT);
 		}	break;
 		case EAction::Forward:
 		case EAction::ForwardLeft:
 		case EAction::ForwardRight:
 		{
-			pObject->SetANIM(Zombie_RUN);
+			pObject->SetANIM_Loop(Zombie_RUN);
 		}	break;
 		case EAction::Backward:
 		{
-			pObject->SetANIM(Zombie_BACKWARD);
+			pObject->SetANIM_Loop(Zombie_BACKWARD);
 		}	break;
 		case EAction::Dance1:
 		{

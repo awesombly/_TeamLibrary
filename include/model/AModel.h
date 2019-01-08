@@ -1,5 +1,5 @@
 #pragma once
-#pragma comment( lib, "_CoreLib D3D.lib")
+#pragma comment( lib, "_CoreLib D3D_d.lib")
 #include "GameObject.h"
 #include "Timer.h"
 
@@ -14,7 +14,10 @@
 
 class AMesh;
 
-
+struct AInstatnce
+{
+	D3DXMATRIX matWorld;
+};
 
 struct VS_CONSTANT_BUFFER
 {
@@ -69,6 +72,11 @@ public:
 
 
 	FILE_TYPE			m_ObjType;
+
+
+
+	vector<AInstatnce>			m_pInstance;
+	ComPtr<ID3D11Buffer>		m_pVBInstance;
 
 protected:
 

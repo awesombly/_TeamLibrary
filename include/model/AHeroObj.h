@@ -5,6 +5,13 @@
 
 #define MAX_BONE_MATRICES 255
 
+enum PLAYER_SELECT
+{
+	GUARD,
+	ZOMBIE,
+	DEFAULT
+};
+
 
 struct CBConstBoneWorld
 {
@@ -15,8 +22,13 @@ struct CBConstBoneWorld
 
 class AHeroObj : public AModel
 {
+	PLAYER_SELECT			m_PlayerSelect;
+
 public:
 	//bool obbCollide = false;
+
+	
+
 	int						m_iObjectIndex;
 	ACharacter*				m_pChar;
 	T_STR					m_szName;
@@ -39,7 +51,7 @@ public:
 
 public:
 
-	bool		SetANIM(const TCHAR* szName);
+	
 	void		SetBoneMatrices(vector<D3DXMATRIX>* pList);
 	bool		Frame(const float& spf, const float& accTime) noexcept override;
 	bool		Render(ID3D11DeviceContext*    pContext) noexcept override;
@@ -52,7 +64,8 @@ public:
 	//bool		SetPlayerCharacter(const TCHAR* fileName);// , D3DXVECTOR3 minBox, D3DXVECTOR3 maxBox);
 
 	bool		SetPlayerCharacter(const TCHAR* fileName, float x=0,float y=0, float z=0);
-
+	
+	bool		SetANIM_Loop(const TCHAR* szName);
 	bool		SetANIM_OneTime(const TCHAR* szName);
 	//D3DXVECTOR3 GetPlayerPos();
 	//INT GetPlayerPosX();
