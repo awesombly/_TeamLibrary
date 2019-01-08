@@ -19,6 +19,7 @@
 #include <d3dx10math.h>
 #include <random>
 #include <algorithm>
+#include <imm.h>
 using namespace std;
 
 namespace UI
