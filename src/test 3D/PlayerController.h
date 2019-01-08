@@ -27,8 +27,8 @@ private:
 	MaxImporter m_Parser;
 	bool		m_isChatting = false;
 
-	//AHeroObj*   m_pHero			= nullptr;
 	Camera*		m_pCamera		= nullptr;
+	ECharacter  m_curCharacter;			// 현재 캐릭터
 	EAction		m_curAction;			// 현재 눌린 액션
 	EAction		m_curAnim;				// 실제 애니메이션
 	EDirection  m_MouseDirection;
@@ -46,8 +46,6 @@ private:
 public:
 	const float	m_DelayThrow	= 0.3f;
 	float		m_curDelayThrow = 0.0f;
-	ECharacter  m_curCharacter;
-	//Collider*	m_pCollider		= nullptr;
 
 	float		m_mouseSense = 0.5f;
 	//float		m_HP = 1.0f;

@@ -63,7 +63,6 @@ bool GameScene::Init() noexcept
 	}
 	m_pHero = (AHeroObj*)ObjectManager::Get().TakeObject(L"Guard");
 	m_pPlayer->Possess(m_pHero);
-	m_pPlayer->m_curCharacter = PlayerController::ECharacter::EGuard;
 	m_pPlayer->ResetOption();
 	
 
@@ -177,7 +176,7 @@ bool GameScene::Frame() noexcept
 				strSize = strSize > 200 ? 200 : strSize;
 				// 패킷 전송
 				Packet_ChatMessage p_ChatMessage;
-				p_ChatMessage.KeyValue = ObjectManager::KeyObjects.begin()->first;// PlayerController::Get().m_keyValue;
+				//p_ChatMessage.KeyValue = ObjectManager::KeyObjects.begin()->first;// PlayerController::Get().m_keyValue;
 				memcpy(p_ChatMessage.Message, m_chatMessage.data(), strSize);
 				p_ChatMessage.MsgSize = (UCHAR)strSize;
 				PacketManager::Get().SendPacket((char*)&p_ChatMessage, (USHORT)(PS_ChatMessage + strSize), PACKET_ChatMessage);

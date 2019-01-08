@@ -20,14 +20,15 @@
 #define PACKET_SyncObjects			3016
 #define PACKET_ChatMessage			3015
 #define PACKET_PlaySound			3012
-#define PACKET_PossessPlayer		3011
-#define PACKET_TakeObject			3013
+#define PACKET_TakeObject			3011
+#define PACKET_PossessPlayer		3013
+
 
 // 패킷 데이터 제외 사이즈
-#define PS_PlaySound				21
+#define PS_SyncObjects				2
+#define PS_ChatMessage				1
+#define PS_PlaySound				17
 #define PS_TakeObject				45
-#define PS_ChatMessage				5
-#define PS_SyncObjects				6
 
 
 #pragma pack(push, 1)
@@ -44,20 +45,14 @@ struct Packet_TakeObject
 
 struct Packet_ChatMessage
 {
-	UINT KeyValue;
+	//UINT KeyValue;
 	UCHAR MsgSize;
 	WCHAR Message[101];
 };
 
-//struct Packet_MouseRotate
-//{
-//	UINT KeyValue;
-//	float RotateSpeed;
-//};
-
 struct Packet_SoundData
 {
-	UINT KeyValue;
+	//UINT KeyValue;
 	D3DXVECTOR3 Position;
 	float MaxDistance;
 	char NameSize;
@@ -154,7 +149,7 @@ struct Packet_SyncTransform
 
 struct Packet_SyncObjects
 {
-	UINT KeyValue;
+	//UINT KeyValue;
 
 	WCHAR Count;
 	Packet_SyncTransform Data[45];

@@ -156,8 +156,7 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 	 case PACKET_PossessPlayer:
 	 {
 		 memcpy(&p_PossessPlayer, data, sizeof(Packet_PossessPlayer));
-		 PlayerController::Get().SetParent(ObjectManager::KeyObjects[p_PossessPlayer.KeyValue]);
-		 PlayerController::Get().m_curCharacter = (PlayerController::ECharacter)p_PossessPlayer.ECharacter;
+		 PlayerController::Get().Possess(ObjectManager::KeyObjects[p_PossessPlayer.KeyValue]);
 	 }	break;
 	 case PACKET_PlaySound:
 	 {
@@ -186,7 +185,7 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 void PacketManager::SendPlaySound(const string_view& soundName, const D3DXVECTOR3& position, const float& maxDistance) noexcept
 {
 	Packet_SoundData p_SoundData;
-	p_SoundData.KeyValue = 0;// ObjectManager::KeyObjects.begin()->first;// PlayerController::Get().m_keyValue;
+	//p_SoundData.KeyValue = (UINT)-1;
 	p_SoundData.Position = position;
 	p_SoundData.MaxDistance = maxDistance;
 	memcpy(p_SoundData.SoundName, soundName.data(), soundName.size());
