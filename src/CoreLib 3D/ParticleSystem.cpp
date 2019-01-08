@@ -32,6 +32,12 @@ bool ParticleSystem::Frame(const float& spf, const float& accTime) noexcept
 	// ============================= 파티클, 인스턴싱부 =================================
 #pragma region Create
 	m_frameCount += spf;
+	m_curLife += spf;
+	if (m_curLife >= m_lifeTime)
+	{
+		m_isEnable = false;
+		return false;
+	}
 	if (m_frameCount >= m_spawnInterval)
 	{
 		if (m_maxParticleCount > (m_dataList.size() - m_disabledParticle.size()))
@@ -333,6 +339,8 @@ void ParticleSystem::Update() noexcept
 		pParticle->m_dataList.clear();
 		while (!pParticle->m_disabledParticle.empty())
 			pParticle->m_disabledParticle.pop();
+		pParticle->m_curLife = 0.0f;
+		pParticle->isEnable(true);
 		///
 		auto count = (int)(RandomNormal() * (pParticle->m_maxInitCount - pParticle->m_minInitCount) + pParticle->m_minInitCount);
 		for (int i = 0; i < count; ++i)

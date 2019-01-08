@@ -49,6 +49,7 @@ void MaxImporter::LoadParticleSystem(GameObject** ppReturnObj) noexcept
 	(*ppReturnObj)->m_myName = m_filePath.filename().c_str();
 	(*ppReturnObj)->m_objType = EObjType::Object;
 	(*ppReturnObj)->AddComponent(pParticle);
+	pParticle->Update();
 }
 
 bool MaxImporter::CreateFromFile(GameObject** ppReturnObj, const wstring_view& fileName, const wstring_view& directory) noexcept

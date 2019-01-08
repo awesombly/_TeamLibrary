@@ -15,7 +15,7 @@ public:
 		Left = 1, Forward = 2, ForwardLeft = 3, 
 		Right = 4, ForwardRight = 6, 
 		Backward = 8, BackwardLeft = 9, BackwardRight = 12,
-		Jump = 100, Dance1, Dance2, Dance3, Throw, Run, Fly 
+		Jump = 100, Dance1, Dance2, Dance3, Throw, Run, Fly, FlyEnd
 	};
 	enum ECharacter : char {
 		EDummy = 0, EGuard, EZombie,
@@ -24,7 +24,6 @@ private:
 	enum class EDirection : char {
 		Middle = 0, Left, Right, 
 	};
-	MaxImporter m_Parser;
 	bool		m_isChatting = false;
 
 	Camera*		m_pCamera		= nullptr;
@@ -34,8 +33,8 @@ private:
 	EDirection  m_MouseDirection;
 	///
 	D3DXVECTOR3 m_direction;
-	float		m_moveSpeed		= 150.0f;
-	float		m_jumpPower		= 180.0f;
+	float		m_moveSpeed		= 100.0f;
+	float		m_jumpPower		= 150.0f;
 
 	//bool		m_toIdle		= false;
 	float		m_prevRotY		= 0.0f;
@@ -43,7 +42,12 @@ private:
 	// 마우스 고정용
 	POINT		m_setMouseScreen;
 	POINT		m_setMouseClient;
+
+	GameObject* m_pEffectFly = nullptr;
 public:
+	MaxImporter m_Parser;
+
+
 	const float	m_DelayThrow	= 0.3f;
 	float		m_curDelayThrow = 0.0f;
 

@@ -15,8 +15,8 @@ bool LobbyScene::Init() noexcept
 		((MainClass*)pScene)->StartupClient();
 		((MainClass*)pScene)->SetScene(ESceneName::Main);
 
-		PacketManager::Get().SendPacket('\0', 1, PACKET_ReqAddPlayer);
-		PacketManager::Get().SendPacket('\0', 1, PACKET_ReqSyncSpawns);
+		PacketManager::Get().SendPacket('\0', 0, PACKET_ReqAddPlayer);
+		PacketManager::Get().SendPacket('\0', 0, PACKET_ReqSyncSpawns);
 		//PacketManager::Get().SendPacket((char*)&PI, sizeof(PI), PACKET_ReqSync);
 	};
 	static auto pToHost = [](void* pScene) {

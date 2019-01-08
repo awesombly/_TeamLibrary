@@ -197,8 +197,8 @@ void PlayerController::PlayerInput(const float& spf) noexcept
 		{
 			eAction = EAction::Dance1;
 			GameObject* pParticle = nullptr;
-			m_Parser.CreateFromFile(&pParticle, L"Snow.eff", L"../../data/script");
-			pParticle->SetPosition(GetRoot()->GetPosition());
+			m_Parser.CreateFromFile(&pParticle, L"Boom.eff", L"../../data/script");
+			pParticle->SetPosition(GetRoot()->GetPosition() + Vector3::Up * 5.0f);
 			ObjectManager::Get().PushObject(pParticle);
 		}
 		if (Input::GetKeyState('2') == EKeyState::DOWN)
@@ -220,7 +220,6 @@ void PlayerController::PlayerInput(const float& spf) noexcept
 			m_curDelayThrow = max(m_curDelayThrow - spf, 0.0f);
 			if (m_curDelayThrow <= 0.0f)
 			{
-				m_MP = min(m_MP + spf * 0.2f, 1.0f);
 				//if (m_curAnim == EAction::Idle)
 					//SetAnim((AHeroObj*)m_pParent, m_curCharacter, EAction::Idle);
 				if (Input::GetKeyState(EMouseButton::Left) == EKeyState::DOWN &&
@@ -233,6 +232,34 @@ void PlayerController::PlayerInput(const float& spf) noexcept
 			}
 		}
 
+		if (Input::GetKeyState(EMouseButton::Right) == EKeyState::DOWN)
+		{
+			eAction = EAction::Fly;
+			m_pEffectFly = nullptr;
+			m_Parser.CreateFromFile(&m_pEffectFly, L"Fly.eff", L"../../data/script");
+			m_pEffectFly->SetPosition(Vector3::Up * 10.0f);
+			m_pEffectFly->SetParent(GetRoot());
+		}
+		if (Input::GetKeyState(EMouseButton::Right) == EKeyState::HOLD)
+		{
+			//eAction = EAction::FlyEnd;
+			m_MP -= 0.35f * spf;
+			if (m_MP <= 0.0f)
+			{
+				eAction = EAction::FlyEnd;
+				//ObjectManager::Get().RemoveObject(m_pEffectFly);
+				//m_pEffectFly = nullptr;
+			}
+		}
+		else
+		{	m_MP = min(m_MP + spf * 0.2f, 1.0f);	}
+		if (Input::GetKeyState(EMouseButton::Right) == EKeyState::UP)
+		{
+			eAction = EAction::FlyEnd;
+			//ObjectManager::Get().RemoveObject(m_pEffectFly);
+			//m_pEffectFly = nullptr;
+		}
+
 		if (eAction != m_curAction)
 		{
 			// 정보 전송
@@ -240,8 +267,8 @@ void PlayerController::PlayerInput(const float& spf) noexcept
 		}
 		m_curAction = eAction;
 		
-		if (!PacketManager::Get().isHost &&
-			Input::GetKeyState(VK_CONTROL) == EKeyState::DOWN)
+		if (Input::GetKeyState(VK_CONTROL) == EKeyState::DOWN &&
+			!PacketManager::Get().isHost)
 		{
 			PacketManager::Get().SendPacket('\0', 1, PACKET_ReqSync);
 		}
@@ -282,7 +309,7 @@ void PlayerController::SendAnimTransform(const EAction& eAction, const ECharacte
 	// 이동 처리
 	if (eAction == EAction::Jump)
 	{
-		p_AnimTransform.Position = m_pParent->GetPosition() + Vector3::Up * 15.0f;
+		p_AnimTransform.Position = m_pParent->GetPosition() + Vector3::Up * 10.0f;
 		p_AnimTransform.Force = Vector3::Up * m_jumpPower;
 	}
 	else
@@ -293,6 +320,10 @@ void PlayerController::SendAnimTransform(const EAction& eAction, const ECharacte
 
 	switch (eAction)
 	{
+	case EAction::Fly:
+	{
+		//p_AnimTransform.Direction = m_pParent->GetBackward() + m_pParent->GetRight();
+	}	break;
 	case EAction::Left:
 	{
 		p_AnimTransform.Direction = m_pParent->GetLeft();
@@ -416,7 +447,7 @@ void PlayerController::ResetOption() noexcept
 	ScreenToClient(Window::m_hWnd, &m_setMouseClient);
 	///
 	m_pCamera = ObjectManager::Cameras[ECamera::Main];
-	m_pCamera->SetPosition(Vector3::Up * 75.0f);
+	m_pCamera->SetPosition(Vector3::Up * 40.0f);
 	m_pCamera->SetRotation(Quaternion::Left * PI + Quaternion::Up * PI * 0.2f);
 	m_pCamera->m_armLength = 6.0f;
 	m_pCamera->m_lerpMoveSpeed = 7.0f;

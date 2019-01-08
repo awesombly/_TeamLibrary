@@ -21,8 +21,10 @@ bool GameScene::Init() noexcept
 		m_pHero->SetANIM_Loop(Guard_IDLE);
 		m_pHero->m_myName = L"Guard";
 		m_pHero->m_objType = EObjType::Object;
+		m_pHero->SetScale(Vector3::One * 0.5f);
 		auto pCollider = new ColliderOBB( { -13.0f, 0.0f , -13.0f }, { 13.0f, 80.0f , 13.0f });
 		m_pHero->AddComponent(pCollider);
+		pCollider->m_pivot *= 0.5f;
 		ObjectManager::Get().SetProtoObject(m_pHero);
 
 		// 좀비
@@ -32,8 +34,10 @@ bool GameScene::Init() noexcept
 		m_pZombie->SetANIM_Loop(Zombie_IDLE);
 		m_pZombie->m_myName = L"Zombie";
 		m_pZombie->m_objType = EObjType::Object;
+		m_pZombie->SetScale(Vector3::One * 0.5f);
 		pCollider = new ColliderOBB( { -13.0f, 0.0f , -13.0f }, { 13.0f, 80.0f , 13.0f });
 		m_pZombie->AddComponent(pCollider);
+		pCollider->m_pivot *= 0.5f;
 		ObjectManager::Get().SetProtoObject(m_pZombie);
 
 		// 새 생성
@@ -42,10 +46,10 @@ bool GameScene::Init() noexcept
 		m_pBird->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
 		m_pBird->m_myName = L"Bird";
 		m_pBird->m_objType = EObjType::Object;
-		m_pBird->SetScale(Vector3::One * 15.0f);
+		m_pBird->SetScale(Vector3::One * 7.0f);
 		pCollider = new ColliderOBB( { -1.0f, 0.0f , -1.0f }, { 1.0f, 2.0f , 1.0f });
 		m_pBird->AddComponent(pCollider);
-		pCollider->m_pivot *= 15.0f;
+		pCollider->m_pivot *= 7.0f;
 		pCollider->SetGravityScale(0.3f);
 		ObjectManager::Get().SetProtoObject(m_pBird);
 
@@ -65,8 +69,10 @@ bool GameScene::Init() noexcept
 	m_pPlayer->Possess(m_pHero);
 	m_pPlayer->ResetOption();
 	
-
-	ObjectManager::Get().TakeObject(L"ParticleSystem");
+	GameObject* pEffect = nullptr;
+	PlayerController::Get().m_Parser.CreateFromFile(&pEffect, L"Snow.eff", L"../../data/script");
+	pEffect->SetPosition(Vector3::Up * 250.0f);
+	ObjectManager::Get().PushObject(pEffect);
 	ObjectManager::Get().TakeObject(L"Guard")  ->SetPosition(RandomNormal() * 1000.0f - 500.0f, RandomNormal() * 500.0f, RandomNormal() * 1000.0f - 500.0f);
 	ObjectManager::Get().TakeObject(L"Zombie") ->SetPosition(RandomNormal() * 1000.0f - 500.0f, RandomNormal() * 500.0f, RandomNormal() * 1000.0f - 500.0f);
 	ObjectManager::Get().TakeObject(L"Bird")   ->SetPosition(RandomNormal()	* 1000.0f - 500.0f, RandomNormal() * 500.0f, RandomNormal() * 1000.0f - 500.0f);

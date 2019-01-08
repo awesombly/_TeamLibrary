@@ -20,6 +20,8 @@ struct ParticleInfo
 	///bool m_isBounding  = false;
 	bool m_isScalarScale			= true;
 
+	float m_lifeTime				= 9999.0f;
+	float m_curLife					= 0.0f;
 	float m_spawnInterval			= 0.0f;		// 생성 간격
 	UINT  m_maxParticleCount		= 0;
 	UINT  m_minInitCount			= 0;

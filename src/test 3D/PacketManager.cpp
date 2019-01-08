@@ -26,7 +26,7 @@ void PacketManager::SendPacket(char* data, const USHORT& size, const USHORT& pac
 	packet.m_Packet.m_Header.m_len = (USHORT)(size + PACKET_HEADER_SIZE);
 
 	pSender->Broadcast(packet);
-	//pSender->BroadcastExcept()
+	//pSender->BroadcastExcept();
 }
 
 
@@ -54,7 +54,7 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 		ObjectManager::KeyObjects.find(p_KeyValue.KeyValue) == ObjectManager::KeyObjects.end())
 	{
 		ErrorMessage("KeyObject is Null : " + to_string(p_KeyValue.KeyValue));
-		//return;
+		return;
 	}
 
 	switch (sendMode)
@@ -113,6 +113,14 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 		 //}
 		 switch ((PlayerController::EAction)p_AnimTransform.EAnimState)
 		 {
+		  case PlayerController::EAction::Fly:
+		  {
+			  ObjectManager::KeyObjects[p_AnimTransform.KeyValue]->SetGravityScale(-0.35f);
+		  } break;
+		  case PlayerController::EAction::FlyEnd:
+		  {
+			  ObjectManager::KeyObjects[p_AnimTransform.KeyValue]->SetGravityScale(1.0f);
+		  } break;
 		  case PlayerController::EAction::Idle:
 		  {
 		 	 ObjectManager::KeyObjects[p_AnimTransform.KeyValue]->isMoving(false);
@@ -126,7 +134,7 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 		  case PlayerController::EAction::Left:
 		  case PlayerController::EAction::Right:
 		  {
-		 	ObjectManager::KeyObjects[p_AnimTransform.KeyValue]->SetDirectionForce(p_AnimTransform.Direction);
+		 	 ObjectManager::KeyObjects[p_AnimTransform.KeyValue]->SetDirectionForce(p_AnimTransform.Direction);
 		  }	break;
 		 }
 	 }	break;
