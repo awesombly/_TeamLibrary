@@ -44,9 +44,9 @@ bool GameScene::Init() noexcept
 		m_pBird->m_objType = EObjType::Object;
 		m_pBird->SetScale(Vector3::One * 15.0f);
 		pCollider = new ColliderOBB( { -1.0f, 0.0f , -1.0f }, { 1.0f, 2.0f , 1.0f });
+		m_pBird->AddComponent(pCollider);
 		pCollider->m_pivot *= 15.0f;
 		pCollider->SetGravityScale(0.3f);
-		m_pBird->AddComponent(pCollider);
 		ObjectManager::Get().SetProtoObject(m_pBird);
 
 		//// ´ß »ı¼º
@@ -307,11 +307,11 @@ void GameScene::DrawBoundingBox()	noexcept
 		{
 		}	break;
 		}
-		pSphere->SetPosition(iter->GetCenter());
-		pSphere->SetRotation(Quaternion::Base);
-		pSphere->SetScale(iter->GetWorldRadius() * Vector3::One);
-		pSphere->Frame(0.0f, 0.0f);
-		pSphere->Render(DxManager::GetDContext());
+		//pSphere->SetPosition(iter->GetCenter());
+		//pSphere->SetRotation(Quaternion::Base);
+		//pSphere->SetScale(iter->GetWorldRadius() * Vector3::One);
+		//pSphere->Frame(0.0f, 0.0f);
+		//pSphere->Render(DxManager::GetDContext());
 	}
 	DxManager::Get().SetRasterizerState(ERasterS::Current);
 }

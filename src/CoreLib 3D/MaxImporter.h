@@ -13,11 +13,11 @@ enum class EClassType : char {
 
 struct SceneData
 {
-	int TotalFrame = 0;		// 총 프레임 수
-	float SPF = 0.0f;		// 프레임 간격
-	int MeshCount;			// 메쉬오브젝트 개수
-	int MaxWeight;			// 정점 당 가중치
-	bool BindPose;			// 바인딩 포즈 에니메이션 여부
+	int   TotalFrame = 0;	 // 총 프레임 수
+	float SPF		 = 0.0f; // 프레임 간격
+	int   MeshCount;		 // 메쉬오브젝트 개수
+	int   MaxWeight;		 // 정점 당 가중치
+	bool  BindPose;			 // 바인딩 포즈 에니메이션 여부
 }; 
 
 struct MaterialData
