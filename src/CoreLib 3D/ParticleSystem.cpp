@@ -31,26 +31,39 @@ bool ParticleSystem::Frame(const float& spf, const float& accTime) noexcept
 	Renderer::Frame(spf, accTime);
 	// ============================= 파티클, 인스턴싱부 =================================
 #pragma region Create
-	m_frameCount += spf;
+	m_spawnFrame += spf;
 	m_curLife += spf;
 	if (m_curLife >= m_lifeTime)
 	{
-		m_isEnable = false;
-		ObjectManager::Get().RemoveComponent(this);
+		if (m_isRepeat)
+		{
+			m_curLife = 0.0f;
+			Update();
+		}
+		else
+		{
+			m_isEnable = false;
+			ObjectManager::Get().DisableComponent(this);
+		}
 		return false;
 	}
-	if (m_frameCount >= m_spawnInterval)
+
+	while (m_spawnFrame >= m_spawnInterval)
 	{
 		if (m_maxParticleCount > (m_dataList.size() - m_disabledParticle.size()))
 		{
-			m_frameCount -= m_spawnInterval;
+			m_spawnFrame -= m_spawnInterval;
 			SpawnParticle();
+			continue;
 		}
 		else if (m_isRepeat)
 		{
 			Update();
 		}
+		break;
 	}
+	if(m_needUpdateBuffer)
+		CreateInstanceBuffer();
 #pragma endregion
 #pragma region Frame
 	static D3DXMATRIX matBill;
@@ -87,6 +100,7 @@ bool ParticleSystem::Frame(const float& spf, const float& accTime) noexcept
 				continue;
 			//}
 		}
+		m_dataList[curData].numTexture = 1.0f;
 		// 이동 처리(중력 방향때메 빼둠)
 		iter->Translate((iter->m_direction * iter->m_curMoveSpeed + m_dirGravity * iter->m_curGravity) * spf);
 		// 행렬 계산
@@ -134,6 +148,10 @@ bool ParticleSystem::Render(ID3D11DeviceContext* pDContext) noexcept
 bool ParticleSystem::Release() noexcept
 {
 	Renderer::Release();
+	for (auto& iter : m_particleList)
+	{
+		delete iter;
+	}
 	return true;
 }
 
@@ -146,6 +164,7 @@ void ParticleSystem::SpawnParticle() noexcept
 		// 파티클 복사, 추가
 		pParticle = m_pParticle->clone();
 		AddInstance(pParticle);
+		m_needUpdateBuffer = true;
 	}
 	else
 	{
@@ -236,7 +255,7 @@ void ParticleSystem::UpdateConstBuffer(ID3D11DeviceContext* pDContext) noexcept
 	CB_VSMatrix* pConstData = (CB_VSMatrix*)MappedResource.pData;		// 바꿀 객체
 	
 	*pConstData = (*m_ppCamera)->m_cbVS;
-	if (!m_isFollow)
+	if (!m_isScreen)
 	{
 		pConstData->m_matWorld = Matrix::Identity;
 	}
@@ -260,6 +279,7 @@ void ParticleSystem::UpdateInstanceBuffer(ID3D11DeviceContext* pDContext) noexce
 
 HRESULT ParticleSystem::CreateInstanceBuffer() noexcept
 {
+	m_needUpdateBuffer = false;
 	if (m_dataList.empty())
 		return E_FAIL;
 	static D3D11_BUFFER_DESC initDesc;
@@ -299,7 +319,7 @@ void ParticleSystem::AddInstance(Particle* pParticle) noexcept
 	m_particleList.push_front(pParticle);
 	m_dataList.push_back({});
 	//if(m_pInstanceBuffer == nullptr)
-		CreateInstanceBuffer();
+		//CreateInstanceBuffer();
 	//DxManager::GetDContext()->UpdateSubresource(m_pInstanceBuffer, 0, nullptr, &m_dataList.at(0), 0, 0);
 }
 
@@ -310,7 +330,8 @@ void ParticleSystem::RemoveInstance(Particle* pParticle) noexcept
 	{
 		m_dataList.pop_back();
 		m_particleList.remove(*iter);
-		CreateInstanceBuffer();
+		m_needUpdateBuffer = true;
+		//CreateInstanceBuffer();
 		//DxManager::GetDContext()->UpdateSubresource(m_pInstanceBuffer, 0, nullptr, &m_dataList.at(0), 0, 0);
 	}
 }
@@ -341,6 +362,7 @@ void ParticleSystem::Update() noexcept
 		while (!pParticle->m_disabledParticle.empty())
 			pParticle->m_disabledParticle.pop();
 		pParticle->m_curLife = 0.0f;
+		pParticle->m_frameCount = 0.0f;
 		pParticle->isEnable(true);
 		///
 		auto count = (int)(RandomNormal() * (pParticle->m_maxInitCount - pParticle->m_minInitCount) + pParticle->m_minInitCount);
@@ -371,13 +393,13 @@ void ParticleSystem::isRepeat(const bool& isRepeat) noexcept
 	m_isRepeat = isRepeat;
 }
 
-bool ParticleSystem::isFollow()	noexcept
+bool ParticleSystem::isScreen()	noexcept
 {
-	return m_isFollow;
+	return m_isScreen;
 }
-void ParticleSystem::isFollow(const bool& isFollow) noexcept
+void ParticleSystem::isScreen(const bool& isScreen) noexcept
 {
-	m_isFollow = isFollow;
+	m_isScreen = isScreen;
 }
 bool ParticleSystem::isScalarScale() noexcept
 {

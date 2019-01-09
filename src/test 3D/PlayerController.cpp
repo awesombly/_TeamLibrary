@@ -196,10 +196,12 @@ void PlayerController::PlayerInput(const float& spf) noexcept
 		if (Input::GetKeyState('1') == EKeyState::DOWN)
 		{
 			eAction = EAction::Dance1;
-			GameObject* pParticle = nullptr;
-			m_Parser.CreateFromFile(&pParticle, L"Boom.eff", L"../../data/script");
-			pParticle->SetPosition(GetRoot()->GetPosition() + Vector3::Up * 5.0f);
-			ObjectManager::Get().PushObject(pParticle);
+			//static GameObject* pParticle = nullptr;//new GameObject(L"Boom", ObjectManager::Get().TakeComponent(L"Boom"));;
+			//if (pParticle != nullptr)
+				//ObjectManager::Get().DisableObject(pParticle);
+			m_pParent->AddComponent(ObjectManager::Get().TakeComponent(L"Boom"));
+			//pParticle->SetPosition(GetRoot()->GetPosition() + Vector3::Up * 20.0f);
+			//ObjectManager::Get().PushObject(pParticle);
 		}
 		if (Input::GetKeyState('2') == EKeyState::DOWN)
 		{
@@ -209,7 +211,7 @@ void PlayerController::PlayerInput(const float& spf) noexcept
 		{
 			eAction = EAction::Dance3;
 		}
-		if (Input::GetKeyState(VK_SPACE) == EKeyState::DOWN)
+		if (m_pParent->isGround() && Input::GetKeyState(VK_SPACE) == EKeyState::DOWN)
 		{
 			eAction = EAction::Jump;
 			PacketManager::Get().SendPlaySound("SE_jump01.mp3", PlayerController::Get().GetWorldPosition(), 1000.0f);
@@ -232,32 +234,38 @@ void PlayerController::PlayerInput(const float& spf) noexcept
 			}
 		}
 
+		static bool isFly = false;
 		if (Input::GetKeyState(EMouseButton::Right) == EKeyState::DOWN)
 		{
+			isFly = true;
 			eAction = EAction::Fly;
-			m_pEffectFly = nullptr;
-			m_Parser.CreateFromFile(&m_pEffectFly, L"Fly.eff", L"../../data/script");
-			m_pEffectFly->SetPosition(Vector3::Up * 10.0f);
-			m_pEffectFly->SetParent(GetRoot());
+			m_pEffectFly = ObjectManager::Get().TakeComponent(L"Fly");
+			m_pParent->AddComponent(m_pEffectFly);
+			//m_pEffectFly->SetPosition(Vector3::Up * 10.0f);
+			//m_pEffectFly->SetParent(GetRoot());
 		}
-		if (Input::GetKeyState(EMouseButton::Right) == EKeyState::HOLD)
+		if (isFly && Input::GetKeyState(EMouseButton::Right) == EKeyState::HOLD)
 		{
-			//eAction = EAction::FlyEnd;
 			m_MP -= 0.35f * spf;
 			if (m_MP <= 0.0f)
 			{
+				isFly = false;
 				eAction = EAction::FlyEnd;
-				//ObjectManager::Get().RemoveObject(m_pEffectFly);
-				//m_pEffectFly = nullptr;
+				ObjectManager::Get().DisableComponent(m_pEffectFly);
+				m_pEffectFly = nullptr;
 			}
 		}
 		else
-		{	m_MP = min(m_MP + spf * 0.2f, 1.0f);	}
+		{	
+			m_MP = min(m_MP + spf * 0.2f, 1.0f);	
+		}
+
 		if (Input::GetKeyState(EMouseButton::Right) == EKeyState::UP)
 		{
+			isFly = false;
 			eAction = EAction::FlyEnd;
-			//ObjectManager::Get().RemoveObject(m_pEffectFly);
-			//m_pEffectFly = nullptr;
+			ObjectManager::Get().DisableComponent(m_pEffectFly);
+			m_pEffectFly = nullptr;
 		}
 
 		if (eAction != m_curAction)
@@ -288,7 +296,7 @@ void PlayerController::PlayerInput(const float& spf) noexcept
 		p_TakeObject.MsgSize	= (UCHAR)strSize;
 		p_TakeObject.Position	= { RandomNormal() * 1000.0f - 500.0f, 800.0f, RandomNormal() * 1000.0f - 500.0f };
 		p_TakeObject.Rotation	= Quaternion::Base;
-		p_TakeObject.Scale		= Vector3::One;
+		p_TakeObject.Scale		= Vector3::One * 0.5f;
 
 		PacketManager::Get().SendPacket((char*)&p_TakeObject, (USHORT)(PS_TakeObject + strSize), PACKET_TakeObject);
 
@@ -436,6 +444,12 @@ void PlayerController::CameraInput(const float& spf) noexcept
 	{
 		Input::isDebug = true;
 		ResetOption();
+	}
+
+	if (Input::GetKeyState(VK_SUBTRACT) == EKeyState::DOWN)
+	{
+		ObjectManager::Cameras[ECamera::Main]->CutParent();
+		CutParent();
 	}
 }
 

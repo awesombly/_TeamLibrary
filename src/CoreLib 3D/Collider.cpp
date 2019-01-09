@@ -42,6 +42,7 @@ bool Collider::Frame(const float& spf, const float& accTime)	noexcept
 	// 최소 높이
 	if (m_pParent->GetPosition().y < m_mapHeight)
 	{
+		isGround(true);
 		// Y 고정 말고 현재 Collider 피벗 따라 다르게 해야댐
 		m_pParent->SetPositionY(m_mapHeight);
 		//m_pPhysics->m_force *= -m_pPhysics->m_drag * m_pPhysics->m_repulsion * spf;

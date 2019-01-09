@@ -11,6 +11,7 @@ class GameScene : public MainClass
 {
 public:
 	PlayerController* m_pPlayer = &PlayerController::Get();		// 컨트롤러
+	MaxImporter m_Parser;
 	// Character
 	AHeroObj*	m_pHero			= nullptr;		
 	AHeroObj*	m_pZombie		= nullptr;		
@@ -26,12 +27,13 @@ public:
 	GameRule	m_Rule;
 
 public:
-	void DrawBoundingBox()	noexcept;
+	void DrawBoundingBox()		noexcept;
 
-	virtual bool Init()		noexcept override;
-	virtual bool Frame()	noexcept override;
-	virtual bool Render()	noexcept override;
-	virtual bool Release()	noexcept override;
+	virtual bool FirstInit()	noexcept override;
+	virtual bool Init()			noexcept override;
+	virtual bool Frame()		noexcept override;
+	virtual bool Render()		noexcept override;
+	virtual bool Release()		noexcept override;
 
 	GameScene() = default;
 	virtual ~GameScene() = default;

@@ -31,6 +31,7 @@ struct PhysicsInfo
 {
 	bool m_usePhysics	 = true;
 	bool m_isMoving		 = false;
+	bool m_isGround		 = false;
 
 	float m_GravityScale = 1.0f;				// 중력크기
 
@@ -69,6 +70,8 @@ public:
 	bool usePhysics()										noexcept;
 	void isMoving(const bool& isMoving)						noexcept;
 	bool isMoving()											noexcept;
+	void isGround(const bool& isGround)						noexcept;
+	bool isGround()											noexcept;
 public:
 	Physics() = default;
 	virtual ~Physics() = default;

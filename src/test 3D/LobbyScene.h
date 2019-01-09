@@ -12,11 +12,11 @@ public:
 	JPanel*		m_toGuestPanel	= nullptr;
 public:
 
-
-	virtual bool Init()		noexcept override;
-	virtual bool Frame()	noexcept override;
-	virtual bool Render()	noexcept override;
-	virtual bool Release()	noexcept override;
+	virtual bool FirstInit()	noexcept override;
+	virtual bool Init()			noexcept override;
+	virtual bool Frame()		noexcept override;
+	virtual bool Render()		noexcept override;
+	virtual bool Release()		noexcept override;
 
 	LobbyScene() = default;
 	virtual ~LobbyScene() = default;

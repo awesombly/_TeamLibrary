@@ -27,16 +27,18 @@ private:
 	map<wstring_view, stack<GameObject*> >		 m_DisabledPull;	// 대기 상태 풀<이름>
 	map<wstring_view, GameObject*>				 m_ProtoPull;		// 복사용 오브젝트 풀<이름>
 
+	map<wstring_view, stack<Component*> >		 m_DisabledPullComp;// 대기 상태 컴포넌트 풀
 	map<wstring, Component*>					 m_ComponentPull;	// 복사용 컴포넌트
+
 	forward_list<Collider*>						 m_ColliderList;	// 충돌체 리스트
 	forward_list<InstanceRenderer*>				 m_InstanceList;	// 인스턴싱용 리스트
 
 	map<wstring, vector<Sprite> > m_SpriteList;						// 스프라이트 리스트
 public:
-	static map<UINT, GameObject*> KeyObjects;					// 서버 처리용 오브젝트들
-	static map<ECamera, Camera*> Cameras;						// 카메라들
-	static Camera*				 CurCamera;						// 적용중인 카메라
-	static list<Light*>			 Lights;						// 조명들
+	static map<UINT, GameObject*> KeyObjects;						// 서버 처리용 오브젝트들
+	static map<ECamera, Camera*> Cameras;							// 카메라들
+	static Camera*				 CurCamera;							// 적용중인 카메라
+	static list<Light*>			 Lights;							// 조명들
 	// 후처리 이벤트 등록용(함수, 인자, 인자)
 	static stack<tuple<void(*)(void*, void*), void*, void*> > PostFrameEvent;
 public:
@@ -50,14 +52,15 @@ public:
 	forward_list<GameObject*>* GetObjectList(const EObjType& objType) noexcept;
 	// 오브젝트 가져오기 (대기 풀에 남아있거나, 복사 풀에 등록 필요)
 	GameObject* TakeObject(const wstring_view& objName, const bool& pushObject = true) noexcept;
-	GameObject* SetProtoObject(GameObject* pObject)				noexcept;	// 복사 풀에 추가
-	GameObject* PushObject(GameObject* pObject)					noexcept;	// 오브젝트 리스트에 추가
+	bool SetProtoObject(GameObject* pObject)					noexcept;	// 복사 풀에 추가
+	void PushObject(GameObject* pObject)						noexcept;	// 오브젝트 리스트에 추가
 	void PopObject(GameObject* pObject)							noexcept;	// 오브젝트 리스트에서 꺼내기
-	void DisableObject(GameObject* pObject)						noexcept;	// 오브젝트 비활성화(+대기 풀에 넣기)
+	void DisableObject(GameObject* pObject)						noexcept;	// 오브젝트 비활성화(->대기 풀)
 	bool RemoveObject(GameObject* pObject)						noexcept;	// 오브젝트 제거(삭제 이벤트 등록)
 	// 컴포넌트 가져오기, 등록, 삭제
 	Component* TakeComponent(const wstring_view& compName)		noexcept;
-	Component* SetProtoComponent(Component* pComponent)			noexcept;
+	bool SetProtoComponent(Component* pComponent)				noexcept;
+	void DisableComponent(Component* pComponent)				noexcept;	// 컴포넌트 비활성화(->대기 풀)
 	bool RemoveComponent(Component* pComponent)					noexcept;	// 컴포넌트 제거("")
 	// 충돌체 리스트 추가, 제거
 	forward_list<Collider*>& GetColliderList()					noexcept;

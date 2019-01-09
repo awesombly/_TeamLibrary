@@ -3,16 +3,50 @@
 
 bool IntroScene::Init() noexcept
 {
-	// ====================================================================================================
+	FirstInit();
 #pragma region Basic
-	GameObject* pObject = nullptr;
-	//Renderer*	pRenderer = nullptr;
-	Collider*   pCollider = nullptr;
 
+#pragma endregion
+	m_isLoading = false;
+	return true;
+}
+
+
+// 프레임
+bool IntroScene::Frame() noexcept
+{
+	DxManager::Get().Frame();
+	ObjectManager::Get().Frame(Timer::SPF, Timer::AccumulateTime);
+	SoundManager::Get().Frame();
+	SetScene(ESceneName::Lobby);
+	return true;
+}
+
+// 랜더
+bool IntroScene::Render() noexcept
+{
+	DxManager::Get().Render();
+	ObjectManager::Get().Render(DxManager::GetDContext());
+	SoundManager::Get().Render();
+	return true;
+}
+
+// 릴리즈
+bool IntroScene::Release() noexcept
+{
+	ObjectManager::Get().Release();
+	return true;
+}
+
+bool IntroScene::FirstInit() noexcept
+{
 	if (m_isFirstInit)
 	{
 		m_isFirstInit = false;
 		LoadSound();
+
+		GameObject* pObject = nullptr;
+		Collider*   pCollider = nullptr;
 		// 컴포넌트 등록
 		ObjectManager::Get().SetProtoComponent(new RPlane(L"Plane", L"None.png"));
 		ObjectManager::Get().SetProtoComponent(new RCube(L"Cube", L"None.png"));
@@ -51,39 +85,6 @@ bool IntroScene::Init() noexcept
 		pObject->SetScale(Vector3::One * 7);
 		pObject->SetParent(ObjectManager::Get().Lights.front());
 
-		///// 파티클
-		///auto pParticle = new ParticleSystem(L"ParticleSystem", new Particle(), L"UI/cat.png");
-		///pParticle->m_maxParticleCount = 9999;
-		///pParticle->m_spawnInterval = 0.013f;
-		///pParticle->m_minLifeCycle = 5.0f;
-		///pParticle->m_maxLifeCycle = 6.0f;
-		///pParticle->m_minInitPosition = Vector3::Zero;// *200;
-		///pParticle->m_maxInitPosition = Vector3::Zero;// *200;
-		///pParticle->m_minDirection = Vector3::Forward;
-		///pParticle->m_maxDirection = Vector3::Backward;
-		///pParticle->m_minMaxMoveSpeed = 100.0;
-		///pParticle->m_maxMaxMoveSpeed = 100.0;
-		///pParticle->m_minAccMoveSpeed = 5.0f;
-		///pParticle->m_maxAccMoveSpeed = 10.0f;
-		///pParticle->m_minCurMoveSpeed = 20.0f;
-		///pParticle->m_maxCurMoveSpeed = 40.0f;
-		///pParticle->m_minDirAngle = Quaternion::Zero;
-		///pParticle->m_maxDirAngle = Quaternion::Zero;
-		///pParticle->m_minRotateSpeed = 0.0f;
-		///pParticle->m_maxRotateSpeed = 0.0f;
-		///pParticle->m_minColor = { 0.5f, 0.5f, 0.5f, 0.5f };
-		///pParticle->m_maxColor = Color::White * 2;
-		///pParticle->m_minGravityPower = 15.0f;
-		///pParticle->m_maxGravityPower = 25.0f;
-		///pParticle->m_minInitScale = Vector3::One * 5.0f;
-		///pParticle->m_minInitScale = Vector3::One * 5.0f;
-		///pParticle->m_minScalePerLife = Vector3::Zero;
-		///pParticle->m_maxScalePerLife = Vector3::Zero;
-		///
-		///auto pParticleObject = new GameObject(L"ParticleSystem", { pParticle, new CTransformer(Vector3::Zero, Quaternion::Left * 1.5f) });
-		///pParticleObject->Translate(Vector3::Up * 250);
-		/////ObjectManager::Get().PushObject(pParticleObject);
-		///ObjectManager::Get().SetProtoObject(pParticleObject);
 
 		// 단검 충돌시
 		static auto pDaggerHit = [](Collider* pA, Collider* pB) {
@@ -119,38 +120,9 @@ bool IntroScene::Init() noexcept
 		pCollider->CollisionEvent = pDaggerHit;
 		pChicken->AddComponent(pCollider);
 		ObjectManager::Get().SetProtoObject(pChicken);
+		return true;
 	}
-#pragma endregion
-	// ====================================================================================================
-	m_isLoading = false;
-	return true;
-}
-
-
-// 프레임
-bool IntroScene::Frame() noexcept
-{
-	DxManager::Get().Frame();
-	ObjectManager::Get().Frame(Timer::SPF, Timer::AccumulateTime);
-	SoundManager::Get().Frame();
-	SetScene(ESceneName::Lobby);
-	return true;
-}
- 
-// 랜더
-bool IntroScene::Render() noexcept
-{
-	DxManager::Get().Render();
-	ObjectManager::Get().Render(DxManager::GetDContext());
-	SoundManager::Get().Render();
-	return true;
-}
-
-// 릴리즈
-bool IntroScene::Release() noexcept
-{
-	ObjectManager::Get().Release();
-	return true;
+	return false;
 }
 
 

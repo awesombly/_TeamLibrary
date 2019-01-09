@@ -66,3 +66,12 @@ bool Physics::isMoving() noexcept
 {
 	return m_pPhysics->m_isMoving;
 }
+
+void Physics::isGround(const bool& isGround) noexcept
+{
+	m_pPhysics->m_isGround = isGround;
+}
+bool Physics::isGround() noexcept
+{
+	return m_pPhysics->m_isGround;
+}

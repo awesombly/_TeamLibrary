@@ -10,14 +10,14 @@ struct ParticleData
 	D3DXVECTOR4 color;
 	//bool isEnable;
 };
-#pragma pack(pop)
 
 struct ParticleInfo
 {
 	bool m_isBillBoard				= true;
 	bool m_isRepeat					= true;
-	bool m_isFollow					= false;
-	///bool m_isBounding  = false;
+	bool m_isScreen					= false;
+	//bool m_isFollow					= false;
+	//bool DUMMY						= false;
 	bool m_isScalarScale			= true;
 
 	float m_lifeTime				= 9999.0f;
@@ -64,6 +64,7 @@ struct ParticleInfo
 	float m_minGravityPower			= 0.0f;
 	float m_maxGravityPower			= 0.0f;
 };
+#pragma pack(pop)
 
 
 
@@ -80,6 +81,9 @@ private:
 	// 정점 버퍼 세팅용
 	UINT Strides[2];				// 정점 크기
 	UINT Offsets[2];				// 시작 오프셋
+
+	float m_spawnFrame = 0.0f;
+	bool  m_needUpdateBuffer = false;
 private:
 	void	SpawnParticle()											noexcept;
 	HRESULT Create()												noexcept override;
@@ -102,8 +106,8 @@ public:
 	void isBillBoard(const bool& isBillBoard)	noexcept;
 	bool isRepeat()								noexcept;
 	void isRepeat(const bool& isRepeat)			noexcept;
-	bool isFollow()								noexcept;
-	void isFollow(const bool& isFollow)			noexcept;
+	bool isScreen()								noexcept;
+	void isScreen(const bool& isScreen)			noexcept;
 	bool isScalarScale()						noexcept;
 	void isScalarScale(const bool& isScalar)	noexcept;
 

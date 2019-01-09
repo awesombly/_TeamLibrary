@@ -26,8 +26,8 @@ protected:
 	map<EComponent, forward_list<Component*> > m_components; // 컴포넌트 리스트
 
 	D3DXMATRIX m_matLocal;			// Local 행렬(사실 월드ㅎ)
-	D3DXMATRIX m_matScale;			// Scale 행렬
-	D3DXMATRIX m_matRotation;		// Rotation 행렬
+	D3DXMATRIX m_matScale	 = Matrix::Identity; // Scale 행렬
+	D3DXMATRIX m_matRotation = Matrix::Identity; // Rotation 행렬
 	
 	bool  m_isEnable	= true;		// 활성화 여부
 	bool  m_isGlobal	= false;	// ObjectManager 릴리즈시 유지 여부

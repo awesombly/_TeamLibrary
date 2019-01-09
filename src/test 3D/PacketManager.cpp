@@ -114,9 +114,11 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 		 switch ((PlayerController::EAction)p_AnimTransform.EAnimState)
 		 {
 		  case PlayerController::EAction::Fly:
-		  {
 			  ObjectManager::KeyObjects[p_AnimTransform.KeyValue]->SetGravityScale(-0.35f);
-		  } break;
+		  case PlayerController::EAction::Jump:
+		  {
+			  ObjectManager::KeyObjects[p_AnimTransform.KeyValue]->isGround(false);
+		  }	break;
 		  case PlayerController::EAction::FlyEnd:
 		  {
 			  ObjectManager::KeyObjects[p_AnimTransform.KeyValue]->SetGravityScale(1.0f);

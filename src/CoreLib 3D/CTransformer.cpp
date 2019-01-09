@@ -6,6 +6,7 @@ CTransformer::CTransformer()
 {
 	m_myName = L"Transformer";
 	m_comptType = EComponent::Transformer;
+	m_scale = Vector3::Zero;
 	Init();
 }
 
@@ -30,6 +31,8 @@ bool CTransformer::Init() noexcept
 
 bool CTransformer::Frame(const float& spf, const float& accTime)	noexcept
 {
+	if (!m_isEnable) return false;
+
 	TransEvent(m_pParent, this, spf, accTime);
 	return true;
 	accTime;

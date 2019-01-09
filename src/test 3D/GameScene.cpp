@@ -3,91 +3,46 @@
 
 bool GameScene::Init() noexcept
 {
+	FirstInit();
 #pragma region Basic
-	
-	if (m_isFirstInit)
-	{
-		m_isFirstInit = false;
-		// 맵 푸쉬
-		ObjectManager::Get().PushObject(m_pMap);
-		///
-		m_pPlayer->m_myName  = L"Player";
-		m_pPlayer->m_objType = EObjType::Object;
-		ObjectManager::Cameras[ECamera::Main]->SetParent(m_pPlayer);
-		// 기사 
-		m_pHero = new AHeroObj();
-		m_pHero->SetPlayerCharacter(Guard, 0.0f, 100.0f, 0.0f);
-		m_pHero->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-		m_pHero->SetANIM_Loop(Guard_IDLE);
-		m_pHero->m_myName = L"Guard";
-		m_pHero->m_objType = EObjType::Object;
-		m_pHero->SetScale(Vector3::One * 0.5f);
-		auto pCollider = new ColliderOBB( { -13.0f, 0.0f , -13.0f }, { 13.0f, 80.0f , 13.0f });
-		m_pHero->AddComponent(pCollider);
-		pCollider->m_pivot *= 0.5f;
-		ObjectManager::Get().SetProtoObject(m_pHero);
-
-		// 좀비
-		m_pZombie = new AHeroObj();
-		m_pZombie->SetPlayerCharacter(Zombie, 80.0f, 200.0f, -300.0f);
-		m_pZombie->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-		m_pZombie->SetANIM_Loop(Zombie_IDLE);
-		m_pZombie->m_myName = L"Zombie";
-		m_pZombie->m_objType = EObjType::Object;
-		m_pZombie->SetScale(Vector3::One * 0.5f);
-		pCollider = new ColliderOBB( { -13.0f, 0.0f , -13.0f }, { 13.0f, 80.0f , 13.0f });
-		m_pZombie->AddComponent(pCollider);
-		pCollider->m_pivot *= 0.5f;
-		ObjectManager::Get().SetProtoObject(m_pZombie);
-
-		// 새 생성
-		m_pBird = new AHeroObj();
-		m_pBird->SetPlayerCharacter(NPC_Bird, 0.0f, 80.0f, 300.0f);
-		m_pBird->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-		m_pBird->m_myName = L"Bird";
-		m_pBird->m_objType = EObjType::Object;
-		m_pBird->SetScale(Vector3::One * 7.0f);
-		pCollider = new ColliderOBB( { -1.0f, 0.0f , -1.0f }, { 1.0f, 2.0f , 1.0f });
-		m_pBird->AddComponent(pCollider);
-		pCollider->m_pivot *= 7.0f;
-		pCollider->SetGravityScale(0.3f);
-		ObjectManager::Get().SetProtoObject(m_pBird);
-
-		//// 닭 생성
-		//m_pChicken = new AHeroObj();
-		//m_pChicken->SetPlayerCharacter(NPC_Chicken, 0.0f, 300.0f, -400.0f);
-		//m_pChicken->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-		//m_pChicken->m_myName = L"Chicken";
-		//m_pChicken->m_objType = EObjType::Object;
-		////m_pChicken->SetScale(Vector3::One * 15.0f);
-		//pCollider = new ColliderOBB(23.0f, { -15.0f, 0.0f , -15.0f }, { 15.0f, 30.0f , 15.0f });
-		////pCollider->m_pivot *= 15.0f;
-		//m_pChicken->AddComponent(pCollider);
-		//ObjectManager::Get().SetProtoObject(m_pChicken);
-	}
-	//ParticleSystem* pComp = nullptr;
-	//PlayerController::Get().m_Parser.CreateFromFile(&pComp, L"Fire.eff", L"../../data/script");
 	m_pHero = (AHeroObj*)ObjectManager::Get().TakeObject(L"Guard");
-	//m_pHero->AddComponent(pComp);
+	m_pHero->AddComponent(ObjectManager::Get().TakeComponent(L"Fire"));
 	m_pPlayer->Possess(m_pHero);
 	m_pPlayer->ResetOption();
-
+	// ==================================================================================
 	GameObject* pEffect = nullptr;
-	PlayerController::Get().m_Parser.CreateFromFile(&pEffect, L"Snow.eff", L"../../data/script");
-	pEffect->SetPosition(Vector3::Up * 300.0f);
+	m_Parser.CreateFromFile(&pEffect, L"Snow.eff", L"../../data/script");
+	pEffect->SetPosition(Vector3::Up * 400.0f);
 	ObjectManager::Get().PushObject(pEffect);
-	ObjectManager::Get().TakeObject(L"Guard")  ->SetPosition(RandomNormal() * 1000.0f - 500.0f, RandomNormal() * 500.0f, RandomNormal() * 1000.0f - 500.0f);
-	ObjectManager::Get().TakeObject(L"Zombie") ->SetPosition(RandomNormal() * 1000.0f - 500.0f, RandomNormal() * 500.0f, RandomNormal() * 1000.0f - 500.0f);
-	ObjectManager::Get().TakeObject(L"Bird")   ->SetPosition(RandomNormal()	* 1000.0f - 500.0f, RandomNormal() * 500.0f, RandomNormal() * 1000.0f - 500.0f);
-	ObjectManager::Get().TakeObject(L"Guard")  ->SetPosition(RandomNormal() * 1000.0f - 500.0f, RandomNormal() * 500.0f, RandomNormal() * 1000.0f - 500.0f);
-	ObjectManager::Get().TakeObject(L"Zombie") ->SetPosition(RandomNormal() * 1000.0f - 500.0f, RandomNormal() * 500.0f, RandomNormal() * 1000.0f - 500.0f);
-	ObjectManager::Get().TakeObject(L"Bird")   ->SetPosition(RandomNormal()	* 1000.0f - 500.0f, RandomNormal() * 500.0f, RandomNormal() * 1000.0f - 500.0f);
-	ObjectManager::Get().TakeObject(L"Guard")  ->SetPosition(RandomNormal() * 1000.0f - 500.0f, RandomNormal() * 500.0f, RandomNormal() * 1000.0f - 500.0f);
-	ObjectManager::Get().TakeObject(L"Zombie") ->SetPosition(RandomNormal() * 1000.0f - 500.0f, RandomNormal() * 500.0f, RandomNormal() * 1000.0f - 500.0f);
-	ObjectManager::Get().TakeObject(L"Bird")   ->SetPosition(RandomNormal()	* 1000.0f - 500.0f, RandomNormal() * 500.0f, RandomNormal() * 1000.0f - 500.0f);
+
+	pEffect = new GameObject(L"Bigbang", ObjectManager::Get().TakeComponent(L"Bigbang"));
+	pEffect->SetPosition(Vector3::Up * 400.0f + Vector3::Left * 700.0f);
+	ObjectManager::Get().PushObject(pEffect);
+
+	pEffect = new GameObject(L"Shock", ObjectManager::Get().TakeComponent(L"Shock"));
+	pEffect->SetPosition(Vector3::Up * 400.0f + Vector3::Right * 700.0f);
+	ObjectManager::Get().PushObject(pEffect);
+
+	pEffect = new GameObject(L"WheelWind", { ObjectManager::Get().TakeComponent(L"WheelWind"), new CTransformer(Vector3::Zero, Quaternion::Left * 3.0f) });
+	pEffect->SetPosition(Vector3::Up * 400.0f + Vector3::Forward * 700.0f);
+	ObjectManager::Get().PushObject(pEffect);
+
+	pEffect = new GameObject(L"Atom", { ObjectManager::Get().TakeComponent(L"Atom"), new CTransformer(Vector3::Zero, {3.0f, 5.0f, 7.0f, 0.0f}) });
+	pEffect->SetPosition(Vector3::Up * 400.0f + Vector3::Backward * 700.0f);
+	ObjectManager::Get().PushObject(pEffect);
+
+	ObjectManager::Get().TakeObject(L"Guard")->SetPosition(RandomNormal() * 1000.0f - 500.0f, RandomNormal() * 500.0f, RandomNormal() * 1000.0f - 500.0f);
+	ObjectManager::Get().TakeObject(L"Zombie")->SetPosition(RandomNormal() * 1000.0f - 500.0f, RandomNormal() * 500.0f, RandomNormal() * 1000.0f - 500.0f);
+	ObjectManager::Get().TakeObject(L"Bird")->SetPosition(RandomNormal()	* 1000.0f - 500.0f, RandomNormal() * 500.0f, RandomNormal() * 1000.0f - 500.0f);
+	ObjectManager::Get().TakeObject(L"Guard")->SetPosition(RandomNormal() * 1000.0f - 500.0f, RandomNormal() * 500.0f, RandomNormal() * 1000.0f - 500.0f);
+	ObjectManager::Get().TakeObject(L"Zombie")->SetPosition(RandomNormal() * 1000.0f - 500.0f, RandomNormal() * 500.0f, RandomNormal() * 1000.0f - 500.0f);
+	ObjectManager::Get().TakeObject(L"Bird")->SetPosition(RandomNormal()	* 1000.0f - 500.0f, RandomNormal() * 500.0f, RandomNormal() * 1000.0f - 500.0f);
+	ObjectManager::Get().TakeObject(L"Guard")->SetPosition(RandomNormal() * 1000.0f - 500.0f, RandomNormal() * 500.0f, RandomNormal() * 1000.0f - 500.0f);
+	ObjectManager::Get().TakeObject(L"Zombie")->SetPosition(RandomNormal() * 1000.0f - 500.0f, RandomNormal() * 500.0f, RandomNormal() * 1000.0f - 500.0f);
+	ObjectManager::Get().TakeObject(L"Bird")->SetPosition(RandomNormal()	* 1000.0f - 500.0f, RandomNormal() * 500.0f, RandomNormal() * 1000.0f - 500.0f);
 
 #pragma endregion
-	
+
 	// ===================================== UI =========================================
 	JPanel* pUIRoot = new JPanel(L"UI_IntroRoot");
 	pUIRoot->m_objType = EObjType::UI;
@@ -106,7 +61,7 @@ bool GameScene::Init() noexcept
 		SoundManager::Get().SetMasterVolume(*((JSliderCtrl*)pSlider)->GetValue());
 	};
 	m_pVolume = (JSliderCtrl*)pUIRoot->find_child(L"Set_Volum");
-	m_pVolume->EventPress.first  = pSetVolume;
+	m_pVolume->EventPress.first = pSetVolume;
 	m_pVolume->EventPress.second = m_pVolume;
 	m_pVolume->SetValue(0.5f);
 	SoundManager::Get().SetMasterVolume(*m_pVolume->GetValue());
@@ -115,7 +70,7 @@ bool GameScene::Init() noexcept
 		PlayerController::Get().m_mouseSense = *((JSliderCtrl*)pSlider)->GetValue();
 	};
 	m_pMouseSense = (JSliderCtrl*)pUIRoot->find_child(L"Set_Mouse");
-	m_pMouseSense->EventPress.first  = pSetMouseSense;
+	m_pMouseSense->EventPress.first = pSetMouseSense;
 	m_pMouseSense->EventPress.second = m_pMouseSense;
 	m_pMouseSense->SetValue(0.5f);
 	PlayerController::Get().m_mouseSense = *m_pMouseSense->GetValue();
@@ -170,53 +125,51 @@ bool GameScene::Init() noexcept
 // 프레임
 bool GameScene::Frame() noexcept
 {
-
-		// IME 채팅
+	// IME 채팅
+	if (PlayerController::Get().isChatting())
+	{
+		m_chatMessage = ime::Get()->GetString();
+	}
+	if (Input::GetKeyState(VK_RETURN) == EKeyState::DOWN)
+	{
 		if (PlayerController::Get().isChatting())
 		{
-			m_chatMessage = ime::Get()->GetString();
+			static size_t strSize = 0;
+			strSize = m_chatMessage.size() * 2;
+			strSize = strSize > 200 ? 200 : strSize;
+			// 패킷 전송
+			Packet_ChatMessage p_ChatMessage;
+			//p_ChatMessage.KeyValue = ObjectManager::KeyObjects.begin()->first;// PlayerController::Get().m_keyValue;
+			memcpy(p_ChatMessage.Message, m_chatMessage.data(), strSize);
+			p_ChatMessage.MsgSize = (UCHAR)strSize;
+			PacketManager::Get().SendPacket((char*)&p_ChatMessage, (USHORT)(PS_ChatMessage + strSize), PACKET_ChatMessage);
+
+			m_chatMessage.clear();
+			ime::Get()->imeEnd();
+			PlayerController::Get().isChatting(false);
 		}
-		if (Input::GetKeyState(VK_RETURN) == EKeyState::DOWN)
+		else
 		{
-			if (PlayerController::Get().isChatting())
-			{
-				static size_t strSize = 0;
-				strSize = m_chatMessage.size() * 2;
-				strSize = strSize > 200 ? 200 : strSize;
-				// 패킷 전송
-				Packet_ChatMessage p_ChatMessage;
-				//p_ChatMessage.KeyValue = ObjectManager::KeyObjects.begin()->first;// PlayerController::Get().m_keyValue;
-				memcpy(p_ChatMessage.Message, m_chatMessage.data(), strSize);
-				p_ChatMessage.MsgSize = (UCHAR)strSize;
-				PacketManager::Get().SendPacket((char*)&p_ChatMessage, (USHORT)(PS_ChatMessage + strSize), PACKET_ChatMessage);
-
-				m_chatMessage.clear();
-				ime::Get()->imeEnd();
-				PlayerController::Get().isChatting(false);
-			}
-			else
-			{
-				PlayerController::Get().isChatting(true);
-				ime::Get()->imeStart();
-			}
+			PlayerController::Get().isChatting(true);
+			ime::Get()->imeStart();
 		}
+	}
 
-		// 플레이어 변경
-		if (Input::GetKeyState(VK_TAB) == EKeyState::DOWN)
-		{
-			static auto curCollider = ObjectManager::Get().GetColliderList().begin();
-			if (curCollider == ObjectManager::Get().GetColliderList().end())
-				curCollider = ObjectManager::Get().GetColliderList().begin();
-			if (++curCollider == ObjectManager::Get().GetColliderList().end())
-				curCollider = ObjectManager::Get().GetColliderList().begin();
+	// 플레이어 변경
+	if (Input::GetKeyState(VK_TAB) == EKeyState::DOWN)
+	{
+		static auto curCollider = ObjectManager::Get().GetColliderList().begin();
+		if (curCollider == ObjectManager::Get().GetColliderList().end())
+			curCollider = ObjectManager::Get().GetColliderList().begin();
+		if (++curCollider == ObjectManager::Get().GetColliderList().end())
+			curCollider = ObjectManager::Get().GetColliderList().begin();
 
-			m_pPlayer->Possess((*curCollider)->m_pParent);
-			//SoundManager::Get().m_pListenerPos = &(*curCollider)->m_pParent->GetRoot()->GetPosition();
-		}
-		
+		m_pPlayer->Possess((*curCollider)->m_pParent);
+	}
 
 
-	
+
+
 
 
 
@@ -273,6 +226,69 @@ bool GameScene::Release() noexcept
 	ObjectManager::Get().Release();
 	m_Rule.Release();
 	return true;
+}
+
+bool GameScene::FirstInit() noexcept
+{
+	if (m_isFirstInit)
+	{
+		m_isFirstInit = false;
+		// 맵 푸쉬
+		ObjectManager::Get().PushObject(m_pMap);
+		// Effect 로드
+		//ObjectManager::Get().SetProtoComponent(m_pParser->CreateFromParticle(L"Snow.eff", L"../../data/script"));
+		ObjectManager::Get().SetProtoComponent(m_Parser.CreateFromParticle(L"Boom.eff", L"../../data/script"));
+		ObjectManager::Get().SetProtoComponent(m_Parser.CreateFromParticle(L"Fire.eff", L"../../data/script"));
+		ObjectManager::Get().SetProtoComponent(m_Parser.CreateFromParticle(L"Fly.eff", L"../../data/script"));
+		ObjectManager::Get().SetProtoComponent(m_Parser.CreateFromParticle(L"Bigbang.eff", L"../../data/script"));
+		ObjectManager::Get().SetProtoComponent(m_Parser.CreateFromParticle(L"Shock.eff", L"../../data/script"));
+		ObjectManager::Get().SetProtoComponent(m_Parser.CreateFromParticle(L"Atom.eff", L"../../data/script"));
+		ObjectManager::Get().SetProtoComponent(m_Parser.CreateFromParticle(L"WheelWind.eff", L"../../data/script"));
+		///
+		m_pPlayer->m_myName = L"Player";
+		m_pPlayer->m_objType = EObjType::Object;
+		ObjectManager::Cameras[ECamera::Main]->SetParent(m_pPlayer);
+		// 기사 
+		m_pHero = new AHeroObj();
+		m_pHero->SetPlayerCharacter(Guard, 0.0f, 100.0f, 0.0f);
+		m_pHero->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+		m_pHero->SetANIM_Loop(Guard_IDLE);
+		m_pHero->m_myName = L"Guard";
+		m_pHero->m_objType = EObjType::Object;
+		m_pHero->SetScale(Vector3::One * 0.5f);
+		auto pCollider = new ColliderOBB({ -13.0f, 0.0f , -13.0f }, { 13.0f, 80.0f , 13.0f });
+		m_pHero->AddComponent(pCollider);
+		pCollider->m_pivot *= 0.5f;
+		ObjectManager::Get().SetProtoObject(m_pHero);
+
+		// 좀비
+		m_pZombie = new AHeroObj();
+		m_pZombie->SetPlayerCharacter(Zombie, 80.0f, 200.0f, -300.0f);
+		m_pZombie->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+		m_pZombie->SetANIM_Loop(Zombie_IDLE);
+		m_pZombie->m_myName = L"Zombie";
+		m_pZombie->m_objType = EObjType::Object;
+		m_pZombie->SetScale(Vector3::One * 0.5f);
+		pCollider = new ColliderOBB({ -13.0f, 0.0f , -13.0f }, { 13.0f, 80.0f , 13.0f });
+		m_pZombie->AddComponent(pCollider);
+		pCollider->m_pivot *= 0.5f;
+		ObjectManager::Get().SetProtoObject(m_pZombie);
+
+		// 새 생성
+		m_pBird = new AHeroObj();
+		m_pBird->SetPlayerCharacter(NPC_Bird, 0.0f, 80.0f, 300.0f);
+		m_pBird->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+		m_pBird->m_myName = L"Bird";
+		m_pBird->m_objType = EObjType::Object;
+		m_pBird->SetScale(Vector3::One * 7.0f);
+		pCollider = new ColliderOBB({ -1.0f, 0.0f , -1.0f }, { 1.0f, 2.0f , 1.0f });
+		m_pBird->AddComponent(pCollider);
+		pCollider->m_pivot *= 7.0f;
+		pCollider->SetGravityScale(0.3f);
+		ObjectManager::Get().SetProtoObject(m_pBird);
+		return true;
+	}
+	return false;
 }
 
 

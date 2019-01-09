@@ -19,9 +19,6 @@
     <ClCompile Include="PacketManager.cpp">
       <Filter>Etc</Filter>
     </ClCompile>
-    <ClCompile Include="BoundingUI.cpp">
-      <Filter>Etc</Filter>
-    </ClCompile>
     <ClCompile Include="GameRule.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -44,9 +41,6 @@
       <Filter>Etc</Filter>
     </ClInclude>
     <ClInclude Include="PacketManager.h">
-      <Filter>Etc</Filter>
-    </ClInclude>
-    <ClInclude Include="BoundingUI.h">
       <Filter>Etc</Filter>
     </ClInclude>
     <ClInclude Include="GameRule.h" />

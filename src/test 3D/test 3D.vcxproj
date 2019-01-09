@@ -214,7 +214,6 @@
     </FxCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="BoundingUI.cpp" />
     <ClCompile Include="GameRule.cpp" />
     <ClCompile Include="LobbyScene.cpp" />
     <ClCompile Include="IntroScene.cpp" />
@@ -224,7 +223,6 @@
     <ClCompile Include="PlayerController.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BoundingUI.h" />
     <ClInclude Include="GameRule.h" />
     <ClInclude Include="LobbyScene.h" />
     <ClInclude Include="IntroScene.h" />

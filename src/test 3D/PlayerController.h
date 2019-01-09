@@ -1,11 +1,12 @@
 #pragma once
 #include "GameObject.h"
 #include "ISingleton.h"
-#include "MaxImporter.h"
+
 
 class Collider;
 class Camera;
 class AHeroObj;
+//class ParticleSystem;
 
 class PlayerController : public GameObject, public ISingleton<PlayerController>
 {
@@ -43,11 +44,8 @@ private:
 	POINT		m_setMouseScreen;
 	POINT		m_setMouseClient;
 
-	GameObject* m_pEffectFly = nullptr;
+	Component* m_pEffectFly = nullptr;
 public:
-	MaxImporter m_Parser;
-
-
 	const float	m_DelayThrow	= 0.3f;
 	float		m_curDelayThrow = 0.0f;
 

@@ -17,6 +17,7 @@
 
 #include "CoreDX.h"
 ///
+#include "MaxImporter.h"
 #include "SkySphere.h"
 #include "SkyBox.h"
 #include "ParticleSystem.h"
@@ -33,8 +34,8 @@
 #include "AHeroObj.h"
 #include "JPanel.h"
 
-#include "XQuadTreeIndex.h"
 //#include "XCamera.h"
+#include "XQuadTreeIndex.h"
 #include "XMapImporter.h"
 
 
@@ -79,9 +80,7 @@ enum class ESceneName : char {
 // 전체 씬과 게임의 흐름을 관리
 class MainClass : public Core 
 {
-public:
-	static GameObject* m_pSkyBox;
-	static map<ESceneName, MainClass*> m_SceneList;
+private:
 	static MainClass* m_curScene;
 	// 로딩
 	static GameObject* m_LoadingImage;
@@ -89,9 +88,13 @@ public:
 	static GameObject* m_Icon2;
 	static GameObject* m_Icon3;
 	static GameObject* m_Icon4;
-	static bool m_isLoading;
-	bool m_isFirstInit = true;
+public:
+	//static MaxImporter* m_pParser;
+	static GameObject* m_pSkyBox;
+	static map<ESceneName, MainClass*> m_SceneList;
 
+	static bool m_isLoading;
+	bool		m_isFirstInit = true;
 	///
 	static XMap*			m_pMap;						// 맵
 	static XQuadTreeIndex*	m_pMapTree;					// 맵->공간분할, LOD시 수정 예정
@@ -100,13 +103,14 @@ public:
 	// 씬 설정
 	void SetScene(const ESceneName& sceneName, const bool& useRelease = true) noexcept;
 
-	void MsgEvent(const MSG& _message) noexcept;
+	void MsgEvent(const MSG& _message)	noexcept;
 	void SendMovedObject()	noexcept;
 	
-	virtual bool Init()		noexcept override;
-	virtual bool Frame()	noexcept override;
-	virtual bool Render()	noexcept override;
-	virtual bool Release()	noexcept override;
+	virtual bool FirstInit()			noexcept { return true; };
+	virtual bool Init()					noexcept override;
+	virtual bool Frame()				noexcept override;
+	virtual bool Render()				noexcept override;
+	virtual bool Release()				noexcept override;
 public:
 	MainClass() = default;
 	~MainClass() = default;

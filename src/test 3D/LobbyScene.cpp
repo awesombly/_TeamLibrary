@@ -5,6 +5,8 @@
 
 bool LobbyScene::Init() noexcept
 {
+	FirstInit();
+	///
 	static auto pToGuest = [](void* pScene) {
 		if (PacketManager::Get().InputIP.empty())
 		{
@@ -17,7 +19,6 @@ bool LobbyScene::Init() noexcept
 
 		PacketManager::Get().SendPacket('\0', 0, PACKET_ReqAddPlayer);
 		PacketManager::Get().SendPacket('\0', 0, PACKET_ReqSyncSpawns);
-		//PacketManager::Get().SendPacket((char*)&PI, sizeof(PI), PACKET_ReqSync);
 	};
 	static auto pToHost = [](void* pScene) {
 		PacketManager::Get().isHost = true;
@@ -55,22 +56,6 @@ bool LobbyScene::Init() noexcept
 	ObjectManager::Get().PushObject(pUIRoot);
 	SoundManager::Get().SetBGM("bgm_Title01.mp3");
 
-
-	if (m_isFirstInit)
-	{
-		m_isFirstInit = false;
-		// =============================== 甘 积己 =================================
-		m_Importer.Import();
-		m_pMap = new XMap();
-		//m_pMap = (XMap*)new GameObject(L"");
-		m_pMap->Create(DxManager::Get().GetDevice(), DxManager::Get().GetDContext(), &m_Importer, _T("../../Data/Map/Shader/MapShader_Specular.hlsl"), _T("../../Data/Map/Shader/MapShader_Color_Specular.hlsl"), "VS", "PS");
-		m_pMapTree = new XQuadTreeIndex();
-		m_pMapTree->Build(m_pMap);
-		m_pMap->m_objType = EObjType::Map;
-		m_pMap->isGlobal();
-		m_pMap->isStatic();
-		//ObjectManager::Get().PushObject(m_pMap);
-	}
 	m_isLoading = false;
 	return true;
 }
@@ -170,4 +155,27 @@ bool LobbyScene::Release() noexcept
 {
 	ObjectManager::Get().Release();
 	return true;
+}
+
+
+
+bool LobbyScene::FirstInit() noexcept
+{
+	if (m_isFirstInit)
+	{
+		m_isFirstInit = false;
+		// =============================== 甘 积己 =================================
+		m_Importer.Import();
+		m_pMap = new XMap();
+		//m_pMap = (XMap*)new GameObject(L"");
+		m_pMap->Create(DxManager::Get().GetDevice(), DxManager::Get().GetDContext(), &m_Importer, _T("../../Data/Map/Shader/MapShader_Specular.hlsl"), _T("../../Data/Map/Shader/MapShader_Color_Specular.hlsl"), "VS", "PS");
+		m_pMapTree = new XQuadTreeIndex();
+		m_pMapTree->Build(m_pMap);
+		m_pMap->m_objType = EObjType::Map;
+		m_pMap->isGlobal();
+		m_pMap->isStatic();
+		//ObjectManager::Get().PushObject(m_pMap);
+		return true;
+	}
+	return false;
 }
