@@ -25,6 +25,7 @@ bool GameRule::Frame()	noexcept
 
 		//WriteManager::Get().SetFontColor(D2D1::ColorF::Red);
 		m_TimerText->m_Text = to_wstring(GetPlayTime() - Timer::AccumulateTime).substr(0, 5);
+
 	}
 
 	if (GetHideTime() - Timer::AccumulateTime <=0)
