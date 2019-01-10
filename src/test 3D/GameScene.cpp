@@ -99,11 +99,8 @@ bool GameScene::Frame() noexcept
 		m_pPlayer->Possess((*curCollider)->m_pParent);
 	}
 
-
-
-
 	// 시간 출력
-	//m_Rule.Frame();
+	m_Rule.Frame();
 	///
 	m_pMapTree->Frame();
 	DxManager::Get().Frame();

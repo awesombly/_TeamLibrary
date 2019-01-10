@@ -73,9 +73,9 @@ bool GameObject::Frame(const float& spf, const float& accTime) noexcept
 	if (m_pPhysics != nullptr)
 	{
 		// 중력
-		m_pPhysics->m_force += Vector3::Down * m_pPhysics->m_GravityScale * GravityPower * spf;
+		m_pPhysics->m_force += m_pPhysics->m_GravityScale * GravityPower * spf * Vector3::Down;
 		// 항력
-		m_pPhysics->m_force -= m_pPhysics->m_force * m_pPhysics->m_damping * spf;
+		m_pPhysics->m_force -= m_pPhysics->m_damping * spf * m_pPhysics->m_force;
 
 		// 힘 적용
 		if (GetVelocitySq() > 20.0f)
@@ -434,7 +434,7 @@ GameObject* GameObject::cloneChild(GameObject* pObject) noexcept
 	// Physics 재생성
 	if (pObject->m_pPhysics != nullptr)
 	{
-		pObject->m_pPhysics = new PhysicsInfo();
+		pObject->m_pPhysics = new PhysicsInfo(*pObject->m_pPhysics);
 	}
 	// 자식들 복사
 	for (auto& iter : pObject->m_childList)

@@ -99,12 +99,19 @@ public:
 	static XMap*			m_pMap;						// 맵
 	static XQuadTreeIndex*	m_pMapTree;					// 맵->공간분할, LOD시 수정 예정
 	static XMapImporter		m_Importer;					// 세이브 데이터 로더
+	///
+	GameObject*				m_pBullet = nullptr;
+	list<GameObject*>		m_BulletList;
+	//
+	GameObject*				m_pEnemy  = nullptr;
+	list<GameObject*>		m_EnemyList;
 public:
+	void MsgEvent(const MSG& _message)	noexcept;
 	// 씬 설정
 	void SetScene(const ESceneName& sceneName, const bool& useRelease = true) noexcept;
+	void MainClass::LoadSceneInput()	noexcept;
 
-	void MsgEvent(const MSG& _message)	noexcept;
-	void SendMovedObject()	noexcept;
+	//void SendMovedObject()	noexcept;
 
 	virtual void LoadUI()				noexcept { return; };
 	virtual bool FirstInit()			noexcept { return true; };

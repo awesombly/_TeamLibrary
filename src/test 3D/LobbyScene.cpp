@@ -12,7 +12,7 @@ bool LobbyScene::Init() noexcept
 	LoadUI();
 
 	m_pBackHero = (AHeroObj*)ObjectManager::Get().TakeObject(L"Guard", false);
-	m_pBackHero->SetPosition(-40.0f, -28.0f, 40.0f);
+	m_pBackHero->SetPosition(-40.0f, -28.0f, 30.0f);
 	m_pBackHero->SetRotation(Quaternion::Left * PI * 0.8f);
 	m_pBackHero->SetGravityScale(0.0f);
 
@@ -137,7 +137,6 @@ bool LobbyScene::Frame() noexcept
 	if (isStart)
 	{
 		frameCount += Timer::SPF;
-		//m_pBackHero->Translate(Vector3::One * 6.0f * Timer::SPF);
 		if (frameCount > 2.5f)
 		{
 			isStart = false;
@@ -172,18 +171,6 @@ bool LobbyScene::FirstInit() noexcept
 {
 	if (m_isFirstInit)
 	{
-		m_isFirstInit = false;
-		// =============================== ¸Ê »ý¼º =================================
-		m_Importer.Import();
-		m_pMap = new XMap();
-		//m_pMap = (XMap*)new GameObject(L"");
-		m_pMap->Create(DxManager::Get().GetDevice(), DxManager::Get().GetDContext(), &m_Importer, _T("../../Data/Map/Shader/MapShader_Specular.hlsl"), _T("../../Data/Map/Shader/MapShader_Color_Specular.hlsl"), "VS", "PS");
-		m_pMapTree = new XQuadTreeIndex();
-		m_pMapTree->Build(m_pMap);
-		m_pMap->m_objType = EObjType::Map;
-		m_pMap->isGlobal();
-		m_pMap->isStatic();
-		//ObjectManager::Get().PushObject(m_pMap);
 		return true;
 	}
 	return false;

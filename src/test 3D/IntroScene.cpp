@@ -77,7 +77,19 @@ bool IntroScene::FirstInit() noexcept
 	if (m_isFirstInit)
 	{
 		m_isFirstInit = false;
+		// 폰트 설정
+		WriteManager::Get().SetText({ 0, 0 }, L"", D2D1::ColorF::Black, 20, L"Yu Gothic");
+		WriteManager::Get().SetFontSizeAlign(20, EAlign::Center, EAlign::Center);
+		//
+		m_pParser = new MaxImporter();
+		
 		LoadSound();
+		// ========================= 캐릭터 초기화 ===========================
+		I_CHARMGR.Init();
+		if (!I_CHARMGR.Load(DxManager::GetDevice(), DxManager::GetDContext(), TablePATH))		//경로 중요함
+		{
+			return false;
+		}
 
 		GameObject* pObject = nullptr;
 		Collider*   pCollider = nullptr;
@@ -205,6 +217,18 @@ bool IntroScene::FirstInit() noexcept
 		pCollider->m_pivot *= 7.0f;
 		pCollider->SetGravityScale(0.3f);
 		ObjectManager::Get().SetProtoObject(pHeroObj);
+
+		// =============================== 맵 생성 =================================
+		m_Importer.Import();
+		m_pMap = new XMap();
+		//m_pMap = (XMap*)new GameObject(L"");
+		m_pMap->Create(DxManager::Get().GetDevice(), DxManager::Get().GetDContext(), &m_Importer, _T("../../Data/Map/Shader/MapShader_Specular.hlsl"), _T("../../Data/Map/Shader/MapShader_Color_Specular.hlsl"), "VS", "PS");
+		m_pMapTree = new XQuadTreeIndex();
+		m_pMapTree->Build(m_pMap);
+		m_pMap->m_objType = EObjType::Map;
+		m_pMap->isGlobal();
+		m_pMap->isStatic();
+		//ObjectManager::Get().PushObject(m_pMap);
 		return true;
 	}
 	return false;
