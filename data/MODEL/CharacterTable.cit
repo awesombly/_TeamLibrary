@@ -5,7 +5,8 @@
 *CHARACTERNAME		guard
 *SHADERFILENMAE		..\..\data\model\Character.hlsl
 
-*MATRIXMATRIXCOUNT  10
+*MATRIXMATRIXCOUNT  11
+*MATRIXFILENAME		..\..\data\model\Guard_02\HERO_DASHJUMP.Mat	
 *MATRIXFILENAME		..\..\data\model\Guard_02\HERO_THROW.Mat
 *MATRIXFILENAME		..\..\data\model\Guard_02\HERO_HAPPYWALK.Mat
 *MATRIXFILENAME		..\..\data\model\Guard_02\HERO_DANCE3.Mat
@@ -16,6 +17,7 @@
 *MATRIXFILENAME		..\..\data\model\Guard_02\HERO_MOVE_BACK.Mat
 *MATRIXFILENAME		..\..\data\model\Guard_02\HERO_MOVE.Mat
 *MATRIXFILENAME		..\..\data\model\Guard_02\HERO_IDLE.Mat
+
 
 
 *SKIN_UPPER_BODY_COUNT	1

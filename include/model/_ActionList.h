@@ -10,8 +10,9 @@
 //참고 1 : 액션리스트
 //////////////////////////////////////////////////////////////////////////
 //Guard
-//ANIM_COUNT  10
+//ANIM_COUNT  11
 #define  Guard				L"guard"
+#define	 Guard_DASHJUMP		L"HERO_DASHJUMP.Mat"
 #define	 Guard_THROW		L"HERO_THROW.Mat"
 #define	 Guard_HAPPYWALK	L"HERO_HAPPYWALK.Mat"
 #define	 Guard_LEFT			L"HERO_LEFT.Mat"
