@@ -1,5 +1,5 @@
 #include "IntroScene.h"
-
+#include "JEventBind.h"
 
 bool IntroScene::Init() noexcept
 {
@@ -137,8 +137,9 @@ bool IntroScene::FirstInit() noexcept
 		pHeroObj->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
 		pHeroObj->m_myName = L"Dagger";
 		pHeroObj->m_objType = EObjType::Object;
+		pHeroObj->SetScale(Vector3::One * 0.5f);
 		pCollider = new Collider(15.0f);
-		pCollider->m_pivot = Vector3::Up * 10.0f + Vector3::Forward * 5.0f;
+		pCollider->m_pivot = Vector3::Up * 5.0f + Vector3::Forward * 2.5f;
 		pCollider->CollisionEvent = pDaggerHit;
 		pHeroObj->AddComponent(pCollider);
 		ObjectManager::Get().SetProtoObject(pHeroObj);
@@ -149,8 +150,9 @@ bool IntroScene::FirstInit() noexcept
 		pHeroObj->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
 		pHeroObj->m_myName = L"Chicken";
 		pHeroObj->m_objType = EObjType::Object;
+		pHeroObj->SetScale(Vector3::One * 0.5f);
 		pCollider = new Collider(15.0f);
-		pCollider->m_pivot = Vector3::Up * 10.0f + Vector3::Forward * 5.0f;
+		pCollider->m_pivot = Vector3::Up * 5.0f + Vector3::Forward * 2.5f;
 		pCollider->CollisionEvent = pDaggerHit;
 		pHeroObj->AddComponent(pCollider);
 		ObjectManager::Get().SetProtoObject(pHeroObj);
@@ -212,4 +214,5 @@ bool IntroScene::FirstInit() noexcept
 void IntroScene::LoadUI() noexcept
 {
 	///
+	// UI::IntroEvent();
 }

@@ -1,5 +1,6 @@
 #include "GameScene.h"
 #include "PacketManager.h"
+#include "JEventBind.h"
 
 bool GameScene::Init() noexcept
 {
@@ -342,4 +343,6 @@ void GameScene::LoadUI() noexcept
 	//JSliderCtrl* pSlider = (JSliderCtrl*)pUIRoot->find_child(L"Chat_Slider");
 	//m_pList->m_fValue = pSlider->GetValue();
 	ObjectManager::Get().PushObject(pUIRoot);
+
+	UI::IntroEvent(pUIRoot);
 }

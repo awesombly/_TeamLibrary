@@ -1,13 +1,21 @@
 #include "LobbyScene.h"
 #include "PacketManager.h"
+#include "JEventBind.h"
 #include "JState.h"
 
 
 bool LobbyScene::Init() noexcept
 {
 	FirstInit();
+	DxManager::Get().SetBlendState(EBlendS::Basic);
 	// UI
 	LoadUI();
+
+	m_pBackHero = (AHeroObj*)ObjectManager::Get().TakeObject(L"Guard", false);
+	m_pBackHero->SetPosition(-40.0f, -28.0f, 40.0f);
+	m_pBackHero->SetRotation(Quaternion::Left * PI * 0.8f);
+	m_pBackHero->SetGravityScale(0.0f);
+
 	///
 	SoundManager::Get().SetBGM("bgm_Title01.mp3");
 	m_isLoading = false;
@@ -18,6 +26,7 @@ bool LobbyScene::Init() noexcept
 // 프레임
 bool LobbyScene::Frame() noexcept
 {
+	// 채팅
 	if (m_toGuestPanel->m_bRender == true)
 	{
 		if (Input::GetKeyState(VK_BACK) == EKeyState::DOWN &&
@@ -27,7 +36,6 @@ bool LobbyScene::Frame() noexcept
 			PacketManager::Get().InputIP.erase(--PacketManager::Get().InputIP.end());
 			m_toGuestIP->m_Text = L"IP : ~." + PacketManager::Get().InputIP;
 		}
-		// 채팅 입력
 		if (PacketManager::Get().InputIP.size() < 3)
 		{
 			for (char i = '0'; i <= '9'; i++)
@@ -80,8 +88,7 @@ bool LobbyScene::Frame() noexcept
 			}
 		}
 	}
-
-
+	// Click
 	if (Input::GetKeyState(EMouseButton::Left) == EKeyState::DOWN)
 	{
 		SoundManager::Get().Play("SE_Click01.mp3");
@@ -90,6 +97,54 @@ bool LobbyScene::Frame() noexcept
 	DxManager::Get().Frame();
 	ObjectManager::Get().Frame(Timer::SPF, Timer::AccumulateTime);
 	SoundManager::Get().Frame();
+
+
+	///
+	if (Input::GetKeyState('Q') == EKeyState::HOLD)
+	{
+		m_pBackHero->Translate(Vector3::Forward * 10.0f * Timer::SPF);
+	}
+	if (Input::GetKeyState('E') == EKeyState::HOLD)
+	{
+		m_pBackHero->Translate(Vector3::Backward * 10.0f * Timer::SPF);
+	}
+	if (Input::GetKeyState('W') == EKeyState::HOLD)
+	{
+		m_pBackHero->Translate(Vector3::Up * 10.0f * Timer::SPF);
+	}
+	if (Input::GetKeyState('S') == EKeyState::HOLD)
+	{
+		m_pBackHero->Translate(Vector3::Down * 10.0f * Timer::SPF);
+	}
+	if (Input::GetKeyState('A') == EKeyState::HOLD)
+	{
+		m_pBackHero->Translate(Vector3::Left * 10.0f * Timer::SPF);
+	}
+	if (Input::GetKeyState('D') == EKeyState::HOLD)
+	{
+		m_pBackHero->Translate(Vector3::Right * 10.0f * Timer::SPF);
+	}
+
+
+	static bool isStart = false;
+	static float frameCount = 0.0f;
+	if (Input::GetKeyState('R') == EKeyState::DOWN)
+	{
+		m_pBackHero->SetANIM_OneTime(Guard_DASHJUMP);
+		isStart = true;
+		frameCount = 0.0f;
+	}
+	if (isStart)
+	{
+		frameCount += Timer::SPF;
+		//m_pBackHero->Translate(Vector3::One * 6.0f * Timer::SPF);
+		if (frameCount > 2.5f)
+		{
+			isStart = false;
+			m_pBackHero->SetANIM_OneTime(Guard_DANCE2);
+		}
+	}
+	m_pBackHero->Frame(Timer::SPF, Timer::AccumulateTime);
 	return true;
 }
 
@@ -99,6 +154,9 @@ bool LobbyScene::Render() noexcept
 	DxManager::Get().Render();
 	ObjectManager::Get().Render(DxManager::GetDContext());
 	SoundManager::Get().Render();
+
+	DxManager::Get().ClearDepthStencilView();
+	m_pBackHero->Render(DxManager::GetDContext());
 	return true;
 }
 
@@ -108,7 +166,6 @@ bool LobbyScene::Release() noexcept
 	ObjectManager::Get().Release();
 	return true;
 }
-
 
 
 bool LobbyScene::FirstInit() noexcept
@@ -182,4 +239,6 @@ void LobbyScene::LoadUI() noexcept
 	m_toGuestPanel = m_toGuestIP->m_pParent;
 
 	ObjectManager::Get().PushObject(pUIRoot);
+
+	UI::IntroEvent(pUIRoot);	
 }
