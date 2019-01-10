@@ -86,6 +86,7 @@ namespace UI
 		JPanel* find_child(wstring childname);
 		void Update(); // worldmatrix update
 		void rtUpdate();
+		JPanel* uiclone();
 	public:
 		bool Init() noexcept override;
 		bool PreFrame(const float& spf, const float& accTime);

@@ -67,4 +67,19 @@ namespace UI
 			pPanel->PreEvent.second = nullptr;
 		}
 	}
+	static void E_MOUSE_PARTICLE(void* vp)
+	{
+		JPanel* pPanel = (JPanel*)vp;
+
+		pPanel->m_vPos.x = pPanel->m_ptMouse.Getpt().x;
+		pPanel->m_vPos.y = pPanel->m_ptMouse.Getpt().y;
+	}
+	//static void E_MOUSE_CLICK_SPRITE(void* vp)
+	//{
+	//	JSpriteCtrl* pSprite = (JSpriteCtrl*)vp;
+	//	if (Input::GetKeyState(EMouseButton::Left) == EKeyState::DOWN)
+	//	{
+	//		//pSprite->m_pParent->push_child(pSprite->clone());
+	//	}
+	//}
 }
