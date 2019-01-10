@@ -131,6 +131,7 @@ bool LobbyScene::Frame() noexcept
 	if (Input::GetKeyState('R') == EKeyState::DOWN)
 	{
 		m_pBackHero->SetANIM_OneTime(Guard_DASHJUMP);
+		SoundManager::Get().Play("SV_Guard_Shout.mp3");
 		isStart = true;
 		frameCount = 0.0f;
 	}
