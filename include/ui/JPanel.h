@@ -4,6 +4,7 @@
 #include "JMouse.h"
 #include "JPlane.h"
 #include "JTextureMgr.h"
+#include "Input.h"
 namespace UI
 {
 	enum ClickType
@@ -56,6 +57,9 @@ namespace UI
 		std::pair<void(*)(void*), void*> EventClick; 
 		std::pair<void(*)(void*), void*> PreEvent;
 		std::pair<void(*)(void*), void*> PostEvent;
+	public:
+		int m_pKeyHold = VK_LBUTTON;
+		int m_pKeyDown = VK_LBUTTON;
 	private:
 		static void E_DEFAULT(void* vp) {}
 	public:

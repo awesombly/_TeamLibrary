@@ -4,6 +4,7 @@
 #pragma warning (disable : 4172)
 #pragma warning (disable : 4505)
 #pragma warning (disable : 4100)
+#pragma warning (disable : 4244)
 #include <windows.h>
 #include <windowsx.h>
 #include "stdio.h"

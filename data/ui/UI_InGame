@@ -8,6 +8,7 @@
 ^Type 778
 ^NodeName Setting
 ^ParentName Root
+^KeyState 1 1
 ^bRender 1
 ^Position -376.173706 276.362976 0.000000
 ^Rotate 0.000000 0.000000 0.000000
@@ -25,6 +26,7 @@
 ^Type 777
 ^NodeName Time_Panel
 ^ParentName Root
+^KeyState 1 1
 ^bRender 1
 ^Position 0.000000 0.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
@@ -33,6 +35,7 @@
 ^Type 783
 ^NodeName Timer_Text
 ^ParentName Time_Panel
+^KeyState 1 1
 ^bRender 1
 ^Position 0.000000 277.166290 0.000000
 ^Rotate 0.000000 0.000000 0.000000
@@ -52,6 +55,7 @@
 ^Type 778
 ^NodeName Timer_Img
 ^ParentName Time_Panel
+^KeyState 1 1
 ^bRender 1
 ^Position -50.000000 285.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
@@ -69,6 +73,7 @@
 ^Type 778
 ^NodeName Timer_Img2
 ^ParentName Time_Panel
+^KeyState 1 1
 ^bRender 1
 ^Position 50.000000 285.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
@@ -86,6 +91,7 @@
 ^Type 778
 ^NodeName Timer_Img3
 ^ParentName Time_Panel
+^KeyState 1 1
 ^bRender 1
 ^Position 0.000000 259.500061 0.000000
 ^Rotate 0.000000 0.000000 0.000000
@@ -103,6 +109,7 @@
 ^Type 779
 ^NodeName temp_Check0
 ^ParentName Root
+^KeyState 1 1
 ^bRender 1
 ^Position 365.000000 275.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
@@ -119,16 +126,17 @@
 ^Type 777
 ^NodeName Game_Panel
 ^ParentName Root
+^KeyState 1 1
 ^bRender 1
 ^Position 0.000000 0.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 1.000000 1.000000 1.000000
 
 ^Type 780
-
 ^VHType 1447
 ^NodeName MP_Progress
 ^ParentName Game_Panel
+^KeyState 1 1
 ^bRender 1
 ^Position 320.000000 -240.000000 0.000000
 ^Rotate 0.000000 0.000000 1.570796
@@ -143,10 +151,10 @@
 ^vpEventClick 
 
 ^Type 780
-
 ^VHType 1447
 ^NodeName HP_Progress
 ^ParentName Game_Panel
+^KeyState 1 1
 ^bRender 1
 ^Position -320.000000 -240.000000 0.000000
 ^Rotate 0.000000 0.000000 1.570796
@@ -163,6 +171,7 @@
 ^Type 778
 ^NodeName Back_HP
 ^ParentName Game_Panel
+^KeyState 1 1
 ^bRender 1
 ^Position 190.000000 -235.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
@@ -180,6 +189,7 @@
 ^Type 778
 ^NodeName Back_MP
 ^ParentName Game_Panel
+^KeyState 1 1
 ^bRender 1
 ^Position -190.000000 -235.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
@@ -197,6 +207,7 @@
 ^Type 777
 ^NodeName Chat_Panel
 ^ParentName Game_Panel
+^KeyState 1 1
 ^bRender 1
 ^Position 0.000000 0.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
@@ -205,6 +216,7 @@
 ^Type 785
 ^NodeName Chat_Log
 ^ParentName Chat_Panel
+^KeyState 1 1
 ^bRender 1
 ^Position 0.000000 -271.834656 0.000000
 ^Rotate 0.000000 0.000000 0.000000
@@ -224,6 +236,7 @@
 ^VHType 1446
 ^NodeName Chat_Slider
 ^ParentName Chat_Panel
+^KeyState 1 1
 ^bRender 1
 ^Position 226.000000 -272.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
@@ -238,10 +251,10 @@
 ^vpEventClick 
 
 ^Type 780
-
 ^VHType 1446
 ^NodeName Skill_0
 ^ParentName Game_Panel
+^KeyState 1 1
 ^bRender 1
 ^Position 368.333008 -261.166260 0.000000
 ^Rotate 0.000000 0.000000 0.000000
@@ -258,6 +271,7 @@
 ^Type 777
 ^NodeName Set_Panel
 ^ParentName Root
+^KeyState 1 1
 ^bRender 0
 ^Position 0.000000 0.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
@@ -266,6 +280,7 @@
 ^Type 778
 ^NodeName Set_BackGround
 ^ParentName Set_Panel
+^KeyState 1 1
 ^bRender 1
 ^Position 0.000000 0.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
@@ -285,6 +300,7 @@
 ^VHType 1447
 ^NodeName Set_Volum
 ^ParentName Set_Panel
+^KeyState 1 1
 ^bRender 1
 ^Position 40.000000 120.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
@@ -301,6 +317,7 @@
 ^Type 778
 ^NodeName Set_Volum_Img
 ^ParentName Set_Panel
+^KeyState 1 1
 ^bRender 1
 ^Position -150.000000 120.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
@@ -320,6 +337,7 @@
 ^VHType 1447
 ^NodeName Set_Mouse
 ^ParentName Set_Panel
+^KeyState 1 1
 ^bRender 1
 ^Position 40.000000 40.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
@@ -336,6 +354,7 @@
 ^Type 778
 ^NodeName Set_Mouse_Img
 ^ParentName Set_Panel
+^KeyState 1 1
 ^bRender 1
 ^Position -150.000000 40.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
@@ -353,6 +372,7 @@
 ^Type 778
 ^NodeName Set_Exit
 ^ParentName Set_Panel
+^KeyState 1 1
 ^bRender 1
 ^Position 195.205933 191.878281 0.000000
 ^Rotate 0.000000 0.000000 0.000000
@@ -370,6 +390,7 @@
 ^Type 783
 ^NodeName Set_GameExit
 ^ParentName Set_Panel
+^KeyState 1 1
 ^bRender 1
 ^Position 124.177338 -153.675186 0.000000
 ^Rotate 0.000000 0.000000 0.000000
@@ -391,6 +412,7 @@
 ^SpriteType 6429
 ^NodeName temp_sprite1
 ^ParentName Set_Panel
+^KeyState 1 1
 ^bRender 1
 ^bLoop 1
 ^Position 42.340454 -149.452454 0.000000
@@ -418,6 +440,7 @@
 ^Type 777
 ^NodeName ZombieWin
 ^ParentName Root
+^KeyState 1 1
 ^bRender 0
 ^Position 0.000000 0.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
@@ -428,15 +451,16 @@
 ^SpriteType 6429
 ^NodeName Z_Win
 ^ParentName ZombieWin
+^KeyState 1 1
 ^bRender 1
 ^bLoop 1
-^Position 20.000000 300.000000 0.000000
+^Position 0.000000 210.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 512.000000 512.000000 1.000000
+^Scale 200.000000 80.000000 1.000000
 ^AnimTime 1.000000
 ^AnimUV 0 0 
 ^SPRITESTART 1 
-^Zombie Win.png
+^zombie.png
 ^SPRITEEND
 ^pfEventHover 7274
 ^vpEventHover 
@@ -448,6 +472,7 @@
 ^Type 777
 ^NodeName GuardWin
 ^ParentName Root
+^KeyState 1 1
 ^bRender 0
 ^Position 0.000000 0.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
@@ -458,15 +483,16 @@
 ^SpriteType 6429
 ^NodeName G_Win
 ^ParentName GuardWin
+^KeyState 1 1
 ^bRender 1
 ^bLoop 1
-^Position 20.000000 300.000000 0.000000
+^Position 0.000000 210.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 512.000000 512.000000 1.000000
+^Scale 200.000000 80.000000 1.000000
 ^AnimTime 1.000000
 ^AnimUV 0 0 
 ^SPRITESTART 1 
-^Guard Win.png
+^guard.png
 ^SPRITEEND
 ^pfEventHover 7274
 ^vpEventHover 
