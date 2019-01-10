@@ -58,10 +58,8 @@ namespace UI
 		std::pair<void(*)(void*), void*> PreEvent;
 		std::pair<void(*)(void*), void*> PostEvent;
 	public:
-		int m_pKeyHold = VK_LBUTTON;
-		int m_pKeyDown = VK_LBUTTON;
-	private:
-		static void E_DEFAULT(void* vp) {}
+		int m_pKeyHold = VK_F24;
+		int m_pKeyDown = VK_F24;
 	public:
 		bool				m_bRender = true; // Render 여부 확인
 		JPanel*				m_pParent = nullptr;
