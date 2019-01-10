@@ -18,9 +18,11 @@ bool GameRule::Frame()	noexcept
 	{
 		//WriteManager::Get().SetFontColor(D2D1::ColorF::Blue);
 		m_TimerText->m_Text = to_wstring(GetHideTime() - Timer::AccumulateTime).substr(0, 5);
+
 	}
 	else
 	{
+
 		//WriteManager::Get().SetFontColor(D2D1::ColorF::Red);
 		m_TimerText->m_Text = to_wstring(GetPlayTime() - Timer::AccumulateTime).substr(0, 5);
 	}
@@ -39,6 +41,7 @@ bool GameRule::Frame()	noexcept
 
 		m_GWinPanel->m_bRender = false;
 		m_ZWinPanel->m_bRender = true;
+		m_TimerText->m_Text = '0';
 	}
 
 
