@@ -13,25 +13,32 @@ bool GameRule::Init() noexcept
 
 bool GameRule::Frame()	noexcept
 {
+
 	if (m_bSeek == true)
 	{
-		WriteManager::Get().SetFontColor(D2D1::ColorF::Blue);
+		//WriteManager::Get().SetFontColor(D2D1::ColorF::Blue);
 		m_TimerText->m_Text = to_wstring(GetHideTime() - Timer::AccumulateTime).substr(0, 5);
 	}
 	else
 	{
-		WriteManager::Get().SetFontColor(D2D1::ColorF::Red);
+		//WriteManager::Get().SetFontColor(D2D1::ColorF::Red);
 		m_TimerText->m_Text = to_wstring(GetPlayTime() - Timer::AccumulateTime).substr(0, 5);
 	}
 
 	if (GetHideTime() - Timer::AccumulateTime <=0)
 	{
-		m_bSeek = false;
+		m_bSeek = false; 
+
+		m_GWinPanel->m_bRender = true;
+		m_ZWinPanel->m_bRender = false;
 	}
 
 	if (GetPlayTime() - Timer::AccumulateTime <= 0)
 	{
 		m_bGameEnd = true;
+
+		m_GWinPanel->m_bRender = false;
+		m_ZWinPanel->m_bRender = true;
 	}
 
 
@@ -47,7 +54,16 @@ bool GameRule::Render()	noexcept
 bool GameRule::Release()	noexcept
 {
 	m_TimerText->Release();
+	delete m_GWinPanel;
+	delete m_ZWinPanel;
 	return true;
+}
+
+
+void GameRule::SetResultPanel(JPanel* pUIRoot)
+{
+	m_GWinPanel = (JPanel*)pUIRoot->find_child(L"GuardWin");
+	m_ZWinPanel = (JPanel*)pUIRoot->find_child(L"ZombieWin");
 }
 
 
