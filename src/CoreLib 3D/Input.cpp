@@ -136,33 +136,33 @@ void Input::MsgEvent(const MSG& message) noexcept
 	{
 	 case WM_LBUTTONDOWN:
 	 {
-	 	m_MousePrevState[0] = EKeyState::FREE;
-		m_KeyState[0] = EKeyState::DOWN;
+	 	m_MousePrevState[EMouseButton::Left] = EKeyState::FREE;
+		m_KeyState[EMouseButton::Left] = EKeyState::DOWN;
 	 } break;
 	 case WM_LBUTTONUP:
 	 {
-	 	m_MousePrevState[0] = EKeyState::HOLD;
-		m_KeyState[0] = EKeyState::UP;
+	 	m_MousePrevState[EMouseButton::Left] = EKeyState::HOLD;
+		m_KeyState[EMouseButton::Left] = EKeyState::UP;
 	 } break;
 	 case WM_RBUTTONDOWN:
 	 {
-	 	m_MousePrevState[1] = EKeyState::FREE;
-		m_KeyState[1] = EKeyState::DOWN;
+	 	m_MousePrevState[EMouseButton::Right] = EKeyState::FREE;
+		m_KeyState[EMouseButton::Right] = EKeyState::DOWN;
 	 } break;
 	 case WM_RBUTTONUP:
 	 {
-	 	m_MousePrevState[1] = EKeyState::HOLD;
-		m_KeyState[1] = EKeyState::UP;
+	 	m_MousePrevState[EMouseButton::Right] = EKeyState::HOLD;
+		m_KeyState[EMouseButton::Right] = EKeyState::UP;
 	 } break;
 	 case WM_MBUTTONDOWN:
 	 {
-	 	m_MousePrevState[2] = EKeyState::FREE;
-		m_KeyState[2] = EKeyState::DOWN;
+	 	m_MousePrevState[EMouseButton::Middle] = EKeyState::FREE;
+		m_KeyState[EMouseButton::Middle] = EKeyState::DOWN;
 	 } break;
 	 case WM_MBUTTONUP:
 	 {
-	 	m_MousePrevState[2] = EKeyState::HOLD;
-		m_KeyState[2] = EKeyState::UP;
+	 	m_MousePrevState[EMouseButton::Middle] = EKeyState::HOLD;
+		m_KeyState[EMouseButton::Middle] = EKeyState::UP;
 	 } break;
 	 case WM_MOUSEWHEEL: 
 	 {

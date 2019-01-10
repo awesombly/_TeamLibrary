@@ -10,7 +10,6 @@ SamplerState::SamplerState()
 
 void SamplerState::Frame(ID3D11DeviceContext* pDContext) noexcept
 {
-
 	if (Input::Get().GetKeyState(VK_F9) == EKeyState::DOWN)
 	{
 		switch (m_curTextureMode)

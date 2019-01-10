@@ -316,7 +316,7 @@ void GameScene::LoadUI() noexcept
 	m_pCheckBox = (JCheckCtrl*)pUIRoot->find_child(L"temp_Check0");
 	// Timer
 	m_Rule.m_TimerText = (JTextCtrl*)pUIRoot->find_child(L"Timer_Text");
-	//m_Rule.SetResultPanel((JPanel*)pUIRoot);
+	m_Rule.SetResultPanel((JPanel*)pUIRoot);
 
 	// Chatting
 	static auto pChatWheel = [](void* pVoid) {
