@@ -6,61 +6,13 @@
 bool LobbyScene::Init() noexcept
 {
 	FirstInit();
+	// UI
+	LoadUI();
 	///
-	static auto pToGuest = [](void* pScene) {
-		if (PacketManager::Get().InputIP.empty())
-		{
-			MessageBox(Window::m_hWnd, L"IP µÞÀÚ¸®¸¦ ÀÔ·ÂÇÏ¼¼¿°.", L"»ßºò-", 0);
-			return;
-		}
-		PacketManager::Get().isHost = false;
-		((MainClass*)pScene)->StartupClient();
-		((MainClass*)pScene)->SetScene(ESceneName::Main);
-
-		PacketManager::Get().SendPacket('\0', 0, PACKET_ReqAddPlayer);
-		PacketManager::Get().SendPacket('\0', 0, PACKET_ReqSyncSpawns);
-	};
-	static auto pToHost = [](void* pScene) {
-		PacketManager::Get().isHost = true;
-		((MainClass*)pScene)->StartupServer();
-		((MainClass*)pScene)->SetScene(ESceneName::Main);
-	};
-	static auto pToExit = [](void* pScene) {
-		exit(0); pScene;
-	};
-
-	JState::SetState(DxManager::GetDevice());
-	JPanel* pUIRoot = new JPanel(L"UI_IntroRoot");
-	pUIRoot->m_objType = EObjType::UI;
-	JParser par;
-	par.FileLoad(DxManager::GetDevice(), L"../../data/ui/UI_Intro", *pUIRoot);
-
-	// to È£½ºÆ®
-	auto pPanel = pUIRoot->find_child(L"D_Host"); // D_Host
-	pPanel->EventClick.first = pToHost;
-	pPanel->EventClick.second = this;
-	// °Ô½ºÆ® ÀÔÀå
-	pPanel = (JTextCtrl*)pUIRoot->find_child(L"G_Enter"); // G_Enter
-	pPanel->EventClick.first = pToGuest;
-	pPanel->EventClick.second = this;
-	// Exit
-	pPanel = (JTextCtrl*)pUIRoot->find_child(L"D_Exit"); 
-	pPanel->EventClick.first = pToExit;
-	pPanel->EventClick.second = this;
-	// IP Ã¢
-	m_toGuestIP = (JTextCtrl*)pUIRoot->find_child(L"G_IP"); // G_IP
-	m_toGuestIP->m_Text = L"IP : ~." + PacketManager::Get().InputIP;
-	// ÆÐ³ÎÃ¢
-	m_toGuestPanel = m_toGuestIP->m_pParent;
-	
-	ObjectManager::Get().PushObject(pUIRoot);
 	SoundManager::Get().SetBGM("bgm_Title01.mp3");
-
 	m_isLoading = false;
 	return true;
 }
-
-
 
 
 // ÇÁ·¹ÀÓ
@@ -178,4 +130,56 @@ bool LobbyScene::FirstInit() noexcept
 		return true;
 	}
 	return false;
+}
+
+
+void LobbyScene::LoadUI() noexcept
+{
+	static auto pToGuest = [](void* pScene) {
+		if (PacketManager::Get().InputIP.empty())
+		{
+			MessageBox(Window::m_hWnd, L"IP µÞÀÚ¸®¸¦ ÀÔ·ÂÇÏ¼¼¿°.", L"»ßºò-", 0);
+			return;
+		}
+		PacketManager::Get().isHost = false;
+		((MainClass*)pScene)->StartupClient();
+		((MainClass*)pScene)->SetScene(ESceneName::Main);
+
+		PacketManager::Get().SendPacket('\0', 0, PACKET_ReqAddPlayer);
+		PacketManager::Get().SendPacket('\0', 0, PACKET_ReqSyncSpawns);
+	};
+	static auto pToHost = [](void* pScene) {
+		PacketManager::Get().isHost = true;
+		((MainClass*)pScene)->StartupServer();
+		((MainClass*)pScene)->SetScene(ESceneName::Main);
+	};
+	static auto pToExit = [](void* pScene) {
+		exit(0); pScene;
+	};
+
+	JState::SetState(DxManager::GetDevice());
+	JPanel* pUIRoot = new JPanel(L"UI_IntroRoot");
+	pUIRoot->m_objType = EObjType::UI;
+	JParser par;
+	par.FileLoad(DxManager::GetDevice(), L"../../data/ui/UI_Intro", *pUIRoot);
+
+	// to È£½ºÆ®
+	auto pPanel = pUIRoot->find_child(L"D_Host"); // D_Host
+	pPanel->EventClick.first = pToHost;
+	pPanel->EventClick.second = this;
+	// °Ô½ºÆ® ÀÔÀå
+	pPanel = (JTextCtrl*)pUIRoot->find_child(L"G_Enter"); // G_Enter
+	pPanel->EventClick.first = pToGuest;
+	pPanel->EventClick.second = this;
+	// Exit
+	pPanel = (JTextCtrl*)pUIRoot->find_child(L"D_Exit");
+	pPanel->EventClick.first = pToExit;
+	pPanel->EventClick.second = this;
+	// IP Ã¢
+	m_toGuestIP = (JTextCtrl*)pUIRoot->find_child(L"G_IP"); // G_IP
+	m_toGuestIP->m_Text = L"IP : ~." + PacketManager::Get().InputIP;
+	// ÆÐ³ÎÃ¢
+	m_toGuestPanel = m_toGuestIP->m_pParent;
+
+	ObjectManager::Get().PushObject(pUIRoot);
 }

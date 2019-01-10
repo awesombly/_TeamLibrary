@@ -89,7 +89,7 @@ private:
 	static GameObject* m_Icon3;
 	static GameObject* m_Icon4;
 public:
-	//static MaxImporter* m_pParser;
+	static MaxImporter* m_pParser;
 	static GameObject* m_pSkyBox;
 	static map<ESceneName, MainClass*> m_SceneList;
 
@@ -105,8 +105,10 @@ public:
 
 	void MsgEvent(const MSG& _message)	noexcept;
 	void SendMovedObject()	noexcept;
-	
+
+	virtual void LoadUI()				noexcept { return; };
 	virtual bool FirstInit()			noexcept { return true; };
+
 	virtual bool Init()					noexcept override;
 	virtual bool Frame()				noexcept override;
 	virtual bool Render()				noexcept override;

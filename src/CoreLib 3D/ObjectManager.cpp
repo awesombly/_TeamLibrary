@@ -438,15 +438,21 @@ bool ObjectManager::RemoveComponent(Component* pComponent) noexcept
 		return false;
 	pComponent->isEnable(false);
 
-	static auto deleteEvent = [](void* pVoid, void*) {
-		Component* pComp = (Component*)pVoid;
+	static auto deleteEvent = [](void* pVoid, void* pObj) {
+		Component* pComp   = (Component*)pVoid;
+		GameObject* pObject = (GameObject*)pObj;
 
 		pComp->m_pParent->GetComponentList()[pComp->m_comptType].remove(pComp);
 		pComp->Release();
 		delete pComp;
+		if (pObject->GetComponentList(EComponent::Collider) == nullptr)
+		{
+			delete pObject->m_pPhysics;
+			pObject->m_pPhysics = nullptr;
+		}
 	};
 
-	PostFrameEvent.emplace(deleteEvent, pComponent, nullptr);
+	PostFrameEvent.emplace(deleteEvent, pComponent, pComponent->m_pParent);
 	return true;
 }
 

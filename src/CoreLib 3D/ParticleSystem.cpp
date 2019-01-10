@@ -31,7 +31,6 @@ bool ParticleSystem::Frame(const float& spf, const float& accTime) noexcept
 	Renderer::Frame(spf, accTime);
 	// ============================= 파티클, 인스턴싱부 =================================
 #pragma region Create
-	m_spawnFrame += spf;
 	m_curLife += spf;
 	if (m_curLife >= m_lifeTime)
 	{
@@ -48,6 +47,7 @@ bool ParticleSystem::Frame(const float& spf, const float& accTime) noexcept
 		return false;
 	}
 
+	m_spawnFrame += spf;
 	while (m_spawnFrame >= m_spawnInterval)
 	{
 		if (m_maxParticleCount > (m_dataList.size() - m_disabledParticle.size()))
@@ -67,7 +67,7 @@ bool ParticleSystem::Frame(const float& spf, const float& accTime) noexcept
 #pragma endregion
 #pragma region Frame
 	static D3DXMATRIX matBill;
-	matBill = (ObjectManager::Cameras[ECamera::Main])->m_matView; //(*m_ppCamera)->m_cbVS.m_matView;
+	matBill = (ObjectManager::Cameras[ECamera::Main])->m_matView;
 	matBill._41 = 0.0f;	matBill._42 = 0.0f;	matBill._43 = 0.0f;
 
 	static WORD curData = 0;
@@ -77,22 +77,12 @@ bool ParticleSystem::Frame(const float& spf, const float& accTime) noexcept
 		++curData;
 		if (!iter->IsEnable())
 		{
-			m_dataList[curData].numTexture = -0.9f;
+			//m_dataList[curData].numTexture = -0.9f;
 			continue;
 		}
 		if (!iter->Frame(spf, accTime))
 		{
-			// 생명주기 종료
-			//if (iter->IsRepeat())
-			//{
-			//	iter->m_direction *= -1.0f;
-			//	iter->m_dirAngle *= -1.0f;
-			//	iter->m_curGravity = 0.0f;
-			//	iter->SetLifeCycle(m_minLifeCycle, m_maxLifeCycle);
-			//}
-			//else
-			//{
-				//m_dataList[curData].numTexture = -0.1f;
+				m_dataList[curData].numTexture = -0.9f;
 				m_disabledParticle.push(iter);
 				//m_dataList.pop_back();
 				//m_particleList.remove(iter);
@@ -112,17 +102,18 @@ bool ParticleSystem::Frame(const float& spf, const float& accTime) noexcept
 		m_dataList[curData].matWorld._42 = iter->m_position.y;
 		m_dataList[curData].matWorld._43 = iter->m_position.z;
 		D3DXMatrixTranspose(&m_dataList[curData].matWorld, &m_dataList[curData].matWorld);
-
+		
 		if (m_isBillBoard)
 		{
 			m_dataList[curData].matWorld *= matBill;
 		}
 		//m_dataList[curData].numTexture += 1.0f;
 		//if(m_dataList[curData].numTexture >= m_pSpriteList->size())
-//			m_dataList[curData].numTexture = 0.1f;
+		//	m_dataList[curData].numTexture = 0.1f;
 		m_dataList[curData].color = iter->m_color;
 	}
 #pragma endregion
+	DxManager::GetDContext()->UpdateSubresource(m_pVertexBuffer, 0, nullptr, &m_vertexList.at(0), 0, 0);
 	return true;
 	accTime;
 }
@@ -419,12 +410,16 @@ Component* ParticleSystem::clone() noexcept
 Component* ParticleSystem::cloneAddition() noexcept
 {
 	Renderer::cloneAddition();
+	///Update();
 	// 파티클 초기화
-	//m_particleList.clear();
-	//m_dataList.clear();
-	//while (!m_disabledParticle.empty())
-	//	m_disabledParticle.pop();
-	Update();
+	m_pParticle = m_pParticle->clone();
+	m_curLife = 0.0f;
+	m_frameCount = 0.0f;
+
+	m_particleList.clear();
+	m_dataList.clear();
+	while (!m_disabledParticle.empty())
+		m_disabledParticle.pop();
 
 	m_pInstanceBuffer = nullptr;
 	CreateInstanceBuffer();

@@ -64,17 +64,21 @@ bool MaxImporter::CreateFromFile(GameObject** ppReturnObj, const wstring_view& f
 {
 	Clear();
 	m_filePath = m_filePath / directory.data() / fileName.data();
-	///
+	/// 이펙트
 	if (m_filePath.extension() == L".eff")
 	{
 		auto pParticle = CreateFromParticle(fileName, directory);
 
 		// 반환될 객체
 		if (*ppReturnObj == nullptr)
-			*ppReturnObj = new GameObject();
-		(*ppReturnObj)->m_myName = m_filePath.filename().c_str();
-		(*ppReturnObj)->m_objType = EObjType::Object;
-		(*ppReturnObj)->AddComponent(pParticle);
+		{
+			*ppReturnObj = new GameObject(m_filePath.filename().c_str(), pParticle);
+		}
+		else
+		{
+			(*ppReturnObj)->m_myName = m_filePath.filename().c_str();
+			(*ppReturnObj)->AddComponent(pParticle);
+		}
 	}
 	else
 	{
@@ -148,9 +152,14 @@ bool MaxImporter::LoadFileData(GameObject** ppReturnObj) noexcept
 
 	// 반환될 객체
 	if (*ppReturnObj == nullptr)
-		*ppReturnObj = new GameObject();
-	(*ppReturnObj)->m_myName = m_filePath.filename().c_str();
-	(*ppReturnObj)->m_objType = EObjType::Object;
+	{
+		*ppReturnObj = new GameObject(m_filePath.filename().c_str(), EObjType::Object);
+	}
+	else
+	{
+		(*ppReturnObj)->m_myName = m_filePath.filename().c_str();
+		(*ppReturnObj)->m_objType = EObjType::Object;
+	}
 	// 부모 없는 애들 설정
 	GameObject* pObject = nullptr;
 	for (auto& [name, pObj] : m_Objects)

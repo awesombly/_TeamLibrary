@@ -520,13 +520,15 @@ void Renderer::UpdateTextureUV()
 				 (m_curSprite->m_textureUV.y + m_curSprite->m_textureUV.w) };
 
 	auto size = m_vertexList.size();
-	if (size % 4 != 0)
-	{
-		ErrorMessage(""s + __FUNCTION__ + " -> vertexList is small!");
-		return;
-	}
+	//if (size % 4 != 0)
+	//{
+	//	ErrorMessage(""s + __FUNCTION__ + " -> vertexList is small!");
+	//	return;
+	//}
 	for (int i = 0; i < size; i += 4)
 	{
+		if (i + 3 >= size)
+			break;
 		m_vertexList[i].tex = { posVector.x, posVector.y };
 		m_vertexList[i + 1].tex = { posVector.z, posVector.y };
 		m_vertexList[i + 2].tex = { posVector.x, posVector.w };

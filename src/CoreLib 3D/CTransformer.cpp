@@ -20,6 +20,7 @@ CTransformer::CTransformer(const D3DXVECTOR3& position, const D3DXQUATERNION& ro
 
 bool CTransformer::Init() noexcept
 {
+	m_isEnable = true;
 	TransEvent = [](Transform* pParent, Transform* pTrans, const float& spf, const float& accTime) {
 		pParent->Translate(pTrans->GetPosition() * spf);
 		pParent->Rotate(pTrans->GetRotation() * spf);

@@ -234,39 +234,39 @@ void PlayerController::PlayerInput(const float& spf) noexcept
 			}
 		}
 
-		static bool isFly = false;
-		if (Input::GetKeyState(EMouseButton::Right) == EKeyState::DOWN)
-		{
-			isFly = true;
-			eAction = EAction::Fly;
-			m_pEffectFly = ObjectManager::Get().TakeComponent(L"Fly");
-			m_pParent->AddComponent(m_pEffectFly);
-			//m_pEffectFly->SetPosition(Vector3::Up * 10.0f);
-			//m_pEffectFly->SetParent(GetRoot());
-		}
-		if (isFly && Input::GetKeyState(EMouseButton::Right) == EKeyState::HOLD)
-		{
-			m_MP -= 0.35f * spf;
-			if (m_MP <= 0.0f)
-			{
-				isFly = false;
-				eAction = EAction::FlyEnd;
-				ObjectManager::Get().DisableComponent(m_pEffectFly);
-				m_pEffectFly = nullptr;
-			}
-		}
-		else
-		{	
-			m_MP = min(m_MP + spf * 0.2f, 1.0f);	
-		}
-
-		if (Input::GetKeyState(EMouseButton::Right) == EKeyState::UP)
-		{
-			isFly = false;
-			eAction = EAction::FlyEnd;
-			ObjectManager::Get().DisableComponent(m_pEffectFly);
-			m_pEffectFly = nullptr;
-		}
+		///static bool isFly = false;
+		///if (Input::GetKeyState(EMouseButton::Right) == EKeyState::DOWN)
+		///{
+		///	isFly = true;
+		///	eAction = EAction::Fly;
+		///	m_pEffectFly = ObjectManager::Get().TakeComponent(L"Fly");
+		///	m_pParent->AddComponent(m_pEffectFly);
+		///	//m_pEffectFly->SetPosition(Vector3::Up * 10.0f);
+		///	//m_pEffectFly->SetParent(GetRoot());
+		///}
+		///if (isFly && Input::GetKeyState(EMouseButton::Right) == EKeyState::HOLD)
+		///{
+		///	m_MP -= 0.35f * spf;
+		///	if (m_MP <= 0.0f)
+		///	{
+		///		isFly = false;
+		///		eAction = EAction::FlyEnd;
+		///		ObjectManager::Get().DisableComponent(m_pEffectFly);
+		///		m_pEffectFly = nullptr;
+		///	}
+		///}
+		///else
+		///{	
+		///	m_MP = min(m_MP + spf * 0.2f, 1.0f);	
+		///}
+		///
+		///if (Input::GetKeyState(EMouseButton::Right) == EKeyState::UP)
+		///{
+		///	isFly = false;
+		///	eAction = EAction::FlyEnd;
+		///	ObjectManager::Get().DisableComponent(m_pEffectFly);
+		///	m_pEffectFly = nullptr;
+		///}
 
 		if (eAction != m_curAction)
 		{

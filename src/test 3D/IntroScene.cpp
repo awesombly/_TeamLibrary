@@ -4,9 +4,9 @@
 bool IntroScene::Init() noexcept
 {
 	FirstInit();
-#pragma region Basic
-
-#pragma endregion
+	// UI
+	//LoadUI();
+	///
 	m_isLoading = false;
 	return true;
 }
@@ -36,6 +36,40 @@ bool IntroScene::Release() noexcept
 {
 	ObjectManager::Get().Release();
 	return true;
+}
+
+void IntroScene::LoadSound() noexcept
+{
+	SoundManager::Get().Load("bgm_ingame01.mp3", false, FMOD_LOOP_NORMAL);
+	SoundManager::Get().Load("bgm_ingame02.mp3", false, FMOD_LOOP_NORMAL);
+	SoundManager::Get().Load("bgm_Title01.mp3", false, FMOD_LOOP_NORMAL);
+	SoundManager::Get().Load("bgm_Title02.mp3", false, FMOD_LOOP_NORMAL);
+	SoundManager::Get().Load("SE_bird_01.mp3");
+	SoundManager::Get().Load("SE_chicken.mp3");
+	SoundManager::Get().Load("SE_Click01.mp3");
+	SoundManager::Get().Load("SE_Click02.mp3");
+	SoundManager::Get().Load("SE_Dance01.mp3");
+	SoundManager::Get().Load("SE_Dance02.mp3");
+	SoundManager::Get().Load("SE_Dance03.mp3");
+	SoundManager::Get().Load("SE_Dance04.mp3");
+	SoundManager::Get().Load("SE_Dance05.mp3");
+	SoundManager::Get().Load("SE_Dance06.mp3");
+	SoundManager::Get().Load("SE_Dance07.mp3");
+	SoundManager::Get().Load("SE_Dance08.mp3");
+	SoundManager::Get().Load("SE_footstep.mp3");
+	SoundManager::Get().Load("SE_game_win.mp3");
+	SoundManager::Get().Load("SE_game_lose.mp3");
+	SoundManager::Get().Load("SE_game_time_start.mp3");
+	SoundManager::Get().Load("SE_game_time_end.mp3");
+	SoundManager::Get().Load("SE_jajan.mp3");
+	SoundManager::Get().Load("SE_jump01.mp3");
+	SoundManager::Get().Load("SE_jump02.mp3");
+	SoundManager::Get().Load("SE_throw01.mp3");
+	SoundManager::Get().Load("SE_throw02.mp3");
+	SoundManager::Get().Load("SE_throw03.mp3");
+	SoundManager::Get().Load("SE_zombie_fly.mp3");
+	SoundManager::Get().Load("SE_zombie_hit01.mp3");
+	SoundManager::Get().Load("SE_zombie_hit02.mp3");
 }
 
 bool IntroScene::FirstInit() noexcept
@@ -98,64 +132,84 @@ bool IntroScene::FirstInit() noexcept
 		};
 
 		// 단검
-		auto pDagger = new AHeroObj();
-		pDagger->SetPlayerCharacter(ITEM_Dagger);
-		pDagger->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-		pDagger->m_myName = L"Dagger";
-		pDagger->m_objType = EObjType::Object;
+		auto pHeroObj = new AHeroObj();
+		pHeroObj->SetPlayerCharacter(ITEM_Dagger);
+		pHeroObj->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+		pHeroObj->m_myName = L"Dagger";
+		pHeroObj->m_objType = EObjType::Object;
 		pCollider = new Collider(15.0f);
 		pCollider->m_pivot = Vector3::Up * 10.0f + Vector3::Forward * 5.0f;
 		pCollider->CollisionEvent = pDaggerHit;
-		pDagger->AddComponent(pCollider);
-		ObjectManager::Get().SetProtoObject(pDagger);
+		pHeroObj->AddComponent(pCollider);
+		ObjectManager::Get().SetProtoObject(pHeroObj);
 
 		// 닭 생성
-		auto pChicken = new AHeroObj();
-		pChicken->SetPlayerCharacter(NPC_Chicken);
-		pChicken->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-		pChicken->m_myName = L"Chicken";
-		pChicken->m_objType = EObjType::Object;
+		pHeroObj = new AHeroObj();
+		pHeroObj->SetPlayerCharacter(NPC_Chicken);
+		pHeroObj->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+		pHeroObj->m_myName = L"Chicken";
+		pHeroObj->m_objType = EObjType::Object;
 		pCollider = new Collider(15.0f);
 		pCollider->m_pivot = Vector3::Up * 10.0f + Vector3::Forward * 5.0f;
 		pCollider->CollisionEvent = pDaggerHit;
-		pChicken->AddComponent(pCollider);
-		ObjectManager::Get().SetProtoObject(pChicken);
+		pHeroObj->AddComponent(pCollider);
+		ObjectManager::Get().SetProtoObject(pHeroObj);
+
+		// Effect 로드
+		//ObjectManager::Get().SetProtoComponent(m_pParser->CreateFromParticle(L"Snow.eff", L"../../data/script"));
+		ObjectManager::Get().SetProtoComponent(m_pParser->CreateFromParticle(L"Boom.eff", L"../../data/script"));
+		ObjectManager::Get().SetProtoComponent(m_pParser->CreateFromParticle(L"Fire.eff", L"../../data/script"));
+		ObjectManager::Get().SetProtoComponent(m_pParser->CreateFromParticle(L"Fly.eff", L"../../data/script"));
+		ObjectManager::Get().SetProtoComponent(m_pParser->CreateFromParticle(L"Bigbang.eff", L"../../data/script"));
+		ObjectManager::Get().SetProtoComponent(m_pParser->CreateFromParticle(L"Shock.eff", L"../../data/script"));
+		ObjectManager::Get().SetProtoComponent(m_pParser->CreateFromParticle(L"Atom.eff", L"../../data/script"));
+		ObjectManager::Get().SetProtoComponent(m_pParser->CreateFromParticle(L"WheelWind.eff", L"../../data/script"));
+		///
+		// 기사 
+		pHeroObj = new AHeroObj();
+		pHeroObj->SetPlayerCharacter(Guard, 0.0f, 100.0f, 0.0f);
+		pHeroObj->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+		pHeroObj->SetANIM_Loop(Guard_IDLE);
+		pHeroObj->m_myName = L"Guard";
+		pHeroObj->m_objType = EObjType::Object;
+		pHeroObj->SetScale(Vector3::One * 0.5f);
+		pCollider = new ColliderOBB({ -13.0f, 0.0f , -13.0f }, { 13.0f, 80.0f , 13.0f });
+		pHeroObj->AddComponent(pCollider);
+		pCollider->m_pivot *= 0.5f;
+		ObjectManager::Get().SetProtoObject(pHeroObj);
+
+		// 좀비
+		pHeroObj = new AHeroObj();
+		pHeroObj->SetPlayerCharacter(Zombie, 80.0f, 200.0f, -300.0f);
+		pHeroObj->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+		pHeroObj->SetANIM_Loop(Zombie_IDLE);
+		pHeroObj->m_myName = L"Zombie";
+		pHeroObj->m_objType = EObjType::Object;
+		pHeroObj->SetScale(Vector3::One * 0.5f);
+		pCollider = new ColliderOBB({ -13.0f, 0.0f , -13.0f }, { 13.0f, 80.0f , 13.0f });
+		pHeroObj->AddComponent(pCollider);
+		pCollider->m_pivot *= 0.5f;
+		ObjectManager::Get().SetProtoObject(pHeroObj);
+
+		// 새 생성
+		pHeroObj = new AHeroObj();
+		pHeroObj->SetPlayerCharacter(NPC_Bird, 0.0f, 80.0f, 300.0f);
+		pHeroObj->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+		pHeroObj->m_myName = L"Bird";
+		pHeroObj->m_objType = EObjType::Object;
+		pHeroObj->SetScale(Vector3::One * 7.0f);
+		pCollider = new ColliderOBB({ -1.0f, 0.0f , -1.0f }, { 1.0f, 2.0f , 1.0f });
+		pHeroObj->AddComponent(pCollider);
+		pCollider->m_pivot *= 7.0f;
+		pCollider->SetGravityScale(0.3f);
+		ObjectManager::Get().SetProtoObject(pHeroObj);
 		return true;
 	}
 	return false;
 }
 
 
-void IntroScene::LoadSound() noexcept
+void IntroScene::LoadUI() noexcept
 {
-	SoundManager::Get().Load("bgm_ingame01.mp3", false, FMOD_LOOP_NORMAL);
-	SoundManager::Get().Load("bgm_ingame02.mp3", false, FMOD_LOOP_NORMAL);
-	SoundManager::Get().Load("bgm_Title01.mp3", false, FMOD_LOOP_NORMAL);
-	SoundManager::Get().Load("bgm_Title02.mp3", false, FMOD_LOOP_NORMAL);
-	SoundManager::Get().Load("SE_bird_01.mp3");
-	SoundManager::Get().Load("SE_chicken.mp3");
-	SoundManager::Get().Load("SE_Click01.mp3");
-	SoundManager::Get().Load("SE_Click02.mp3");
-	SoundManager::Get().Load("SE_Dance01.mp3");
-	SoundManager::Get().Load("SE_Dance02.mp3");
-	SoundManager::Get().Load("SE_Dance03.mp3");
-	SoundManager::Get().Load("SE_Dance04.mp3");
-	SoundManager::Get().Load("SE_Dance05.mp3");
-	SoundManager::Get().Load("SE_Dance06.mp3");
-	SoundManager::Get().Load("SE_Dance07.mp3");
-	SoundManager::Get().Load("SE_Dance08.mp3");
-	SoundManager::Get().Load("SE_footstep.mp3");
-	SoundManager::Get().Load("SE_game_win.mp3");
-	SoundManager::Get().Load("SE_game_lose.mp3");
-	SoundManager::Get().Load("SE_game_time_start.mp3");
-	SoundManager::Get().Load("SE_game_time_end.mp3");
-	SoundManager::Get().Load("SE_jajan.mp3");
-	SoundManager::Get().Load("SE_jump01.mp3");
-	SoundManager::Get().Load("SE_jump02.mp3");
-	SoundManager::Get().Load("SE_throw01.mp3");
-	SoundManager::Get().Load("SE_throw02.mp3");
-	SoundManager::Get().Load("SE_throw03.mp3");
-	SoundManager::Get().Load("SE_zombie_fly.mp3");
-	SoundManager::Get().Load("SE_zombie_hit01.mp3");
-	SoundManager::Get().Load("SE_zombie_hit02.mp3");
+	///
 }

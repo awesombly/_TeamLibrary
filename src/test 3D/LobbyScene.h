@@ -11,8 +11,9 @@ public:
 	//JPanel*		m_toGuest		= nullptr;
 	JPanel*		m_toGuestPanel	= nullptr;
 public:
+	void LoadUI()				noexcept override;
+	bool FirstInit()			noexcept override;
 
-	virtual bool FirstInit()	noexcept override;
 	virtual bool Init()			noexcept override;
 	virtual bool Frame()		noexcept override;
 	virtual bool Render()		noexcept override;
