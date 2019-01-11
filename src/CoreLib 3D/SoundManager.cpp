@@ -31,20 +31,10 @@ bool SoundManager::Frame() noexcept
 	if (Input::Get().GetKeyState(VK_INSERT) == EKeyState::HOLD)
 	{
 		m_masterVolume = clamp(m_masterVolume + Timer::SPF, 0.0f, 1.0f);
-		//for (auto& iter : m_SoundList)
-		//{
-		//	if (&iter.second != m_curBGM)
-		//		OperVolume(iter.first, Timer::SPF);
-		//}
 	}
 	if (Input::Get().GetKeyState(VK_DELETE) == EKeyState::HOLD)
 	{
 		m_masterVolume = clamp(m_masterVolume - Timer::SPF, 0.0f, 1.0f);
-		//for (auto& iter : m_SoundList)
-		//{
-		//	if (&iter.second != m_curBGM)
-		//		OperVolume(iter.first, -Timer::SPF);
-		//}
 	}
 #pragma endregion
 
@@ -52,6 +42,13 @@ bool SoundManager::Frame() noexcept
 	while (!m_SoundQueue.empty())
 	{
 		auto&[soundName, position, range] = m_SoundQueue.back();
+		if (m_SoundList.find(soundName) == m_SoundList.end())
+		{
+			ErrorMessage(""s + __FUNCTION__ + " -> Sound Not Find : " + soundName);
+			m_SoundQueue.pop();
+			continue;
+		}
+
 		position = position - *m_pListenerPos;
 		float distance = D3DXVec3Length(&position);
 		if (distance <= range)
@@ -127,9 +124,9 @@ void SoundManager::PlayVariation(string&& soundName, const bool& isPlay, const i
 	Play(soundName, isPlay);
 }
 
-void SoundManager::PlayQueue(const string_view& soundName, const D3DXVECTOR3& position, const float& maxDistance) noexcept
+void SoundManager::PlayQueue(const char* soundName, const D3DXVECTOR3& position, const float& maxDistance) noexcept
 {
-	m_SoundQueue.emplace(soundName.data(), position, maxDistance);
+	m_SoundQueue.emplace(soundName, position, maxDistance);
 }
 
 void SoundManager::Stop(const string_view& soundName) noexcept

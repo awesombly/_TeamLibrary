@@ -9,21 +9,21 @@ private:
 	vector<Vertex_PC> m_vertexList;				// Á¤Á¡ ¸®½ºÆ® µ¤¾î¾¸
 	bool m_isDebugLine;
 private:
-	virtual HRESULT Create() noexcept override;
-	HRESULT CreateVertexBuffer();
+	HRESULT Create()	noexcept override;
+	HRESULT CreateVertexBuffer() override;
 public:
 	void SetLineInfo(ID3D11DeviceContext* pDContext, const D3DXVECTOR3& start, const D3DXVECTOR3& end, const D3DXVECTOR4& color, const bool& isDebugLine = false) noexcept;
 
 	bool isDebugLine();
 	void isDebugLine(const bool& isDebugLine);
 
-	virtual bool PrevRender(ID3D11DeviceContext* pDContext)		noexcept override;
-	virtual bool PostRender(ID3D11DeviceContext* pDContext)		noexcept override;
-	virtual bool Init()											noexcept override;
-	virtual bool Frame(const float& spf, const float& accTime)	noexcept override;
-	virtual bool Render(ID3D11DeviceContext* pDContext)			noexcept override;
-	virtual bool Release()										noexcept override;
-	virtual Component* clone() noexcept override;
+	bool PrevRender(ID3D11DeviceContext* pDContext)		noexcept override;
+	bool PostRender(ID3D11DeviceContext* pDContext)		noexcept override;
+	bool Init()											noexcept override;
+	bool Frame(const float& spf, const float& accTime)	noexcept override;
+	bool Render(ID3D11DeviceContext* pDContext)			noexcept override;
+	bool Release()										noexcept override;
+	Component* clone() noexcept override;
 protected:
 	RLine() = default;
 public:

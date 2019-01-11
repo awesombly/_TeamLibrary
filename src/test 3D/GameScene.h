@@ -11,6 +11,7 @@ class GameScene : public MainClass
 {
 public:
 	PlayerController* m_pPlayer = &PlayerController::Get();		// 컨트롤러
+	bool		 m_hitRay = false;
 	// UI
 	JTextCtrl*	 m_TimerText	= nullptr;
 	JCheckCtrl*  m_pCheckBox	= nullptr;

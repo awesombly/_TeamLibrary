@@ -7,7 +7,6 @@
 bool LobbyScene::Init() noexcept
 {
 	FirstInit();
-	DxManager::Get().SetBlendState(EBlendS::Basic);
 	// UI
 	LoadUI();
 
@@ -15,7 +14,6 @@ bool LobbyScene::Init() noexcept
 	m_pBackHero->SetPosition(-40.0f, -28.0f, 30.0f);
 	m_pBackHero->SetRotation(Quaternion::Left * PI * 0.8f);
 	m_pBackHero->SetGravityScale(0.0f);
-
 	///
 	SoundManager::Get().SetBGM("bgm_Title01.mp3");
 	m_isLoading = false;

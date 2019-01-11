@@ -20,8 +20,8 @@ public:
 public:
 	void SendPlaySound(const string_view& soundName, const D3DXVECTOR3& position, const float& maxDistance) noexcept;
 
-	void InterceptPacket(const PP::PPPacketType& sendMode, const char* data) noexcept;
-	void SendPacket(char* data, const USHORT& size, const USHORT& packeyType/*, const PP::PPSendMode& sendMode = PP::PPSendMode::BROADCAST*/) noexcept;
+	void SendPacket(const char* data, const USHORT& size, const USHORT& packeyType) noexcept;
+	void InterceptPacket(const PP::PPPacketType& sendMode, const char* data)		noexcept;
 public:
 	friend class ISingleton<PacketManager>;
 	PacketManager()			 = default;

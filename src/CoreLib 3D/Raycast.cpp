@@ -1,13 +1,31 @@
 #include "Raycast.h"
 #include "Renderer.h"
 #include "ObjectManager.h"
+#include "RLine.h"
+#include "Collider.h"
 
+//GameObject* Raycast::m_pDrawRay = nullptr;
 D3DXVECTOR3 Raycast::m_start;
+D3DXVECTOR3 Raycast::m_direction;
 D3DXVECTOR3 Raycast::m_ray;
 D3DXVECTOR3 Raycast::HitPoint;
 
-Raycast::Raycast()
-{}
+
+
+bool Raycast::Raycasting(const Collider* pTarget/*, D3DXVECTOR3* pHitPoint = nullptr, const D3DXMATRIX* pWorldMatrix*/) noexcept
+{
+	auto targetPos = pTarget->GetCenter();
+
+	auto point = m_start + m_direction * VectorDot(m_direction, targetPos);
+	float length = VectorLength(point - targetPos);
+	if (length <= pTarget->GetWorldRadius())
+	{
+		ErrorMessage(pTarget->m_pParent->m_myName + L", Succese!,  length : " + to_wstring(length) + L", radius : " + to_wstring(pTarget->GetWorldRadius()));
+		return true;
+	}
+	ErrorMessage(pTarget->m_pParent->m_myName + L", length : " + to_wstring(length) + L", radius : " + to_wstring(pTarget->GetWorldRadius()));
+	return false;
+}
 
 bool Raycast::Raycasting(const Renderer* pTarget, D3DXVECTOR3* pHitPoint, const D3DXMATRIX* pWorldMatrix) noexcept
 {
@@ -90,6 +108,7 @@ bool Raycast::Raycasting(const Renderer* pTarget, const D3DXVECTOR3& start, cons
 void Raycast::SetRaycast(const D3DXVECTOR3& start, const D3DXVECTOR3& direction, const float& range) noexcept
 {
 	m_start = start;
+	m_direction = direction;
 	m_ray = direction * range;
 }
 
@@ -105,6 +124,10 @@ void Raycast::SetMousePick(const POINT& cursor, const float& range) noexcept
 	direction.z = 1.0f;
 	// 현재 start, end = 뷰 좌표계, 뷰->월드로 변환,, direction 정규화
 	static D3DXMATRIX matInView;
+	//if(ObjectManager::CurCamera->GetParent() == nullptr)
+	//	matInView = ObjectManager::CurCamera->m_matView;
+	//else
+	//	matInView = ObjectManager::CurCamera->m_matView * ObjectManager::CurCamera->GetParent()->GetWorldMatrix();
 	D3DXMatrixInverse(&matInView, nullptr, &ObjectManager::CurCamera->m_matView);
 	// direction은 방향성만을 가지는 벡터기 때문에, 카메라 뷰 행렬의 이동값은 무시함
 	D3DXVec3TransformCoord(&start, &start, &matInView);
@@ -112,4 +135,15 @@ void Raycast::SetMousePick(const POINT& cursor, const float& range) noexcept
 	D3DXVec3Normalize(&direction, &direction);
 	// 레이 설정
 	SetRaycast(start, direction, range);
+}
+
+
+void Raycast::DrawRay(ID3D11DeviceContext* pDContext, const D3DXVECTOR4& color) noexcept
+{
+	static auto pLine	 = new RLine(L"Ray");
+	static auto pLineObj = new GameObject(L"Ray", pLine);
+	//pLine->SetLineInfo(pDContext, m_start, m_start + m_ray, color);
+	pLine->SetLineInfo(pDContext, m_start, m_start + m_ray, color);
+	pLineObj->Frame(0.0f, 0.0f);
+	pLineObj->Render(pDContext);
 }

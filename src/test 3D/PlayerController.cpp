@@ -105,7 +105,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const ECharacter& eCharacter, 
 			pDagger->SetPosition(pObject->GetPosition() + pObject->GetForward() * 40.0f + pObject->GetUp() * 65.0f + pObject->GetRight() * 20.0f);
 			pDagger->SetRotation(pObject->GetRotation() + Quaternion::Up * 0.5f);
 			//pDagger->SetScale(Vector3::One * 1.0f);
-			pDagger->SetForce((pObject->GetForward() + Vector3::Up * 0.5f) * 200.0f);
+			pDagger->SetForce((pObject->GetForward() + Vector3::Up * 0.15f) * 500.0f);
 			((Collider*)pDagger->GetComponentList(EComponent::Collider)->front())->AddIgnoreList((Collider*)pObject->GetComponentList(EComponent::Collider)->front());
 			SoundManager::Get().PlayQueue("SE_throw01.mp3", pObject->GetWorldPosition(), 1000.0f);
 		}	break;
@@ -160,7 +160,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const ECharacter& eCharacter, 
 			pChicken->SetPosition(pObject->GetPosition() + pObject->GetForward() * 40.0f + pObject->GetUp() * 65.0f + pObject->GetRight() * 20.0f);
 			pChicken->SetRotation(pObject->GetRotation() + Quaternion::Up * 0.5f);
 			//pDagger->SetScale(Vector3::One * 1.0f);
-			pChicken->SetForce((pObject->GetForward() + Vector3::Up * 0.5f) * 200.0f);
+			pChicken->SetForce((pObject->GetForward() + Vector3::Up * 0.15f) * 500.0f);
 			((Collider*)pChicken->GetComponentList(EComponent::Collider)->front())->AddIgnoreList((Collider*)pObject->GetComponentList(EComponent::Collider)->front());
 			SoundManager::Get().PlayQueue("SE_chicken.mp3", pObject->GetWorldPosition(), 1000.0f);
 		}	break;

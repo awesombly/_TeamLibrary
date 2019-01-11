@@ -7,7 +7,7 @@
 
 
 
-void PacketManager::SendPacket(char* data, const USHORT& size, const USHORT& packeyType/*, const PP::PPSendMode& sendMode*/) noexcept
+void PacketManager::SendPacket(const char* data, const USHORT& size, const USHORT& packeyType/*, const PP::PPSendMode& sendMode*/) noexcept
 {
 	if (isHost)
 	{
@@ -205,4 +205,3 @@ void PacketManager::SendPlaySound(const string_view& soundName, const D3DXVECTOR
 
 	SendPacket((char*)&p_SoundData, (USHORT)(PS_PlaySound + soundName.size()), PACKET_PlaySound);
 }
-

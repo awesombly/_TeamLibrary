@@ -272,9 +272,6 @@
     <Filter Include="Object\GameObject">
       <UniqueIdentifier>{157f432c-bc92-4142-8dce-e87418171728}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Shader">
-      <UniqueIdentifier>{e2203dfe-7bc3-4363-a152-be2ee34301dc}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Component">
       <UniqueIdentifier>{0a8c9a30-ad72-4c26-99d8-5374033615f1}</UniqueIdentifier>
     </Filter>
@@ -296,37 +293,40 @@
     <Filter Include="Component\Basic">
       <UniqueIdentifier>{13b60ea9-09c2-4bf0-9f10-0277b85ba652}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sound\Shader">
+      <UniqueIdentifier>{e2203dfe-7bc3-4363-a152-be2ee34301dc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="..\..\data\shader\Basis.hlsl">
-      <Filter>Shader</Filter>
+      <Filter>Sound\Shader</Filter>
     </FxCompile>
     <FxCompile Include="..\..\data\shader\CubeMap.hlsl">
-      <Filter>Shader</Filter>
+      <Filter>Sound\Shader</Filter>
     </FxCompile>
     <FxCompile Include="..\..\data\shader\EnviMap.hlsl">
-      <Filter>Shader</Filter>
+      <Filter>Sound\Shader</Filter>
     </FxCompile>
     <FxCompile Include="..\..\data\shader\Instance.hlsl">
-      <Filter>Shader</Filter>
+      <Filter>Sound\Shader</Filter>
     </FxCompile>
     <FxCompile Include="..\..\data\shader\NormalMap.hlsl">
-      <Filter>Shader</Filter>
+      <Filter>Sound\Shader</Filter>
     </FxCompile>
     <FxCompile Include="..\..\data\shader\RenderTarget.hlsl">
-      <Filter>Shader</Filter>
+      <Filter>Sound\Shader</Filter>
     </FxCompile>
     <FxCompile Include="..\..\data\shader\Shader.hlsl">
-      <Filter>Shader</Filter>
+      <Filter>Sound\Shader</Filter>
     </FxCompile>
     <FxCompile Include="..\..\data\shader\ShadowMap.hlsl">
-      <Filter>Shader</Filter>
+      <Filter>Sound\Shader</Filter>
     </FxCompile>
     <FxCompile Include="..\..\data\shader\Final.hlsl">
-      <Filter>Shader</Filter>
+      <Filter>Sound\Shader</Filter>
     </FxCompile>
     <FxCompile Include="..\..\data\shader\OutLine.hlsl">
-      <Filter>Shader</Filter>
+      <Filter>Sound\Shader</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>

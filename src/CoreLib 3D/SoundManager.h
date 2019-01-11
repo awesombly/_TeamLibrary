@@ -23,7 +23,7 @@ public:
 	void	SetBGM(const string_view& soundName) noexcept;
 	void	Play(const string_view& soundName, const bool& isPlay = false) noexcept;
 	void    PlayVariation(string&& soundName, const bool& isPlay, const int& vCount) noexcept;
-	void	PlayQueue(const string_view& soundName, const D3DXVECTOR3& position, const float& maxDistance) noexcept;
+	void	PlayQueue(const char* soundName, const D3DXVECTOR3& position, const float& maxDistance) noexcept;
 	void	Stop(const string_view& soundName)	 noexcept;
 	void	Paused(const string_view& soundName) noexcept;
 	void	OperVolume(const string_view& soundName, const float& value) noexcept;

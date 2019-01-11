@@ -13,13 +13,13 @@ bool GameScene::Init() noexcept
 	m_pPlayer->ResetOption();
 	// ==================================================================================
 	GameObject* pEffect = nullptr;
-	m_pParser->CreateFromFile(&pEffect, L"Snow.eff", L"../../data/script");
-	pEffect->SetPosition(Vector3::Up * 400.0f);
-	ObjectManager::Get().PushObject(pEffect);
+	//m_pParser->CreateFromFile(&pEffect, L"Snow.eff", L"../../data/script");
+	//pEffect->SetPosition(Vector3::Up * 400.0f);
+	//ObjectManager::Get().PushObject(pEffect);
 
-	pEffect = new GameObject(L"Bigbang", ObjectManager::Get().TakeComponent(L"Bigbang"));
-	pEffect->SetPosition(Vector3::Up * 400.0f + Vector3::Left * 700.0f);
-	ObjectManager::Get().PushObject(pEffect);
+	//pEffect = new GameObject(L"Bigbang", ObjectManager::Get().TakeComponent(L"Bigbang"));
+	//pEffect->SetPosition(Vector3::Up * 400.0f + Vector3::Left * 700.0f);
+	//ObjectManager::Get().PushObject(pEffect);
 
 	auto pParticle = (ParticleSystem*)ObjectManager::Get().TakeComponent(L"Shock");
 	pParticle->isRepeat(true);
@@ -88,14 +88,39 @@ bool GameScene::Frame() noexcept
 		}
 	}
 
+	//Raycast::SetMousePick(Input::GetCursor(), 3000.0f);
+	m_hitRay = false;
+	auto forward = Normalize(ObjectManager::Get().Cameras[ECamera::Main]->GetForward());
+	//D3DXVec3TransformNormal(&forward, &forward, &m_pPlayer->GetRoot()->GetWorldMatrix());
+	Raycast::SetRaycast(ObjectManager::Get().Cameras[ECamera::Main]->GetWorldPosition(), forward, 3000.0f);
+	for (auto& iter : ObjectManager::Get().GetColliderList())
+	{
+		if (iter->m_pParent == m_pPlayer->GetParent())
+			continue;
+		if (Raycast::Raycasting(iter))
+		{
+			m_hitRay = true;
+			if (Input::GetKeyState('V') == EKeyState::DOWN)
+			{
+				m_pPlayer->Possess(iter->m_pParent);
+			}
+		}
+	}
+
 	// 플레이어 변경
 	if (Input::GetKeyState(VK_TAB) == EKeyState::DOWN)
 	{
 		static auto curCollider = ObjectManager::Get().GetColliderList().begin();
-		if (curCollider == ObjectManager::Get().GetColliderList().end())
-			curCollider = ObjectManager::Get().GetColliderList().begin();
+		/*if (curCollider == ObjectManager::Get().GetColliderList().end())
+			curCollider = ObjectManager::Get().GetColliderList().begin();*/
 		if (++curCollider == ObjectManager::Get().GetColliderList().end())
 			curCollider = ObjectManager::Get().GetColliderList().begin();
+		if ((*curCollider)->m_eCollider == ECollider::Sphere)
+		{
+			++curCollider;
+			if (curCollider == ObjectManager::Get().GetColliderList().end())
+				curCollider = ObjectManager::Get().GetColliderList().begin();
+		}
 
 		m_pPlayer->Possess((*curCollider)->m_pParent);
 	}
@@ -132,7 +157,10 @@ bool GameScene::Render() noexcept
 	DxManager::Get().Render();
 	ObjectManager::Get().Render(DxManager::Get().GetDContext());
 	SoundManager::Get().Render();
-
+	if(m_hitRay)
+		Raycast::DrawRay(DxManager::Get().GetDContext(), Color::Red);
+	else
+		Raycast::DrawRay(DxManager::Get().GetDContext(), Color::Green);
 	// 바운딩 박스 표시
 	if (m_pCheckBox->m_bCheck)
 	{
