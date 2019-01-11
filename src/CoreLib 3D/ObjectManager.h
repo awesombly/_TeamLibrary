@@ -36,6 +36,7 @@ private:
 	map<wstring, vector<Sprite> > m_SpriteList;						// 스프라이트 리스트
 public:
 	static map<UINT, GameObject*> KeyObjects;						// 서버 처리용 오브젝트들
+	static UINT					  KeyCount;							// 키값 설정용
 	static map<ECamera, Camera*> Cameras;							// 카메라들
 	static Camera*				 CurCamera;							// 적용중인 카메라
 	static list<Light*>			 Lights;							// 조명들

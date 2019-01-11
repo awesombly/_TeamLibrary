@@ -97,54 +97,32 @@ bool LobbyScene::Frame() noexcept
 	DxManager::Get().Frame();
 	ObjectManager::Get().Frame(Timer::SPF, Timer::AccumulateTime);
 	SoundManager::Get().Frame();
+	m_pBackHero->Frame(Timer::SPF, Timer::AccumulateTime);
 
-
-	///
-	if (Input::GetKeyState('Q') == EKeyState::HOLD)
+	if (m_isStart)
 	{
-		m_pBackHero->Translate(Vector3::Forward * 10.0f * Timer::SPF);
-	}
-	if (Input::GetKeyState('E') == EKeyState::HOLD)
-	{
-		m_pBackHero->Translate(Vector3::Backward * 10.0f * Timer::SPF);
-	}
-	if (Input::GetKeyState('W') == EKeyState::HOLD)
-	{
-		m_pBackHero->Translate(Vector3::Up * 10.0f * Timer::SPF);
-	}
-	if (Input::GetKeyState('S') == EKeyState::HOLD)
-	{
-		m_pBackHero->Translate(Vector3::Down * 10.0f * Timer::SPF);
-	}
-	if (Input::GetKeyState('A') == EKeyState::HOLD)
-	{
-		m_pBackHero->Translate(Vector3::Left * 10.0f * Timer::SPF);
-	}
-	if (Input::GetKeyState('D') == EKeyState::HOLD)
-	{
-		m_pBackHero->Translate(Vector3::Right * 10.0f * Timer::SPF);
-	}
-
-
-	static bool isStart = false;
-	static float frameCount = 0.0f;
-	if (Input::GetKeyState('R') == EKeyState::DOWN)
-	{
-		m_pBackHero->SetANIM_OneTime(Guard_DASHJUMP);
-		SoundManager::Get().Play("SV_Guard_Shout.mp3");
-		isStart = true;
-		frameCount = 0.0f;
-	}
-	if (isStart)
-	{
+		static float frameCount = 0.0f;
 		frameCount += Timer::SPF;
-		if (frameCount > 2.5f)
+		if (frameCount > 2.3f)
 		{
-			isStart = false;
-			m_pBackHero->SetANIM_OneTime(Guard_DANCE2);
+			// 시작
+			if (PacketManager::Get().isHost)
+			{
+				m_isStart = false;
+				StartupServer();
+				SetScene(ESceneName::Main);
+			}
+			else
+			{
+				m_isStart = false;
+				StartupClient();
+				SetScene(ESceneName::Main);
+
+				PacketManager::Get().SendPacket('\0', 0, PACKET_ReqAddPlayer);
+				PacketManager::Get().SendPacket('\0', 0, PACKET_ReqSyncSpawns);
+			}
 		}
 	}
-	m_pBackHero->Frame(Timer::SPF, Timer::AccumulateTime);
 	return true;
 }
 
@@ -163,6 +141,7 @@ bool LobbyScene::Render() noexcept
 // 릴리즈
 bool LobbyScene::Release() noexcept
 {
+	ObjectManager::Get().RemoveObject(m_pBackHero);
 	ObjectManager::Get().Release();
 	return true;
 }
@@ -186,17 +165,23 @@ void LobbyScene::LoadUI() noexcept
 			MessageBox(Window::m_hWnd, L"IP 뒷자리를 입력하세염.", L"삐빅-", 0);
 			return;
 		}
+		((LobbyScene*)pScene)->m_pBackHero->SetANIM_OneTime(Guard_DASHJUMP);
+		SoundManager::Get().Play("SV_Guard_Shout.mp3");
 		PacketManager::Get().isHost = false;
-		((MainClass*)pScene)->StartupClient();
-		((MainClass*)pScene)->SetScene(ESceneName::Main);
+		((LobbyScene*)pScene)->m_isStart = true;
+		/*((LobbyScene*)pScene)->StartupClient();
+		((LobbyScene*)pScene)->SetScene(ESceneName::Main);
 
 		PacketManager::Get().SendPacket('\0', 0, PACKET_ReqAddPlayer);
-		PacketManager::Get().SendPacket('\0', 0, PACKET_ReqSyncSpawns);
+		PacketManager::Get().SendPacket('\0', 0, PACKET_ReqSyncSpawns);*/
 	};
 	static auto pToHost = [](void* pScene) {
+		((LobbyScene*)pScene)->m_pBackHero->SetANIM_OneTime(Guard_DASHJUMP);
+		SoundManager::Get().Play("SV_Guard_Shout.mp3");
 		PacketManager::Get().isHost = true;
-		((MainClass*)pScene)->StartupServer();
-		((MainClass*)pScene)->SetScene(ESceneName::Main);
+		((LobbyScene*)pScene)->m_isStart = true;
+		/*((LobbyScene*)pScene)->StartupServer();
+		((LobbyScene*)pScene)->SetScene(ESceneName::Main);*/
 	};
 	static auto pToExit = [](void* pScene) {
 		exit(0); pScene;
@@ -208,7 +193,7 @@ void LobbyScene::LoadUI() noexcept
 	JParser par;
 	par.FileLoad(DxManager::GetDevice(), L"../../data/ui/UI_Intro", *pUIRoot);
 
-	// to 호스트
+	// 호스트 입장
 	auto pPanel = pUIRoot->find_child(L"D_Host"); // D_Host
 	pPanel->EventClick.first = pToHost;
 	pPanel->EventClick.second = this;

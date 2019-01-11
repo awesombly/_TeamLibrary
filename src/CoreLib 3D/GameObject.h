@@ -3,7 +3,7 @@
 #include "Component.h"
 #include "Physics.h"
 
-static UINT ObjectKeyCount = 0;
+
 
 enum class EObjType : char {
 	Dummy,

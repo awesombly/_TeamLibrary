@@ -6,11 +6,13 @@
 class LobbyScene : public MainClass
 {
 public:
-	AHeroObj* m_pBackHero = nullptr;
+	bool m_isStart = false;
 
+	AHeroObj* m_pBackHero = nullptr;
+	///
 	//JPanel*		m_toHost		= nullptr;
-	JTextCtrl*	m_toGuestIP		= nullptr;
 	//JPanel*		m_toGuest		= nullptr;
+	JTextCtrl*	m_toGuestIP		= nullptr;
 	JPanel*		m_toGuestPanel	= nullptr;
 public:
 	void LoadUI()				noexcept override;

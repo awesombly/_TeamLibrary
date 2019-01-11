@@ -14,7 +14,7 @@
 
 GameObject::GameObject(const wstring_view& myName, const EObjType& eType)
 {
-	m_keyValue = ++ObjectKeyCount;
+	m_keyValue = ++ObjectManager::KeyCount;
 	ObjectManager::KeyObjects[m_keyValue] = this;
 	m_myName = myName;
 	m_objType = eType;
@@ -23,7 +23,7 @@ GameObject::GameObject(const wstring_view& myName, const EObjType& eType)
 
 GameObject::GameObject(const wstring_view& myName, const std::initializer_list<Component*>& components, const EObjType& eType)
 {
-	m_keyValue = ++ObjectKeyCount;
+	m_keyValue = ++ObjectManager::KeyCount;
 	ObjectManager::KeyObjects[m_keyValue] = this;
 	m_myName = myName;
 	m_objType = eType;
@@ -33,7 +33,7 @@ GameObject::GameObject(const wstring_view& myName, const std::initializer_list<C
 
 GameObject::GameObject(const wstring_view& myName, Component* pComponent, const EObjType& eType)
 {
-	m_keyValue = ++ObjectKeyCount;
+	m_keyValue = ++ObjectManager::KeyCount;
 	ObjectManager::KeyObjects[m_keyValue] = this;
 	m_myName = myName;
 	m_objType = eType;
@@ -423,7 +423,7 @@ const float& GameObject::GetHP() const noexcept
 
 GameObject* GameObject::clone() noexcept
 {
-	m_keyValue = ++ObjectKeyCount;
+	m_keyValue = ++ObjectManager::KeyCount;
 	return ObjectManager::KeyObjects[m_keyValue] = cloneChild(new GameObject(*this));
 }
 

@@ -6,6 +6,7 @@ bool GameScene::Init() noexcept
 {
 	FirstInit();
 #pragma region Basic
+	ObjectManager::KeyCount = 1000;
 	auto pHero = (AHeroObj*)ObjectManager::Get().TakeObject(L"Guard");
 	pHero->AddComponent(ObjectManager::Get().TakeComponent(L"Fire"));
 	m_pPlayer->Possess(pHero);
@@ -211,56 +212,6 @@ bool GameScene::FirstInit() noexcept
 		m_pPlayer->m_myName = L"Player";
 		m_pPlayer->m_objType = EObjType::Object;
 		ObjectManager::Cameras[ECamera::Main]->SetParent(m_pPlayer);
-
-		//// Effect 로드
-		////ObjectManager::Get().SetProtoComponent(m_pParser->CreateFromParticle(L"Snow.eff", L"../../data/script"));
-		//ObjectManager::Get().SetProtoComponent(m_Parser.CreateFromParticle(L"Boom.eff", L"../../data/script"));
-		//ObjectManager::Get().SetProtoComponent(m_Parser.CreateFromParticle(L"Fire.eff", L"../../data/script"));
-		//ObjectManager::Get().SetProtoComponent(m_Parser.CreateFromParticle(L"Fly.eff", L"../../data/script"));
-		//ObjectManager::Get().SetProtoComponent(m_Parser.CreateFromParticle(L"Bigbang.eff", L"../../data/script"));
-		//ObjectManager::Get().SetProtoComponent(m_Parser.CreateFromParticle(L"Shock.eff", L"../../data/script"));
-		//ObjectManager::Get().SetProtoComponent(m_Parser.CreateFromParticle(L"Atom.eff", L"../../data/script"));
-		//ObjectManager::Get().SetProtoComponent(m_Parser.CreateFromParticle(L"WheelWind.eff", L"../../data/script"));
-		/////
-		//m_pPlayer->m_myName = L"Player";
-		//m_pPlayer->m_objType = EObjType::Object;
-		//ObjectManager::Cameras[ECamera::Main]->SetParent(m_pPlayer);
-		//// 기사 
-		//m_pHero = new AHeroObj();
-		//m_pHero->SetPlayerCharacter(Guard, 0.0f, 100.0f, 0.0f);
-		//m_pHero->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-		//m_pHero->SetANIM_Loop(Guard_IDLE);
-		//m_pHero->m_myName = L"Guard";
-		//m_pHero->m_objType = EObjType::Object;
-		//m_pHero->SetScale(Vector3::One * 0.5f);
-		//auto pCollider = new ColliderOBB({ -13.0f, 0.0f , -13.0f }, { 13.0f, 80.0f , 13.0f });
-		//m_pHero->AddComponent(pCollider);
-		//pCollider->m_pivot *= 0.5f;
-		//ObjectManager::Get().SetProtoObject(m_pHero);
-		//// 좀비
-		//m_pZombie = new AHeroObj();
-		//m_pZombie->SetPlayerCharacter(Zombie, 80.0f, 200.0f, -300.0f);
-		//m_pZombie->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-		//m_pZombie->SetANIM_Loop(Zombie_IDLE);
-		//m_pZombie->m_myName = L"Zombie";
-		//m_pZombie->m_objType = EObjType::Object;
-		//m_pZombie->SetScale(Vector3::One * 0.5f);
-		//pCollider = new ColliderOBB({ -13.0f, 0.0f , -13.0f }, { 13.0f, 80.0f , 13.0f });
-		//m_pZombie->AddComponent(pCollider);
-		//pCollider->m_pivot *= 0.5f;
-		//ObjectManager::Get().SetProtoObject(m_pZombie);
-		//// 새 생성
-		//m_pBird = new AHeroObj();
-		//m_pBird->SetPlayerCharacter(NPC_Bird, 0.0f, 80.0f, 300.0f);
-		//m_pBird->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-		//m_pBird->m_myName = L"Bird";
-		//m_pBird->m_objType = EObjType::Object;
-		//m_pBird->SetScale(Vector3::One * 7.0f);
-		//pCollider = new ColliderOBB({ -1.0f, 0.0f , -1.0f }, { 1.0f, 2.0f , 1.0f });
-		//m_pBird->AddComponent(pCollider);
-		//pCollider->m_pivot *= 7.0f;
-		//pCollider->SetGravityScale(0.3f);
-		//ObjectManager::Get().SetProtoObject(m_pBird);
 		return true;
 	}
 	return false;

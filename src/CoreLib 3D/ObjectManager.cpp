@@ -3,9 +3,10 @@
 #include "ColliderOBB.h"
 
 map<UINT, GameObject*> ObjectManager::KeyObjects;
-map<ECamera, Camera*> ObjectManager::Cameras;
-Camera*				  ObjectManager::CurCamera;
-list<Light*>		  ObjectManager::Lights;
+UINT				   ObjectManager::KeyCount = 0;
+map<ECamera, Camera*>  ObjectManager::Cameras;
+Camera*				   ObjectManager::CurCamera;
+list<Light*>		   ObjectManager::Lights;
 stack<tuple<void(*)(void*, void*), void*, void*> >	 ObjectManager::PostFrameEvent;
 
 static const float g_fMaxSize = 1024.0f;
