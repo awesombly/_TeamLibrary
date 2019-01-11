@@ -196,12 +196,6 @@ void PlayerController::PlayerInput(const float& spf) noexcept
 		if (Input::GetKeyState('1') == EKeyState::DOWN)
 		{
 			eAction = EAction::Dance1;
-			//static GameObject* pParticle = nullptr;//new GameObject(L"Boom", ObjectManager::Get().TakeComponent(L"Boom"));;
-			//if (pParticle != nullptr)
-				//ObjectManager::Get().DisableObject(pParticle);
-			m_pParent->AddComponent(ObjectManager::Get().TakeComponent(L"Boom"));
-			//pParticle->SetPosition(GetRoot()->GetPosition() + Vector3::Up * 20.0f);
-			//ObjectManager::Get().PushObject(pParticle);
 		}
 		if (Input::GetKeyState('2') == EKeyState::DOWN)
 		{

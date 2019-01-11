@@ -140,6 +140,9 @@ bool IntroScene::FirstInit() noexcept
 				pB->m_pParent->OperHP(-0.15f);
 				pB->SetForce((Normalize(-pA->GetTotalForce()) + Vector3::Up) * 200.0f);
 			}
+			auto pEffect = new GameObject(L"HitEffect", ObjectManager::Get().TakeComponent(L"Boom"));
+			pEffect->SetPosition(pA->m_pParent->GetWorldPosition());
+			ObjectManager::Get().PushObject(pEffect);
 			pA->ClearIgnoreList();
 			ObjectManager::Get().DisableObject(pA->m_pParent);
 		};
