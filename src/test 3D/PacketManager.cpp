@@ -105,39 +105,39 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 		 }
 		 ObjectManager::KeyObjects[p_AnimTransform.KeyValue]->SetPosition(p_AnimTransform.Position);
 		 ObjectManager::KeyObjects[p_AnimTransform.KeyValue]->SetRotation(p_AnimTransform.Rotation);
-		 if(ObjectManager::KeyObjects[p_AnimTransform.KeyValue]->m_pPhysics != nullptr)
-			ObjectManager::KeyObjects[p_AnimTransform.KeyValue]->SetForce(p_AnimTransform.Force);
-		 //if ((PlayerController::EAction)p_AnimTransform.EAnimState == PlayerController::EAction::Idle)
-		 //{
-		 //	 ((Collider*)ObjectManager::KeyObjects[p_AnimTransform.KeyValue]->GetComponentList(EComponent::Collider)->front())->isMoving(false);
-		 //}
-		 switch ((PlayerController::EAction)p_AnimTransform.EAnimState)
+
+		 if (ObjectManager::KeyObjects[p_AnimTransform.KeyValue]->m_pPhysics != nullptr)
 		 {
-		  case PlayerController::EAction::Fly:
-			  ObjectManager::KeyObjects[p_AnimTransform.KeyValue]->SetGravityScale(-0.35f);
-		  case PlayerController::EAction::Jump:
-		  {
-			  ObjectManager::KeyObjects[p_AnimTransform.KeyValue]->isGround(false);
-		  }	break;
-		  case PlayerController::EAction::FlyEnd:
-		  {
-			  ObjectManager::KeyObjects[p_AnimTransform.KeyValue]->SetGravityScale(1.0f);
-		  } break;
-		  case PlayerController::EAction::Idle:
-		  {
-		 	 ObjectManager::KeyObjects[p_AnimTransform.KeyValue]->isMoving(false);
-		  }	break;
-		  case PlayerController::EAction::Forward:
-		  case PlayerController::EAction::ForwardLeft:
-		  case PlayerController::EAction::ForwardRight:
-		  case PlayerController::EAction::Backward:
-		  case PlayerController::EAction::BackwardLeft:
-		  case PlayerController::EAction::BackwardRight:
-		  case PlayerController::EAction::Left:
-		  case PlayerController::EAction::Right:
-		  {
-		 	 ObjectManager::KeyObjects[p_AnimTransform.KeyValue]->SetDirectionForce(p_AnimTransform.Direction);
-		  }	break;
+			 ObjectManager::KeyObjects[p_AnimTransform.KeyValue]->SetForce(p_AnimTransform.Force);
+
+			 switch ((PlayerController::EAction)p_AnimTransform.EAnimState)
+			 {
+			 case PlayerController::EAction::Fly:
+				 ObjectManager::KeyObjects[p_AnimTransform.KeyValue]->SetGravityScale(-0.35f);
+			 case PlayerController::EAction::Jump:
+			 {
+				 ObjectManager::KeyObjects[p_AnimTransform.KeyValue]->isGround(false);
+			 }	break;
+			 case PlayerController::EAction::FlyEnd:
+			 {
+				 ObjectManager::KeyObjects[p_AnimTransform.KeyValue]->SetGravityScale(1.0f);
+			 } break;
+			 case PlayerController::EAction::Idle:
+			 {
+				 ObjectManager::KeyObjects[p_AnimTransform.KeyValue]->isMoving(false);
+			 }	break;
+			 case PlayerController::EAction::Forward:
+			 case PlayerController::EAction::ForwardLeft:
+			 case PlayerController::EAction::ForwardRight:
+			 case PlayerController::EAction::Backward:
+			 case PlayerController::EAction::BackwardLeft:
+			 case PlayerController::EAction::BackwardRight:
+			 case PlayerController::EAction::Left:
+			 case PlayerController::EAction::Right:
+			 {
+				 ObjectManager::KeyObjects[p_AnimTransform.KeyValue]->SetDirectionForce(p_AnimTransform.Direction);
+			 }	break;
+			 }
 		 }
 	 }	break;
 	 case PACKET_TakeObject:
