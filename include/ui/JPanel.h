@@ -63,9 +63,10 @@ namespace UI
 	public:
 		bool				m_bRender = true; // Render 여부 확인
 		JPanel*				m_pParent = nullptr;
+		JPanel*				m_pRoot = nullptr;
 		wstring				m_ParentName;
 		wstring				m_NodeName;
-		std::list<JPanel*>		m_pChildList;
+		std::list<JPanel*>	m_pChildList;
 	public:
 		JPlane*				m_pShape;
 		JTexture*			m_pTexture;
@@ -78,13 +79,15 @@ namespace UI
 		JMouse				m_ptMouse; // 중앙이 0,0인 POINT
 		float				m_fWidth;  // 화면 크기 설정 -> matproj
 		float				m_fHeight; // 화면 크기 설정 -> matproj
+		float				m_fUITimer;
 	public:
 		bool SetParent(JPanel* pParent);
 		void push_child(JPanel* pChild);
 		JPanel* find_child(wstring childname);
+		JPanel*	find_root();
 		void Update(); // worldmatrix update
 		void rtUpdate();
-		JPanel* uiclone();
+		void* uiclone();
 	public:
 		bool Init() noexcept override;
 		bool PreFrame(const float& spf, const float& accTime);

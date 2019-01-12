@@ -16,6 +16,7 @@ namespace UI
 		const float* GetValue();
 		void SetValue(float fValue);
 	public:
+		void* uiclone();
 		void Update();
 		bool Frame(const float& spf, const float& accTime) noexcept override;
 		bool Render(ID3D11DeviceContext* pContext)noexcept override;

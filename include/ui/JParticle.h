@@ -24,7 +24,6 @@ namespace UI
 		/* 생명주기 */
 		float		fLifeTime;
 		bool		bRender;
-	private:
 		/* Render true time */
 		float		fStartTime;
 	public:

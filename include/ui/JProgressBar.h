@@ -17,6 +17,7 @@ namespace UI
 		bool Create(ID3D11Device* pDevice, const TCHAR* szBack, const TCHAR* szFront, 
 			const char* PSName = "PS", const TCHAR* szShaderName = L"../../data/ui/shader/DefaultUI.hlsl");
 	public:
+		void* uiclone();
 		void Update();
 		bool Frame(const float& spf, const float& accTime) noexcept override;
 		bool Render(ID3D11DeviceContext* pContext)noexcept override;

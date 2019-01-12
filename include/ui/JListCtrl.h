@@ -19,6 +19,7 @@ namespace UI
 		void push_string(wstring str);
 		bool Create(ID3D11Device* pDevice, const TCHAR* szNORMAL, float fSize = 15, int iCols = 6,
 			 const char* PSName = "PS", const TCHAR* szShaderName = L"../../data/ui/shader/DefaultUI.hlsl");
+		void* uiclone();
 	public:
 		void Update();
 		bool Frame(const float& spf, const float& accTime) noexcept override;

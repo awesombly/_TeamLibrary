@@ -8,6 +8,47 @@ namespace UI
 		if (pMouseParticle == nullptr) return;
 		pMouseParticle->PreEvent.first = UI::E_MOUSE_PARTICLE;
 		pMouseParticle->PreEvent.second = pMouseParticle;
+
+		JPanel* pMouseCursor = pRoot->find_child(L"mouse_cursor");
+		if (pMouseCursor == nullptr) return;
+		pMouseCursor->PreEvent.first = UI::E_MOUSE_CURSOR;
+		pMouseCursor->PreEvent.second = pMouseCursor;
+
+		JSpriteCtrl* pCursorClick = (JSpriteCtrl*)pRoot->find_child(L"mouse_click_sprite");
+		if (pCursorClick == nullptr) return;
+		pCursorClick->PreEvent.first = E_MOUSE_CLICK_SPRITE;
+		pCursorClick->PreEvent.second = pCursorClick;
+
+		JSpriteCtrl* pCursorErase = (JSpriteCtrl*)pRoot->find_child(L"mouse_click_sprite_panel");
+		if (pCursorErase == nullptr) return;
+		pCursorErase->PreEvent.first = E_MOUSE_SPRITE_ERASE;
+		pCursorErase->PreEvent.second = pCursorErase;
+
+		JPanel* pHelpImg = (JPanel*)pRoot->find_child(L"D_Host");
+		if (pHelpImg == nullptr) return;
+		pHelpImg->PreEvent.first = E_HELP_IMG;
+		pHelpImg->PreEvent.second = pHelpImg;
+
+		// effect
+		JPanel* pEff1 = (JPanel*)pRoot->find_child(L"white_effect");
+		if (pEff1 == nullptr) return;
+		pEff1->PreEvent.first = E_EFFECT_ALPHA;
+		pEff1->PreEvent.second = pEff1;
+
+		JPanel* pEff2 = (JPanel*)pRoot->find_child(L"white_effect2");
+		if (pEff2 == nullptr) return;
+		pEff2->PreEvent.first = E_EFFECT_ALPHA2;
+		pEff2->PreEvent.second = pEff2;
+
+		JPanel* pEff3 = (JPanel*)pRoot->find_child(L"effect3");
+		if (pEff3 == nullptr) return;
+		pEff3->PreEvent.first = E_EFFECT3;
+		pEff3->PreEvent.second = pEff3;
+
+		JPanel* pEff4 = (JPanel*)pRoot->find_child(L"effect4");
+		if (pEff4 == nullptr) return;
+		pEff4->PreEvent.first = E_EFFECT4;
+		pEff4->PreEvent.second = pEff4;
 	}
 	static void LobbyEvent(JPanel* pRoot)
 	{
@@ -15,6 +56,29 @@ namespace UI
 	}
 	static void InGameEvent(JPanel* pRoot)
 	{
+		JPanel* pMouseCursor = pRoot->find_child(L"mouse_cursor");
+		if (pMouseCursor == nullptr) return;
+		pMouseCursor->PreEvent.first = UI::E_MOUSE_CURSOR;
+		pMouseCursor->PreEvent.second = pMouseCursor;
 
+		JSpriteCtrl* pCursorClick = (JSpriteCtrl*)pRoot->find_child(L"mouse_click_sprite");
+		if (pCursorClick == nullptr) return;
+		pCursorClick->PreEvent.first = E_MOUSE_CLICK_SPRITE;
+		pCursorClick->PreEvent.second = pCursorClick;
+
+		JSpriteCtrl* pCursorErase = (JSpriteCtrl*)pRoot->find_child(L"mouse_click_sprite_panel");
+		if (pCursorErase == nullptr) return;
+		pCursorErase->PreEvent.first = E_MOUSE_SPRITE_ERASE;
+		pCursorErase->PreEvent.second = pCursorErase;
+
+
+		JPanel* pStatePanel = (JPanel*)pRoot->find_child(L"State_Panel");
+		if (pStatePanel == nullptr) return;
+		pStatePanel->PreEvent.first = E_STATE_SHOW;
+		pStatePanel->PreEvent.second = pStatePanel;
+
+		JPanel* pSetting = (JPanel*)pRoot->find_child(L"Set_Panel");
+		pSetting->PreEvent.first = E_SETTING_SHOW;
+		pSetting->PreEvent.second = pSetting;
 	}
 }
