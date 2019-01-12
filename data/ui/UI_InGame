@@ -32,6 +32,24 @@
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 1.000000 1.000000 1.000000
 
+^Type 778
+^NodeName Timer_back
+^ParentName Time_Panel
+^KeyState 135 135
+^bRender 1
+^Position -0.000000 281.166534 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 35.000000 15.000000 1.000000
+^tx_Normal backimg_000.png
+^tx_Hover backimg_000.png
+^tx_Press backimg_000.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
 ^Type 783
 ^NodeName Timer_Text
 ^ParentName Time_Panel
@@ -271,7 +289,7 @@
 ^Type 777
 ^NodeName Set_Panel
 ^ParentName Root
-^KeyState 135 135
+^KeyState 27 135
 ^bRender 0
 ^Position 0.000000 0.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
@@ -493,6 +511,318 @@
 ^AnimUV 0 0 
 ^SPRITESTART 1 
 ^guard.png
+^SPRITEEND
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 777
+^NodeName State_Panel
+^ParentName Root
+^KeyState 135 9
+^bRender 0
+^Position 0.000000 0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 1.000000 1.000000 1.000000
+
+^Type 778
+^NodeName State_Back
+^ParentName State_Panel
+^KeyState 135 135
+^bRender 1
+^Position 0.000000 0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 300.000000 200.000000 1.000000
+^tx_Normal bx_090.png
+^tx_Hover bx_090.png
+^tx_Press bx_090.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 783
+^NodeName State_Title
+^ParentName State_Panel
+^KeyState 135 135
+^bRender 1
+^Position 0.000000 133.440933 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 200.000000 30.000000 1.000000
+^strText Title방어전_조오온싀나아아
+^TextSize 50.000000
+^tx_Normal Alpha.png
+^tx_Hover Alpha.png
+^tx_Press Alpha.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 783
+^NodeName State_txt
+^ParentName State_Panel
+^KeyState 135 135
+^bRender 1
+^Position 0.000000 -39.001232 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 282.332031 120.000000 1.000000
+^strText WWE수우우우우우퍼챔픠언수ㅟㅂ_조오오오오오온싀나아아ㅏ아
+^TextSize 50.000000
+^tx_Normal Alpha.png
+^tx_Hover Alpha.png
+^tx_Press Alpha.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 778
+^NodeName State_John
+^ParentName State_Panel
+^KeyState 135 135
+^bRender 1
+^Position 214.000000 -107.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 70.000000 70.000000 1.000000
+^tx_Normal hqdefault.jpg
+^tx_Hover hqdefault.jpg
+^tx_Press hqdefault.jpg
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 782
+
+^SpriteType 6429
+^NodeName State_JohnSprite
+^ParentName State_Panel
+^KeyState 135 135
+^bRender 1
+^bLoop 1
+^Position -222.000000 -121.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 70.000000 71.000000 1.000000
+^AnimTime 3.500000
+^AnimUV 0 0 
+^SPRITESTART 150 
+^0__f00.jpg
+^0__f01.jpg
+^0__f02.jpg
+^0__f03.jpg
+^0__f04.jpg
+^0__f05.jpg
+^0__f06.jpg
+^0__f07.jpg
+^0__f08.jpg
+^0__f09.jpg
+^0__f10.jpg
+^0__f11.jpg
+^0__f12.jpg
+^0__f13.jpg
+^0__f14.jpg
+^0__f15.jpg
+^0__f16.jpg
+^0__f17.jpg
+^0__f18.jpg
+^0__f19.jpg
+^0__f20.jpg
+^0__f21.jpg
+^0__f22.jpg
+^0__f23.jpg
+^0__f24.jpg
+^0__f25.jpg
+^0__f26.jpg
+^0__f27.jpg
+^0__f28.jpg
+^0__f29.jpg
+^0__f30.jpg
+^0__f31.jpg
+^0__f32.jpg
+^0__f33.jpg
+^0__f34.jpg
+^0__f35.jpg
+^0__f36.jpg
+^0__f37.jpg
+^0__f38.jpg
+^0__f39.jpg
+^0__f40.jpg
+^0__f41.jpg
+^0__f42.jpg
+^0__f43.jpg
+^0__f44.jpg
+^0__f45.jpg
+^0__f46.jpg
+^0__f47.jpg
+^0__f48.jpg
+^0__f49.jpg
+^0__f50.jpg
+^0__f51.jpg
+^0__f52.jpg
+^0__f53.jpg
+^0__f54.jpg
+^0__f55.jpg
+^0__f56.jpg
+^0__f57.jpg
+^0__f58.jpg
+^0__f59.jpg
+^0__f60.jpg
+^0__f61.jpg
+^0__f62.jpg
+^0__f63.jpg
+^0__f64.jpg
+^0__f65.jpg
+^0__f66.jpg
+^0__f67.jpg
+^0__f68.jpg
+^0__f69.jpg
+^0__f70.jpg
+^0__f71.jpg
+^0__f72.jpg
+^0__f73.jpg
+^0__f74.jpg
+^0__f75.jpg
+^0__f76.jpg
+^0__f77.jpg
+^0__f78.jpg
+^0__f79.jpg
+^0__f80.jpg
+^0__f81.jpg
+^0__f82.jpg
+^0__f83.jpg
+^0__f84.jpg
+^0__f85.jpg
+^0__f86.jpg
+^0__f87.jpg
+^0__f88.jpg
+^0__f89.jpg
+^0__f90.jpg
+^0__f91.jpg
+^0__f92.jpg
+^0__f93.jpg
+^0__f94.jpg
+^0__f95.jpg
+^0__f96.jpg
+^0__f97.jpg
+^0__f98.jpg
+^0__f99.jpg
+^0__f100.jpg
+^0__f101.jpg
+^0__f102.jpg
+^0__f103.jpg
+^0__f104.jpg
+^0__f105.jpg
+^0__f106.jpg
+^0__f107.jpg
+^0__f108.jpg
+^0__f109.jpg
+^0__f110.jpg
+^0__f111.jpg
+^0__f112.jpg
+^0__f113.jpg
+^0__f114.jpg
+^0__f115.jpg
+^0__f116.jpg
+^0__f117.jpg
+^0__f118.jpg
+^0__f119.jpg
+^0__f120.jpg
+^0__f121.jpg
+^0__f122.jpg
+^0__f123.jpg
+^0__f124.jpg
+^0__f125.jpg
+^0__f126.jpg
+^0__f127.jpg
+^0__f128.jpg
+^0__f129.jpg
+^0__f130.jpg
+^0__f131.jpg
+^0__f132.jpg
+^0__f133.jpg
+^0__f134.jpg
+^0__f135.jpg
+^0__f136.jpg
+^0__f137.jpg
+^0__f138.jpg
+^0__f139.jpg
+^0__f140.jpg
+^0__f141.jpg
+^0__f142.jpg
+^0__f143.jpg
+^0__f144.jpg
+^0__f145.jpg
+^0__f146.jpg
+^0__f147.jpg
+^0__f148.jpg
+^0__f149.jpg
+^SPRITEEND
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 777
+^NodeName mouse_click_sprite_panel
+^ParentName Root
+^KeyState 135 135
+^bRender 0
+^Position 0.000000 0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 1.000000 1.000000 1.000000
+
+^Type 782
+
+^SpriteType 6429
+^NodeName mouse_click_sprite
+^ParentName mouse_click_sprite_panel
+^KeyState 135 135
+^bRender 1
+^bLoop 0
+^Position 1000.000000 1000.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 1.000000 1.000000 1.000000
+^AnimTime 0.500000
+^AnimUV 2 2 
+^SPRITESTART 1 
+^PropertyButtonFavouriteFill-468cdd1c31f3046448a59ed378113993-1.png
+^SPRITEEND
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 782
+
+^SpriteType 6430
+^NodeName mouse_cursor
+^ParentName mouse_click_sprite_panel
+^KeyState 135 135
+^bRender 1
+^bLoop 1
+^Position 1000.000000 -1000.000000 0.000000
+^Rotate 0.000000 0.000000 -0.261799
+^Scale 15.000000 15.000000 1.000000
+^AnimTime 0.250000
+^AnimUV 2 2 
+^SPRITESTART 1 
+^Ghost2-a8030e16d3339d54c9ade70d2dbc4b91-1.png
 ^SPRITEEND
 ^pfEventHover 7274
 ^vpEventHover 
