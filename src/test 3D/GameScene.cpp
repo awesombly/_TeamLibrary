@@ -320,5 +320,5 @@ void GameScene::LoadUI() noexcept
 	//m_pList->m_fValue = pSlider->GetValue();
 	ObjectManager::Get().PushObject(pUIRoot);
 
-	UI::IntroEvent(pUIRoot);
+	UI::InGameEvent(pUIRoot);
 }
