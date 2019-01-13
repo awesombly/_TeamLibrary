@@ -47,7 +47,8 @@ bool Camera::Init()	noexcept
 
 bool Camera::Frame(const float& spf, const float& accTime)	noexcept
 {
-	if (Input::GetInstance().GetKeyState(VK_SHIFT) == EKeyState::HOLD)
+	if (m_pParent == nullptr &&
+		Input::GetInstance().GetKeyState(VK_SHIFT) == EKeyState::HOLD)
 	{
 		static bool isMoving, isRotating;
 		isMoving = false;

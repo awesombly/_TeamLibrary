@@ -59,19 +59,9 @@ bool GameObject::Frame(const float& spf, const float& accTime) noexcept
 	if (!m_isEnable || m_isStatic) return false;
 	//if (!m_isStatic)
 	UpdateMatrix();
-	for (auto& outIter : m_components)
-	{
-		for (auto& inIter : outIter.second)
-		{
-			inIter->Frame(spf, accTime);
-		}
-	}
-	for (auto& iter : m_childList)
-	{
-		iter->Frame(spf, accTime);
-	}
 	if (m_pPhysics != nullptr)
 	{
+		//m_pPhysics->m_prePosition = m_position;
 		// 중력
 		m_pPhysics->m_force += m_pPhysics->m_GravityScale * GravityPower * spf * Vector3::Down;
 		// 항력
@@ -83,6 +73,17 @@ bool GameObject::Frame(const float& spf, const float& accTime) noexcept
 			//m_pParent->isMoved(true);
 			GetRoot()->Translate((GetTotalForce() + Vector3::Up * 5.0f) * spf);
 		}
+	}
+	for (auto& outIter : m_components)
+	{
+		for (auto& inIter : outIter.second)
+		{
+			inIter->Frame(spf, accTime);
+		}
+	}
+	for (auto& iter : m_childList)
+	{
+		iter->Frame(spf, accTime);
 	}
 	return true;
 }
@@ -219,6 +220,15 @@ void GameObject::CutParent() noexcept
 	}
 	m_pParent = nullptr;
 	ObjectManager::GetInstance().PushObject(this);
+}
+
+void GameObject::CutParentPost() noexcept
+{
+	static auto pEvent = [](void* pVoid, void*) {
+		((GameObject*)pVoid)->CutParent();
+	};
+
+	ObjectManager::PostFrameEvent.emplace(pEvent, this, nullptr);
 }
 
 forward_list<GameObject*>* GameObject::GetChildList() noexcept
@@ -395,25 +405,19 @@ void GameObject::SetKeyValue(const UINT& keyValue) noexcept
 void GameObject::OperHP(const float& value) noexcept
 {
 	m_HP += value;
-	if (m_HP <= 0.0f)
-	{
-		ObjectManager::Get().DisableObject(this);
-		//m_pParent->isEnable(false);
-		//ObjectManager::Get().PopCollider(this);
-		//ObjectManager::Get().RemoveObject(m_pParent);
-	}
+	//if (m_HP <= 0.0f)
+	//{
+	//	ObjectManager::Get().DisableObject(this);
+	//}
 }
 
 void GameObject::SetHP(const float& value) noexcept
 {
 	m_HP = value;
-	if (m_HP <= 0.0f)
-	{
-		ObjectManager::Get().DisableObject(this);
-		//m_pParent->isEnable(false);
-		//ObjectManager::Get().PopCollider(this);
-		//ObjectManager::Get().RemoveObject(m_pParent);
-	}
+	//if (m_HP <= 0.0f)
+	//{
+	//	ObjectManager::Get().DisableObject(this);
+	//}
 }
 
 const float& GameObject::GetHP() const noexcept
@@ -423,12 +427,12 @@ const float& GameObject::GetHP() const noexcept
 
 GameObject* GameObject::clone() noexcept
 {
-	m_keyValue = ++ObjectManager::KeyCount;
-	return ObjectManager::KeyObjects[m_keyValue] = cloneChild(new GameObject(*this));
+	return cloneChild(new GameObject(*this));
 }
 
 GameObject* GameObject::cloneChild(GameObject* pObject) noexcept
 {
+	ObjectManager::KeyObjects[pObject->m_keyValue = ++ObjectManager::KeyCount] = pObject;
 	vector<GameObject*> addObjects;
 	vector<Component*> addComponents;
 	// Physics 재생성

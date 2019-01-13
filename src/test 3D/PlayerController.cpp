@@ -19,11 +19,25 @@ bool PlayerController::Frame(const float& spf, const float& accTime)	noexcept
 	GameObject::Frame(spf, accTime);
 
 	if (!m_isChatting &&
+		!Input::isDebug &&
 		m_pParent != nullptr)
 	{
 		PlayerInput(spf);
 		CameraInput(spf);
 	}
+
+	// 초기화
+	if (Input::GetKeyState('R') == EKeyState::DOWN)
+	{
+		Input::isDebug = !Input::isDebug;
+		ResetOption();
+	}
+	if (Input::GetKeyState(VK_SUBTRACT) == EKeyState::DOWN)
+	{
+		CutParentPost();
+		ObjectManager::Cameras[ECamera::Main]->CutParentPost();
+	}
+
 	return true;
 }
 
@@ -43,7 +57,7 @@ bool PlayerController::Release() noexcept
 
 
 
-void PlayerController::SetAnim(AHeroObj* pObject, const ECharacter& eCharacter, const EAction& eAction) noexcept
+void PlayerController::SetAnim(AHeroObj* pObject, const ECharacter& eCharacter, const EAction& eAction, const D3DXVECTOR3& forward) noexcept
 {
 	switch (eCharacter)
 	{
@@ -103,9 +117,9 @@ void PlayerController::SetAnim(AHeroObj* pObject, const ECharacter& eCharacter, 
 			pObject->SetANIM_OneTime(Guard_THROW);
 			auto pDagger = ObjectManager::Get().TakeObject(L"Dagger");
 			pDagger->SetPosition(pObject->GetPosition() + pObject->GetForward() * 40.0f + pObject->GetUp() * 65.0f + pObject->GetRight() * 20.0f);
-			pDagger->SetRotation(pObject->GetRotation() + Quaternion::Up * 0.5f);
+			pDagger->SetRotation(pObject->GetRotation());
 			//pDagger->SetScale(Vector3::One * 1.0f);
-			pDagger->SetForce((pObject->GetForward() + Vector3::Up * 0.15f) * 500.0f);
+			pDagger->SetForce((forward + Vector3::Up * 0.15f) * 500.0f);
 			((Collider*)pDagger->GetComponentList(EComponent::Collider)->front())->AddIgnoreList((Collider*)pObject->GetComponentList(EComponent::Collider)->front());
 			SoundManager::Get().PlayQueue("SE_throw01.mp3", pObject->GetWorldPosition(), 1000.0f);
 		}	break;
@@ -158,9 +172,9 @@ void PlayerController::SetAnim(AHeroObj* pObject, const ECharacter& eCharacter, 
 			pObject->SetANIM_OneTime(Zombie_THROW);
 			auto pChicken = ObjectManager::Get().TakeObject(L"Chicken");
 			pChicken->SetPosition(pObject->GetPosition() + pObject->GetForward() * 40.0f + pObject->GetUp() * 65.0f + pObject->GetRight() * 20.0f);
-			pChicken->SetRotation(pObject->GetRotation() + Quaternion::Up * 0.5f);
+			pChicken->SetRotation(pObject->GetRotation());
 			//pDagger->SetScale(Vector3::One * 1.0f);
-			pChicken->SetForce((pObject->GetForward() + Vector3::Up * 0.15f) * 500.0f);
+			pChicken->SetForce((forward + Vector3::Up * 0.15f) * 500.0f);
 			((Collider*)pChicken->GetComponentList(EComponent::Collider)->front())->AddIgnoreList((Collider*)pObject->GetComponentList(EComponent::Collider)->front());
 			SoundManager::Get().PlayQueue("SE_chicken.mp3", pObject->GetWorldPosition(), 1000.0f);
 		}	break;
@@ -171,8 +185,6 @@ void PlayerController::SetAnim(AHeroObj* pObject, const ECharacter& eCharacter, 
 
 void PlayerController::PlayerInput(const float& spf) noexcept
 {
-	if (Input::GetKeyState(VK_SHIFT) != EKeyState::HOLD)
-	{
 		static EAction eAction;
 		eAction = EAction::Idle;
 		//m_pCollider = (Collider*)m_pParent->GetComponentList(EComponent::Collider)->front();
@@ -214,16 +226,22 @@ void PlayerController::PlayerInput(const float& spf) noexcept
 		if (m_curCharacter != ECharacter::EDummy)
 		{
 			m_curDelayThrow = max(m_curDelayThrow - spf, 0.0f);
+			m_curDelayDash = max(m_curDelayDash - spf, 0.0f);
 			if (m_curDelayThrow <= 0.0f)
 			{
-				//if (m_curAnim == EAction::Idle)
-					//SetAnim((AHeroObj*)m_pParent, m_curCharacter, EAction::Idle);
+				// 던지기
 				if (Input::GetKeyState(EMouseButton::Left) == EKeyState::DOWN &&
 					m_MP >= 0.15f)
 				{
 					m_MP -= 0.15f;
 					m_curDelayThrow = m_DelayThrow;
 					eAction = EAction::Throw;
+				}
+				// 구르기
+				if (Input::GetKeyState(VK_SHIFT) == EKeyState::DOWN)
+				{
+					m_curDelayDash = m_DelayDash;
+					eAction = EAction::Dash;
 				}
 			}
 		}
@@ -245,21 +263,27 @@ void PlayerController::PlayerInput(const float& spf) noexcept
 			{
 				isFly = false;
 				eAction = EAction::FlyEnd;
-				ObjectManager::Get().DisableComponent(m_pEffectFly);
-				m_pEffectFly = nullptr;
+				if (m_pEffectFly != nullptr)
+				{
+					ObjectManager::Get().DisableComponent(m_pEffectFly);
+					m_pEffectFly = nullptr;
+				}
 			}
 		}
 		else
-		{	
-			m_MP = min(m_MP + spf * 0.2f, 1.0f);	
+		{
+			m_MP = min(m_MP + spf * 0.2f, 1.0f);
 		}
-		
+
 		if (Input::GetKeyState(EMouseButton::Right) == EKeyState::UP)
 		{
 			isFly = false;
 			eAction = EAction::FlyEnd;
-			ObjectManager::Get().DisableComponent(m_pEffectFly);
-			m_pEffectFly = nullptr;
+			if (m_pEffectFly != nullptr)
+			{
+				ObjectManager::Get().DisableComponent(m_pEffectFly);
+				m_pEffectFly = nullptr;
+			}
 		}
 
 		if (eAction != m_curAction)
@@ -268,13 +292,12 @@ void PlayerController::PlayerInput(const float& spf) noexcept
 			SendAnimTransform(eAction, m_curCharacter);
 		}
 		m_curAction = eAction;
-		
+
 		if (Input::GetKeyState(VK_CONTROL) == EKeyState::DOWN &&
 			!PacketManager::Get().isHost)
 		{
 			PacketManager::Get().SendPacket('\0', 1, PACKET_ReqSync);
 		}
-	}
 
 
 	if (Input::GetKeyState('X') == EKeyState::DOWN)
@@ -287,84 +310,98 @@ void PlayerController::PlayerInput(const float& spf) noexcept
 		Packet_TakeObject p_TakeObject;
 		p_TakeObject.KeyValue = ++PacketManager::Get().PlayerKeyCount;
 		memcpy(p_TakeObject.ObjectName, objName.data(), strSize);
-		p_TakeObject.MsgSize	= (UCHAR)strSize;
-		p_TakeObject.Position	= { RandomNormal() * 1000.0f - 500.0f, 800.0f, RandomNormal() * 1000.0f - 500.0f };
-		p_TakeObject.Rotation	= Quaternion::Base;
-		p_TakeObject.Scale		= Vector3::One * 0.5f;
+		p_TakeObject.MsgSize = (UCHAR)strSize;
+		p_TakeObject.Position = { RandomNormal() * 1000.0f - 500.0f, 800.0f, RandomNormal() * 1000.0f - 500.0f };
+		p_TakeObject.Rotation = Quaternion::Base;
+		p_TakeObject.Scale = Vector3::One * 0.5f;
 
 		PacketManager::Get().SendPacket((char*)&p_TakeObject, (USHORT)(PS_TakeObject + strSize), PACKET_TakeObject);
 
 		// 빙의 파트
 		static Packet_PossessPlayer p_character;
-		p_character.KeyValue	= p_TakeObject.KeyValue;
-		p_character.ECharacter	= PlayerController::ECharacter::EZombie;
+		p_character.KeyValue = p_TakeObject.KeyValue;
+		p_character.ECharacter = PlayerController::ECharacter::EZombie;
 
 		PacketManager::Get().SendPacket((char*)&p_character, (USHORT)sizeof(Packet_PossessPlayer), PACKET_PossessPlayer);
 	}
-	
+
 	spf;
 }
 
 void PlayerController::SendAnimTransform(const EAction& eAction, const ECharacter& eCharacter) noexcept
 {
 	static Packet_AnimTransform p_AnimTransform;
-	// 이동 처리
+
 	if (eAction == EAction::Jump)
 	{
-		p_AnimTransform.Position = m_pParent->GetPosition() + Vector3::Up * 10.0f;
 		p_AnimTransform.Force = Vector3::Up * m_jumpPower;
+	}
+	else if (eAction == EAction::Dash)
+	{
+		if (m_pParent->isMoving())
+			p_AnimTransform.Force = (m_pParent->m_pPhysics->m_direction * 1.5f + Vector3::Up * 80.0f);
+		else
+			p_AnimTransform.Force = (Normalize(m_pParent->GetForward()) * m_moveSpeed * 1.5f + Vector3::Up * 80.0f);
 	}
 	else
 	{
-		p_AnimTransform.Position = m_pParent->GetPosition();
 		p_AnimTransform.Force = m_pParent->GetForce();
 	}
-
+	// 이동 처리
 	switch (eAction)
 	{
-	case EAction::Fly:
+	case EAction::Throw:
 	{
-		//p_AnimTransform.Direction = m_pParent->GetBackward() + m_pParent->GetRight();
+		p_AnimTransform.Direction = ObjectManager::Cameras[ECamera::Main]->GetForward();
+		p_AnimTransform.Direction = Normalize(p_AnimTransform.Direction);
 	}	break;
 	case EAction::Left:
 	{
 		p_AnimTransform.Direction = m_pParent->GetLeft();
+		p_AnimTransform.Direction = Normalize(p_AnimTransform.Direction) * m_moveSpeed;
 	}	break;
 	case EAction::Right:
 	{
 		p_AnimTransform.Direction = m_pParent->GetRight();
+		p_AnimTransform.Direction = Normalize(p_AnimTransform.Direction) * m_moveSpeed;
 	}	break;
 	case EAction::Forward:
 	{
 		p_AnimTransform.Direction = m_pParent->GetForward();
+		p_AnimTransform.Direction = Normalize(p_AnimTransform.Direction) * m_moveSpeed;
 	}	break;
 	case EAction::ForwardLeft:
 	{
 		p_AnimTransform.Direction = m_pParent->GetForward() + m_pParent->GetLeft();
+		p_AnimTransform.Direction = Normalize(p_AnimTransform.Direction) * m_moveSpeed;
 	}	break;
 	case EAction::ForwardRight:
 	{
 		p_AnimTransform.Direction = m_pParent->GetForward() + m_pParent->GetRight();
+		p_AnimTransform.Direction = Normalize(p_AnimTransform.Direction) * m_moveSpeed;
 	}	break;
 	case EAction::Backward:
 	{
 		p_AnimTransform.Direction = m_pParent->GetBackward();
+		p_AnimTransform.Direction = Normalize(p_AnimTransform.Direction) * m_moveSpeed;
 	}	break;
 	case EAction::BackwardLeft:
 	{
 		p_AnimTransform.Direction = m_pParent->GetBackward() + m_pParent->GetLeft();
+		p_AnimTransform.Direction = Normalize(p_AnimTransform.Direction) * m_moveSpeed;
 	}	break;
 	case EAction::BackwardRight:
 	{
 		p_AnimTransform.Direction = m_pParent->GetBackward() + m_pParent->GetRight();
+		p_AnimTransform.Direction = Normalize(p_AnimTransform.Direction) * m_moveSpeed;
 	}	break;
 	default:
 	{
 		p_AnimTransform.Direction = Vector3::Zero;
 	}	break;
 	}
-	p_AnimTransform.Direction = Normalize(p_AnimTransform.Direction) * m_moveSpeed;
 	p_AnimTransform.KeyValue = m_pParent->m_keyValue;
+	p_AnimTransform.Position = m_pParent->GetPosition();
 	p_AnimTransform.Rotation = m_pParent->GetRotation();
 	m_prevRotY = p_AnimTransform.Rotation.y;
 	p_AnimTransform.EAnimState = m_curAnim = eAction;
@@ -378,15 +415,12 @@ void PlayerController::CameraInput(const float& spf) noexcept
 	static const float MinCameraY = -PI * 0.2f;
 	static const float MaxCameraY = PI * 0.4f;
 
-	if (!Input::isDebug)
-	{
-		// 마우스 고정
-		static POINT prevPoint = { 0, 0 };
-		prevPoint = Input::GetCursor();
-		SetCursorPos((int)m_setMouseScreen.x, (int)m_setMouseScreen.y);
+	// 마우스 고정
+	static POINT prevPoint = { 0, 0 };
+	prevPoint = Input::GetCursor();
+	SetCursorPos((int)m_setMouseScreen.x, (int)m_setMouseScreen.y);
 
-		Input::OperMoveMousePos({ (float)(-m_setMouseClient.x + prevPoint.x), (float)(-m_setMouseClient.y + prevPoint.y) });
-	}
+	Input::OperMoveMousePos({ (float)(-m_setMouseClient.x + prevPoint.x), (float)(-m_setMouseClient.y + prevPoint.y) });
 
 	// 카메라 Arm 조절
 	if (!m_isChatting)
@@ -395,9 +429,8 @@ void PlayerController::CameraInput(const float& spf) noexcept
 	}
 	// 회전
 	m_pCamera->SetRotationX(std::clamp(m_pCamera->GetRotation().x + Input::GetMouseMovePos().y * m_mouseSense * 0.004f, MinCameraY, MaxCameraY));
-
 	m_pParent->Rotate(0.0f, Input::GetMouseMovePos().x * m_mouseSense * 0.004f);
-
+	// 회전 동기화
 	if (abs(m_prevRotY - m_pParent->GetRotation().y) > 0.08f)
 	{
 		SendAnimTransform(m_curAnim, ECharacter::EDummy);
@@ -433,18 +466,6 @@ void PlayerController::CameraInput(const float& spf) noexcept
 	//	ErrorMessage("회전 : " + to_string(Input::GetMouseMovePos().x));
 	//}
 
-	// 초기화
-	if (Input::GetKeyState('R') == EKeyState::DOWN)
-	{
-		Input::isDebug = true;
-		ResetOption();
-	}
-
-	if (Input::GetKeyState(VK_SUBTRACT) == EKeyState::DOWN)
-	{
-		ObjectManager::Cameras[ECamera::Main]->CutParent();
-		CutParent();
-	}
 }
 
 void PlayerController::ResetOption() noexcept
@@ -455,7 +476,7 @@ void PlayerController::ResetOption() noexcept
 	ScreenToClient(Window::m_hWnd, &m_setMouseClient);
 	///
 	m_pCamera = ObjectManager::Cameras[ECamera::Main];
-	m_pCamera->SetPosition(Vector3::Up * 40.0f);
+	m_pCamera->SetPosition(Vector3::Up * 50.0f);
 	m_pCamera->SetRotation(Quaternion::Left * PI + Quaternion::Up * PI * 0.2f);
 	m_pCamera->m_armLength = 6.0f;
 	m_pCamera->m_lerpMoveSpeed = 7.0f;
@@ -470,7 +491,7 @@ void PlayerController::Possess(GameObject* pObject) noexcept
 
 	static auto pEvent = [](void* pVoid, void* pVoid2) {
 		auto pPlayer = (PlayerController*)pVoid;
-		auto pObj	 = (GameObject*)pVoid2;
+		auto pObj = (GameObject*)pVoid2;
 
 		if (pObj->m_myName == L"Guard")
 			pPlayer->m_curCharacter = PlayerController::ECharacter::EGuard;

@@ -108,6 +108,12 @@ void Transform::SetRotation(const D3DXQUATERNION& rotation) noexcept
 {
 	m_rotation = rotation;
 }
+void Transform::SetRotation(const D3DXVECTOR3& rotation) noexcept
+{
+	m_rotation.x = rotation.x;
+	m_rotation.y = rotation.y;
+	m_rotation.z = rotation.z;
+}
 void Transform::SetRotation(const float& x, const float& y, const float& z) noexcept
 {
 	m_rotation.x = x;

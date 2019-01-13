@@ -45,7 +45,8 @@ bool Collider::Frame(const float& spf, const float& accTime)	noexcept
 		isGround(true);
 		// Y 고정 말고 현재 Collider 피벗 따라 다르게 해야댐
 		m_pParent->SetPositionY(m_mapHeight);
-		m_pPhysics->m_force *= -m_pPhysics->m_drag * m_pPhysics->m_repulsion * spf;
+		m_pPhysics->m_force -= m_pPhysics->m_force * m_pPhysics->m_drag;
+		m_pPhysics->m_force.y = -m_pPhysics->m_repulsion;
 		//m_pPhysics->m_force = Vector3::Zero;
 		if(CollisionEvent != nullptr)
 			CollisionEvent(this, nullptr);
@@ -84,52 +85,60 @@ bool Collider::CollisionAllCheck(const float& spf) noexcept
 			// 상대 충돌 목록 추가
 			iter->m_CollisionList.push_front(this);
 
-			//D3DXVECTOR3 vDirection		= Vector3::Zero;
-			D3DXVECTOR3 vForceDis		= Vector3::Zero;
-			D3DXVECTOR3 vForceDisOther	= Vector3::Zero;
-			
-			//// 반작용
-			//vForceDis = iter->GetTotalForce();
-			//
-			//vForceDisOther = GetTotalForce();
-			////vDirection = iter->GetCenter() - GetCenter();
-			////D3DXVec3Normalize(&vDirection, &vDirection);
-			////vForceDisOther = -iter->GetTotalForce();
-			////vForceDisOther = D3DXVec3Dot(&vForceDis, &vDirection) * 2.0f * vDirection - vForceDis;
-			//
-			//
-			////vDirection = iter->GetCenter() - GetCenter();
-			////D3DXVec3Normalize(&vDirection, &vDirection);
-			////vForceDisOther = m_force - iter->m_force;
-			////vForceDisOther = vDirection * (m_mass / iter->m_mass) * D3DXVec3Length(&vForceDisOther);
-			//
-			//
+			/////D3DXVECTOR3 vDirection		= Vector3::Zero;
+			///D3DXVECTOR3 vForceDis		= Vector3::Zero;
+			///D3DXVECTOR3 vForceDisOther	= Vector3::Zero;
+			///
+			/////// 반작용
+			/////vForceDis = iter->GetTotalForce();
+			/////
+			/////vForceDisOther = GetTotalForce();
+			///////vDirection = iter->GetCenter() - GetCenter();
+			///////D3DXVec3Normalize(&vDirection, &vDirection);
+			///////vForceDisOther = -iter->GetTotalForce();
+			///////vForceDisOther = D3DXVec3Dot(&vForceDis, &vDirection) * 2.0f * vDirection - vForceDis;
+			/////
+			/////
+			///////vDirection = iter->GetCenter() - GetCenter();
+			///////D3DXVec3Normalize(&vDirection, &vDirection);
+			///////vForceDisOther = m_force - iter->m_force;
+			///////vForceDisOther = vDirection * (m_mass / iter->m_mass) * D3DXVec3Length(&vForceDisOther);
+			/////
+			/////
+			///
+			///vForceDis = iter->GetTotalForce();
+			///vForceDisOther = GetTotalForce();
+			///if (m_pPhysics->m_usePhysics)
+			///{
+			///	//m_force += vForceDis;
+			///	//D3DXVec3Normalize(&vForceDis, &m_force);
+			///	// 반발력
+			///	m_pPhysics->m_force = /*vForceDis +*/ -m_pPhysics->m_force * (m_pPhysics->m_repulsion + iter->m_pPhysics->m_repulsion) * 0.5f;
+			///	//m_pParent->Translate(-m_force * 0.001f);
+			///	//m_pParent->Translate(Vector3::Up * spf);
+			///}
+			///if (iter->m_pPhysics->m_usePhysics)
+			///{
+			///	//iter->m_force += vForceDisOther;
+			///	//D3DXVec3Normalize(&vForceDisOther, &iter->m_force);
+			///	iter->m_pPhysics->m_force = /*vForceDisOther +*/ -iter->m_pPhysics->m_force * (m_pPhysics->m_repulsion + iter->m_pPhysics->m_repulsion) * 0.5f;
+			///	//iter->m_pParent->Translate(-iter->m_force * 0.001f);
+			///	//iter->m_pParent->Translate(Vector3::Up * spf);
+			///}
+			///// 마찰력
+			///m_pPhysics->m_force		  -= m_pPhysics->m_force		* (m_pPhysics->m_drag + iter->m_pPhysics->m_drag) * 0.5f  * spf;
+			///iter->m_pPhysics->m_force -= iter->m_pPhysics->m_force	* (m_pPhysics->m_drag + iter->m_pPhysics->m_drag) * 0.5f  * spf;
+			///
+			/////m_force = Vector3::Zero;
+			/////iter->m_force = Vector3::Zero;
 
-			vForceDis = iter->GetTotalForce();
-			vForceDisOther = GetTotalForce();
-			if (m_pPhysics->m_usePhysics)
-			{
-				//m_force += vForceDis;
-				//D3DXVec3Normalize(&vForceDis, &m_force);
-				// 반발력
-				m_pPhysics->m_force = /*vForceDis +*/ -m_pPhysics->m_force * (m_pPhysics->m_repulsion + iter->m_pPhysics->m_repulsion) * 0.5f;
-				//m_pParent->Translate(-m_force * 0.001f);
-				//m_pParent->Translate(Vector3::Up * spf);
-			}
-			if (iter->m_pPhysics->m_usePhysics)
-			{
-				//iter->m_force += vForceDisOther;
-				//D3DXVec3Normalize(&vForceDisOther, &iter->m_force);
-				iter->m_pPhysics->m_force = /*vForceDisOther +*/ -iter->m_pPhysics->m_force * (m_pPhysics->m_repulsion + iter->m_pPhysics->m_repulsion) * 0.5f;
-				//iter->m_pParent->Translate(-iter->m_force * 0.001f);
-				//iter->m_pParent->Translate(Vector3::Up * spf);
-			}
-			// 마찰력
-			m_pPhysics->m_force		  -= (m_pPhysics->m_force		* 0.4f) * (m_pPhysics->m_drag + iter->m_pPhysics->m_drag) * 0.5f  * spf;
-			iter->m_pPhysics->m_force -= (iter->m_pPhysics->m_force * 0.4f) * (m_pPhysics->m_drag + iter->m_pPhysics->m_drag) * 0.5f  * spf;
+			m_pPhysics->m_force = Normalize(GetCenter() - iter->GetCenter()) * 100;
+			iter->m_pPhysics->m_force = Normalize(iter->GetCenter() - GetCenter()) * 100;
 
-			//m_force = Vector3::Zero;
-			//iter->m_force = Vector3::Zero;
+			//m_pPhysics->m_force = Vector3::Zero;
+			////isMoving(false);
+			//iter->m_pPhysics->m_force = Vector3::Zero;
+			////iter->isMoving(false);
 
 			// 충돌 이벤트
 			if (CollisionEvent != nullptr)
@@ -139,6 +148,7 @@ bool Collider::CollisionAllCheck(const float& spf) noexcept
 		}
 	}
 	return true;
+	spf;
 }
 
 

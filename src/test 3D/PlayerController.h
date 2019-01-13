@@ -16,7 +16,7 @@ public:
 		Left = 1, Forward = 2, ForwardLeft = 3, 
 		Right = 4, ForwardRight = 6, 
 		Backward = 8, BackwardLeft = 9, BackwardRight = 12,
-		Jump = 100, Dance1, Dance2, Dance3, Throw, Run, Fly, FlyEnd
+		Jump = 100, Dance1, Dance2, Dance3, Throw, Run, Fly, FlyEnd, Dash, 
 	};
 	enum ECharacter : char {
 		EDummy = 0, EGuard, EZombie,
@@ -49,13 +49,16 @@ public:
 	const float	m_DelayThrow	= 0.3f;
 	float		m_curDelayThrow = 0.0f;
 
+	const float	m_DelayDash = 1.0f;
+	float		m_curDelayDash = 0.0f;
+
 	float		m_mouseSense = 0.5f;
 	//float		m_HP = 1.0f;
 	float		m_MP = 1.0f;
 	
 	void*		m_pHpBar = nullptr;		// Ã¼·Â¹Ù
 public:
-	static void SetAnim(AHeroObj* pObject, const ECharacter& eCharacter, const EAction& eAction) noexcept;
+	static void SetAnim(AHeroObj* pObject, const ECharacter& eCharacter, const EAction& eAction, const D3DXVECTOR3& forward = Vector3::Zero) noexcept;
 
 	void PlayerInput(const float& spf)												noexcept;
 	void CameraInput(const float& spf)												noexcept;

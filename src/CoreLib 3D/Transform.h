@@ -35,6 +35,7 @@ public:
 	void SetPositionZ(const float& z)								 noexcept;
 
 	void SetRotation(const D3DXQUATERNION& rotation)				 noexcept;
+	void SetRotation(const D3DXVECTOR3& rotation)					 noexcept;
 	void SetRotation(const float& x, const float& y, const float& z) noexcept;
 	void SetRotationX(const float& x)								 noexcept;
 	void SetRotationY(const float& y)								 noexcept;

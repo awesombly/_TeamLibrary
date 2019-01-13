@@ -1,4 +1,4 @@
-#include "PacketManager.h"
+ #include "PacketManager.h"
 #include "ObjectManager.h"
 #include "SoundManager.h"
 #include "PlayerController.h"
@@ -101,7 +101,7 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 		 memcpy(&p_AnimTransform, data, sizeof(Packet_AnimTransform));
 		 if (p_AnimTransform.ECharacter != PlayerController::ECharacter::EDummy)
 		 {
-			 PlayerController::SetAnim((AHeroObj*)ObjectManager::KeyObjects[p_AnimTransform.KeyValue], (PlayerController::ECharacter)p_AnimTransform.ECharacter, (PlayerController::EAction)p_AnimTransform.EAnimState);
+			 PlayerController::SetAnim((AHeroObj*)ObjectManager::KeyObjects[p_AnimTransform.KeyValue], (PlayerController::ECharacter)p_AnimTransform.ECharacter, (PlayerController::EAction)p_AnimTransform.EAnimState, p_AnimTransform.Direction);
 		 }
 		 ObjectManager::KeyObjects[p_AnimTransform.KeyValue]->SetPosition(p_AnimTransform.Position);
 		 ObjectManager::KeyObjects[p_AnimTransform.KeyValue]->SetRotation(p_AnimTransform.Rotation);

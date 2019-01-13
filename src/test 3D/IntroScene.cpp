@@ -138,9 +138,9 @@ bool IntroScene::FirstInit() noexcept
 			if (pB != nullptr)
 			{
 				pB->m_pParent->OperHP(-0.15f);
-				pB->SetForce((Normalize(-pA->GetTotalForce()) + Vector3::Up) * 200.0f);
+				pB->SetForce((Normalize(-pA->GetTotalForce()) + Vector3::Up) * 120.0f);
 			}
-			auto pEffect = new GameObject(L"HitEffect", ObjectManager::Get().TakeComponent(L"Boom"));
+			auto pEffect = new GameObject(L"HitEffect", ObjectManager::Get().TakeComponent(L"Boom2"));
 			pEffect->SetPosition(pA->m_pParent->GetWorldPosition());
 			ObjectManager::Get().PushObject(pEffect);
 			pA->ClearIgnoreList();
@@ -153,9 +153,9 @@ bool IntroScene::FirstInit() noexcept
 		pHeroObj->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
 		pHeroObj->m_myName = L"Dagger";
 		pHeroObj->m_objType = EObjType::Object;
-		pHeroObj->SetScale(Vector3::One * 0.5f);
+		pHeroObj->SetScale(Vector3::One * 0.8f);
 		pCollider = new Collider(15.0f);
-		pCollider->m_pivot = Vector3::Up * 5.0f + Vector3::Forward * 2.5f;
+		pCollider->m_pivot = Vector3::Up * 8.0f + Vector3::Forward * 2.5f;
 		pCollider->CollisionEvent = pDaggerHit;
 		pHeroObj->AddComponent(pCollider);
 		ObjectManager::Get().SetProtoObject(pHeroObj);
@@ -166,22 +166,22 @@ bool IntroScene::FirstInit() noexcept
 		pHeroObj->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
 		pHeroObj->m_myName = L"Chicken";
 		pHeroObj->m_objType = EObjType::Object;
-		pHeroObj->SetScale(Vector3::One * 0.5f);
+		pHeroObj->SetScale(Vector3::One * 0.8f);
 		pCollider = new Collider(15.0f);
-		pCollider->m_pivot = Vector3::Up * 5.0f + Vector3::Forward * 2.5f;
+		pCollider->m_pivot = Vector3::Up * 8.0f + Vector3::Forward * 2.5f;
 		pCollider->CollisionEvent = pDaggerHit;
 		pHeroObj->AddComponent(pCollider);
 		ObjectManager::Get().SetProtoObject(pHeroObj);
 
 		// Effect 로드
 		//ObjectManager::Get().SetProtoComponent(m_pParser->CreateFromParticle(L"Snow.eff", L"../../data/script"));
-		ObjectManager::Get().SetProtoComponent(m_pParser->CreateFromParticle(L"Boom.eff", L"../../data/script"));
+		ObjectManager::Get().SetProtoComponent(m_pParser->CreateFromParticle(L"Boom2.eff", L"../../data/script"));
 		ObjectManager::Get().SetProtoComponent(m_pParser->CreateFromParticle(L"Fire.eff", L"../../data/script"));
 		ObjectManager::Get().SetProtoComponent(m_pParser->CreateFromParticle(L"Fly.eff", L"../../data/script"));
-		ObjectManager::Get().SetProtoComponent(m_pParser->CreateFromParticle(L"Bigbang.eff", L"../../data/script"));
-		ObjectManager::Get().SetProtoComponent(m_pParser->CreateFromParticle(L"Shock.eff", L"../../data/script"));
-		ObjectManager::Get().SetProtoComponent(m_pParser->CreateFromParticle(L"Atom.eff", L"../../data/script"));
-		ObjectManager::Get().SetProtoComponent(m_pParser->CreateFromParticle(L"WheelWind.eff", L"../../data/script"));
+		//ObjectManager::Get().SetProtoComponent(m_pParser->CreateFromParticle(L"Bigbang.eff", L"../../data/script"));
+		//ObjectManager::Get().SetProtoComponent(m_pParser->CreateFromParticle(L"Shock.eff", L"../../data/script"));
+		//ObjectManager::Get().SetProtoComponent(m_pParser->CreateFromParticle(L"Atom.eff", L"../../data/script"));
+		//ObjectManager::Get().SetProtoComponent(m_pParser->CreateFromParticle(L"WheelWind.eff", L"../../data/script"));
 		///
 		// 기사 
 		pHeroObj = new AHeroObj();

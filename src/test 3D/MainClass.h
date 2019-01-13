@@ -82,29 +82,27 @@ class MainClass : public Core
 {
 private:
 	static MainClass* m_curScene;
+	static map<ESceneName, MainClass*> m_SceneList;
+	static GameObject* m_pSkyBox;
 	// 로딩
 	static GameObject* m_LoadingImage;
 	static GameObject* m_Icon;
 	static GameObject* m_Icon2;
 	static GameObject* m_Icon3;
 	static GameObject* m_Icon4;
+	//
+	static GameObject*				m_pBullet;
+	static list<GameObject*>		m_BulletList;
+	static GameObject*				m_pEnemy;
+	static list<GameObject*>		m_EnemyList;
 public:
-	static MaxImporter* m_pParser;
-	static GameObject* m_pSkyBox;
-	static map<ESceneName, MainClass*> m_SceneList;
-
-	static bool m_isLoading;
-	bool		m_isFirstInit = true;
+	static MaxImporter*		m_pParser;
+	static bool				m_isLoading;
+	bool					m_isFirstInit = true;
 	///
 	static XMap*			m_pMap;						// 맵
 	static XQuadTreeIndex*	m_pMapTree;					// 맵->공간분할, LOD시 수정 예정
 	static XMapImporter		m_Importer;					// 세이브 데이터 로더
-	///
-	GameObject*				m_pBullet = nullptr;
-	list<GameObject*>		m_BulletList;
-	//
-	GameObject*				m_pEnemy  = nullptr;
-	list<GameObject*>		m_EnemyList;
 public:
 	void MsgEvent(const MSG& _message)	noexcept;
 	// 씬 설정

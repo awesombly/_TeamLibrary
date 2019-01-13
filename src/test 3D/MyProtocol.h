@@ -34,6 +34,7 @@
 struct Packet_TakeObject
 {
 	UINT KeyValue;
+	//D3DXVECTOR3 Force;
 	D3DXVECTOR3 Position;
 	D3DXVECTOR3 Scale;
 	D3DXQUATERNION Rotation;

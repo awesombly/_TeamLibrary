@@ -20,10 +20,10 @@ bool Raycast::Raycasting(const Collider* pTarget/*, D3DXVECTOR3* pHitPoint = nul
 	float length = VectorLength(point - targetPos);
 	if (length <= pTarget->GetWorldRadius())
 	{
-		ErrorMessage(pTarget->m_pParent->m_myName + L", Succese!,  length : " + to_wstring(length) + L", radius : " + to_wstring(pTarget->GetWorldRadius()));
+		//ErrorMessage(pTarget->m_pParent->m_myName + L", Succese!,  length : " + to_wstring(length) + L", radius : " + to_wstring(pTarget->GetWorldRadius()));
 		return true;
 	}
-	ErrorMessage(pTarget->m_pParent->m_myName + L", length : " + to_wstring(length) + L", radius : " + to_wstring(pTarget->GetWorldRadius()));
+	//ErrorMessage(pTarget->m_pParent->m_myName + L", length : " + to_wstring(length) + L", radius : " + to_wstring(pTarget->GetWorldRadius()));
 	return false;
 }
 

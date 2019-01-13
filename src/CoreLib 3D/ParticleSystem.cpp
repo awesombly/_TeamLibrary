@@ -42,7 +42,7 @@ bool ParticleSystem::Frame(const float& spf, const float& accTime) noexcept
 		else
 		{
 			m_isEnable = false;
-			ObjectManager::Get().DisableComponent(this);
+			ObjectManager::Get().DisableObject(m_pParent);
 		}
 		return false;
 	}

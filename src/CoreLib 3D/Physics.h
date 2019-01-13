@@ -39,15 +39,16 @@ struct PhysicsInfo
 	D3DXVECTOR3 m_direction = Vector3::Zero;	// 이동 힘
 
 	float m_mass		 = 1.0f;				// 질량
-	float m_repulsion	 = 0.5f;				// 반발 계수
-	float m_drag		 = 1.0f;				// 마찰력
-	float m_damping		 = 0.2f;				// 항력
+	float m_repulsion	 = 0.3f;				// 반발 계수
+	float m_drag		 = 0.5f;				// 마찰력
+	float m_damping		 = 0.3f;				// 항력
 	//float m_angularDamping = 0.2f;			// 회전 항력
 	///
-	D3DXVECTOR3 m_normal;						// 충돌 노말
-	D3DXVECTOR3 m_tangent[2];					// 접선 벡터
-	q3Contact	m_contacts[8];					// 접점 정보?
-	int			m_contactCount;
+	//D3DXVECTOR3 m_prePosition;				// 이전 위치
+	//D3DXVECTOR3 m_normal;						// 충돌 노말
+	//D3DXVECTOR3 m_tangent[2];					// 접선 벡터
+	//q3Contact	m_contacts[8];					// 접점 정보?
+	//int			m_contactCount;
 };
 
 

@@ -17,32 +17,32 @@ bool GameScene::Init() noexcept
 	//pEffect->SetPosition(Vector3::Up * 400.0f);
 	//ObjectManager::Get().PushObject(pEffect);
 
-	//pEffect = new GameObject(L"Bigbang", ObjectManager::Get().TakeComponent(L"Bigbang"));
-	//pEffect->SetPosition(Vector3::Up * 400.0f + Vector3::Left * 700.0f);
-	//ObjectManager::Get().PushObject(pEffect);
+	pEffect = new GameObject(L"Bigbang", m_pParser->CreateFromParticle(L"Bigbang.eff", L"../../data/script"));
+	pEffect->SetPosition(Vector3::Up * 400.0f + Vector3::Left * 700.0f);
+	ObjectManager::Get().PushObject(pEffect);
 
-	auto pParticle = (ParticleSystem*)ObjectManager::Get().TakeComponent(L"Shock");
+	auto pParticle = m_pParser->CreateFromParticle(L"Shock.eff", L"../../data/script");
 	pParticle->isRepeat(true);
 	pEffect = new GameObject(L"Shock", pParticle);
 	pEffect->SetPosition(Vector3::Up * 400.0f + Vector3::Right * 700.0f);
 	ObjectManager::Get().PushObject(pEffect);
 
-	pEffect = new GameObject(L"WheelWind", { ObjectManager::Get().TakeComponent(L"WheelWind"), new CTransformer(Vector3::Zero, Quaternion::Left * 3.0f) });
+	pEffect = new GameObject(L"WheelWind", { m_pParser->CreateFromParticle(L"WheelWind.eff", L"../../data/script"), new CTransformer(Vector3::Zero, Quaternion::Left * 3.0f) });
 	pEffect->SetPosition(Vector3::Up * 400.0f + Vector3::Forward * 700.0f);
 	ObjectManager::Get().PushObject(pEffect);
 
-	pEffect = new GameObject(L"Atom", { ObjectManager::Get().TakeComponent(L"Atom"), new CTransformer(Vector3::Zero, {3.0f, 5.0f, 7.0f, 0.0f}) });
+	pEffect = new GameObject(L"Atom", { m_pParser->CreateFromParticle(L"Atom.eff", L"../../data/script"), new CTransformer(Vector3::Zero, {3.0f, 5.0f, 7.0f, 0.0f}) });
 	pEffect->SetPosition(Vector3::Up * 400.0f + Vector3::Backward * 700.0f);
 	ObjectManager::Get().PushObject(pEffect);
 
 	ObjectManager::Get().TakeObject(L"Guard")->SetPosition(RandomNormal() * 1000.0f - 500.0f, RandomNormal() * 500.0f, RandomNormal() * 1000.0f - 500.0f);
-	ObjectManager::Get().TakeObject(L"Zombie")->SetPosition(RandomNormal() * 1000.0f - 500.0f, RandomNormal() * 500.0f, RandomNormal() * 1000.0f - 500.0f);
-	ObjectManager::Get().TakeObject(L"Bird")->SetPosition(RandomNormal()	* 1000.0f - 500.0f, RandomNormal() * 500.0f, RandomNormal() * 1000.0f - 500.0f);
+	ObjectManager::Get().TakeObject(L"Guard")->SetPosition(RandomNormal() * 1000.0f - 500.0f, RandomNormal() * 500.0f, RandomNormal() * 1000.0f - 500.0f);
 	ObjectManager::Get().TakeObject(L"Guard")->SetPosition(RandomNormal() * 1000.0f - 500.0f, RandomNormal() * 500.0f, RandomNormal() * 1000.0f - 500.0f);
 	ObjectManager::Get().TakeObject(L"Zombie")->SetPosition(RandomNormal() * 1000.0f - 500.0f, RandomNormal() * 500.0f, RandomNormal() * 1000.0f - 500.0f);
-	ObjectManager::Get().TakeObject(L"Bird")->SetPosition(RandomNormal()	* 1000.0f - 500.0f, RandomNormal() * 500.0f, RandomNormal() * 1000.0f - 500.0f);
-	ObjectManager::Get().TakeObject(L"Guard")->SetPosition(RandomNormal() * 1000.0f - 500.0f, RandomNormal() * 500.0f, RandomNormal() * 1000.0f - 500.0f);
 	ObjectManager::Get().TakeObject(L"Zombie")->SetPosition(RandomNormal() * 1000.0f - 500.0f, RandomNormal() * 500.0f, RandomNormal() * 1000.0f - 500.0f);
+	ObjectManager::Get().TakeObject(L"Zombie")->SetPosition(RandomNormal() * 1000.0f - 500.0f, RandomNormal() * 500.0f, RandomNormal() * 1000.0f - 500.0f);
+	ObjectManager::Get().TakeObject(L"Bird")->SetPosition(RandomNormal()	* 1000.0f - 500.0f, RandomNormal() * 500.0f, RandomNormal() * 1000.0f - 500.0f);
+	ObjectManager::Get().TakeObject(L"Bird")->SetPosition(RandomNormal()	* 1000.0f - 500.0f, RandomNormal() * 500.0f, RandomNormal() * 1000.0f - 500.0f);
 	ObjectManager::Get().TakeObject(L"Bird")->SetPosition(RandomNormal()	* 1000.0f - 500.0f, RandomNormal() * 500.0f, RandomNormal() * 1000.0f - 500.0f);
 #pragma endregion
 	// UI
@@ -88,42 +88,42 @@ bool GameScene::Frame() noexcept
 		}
 	}
 
-	//Raycast::SetMousePick(Input::GetCursor(), 3000.0f);
-	m_hitRay = false;
-	auto forward = Normalize(ObjectManager::Get().Cameras[ECamera::Main]->GetForward());
-	//D3DXVec3TransformNormal(&forward, &forward, &m_pPlayer->GetRoot()->GetWorldMatrix());
-	Raycast::SetRaycast(ObjectManager::Get().Cameras[ECamera::Main]->GetWorldPosition(), forward, 3000.0f);
-	for (auto& iter : ObjectManager::Get().GetColliderList())
-	{
-		if (iter->m_pParent == m_pPlayer->GetParent())
-			continue;
-		if (Raycast::Raycasting(iter))
-		{
-			m_hitRay = true;
-			if (Input::GetKeyState('V') == EKeyState::DOWN)
-			{
-				m_pPlayer->Possess(iter->m_pParent);
-			}
-		}
-	}
+	////Raycast::SetMousePick(Input::GetCursor(), 3000.0f);
+	//m_hitRay = false;
+	//auto forward = Normalize(ObjectManager::Get().Cameras[ECamera::Main]->GetForward());
+	////D3DXVec3TransformNormal(&forward, &forward, &m_pPlayer->GetRoot()->GetWorldMatrix());
+	//Raycast::SetRaycast(ObjectManager::Get().Cameras[ECamera::Main]->GetWorldPosition(), forward, 3000.0f);
+	//for (auto& iter : ObjectManager::Get().GetColliderList())
+	//{
+	//	if (iter->m_pParent == m_pPlayer->GetParent())
+	//		continue;
+	//	if (Raycast::Raycasting(iter))
+	//	{
+	//		m_hitRay = true;
+	//		if (Input::GetKeyState('V') == EKeyState::DOWN)
+	//		{
+	//			m_pPlayer->Possess(iter->m_pParent);
+	//		}
+	//	}
+	//}
 
-	// 플레이어 변경
-	if (Input::GetKeyState(VK_TAB) == EKeyState::DOWN)
-	{
-		static auto curCollider = ObjectManager::Get().GetColliderList().begin();
-		/*if (curCollider == ObjectManager::Get().GetColliderList().end())
-			curCollider = ObjectManager::Get().GetColliderList().begin();*/
-		if (++curCollider == ObjectManager::Get().GetColliderList().end())
-			curCollider = ObjectManager::Get().GetColliderList().begin();
-		if ((*curCollider)->m_eCollider == ECollider::Sphere)
-		{
-			++curCollider;
-			if (curCollider == ObjectManager::Get().GetColliderList().end())
-				curCollider = ObjectManager::Get().GetColliderList().begin();
-		}
-
-		m_pPlayer->Possess((*curCollider)->m_pParent);
-	}
+	//// 플레이어 변경
+	//if (Input::GetKeyState(VK_TAB) == EKeyState::DOWN)
+	//{
+	//	static auto curCollider = ObjectManager::Get().GetColliderList().begin();
+	//	/*if (curCollider == ObjectManager::Get().GetColliderList().end())
+	//		curCollider = ObjectManager::Get().GetColliderList().begin();*/
+	//	if (++curCollider == ObjectManager::Get().GetColliderList().end())
+	//		curCollider = ObjectManager::Get().GetColliderList().begin();
+	//	if ((*curCollider)->m_eCollider == ECollider::Sphere)
+	//	{
+	//		++curCollider;
+	//		if (curCollider == ObjectManager::Get().GetColliderList().end())
+	//			curCollider = ObjectManager::Get().GetColliderList().begin();
+	//	}
+	//
+	//	m_pPlayer->Possess((*curCollider)->m_pParent);
+	//}
 
 	// 시간 출력
 	m_Rule.Frame();
@@ -186,7 +186,7 @@ void GameScene::DrawBoundingBox()	noexcept
 {
 	static GameObject* pBox = nullptr;
 	static GameObject* pSphere = nullptr;
-	if (pBox == nullptr)
+	if (pBox == nullptr || pSphere == nullptr)
 	{
 		pBox = new GameObject(L"DebugBox", ObjectManager::Get().TakeComponent(L"Cube"));
 		pBox->isGlobal(true);
@@ -219,11 +219,11 @@ void GameScene::DrawBoundingBox()	noexcept
 		{
 		}	break;
 		}
-		//pSphere->SetPosition(iter->GetCenter());
-		//pSphere->SetRotation(Quaternion::Base);
-		//pSphere->SetScale(iter->GetWorldRadius() * Vector3::One);
-		//pSphere->Frame(0.0f, 0.0f);
-		//pSphere->Render(DxManager::GetDContext());
+		pSphere->SetPosition(iter->GetCenter());
+		pSphere->SetRotation(Quaternion::Base);
+		pSphere->SetScale(iter->GetWorldRadius() * Vector3::One);
+		pSphere->Frame(0.0f, 0.0f);
+		pSphere->Render(DxManager::GetDContext());
 	}
 	DxManager::Get().SetRasterizerState(ERasterS::Current);
 }
