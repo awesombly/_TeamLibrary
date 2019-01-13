@@ -5,8 +5,9 @@
 *CHARACTERNAME		guard
 *SHADERFILENMAE		..\..\data\model\Character.hlsl
 
-*MATRIXMATRIXCOUNT  11
-*MATRIXFILENAME		..\..\data\model\Guard_02\HERO_DASHJUMP.Mat	
+*MATRIXMATRIXCOUNT  12
+*MATRIXFILENAME		..\..\data\model\Guard_02\HERO_PUNCH.Mat
+*MATRIXFILENAME		..\..\data\model\Guard_02\HERO_DASHJUMP.Mat
 *MATRIXFILENAME		..\..\data\model\Guard_02\HERO_THROW.Mat
 *MATRIXFILENAME		..\..\data\model\Guard_02\HERO_HAPPYWALK.Mat
 *MATRIXFILENAME		..\..\data\model\Guard_02\HERO_DANCE3.Mat
@@ -19,7 +20,6 @@
 *MATRIXFILENAME		..\..\data\model\Guard_02\HERO_IDLE.Mat
 
 
-
 *SKIN_UPPER_BODY_COUNT	1
 *SKIN_UPPER_BODY	..\..\data\model\Guard_02\Guard_02.skm		null
 *SKIN_LOWER_BODY_COUNT	0
@@ -28,7 +28,8 @@
 *CHARACTERNAME		zombie
 *SHADERFILENMAE		..\..\data\model\Character.hlsl
 
-*MATRIXMATRIXCOUNT  10
+*MATRIXMATRIXCOUNT  11
+*MATRIXFILENAME		..\..\data\model\zombie\zombie_punch.Mat
 *MATRIXFILENAME		..\..\data\model\zombie\zombie_throw.Mat
 *MATRIXFILENAME		..\..\data\model\zombie\zombie_dance1.Mat
 *MATRIXFILENAME		..\..\data\model\zombie\zombie_dance2.Mat
