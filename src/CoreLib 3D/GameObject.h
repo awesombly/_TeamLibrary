@@ -44,7 +44,7 @@ public:
 	// 컴포넌트 추가, 삭제, 검색
 	void AddComponent(Component* pComponent)								noexcept;
 	void AddComponent(const initializer_list<Component*>& components)		noexcept;
-	void DeleteComponent(Component* pComponent)								noexcept;
+	void RemoveComponent(Component* pComponent)								noexcept;
 	forward_list<Component*>* GetComponentList(const EComponent& eCompType) noexcept;
 	map<EComponent, forward_list<Component*> >& GetComponentList()			noexcept;
 	// 부모 설정

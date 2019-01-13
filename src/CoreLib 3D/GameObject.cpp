@@ -267,7 +267,7 @@ void GameObject::AddComponent(const initializer_list<Component*>& components) no
 	}
 }
 
-void GameObject::DeleteComponent(Component* pComponent) noexcept 
+void GameObject::RemoveComponent(Component* pComponent) noexcept 
 {
 	ObjectManager::GetInstance().RemoveComponent(pComponent);
 }

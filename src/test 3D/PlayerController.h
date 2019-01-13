@@ -46,6 +46,7 @@ private:
 
 	Component* m_pEffectFly = nullptr;
 public:
+	Collider*  m_pMeleeCollider = nullptr;
 	const float	m_DelayThrow	= 0.3f;
 	float		m_curDelayThrow = 0.0f;
 

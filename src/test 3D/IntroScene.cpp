@@ -154,13 +154,16 @@ bool IntroScene::FirstInit() noexcept
 				if (pB->m_pParent->GetHP() <= 0.0f)
 				{
 					auto pCollider = new Collider(140.0f);
+					auto pEffect = new GameObject(L"DeadEffect", { pCollider, ObjectManager::Get().TakeComponent(L"Boom3") });
 					pCollider->CollisionEvent = [](Collider* pMe, Collider* pYou) {
 						if(pYou != nullptr)
 							pYou->SetForce((Normalize(pYou->GetCenter() - pMe->GetCenter()) + Vector3::Up * 0.3f) * 300.0f);
 					};
+					pCollider->SetGravityScale(0.0f);
+					pCollider->usePhysics(false);
 					pCollider->AddIgnoreList(pA);
 					pCollider->AddIgnoreList(pB);
-					auto pEffect = new GameObject(L"DeadEffect", { pCollider, ObjectManager::Get().TakeComponent(L"Boom3") });
+
 					pEffect->SetPosition(pB->GetCenter());
 					ObjectManager::Get().PushObject(pEffect);
 					

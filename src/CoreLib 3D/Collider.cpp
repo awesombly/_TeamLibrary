@@ -132,8 +132,10 @@ bool Collider::CollisionAllCheck(const float& spf) noexcept
 			/////m_force = Vector3::Zero;
 			/////iter->m_force = Vector3::Zero;
 
-			m_pPhysics->m_force = Normalize(GetCenter() - iter->GetCenter()) * 100;
-			iter->m_pPhysics->m_force = Normalize(iter->GetCenter() - GetCenter()) * 100;
+			if (m_pPhysics->m_usePhysics)
+				m_pPhysics->m_force = Normalize(GetCenter() - iter->GetCenter()) * 100;
+			if (iter->m_pPhysics->m_usePhysics)
+				iter->m_pPhysics->m_force = Normalize(iter->GetCenter() - GetCenter()) * 100;
 
 			//m_pPhysics->m_force = Vector3::Zero;
 			////isMoving(false);

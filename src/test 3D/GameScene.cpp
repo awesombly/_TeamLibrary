@@ -9,6 +9,7 @@ bool GameScene::Init() noexcept
 	ObjectManager::KeyCount = 1000;
 	auto pHero = (AHeroObj*)ObjectManager::Get().TakeObject(L"Guard");
 	pHero->AddComponent(ObjectManager::Get().TakeComponent(L"Fire"));
+	m_pPlayer->Init();
 	m_pPlayer->Possess(pHero);
 	m_pPlayer->ResetOption();
 	// ==================================================================================
