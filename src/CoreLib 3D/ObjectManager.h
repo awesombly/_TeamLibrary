@@ -37,11 +37,11 @@ private:
 public:
 	static map<UINT, GameObject*> KeyObjects;						// 서버 처리용 오브젝트들
 	static UINT					  KeyCount;							// 키값 설정용
-	static map<ECamera, Camera*> Cameras;							// 카메라들
-	static Camera*				 CurCamera;							// 적용중인 카메라
-	static list<Light*>			 Lights;							// 조명들
+	static map<ECamera, Camera*>  Cameras;							// 카메라들
+	static Camera*				  CurCamera;							// 적용중인 카메라
+	static list<Light*>			  Lights;							// 조명들
 	// 후처리 이벤트 등록용(함수, 인자, 인자)
-	static stack<tuple<void(*)(void*, void*), void*, void*> > PostFrameEvent;
+	static queue<tuple<void(*)(void*, void*), void*, void*> > PostFrameEvent;
 public:
 	// txt 파일 읽기
 	bool ReadSpriteScript()	noexcept;

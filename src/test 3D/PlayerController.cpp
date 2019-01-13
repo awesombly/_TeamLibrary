@@ -185,97 +185,80 @@ void PlayerController::SetAnim(AHeroObj* pObject, const ECharacter& eCharacter, 
 
 void PlayerController::PlayerInput(const float& spf) noexcept
 {
-		static EAction eAction;
-		eAction = EAction::Idle;
-		//m_pCollider = (Collider*)m_pParent->GetComponentList(EComponent::Collider)->front();
+	static EAction eAction;
+	eAction = EAction::Idle;
+	//m_pCollider = (Collider*)m_pParent->GetComponentList(EComponent::Collider)->front();
 
-		if (Input::GetKeyState('W') == EKeyState::HOLD)
-		{
-			eAction = (EAction)(eAction + EAction::Forward);
-		}
-		if (Input::GetKeyState('S') == EKeyState::HOLD)
-		{
-			eAction = (EAction)(eAction + EAction::Backward);
-		}
-		if (Input::GetKeyState('A') == EKeyState::HOLD)
-		{
-			eAction = (EAction)(eAction + EAction::Left);
-		}
-		if (Input::GetKeyState('D') == EKeyState::HOLD)
-		{
-			eAction = (EAction)(eAction + EAction::Right);
-		}
-		if (Input::GetKeyState('1') == EKeyState::DOWN)
-		{
-			eAction = EAction::Dance1;
-		}
-		if (Input::GetKeyState('2') == EKeyState::DOWN)
-		{
-			eAction = EAction::Dance2;
-		}
-		if (Input::GetKeyState('3') == EKeyState::DOWN)
-		{
-			eAction = EAction::Dance3;
-		}
-		if (m_pParent->isGround() && Input::GetKeyState(VK_SPACE) == EKeyState::DOWN)
-		{
-			eAction = EAction::Jump;
-			PacketManager::Get().SendPlaySound("SE_jump01.mp3", PlayerController::Get().GetWorldPosition(), 1000.0f);
-		}
+	if (Input::GetKeyState('W') == EKeyState::HOLD)
+	{
+		eAction = (EAction)(eAction + EAction::Forward);
+	}
+	if (Input::GetKeyState('S') == EKeyState::HOLD)
+	{
+		eAction = (EAction)(eAction + EAction::Backward);
+	}
+	if (Input::GetKeyState('A') == EKeyState::HOLD)
+	{
+		eAction = (EAction)(eAction + EAction::Left);
+	}
+	if (Input::GetKeyState('D') == EKeyState::HOLD)
+	{
+		eAction = (EAction)(eAction + EAction::Right);
+	}
+	if (Input::GetKeyState('1') == EKeyState::DOWN)
+	{
+		eAction = EAction::Dance1;
+	}
+	if (Input::GetKeyState('2') == EKeyState::DOWN)
+	{
+		eAction = EAction::Dance2;
+	}
+	if (Input::GetKeyState('3') == EKeyState::DOWN)
+	{
+		eAction = EAction::Dance3;
+	}
+	if (m_pParent->isGround() && Input::GetKeyState(VK_SPACE) == EKeyState::DOWN)
+	{
+		eAction = EAction::Jump;
+		PacketManager::Get().SendPlaySound("SE_jump01.mp3", PlayerController::Get().GetWorldPosition(), 1000.0f);
+	}
 
-		if (m_curCharacter != ECharacter::EDummy)
+	if (m_curCharacter != ECharacter::EDummy)
+	{
+		m_curDelayThrow = max(m_curDelayThrow - spf, 0.0f);
+		m_curDelayDash = max(m_curDelayDash - spf, 0.0f);
+		// 던지기
+		if (Input::GetKeyState(EMouseButton::Left) == EKeyState::DOWN &&
+			m_curDelayThrow <= 0.0f &&
+			m_MP >= 0.15f)
 		{
-			m_curDelayThrow = max(m_curDelayThrow - spf, 0.0f);
-			m_curDelayDash = max(m_curDelayDash - spf, 0.0f);
-			if (m_curDelayThrow <= 0.0f)
-			{
-				// 던지기
-				if (Input::GetKeyState(EMouseButton::Left) == EKeyState::DOWN &&
-					m_MP >= 0.15f)
-				{
-					m_MP -= 0.15f;
-					m_curDelayThrow = m_DelayThrow;
-					eAction = EAction::Throw;
-				}
-				// 구르기
-				if (Input::GetKeyState(VK_SHIFT) == EKeyState::DOWN)
-				{
-					m_curDelayDash = m_DelayDash;
-					eAction = EAction::Dash;
-				}
-			}
+			m_MP -= 0.15f;
+			m_curDelayThrow = m_DelayThrow;
+			eAction = EAction::Throw;
 		}
+		// 구르기
+		if (Input::GetKeyState(VK_SHIFT) == EKeyState::DOWN &&
+			m_curDelayDash <= 0.0f)
+		{
+			m_curDelayDash = m_DelayDash;
+			eAction = EAction::Dash;
+		}
+	}
 
-		static bool isFly = false;
-		if (Input::GetKeyState(EMouseButton::Right) == EKeyState::DOWN)
-		{
-			isFly = true;
-			eAction = EAction::Fly;
-			m_pEffectFly = ObjectManager::Get().TakeComponent(L"Fly");
-			m_pParent->AddComponent(m_pEffectFly);
-			//m_pEffectFly->SetPosition(Vector3::Up * 10.0f);
-			//m_pEffectFly->SetParent(GetRoot());
-		}
-		if (isFly && Input::GetKeyState(EMouseButton::Right) == EKeyState::HOLD)
-		{
-			m_MP -= 0.35f * spf;
-			if (m_MP <= 0.0f)
-			{
-				isFly = false;
-				eAction = EAction::FlyEnd;
-				if (m_pEffectFly != nullptr)
-				{
-					ObjectManager::Get().DisableComponent(m_pEffectFly);
-					m_pEffectFly = nullptr;
-				}
-			}
-		}
-		else
-		{
-			m_MP = min(m_MP + spf * 0.2f, 1.0f);
-		}
-
-		if (Input::GetKeyState(EMouseButton::Right) == EKeyState::UP)
+	static bool isFly = false;
+	if (Input::GetKeyState(EMouseButton::Right) == EKeyState::DOWN)
+	{
+		isFly = true;
+		eAction = EAction::Fly;
+		m_pEffectFly = ObjectManager::Get().TakeComponent(L"Fly");
+		m_pParent->AddComponent(m_pEffectFly);
+		//m_pEffectFly->SetPosition(Vector3::Up * 10.0f);
+		//m_pEffectFly->SetParent(GetRoot());
+	}
+	if (isFly && Input::GetKeyState(EMouseButton::Right) == EKeyState::HOLD)
+	{
+		m_MP -= 0.35f * spf;
+		if (m_MP <= 0.0f)
 		{
 			isFly = false;
 			eAction = EAction::FlyEnd;
@@ -285,19 +268,36 @@ void PlayerController::PlayerInput(const float& spf) noexcept
 				m_pEffectFly = nullptr;
 			}
 		}
+	}
+	else
+	{
+		m_MP = min(m_MP + spf * 0.2f, 1.0f);
+	}
 
-		if (eAction != m_curAction)
+	if (Input::GetKeyState(EMouseButton::Right) == EKeyState::UP)
+	{
+		isFly = false;
+		eAction = EAction::FlyEnd;
+		if (m_pEffectFly != nullptr)
 		{
-			// 정보 전송
-			SendAnimTransform(eAction, m_curCharacter);
+			ObjectManager::Get().DisableComponent(m_pEffectFly);
+			m_pEffectFly = nullptr;
 		}
-		m_curAction = eAction;
+	}
 
-		if (Input::GetKeyState(VK_CONTROL) == EKeyState::DOWN &&
-			!PacketManager::Get().isHost)
-		{
-			PacketManager::Get().SendPacket('\0', 1, PACKET_ReqSync);
-		}
+	if (eAction != m_curAction)
+	{
+		// 정보 전송
+		SendAnimTransform(eAction, m_curCharacter);
+	}
+	m_curAction = eAction;
+
+	// 동기화 요청
+	if (Input::GetKeyState(VK_CONTROL) == EKeyState::DOWN &&
+		!PacketManager::Get().isHost)
+	{
+		PacketManager::Get().SendPacket('\0', 1, PACKET_ReqSync);
+	}
 
 
 	if (Input::GetKeyState('X') == EKeyState::DOWN)
@@ -339,9 +339,9 @@ void PlayerController::SendAnimTransform(const EAction& eAction, const ECharacte
 	else if (eAction == EAction::Dash)
 	{
 		if (m_pParent->isMoving())
-			p_AnimTransform.Force = (m_pParent->m_pPhysics->m_direction * 1.5f + Vector3::Up * 80.0f);
+			p_AnimTransform.Force = (m_pParent->m_pPhysics->m_direction * 1.5f + Vector3::Up * 60.0f);
 		else
-			p_AnimTransform.Force = (Normalize(m_pParent->GetForward()) * m_moveSpeed * 1.5f + Vector3::Up * 80.0f);
+			p_AnimTransform.Force = (Normalize(m_pParent->GetForward()) * m_moveSpeed * 1.5f + Vector3::Up * 60.0f);
 	}
 	else
 	{

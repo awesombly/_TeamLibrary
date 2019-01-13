@@ -9,11 +9,11 @@ ParticleSystem::ParticleSystem(const wstring_view& myName, Particle* pParticle, 
 	m_pParticle = pParticle;
 	SetInfo(myName, EComponent::Renderer, srcName, vertexShaderName, pixelShaderName);
 	Create();
-	m_eRenderType = ERenderType::Particle;
 }
 
 bool ParticleSystem::Init() noexcept
 {
+	m_eRenderType = ERenderType::Particle;
 	//m_curParticle = m_particleList.begin();
 	m_curSprite = m_pSpriteList->begin();
 	m_pBuffers[0] = m_pVertexBuffer;
@@ -42,7 +42,8 @@ bool ParticleSystem::Frame(const float& spf, const float& accTime) noexcept
 		else
 		{
 			m_isEnable = false;
-			ObjectManager::Get().DisableObject(m_pParent);
+			ObjectManager::Get().DisableComponent(this);
+			ObjectManager::Get().RemoveObject(m_pParent);
 		}
 		return false;
 	}

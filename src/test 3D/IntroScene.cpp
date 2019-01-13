@@ -132,13 +132,40 @@ bool IntroScene::FirstInit() noexcept
 		pObject->SetScale(Vector3::One * 7);
 		pObject->SetParent(ObjectManager::Get().Lights.front());
 
+		// Effect 로드
+		//ObjectManager::Get().SetProtoComponent(m_pParser->CreateFromParticle(L"Snow.eff", L"../../data/script"));
+		ObjectManager::Get().SetProtoComponent(m_pParser->CreateFromParticle(L"Boom.eff", L"../../data/script"));
+		ObjectManager::Get().SetProtoComponent(m_pParser->CreateFromParticle(L"Boom2.eff", L"../../data/script"));
+		ObjectManager::Get().SetProtoComponent(m_pParser->CreateFromParticle(L"Boom3.eff", L"../../data/script"));
+		ObjectManager::Get().SetProtoComponent(m_pParser->CreateFromParticle(L"Fire.eff", L"../../data/script"));
+		ObjectManager::Get().SetProtoComponent(m_pParser->CreateFromParticle(L"Fly.eff", L"../../data/script"));
+		//ObjectManager::Get().SetProtoComponent(m_pParser->CreateFromParticle(L"Bigbang.eff", L"../../data/script"));
+		//ObjectManager::Get().SetProtoComponent(m_pParser->CreateFromParticle(L"Shock.eff", L"../../data/script"));
+		//ObjectManager::Get().SetProtoComponent(m_pParser->CreateFromParticle(L"Atom.eff", L"../../data/script"));
+		//ObjectManager::Get().SetProtoComponent(m_pParser->CreateFromParticle(L"WheelWind.eff", L"../../data/script"));
+		///
 
 		// 단검 충돌시
 		static auto pDaggerHit = [](Collider* pA, Collider* pB) {
 			if (pB != nullptr)
 			{
-				pB->m_pParent->OperHP(-0.15f);
 				pB->SetForce((Normalize(-pA->GetTotalForce()) + Vector3::Up) * 120.0f);
+				pB->m_pParent->OperHP(-0.15f);
+				if (pB->m_pParent->GetHP() <= 0.0f)
+				{
+					auto pCollider = new Collider(140.0f);
+					pCollider->CollisionEvent = [](Collider* pMe, Collider* pYou) {
+						if(pYou != nullptr)
+							pYou->SetForce((Normalize(pYou->GetCenter() - pMe->GetCenter()) + Vector3::Up * 0.3f) * 300.0f);
+					};
+					pCollider->AddIgnoreList(pA);
+					pCollider->AddIgnoreList(pB);
+					auto pEffect = new GameObject(L"DeadEffect", { pCollider, ObjectManager::Get().TakeComponent(L"Boom3") });
+					pEffect->SetPosition(pB->GetCenter());
+					ObjectManager::Get().PushObject(pEffect);
+					
+					ObjectManager::Get().DisableObject(pB->m_pParent);
+				}
 			}
 			auto pEffect = new GameObject(L"HitEffect", ObjectManager::Get().TakeComponent(L"Boom2"));
 			pEffect->SetPosition(pA->m_pParent->GetWorldPosition());
@@ -160,7 +187,7 @@ bool IntroScene::FirstInit() noexcept
 		pHeroObj->AddComponent(pCollider);
 		ObjectManager::Get().SetProtoObject(pHeroObj);
 
-		// 닭 생성
+		// 닭
 		pHeroObj = new AHeroObj();
 		pHeroObj->SetPlayerCharacter(NPC_Chicken);
 		pHeroObj->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
@@ -173,16 +200,6 @@ bool IntroScene::FirstInit() noexcept
 		pHeroObj->AddComponent(pCollider);
 		ObjectManager::Get().SetProtoObject(pHeroObj);
 
-		// Effect 로드
-		//ObjectManager::Get().SetProtoComponent(m_pParser->CreateFromParticle(L"Snow.eff", L"../../data/script"));
-		ObjectManager::Get().SetProtoComponent(m_pParser->CreateFromParticle(L"Boom2.eff", L"../../data/script"));
-		ObjectManager::Get().SetProtoComponent(m_pParser->CreateFromParticle(L"Fire.eff", L"../../data/script"));
-		ObjectManager::Get().SetProtoComponent(m_pParser->CreateFromParticle(L"Fly.eff", L"../../data/script"));
-		//ObjectManager::Get().SetProtoComponent(m_pParser->CreateFromParticle(L"Bigbang.eff", L"../../data/script"));
-		//ObjectManager::Get().SetProtoComponent(m_pParser->CreateFromParticle(L"Shock.eff", L"../../data/script"));
-		//ObjectManager::Get().SetProtoComponent(m_pParser->CreateFromParticle(L"Atom.eff", L"../../data/script"));
-		//ObjectManager::Get().SetProtoComponent(m_pParser->CreateFromParticle(L"WheelWind.eff", L"../../data/script"));
-		///
 		// 기사 
 		pHeroObj = new AHeroObj();
 		pHeroObj->SetPlayerCharacter(Guard, 0.0f, 100.0f, 0.0f);
@@ -209,7 +226,7 @@ bool IntroScene::FirstInit() noexcept
 		pCollider->m_pivot *= 0.5f;
 		ObjectManager::Get().SetProtoObject(pHeroObj);
 
-		// 새 생성
+		// 새
 		pHeroObj = new AHeroObj();
 		pHeroObj->SetPlayerCharacter(NPC_Bird, 0.0f, 80.0f, 300.0f);
 		pHeroObj->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);

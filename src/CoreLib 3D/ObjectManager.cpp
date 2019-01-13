@@ -7,7 +7,7 @@ UINT				   ObjectManager::KeyCount = 0;
 map<ECamera, Camera*>  ObjectManager::Cameras;
 Camera*				   ObjectManager::CurCamera;
 list<Light*>		   ObjectManager::Lights;
-stack<tuple<void(*)(void*, void*), void*, void*> >	 ObjectManager::PostFrameEvent;
+queue<tuple<void(*)(void*, void*), void*, void*> >	 ObjectManager::PostFrameEvent;
 
 static const float g_fMaxSize = 1024.0f;
 
@@ -74,7 +74,7 @@ bool ObjectManager::Frame(const float& spf, const float& accTime) noexcept
 	// 후처리 이벤트
 	while (!PostFrameEvent.empty())
 	{
-		auto& [postEvent, param1, param2] = PostFrameEvent.top();
+		auto& [postEvent, param1, param2] = PostFrameEvent.front();
 		postEvent(param1, param2);
 		PostFrameEvent.pop();
 	}
