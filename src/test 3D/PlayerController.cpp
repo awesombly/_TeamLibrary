@@ -51,8 +51,6 @@ bool PlayerController::Frame(const float& spf, const float& accTime)	noexcept
 {
 	GameObject::Frame(spf, accTime);
 
-	ErrorMessage("플레이어 프레임");
-
 	if (!m_isChatting &&
 		!Input::isDebug &&
 		m_pParent != nullptr)
