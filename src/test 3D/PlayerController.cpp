@@ -210,7 +210,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const ECharacter& eCharacter, 
 		case EAction::Melee:
 		{
 			pObject->SetANIM_OneTime(Guard_PANCH);
-			SoundManager::Get().PlayQueue("SE_throw01.mp3", pObject->GetWorldPosition(), 1000.0f);
+			SoundManager::Get().PlayQueue("SV_Guard_Punch.mp3", pObject->GetWorldPosition(), 1000.0f);
 			
 			auto pCollider = new Collider(20.0f);
 			auto pMelee = new GameObject(L"Melee", { pCollider, new CEventTimer(0.5f) });
@@ -311,7 +311,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const ECharacter& eCharacter, 
 		 case EAction::Melee:
 		 {
 		 	pObject->SetANIM_OneTime(Zombie_PUNCH);
-		 	SoundManager::Get().PlayQueue("SE_throw01.mp3", pObject->GetWorldPosition(), 1000.0f);
+		 	SoundManager::Get().PlayQueue("SE_zombie_hit01.mp3", pObject->GetWorldPosition(), 1000.0f);
 		 
 		 	auto pCollider = new Collider(20.0f);
 		 	auto pMelee = new GameObject(L"Melee", { pCollider, new CEventTimer(0.5f) });
