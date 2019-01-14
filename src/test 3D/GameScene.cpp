@@ -305,11 +305,11 @@ void GameScene::LoadUI() noexcept
 			auto pList = (JListCtrl*)pVoid;
 			if (wheel > 0)
 			{
-				pList->m_fValue = min(pList->m_fValue + pList->fDivisionValue, 1.0f);
+				*pList->m_fValue = min(*pList->m_fValue + pList->fDivisionValue, 1.0f);
 			}
 			else
 			{
-				pList->m_fValue = max(pList->m_fValue - pList->fDivisionValue, 0.0f);
+				*pList->m_fValue = max(*pList->m_fValue - pList->fDivisionValue, 0.0f);
 				//pList->AddValue(clamp(pList->m_fValue - pList->fDivisionValue, 0.0f, 1.0f) - pList->m_fValue);
 			}
 		}

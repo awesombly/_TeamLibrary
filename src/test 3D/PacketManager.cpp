@@ -170,7 +170,7 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 		 memcpy(&p_ChatMessage, data, PS_ChatMessage);
 		 memcpy(((char*)&p_ChatMessage + PS_ChatMessage), ((char*)data + PS_ChatMessage), p_ChatMessage.MsgSize);
 		 m_pChatList->push_string(p_ChatMessage.Message);
-		 m_pChatList->m_fValue = 0.0f;
+		 *m_pChatList->m_fValue = 0.0f;
 	 }	break;
 	 case PS_SyncObjects:
 	 {

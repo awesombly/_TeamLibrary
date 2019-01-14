@@ -830,3 +830,50 @@
 ^vpEventPress 
 ^pfEventClick 7274
 ^vpEventClick 
+
+^Type 777
+^NodeName respawn_panel
+^ParentName Root
+^KeyState 135 135
+^bRender 1
+^Position 0.000000 0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 1.000000 1.000000 1.000000
+
+^Type 780
+^VHType 1447
+^NodeName respawn_prog
+^ParentName respawn_panel
+^KeyState 135 135
+^bRender 1
+^Position 0.000000 -72.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 150.000000 10.000000 1.000000
+^tx_BackGround black.png
+^tx_FrontGround White.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 783
+^NodeName respawn_txt
+^ParentName respawn_panel
+^KeyState 135 135
+^bRender 1
+^Position 0.000000 -48.684788 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 150.000000 20.000000 1.000000
+^strText RESPAWN
+^TextSize 35.000000
+^tx_Normal Alpha.png
+^tx_Hover Alpha.png
+^tx_Press Alpha.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
