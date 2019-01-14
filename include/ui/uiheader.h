@@ -9,6 +9,7 @@
 #include "JTextCtrl.h"
 #include "JParticleSystem.h"
 #include "JListCtrl.h"
+#include "JEditCtrl.h"
 #include "JEventList.h"
 #include "JParser.h"
 #include "ime.h"

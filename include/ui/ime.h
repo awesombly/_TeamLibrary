@@ -25,6 +25,7 @@ namespace UI
 		void imeStart();
 		void imeEnd();	
 		wstring GetString();
+		void SetString(wstring str);
 		bool Set(HWND hWnd);
 	public:
 		int WndProc(MSG msg);

@@ -37,7 +37,7 @@
 ^ParentName Time_Panel
 ^KeyState 135 135
 ^bRender 1
-^Position -0.000000 281.166534 0.000000
+^Position 0.000000 281.166534 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 35.000000 15.000000 1.000000
 ^tx_Normal backimg_000.png
@@ -55,7 +55,7 @@
 ^ParentName Time_Panel
 ^KeyState 135 135
 ^bRender 1
-^Position 0.000000 277.166290 0.000000
+^Position 0.000000 282.332642 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 30.000000 15.000000 1.000000
 ^strText Å¸ÀÌ¹«!
@@ -268,6 +268,23 @@
 ^pfEventClick 7274
 ^vpEventClick 
 
+^Type 787
+^NodeName Chat_Edit
+^ParentName Chat_Panel
+^KeyState 135 135
+^bRender 0
+^Position 0.000000 -160.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 200.000000 10.000000 1.000000
+^TextSize 20.000000
+^tx_Normal White.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
 ^Type 780
 ^VHType 1446
 ^NodeName Skill_0
@@ -290,7 +307,7 @@
 ^NodeName respawn_panel
 ^ParentName Game_Panel
 ^KeyState 135 135
-^bRender 1
+^bRender 0
 ^Position 0.000000 0.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 1.000000 1.000000 1.000000
