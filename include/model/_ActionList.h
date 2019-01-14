@@ -12,6 +12,8 @@
 //Guard
 //ANIM_COUNT  11
 #define  Guard				L"guard"
+//#define	 Guard_ROLE			L"HERO_ROLE.Mat"
+#define	 Guard_PANCH		L"HERO_PUNCH.Mat"
 #define	 Guard_DASHJUMP		L"HERO_DASHJUMP.Mat"
 #define	 Guard_THROW		L"HERO_THROW.Mat"
 #define	 Guard_HAPPYWALK	L"HERO_HAPPYWALK.Mat"
@@ -31,6 +33,8 @@
 //Zombie
 //ANIM_COUNT  10
 #define  Zombie				L"zombie"
+//#define	 Zombie_ROLE			L"Zombie_ROLE.Mat"
+#define	 Zombie_PUNCH		L"zombie_punch.Mat"
 #define	 Zombie_THROW		L"zombie_throw.Mat"
 #define	 Zombie_DANCE1		L"zombie_dance1.Mat"
 #define	 Zombie_DANCE2		L"zombie_dance2.Mat"
