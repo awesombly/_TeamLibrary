@@ -8,7 +8,7 @@ float Timer::SPF = 0.0f;
 int	  Timer::FPS = 0;
 float Timer::AccumulateTime = 0.0f;
 Timer*	Timer::Instance = nullptr;
-stack<tuple<void(*)(void*, void*), void*, void*> > Timer::SecondFrameEvent;
+queue<tuple<void(*)(void*, void*), void*, void*> > Timer::SecondFrameEvent;
 
 Timer::Timer() : m_kDirTick(1.0f / 60), m_ElapseTime(0.0f), m_FrameCnt(0),
 				m_CurrentTick({ 0,0 }), m_BeforeTick({ 0,0 }), m_GameSpeed(1.0f)
@@ -68,7 +68,7 @@ bool Timer::Frame() noexcept
 				// 초당 발생 이벤트
 				while (!SecondFrameEvent.empty())
 				{
-					auto&[secondEvent, param1, param2] = SecondFrameEvent.top();
+					auto&[secondEvent, param1, param2] = SecondFrameEvent.front();
 					secondEvent(param1, param2);
 					SecondFrameEvent.pop();
 				}

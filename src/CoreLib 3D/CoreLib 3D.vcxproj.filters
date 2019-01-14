@@ -118,6 +118,9 @@
     <ClCompile Include="CAnimation.cpp">
       <Filter>Utility</Filter>
     </ClCompile>
+    <ClCompile Include="CEventTimer.cpp">
+      <Filter>Component\Basic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CoreDX.h">
@@ -252,6 +255,9 @@
     <ClInclude Include="CAnimation.h">
       <Filter>Utility</Filter>
     </ClInclude>
+    <ClInclude Include="CEventTimer.h">
+      <Filter>Component\Basic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="MainCore">
@@ -330,6 +336,6 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="..\..\..\_SVN\src\geometry.txt" />
+    <Text Include="..\..\..\_Study\src\geometry.txt" />
   </ItemGroup>
 </Project>

@@ -18,9 +18,9 @@ bool GameScene::Init() noexcept
 	//pEffect->SetPosition(Vector3::Up * 400.0f);
 	//ObjectManager::Get().PushObject(pEffect);
 
-	pEffect = new GameObject(L"Bigbang", m_pParser->CreateFromParticle(L"Bigbang.eff", L"../../data/script"));
-	pEffect->SetPosition(Vector3::Up * 400.0f + Vector3::Left * 700.0f);
-	ObjectManager::Get().PushObject(pEffect);
+	//pEffect = new GameObject(L"Bigbang", m_pParser->CreateFromParticle(L"Bigbang.eff", L"../../data/script"));
+	//pEffect->SetPosition(Vector3::Up * 400.0f + Vector3::Left * 700.0f);
+	//ObjectManager::Get().PushObject(pEffect);
 
 	auto pParticle = m_pParser->CreateFromParticle(L"Shock.eff", L"../../data/script");
 	pParticle->isRepeat(true);
@@ -158,10 +158,10 @@ bool GameScene::Render() noexcept
 	DxManager::Get().Render();
 	ObjectManager::Get().Render(DxManager::Get().GetDContext());
 	SoundManager::Get().Render();
-	if(m_hitRay)
-		Raycast::DrawRay(DxManager::Get().GetDContext(), Color::Red);
-	else
-		Raycast::DrawRay(DxManager::Get().GetDContext(), Color::Green);
+	//if(m_hitRay)
+	//	Raycast::DrawRay(DxManager::Get().GetDContext(), Color::Red);
+	//else
+	//	Raycast::DrawRay(DxManager::Get().GetDContext(), Color::Green);
 	// 바운딩 박스 표시
 	if (m_pCheckBox->m_bCheck)
 	{
@@ -267,8 +267,8 @@ void GameScene::LoadUI() noexcept
 		SoundManager::Get().SetMasterVolume(*((JSliderCtrl*)pSlider)->GetValue());
 	};
 	m_pVolume = (JSliderCtrl*)pUIRoot->find_child(L"Set_Volum");
-	m_pVolume->EventPress.first = pSetVolume;
-	m_pVolume->EventPress.second = m_pVolume;
+	m_pVolume->EventHover.first = pSetVolume;
+	m_pVolume->EventHover.second = m_pVolume;
 	m_pVolume->SetValue(0.5f);
 	SoundManager::Get().SetMasterVolume(*m_pVolume->GetValue());
 
@@ -276,8 +276,8 @@ void GameScene::LoadUI() noexcept
 		PlayerController::Get().m_mouseSense = *((JSliderCtrl*)pSlider)->GetValue();
 	};
 	m_pMouseSense = (JSliderCtrl*)pUIRoot->find_child(L"Set_Mouse");
-	m_pMouseSense->EventPress.first = pSetMouseSense;
-	m_pMouseSense->EventPress.second = m_pMouseSense;
+	m_pMouseSense->EventHover.first = pSetMouseSense;
+	m_pMouseSense->EventHover.second = m_pMouseSense;
 	m_pMouseSense->SetValue(0.5f);
 	PlayerController::Get().m_mouseSense = *m_pMouseSense->GetValue();
 	// Exit
@@ -320,6 +320,6 @@ void GameScene::LoadUI() noexcept
 	//JSliderCtrl* pSlider = (JSliderCtrl*)pUIRoot->find_child(L"Chat_Slider");
 	//m_pList->m_fValue = pSlider->GetValue();
 	ObjectManager::Get().PushObject(pUIRoot);
-
+	
 	UI::InGameEvent(pUIRoot);
 }

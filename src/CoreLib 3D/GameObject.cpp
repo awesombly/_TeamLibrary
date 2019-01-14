@@ -209,7 +209,7 @@ GameObject* GameObject::GetRoot() noexcept
 	return pRoot;
 }
 
-void GameObject::CutParent() noexcept
+void GameObject::CutParent(const bool& pushObject) noexcept
 {
 	if (m_pParent == nullptr)
 		return;
@@ -219,7 +219,8 @@ void GameObject::CutParent() noexcept
 		m_pParent->m_childList.remove(*iter);
 	}
 	m_pParent = nullptr;
-	ObjectManager::GetInstance().PushObject(this);
+	if(pushObject)
+		ObjectManager::GetInstance().PushObject(this);
 }
 
 void GameObject::CutParentPost() noexcept

@@ -4,6 +4,7 @@
 #include "ObjectManager.h"
 #include "PacketManager.h"
 #include "SoundManager.h"
+#include "CEventTimer.h"
 
 #include "uiheader.h"
 #include "JPanel.h"
@@ -156,6 +157,45 @@ void PlayerController::SetAnim(AHeroObj* pObject, const ECharacter& eCharacter, 
 			((Collider*)pDagger->GetComponentList(EComponent::Collider)->front())->AddIgnoreList((Collider*)pObject->GetComponentList(EComponent::Collider)->front());
 			SoundManager::Get().PlayQueue("SE_throw01.mp3", pObject->GetWorldPosition(), 1000.0f);
 		}	break;
+		case EAction::Melee:
+		{
+			pObject->SetANIM_OneTime(Guard_THROW);
+			SoundManager::Get().PlayQueue("SE_throw01.mp3", pObject->GetWorldPosition(), 1000.0f);
+			
+			auto pCollider = new Collider(20.0f);
+			auto pMelee = new GameObject(L"Melee", { pCollider, new CEventTimer(3.0f) });
+			pMelee->SetParent(pObject);
+			pMelee->SetPosition(Vector3::Forward * 50.0f);
+			pCollider->CollisionEvent = [](Collider* pA, Collider* pB) {
+				if (pB != nullptr)
+				{
+					pB->SetForce((Normalize(pB->GetCenter() - pA->GetCenter()) + Vector3::Up * 0.3f) * 100.0f);
+					pB->m_pParent->OperHP(-0.15f);
+					if (pB->m_pParent->GetHP() <= 0.0f)
+					{
+						auto pCollider = new Collider(140.0f);
+						pCollider->CollisionEvent = [](Collider* pMe, Collider* pYou) {
+							if (pYou != nullptr)
+								pYou->SetForce((Normalize(pYou->GetCenter() - pMe->GetCenter()) + Vector3::Up * 0.3f) * 300.0f);
+						};
+						pCollider->AddIgnoreList(pA);
+						pCollider->AddIgnoreList(pB);
+						auto pEffect = new GameObject(L"DeadEffect", { pCollider, ObjectManager::Get().TakeComponent(L"Boom3") });
+						pEffect->SetPosition(pB->GetCenter());
+						ObjectManager::Get().PushObject(pEffect);
+				
+						ObjectManager::Get().DisableObject(pB->m_pParent);
+					}
+				}
+				auto pEffect = new GameObject(L"HitEffect", ObjectManager::Get().TakeComponent(L"Boom2"));
+				pEffect->SetPosition(pA->m_pParent->GetWorldPosition());
+				ObjectManager::Get().PushObject(pEffect);
+			};
+			pCollider->SetGravityScale(0.0f);
+			pCollider->usePhysics(false);
+			//pCollider->AddIgnoreList()
+
+		}	break;
 		}
 	}	break;
 	case ECharacter::EZombie:
@@ -259,7 +299,8 @@ void PlayerController::PlayerInput(const float& spf) noexcept
 	if (m_curCharacter != ECharacter::EDummy)
 	{
 		m_curDelayThrow = max(m_curDelayThrow - spf, 0.0f);
-		m_curDelayDash = max(m_curDelayDash - spf, 0.0f);
+		m_curDelayDash  = max(m_curDelayDash  - spf, 0.0f);
+		m_curDelayMelee = max(m_curDelayMelee - spf, 0.0f);
 		// 던지기
 		if (Input::GetKeyState(EMouseButton::Left) == EKeyState::DOWN &&
 			m_curDelayThrow <= 0.0f &&
@@ -276,6 +317,13 @@ void PlayerController::PlayerInput(const float& spf) noexcept
 			m_curDelayDash = m_DelayDash;
 			eAction = EAction::Dash;
 		}
+		// 근접 공격
+		if (Input::GetKeyState('V') == EKeyState::DOWN &&
+			m_curDelayMelee <= 0.0f)
+		{
+			m_curDelayMelee = m_DelayMelee;
+			eAction = EAction::Melee;
+		}
 	}
 
 	static bool isFly = false;
@@ -285,8 +333,6 @@ void PlayerController::PlayerInput(const float& spf) noexcept
 		eAction = EAction::Fly;
 		m_pEffectFly = ObjectManager::Get().TakeComponent(L"Fly");
 		m_pParent->AddComponent(m_pEffectFly);
-		//m_pEffectFly->SetPosition(Vector3::Up * 10.0f);
-		//m_pEffectFly->SetParent(GetRoot());
 	}
 	if (isFly && Input::GetKeyState(EMouseButton::Right) == EKeyState::HOLD)
 	{
@@ -365,71 +411,78 @@ void PlayerController::SendAnimTransform(const EAction& eAction, const ECharacte
 {
 	static Packet_AnimTransform p_AnimTransform;
 
-	if (eAction == EAction::Jump)
+	// 이동 처리
+	switch (eAction)
 	{
-		p_AnimTransform.Force = Vector3::Up * m_jumpPower;
-	}
-	else if (eAction == EAction::Dash)
+	case EAction::Dash:
 	{
 		if (m_pParent->isMoving())
 			p_AnimTransform.Force = (m_pParent->m_pPhysics->m_direction * 1.5f + Vector3::Up * 60.0f);
 		else
 			p_AnimTransform.Force = (Normalize(m_pParent->GetForward()) * m_moveSpeed * 1.5f + Vector3::Up * 60.0f);
-	}
-	else
+	}	break;
+	case EAction::Jump:
 	{
-		p_AnimTransform.Force = m_pParent->GetForce();
-	}
-	// 이동 처리
-	switch (eAction)
-	{
+		p_AnimTransform.Force = Vector3::Up * m_jumpPower;
+	}	break;
+	case EAction::Melee:
 	case EAction::Throw:
 	{
+		p_AnimTransform.Force = m_pParent->GetForce();
 		p_AnimTransform.Direction = ObjectManager::Cameras[ECamera::Main]->GetForward();
 		p_AnimTransform.Direction = Normalize(p_AnimTransform.Direction);
 	}	break;
 	case EAction::Left:
 	{
+		p_AnimTransform.Force = m_pParent->GetForce();
 		p_AnimTransform.Direction = m_pParent->GetLeft();
 		p_AnimTransform.Direction = Normalize(p_AnimTransform.Direction) * m_moveSpeed;
 	}	break;
 	case EAction::Right:
 	{
+		p_AnimTransform.Force = m_pParent->GetForce();
 		p_AnimTransform.Direction = m_pParent->GetRight();
 		p_AnimTransform.Direction = Normalize(p_AnimTransform.Direction) * m_moveSpeed;
 	}	break;
 	case EAction::Forward:
 	{
+		p_AnimTransform.Force = m_pParent->GetForce();
 		p_AnimTransform.Direction = m_pParent->GetForward();
 		p_AnimTransform.Direction = Normalize(p_AnimTransform.Direction) * m_moveSpeed;
 	}	break;
 	case EAction::ForwardLeft:
 	{
+		p_AnimTransform.Force = m_pParent->GetForce();
 		p_AnimTransform.Direction = m_pParent->GetForward() + m_pParent->GetLeft();
 		p_AnimTransform.Direction = Normalize(p_AnimTransform.Direction) * m_moveSpeed;
 	}	break;
 	case EAction::ForwardRight:
 	{
+		p_AnimTransform.Force = m_pParent->GetForce();
 		p_AnimTransform.Direction = m_pParent->GetForward() + m_pParent->GetRight();
 		p_AnimTransform.Direction = Normalize(p_AnimTransform.Direction) * m_moveSpeed;
 	}	break;
 	case EAction::Backward:
 	{
+		p_AnimTransform.Force = m_pParent->GetForce();
 		p_AnimTransform.Direction = m_pParent->GetBackward();
 		p_AnimTransform.Direction = Normalize(p_AnimTransform.Direction) * m_moveSpeed;
 	}	break;
 	case EAction::BackwardLeft:
 	{
+		p_AnimTransform.Force = m_pParent->GetForce();
 		p_AnimTransform.Direction = m_pParent->GetBackward() + m_pParent->GetLeft();
 		p_AnimTransform.Direction = Normalize(p_AnimTransform.Direction) * m_moveSpeed;
 	}	break;
 	case EAction::BackwardRight:
 	{
+		p_AnimTransform.Force = m_pParent->GetForce();
 		p_AnimTransform.Direction = m_pParent->GetBackward() + m_pParent->GetRight();
 		p_AnimTransform.Direction = Normalize(p_AnimTransform.Direction) * m_moveSpeed;
 	}	break;
 	default:
 	{
+		p_AnimTransform.Force = m_pParent->GetForce();
 		p_AnimTransform.Direction = Vector3::Zero;
 	}	break;
 	}

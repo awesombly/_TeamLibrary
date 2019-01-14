@@ -423,7 +423,7 @@ bool ObjectManager::RemoveObject(GameObject* pObject) noexcept
 
 	static auto deleteEvent = [](void* pVoid, void*) {
 		GameObject* pObj = (GameObject*)pVoid;
-		pObj->CutParent();
+		pObj->CutParent(false);
 		ObjectManager::GetInstance().PopObject(pObj);
 		pObj->Release();
 		delete pObj;

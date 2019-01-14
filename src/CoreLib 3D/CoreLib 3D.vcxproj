@@ -240,6 +240,7 @@ copy "*.h" "..\\..\\include\\core\\"</Command>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CAnimation.cpp" />
+    <ClCompile Include="CEventTimer.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="ColliderAABB.cpp" />
     <ClCompile Include="ColliderOBB.cpp" />
@@ -281,6 +282,7 @@ copy "*.h" "..\\..\\include\\core\\"</Command>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CAnimation.h" />
+    <ClInclude Include="CEventTimer.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="ColliderAABB.h" />
     <ClInclude Include="ColliderOBB.h" />
@@ -387,7 +389,7 @@ copy "*.h" "..\\..\\include\\core\\"</Command>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="..\..\..\_SVN\src\geometry.txt" />
+    <Text Include="..\..\..\_Study\src\geometry.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -6,7 +6,6 @@
 class Collider;
 class Camera;
 class AHeroObj;
-//class ParticleSystem;
 
 class PlayerController : public GameObject, public ISingleton<PlayerController>
 {
@@ -16,7 +15,7 @@ public:
 		Left = 1, Forward = 2, ForwardLeft = 3, 
 		Right = 4, ForwardRight = 6, 
 		Backward = 8, BackwardLeft = 9, BackwardRight = 12,
-		Jump = 100, Dance1, Dance2, Dance3, Throw, Run, Fly, FlyEnd, Dash, 
+		Jump = 100, Dance1, Dance2, Dance3, Throw, Run, Fly, FlyEnd, Dash, Melee
 	};
 	enum ECharacter : char {
 		EDummy = 0, EGuard, EZombie,
@@ -50,8 +49,11 @@ public:
 	const float	m_DelayThrow	= 0.3f;
 	float		m_curDelayThrow = 0.0f;
 
-	const float	m_DelayDash = 1.0f;
-	float		m_curDelayDash = 0.0f;
+	const float	m_DelayDash		= 1.0f;
+	float		m_curDelayDash	= 0.0f;
+
+	const float	m_DelayMelee	= 1.0f;
+	float		m_curDelayMelee = 0.0f;
 
 	float		m_mouseSense = 0.5f;
 	//float		m_HP = 1.0f;

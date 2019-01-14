@@ -51,7 +51,7 @@ public:
 	virtual void SetParent(GameObject* pParent)						  	    noexcept;
 	GameObject*  GetParent()										  const noexcept;
 	GameObject*  GetRoot()											  	    noexcept;
-	void		 CutParent()										  	    noexcept;
+	void		 CutParent(const bool& pushObject = true)			  	    noexcept;
 	void		 CutParentPost()										  	noexcept;
 	forward_list<GameObject*>* GetChildList()						  	    noexcept;
 	// 부모월드 * 자식로컬

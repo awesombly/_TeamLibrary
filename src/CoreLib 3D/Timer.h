@@ -29,7 +29,7 @@ public:
 	std::condition_variable m_RenderEvent;
 
 	// 초당 발생 이벤트(함수, 인자, 인자)
-	static stack<tuple<void(*)(void*, void*), void*, void*> > SecondFrameEvent;
+	static queue<tuple<void(*)(void*, void*), void*, void*> > SecondFrameEvent;
 public:
 	void ResetSPF()			noexcept;
 	void setDirFrame(const int& dirFrame);
