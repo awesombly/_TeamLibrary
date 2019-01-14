@@ -4,12 +4,12 @@
 
 bool GameScene::Init() noexcept
 {
+	m_pPlayer->Init();
 	FirstInit();
 #pragma region Basic
 	ObjectManager::KeyCount = 1000;
 	auto pHero = (AHeroObj*)ObjectManager::Get().TakeObject(L"Guard");
 	pHero->AddComponent(ObjectManager::Get().TakeComponent(L"Fire"));
-	m_pPlayer->Init();
 	m_pPlayer->Possess(pHero);
 	m_pPlayer->ResetOption();
 	// ==================================================================================
@@ -319,6 +319,16 @@ void GameScene::LoadUI() noexcept
 	PacketManager::Get().m_pChatList->EventHover.second = PacketManager::Get().m_pChatList;
 	//JSliderCtrl* pSlider = (JSliderCtrl*)pUIRoot->find_child(L"Chat_Slider");
 	//m_pList->m_fValue = pSlider->GetValue();
+
+	// 리스폰창
+	PlayerController::Get().m_pRespawn	  = (JPanel*)pUIRoot->find_child(L"respawn_panel");		 // bRender용
+	PlayerController::Get().m_pRespawnBar = (JProgressBar*)pUIRoot->find_child(L"respawn_prog"); // value 넣엇ㅅㅅ
+	//JTextCtrl* respawntxt = (JTextCtrl*)pUIRoot->find_child(L"respawn_txt");	 // text
+
+	// 쳐맞 효과
+	PlayerController::Get().m_pHitEffect	 = (JPanel*)pUIRoot->find_child(L"effect1"); //1234
+	PlayerController::Get().m_pRespawnEffect = (JPanel*)pUIRoot->find_child(L"effect2"); //1234
+
 	ObjectManager::Get().PushObject(pUIRoot);
 	
 	UI::InGameEvent(pUIRoot);

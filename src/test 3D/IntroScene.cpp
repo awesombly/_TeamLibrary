@@ -147,8 +147,18 @@ bool IntroScene::FirstInit() noexcept
 
 		// 단검 충돌시
 		static auto pDaggerHit = [](Collider* pA, Collider* pB) {
-			if (pB != nullptr)
+			if (pB == nullptr)
 			{
+				auto pEffect = new GameObject(L"HitEffect", ObjectManager::Get().TakeComponent(L"Boom2"));
+				pEffect->SetPosition(pA->m_pParent->GetWorldPosition());
+				ObjectManager::Get().PushObject(pEffect);
+				pA->ClearIgnoreList();
+				ObjectManager::Get().DisableObject(pA->m_pParent);
+			}
+			else
+			{
+				if (pB->m_eTag != ETag::Collider) return;
+
 				pB->SetForce((Normalize(-pA->GetTotalForce()) + Vector3::Up) * 120.0f);
 				pB->m_pParent->OperHP(-0.15f);
 				if (pB->m_pParent->GetHP() <= 0.0f)
@@ -156,9 +166,10 @@ bool IntroScene::FirstInit() noexcept
 					auto pCollider = new Collider(140.0f);
 					auto pEffect = new GameObject(L"DeadEffect", { pCollider, ObjectManager::Get().TakeComponent(L"Boom3") });
 					pCollider->CollisionEvent = [](Collider* pMe, Collider* pYou) {
-						if(pYou != nullptr)
-							pYou->SetForce((Normalize(pYou->GetCenter() - pMe->GetCenter()) + Vector3::Up * 0.3f) * 300.0f);
+						if (pYou != nullptr && pYou->m_eTag == ETag::Collider)
+							pYou->SetForce((Normalize(pYou->GetCenter() - pMe->GetCenter()) + Vector3::Up * 0.3f) * 250.0f);
 					};
+					pCollider->m_eTag = ETag::Dummy;
 					pCollider->SetGravityScale(0.0f);
 					pCollider->usePhysics(false);
 					pCollider->AddIgnoreList(pA);
@@ -166,15 +177,14 @@ bool IntroScene::FirstInit() noexcept
 
 					pEffect->SetPosition(pB->GetCenter());
 					ObjectManager::Get().PushObject(pEffect);
-					
 					ObjectManager::Get().DisableObject(pB->m_pParent);
 				}
+				auto pEffect = new GameObject(L"HitEffect", ObjectManager::Get().TakeComponent(L"Boom2"));
+				pEffect->SetPosition(pA->m_pParent->GetWorldPosition());
+				ObjectManager::Get().PushObject(pEffect);
+				pA->ClearIgnoreList();
+				ObjectManager::Get().DisableObject(pA->m_pParent);
 			}
-			auto pEffect = new GameObject(L"HitEffect", ObjectManager::Get().TakeComponent(L"Boom2"));
-			pEffect->SetPosition(pA->m_pParent->GetWorldPosition());
-			ObjectManager::Get().PushObject(pEffect);
-			pA->ClearIgnoreList();
-			ObjectManager::Get().DisableObject(pA->m_pParent);
 		};
 
 		// 단검

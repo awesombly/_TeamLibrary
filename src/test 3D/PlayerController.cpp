@@ -59,6 +59,17 @@ bool PlayerController::Frame(const float& spf, const float& accTime)	noexcept
 		CameraInput(spf);
 		// m_pMeleeCollider->m_pivot = m_pParent->GetForward() * 80.0f;
 	}
+	else if(m_pParent == nullptr)
+	{
+		m_curDelayRespawn += spf;
+		if (m_curDelayRespawn >= m_DelayRespawn)
+		{
+			((JPanel*)m_pRespawn)->m_bRender = false;
+			m_curDelayRespawn = 0.0f;
+			PacketManager::Get().SendPacket('\0', 0, PACKET_ReqAddPlayer);
+			return true;
+		}
+	}
 
 	// ÃÊ±âÈ­
 	if (Input::GetKeyState('R') == EKeyState::DOWN)
@@ -163,34 +174,53 @@ void PlayerController::SetAnim(AHeroObj* pObject, const ECharacter& eCharacter, 
 			SoundManager::Get().PlayQueue("SE_throw01.mp3", pObject->GetWorldPosition(), 1000.0f);
 			
 			auto pCollider = new Collider(20.0f);
-			auto pMelee = new GameObject(L"Melee", { pCollider, new CEventTimer(3.0f) });
+			auto pMelee = new GameObject(L"Melee", { pCollider, new CEventTimer(0.5f) });
 			pMelee->SetParent(pObject);
-			pMelee->SetPosition(Vector3::Forward * 50.0f);
+			pMelee->SetPosition(pObject->GetForward() * 45.0f + Vector3::Up * 30.0f);
+			pMelee->SetRotation(pObject->GetRotation());
 			pCollider->CollisionEvent = [](Collider* pA, Collider* pB) {
-				if (pB != nullptr)
+				if (pB == nullptr)
 				{
-					pB->SetForce((Normalize(pB->GetCenter() - pA->GetCenter()) + Vector3::Up * 0.3f) * 100.0f);
-					pB->m_pParent->OperHP(-0.15f);
+					auto pEffect = new GameObject(L"HitEffect", ObjectManager::Get().TakeComponent(L"Boom2"));
+					pEffect->SetPosition(pA->m_pParent->GetWorldPosition());
+					ObjectManager::Get().PushObject(pEffect);
+					pA->ClearIgnoreList();
+				}
+				else
+				{
+					if (pB->m_eTag != ETag::Collider) return;
+
+					pB->SetForce((pA->m_pParent->GetForward() + Vector3::Up * 0.5f) * 200.0f);
+					pB->m_pParent->OperHP(-0.1f);
 					if (pB->m_pParent->GetHP() <= 0.0f)
 					{
-						auto pCollider = new Collider(140.0f);
-						pCollider->CollisionEvent = [](Collider* pMe, Collider* pYou) {
-							if (pYou != nullptr)
-								pYou->SetForce((Normalize(pYou->GetCenter() - pMe->GetCenter()) + Vector3::Up * 0.3f) * 300.0f);
-						};
-						pCollider->AddIgnoreList(pA);
-						pCollider->AddIgnoreList(pB);
-						auto pEffect = new GameObject(L"DeadEffect", { pCollider, ObjectManager::Get().TakeComponent(L"Boom3") });
-						pEffect->SetPosition(pB->GetCenter());
-						ObjectManager::Get().PushObject(pEffect);
-				
-						ObjectManager::Get().DisableObject(pB->m_pParent);
+						//auto pCollider = new Collider(140.0f);
+						//auto pEffect = new GameObject(L"DeadEffect", { pCollider, ObjectManager::Get().TakeComponent(L"Boom3") });
+						//pCollider->CollisionEvent = [](Collider* pMe, Collider* pYou) {
+						//	if (pYou != nullptr && pYou->m_eTag == ETag::Collider)
+						//		pYou->SetForce((Normalize(pYou->GetCenter() - pMe->GetCenter()) + Vector3::Up * 0.3f) * 250.0f);
+						//};
+						//pCollider->m_eTag = ETag::Dummy;
+						//pCollider->SetGravityScale(0.0f);
+						//pCollider->usePhysics(false);
+						//pCollider->AddIgnoreList(pA);
+						//pCollider->AddIgnoreList(pB);
+						//
+						//pEffect->SetPosition(pB->GetCenter());
+						//ObjectManager::Get().PushObject(pEffect);
+						//ObjectManager::Get().DisableObject(pB->m_pParent);
+
+						Packet_PlayerDead p_PlayerDead;
+						p_PlayerDead.KeyValue = pB->m_pParent->m_keyValue;
+						PacketManager::Get().SendPacket((char*)&p_PlayerDead, (USHORT)sizeof(Packet_PlayerDead), PACKET_PlayerDead);
 					}
+					auto pEffect = new GameObject(L"HitEffect", ObjectManager::Get().TakeComponent(L"Boom2"));
+					pEffect->SetPosition(pA->m_pParent->GetWorldPosition());
+					ObjectManager::Get().PushObject(pEffect);
 				}
-				auto pEffect = new GameObject(L"HitEffect", ObjectManager::Get().TakeComponent(L"Boom2"));
-				pEffect->SetPosition(pA->m_pParent->GetWorldPosition());
-				ObjectManager::Get().PushObject(pEffect);
 			};
+			pCollider->AddIgnoreList((Collider*)pObject->GetComponentList(EComponent::Collider)->front());
+			pCollider->m_eTag = ETag::Dummy;
 			pCollider->SetGravityScale(0.0f);
 			pCollider->usePhysics(false);
 			//pCollider->AddIgnoreList()
@@ -601,6 +631,15 @@ void PlayerController::Possess(GameObject* pObject) noexcept
 	//	m_curCharacter = PlayerController::ECharacter::EDummy;
 	//((JProgressBar*)m_pHpBar)->SetValue(pCollider->GetHP(), 1.0f);
 	//ResetOption();
+}
+
+
+void PlayerController::DeadEvent() noexcept
+{
+	CutParent();
+	m_curDelayRespawn = 0.0f;
+	((JPanel*)m_pRespawn)->m_bRender = true;
+	((JProgressBar*)m_pRespawnBar)->SetValue(m_curDelayRespawn, m_DelayRespawn);
 }
 
 

@@ -59,7 +59,7 @@ bool GameObject::Frame(const float& spf, const float& accTime) noexcept
 	if (!m_isEnable || m_isStatic) return false;
 	//if (!m_isStatic)
 	UpdateMatrix();
-	if (m_pPhysics != nullptr)
+	if (m_pPhysics != nullptr && usePhysics())
 	{
 		//m_pPhysics->m_prePosition = m_position;
 		// ม฿ทย

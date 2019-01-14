@@ -1,7 +1,7 @@
 #pragma once
 #include "GameObject.h"
 #include "ISingleton.h"
-
+//#include "uiheader.h"
 
 class Collider;
 class Camera;
@@ -46,20 +46,26 @@ private:
 	Component* m_pEffectFly = nullptr;
 public:
 	Collider*  m_pMeleeCollider = nullptr;
+
+	const float	m_DelayRespawn  = 5.0f;
 	const float	m_DelayThrow	= 0.3f;
-	float		m_curDelayThrow = 0.0f;
-
 	const float	m_DelayDash		= 1.0f;
-	float		m_curDelayDash	= 0.0f;
-
 	const float	m_DelayMelee	= 1.0f;
+
+	float		m_curDelayRespawn = 0.0f;
+	float		m_curDelayThrow = 0.0f;
+	float		m_curDelayDash	= 0.0f;
 	float		m_curDelayMelee = 0.0f;
 
 	float		m_mouseSense = 0.5f;
 	//float		m_HP = 1.0f;
 	float		m_MP = 1.0f;
 	
-	void*		m_pHpBar = nullptr;		// 체력바
+	void*		m_pHpBar		 = nullptr;		// 체력바
+	void*		m_pRespawn		 = nullptr;
+	void*		m_pRespawnBar	 = nullptr;
+	void*		m_pRespawnEffect = nullptr;
+	void*		m_pHitEffect	 = nullptr;
 public:
 	static void SetAnim(AHeroObj* pObject, const ECharacter& eCharacter, const EAction& eAction, const D3DXVECTOR3& forward = Vector3::Zero) noexcept;
 
@@ -67,6 +73,7 @@ public:
 	void CameraInput(const float& spf)												noexcept;
 	void ResetOption()																noexcept;
 	void Possess(GameObject* pObject)												noexcept;
+	void DeadEvent()																noexcept;
 
 	void SendAnimTransform(const EAction& eAction, const ECharacter& eCharacter)	noexcept;
 

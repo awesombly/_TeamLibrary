@@ -14,6 +14,7 @@ public:
 	//JPanel*		m_toGuest		= nullptr;
 	JTextCtrl*	m_toGuestIP		= nullptr;
 	JPanel*		m_toGuestPanel	= nullptr;
+	JPanel*		m_pStartEffect	= nullptr;
 public:
 	void LoadUI()				noexcept override;
 	bool FirstInit()			noexcept override;

@@ -6,8 +6,6 @@
 class CEventTimer : public Component
 {
 public:
-	//pair<void*, void*> m_Parameter;
-	//void(*TimerEvent)(void*, void*);
 	tuple<void(*)(void*, void*), void*, void*> TimerEvent;
 	float m_curDelay   = 0.0f;
 	float m_EventDelay = 0.0f;

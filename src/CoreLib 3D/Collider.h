@@ -6,6 +6,10 @@ enum class ECollider : char {
 	AABB = 0, OBB, Sphere,
 };
 
+enum class ETag : char {
+	Collider, Dummy, 
+};
+
 
 class ColliderAABB;
 class ColliderOBB;
@@ -20,6 +24,7 @@ protected:
 public:
 	void (*CollisionEvent)(Collider*, Collider*) = nullptr;
 	ECollider	m_eCollider;
+	ETag		m_eTag = ETag::Collider;
 
 	D3DXVECTOR3 m_pivot = Vector3::Zero;		// 부모 상대 피벗
 	

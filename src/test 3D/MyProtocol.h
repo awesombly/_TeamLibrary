@@ -11,6 +11,7 @@
 #define PACKET_Rotate				1005
 #define PACKET_Scaling				1006
 #define PACKET_SetAnimTransform		1008
+#define PACKET_PlayerDead			1009
 // ¿¹¿Ü
 #define PACKET_ReqSync				2000
 #define PACKET_ReqSyncSpawns		2001
@@ -31,6 +32,11 @@
 
 
 #pragma pack(push, 1)
+struct Packet_PlayerDead
+{
+	UINT KeyValue;
+};
+
 struct Packet_TakeObject
 {
 	UINT KeyValue;

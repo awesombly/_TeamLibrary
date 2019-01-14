@@ -47,6 +47,7 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 	static Packet_ChatMessage	p_ChatMessage;
 	static Packet_TakeObject	p_TakeObject;
 	static Packet_SyncObjects	p_SyncObjects;
+	static Packet_PlayerDead	p_PlayerDead;
 
 	memcpy(&p_KeyValue, data, sizeof(Packet_KeyValue));
 	if (sendMode			< 2000 &&
@@ -156,6 +157,31 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 	 {
 		 memcpy(&p_PossessPlayer, data, sizeof(Packet_PossessPlayer));
 		 PlayerController::Get().Possess(ObjectManager::KeyObjects[p_PossessPlayer.KeyValue]);
+	 }	break;
+	 case PACKET_PlayerDead:
+	 {
+		 memcpy(&p_PlayerDead, data, sizeof(Packet_PlayerDead));
+		 ObjectManager::KeyObjects[p_PlayerDead.KeyValue];
+
+		 if (PlayerController::Get().GetParent() == ObjectManager::KeyObjects[p_PlayerDead.KeyValue])
+		 {
+			 PlayerController::Get().DeadEvent();
+		 }
+		 auto pCollider = new Collider(140.0f);
+		 auto pEffect = new GameObject(L"DeadEffect", { pCollider, ObjectManager::Get().TakeComponent(L"Boom3") });
+		 pCollider->CollisionEvent = [](Collider* pMe, Collider* pYou) {
+		 	if (pYou != nullptr && pYou->m_eTag == ETag::Collider)
+		 		pYou->SetForce((Normalize(pYou->GetCenter() - pMe->GetCenter()) + Vector3::Up * 0.3f) * 250.0f);
+		 };
+		 pCollider->m_eTag = ETag::Dummy;
+		 pCollider->SetGravityScale(0.0f);
+		 pCollider->usePhysics(false);
+		 //pCollider->AddIgnoreList(pA);
+		 //pCollider->AddIgnoreList(pB);
+		 
+		 pEffect->SetPosition(ObjectManager::KeyObjects[p_PlayerDead.KeyValue]->GetPosition() + Vector3::Up * 80.0f);
+		 ObjectManager::Get().PushObject(pEffect);
+		 ObjectManager::Get().DisableObject(ObjectManager::KeyObjects[p_PlayerDead.KeyValue]);
 	 }	break;
 	 case PACKET_PlaySound:
 	 {

@@ -164,6 +164,7 @@ void LobbyScene::LoadUI() noexcept
 			return;
 		}
 		((LobbyScene*)pScene)->m_pBackHero->SetANIM_OneTime(Guard_DASHJUMP);
+		((LobbyScene*)pScene)->m_pStartEffect->EffectPlay();
 		SoundManager::Get().Play("SV_Guard_Shout.mp3");
 		PacketManager::Get().isHost = false;
 		((LobbyScene*)pScene)->m_isStart = true;
@@ -175,6 +176,7 @@ void LobbyScene::LoadUI() noexcept
 	};
 	static auto pToHost = [](void* pScene) {
 		((LobbyScene*)pScene)->m_pBackHero->SetANIM_OneTime(Guard_DASHJUMP);
+		((LobbyScene*)pScene)->m_pStartEffect->EffectPlay();
 		SoundManager::Get().Play("SV_Guard_Shout.mp3");
 		PacketManager::Get().isHost = true;
 		((LobbyScene*)pScene)->m_isStart = true;
@@ -208,8 +210,10 @@ void LobbyScene::LoadUI() noexcept
 	m_toGuestIP->m_Text = L"IP : ~." + PacketManager::Get().InputIP;
 	// ÆÐ³ÎÃ¢
 	m_toGuestPanel = m_toGuestIP->m_pParent;
-
+	// ¸ÅÄª, ½ÃÀÛ ÀÌÆå
+	JTextCtrl* AutoMatching = (JTextCtrl*)pUIRoot->find_child(L"D_AutoMatching");
+	m_pStartEffect = (JPanel*)pUIRoot->find_child(L"effect4"); //1234
+	
 	ObjectManager::Get().PushObject(pUIRoot);
-
 	UI::IntroEvent(pUIRoot);	
 }
