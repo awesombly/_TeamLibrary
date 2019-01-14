@@ -119,7 +119,6 @@ bool LobbyScene::Frame() noexcept
 				SetScene(ESceneName::Main);
 
 				PacketManager::Get().SendPacket('\0', 0, PACKET_ReqAddPlayer);
-				//PacketManager::Get().SendPacket('\0', 0, PACKET_ReqSyncSpawns);
 			}
 		}
 	}
