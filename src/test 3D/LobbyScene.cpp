@@ -211,5 +211,12 @@ void LobbyScene::LoadUI() noexcept
 
 	ObjectManager::Get().PushObject(pUIRoot);
 
+	////////////////////////////////////////////////////////////////////////////////
+	JButtonCtrl* FadeOut = (JButtonCtrl*)pUIRoot->find_child(L"fadeout");
+	//FadeOut->EffectPlay();
+	JButtonCtrl* FadeIn = (JButtonCtrl*)pUIRoot->find_child(L"fadein");
+	//FadeIn->EffectPlay();
+	JButtonCtrl* hos = (JButtonCtrl*)pUIRoot->find_child(L"effect_hos");
+	//hos->EffectPlay();
 	UI::IntroEvent(pUIRoot);	
 }
