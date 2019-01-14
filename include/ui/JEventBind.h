@@ -44,6 +44,17 @@ namespace UI
 		if (pEff4 == nullptr) return;
 		pEff4->PreEvent.first = E_HOS;
 		pEff4->PreEvent.second = pEff4;
+
+		JPanel* pMatching_Panel = (JPanel*)pRoot->find_child(L"Matching_Panel");
+		JPanel* AutoMatching = (JPanel*)pRoot->find_child(L"D_AutoMatching");
+		AutoMatching->EventClick.first = E_REVERSE_SHOW;
+		AutoMatching->EventClick.second = pMatching_Panel;
+
+		JPanel* pLoginBtn = (JPanel*)pRoot->find_child(L"Matching_Login");
+		JPanel* pMatching_Loading = (JPanel*)pRoot->find_child(L"Matching_Loading_Panel");
+		if (pLoginBtn == nullptr) return;
+		pLoginBtn->EventClick.first = E_LOGIN_BUTTON;
+		pLoginBtn->EventClick.second = pMatching_Loading;
 	}
 	static void LobbyEvent(JPanel* pRoot)
 	{

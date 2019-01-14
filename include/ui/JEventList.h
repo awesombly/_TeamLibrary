@@ -87,6 +87,14 @@ namespace UI
 		pPanel->m_vPos.x = pPanel->m_ptMouse.Getpt().x + 10.0f;
 		pPanel->m_vPos.y = pPanel->m_ptMouse.Getpt().y - 10.0f;
 	}
+	static void E_LOGIN_BUTTON(void* vp)
+	{
+		JPanel* pPanel = (JPanel*)vp;
+		pPanel->m_bRender = true;
+
+		JPanel* pSrc = pPanel->find_root()->find_child(L"Matching_Panel");
+		pSrc->m_bRender = false;
+	}
 	// mouse click sprite clone create ==============================================================
 	static void E_MOUSE_SPRITE_CLONE(void* vp)
 	{
@@ -232,11 +240,11 @@ namespace UI
 		JPanel* pPanel = (JPanel*)vp;
 		if (pPanel->m_bRender)
 		{
-			if (pPanel->m_vScl.x >= 75.0f || pPanel->m_vScl.y >= 75.0f)
+			if (pPanel->m_vScl.x >= 125.0f || pPanel->m_vScl.y >= 125.0f)
 			{
-				if (pPanel->m_vScl.x >= 75.0f)
+				if (pPanel->m_vScl.x >= 125.0f)
 					pPanel->m_vScl.x -= Timer::SPF * 1000.0f; // 2ÃÊ¿¡ ¾ø¾îÁü
-				if (pPanel->m_vScl.y >= 75.0f)
+				if (pPanel->m_vScl.y >= 125.0f)
 					pPanel->m_vScl.y -= Timer::SPF * 1000.0f; // 2ÃÊ¿¡ ¾ø¾îÁü
 			}
 			pPanel->m_vRot.z -= Timer::SPF * 50.0f;
