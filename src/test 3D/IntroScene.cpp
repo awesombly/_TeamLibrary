@@ -1,5 +1,6 @@
 #include "IntroScene.h"
 #include "JEventBind.h"
+#include "PacketManager.h"
 
 bool IntroScene::Init() noexcept
 {
@@ -152,7 +153,7 @@ bool IntroScene::FirstInit() noexcept
 				auto pEffect = new GameObject(L"HitEffect", ObjectManager::Get().TakeComponent(L"Boom2"));
 				pEffect->SetPosition(pA->m_pParent->GetWorldPosition());
 				ObjectManager::Get().PushObject(pEffect);
-				pA->ClearIgnoreList();
+				//pA->ClearIgnoreList();
 				ObjectManager::Get().DisableObject(pA->m_pParent);
 			}
 			else
@@ -163,26 +164,14 @@ bool IntroScene::FirstInit() noexcept
 				pB->m_pParent->OperHP(-0.15f);
 				if (pB->m_pParent->GetHP() <= 0.0f)
 				{
-					auto pCollider = new Collider(140.0f);
-					auto pEffect = new GameObject(L"DeadEffect", { pCollider, ObjectManager::Get().TakeComponent(L"Boom3") });
-					pCollider->CollisionEvent = [](Collider* pMe, Collider* pYou) {
-						if (pYou != nullptr && pYou->m_eTag == ETag::Collider)
-							pYou->SetForce((Normalize(pYou->GetCenter() - pMe->GetCenter()) + Vector3::Up * 0.3f) * 250.0f);
-					};
-					pCollider->m_eTag = ETag::Dummy;
-					pCollider->SetGravityScale(0.0f);
-					pCollider->usePhysics(false);
-					pCollider->AddIgnoreList(pA);
-					pCollider->AddIgnoreList(pB);
-
-					pEffect->SetPosition(pB->GetCenter());
-					ObjectManager::Get().PushObject(pEffect);
-					ObjectManager::Get().DisableObject(pB->m_pParent);
+					Packet_PlayerDead p_PlayerDead;
+					p_PlayerDead.KeyValue = pB->m_pParent->m_keyValue;
+					PacketManager::Get().SendPacket((char*)&p_PlayerDead, (USHORT)sizeof(Packet_PlayerDead), PACKET_PlayerDead);
 				}
 				auto pEffect = new GameObject(L"HitEffect", ObjectManager::Get().TakeComponent(L"Boom2"));
 				pEffect->SetPosition(pA->m_pParent->GetWorldPosition());
 				ObjectManager::Get().PushObject(pEffect);
-				pA->ClearIgnoreList();
+				//pA->ClearIgnoreList();
 				ObjectManager::Get().DisableObject(pA->m_pParent);
 			}
 		};

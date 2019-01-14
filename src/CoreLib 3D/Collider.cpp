@@ -725,18 +725,29 @@ void Collider::AddIgnoreList(Collider* pCollider) noexcept
 	pCollider->m_IgnoreList.push_front(this);
 }
 
-void Collider::ClearIgnoreList() noexcept
+void Collider::ClearIgnoreList(const bool& isPostEvent) noexcept
 {
-	static auto pEvent = [](void* pVoid, void*) {
-		auto pCollider = (Collider*)pVoid;
-		for (auto& iter : pCollider->m_IgnoreList)
-		{
-			iter->m_IgnoreList.remove(pCollider);
-		}
-		pCollider->m_IgnoreList.clear();
-	};
+	if (isPostEvent)
+	{
+		static auto pEvent = [](void* pVoid, void*) {
+			auto pCollider = (Collider*)pVoid;
+			for (auto& iter : pCollider->m_IgnoreList)
+			{
+				iter->m_IgnoreList.remove(pCollider);
+			}
+			pCollider->m_IgnoreList.clear();
+		};
 
-	ObjectManager::PostFrameEvent.emplace(pEvent, this, nullptr);
+		ObjectManager::PostFrameEvent.emplace(pEvent, this, nullptr);
+	}
+	else
+	{
+		for (auto& iter : m_IgnoreList)
+		{
+			iter->m_IgnoreList.remove(iter);
+		}
+		m_IgnoreList.clear();
+	}
 }
 
 void Collider::ClearCollisionList() noexcept

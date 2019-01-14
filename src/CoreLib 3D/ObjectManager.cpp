@@ -404,6 +404,7 @@ void ObjectManager::DisableObject(GameObject* pObject) noexcept
 		{
 			for (auto& iter : *pColliders)
 			{
+				((Collider*)iter)->ClearIgnoreList();
 				ObjectManager::Get().PopCollider((Collider*)iter);
 			}
 		}

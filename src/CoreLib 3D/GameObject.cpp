@@ -120,6 +120,7 @@ bool GameObject::Release() noexcept
 		{
 			if (outIter.first == EComponent::Collider)
 			{
+				((Collider*)inIter)->ClearIgnoreList(false);
 				ObjectManager::Get().GetColliderList().remove((Collider*)inIter);
 			}
 			inIter->Release();

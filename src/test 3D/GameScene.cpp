@@ -7,13 +7,6 @@ bool GameScene::Init() noexcept
 	m_pPlayer->Init();
 	FirstInit();
 #pragma region Basic
-	ObjectManager::KeyCount = 1000;
-	auto pHero = (AHeroObj*)ObjectManager::Get().TakeObject(L"Guard");
-	//pHero->GetLeftHandPos
-	pHero->AddComponent(ObjectManager::Get().TakeComponent(L"Fire"));
-	m_pPlayer->Possess(pHero);
-	m_pPlayer->ResetOption();
-	// ==================================================================================
 	GameObject* pEffect = nullptr;
 	//m_pParser->CreateFromFile(&pEffect, L"Snow.eff", L"../../data/script");
 	//pEffect->SetPosition(Vector3::Up * 400.0f);
@@ -36,6 +29,14 @@ bool GameScene::Init() noexcept
 	pEffect = new GameObject(L"Atom", { m_pParser->CreateFromParticle(L"Atom.eff", L"../../data/script"), new CTransformer(Vector3::Zero, {3.0f, 5.0f, 7.0f, 0.0f}) });
 	pEffect->SetPosition(Vector3::Up * 400.0f + Vector3::Backward * 700.0f);
 	ObjectManager::Get().PushObject(pEffect);
+
+	// ==================================================================================
+	ObjectManager::KeyCount = 1000;
+	auto pHero = (AHeroObj*)ObjectManager::Get().TakeObject(L"Guard");
+	//pHero->GetLeftHandPos
+	pHero->AddComponent(ObjectManager::Get().TakeComponent(L"Fire"));
+	m_pPlayer->Possess(pHero);
+	m_pPlayer->ResetOption();
 
 	ObjectManager::Get().TakeObject(L"Guard")->SetPosition(RandomNormal() * 1000.0f - 500.0f, RandomNormal() * 500.0f, RandomNormal() * 1000.0f - 500.0f);
 	ObjectManager::Get().TakeObject(L"Guard")->SetPosition(RandomNormal() * 1000.0f - 500.0f, RandomNormal() * 500.0f, RandomNormal() * 1000.0f - 500.0f);
@@ -117,7 +118,8 @@ bool GameScene::Frame() noexcept
 	//		curCollider = ObjectManager::Get().GetColliderList().begin();*/
 	//	if (++curCollider == ObjectManager::Get().GetColliderList().end())
 	//		curCollider = ObjectManager::Get().GetColliderList().begin();
-	//	if ((*curCollider)->m_eCollider == ECollider::Sphere)
+	//	while ( (*curCollider)->m_eCollider == ECollider::Sphere ||
+	//			(*curCollider)->m_eTag		!= ETag::Collider)
 	//	{
 	//		++curCollider;
 	//		if (curCollider == ObjectManager::Get().GetColliderList().end())

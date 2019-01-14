@@ -52,7 +52,7 @@ bool PlayerController::Frame(const float& spf, const float& accTime)	noexcept
 	GameObject::Frame(spf, accTime);
 
 	if (!m_isChatting &&
-		!Input::isDebug &&
+		//!Input::isDebug &&
 		m_pParent != nullptr)
 	{
 		PlayerInput(spf);
@@ -223,7 +223,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const ECharacter& eCharacter, 
 					auto pEffect = new GameObject(L"HitEffect", ObjectManager::Get().TakeComponent(L"Boom2"));
 					pEffect->SetPosition(pA->m_pParent->GetWorldPosition());
 					ObjectManager::Get().PushObject(pEffect);
-					pA->ClearIgnoreList();
+					//pA->ClearIgnoreList();
 				}
 				else
 				{
@@ -324,7 +324,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const ECharacter& eCharacter, 
 		 			auto pEffect = new GameObject(L"HitEffect", ObjectManager::Get().TakeComponent(L"Boom2"));
 		 			pEffect->SetPosition(pA->m_pParent->GetWorldPosition());
 		 			ObjectManager::Get().PushObject(pEffect);
-		 			pA->ClearIgnoreList();
+		 			//pA->ClearIgnoreList();
 		 		}
 		 		else
 		 		{
