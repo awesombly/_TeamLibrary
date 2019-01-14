@@ -74,6 +74,11 @@ bool Collider::CollisionAllCheck(const float& spf) noexcept
 	m_CollisionList.push_front(this);
 	for (auto& iter : ObjectManager::Get().GetColliderList())
 	{
+		if (iter->m_pParent == nullptr)
+		{
+			ErrorMessage(""s + __FUNCTION__ + " -> Parent is Null!");
+			continue;
+		}
 		// 자신 또는 처리된 객체 제외
 		auto finder = std::find(m_CollisionList.begin(), m_CollisionList.end(), iter);
 		if(finder != m_CollisionList.end())
