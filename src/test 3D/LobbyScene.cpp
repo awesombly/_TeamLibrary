@@ -101,8 +101,8 @@ bool LobbyScene::Frame() noexcept
 	{
 		static float frameCount = 0.0f;
 		frameCount += Timer::SPF;
-		m_pBackHero->Scaling(-Vector3::Right * 0.3f * Timer::SPF);
-		m_pBackHero->Translate(Vector3::One * 60.0f * Timer::SPF);
+		m_pBackHero->Scaling(-Vector3::One * 0.25f * Timer::SPF);
+		m_pBackHero->Translate(Vector3::One * 30.0f * Timer::SPF);
 		if (frameCount > 2.3f)
 		{
 			// 시작
@@ -216,17 +216,13 @@ void LobbyScene::LoadUI() noexcept
 	JTextCtrl* AutoMatching = (JTextCtrl*)pUIRoot->find_child(L"D_AutoMatching");
 	static auto pMatching = [](void* pScene) {
 		auto pMain = ((MainClass*)pScene);
-		pMain->StartupClient;//여기서 매칭 서버 접속기능 편집
+		pMain->StartupClient();//여기서 매칭 서버 접속기능 편집
 	};
 	AutoMatching->EventClick.first = pMatching;
 	AutoMatching->EventClick.second = this;
 	///
 	m_pStartEffect = (JPanel*)pUIRoot->find_child(L"effect_hos"); //1234
 	
-
-	////////////////////////////////////////////////////////////////////////////////
-	//JButtonCtrl* FadeOut = (JButtonCtrl*)pUIRoot->find_child(L"fadeout");
-	//JButtonCtrl* FadeIn = (JButtonCtrl*)pUIRoot->find_child(L"fadein");
 
 	ObjectManager::Get().PushObject(pUIRoot);
 	UI::IntroEvent(pUIRoot);	

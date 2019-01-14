@@ -171,8 +171,11 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 		 auto pCollider = new Collider(140.0f);
 		 auto pEffect = new GameObject(L"DeadEffect", { pCollider, ObjectManager::Get().TakeComponent(L"Boom3") });
 		 pCollider->CollisionEvent = [](Collider* pMe, Collider* pYou) {
-		 	if (pYou != nullptr && pYou->m_eTag == ETag::Collider)
-		 		pYou->SetForce((Normalize(pYou->GetCenter() - pMe->GetCenter()) + Vector3::Up * 0.4f) * 220.0f);
+			 if (pYou != nullptr && pYou->m_eTag == ETag::Collider)
+			 {
+				 pYou->SetForce((Normalize(pYou->GetCenter() - pMe->GetCenter()) + Vector3::Up) * 300.0f);
+				 pMe->AddIgnoreList(pYou);
+			 }
 		 };
 		 pCollider->m_eTag = ETag::Dummy;
 		 pCollider->SetGravityScale(0.0f);

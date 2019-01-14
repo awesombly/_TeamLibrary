@@ -54,7 +54,7 @@ bool PlayerController::Frame(const float& spf, const float& accTime)	noexcept
 	ErrorMessage("플레이어 프레임");
 
 	if (!m_isChatting &&
-		//!Input::isDebug &&
+		!Input::isDebug &&
 		m_pParent != nullptr)
 	{
 		PlayerInput(spf);
@@ -232,7 +232,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const ECharacter& eCharacter, 
 				{
 					if (pB->m_eTag != ETag::Collider) return;
 
-					pB->SetForce((pA->m_pParent->GetForward() + Vector3::Up * 0.5f) * 300.0f);
+					pB->SetForce(((pB->GetCenter() - pA->GetCenter()) + Vector3::Up * 0.6f) * 230.0f);
 					pB->m_pParent->OperHP(-0.4f);
 					if (pB->m_pParent->GetHP() <= 0.0f)
 					{
@@ -409,9 +409,9 @@ void PlayerController::PlayerInput(const float& spf) noexcept
 		// 던지기
 		if (Input::GetKeyState(EMouseButton::Left) == EKeyState::DOWN &&
 			m_curDelayThrow <= 0.0f &&
-			m_MP >= 0.15f)
+			m_MP >= 0.2f)
 		{
-			m_MP -= 0.15f;
+			m_MP -= 0.2f;
 			m_curDelayThrow = m_DelayThrow;
 			eAction = EAction::Throw;
 		}
@@ -443,7 +443,7 @@ void PlayerController::PlayerInput(const float& spf) noexcept
 	}
 	if (isFly && Input::GetKeyState(EMouseButton::Right) == EKeyState::HOLD)
 	{
-		m_MP -= 0.35f * spf;
+		m_MP -= 0.5f * spf;
 		if (m_MP <= 0.0f)
 		{
 			isFly = false;
@@ -457,7 +457,7 @@ void PlayerController::PlayerInput(const float& spf) noexcept
 	}
 	else
 	{
-		m_MP = min(m_MP + spf * 0.2f, 1.0f);
+		m_MP = min(m_MP + spf * 0.3f, 1.0f);
 	}
 
 	if (Input::GetKeyState(EMouseButton::Right) == EKeyState::UP)
@@ -658,7 +658,6 @@ void PlayerController::CameraInput(const float& spf) noexcept
 	//	PacketManager::Get().SendPacket((char*)&p_MouseRotate, sizeof(Packet_MouseRotate), PACKET_MouseRotate);
 	//	ErrorMessage("회전 : " + to_string(Input::GetMouseMovePos().x));
 	//}
-
 }
 
 void PlayerController::ResetOption() noexcept
@@ -685,7 +684,6 @@ void PlayerController::Possess(GameObject* pObject) noexcept
 	static auto pEvent = [](void* pVoid, void* pVoid2) {
 		auto pPlayer = (PlayerController*)pVoid;
 		auto pObj = (GameObject*)pVoid2;
-
 		if (pObj->m_myName == L"Guard")
 			pPlayer->m_curCharacter = PlayerController::ECharacter::EGuard;
 		else if (pObj->m_myName == L"Zombie")

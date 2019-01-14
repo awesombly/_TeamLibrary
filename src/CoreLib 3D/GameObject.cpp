@@ -186,7 +186,7 @@ void GameObject::SetParent(GameObject* pParent) noexcept
 		if (pBase == pObject || pObject->m_pParent == pBase || iter != pBase->m_childList.end())
 			return;
 		if (pObject->m_pParent != nullptr)
-			pObject->CutParent();
+			pObject->CutParent(false);
 		pObject->m_pParent = pBase;
 		pBase->m_childList.push_front(pObject);
 		ObjectManager::GetInstance().PopObject(pObject);
