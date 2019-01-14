@@ -71,7 +71,6 @@ namespace UI
 		pCursorErase->PreEvent.first = E_MOUSE_SPRITE_ERASE;
 		pCursorErase->PreEvent.second = pCursorErase;
 
-
 		JPanel* pStatePanel = (JPanel*)pRoot->find_child(L"State_Panel");
 		if (pStatePanel == nullptr) return;
 		pStatePanel->PreEvent.first = E_STATE_SHOW;
@@ -80,5 +79,9 @@ namespace UI
 		JPanel* pSetting = (JPanel*)pRoot->find_child(L"Set_Panel");
 		pSetting->PreEvent.first = E_SETTING_SHOW;
 		pSetting->PreEvent.second = pSetting;
+
+		JSliderCtrl* pChatSlider = (JSliderCtrl*)pRoot->find_child(L"Chat_Slider");
+		JListCtrl* pList = (JListCtrl*)pRoot->find_child(L"Chat_Log");
+		pList->m_fValue = pChatSlider->m_fValue;
 	}
 }

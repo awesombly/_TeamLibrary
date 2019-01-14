@@ -67,6 +67,7 @@ namespace UI
 		wstring				m_ParentName;
 		wstring				m_NodeName;
 		std::list<JPanel*>	m_pChildList;
+		bool				m_bEffect = false;
 	public:
 		JPlane*				m_pShape;
 		JTexture*			m_pTexture;
@@ -89,6 +90,7 @@ namespace UI
 		void rtUpdate();
 		void* uiclone();
 	public:
+		void EffectPlay();
 		bool Init() noexcept override;
 		bool PreFrame(const float& spf, const float& accTime);
 		bool PostFrame(const float& spf, const float& accTime);

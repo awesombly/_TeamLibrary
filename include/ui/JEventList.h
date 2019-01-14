@@ -15,16 +15,22 @@ namespace UI
 	{
 		JPanel* pPanel = (JPanel*)vp;
 		pPanel->m_bRender = true;
+		Input::isDebug = true;
 	}
 	static void E_NOTSHOW(void* vp)
 	{
 		JPanel* pPanel = (JPanel*)vp;
 		pPanel->m_bRender = false;
+		Input::isDebug = false;
 	}
 	static void E_REVERSE_SHOW(void* vp)
 	{
 		JPanel* pPanel = (JPanel*)vp;
 		pPanel->m_bRender = !pPanel->m_bRender;
+		if (pPanel->m_bRender)
+			Input::isDebug = true;
+		else
+			Input::isDebug = false;
 	}
 	static void E_ROTATEZ(void* vp)
 	{
@@ -183,10 +189,13 @@ namespace UI
 			else
 				pPanel->m_bRender = false;
 		}
-		if (Input::GetKeyState(VK_F1) == EKeyState::DOWN)
+		if (Input::GetKeyState('1') == EKeyState::DOWN ||
+			pPanel->m_bEffect)
 		{
 			pPanel->m_bRender = true;
 			pPanel->m_pShape->m_cbData.vColor.w = 1.0f;
+
+			pPanel->m_bEffect = false;
 		}
 	}
 	static void E_EFFECT_ALPHA2(void* vp)
@@ -200,18 +209,22 @@ namespace UI
 			else
 				pPanel->m_bRender = false;
 		}
-		if (Input::GetKeyState(VK_F2) == EKeyState::DOWN)
+		if (Input::GetKeyState('2') == EKeyState::DOWN ||
+			pPanel->m_bEffect)
 		{
 			pPanel->m_bRender = true;
 			pPanel->m_pShape->m_cbData.vColor.w = 0.0f;
+			pPanel->m_bEffect = false;
 		}
 	}
 	static void E_EFFECT3(void* vp)
 	{
 		JPanel* pPanel = (JPanel*)vp;
-		if (Input::GetKeyState(VK_F3) == EKeyState::DOWN)
+		if (Input::GetKeyState('3') == EKeyState::DOWN ||
+			pPanel->m_bEffect)
 		{
 			pPanel->m_bRender = !pPanel->m_bRender;
+			pPanel->m_bEffect = false;
 		}
 	}
 	static void E_EFFECT4(void* vp)
@@ -228,7 +241,8 @@ namespace UI
 			}
 			pPanel->m_vRot.z -= Timer::SPF * 20.0f;
 		}
-		if (Input::GetKeyState(VK_F4) == EKeyState::DOWN)
+		if (Input::GetKeyState('4') == EKeyState::DOWN ||
+			pPanel->m_bEffect)
 		{
 			pPanel->m_bRender = !pPanel->m_bRender;
 			if (pPanel->m_bRender)
@@ -236,6 +250,7 @@ namespace UI
 				pPanel->m_vScl.x = 500.0f;
 				pPanel->m_vScl.y = 500.0f;
 			}
+			pPanel->m_bEffect = false;
 		}
 	}
 }

@@ -9,7 +9,7 @@ namespace UI
 		int							m_iCols; // 얼만큼쪼갤것인가
 		std::list<wstring>			m_pText; // text array
 		std::vector<D3DXVECTOR4>	m_pTextrt; // text rect  image rect / cols
-		float						m_fValue = 0.0f; // 0이면 맨앞의 string 1이면 맨뒤의 string
+		float*						m_fValue; // 0이면 맨앞의 string 1이면 맨뒤의 string
 		float						m_fTemp;
 		//
 		float fDivisionValue;       // CurValue Increase
