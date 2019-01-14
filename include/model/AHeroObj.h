@@ -47,10 +47,10 @@ public:
 	bool					m_bBoneRender;
 	
 	
-	//D3DXMATRIX				m_pTestParent;
+	D3DXMATRIX				m_pTestParent;
 
-	//GameObject* clone() noexcept override;
-	//AHeroObj*	m_pParent;
+	GameObject* clone() noexcept override;
+
 	D3DXVECTOR3 GetRightHandPos();
 	D3DXVECTOR3 GetLeftHandPos();
 public:
