@@ -101,6 +101,7 @@ bool LobbyScene::Frame() noexcept
 	{
 		static float frameCount = 0.0f;
 		frameCount += Timer::SPF;
+		m_pBackHero->Scaling(Vector3::One * 0.3f * Timer::SPF);
 		if (frameCount > 2.3f)
 		{
 			// ½ÃÀÛ
@@ -212,19 +213,13 @@ void LobbyScene::LoadUI() noexcept
 	m_toGuestPanel = m_toGuestIP->m_pParent;
 	// ¸ÅÄª, ½ÃÀÛ ÀÌÆå
 	JTextCtrl* AutoMatching = (JTextCtrl*)pUIRoot->find_child(L"D_AutoMatching");
-	m_pStartEffect = (JPanel*)pUIRoot->find_child(L"effect4"); //1234
+	m_pStartEffect = (JPanel*)pUIRoot->find_child(L"effect_hos"); //1234
 	
-	ObjectManager::Get().PushObject(pUIRoot);
 
 	////////////////////////////////////////////////////////////////////////////////
-	JButtonCtrl* FadeOut = (JButtonCtrl*)pUIRoot->find_child(L"fadeout");
-	//FadeOut->EffectPlay();
-	JButtonCtrl* FadeIn = (JButtonCtrl*)pUIRoot->find_child(L"fadein");
-	//FadeIn->EffectPlay();
-	JButtonCtrl* hos = (JButtonCtrl*)pUIRoot->find_child(L"effect_hos");
-	//hos->EffectPlay();
+	//JButtonCtrl* FadeOut = (JButtonCtrl*)pUIRoot->find_child(L"fadeout");
+	//JButtonCtrl* FadeIn = (JButtonCtrl*)pUIRoot->find_child(L"fadein");
 
-
-
+	ObjectManager::Get().PushObject(pUIRoot);
 	UI::IntroEvent(pUIRoot);	
 }

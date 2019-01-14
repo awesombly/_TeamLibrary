@@ -16,6 +16,7 @@
 #define PACKET_ReqSync				2000
 #define PACKET_ReqSyncSpawns		2001
 #define PACKET_ReqAddPlayer			2002
+#define PACKET_HostAddPlayer		2003
 // Key X
 #define PACKET_SyncObjects			3016
 #define PACKET_ChatMessage			3015

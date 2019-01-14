@@ -9,6 +9,7 @@ bool GameScene::Init() noexcept
 #pragma region Basic
 	ObjectManager::KeyCount = 1000;
 	auto pHero = (AHeroObj*)ObjectManager::Get().TakeObject(L"Guard");
+	//pHero->GetLeftHandPos
 	pHero->AddComponent(ObjectManager::Get().TakeComponent(L"Fire"));
 	m_pPlayer->Possess(pHero);
 	m_pPlayer->ResetOption();
@@ -322,19 +323,14 @@ void GameScene::LoadUI() noexcept
 
 	// 리스폰창
 	PlayerController::Get().m_pRespawn	  = (JPanel*)pUIRoot->find_child(L"respawn_panel");		 // bRender용
+	((JPanel*)PlayerController::Get().m_pRespawn)->m_bRender = false;
 	PlayerController::Get().m_pRespawnBar = (JProgressBar*)pUIRoot->find_child(L"respawn_prog"); // value 넣엇ㅅㅅ
 	//JTextCtrl* respawntxt = (JTextCtrl*)pUIRoot->find_child(L"respawn_txt");	 // text
 
 	// 쳐맞 효과
-	PlayerController::Get().m_pHitEffect	 = (JPanel*)pUIRoot->find_child(L"effect1"); //1234
-	PlayerController::Get().m_pRespawnEffect = (JPanel*)pUIRoot->find_child(L"effect2"); //1234
+	PlayerController::Get().m_pHitEffect	 = (JPanel*)pUIRoot->find_child(L"fadeout"); //1234
+	PlayerController::Get().m_pRespawnEffect = (JPanel*)pUIRoot->find_child(L"fadein"); //1234
 
 	ObjectManager::Get().PushObject(pUIRoot);
-	
-	////////////////////////////////////////////////////////////////////////////////
-	JButtonCtrl* FadeOut = (JButtonCtrl*)pUIRoot->find_child(L"fadeout");
-	//FadeOut->EffectPlay();
-	JButtonCtrl* FadeIn = (JButtonCtrl*)pUIRoot->find_child(L"fadein");
-	//FadeIn->EffectPlay();
 	UI::InGameEvent(pUIRoot);
 }
