@@ -158,6 +158,7 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 	 {
 		 memcpy(&p_PossessPlayer, data, sizeof(Packet_PossessPlayer));
 		 PlayerController::Get().Possess(ObjectManager::KeyObjects[p_PossessPlayer.KeyValue]);
+		 ((JPanel*)PlayerController::Get().m_pRespawnEffect)->EffectPlay();
 	 }	break;
 	 case PACKET_PlayerDead:
 	 {

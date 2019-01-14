@@ -41,9 +41,9 @@ public:
 	bool AABBToOBB(ColliderAABB* pAABB, ColliderOBB* pOBB)		const noexcept;
 	bool OBBToOBB(ColliderOBB* ApOBB, ColliderOBB* BpOBB)		const noexcept;
 	///
-	void AddIgnoreList(Collider* pCollider)			  noexcept;
-	void ClearIgnoreList()							  noexcept;
-	void ClearCollisionList()						  noexcept;
+	void AddIgnoreList(Collider* pCollider)							  noexcept;
+	void ClearIgnoreList(const bool& isPostEvent = true)			  noexcept;
+	void ClearCollisionList()										  noexcept;
 	// ±¸ÆÇÁ¤
 	void  SetRadius(const float& radius)			  noexcept;
 	const float GetRadius()						const noexcept;

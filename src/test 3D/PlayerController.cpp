@@ -51,8 +51,10 @@ bool PlayerController::Frame(const float& spf, const float& accTime)	noexcept
 {
 	GameObject::Frame(spf, accTime);
 
+	ErrorMessage("플레이어 프레임");
+
 	if (!m_isChatting &&
-		!Input::isDebug &&
+		//!Input::isDebug &&
 		m_pParent != nullptr)
 	{
 		PlayerInput(spf);
@@ -217,13 +219,14 @@ void PlayerController::SetAnim(AHeroObj* pObject, const ECharacter& eCharacter, 
 			pMelee->SetParent(pObject);
 			pMelee->SetPosition(pObject->GetForward() * 45.0f + Vector3::Up * 30.0f);
 			pMelee->SetRotation(pObject->GetRotation());
+			pMelee->UpdateMatrix();
 			pCollider->CollisionEvent = [](Collider* pA, Collider* pB) {
 				if (pB == nullptr)
 				{
 					auto pEffect = new GameObject(L"HitEffect", ObjectManager::Get().TakeComponent(L"Boom2"));
 					pEffect->SetPosition(pA->m_pParent->GetWorldPosition());
 					ObjectManager::Get().PushObject(pEffect);
-					pA->ClearIgnoreList();
+					//pA->ClearIgnoreList();
 				}
 				else
 				{
@@ -318,13 +321,14 @@ void PlayerController::SetAnim(AHeroObj* pObject, const ECharacter& eCharacter, 
 		 	pMelee->SetParent(pObject);
 		 	pMelee->SetPosition(pObject->GetForward() * 45.0f + Vector3::Up * 30.0f);
 		 	pMelee->SetRotation(pObject->GetRotation());
+			pMelee->UpdateMatrix();
 		 	pCollider->CollisionEvent = [](Collider* pA, Collider* pB) {
 		 		if (pB == nullptr)
 		 		{
 		 			auto pEffect = new GameObject(L"HitEffect", ObjectManager::Get().TakeComponent(L"Boom2"));
 		 			pEffect->SetPosition(pA->m_pParent->GetWorldPosition());
 		 			ObjectManager::Get().PushObject(pEffect);
-		 			pA->ClearIgnoreList();
+		 			//pA->ClearIgnoreList();
 		 		}
 		 		else
 		 		{
@@ -351,7 +355,6 @@ void PlayerController::SetAnim(AHeroObj* pObject, const ECharacter& eCharacter, 
 		 	pCollider->m_eTag = ETag::Dummy;
 		 	pCollider->SetGravityScale(0.0f);
 		 	pCollider->usePhysics(false);
-		 
 		 }	break;
 		}
 	}	break;
