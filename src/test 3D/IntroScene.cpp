@@ -71,6 +71,7 @@ void IntroScene::LoadSound() noexcept
 	SoundManager::Get().Load("SE_zombie_hit01.mp3");
 	SoundManager::Get().Load("SE_zombie_hit02.mp3");
 	SoundManager::Get().Load("SV_Guard_Shout.mp3");
+	SoundManager::Get().Load("SV_Guard_Punch.mp3");
 }
 
 bool IntroScene::FirstInit() noexcept
