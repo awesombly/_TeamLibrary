@@ -30,24 +30,19 @@ namespace UI
 		pHelpImg->PreEvent.second = pHelpImg;
 
 		// effect
-		JPanel* pEff1 = (JPanel*)pRoot->find_child(L"white_effect");
+		JPanel* pEff1 = (JPanel*)pRoot->find_child(L"fadeout");
 		if (pEff1 == nullptr) return;
-		pEff1->PreEvent.first = E_EFFECT_ALPHA;
+		pEff1->PreEvent.first = E_FADEOUT;
 		pEff1->PreEvent.second = pEff1;
 
-		JPanel* pEff2 = (JPanel*)pRoot->find_child(L"white_effect2");
+		JPanel* pEff2 = (JPanel*)pRoot->find_child(L"fadein");
 		if (pEff2 == nullptr) return;
-		pEff2->PreEvent.first = E_EFFECT_ALPHA2;
+		pEff2->PreEvent.first = E_FADEIN;
 		pEff2->PreEvent.second = pEff2;
 
-		JPanel* pEff3 = (JPanel*)pRoot->find_child(L"effect3");
-		if (pEff3 == nullptr) return;
-		pEff3->PreEvent.first = E_EFFECT3;
-		pEff3->PreEvent.second = pEff3;
-
-		JPanel* pEff4 = (JPanel*)pRoot->find_child(L"effect4");
+		JPanel* pEff4 = (JPanel*)pRoot->find_child(L"effect_hos");
 		if (pEff4 == nullptr) return;
-		pEff4->PreEvent.first = E_EFFECT4;
+		pEff4->PreEvent.first = E_HOS;
 		pEff4->PreEvent.second = pEff4;
 	}
 	static void LobbyEvent(JPanel* pRoot)
@@ -83,5 +78,16 @@ namespace UI
 		JSliderCtrl* pChatSlider = (JSliderCtrl*)pRoot->find_child(L"Chat_Slider");
 		JListCtrl* pList = (JListCtrl*)pRoot->find_child(L"Chat_Log");
 		pList->m_fValue = &pChatSlider->m_fValue;
+
+		// effect
+		JPanel* pEff1 = (JPanel*)pRoot->find_child(L"fadeout");
+		if (pEff1 == nullptr) return;
+		pEff1->PreEvent.first = E_FADEOUT;
+		pEff1->PreEvent.second = pEff1;
+
+		JPanel* pEff2 = (JPanel*)pRoot->find_child(L"fadein");
+		if (pEff2 == nullptr) return;
+		pEff2->PreEvent.first = E_FADEIN;
+		pEff2->PreEvent.second = pEff2;
 	}
 }

@@ -321,5 +321,10 @@ void GameScene::LoadUI() noexcept
 	//m_pList->m_fValue = pSlider->GetValue();
 	ObjectManager::Get().PushObject(pUIRoot);
 	
+	////////////////////////////////////////////////////////////////////////////////
+	JButtonCtrl* FadeOut = (JButtonCtrl*)pUIRoot->find_child(L"fadeout");
+	//FadeOut->EffectPlay();
+	JButtonCtrl* FadeIn = (JButtonCtrl*)pUIRoot->find_child(L"fadein");
+	//FadeIn->EffectPlay();
 	UI::InGameEvent(pUIRoot);
 }

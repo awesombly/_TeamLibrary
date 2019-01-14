@@ -178,7 +178,7 @@ namespace UI
 			pMouse->m_bRender = false;
 	}
 	// ui effect
-	static void E_EFFECT_ALPHA(void* vp)
+	static void E_FADEOUT(void* vp)
 	{
 		JPanel* pPanel = (JPanel*)vp;
 
@@ -198,7 +198,7 @@ namespace UI
 			pPanel->m_bEffect = false;
 		}
 	}
-	static void E_EFFECT_ALPHA2(void* vp)
+	static void E_FADEIN(void* vp)
 	{
 		JPanel* pPanel = (JPanel*)vp;
 
@@ -227,7 +227,7 @@ namespace UI
 			pPanel->m_bEffect = false;
 		}
 	}
-	static void E_EFFECT4(void* vp)
+	static void E_HOS(void* vp)
 	{
 		JPanel* pPanel = (JPanel*)vp;
 		if (pPanel->m_bRender)

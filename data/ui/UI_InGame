@@ -287,6 +287,53 @@
 ^vpEventClick 
 
 ^Type 777
+^NodeName respawn_panel
+^ParentName Game_Panel
+^KeyState 135 135
+^bRender 1
+^Position 0.000000 0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 1.000000 1.000000 1.000000
+
+^Type 780
+^VHType 1447
+^NodeName respawn_prog
+^ParentName respawn_panel
+^KeyState 135 135
+^bRender 1
+^Position 0.000000 -72.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 150.000000 10.000000 1.000000
+^tx_BackGround black.png
+^tx_FrontGround White.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 783
+^NodeName respawn_txt
+^ParentName respawn_panel
+^KeyState 135 135
+^bRender 1
+^Position 0.000000 -48.684788 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 150.000000 20.000000 1.000000
+^strText RESPAWN
+^TextSize 35.000000
+^tx_Normal Alpha.png
+^tx_Hover Alpha.png
+^tx_Press Alpha.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 777
 ^NodeName Set_Panel
 ^ParentName Root
 ^KeyState 27 135
@@ -816,7 +863,7 @@
 ^KeyState 135 135
 ^bRender 1
 ^bLoop 1
-^Position 1000.000000 -1000.000000 0.000000
+^Position -365.000000 265.000000 0.000000
 ^Rotate 0.000000 0.000000 -0.261799
 ^Scale 15.000000 15.000000 1.000000
 ^AnimTime 0.250000
@@ -831,26 +878,17 @@
 ^pfEventClick 7274
 ^vpEventClick 
 
-^Type 777
-^NodeName respawn_panel
+^Type 778
+^NodeName fadeout
 ^ParentName Root
 ^KeyState 135 135
-^bRender 1
+^bRender 0
 ^Position 0.000000 0.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 1.000000 1.000000 1.000000
-
-^Type 780
-^VHType 1447
-^NodeName respawn_prog
-^ParentName respawn_panel
-^KeyState 135 135
-^bRender 1
-^Position 0.000000 -72.000000 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 150.000000 10.000000 1.000000
-^tx_BackGround black.png
-^tx_FrontGround White.png
+^Scale 400.000000 300.000000 1.000000
+^tx_Normal red.png
+^tx_Hover red.png
+^tx_Press red.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -858,19 +896,17 @@
 ^pfEventClick 7274
 ^vpEventClick 
 
-^Type 783
-^NodeName respawn_txt
-^ParentName respawn_panel
+^Type 778
+^NodeName fadein
+^ParentName Root
 ^KeyState 135 135
-^bRender 1
-^Position 0.000000 -48.684788 0.000000
+^bRender 0
+^Position 0.000000 0.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 150.000000 20.000000 1.000000
-^strText RESPAWN
-^TextSize 35.000000
-^tx_Normal Alpha.png
-^tx_Hover Alpha.png
-^tx_Press Alpha.png
+^Scale 400.000000 300.000000 1.000000
+^tx_Normal White.png
+^tx_Hover White.png
+^tx_Press White.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
