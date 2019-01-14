@@ -744,7 +744,7 @@ void Collider::ClearIgnoreList(const bool& isPostEvent) noexcept
 	{
 		for (auto& iter : m_IgnoreList)
 		{
-			iter->m_IgnoreList.remove(iter);
+			iter->m_IgnoreList.remove(this);
 		}
 		m_IgnoreList.clear();
 	}

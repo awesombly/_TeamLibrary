@@ -64,7 +64,7 @@ bool GameScene::Frame() noexcept
 	// IME 채팅
 	if (PlayerController::Get().isChatting())
 	{
-		m_chatMessage = ime::Get()->GetString();
+		m_chatMessage = m_pChat->GetString(); //ime::Get()->GetString();
 	}
 	if (Input::GetKeyState(VK_RETURN) == EKeyState::DOWN)
 	{
@@ -81,13 +81,18 @@ bool GameScene::Frame() noexcept
 			PacketManager::Get().SendPacket((char*)&p_ChatMessage, (USHORT)(PS_ChatMessage + strSize), PACKET_ChatMessage);
 
 			m_chatMessage.clear();
-			ime::Get()->imeEnd();
+			//ime::Get()->imeEnd();
+			m_pChat->End();
+			m_pChat->Clear();
+			m_pChat->m_bRender = false;
 			PlayerController::Get().isChatting(false);
 		}
 		else
 		{
 			PlayerController::Get().isChatting(true);
-			ime::Get()->imeStart();
+			//ime::Get()->imeStart();
+			m_pChat->Play();
+			m_pChat->m_bRender = true;
 		}
 	}
 
@@ -148,12 +153,6 @@ bool GameScene::Frame() noexcept
 // 랜더
 bool GameScene::Render() noexcept
 {
-	// 채팅
-	if (PlayerController::Get().isChatting())
-	{
-		WriteManager::Get().Draw({ 330, 850, 900, 200 }, m_chatMessage);
-	}
-
 	m_pMap->SetMatrix(NULL, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
 	I_Object.SetMatrix(&ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
 	I_Object.Render(DxManager::Get().GetDContext());
@@ -332,6 +331,8 @@ void GameScene::LoadUI() noexcept
 	// 쳐맞 효과
 	PlayerController::Get().m_pHitEffect	 = (JPanel*)pUIRoot->find_child(L"fadeout"); //1234
 	PlayerController::Get().m_pRespawnEffect = (JPanel*)pUIRoot->find_child(L"fadein"); //1234
+
+	m_pChat = (JEditCtrl*)pUIRoot->find_child(L"Chat_Edit");
 
 	ObjectManager::Get().PushObject(pUIRoot);
 	UI::InGameEvent(pUIRoot);

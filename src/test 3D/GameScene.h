@@ -13,6 +13,7 @@ public:
 	PlayerController* m_pPlayer = &PlayerController::Get();		// 컨트롤러
 	bool		 m_hitRay = false;
 	// UI
+	JEditCtrl*	 m_pChat = nullptr;
 	JTextCtrl*	 m_TimerText	= nullptr;
 	JCheckCtrl*  m_pCheckBox	= nullptr;
 	JSliderCtrl* m_pVolume		= nullptr;
