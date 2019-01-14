@@ -123,10 +123,9 @@ public:
 	MainClass() = default;
 	~MainClass() = default;
 public:
+	int ProcessServerPacket();
+	int ProcessClientPacket();
 	
 	int StartupServer();
 	int StartupClient();
 };
-
-int ProcessServerPacket();
-int ProcessClientPacket();
