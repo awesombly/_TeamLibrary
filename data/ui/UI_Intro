@@ -318,118 +318,8 @@
 ^pfEventClick 7274
 ^vpEventClick 
 
-^Type 784
-
-^SpriteType 6429
-^NodeName JumpParticle
-^ParentName Root
-^KeyState 135 135
-^bRender 0
-^bLoop 1
-^Position 0.000000 0.000000 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 1.000000 1.000000 1.000000
-^AnimTime 1.000000
-^AnimUV 8 8 
-^ParticleSize 511
-^ParticleScale 50.000000 100.000000
-^MinStartPos -400.000000 -300.000000 -1.000000
-^MaxStartPos 400.000000 300.000000 -1.000000
-^TurnDir 0 0 0
-^MinColor 1.000000 1.000000 1.000000 1.000000
-^MaxColor 1.000000 1.000000 1.000000 1.000000
-^LifeTime 0.000000 1.000000
-^MinDir -0.000000 -0.000000 0.000000
-^MaxDir 0.000000 0.000000 0.000000
-^MinDirAngle 0.000000 0.000000 -0.000000 1.000000
-^MaxDirAngle 0.000000 0.000000 0.000000 1.000000
-^MoveSpeed 0.000000 0.000000
-^RotSpeed 0.000000 0.000000
-^SPRITESTART 1
-^icn_rate_18.png
-^SPRITEEND
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick 
-
 ^Type 778
-^NodeName effect1
-^ParentName Root
-^KeyState 135 135
-^bRender 0
-^Position 0.000000 0.000000 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 400.000000 300.000000 1.000000
-^tx_Normal red.png
-^tx_Hover red.png
-^tx_Press red.png
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick 
-
-^Type 778
-^NodeName effect2
-^ParentName Root
-^KeyState 135 135
-^bRender 0
-^Position 0.000000 0.000000 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 400.000000 300.000000 1.000000
-^tx_Normal White.png
-^tx_Hover White.png
-^tx_Press White.png
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick 
-
-^Type 784
-
-^SpriteType 6429
-^NodeName effect3
-^ParentName Root
-^KeyState 135 135
-^bRender 0
-^bLoop 1
-^Position 0.000000 0.000000 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 1.000000 1.000000 1.000000
-^AnimTime 1.000000
-^AnimUV 0 0 
-^ParticleSize 512
-^ParticleScale 60.000000 110.000000
-^MinStartPos -400.000000 -300.000000 -1.000000
-^MaxStartPos 400.000000 300.000000 -1.000000
-^TurnDir 0 0 0
-^MinColor 1.000000 1.000000 1.000000 1.000000
-^MaxColor 1.000000 1.000000 1.000000 1.000000
-^LifeTime 10.000000 10.000000
-^MinDir -0.000000 -0.000000 0.000000
-^MaxDir 0.000000 0.000000 0.000000
-^MinDirAngle 0.000000 0.000000 -0.000000 1.000000
-^MaxDirAngle 0.000000 0.000000 0.000000 1.000000
-^MoveSpeed 150.000000 200.000000
-^RotSpeed 5.000000 10.000000
-^SPRITESTART 1
-^icn_rate_18.png
-^SPRITEEND
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick 
-
-^Type 778
-^NodeName effect4
+^NodeName effect_hos
 ^ParentName Root
 ^KeyState 135 135
 ^bRender 0
@@ -446,36 +336,35 @@
 ^pfEventClick 7274
 ^vpEventClick 
 
-^Type 784
-
-^SpriteType 6429
-^NodeName mouse_particle
+^Type 778
+^NodeName fadein
 ^ParentName Root
 ^KeyState 135 135
-^bRender 1
-^bLoop 1
-^Position 904.000000 -14.000000 0.000000
+^bRender 0
+^Position 0.000000 0.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 1.000000 1.000000 1.000000
-^AnimTime 1.000000
-^AnimUV 0 0 
-^ParticleSize 128
-^ParticleScale 5.000000 10.000000
-^MinStartPos 0.000000 0.000000 -0.000000
-^MaxStartPos 0.000000 0.000000 -0.000000
-^TurnDir 0 0 0
-^MinColor 0.000000 0.000000 0.000000 1.000000
-^MaxColor 1.000000 1.000000 1.000000 1.000000
-^LifeTime 0.500000 1.000000
-^MinDir 0.000000 -1.000000 0.000000
-^MaxDir 2.000000 -1.000000 0.000000
-^MinDirAngle 0.000000 0.000000 -1.000000 1.000000
-^MaxDirAngle 0.000000 0.000000 1.000000 1.000000
-^MoveSpeed 150.000000 200.000000
-^RotSpeed 5.000000 10.000000
-^SPRITESTART 1
-^star_1-792ed97534d5eed4092159fc3befacc0-1.png
-^SPRITEEND
+^Scale 400.000000 300.000000 1.000000
+^tx_Normal White.png
+^tx_Hover White.png
+^tx_Press White.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 778
+^NodeName fadeout
+^ParentName Root
+^KeyState 135 135
+^bRender 0
+^Position 0.000000 0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 400.000000 300.000000 1.000000
+^tx_Normal red.png
+^tx_Hover red.png
+^tx_Press red.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -523,7 +412,7 @@
 ^KeyState 135 135
 ^bRender 1
 ^bLoop 1
-^Position 904.000000 -14.000000 0.000000
+^Position 906.000000 -7.000000 0.000000
 ^Rotate 0.000000 0.000000 -0.261799
 ^Scale 15.000000 15.000000 1.000000
 ^AnimTime 0.250000
@@ -546,13 +435,50 @@
 ^KeyState 135 135
 ^bRender 1
 ^bLoop 0
-^Position 894.000000 -4.000000 0.000000
+^Position 896.000000 3.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 4.309733 4.309733 1.000000
+^Scale 4.511353 4.511353 1.000000
 ^AnimTime 0.500000
 ^AnimUV 3 2 
 ^SPRITESTART 1 
 ^PropertyButtonFavouriteFill-468cdd1c31f3046448a59ed378113993-1.png
+^SPRITEEND
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 784
+
+^SpriteType 6429
+^NodeName mouse_particle
+^ParentName Root
+^KeyState 135 135
+^bRender 1
+^bLoop 1
+^Position 906.000000 -7.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 1.000000 1.000000 1.000000
+^AnimTime 1.000000
+^AnimUV 0 0 
+^ParticleSize 128
+^ParticleScale 5.000000 10.000000
+^MinStartPos 0.000000 0.000000 -0.000000
+^MaxStartPos 0.000000 0.000000 -0.000000
+^TurnDir 0 0 0
+^MinColor 0.000000 0.000000 0.000000 1.000000
+^MaxColor 1.000000 1.000000 1.000000 1.000000
+^LifeTime 0.500000 1.000000
+^MinDir 0.000000 -1.000000 0.000000
+^MaxDir 2.000000 -1.000000 0.000000
+^MinDirAngle 0.000000 0.000000 -1.000000 1.000000
+^MaxDirAngle 0.000000 0.000000 1.000000 1.000000
+^MoveSpeed 150.000000 200.000000
+^RotSpeed 5.000000 10.000000
+^SPRITESTART 1
+^star_1-792ed97534d5eed4092159fc3befacc0-1.png
 ^SPRITEEND
 ^pfEventHover 7274
 ^vpEventHover 

@@ -331,5 +331,10 @@ void GameScene::LoadUI() noexcept
 
 	ObjectManager::Get().PushObject(pUIRoot);
 	
+	////////////////////////////////////////////////////////////////////////////////
+	JButtonCtrl* FadeOut = (JButtonCtrl*)pUIRoot->find_child(L"fadeout");
+	//FadeOut->EffectPlay();
+	JButtonCtrl* FadeIn = (JButtonCtrl*)pUIRoot->find_child(L"fadein");
+	//FadeIn->EffectPlay();
 	UI::InGameEvent(pUIRoot);
 }
