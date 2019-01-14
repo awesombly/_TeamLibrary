@@ -85,6 +85,11 @@ namespace UI
 		pEff1->PreEvent.first = E_FADEOUT;
 		pEff1->PreEvent.second = pEff1;
 
+		JPanel* pEff3 = (JPanel*)pRoot->find_child(L"fadeout_white");
+		if (pEff3 == nullptr) return;
+		pEff3->PreEvent.first = E_FADEOUT;
+		pEff3->PreEvent.second = pEff3;
+
 		JPanel* pEff2 = (JPanel*)pRoot->find_child(L"fadein");
 		if (pEff2 == nullptr) return;
 		pEff2->PreEvent.first = E_FADEIN;
