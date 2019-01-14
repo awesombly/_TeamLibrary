@@ -15,22 +15,22 @@ namespace UI
 	{
 		JPanel* pPanel = (JPanel*)vp;
 		pPanel->m_bRender = true;
-		Input::isDebug = true;
+		Input::isDebug = false;
 	}
 	static void E_NOTSHOW(void* vp)
 	{
 		JPanel* pPanel = (JPanel*)vp;
 		pPanel->m_bRender = false;
-		Input::isDebug = false;
+		Input::isDebug = true;
 	}
 	static void E_REVERSE_SHOW(void* vp)
 	{
 		JPanel* pPanel = (JPanel*)vp;
 		pPanel->m_bRender = !pPanel->m_bRender;
 		if (pPanel->m_bRender)
-			Input::isDebug = true;
-		else
 			Input::isDebug = false;
+		else
+			Input::isDebug = true;
 	}
 	static void E_ROTATEZ(void* vp)
 	{
