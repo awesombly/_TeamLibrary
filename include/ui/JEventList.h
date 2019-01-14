@@ -232,14 +232,14 @@ namespace UI
 		JPanel* pPanel = (JPanel*)vp;
 		if (pPanel->m_bRender)
 		{
-			if (pPanel->m_vScl.x >= 50.0f || pPanel->m_vScl.y >= 50.0f)
+			if (pPanel->m_vScl.x >= 75.0f || pPanel->m_vScl.y >= 75.0f)
 			{
-				if (pPanel->m_vScl.x >= 50.0f)
+				if (pPanel->m_vScl.x >= 75.0f)
 					pPanel->m_vScl.x -= Timer::SPF * 1000.0f; // 2ÃÊ¿¡ ¾ø¾îÁü
-				if (pPanel->m_vScl.y >= 50.0f)
+				if (pPanel->m_vScl.y >= 75.0f)
 					pPanel->m_vScl.y -= Timer::SPF * 1000.0f; // 2ÃÊ¿¡ ¾ø¾îÁü
 			}
-			pPanel->m_vRot.z -= Timer::SPF * 20.0f;
+			pPanel->m_vRot.z -= Timer::SPF * 50.0f;
 		}
 		if (Input::GetKeyState('4') == EKeyState::DOWN ||
 			pPanel->m_bEffect)
