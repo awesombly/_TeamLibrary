@@ -240,11 +240,11 @@ namespace UI
 		JPanel* pPanel = (JPanel*)vp;
 		if (pPanel->m_bRender)
 		{
-			if (pPanel->m_vScl.x >= 125.0f || pPanel->m_vScl.y >= 125.0f)
+			if (pPanel->m_vScl.x >= 100.0f || pPanel->m_vScl.y >= 100.0f)
 			{
-				if (pPanel->m_vScl.x >= 125.0f)
+				if (pPanel->m_vScl.x >= 100.0f)
 					pPanel->m_vScl.x -= Timer::SPF * 1000.0f; // 2ÃÊ¿¡ ¾ø¾îÁü
-				if (pPanel->m_vScl.y >= 125.0f)
+				if (pPanel->m_vScl.y >= 100.0f)
 					pPanel->m_vScl.y -= Timer::SPF * 1000.0f; // 2ÃÊ¿¡ ¾ø¾îÁü
 			}
 			pPanel->m_vRot.z -= Timer::SPF * 50.0f;
@@ -264,24 +264,24 @@ namespace UI
 	static void E_CROSSHAIR(void* vp)
 	{
 		JPanel* pPanel = (JPanel*)vp;
-		if (Input::GetKeyState(EMouseButton::Left) == EKeyState::HOLD)
+		if (Input::GetKeyState(EMouseButton::Left) == EKeyState::DOWN)
 		{
 			pPanel->EffectPlay();
 		}
 		if (!pPanel->m_bEffect)
 		{
-			if (pPanel->m_vScl.x >= 15.0f || pPanel->m_vScl.y >= 15.0f)
+			if (pPanel->m_vScl.x >= 40.0f || pPanel->m_vScl.y >= 40.0f)
 			{
-				if (pPanel->m_vScl.x >= 25.0f)
-					pPanel->m_vScl.x -= Timer::SPF * 100.0f; // 2ÃÊ¿¡ ¾ø¾îÁü
-				if (pPanel->m_vScl.y >= 25.0f)
-					pPanel->m_vScl.y -= Timer::SPF * 100.0f; // 2ÃÊ¿¡ ¾ø¾îÁü
+				if (pPanel->m_vScl.x >= 40.0f)
+					pPanel->m_vScl.x -= Timer::SPF * 200.0f; // 2ÃÊ¿¡ ¾ø¾îÁü
+				if (pPanel->m_vScl.y >= 40.0f)
+					pPanel->m_vScl.y -= Timer::SPF * 200.0f; // 2ÃÊ¿¡ ¾ø¾îÁü
 			}
 		}
 		if (pPanel->m_bEffect)
 		{
-			pPanel->m_vScl.x = 50.0f;
-			pPanel->m_vScl.y = 50.0f;
+			pPanel->m_vScl.x = 100.0f;
+			pPanel->m_vScl.y = 100.0f;
 			pPanel->m_bEffect = false;
 		}
 	}

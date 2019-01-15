@@ -109,6 +109,11 @@ namespace UI
 		JPanel* pJohn = (JPanel*)pRoot->find_child(L"JohnSprite");
 		pJohn->PreEvent.first = E_FADEOUT;
 		pJohn->PreEvent.second = pJohn;
+
+		JPanel* pCrossHair = (JPanel*)pRoot->find_child(L"CrossHair");
+		if (pCrossHair == nullptr) return;
+		pCrossHair->PreEvent.first = E_CROSSHAIR;
+		pCrossHair->PreEvent.second = pCrossHair;
 	}
 }/*
 L"^frame_000_delay-0.03s.jpg
