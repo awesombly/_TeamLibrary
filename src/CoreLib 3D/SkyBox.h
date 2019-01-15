@@ -19,6 +19,6 @@ protected:
 	SkyBox() = default;
 public:
 	SkyBox(const wstring_view& myName, const wstring_view& srcName = L"",
-		   const string_view& vertexShaderName = "VS_PNCT", const string_view& pixelShaderName = "PS_Final") noexcept;
+		   const string_view& vertexShaderName = "VS_Basic", const string_view& pixelShaderName = "PS_Final") noexcept;
 	virtual ~SkyBox() = default;
 };

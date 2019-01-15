@@ -68,11 +68,11 @@ void DxManager::InitLoadShader() noexcept
 	LoadPixelShader(L"../../data/shader/RenderTarget.hlsl", "PS_MRT_None");
 	LoadPixelShader(L"../../data/shader/RenderTarget.hlsl", "PS_MRT_Normal");
 	// ¡§¡° Ω¶¿Ã¥ı ∑ŒµÂ
-	LoadVertexShader(L"../../data/shader/Shader.hlsl", "VS_PNCT");
+	LoadVertexShader(L"../../data/shader/Shader.hlsl", "VS_Basic");
 	LoadVertexShader(L"../../data/shader/Shader.hlsl", "VS_Light");
 	LoadVertexShader(L"../../data/shader/Shader.hlsl", "VS_PC");
 	// «»ºø Ω¶¿Ã¥ı ∑ŒµÂ
-	LoadPixelShader(L"../../data/shader/Shader.hlsl", "PS_PCT");
+	LoadPixelShader(L"../../data/shader/Shader.hlsl", "PS_Basic");
 	LoadPixelShader(L"../../data/shader/Shader.hlsl", "PS_PC");
 	LoadPixelShader(L"../../data/shader/Shader.hlsl", "PS_Frustum");
 	// ±∏√º ≈•∫Í∏ 

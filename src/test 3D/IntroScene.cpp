@@ -129,7 +129,7 @@ bool IntroScene::FirstInit() noexcept
 		ObjectManager::Get().Lights.front()->AddComponent({ pTrans });
 		// 라이트 랜더러
 		auto pShpere = (Renderer*)ObjectManager::GetInstance().TakeComponent(L"Sphere");
-		pShpere->SetShaderLayout("VS_PNCT", "PS_PCT");
+		pShpere->SetShaderLayout("VS_Basic", "PS_Basic");
 		pObject = new GameObject(L"Sun", pShpere);
 		pObject->isGlobal(true);
 		pObject->SetScale(Vector3::One * 7);

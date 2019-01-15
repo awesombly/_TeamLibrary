@@ -14,7 +14,7 @@ HRESULT RenderDepthView::Create(ID3D11DeviceContext* pDContext, IDXGISwapChain* 
 	if (isShadowMap)
 	{
 		m_RTViewCount = 1;
-		m_pScreen = new PlaneUI(L"ScreenView", L"None.png", "VS_PNCT", "PS_MRT_None");
+		m_pScreen = new PlaneUI(L"ScreenView", L"None.png", "VS_Basic", "PS_MRT_None");
 	}
 	else
 	{

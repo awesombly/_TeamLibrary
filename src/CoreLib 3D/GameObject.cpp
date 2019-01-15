@@ -158,12 +158,12 @@ void GameObject::UpdateMatrix() noexcept
 	if (m_isBillBoard)
 	{
 		static D3DXMATRIX matBill;
-		matBill = (ObjectManager::Cameras[ECamera::Current])->m_matView;
+		matBill = ObjectManager::CurCamera->m_matView;
 		matBill._41 = 0.0f;
 		matBill._42 = 0.0f;
 		matBill._43 = 0.0f;
 		//D3DXMatrixInverse(&matBill, nullptr, &matBill);
-		m_matLocal = matBill * m_matLocal;
+		m_matLocal *= matBill/* * m_matLocal*/;
 	}
 
 	//m_Side	= { m_matRotation._11, m_matRotation._12, m_matRotation._13 };

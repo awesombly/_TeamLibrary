@@ -21,7 +21,7 @@ struct VS_OUTPUT_PC
 };
 
 //// 기본 정점
-//VS_OUTPUT_PNCT VS_PNCT(VS_INPUT_PNCTT input)
+//VS_OUTPUT_PNCT VS_Basic(VS_INPUT_PNCTT input)
 //{
 //	VS_OUTPUT_PNCT output = (VS_OUTPUT_PNCT)0;
 //	output.pos = mul(float4(input.pos, 1.0f), g_matWorld);
@@ -52,7 +52,7 @@ struct VS_OUTPUT_PC
 //}
 
 // 기본 정점
-VS_OUTPUT_PNCT VS_PNCT(VS_INPUT_PNCTT input)
+VS_OUTPUT_PNCT VS_Basic(VS_INPUT_PNCTT input)
 {
 	VS_OUTPUT_PNCT output = (VS_OUTPUT_PNCT)0;
 	output.pos = mul(float4(input.pos, 1.0f), g_matWorld);
@@ -96,7 +96,7 @@ VS_OUTPUT_PC VS_PC(VS_INPUT_PC input)
 	return output;
 }
 // 기본 픽셀
-PBUFFER_OUTPUT PS_PCT(VS_OUTPUT_PNCT input)
+PBUFFER_OUTPUT PS_Basic(VS_OUTPUT_PNCT input)
 {
 	PBUFFER_OUTPUT output;
 	output.color0 = g_txDiffuse.Sample(samLinear, input.tex) * input.col;

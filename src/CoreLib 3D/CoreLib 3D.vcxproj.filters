@@ -299,40 +299,40 @@
     <Filter Include="Component\Basic">
       <UniqueIdentifier>{13b60ea9-09c2-4bf0-9f10-0277b85ba652}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Sound\Shader">
+    <Filter Include="Shader">
       <UniqueIdentifier>{e2203dfe-7bc3-4363-a152-be2ee34301dc}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="..\..\data\shader\Basis.hlsl">
-      <Filter>Sound\Shader</Filter>
+      <Filter>Shader</Filter>
     </FxCompile>
     <FxCompile Include="..\..\data\shader\CubeMap.hlsl">
-      <Filter>Sound\Shader</Filter>
+      <Filter>Shader</Filter>
     </FxCompile>
     <FxCompile Include="..\..\data\shader\EnviMap.hlsl">
-      <Filter>Sound\Shader</Filter>
+      <Filter>Shader</Filter>
     </FxCompile>
     <FxCompile Include="..\..\data\shader\Instance.hlsl">
-      <Filter>Sound\Shader</Filter>
+      <Filter>Shader</Filter>
     </FxCompile>
     <FxCompile Include="..\..\data\shader\NormalMap.hlsl">
-      <Filter>Sound\Shader</Filter>
+      <Filter>Shader</Filter>
     </FxCompile>
     <FxCompile Include="..\..\data\shader\RenderTarget.hlsl">
-      <Filter>Sound\Shader</Filter>
+      <Filter>Shader</Filter>
     </FxCompile>
     <FxCompile Include="..\..\data\shader\Shader.hlsl">
-      <Filter>Sound\Shader</Filter>
+      <Filter>Shader</Filter>
     </FxCompile>
     <FxCompile Include="..\..\data\shader\ShadowMap.hlsl">
-      <Filter>Sound\Shader</Filter>
+      <Filter>Shader</Filter>
     </FxCompile>
     <FxCompile Include="..\..\data\shader\Final.hlsl">
-      <Filter>Sound\Shader</Filter>
+      <Filter>Shader</Filter>
     </FxCompile>
     <FxCompile Include="..\..\data\shader\OutLine.hlsl">
-      <Filter>Sound\Shader</Filter>
+      <Filter>Shader</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>

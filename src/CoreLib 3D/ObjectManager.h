@@ -5,7 +5,7 @@
 #include "Light.h"
 
 enum class ECamera : char{
-	Current,		// 적용중인 카메라
+	//Current,		// 적용중인 카메라
 	Screen,			// 랜더 타겟용
 	Main,			// 메인 카메라
 	UI,				// 화면 직교 카메라

@@ -17,6 +17,6 @@ protected:
 	PlaneUI() = default;
 public:
 	PlaneUI(const wstring_view& myName, const wstring_view& srcName = L"",
-		 const string_view& vertexShaderName = "VS_PNCT", const string_view& pixelShaderName = "PS_PCT") noexcept;
+		 const string_view& vertexShaderName = "VS_Basic", const string_view& pixelShaderName = "PS_Basic") noexcept;
 	virtual ~PlaneUI() = default;
 };

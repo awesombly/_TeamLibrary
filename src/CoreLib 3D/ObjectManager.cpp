@@ -568,6 +568,5 @@ void ObjectManager::PopInstance(InstanceRenderer* pInstance) noexcept
 			return;
 		}
 	}
-
 	//ErrorMessage(L""s + __FUNCTIONW__ + L" -> " + pObject->m_myName + L", Not Found!" );
 }

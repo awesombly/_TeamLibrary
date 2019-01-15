@@ -12,7 +12,9 @@
 class PacketManager : public ISingleton<PacketManager>
 {
 public:
-	list<UserInfo> UserList;
+	list<UserInfo*>	UserList;
+	UserInfo*		pMyInfo;
+
 	PP::PPSender* pSender;
 	bool isHost;
 
