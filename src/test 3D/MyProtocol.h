@@ -38,7 +38,7 @@ enum EPacketProtocol : USHORT {
 	PACKET_ReqSync			= 2000,
 	PACKET_ReqSyncSpawns,
 	PACKET_ReqAddPlayer,
-	PACKET_HostAddPlayer,
+	//PACKET_HostAddPlayer,
 	// Key X
 	PACKET_SyncObjects		= 3000,
 	PACKET_ChatMessage,
@@ -168,6 +168,11 @@ struct Packet_AnimTransform
 	D3DXVECTOR3 Direction;
 	D3DXQUATERNION Rotation;
 	char EAnimState;
+	char ECharacter;
+};
+
+struct Packet_ReqAddPlayer
+{
 	char ECharacter;
 };
 
