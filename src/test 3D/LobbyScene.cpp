@@ -212,7 +212,7 @@ void LobbyScene::LoadUI() noexcept
 	// ÆÐ³ÎÃ¢
 	m_toGuestPanel = m_toGuestIP->m_pParent;
 	// ¸ÅÄª, ½ÃÀÛ ÀÌÆå
-	JTextCtrl* AutoMatching = (JTextCtrl*)pUIRoot->find_child(L"Matching_Loading_Start");
+	JTextCtrl* AutoMatching = (JTextCtrl*)pUIRoot->find_child(L"Matching_Login");
 	static auto pMatching = [](void* pScene) {
 		auto pMain = ((MainClass*)pScene);
 		pMain->ConnectMatchingServer();
@@ -228,11 +228,11 @@ void LobbyScene::LoadUI() noexcept
 
 	auto pLogin = (JTextCtrl*)pUIRoot->find_child(L"Matching_Login");
 
-	auto pLoading = (JListCtrl*)pUIRoot->find_child(L"Matching_Loading_List");
-	pLoading->push_string(L"¢¾¢¾¢¾¢¾");
-	pLoading->push_string(L"¢¾¢¾¢¾¢¾");
-	pLoading->push_string(L"¢¾¢¾¢¾¢¾");
-	pLoading->push_string(L"¢¾¢¾¢¾¢¾");
+	//auto pLoading = (JListCtrl*)pUIRoot->find_child(L"Matching_Loading_List");
+	//pLoading->push_string(L"¢¾¢¾¢¾¢¾");
+	//pLoading->push_string(L"¢¾¢¾¢¾¢¾");
+	//pLoading->push_string(L"¢¾¢¾¢¾¢¾");
+	//pLoading->push_string(L"¢¾¢¾¢¾¢¾");
 	///UI::E_LOGIN_BUTTON(pUIRoot->find_child(L"Matching_Loading_Panel"))
 	//pLogin->EventClick.first = ;
 	//pLogin->EventClick.second = pUIRoot->find_child(L"Matching_Loading_Panel");
