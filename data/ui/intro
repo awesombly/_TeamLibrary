@@ -22,43 +22,6 @@
 ^pfEventClick 7274
 ^vpEventClick 
 
-^Type 784
-
-^SpriteType 6429
-^NodeName click
-^ParentName Root
-^KeyState 135 135
-^bRender 1
-^bLoop 1
-^Position 0.000000 0.000000 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 50.000000 50.000000 1.000000
-^AnimTime 1.000000
-^AnimUV 0 0 
-^ParticleSize 16
-^ParticleScale 25.000000 50.000000
-^MinStartPos -350.000000 -250.000000 -1.000000
-^MaxStartPos 350.000000 250.000000 -1.000000
-^TurnDir 0 0 0
-^MinColor 1.000000 1.000000 1.000000 1.000000
-^MaxColor 1.000000 1.000000 1.000000 1.000000
-^LifeTime 1.000000 1.000000
-^MinDir -0.000000 -0.000000 0.000000
-^MaxDir 0.000000 0.000000 0.000000
-^MinDirAngle 0.000000 0.000000 -0.000000 1.000000
-^MaxDirAngle 0.000000 0.000000 0.000000 1.000000
-^MoveSpeed 0.000000 0.000000
-^RotSpeed 0.000000 0.000000
-^SPRITESTART 1
-^particleClick.png
-^SPRITEEND
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick 
-
 ^Type 777
 ^NodeName effect_panel
 ^ParentName Root
@@ -269,30 +232,6 @@
 ^RotSpeed 5.000000 10.000000
 ^SPRITESTART 1
 ^circle.png
-^SPRITEEND
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick 
-
-^Type 782
-
-^SpriteType 6430
-^NodeName cursor
-^ParentName effect_panel
-^KeyState 135 135
-^bRender 0
-^bLoop 1
-^Position 0.000000 0.000000 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 15.000000 15.000000 1.000000
-^Color 1.000000 1.000000 1.000000 1.000000
-^AnimTime 0.250000
-^AnimUV 2 2 
-^SPRITESTART 1 
-^Ghost2-a8030e16d3339d54c9ade70d2dbc4b91-1.png
 ^SPRITEEND
 ^pfEventHover 7274
 ^vpEventHover 
