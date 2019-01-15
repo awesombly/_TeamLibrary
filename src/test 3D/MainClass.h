@@ -127,4 +127,5 @@ public:
 	
 	int StartupServer();
 	int StartupClient();
+	int ConnectMatchingServer();
 };

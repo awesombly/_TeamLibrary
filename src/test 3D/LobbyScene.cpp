@@ -215,11 +215,11 @@ void LobbyScene::LoadUI() noexcept
 	JTextCtrl* AutoMatching = (JTextCtrl*)pUIRoot->find_child(L"D_AutoMatching");
 	static auto pMatching = [](void* pScene) {
 		auto pMain = ((MainClass*)pScene);
-		pMain->StartupClient();//여기서 매칭 서버 접속기능 편집
+		pMain->ConnectMatchingServer();//여기서 매칭 서버 접속기능 편집
 	};
 	AutoMatching->EventClick.first = pMatching;
 	AutoMatching->EventClick.second = this;
-	///
+	
 	m_pStartEffect = (JPanel*)pUIRoot->find_child(L"effect_hos"); //1234
 	
 
