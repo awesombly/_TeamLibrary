@@ -59,6 +59,7 @@ enum EPacketProtocol : USHORT {
 struct UserInfo
 {
 	UINT UserSocket;
+	UINT IconNum;
 	UINT Score;
 	WORD KillCount;
 	WORD DeathCount;

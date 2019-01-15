@@ -222,6 +222,20 @@ void LobbyScene::LoadUI() noexcept
 	
 	m_pStartEffect = (JPanel*)pUIRoot->find_child(L"effect_hos"); //1234
 	
+	auto pID = (JEditCtrl*)pUIRoot->find_child(L"Matching_ID");
+	// pID->GetString();
+	auto pPass = (JEditCtrl*)pUIRoot->find_child(L"Matching_PW");
+
+	auto pLogin = (JTextCtrl*)pUIRoot->find_child(L"Matching_Login");
+
+	auto pLoading = (JListCtrl*)pUIRoot->find_child(L"Matching_Loading_List");
+	pLoading->push_string(L"¢¾¢¾¢¾¢¾");
+	pLoading->push_string(L"¢¾¢¾¢¾¢¾");
+	pLoading->push_string(L"¢¾¢¾¢¾¢¾");
+	pLoading->push_string(L"¢¾¢¾¢¾¢¾");
+	///UI::E_LOGIN_BUTTON(pUIRoot->find_child(L"Matching_Loading_Panel"))
+	//pLogin->EventClick.first = ;
+	//pLogin->EventClick.second = pUIRoot->find_child(L"Matching_Loading_Panel");
 
 	ObjectManager::Get().PushObject(pUIRoot);
 	UI::IntroEvent(pUIRoot);	
