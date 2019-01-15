@@ -212,10 +212,10 @@ void LobbyScene::LoadUI() noexcept
 	// 패널창
 	m_toGuestPanel = m_toGuestIP->m_pParent;
 	// 매칭, 시작 이펙
-	JTextCtrl* AutoMatching = (JTextCtrl*)pUIRoot->find_child(L"D_AutoMatching");
+	JTextCtrl* AutoMatching = (JTextCtrl*)pUIRoot->find_child(L"Matching_Loading_Start");
 	static auto pMatching = [](void* pScene) {
 		auto pMain = ((MainClass*)pScene);
-		pMain->ConnectMatchingServer();//여기서 매칭 서버 접속기능 편집
+		MessageBoxW(0, L"", L"", 0);
 	};
 	AutoMatching->EventClick.first = pMatching;
 	AutoMatching->EventClick.second = this;
