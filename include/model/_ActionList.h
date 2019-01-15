@@ -13,7 +13,7 @@
 //ANIM_COUNT  11
 #define  Guard				L"guard"
 //#define	 Guard_ROLE			L"HERO_ROLE.Mat"
-#define	 Guard_PANCH		L"HERO_PUNCH.Mat"
+#define	 Guard_PUNCH		L"HERO_PUNCH.Mat"
 #define	 Guard_DASHJUMP		L"HERO_DASHJUMP.Mat"
 #define	 Guard_THROW		L"HERO_THROW.Mat"
 #define	 Guard_HAPPYWALK	L"HERO_HAPPYWALK.Mat"
