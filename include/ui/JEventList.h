@@ -316,7 +316,10 @@ namespace UI
 	{
 		JPanel* pParent = (JPanel*)vp;
 		if (Input::GetKeyState(EMouseButton::Left) == EKeyState::DOWN)
+		{
 			pParent->m_bRender = true;
+			pParent->find_root()->find_child(L"click")->m_bRender = false;
+		}
 
 		if (!pParent->m_bRender) return;
 		pParent->m_fUITimer += Timer::SPF;
@@ -415,6 +418,12 @@ namespace UI
 			pChild->m_bRender = true;
 			if (pChild->m_pShape->m_cbData.vColor.w <= 1.0f)
 				pChild->m_pShape->m_cbData.vColor.w += Timer::SPF * 2.0f;
+
+			JSpriteCtrl* pCursor = (JSpriteCtrl*)pParent->find_child(L"cursor");
+			if (pCursor == nullptr) return;
+			pCursor->m_bRender = true;
+			pCursor->PreEvent.first = E_MOUSE_CURSOR;
+			pCursor->PreEvent.second = pCursor;
 		}
 	}
 }
