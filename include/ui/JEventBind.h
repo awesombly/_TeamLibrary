@@ -5,6 +5,7 @@ namespace UI
 	static void IntroEvent(JPanel* pRoot)
 	{
 		JPanel* pEffect = pRoot->find_child(L"effect_panel");
+		if (pEffect == nullptr) return;
 		pEffect->PreEvent.first = E_INTRO;
 		pEffect->PreEvent.second = pEffect;
 	}
