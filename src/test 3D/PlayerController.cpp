@@ -17,7 +17,7 @@ bool PlayerController::Init() noexcept
 	{
 		auto pObject = new GameObject(L"UserTitle", m_pUserTitle = new RPlane(L"UserTitle", L"ui/dog.png"));
 		pObject->SetPosition(Vector3::Up * 50.0f);
-		pObject->isBillBoard(true);
+		//pObject->isBillBoard(true);
 		pObject->SetParent(this);
 	}
 	return true;
