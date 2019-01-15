@@ -6,6 +6,24 @@ bool GameScene::Init() noexcept
 {
 	m_pPlayer->Init();
 	FirstInit();
+
+	for (auto& [name, matrixList] : I_Object.m_ObjectMatrix)
+	{
+		for (auto& matrix : matrixList)
+		{
+			auto pObject = new GameObject(L"test");
+			pObject->SetPosition(matrix._41, matrix._42, matrix._43);
+			//pObject->SetRotation();
+
+			for (auto& collider : I_Object.m_ObjectCollider[name].ColliderOBB)
+			{
+				auto pCollider = new ColliderOBB(collider.vMin, collider.vMax);
+				pObject->AddComponent(pCollider);
+				pCollider->m_pivot = collider.vCenter;
+			}
+		}
+	}
+
 #pragma region Basic
 	GameObject* pEffect = nullptr;
 	//m_pParser->CreateFromFile(&pEffect, L"Snow.eff", L"../../data/script");
@@ -38,15 +56,15 @@ bool GameScene::Init() noexcept
 	m_pPlayer->Possess(pHero);
 	m_pPlayer->ResetOption();
 
-	ObjectManager::Get().TakeObject(L"Guard")->SetPosition(RandomNormal() * 1000.0f - 500.0f, RandomNormal() * 150.0f, RandomNormal() * 1000.0f - 500.0f);
-	ObjectManager::Get().TakeObject(L"Guard")->SetPosition(RandomNormal() * 1000.0f - 500.0f, RandomNormal() * 150.0f, RandomNormal() * 1000.0f - 500.0f);
-	ObjectManager::Get().TakeObject(L"Guard")->SetPosition(RandomNormal() * 1000.0f - 500.0f, RandomNormal() * 150.0f, RandomNormal() * 1000.0f - 500.0f);
-	ObjectManager::Get().TakeObject(L"Zombie")->SetPosition(RandomNormal() * 1000.0f - 500.0f, RandomNormal() * 150.0f, RandomNormal() * 1000.0f - 500.0f);
-	ObjectManager::Get().TakeObject(L"Zombie")->SetPosition(RandomNormal() * 1000.0f - 500.0f, RandomNormal() * 150.0f, RandomNormal() * 1000.0f - 500.0f);
-	ObjectManager::Get().TakeObject(L"Zombie")->SetPosition(RandomNormal() * 1000.0f - 500.0f, RandomNormal() * 150.0f, RandomNormal() * 1000.0f - 500.0f);
-	ObjectManager::Get().TakeObject(L"Bird")->SetPosition(RandomNormal()	* 1000.0f - 500.0f, RandomNormal() * 150.0f, RandomNormal() * 1000.0f - 500.0f);
-	ObjectManager::Get().TakeObject(L"Bird")->SetPosition(RandomNormal()	* 1000.0f - 500.0f, RandomNormal() * 150.0f, RandomNormal() * 1000.0f - 500.0f);
-	ObjectManager::Get().TakeObject(L"Bird")->SetPosition(RandomNormal()	* 1000.0f - 500.0f, RandomNormal() * 150.0f, RandomNormal() * 1000.0f - 500.0f);
+	//ObjectManager::Get().TakeObject(L"Guard")->SetPosition(RandomNormal() * 1000.0f - 500.0f, RandomNormal() * 150.0f, RandomNormal() * 1000.0f - 500.0f);
+	//ObjectManager::Get().TakeObject(L"Guard")->SetPosition(RandomNormal() * 1000.0f - 500.0f, RandomNormal() * 150.0f, RandomNormal() * 1000.0f - 500.0f);
+	//ObjectManager::Get().TakeObject(L"Guard")->SetPosition(RandomNormal() * 1000.0f - 500.0f, RandomNormal() * 150.0f, RandomNormal() * 1000.0f - 500.0f);
+	//ObjectManager::Get().TakeObject(L"Zombie")->SetPosition(RandomNormal() * 1000.0f - 500.0f, RandomNormal() * 150.0f, RandomNormal() * 1000.0f - 500.0f);
+	//ObjectManager::Get().TakeObject(L"Zombie")->SetPosition(RandomNormal() * 1000.0f - 500.0f, RandomNormal() * 150.0f, RandomNormal() * 1000.0f - 500.0f);
+	//ObjectManager::Get().TakeObject(L"Zombie")->SetPosition(RandomNormal() * 1000.0f - 500.0f, RandomNormal() * 150.0f, RandomNormal() * 1000.0f - 500.0f);
+	//ObjectManager::Get().TakeObject(L"Bird")->SetPosition(RandomNormal()	* 1000.0f - 500.0f, RandomNormal() * 150.0f, RandomNormal() * 1000.0f - 500.0f);
+	//ObjectManager::Get().TakeObject(L"Bird")->SetPosition(RandomNormal()	* 1000.0f - 500.0f, RandomNormal() * 150.0f, RandomNormal() * 1000.0f - 500.0f);
+	//ObjectManager::Get().TakeObject(L"Bird")->SetPosition(RandomNormal()	* 1000.0f - 500.0f, RandomNormal() * 150.0f, RandomNormal() * 1000.0f - 500.0f);
 #pragma endregion
 	// UI
 	LoadUI();
