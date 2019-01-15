@@ -103,6 +103,9 @@ public:
 	static XQuadTreeIndex*	m_pMapTree;					// 맵->공간분할, LOD시 수정 예정
 	static XMapImporter		m_Importer;					// 세이브 데이터 로더
 public:
+	int m_iMatchingStatus = 0;
+	std::string m_strHostIPv4;
+public:
 	void MsgEvent(const MSG& _message)	noexcept;
 	// 씬 설정
 	void SetScene(const ESceneName& sceneName, const bool& useRelease = true) noexcept;
