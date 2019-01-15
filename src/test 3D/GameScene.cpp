@@ -4,38 +4,33 @@
 
 bool GameScene::Init() noexcept
 {
+	I_Object.ViewColliderSwitch();
+	for (auto& [name, matrixList] : I_Object.m_ObjectMatrix)
+	{
+		for (int matIndex = 0; matIndex < matrixList.Matrix.size(); ++matIndex)
+		{
+			D3DXVECTOR3 center = Vector3::Zero;
+			for (int colIndex = 0; colIndex < I_Object.m_ObjectCollider[name].ColliderAABB.size(); ++colIndex)
+			{
+				auto pObject = new GameObject(L"Dummy");
+				auto pCollider = new ColliderOBB(Product(I_Object.m_ObjectCollider[name].ColliderAABB[colIndex].vMin, matrixList.vScale[matIndex]), Product(I_Object.m_ObjectCollider[name].ColliderAABB[colIndex].vMax, matrixList.vScale[matIndex]));
+				pObject->AddComponent(pCollider);
+				pObject->SetPosition(matrixList.vLocation[matIndex]);
+				pObject->SetRotation(QuatToRotation(matrixList.qRotation[matIndex]) + QuatToRotation(I_Object.m_ObjectCollider[name].qRotation[colIndex]));
+				pObject->SetHP(10000.0f);
+				center = Product(I_Object.m_ObjectCollider[name].ColliderAABB[colIndex].vCenter, matrixList.vScale[matIndex]);
+				pCollider->m_pivot = center;
+				pCollider->usePhysics(false);
+				pCollider->SetGravityScale(0.0f);
+	
+				pObject->Frame(0.0f, 0.0f);
+				//ObjectManager::Get().PushObject(pObject);
+			}
+		}
+	}
+
 	m_pPlayer->Init();
 	FirstInit();
-
-	//I_Object.ViewColliderSwitch();
-	//for (auto& [name, matrixList] : I_Object.m_ObjectMatrix)
-	//{
-	//	for (int index = 0; index < matrixList.Matrix.size(); ++index)
-	//	{
-	//		//pObject->SetRotation();
-	//		//D3DXVECTOR3 scale, rotation, position;
-	//		//matrix.
-	//		//D3DXMatrixDecompose(, matrix)
-	//
-	//		matrixList.Matrix[index];
-	//		
-	//		for (int i = 0; i < I_Object.m_ObjectCollider[name].ColliderAABB.size(); ++i)
-	//		{
-	//			auto pObject = new GameObject(L"Dummy");
-	//			auto pCollider = new ColliderOBB(I_Object.m_ObjectCollider[name].ColliderAABB[i].vMin, I_Object.m_ObjectCollider[name].ColliderAABB[i].vMax);
-	//			pObject->AddComponent(pCollider);
-	//			pObject->SetPosition(matrixList.vLocation[index]);
-	//			pObject->SetRotation(I_Object.m_ObjectCollider[name].qRotation[i]);
-	//			pObject->SetHP(10000.0f);
-	//			pCollider->m_pivot = I_Object.m_ObjectCollider[name].ColliderAABB[i].vCenter;
-	//			pCollider->usePhysics(false);
-	//			pCollider->SetGravityScale(0.0f);
-	//
-	//			pObject->Frame(0.0f, 0.0f);
-	//			//ObjectManager::Get().PushObject(pObject);
-	//		}
-	//	}
-	//}
 
 #pragma region Basic
 	GameObject* pEffect = nullptr;
@@ -92,13 +87,6 @@ bool GameScene::Init() noexcept
 // 프레임
 bool GameScene::Frame() noexcept
 {
-	if (Input::GetKeyState('V') == EKeyState::DOWN)
-	{
-		g_pClient->ReqSocketNumber();
-	}
-
-
-
 	// IME 채팅
 	if (PlayerController::Get().isChatting())
 	{

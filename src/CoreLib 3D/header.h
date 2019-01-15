@@ -150,6 +150,7 @@ const float			 VectorLength(const D3DXVECTOR3& vector3)										 noexcept;
 const float			 VectorLengthSq(const D3DXVECTOR2& vector2)										 noexcept;
 const float			 VectorLengthSq(const D3DXVECTOR3& vector3)										 noexcept;
 const D3DXMATRIX	 MatrixTranspose(const D3DXMATRIX& matrix)										 noexcept;
+const D3DXVECTOR3	 QuatToRotation(const D3DXQUATERNION& quat)										 noexcept;
 
 
 

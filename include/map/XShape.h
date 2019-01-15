@@ -62,8 +62,13 @@ public:
 	}
 public:
 	virtual bool Init() noexcept { return true; }
-	virtual bool Frame(const float& spf, const float& accTime) noexcept { return true; }
-	virtual bool Render(ID3D11DeviceContext* pContext) noexcept { return true; }
+	virtual bool Frame(const float& spf, const float& accTime) noexcept {
+		return true; accTime; spf;
+	}
+	virtual bool Render(ID3D11DeviceContext* pContext) noexcept {
+		return true; pContext
+			;
+	}
 	virtual bool Release() noexcept { return true; }
 public:
 	XShape();

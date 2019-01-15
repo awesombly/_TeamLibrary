@@ -101,9 +101,9 @@ bool LobbyScene::Frame() noexcept
 	{
 		static float frameCount = 0.0f;
 		frameCount += Timer::SPF;
-		m_pBackHero->Scaling(-Vector3::One * 0.22f * Timer::SPF);
-		m_pBackHero->Translate(Vector3::One * 20.0f * Timer::SPF);
-		if (frameCount > 2.3f)
+		m_pBackHero->Scaling(-Vector3::One * 0.21f * Timer::SPF);
+		m_pBackHero->Translate(Vector3::One * 16.0f * Timer::SPF);
+		if (frameCount > 1.8f)
 		{
 			// ½ÃÀÛ
 			if (PacketManager::Get().isHost)
@@ -214,7 +214,7 @@ void LobbyScene::LoadUI() noexcept
 	// ¸ÅÄª, ½ÃÀÛ ÀÌÆå
 	JTextCtrl* AutoMatching = (JTextCtrl*)pUIRoot->find_child(L"Matching_Loading_Start");
 	static auto pMatching = [](void* pScene) {
-		auto pMain = ((MainClass*)pScene);
+		//auto pMain = ((MainClass*)pScene);
 		MessageBoxW(0, L"", L"", 0);
 	};
 	AutoMatching->EventClick.first = pMatching;
