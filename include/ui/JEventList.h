@@ -194,8 +194,8 @@ namespace UI
 		{
 			if (pPanel->m_pShape->m_cbData.vColor.w >= 0.0f)
 				pPanel->m_pShape->m_cbData.vColor.w -= Timer::SPF / 1.0f; // 2ÃÊ¿¡ ¾ø¾îÁü
-			else
-				pPanel->m_bRender = false;
+			//else
+			//	pPanel->m_bRender = false;
 		}
 		if (Input::GetKeyState('1') == EKeyState::DOWN ||
 			pPanel->m_bEffect)
@@ -258,6 +258,30 @@ namespace UI
 				pPanel->m_vScl.x = 500.0f;
 				pPanel->m_vScl.y = 500.0f;
 			}
+			pPanel->m_bEffect = false;
+		}
+	}
+	static void E_CROSSHAIR(void* vp)
+	{
+		JPanel* pPanel = (JPanel*)vp;
+		if (Input::GetKeyState(EMouseButton::Left) == EKeyState::HOLD)
+		{
+			pPanel->EffectPlay();
+		}
+		if (!pPanel->m_bEffect)
+		{
+			if (pPanel->m_vScl.x >= 15.0f || pPanel->m_vScl.y >= 15.0f)
+			{
+				if (pPanel->m_vScl.x >= 25.0f)
+					pPanel->m_vScl.x -= Timer::SPF * 100.0f; // 2ÃÊ¿¡ ¾ø¾îÁü
+				if (pPanel->m_vScl.y >= 25.0f)
+					pPanel->m_vScl.y -= Timer::SPF * 100.0f; // 2ÃÊ¿¡ ¾ø¾îÁü
+			}
+		}
+		if (pPanel->m_bEffect)
+		{
+			pPanel->m_vScl.x = 50.0f;
+			pPanel->m_vScl.y = 50.0f;
 			pPanel->m_bEffect = false;
 		}
 	}
