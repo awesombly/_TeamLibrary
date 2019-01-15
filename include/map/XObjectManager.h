@@ -10,13 +10,21 @@ struct XCollider
 	vector<X_Sphere> ColliderSphere;
 };
 
+struct XTransform
+{
+	vector<D3DXMATRIX> Matrix;
+	vector<D3DXVECTOR3> vLocation;
+	vector<D3DXQUATERNION> qRotation;
+	vector<D3DXVECTOR3> vScale;
+};
+
 class XObjectManager :public XSingleton<XObjectManager>
 {
 private:
 	friend class XSingleton<XObjectManager>;
 public:
 	map<TString, shared_ptr<XViewer>>	m_ObjectList;		// 같은 오브젝트 하나만 저장
-	map<TString, vector<D3DXMATRIX>>	m_ObjectMatrix;		// 오브젝트 별 matWorld 배열
+	map<TString, XTransform>	m_ObjectMatrix;		// 오브젝트 별 matWorld 배열, mat분해 성분
 	map<TString, XCollider>				m_ObjectCollider;	// 같은 오브젝트 당 하나의 충돌체만 저장
 	map<TString, vector<XBoxShape>>		m_OBBViewerList;	// 오브젝트 종류 당 하나만 추가
 	D3DXMATRIX m_matView;
