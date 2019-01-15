@@ -77,7 +77,7 @@ bool PlayerController::Frame(const float& spf, const float& accTime)	noexcept
 				p_TakeObject.KeyValue = ++PacketManager::Get().PlayerKeyCount;
 				memcpy(p_TakeObject.ObjectName, objName.data(), strSize);
 				p_TakeObject.DataSize = (UCHAR)strSize;
-				p_TakeObject.Position = { RandomNormal() * 1000.0f - 500.0f, 800.0f, RandomNormal() * 1000.0f - 500.0f };
+				p_TakeObject.Position = { RandomNormal() * 1000.0f - 500.0f, 250.0f, RandomNormal() * 1000.0f - 500.0f };
 				p_TakeObject.Rotation = Quaternion::Base;
 				p_TakeObject.Scale = Vector3::One * 0.5f;
 
@@ -155,7 +155,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const ECharacter& eCharacter, 
 		{
 			if (pB->m_eTag != ETag::Collider) return;
 
-			pB->SetForce((Normalize(pB->GetCenter() - pA->GetCenter()) + Vector3::Up * 0.6f) * 230.0f);
+			pB->SetForce((Normalize(pB->GetCenter() - pA->GetCenter()) + Vector3::Up * 0.8f) * 230.0f);
 			pB->m_pParent->OperHP(-0.4f);
 			if (pB->m_pParent == PlayerController::Get().GetParent())
 			{
@@ -395,7 +395,7 @@ void PlayerController::PlayerInput(const float& spf) noexcept
 			eAction = EAction::Dash;
 		}
 		// 근접 공격
-		if (Input::GetKeyState(VK_MBUTTON) == EKeyState::DOWN &&
+		if (Input::GetKeyState('E') == EKeyState::DOWN &&
 			m_curDelayMelee <= 0.0f)
 		{
 			m_curDelayMelee = m_DelayMelee;
@@ -469,7 +469,7 @@ void PlayerController::PlayerInput(const float& spf) noexcept
 		p_TakeObject.KeyValue = ++PacketManager::Get().PlayerKeyCount;
 		memcpy(p_TakeObject.ObjectName, objName.data(), strSize);
 		p_TakeObject.DataSize = (UCHAR)strSize;
-		p_TakeObject.Position = { RandomNormal() * 1000.0f - 500.0f, 800.0f, RandomNormal() * 1000.0f - 500.0f };
+		p_TakeObject.Position = { RandomNormal() * 1000.0f - 500.0f, 250.0f, RandomNormal() * 1000.0f - 500.0f };
 		p_TakeObject.Rotation = Quaternion::Base;
 		p_TakeObject.Scale = Vector3::One * 0.5f;
 
@@ -639,6 +639,7 @@ void PlayerController::ResetOption() noexcept
 	m_setMouseClient = m_setMouseScreen;
 	ScreenToClient(Window::m_hWnd, &m_setMouseClient);
 	///
+	SetPosition(Vector3::Zero);
 	m_pCamera = ObjectManager::Cameras[ECamera::Main];
 	m_pCamera->SetPosition(Vector3::Up * 50.0f);
 	m_pCamera->SetRotation(Quaternion::Left * PI + Quaternion::Up * PI * 0.2f);
@@ -683,6 +684,7 @@ void PlayerController::Possess(GameObject* pObject) noexcept
 
 void PlayerController::DeadEvent() noexcept
 {
+	SetPosition(m_pParent->GetPosition());
 	CutParent();
 	m_curDelayRespawn = 0.0f;
 	((JPanel*)m_pRespawn)->m_bRender = true;

@@ -202,7 +202,7 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 		 m_pChatList->push_string(p_ChatMessage.Message);
 		 *m_pChatList->m_fValue = 0.0f;
 	 }	break;
-	 case PS_SyncObjects:
+	 case PACKET_SyncObjects:
 	 {
 		 memcpy(&p_SyncObjects, data, PS_SyncObjects);
 		 memcpy(((char*)&p_SyncObjects + PS_SyncObjects), ((char*)data + PS_SyncObjects), p_SyncObjects.Count * sizeof(Packet_SyncTransform));

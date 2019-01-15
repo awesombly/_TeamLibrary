@@ -1,6 +1,7 @@
 #include "IntroScene.h"
 #include "JEventBind.h"
 #include "PacketManager.h"
+#include "PlayerController.h"
 
 bool IntroScene::Init() noexcept
 {
@@ -163,6 +164,10 @@ bool IntroScene::FirstInit() noexcept
 
 				pB->SetForce((Normalize(-pA->GetTotalForce()) + Vector3::Up) * 120.0f);
 				pB->m_pParent->OperHP(-0.15f);
+				if (pB->m_pParent == PlayerController::Get().GetParent())
+				{
+					((JPanel*)PlayerController::Get().m_pHitEffect)->EffectPlay();
+				}
 				if (pB->m_pParent->GetHP() <= 0.0f)
 				{
 					Packet_PlayerDead p_PlayerDead;
