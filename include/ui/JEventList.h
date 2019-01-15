@@ -285,4 +285,136 @@ namespace UI
 			pPanel->m_bEffect = false;
 		}
 	}
+	static POINT pttemp;
+	static void E_DRAG(void* vp)
+	{
+		JImageCtrl* pImg = (JImageCtrl*)vp;
+	//	JPanel* pParent = pImg->m_pParent;
+
+		if (Input::GetKeyState(EMouseButton::Left) == EKeyState::DOWN)
+		{
+			//pParent->m_bRender = true;
+			pttemp.x = pImg->m_ptMouse.Getpt().x;
+			pttemp.y = pImg->m_ptMouse.Getpt().y;
+		}
+		if (Input::GetKeyState(EMouseButton::Left) == EKeyState::HOLD)
+		{
+			pImg->m_vScl.x = (pImg->m_ptMouse.Getpt().x - pttemp.x) / 2.0f;
+			pImg->m_vScl.y = (pImg->m_ptMouse.Getpt().y - pttemp.y) / 2.0f;
+
+			pImg->m_vPos.x = pttemp.x + pImg->m_vScl.x;
+			pImg->m_vPos.y = pttemp.y + pImg->m_vScl.y;
+		}
+		if (Input::GetKeyState(EMouseButton::Left) == EKeyState::UP)
+		{
+			//pParent->m_bRender = false;
+			pImg->m_vScl.x = 0;
+			pImg->m_vScl.y = 0;
+		}
+	}
+	static void E_INTRO(void* vp)
+	{
+		JPanel* pParent = (JPanel*)vp;
+		if (Input::GetKeyState(EMouseButton::Left) == EKeyState::DOWN)
+			pParent->m_bRender = true;
+
+		if (!pParent->m_bRender) return;
+		pParent->m_fUITimer += Timer::SPF;
+		if (pParent->m_fUITimer >= 0.0f && pParent->m_fUITimer <= 0.8f)
+		{
+			JPanel* pChild = pParent->find_child(L"left");
+			if (pChild->m_vPos.x >= 0.0f)
+			{
+				pChild->m_vPos.x = 0.0f;
+				return;
+			}
+			pChild->m_vPos.x += Timer::SPF * 800.0f * 3.0f;
+		}
+		else if (pParent->m_fUITimer >= 0.8f && pParent->m_fUITimer <= 1.6f)
+		{
+			JPanel* pChild = pParent->find_child(L"top");
+			if (pChild->m_vPos.y <= 0.0f)
+			{
+				pChild->m_vPos.y = 0.0f;
+				return;
+			}
+			pChild->m_vPos.y -= Timer::SPF * 600.0f * 3.0f;
+		}
+		else if (pParent->m_fUITimer >= 1.6f && pParent->m_fUITimer <= 2.4f)
+		{
+			JPanel* pChild = pParent->find_child(L"right");
+			if (pChild->m_vPos.x <= 0.0f)
+			{
+				pChild->m_vPos.x = 0.0f;
+				return;
+			}
+			pChild->m_vPos.x -= Timer::SPF * 800.0f * 3.0f;
+		}
+		else if (pParent->m_fUITimer >= 2.4f && pParent->m_fUITimer <= 3.2f)
+		{
+			JPanel* pChild = pParent->find_child(L"bottom");
+			if (pChild->m_vPos.y >= 0.0f)
+			{
+				pChild->m_vPos.y = 0.0f;
+				return;
+			}
+			pChild->m_vPos.y += Timer::SPF * 600.0f * 3.0f;
+		}
+		else if (pParent->m_fUITimer >= 3.2f && pParent->m_fUITimer <= 4.0f)
+		{
+			JPanel* pChild = pParent->find_child(L"left2");
+			if (pChild->m_vPos.x >= 0.0f)
+			{
+				pChild->m_vPos.x = 0.0f;
+				return;
+			}
+			pChild->m_vPos.x += Timer::SPF * 800.0f * 3.0f;
+		}
+		else if (pParent->m_fUITimer >= 4.0f && pParent->m_fUITimer <= 5.0f)
+		{
+			JPanel* pChild = pParent->find_child(L"fadein");
+			if (pChild->m_pShape->m_cbData.vColor.w <= 1.0f)
+				pChild->m_pShape->m_cbData.vColor.w += Timer::SPF * 2.0f;
+		}
+		else if (pParent->m_fUITimer >= 5.0f && pParent->m_fUITimer <= 6.5f)
+		{
+			JPanel* pParticle = pParent->find_child(L"snow_particle");
+			pParticle->m_bRender = true;
+			JPanel* pChild = pParent->find_child(L"title");
+			pChild->m_bRender = true;
+			if (pChild->m_vScl.x >= 150.0f || pChild->m_vScl.y >= 50.0f)
+			{
+				if (pChild->m_vScl.x >= 150.0f)
+					pChild->m_vScl.x -= Timer::SPF * 2000.0f; // 2ÃÊ¿¡ ¾ø¾îÁü
+				if (pChild->m_vScl.y >= 50.0f)
+					pChild->m_vScl.y -= Timer::SPF * 2000.0f; // 2ÃÊ¿¡ ¾ø¾îÁü
+			}
+			if (pChild->m_vScl.x <= 150.0f || pChild->m_vScl.y <= 50.0f)
+			{
+				if (pChild->m_vScl.x <= 150.0f)
+					pChild->m_vScl.x = 150.0f;
+				if (pChild->m_vScl.y <= 50.0f)
+					pChild->m_vScl.y = 50.0f;
+			}
+		}
+		else if (pParent->m_fUITimer >= 6.5f && pParent->m_fUITimer <= 7.5f)
+		{
+			JPanel* pChild = pParent->find_child(L"teamname");
+			if (pChild->m_pShape->m_cbData.vColor.w <= 1.0f)
+				pChild->m_pShape->m_cbData.vColor.w += Timer::SPF * 2.0f;
+		}
+		else if (pParent->m_fUITimer >= 7.5f && pParent->m_fUITimer <= 8.5f)
+		{
+			JPanel* pChild = pParent->find_child(L"team");
+			if (pChild->m_pShape->m_cbData.vColor.w <= 1.0f)
+				pChild->m_pShape->m_cbData.vColor.w += Timer::SPF * 2.0f;
+		}
+		else if (pParent->m_fUITimer >= 8.5f && pParent->m_fUITimer <= 9.5f)
+		{
+			JPanel* pChild = pParent->find_child(L"gamestart");
+			pChild->m_bRender = true;
+			if (pChild->m_pShape->m_cbData.vColor.w <= 1.0f)
+				pChild->m_pShape->m_cbData.vColor.w += Timer::SPF * 2.0f;
+		}
+	}
 }

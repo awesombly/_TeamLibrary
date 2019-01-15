@@ -278,7 +278,7 @@ void GameScene::LoadUI() noexcept
 	JPanel* pUIRoot = new JPanel(L"UI_IntroRoot");
 	pUIRoot->m_objType = EObjType::UI;
 	JParser par;
-	par.FileLoad(DxManager::GetDevice(), L"../../data/ui/UI_InGame", *pUIRoot);
+	par.FileLoad(DxManager::GetDevice(), L"../../data/ui/InGame", *pUIRoot);
 	PlayerController::Get().m_pHpBar = (JProgressBar*)pUIRoot->find_child(L"HP_Progress");
 	//pProj->SetValue(m_pPlayer->m_HP, 1.0f); // °ª bind
 	auto pProj = (JProgressBar*)pUIRoot->find_child(L"MP_Progress");

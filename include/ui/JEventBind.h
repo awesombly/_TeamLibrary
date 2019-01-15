@@ -4,6 +4,12 @@ namespace UI
 {
 	static void IntroEvent(JPanel* pRoot)
 	{
+		JPanel* pEffect = pRoot->find_child(L"effect_panel");
+		pEffect->PreEvent.first = E_INTRO;
+		pEffect->PreEvent.second = pEffect;
+	}
+	static void LobbyEvent(JPanel* pRoot)
+	{
 		JPanel* pMouseParticle = pRoot->find_child(L"mouse_particle");
 		if (pMouseParticle == nullptr) return;
 		pMouseParticle->PreEvent.first = UI::E_MOUSE_PARTICLE;
@@ -56,13 +62,9 @@ namespace UI
 		AutoMatching->EventClick.second = pMatching_Panel;
 
 		JPanel* pMatchingExit = (JPanel*)pRoot->find_child(L"Matching_Exit");
-		if(pMatchingExit == nullptr) return;
+		if (pMatchingExit == nullptr) return;
 		pMatchingExit->EventClick.first = E_NOTSHOW;
 		pMatchingExit->EventClick.second = pMatchingExit->m_pParent;
-	}
-	static void LobbyEvent(JPanel* pRoot)
-	{
-
 	}
 	static void InGameEvent(JPanel* pRoot)
 	{

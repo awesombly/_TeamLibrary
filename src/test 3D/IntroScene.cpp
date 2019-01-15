@@ -266,6 +266,9 @@ bool IntroScene::FirstInit() noexcept
 
 void IntroScene::LoadUI() noexcept
 {
-	///
-	// UI::IntroEvent();
+	JPanel* pUIRoot = new JPanel(L"Intro");
+	pUIRoot->m_objType = EObjType::UI;
+	JParser par;
+	par.FileLoad(DxManager::GetDevice(), L"../../data/ui/Intro", *pUIRoot);
+	 UI::IntroEvent(pUIRoot);
 }

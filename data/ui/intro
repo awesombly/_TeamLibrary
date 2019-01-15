@@ -1,0 +1,241 @@
+^Type 777
+^NodeName Root
+^ParentName 
+^Position 0.000000 0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 1.000000 1.000000 1.000000
+
+^Type 788
+^NodeName background
+^ParentName Root
+^KeyState 135 135
+^bRender 1
+^Position 0.000000 0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 400.000000 300.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_Normal kgcalogo.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 777
+^NodeName effect_panel
+^ParentName Root
+^KeyState 135 135
+^bRender 0
+^Position 0.000000 0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 1.000000 1.000000 1.000000
+
+^Type 788
+^NodeName left
+^ParentName effect_panel
+^KeyState 135 135
+^bRender 1
+^Position -800.000000 0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 400.000000 300.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_Normal KakaoTalk_20181230_070516672.jpg
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName top
+^ParentName effect_panel
+^KeyState 135 135
+^bRender 1
+^Position 0.000000 600.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 400.000000 300.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_Normal KakaoTalk_20181230_070516776.jpg
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName right
+^ParentName effect_panel
+^KeyState 135 135
+^bRender 1
+^Position 800.000000 0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 400.000000 300.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_Normal KakaoTalk_20181230_070517608.jpg
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName bottom
+^ParentName effect_panel
+^KeyState 135 135
+^bRender 1
+^Position 0.000000 -600.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 400.000000 300.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_Normal KakaoTalk_20181230_070517832.jpg
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName left2
+^ParentName effect_panel
+^KeyState 135 135
+^bRender 1
+^Position -800.000000 0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 400.000000 300.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_Normal KakaoTalk_20190116_041500129.jpg
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName fadein
+^ParentName effect_panel
+^KeyState 135 135
+^bRender 1
+^Position 0.000000 0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 400.000000 300.000000 1.000000
+^Color 0.000000 0.000000 0.000000 0.000000
+^tx_Normal White.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName title
+^ParentName effect_panel
+^KeyState 135 135
+^bRender 0
+^Position 0.000000 200.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 1000.000000 1000.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_Normal Title.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName teamname
+^ParentName effect_panel
+^KeyState 135 135
+^bRender 1
+^Position 0.000000 150.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 100.000000 20.000000 1.000000
+^Color 1.000000 1.000000 1.000000 0.000000
+^tx_Normal logo.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName team
+^ParentName effect_panel
+^KeyState 135 135
+^bRender 1
+^Position 0.000000 -30.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 215.000000 100.000000 1.000000
+^Color 1.000000 1.000000 1.000000 0.000000
+^tx_Normal partname.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 778
+^NodeName gamestart
+^ParentName effect_panel
+^KeyState 135 135
+^bRender 0
+^Position -0.000000 -220.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 75.000000 25.000000 1.000000
+^Color 1.000000 1.000000 1.000000 0.000000
+^tx_Normal btn_238.png
+^tx_Hover btn_237.png
+^tx_Press btn_237.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 784
+
+^SpriteType 6429
+^NodeName snow_particle
+^ParentName effect_panel
+^KeyState 135 135
+^bRender 0
+^bLoop 1
+^Position 0.000000 0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 50.000000 50.000000 1.000000
+^AnimTime 1.000000
+^AnimUV 0 0 
+^ParticleSize 128
+^ParticleScale 1.000000 3.000000
+^MinStartPos -400.000000 300.000000 -1.000000
+^MaxStartPos 400.000000 300.000000 -1.000000
+^TurnDir 1 0 0
+^MinColor 1.000000 1.000000 1.000000 0.300000
+^MaxColor 1.000000 1.000000 1.000000 0.900000
+^LifeTime 6.000000 6.000000
+^MinDir -1.000000 -1.000000 0.000000
+^MaxDir 1.000000 -1.000000 0.000000
+^MinDirAngle 0.000000 0.000000 -0.000000 1.000000
+^MaxDirAngle 0.000000 0.000000 -0.000000 1.000000
+^MoveSpeed 100.000000 150.000000
+^RotSpeed 5.000000 10.000000
+^SPRITESTART 1
+^circle.png
+^SPRITEEND
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 

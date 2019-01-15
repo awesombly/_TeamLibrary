@@ -192,7 +192,7 @@ void LobbyScene::LoadUI() noexcept
 	JPanel* pUIRoot = new JPanel(L"UI_IntroRoot");
 	pUIRoot->m_objType = EObjType::UI;
 	JParser par;
-	par.FileLoad(DxManager::GetDevice(), L"../../data/ui/UI_Intro", *pUIRoot);
+	par.FileLoad(DxManager::GetDevice(), L"../../data/ui/Lobby", *pUIRoot);
 
 	// 호스트 입장
 	auto pPanel = pUIRoot->find_child(L"D_Host"); // D_Host
@@ -245,5 +245,5 @@ void LobbyScene::LoadUI() noexcept
 	//pLogin->EventClick.second = pUIRoot->find_child(L"Matching_Loading_Panel");
 
 	ObjectManager::Get().PushObject(pUIRoot);
-	UI::IntroEvent(pUIRoot);	
+	UI::LobbyEvent(pUIRoot);	
 }
