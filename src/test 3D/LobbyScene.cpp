@@ -214,8 +214,8 @@ void LobbyScene::LoadUI() noexcept
 	// ¸ÅÄª, ½ÃÀÛ ÀÌÆå
 	JTextCtrl* AutoMatching = (JTextCtrl*)pUIRoot->find_child(L"Matching_Loading_Start");
 	static auto pMatching = [](void* pScene) {
-		//auto pMain = ((MainClass*)pScene);
-		MessageBoxW(0, L"", L"", 0);
+		auto pMain = ((MainClass*)pScene);
+		pMain->ConnectMatchingServer();
 	};
 	AutoMatching->EventClick.first = pMatching;
 	AutoMatching->EventClick.second = this;
