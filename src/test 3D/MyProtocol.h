@@ -3,29 +3,54 @@
 
 #include "header.h"
 
-#define PACKET_SetTransform			1000
-#define PACKET_SetPosition			1001
-#define PACKET_SetRotation			1002
-#define PACKET_SetScale				1003
-#define PACKET_Translate			1004
-#define PACKET_Rotate				1005
-#define PACKET_Scaling				1006
-#define PACKET_SetAnimTransform		1008
-#define PACKET_PlayerDead			1009
-// 예외
-#define PACKET_ReqSync				2000
-#define PACKET_ReqSyncSpawns		2001
-#define PACKET_ReqAddPlayer			2002
-#define PACKET_HostAddPlayer		2003
-// Key X
-#define PACKET_SyncObjects			3016
-#define PACKET_ChatMessage			3015
-#define PACKET_PlaySound			3012
-#define PACKET_TakeObject			3011
-#define PACKET_PossessPlayer		3013
+//#define PACKET_SetTransform			1000
+//#define PACKET_SetPosition			1001
+//#define PACKET_SetRotation			1002
+//#define PACKET_SetScale				1003
+//#define PACKET_Translate			1004
+//#define PACKET_Rotate				1005
+//#define PACKET_Scaling				1006
+//#define PACKET_SetAnimTransform		1008
+//#define PACKET_PlayerDead			1009
+//// 예외
+//#define PACKET_ReqSync				2000
+//#define PACKET_ReqSyncSpawns		2001
+//#define PACKET_ReqAddPlayer			2002
+//#define PACKET_HostAddPlayer		2003
+//// Key X
+//#define PACKET_SyncObjects			3016
+//#define PACKET_ChatMessage			3015
+//#define PACKET_PlaySound			3012
+//#define PACKET_TakeObject			3011
+//#define PACKET_PossessPlayer		3013
 
+enum EPacketProtocol : USHORT {
+	PACKET_SetTransform		= 1000,
+	PACKET_SetTransform,
+	PACKET_SetTransform,
+	PACKET_SetPosition,
+	PACKET_SetRotation,
+	PACKET_SetScale,
+	PACKET_Translate,
+	PACKET_Rotate,
+	PACKET_Scaling,
+	PACKET_SetAnimTransform,
+	PACKET_PlayerDead,
+	// 예외
+	PACKET_ReqSync			= 2000,
+	PACKET_ReqSyncSpawns,
+	PACKET_ReqAddPlayer,
+	PACKET_HostAddPlayer,
+	// Key X
+	PACKET_SyncObjects		= 3000,
+	PACKET_ChatMessage,
+	PACKET_PlaySound,
+	PACKET_TakeObject,
+	PACKET_PossessPlayer,
+};
 
-// 패킷 데이터 제외 사이즈
+// 패킷 배열 제외 사이즈
+#define PS_UserInfo					13
 #define PS_SyncObjects				2
 #define PS_ChatMessage				1
 #define PS_PlaySound				17
@@ -33,6 +58,18 @@
 
 
 #pragma pack(push, 1)
+struct UserInfo
+{
+	UINT UserSocket;
+	UINT Score;
+	WORD KillCount;
+	WORD DeathCount;
+	bool isDead;
+
+	UCHAR DataSize;
+	WCHAR UserID[21];
+};
+
 struct Packet_PlayerDead
 {
 	UINT KeyValue;
@@ -46,14 +83,14 @@ struct Packet_TakeObject
 	D3DXVECTOR3 Scale;
 	D3DXQUATERNION Rotation;
 
-	UCHAR MsgSize;
+	UCHAR DataSize;
 	WCHAR ObjectName[51];
 };
 
 struct Packet_ChatMessage
 {
 	//UINT KeyValue;
-	UCHAR MsgSize;
+	UCHAR DataSize;
 	WCHAR Message[101];
 };
 
@@ -62,7 +99,7 @@ struct Packet_SoundData
 	//UINT KeyValue;
 	D3DXVECTOR3 Position;
 	float MaxDistance;
-	char NameSize;
+	char DataSize;
 	char SoundName[101];
 };
 
@@ -123,15 +160,6 @@ struct Packet_Transform
 	D3DXVECTOR3 Scale;
 	D3DXQUATERNION Rotation;
 };
-
-
-//struct Packet_Collider
-//{
-//	UINT KeyValue;
-//	D3DXVECTOR3 Position;
-//	//D3DXVECTOR3 Force;
-//	D3DXQUATERNION Rotation;
-//};		콜라이더 리스트에서 동기화?
 
 
 struct Packet_AnimTransform

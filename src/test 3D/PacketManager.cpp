@@ -114,7 +114,7 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 			 switch ((PlayerController::EAction)p_AnimTransform.EAnimState)
 			 {
 			 case PlayerController::EAction::Fly:
-				 ObjectManager::KeyObjects[p_AnimTransform.KeyValue]->SetGravityScale(-0.35f);
+				 ObjectManager::KeyObjects[p_AnimTransform.KeyValue]->SetGravityScale(-0.4f);
 			 case PlayerController::EAction::Jump:
 			 {
 				 ObjectManager::KeyObjects[p_AnimTransform.KeyValue]->isGround(false);
@@ -145,7 +145,7 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 	 {
 		 ZeroMemory(&p_TakeObject, sizeof(Packet_TakeObject));
 		 memcpy(&p_TakeObject, data, PS_TakeObject);
-		 memcpy(((char*)&p_TakeObject + PS_TakeObject), ((char*)data + PS_TakeObject), p_TakeObject.MsgSize);
+		 memcpy(((char*)&p_TakeObject + PS_TakeObject), ((char*)data + PS_TakeObject), p_TakeObject.DataSize);
 
 		 auto pObject = ObjectManager::Get().TakeObject(p_TakeObject.ObjectName);
 		 pObject->SetKeyValue(p_TakeObject.KeyValue);
@@ -191,14 +191,14 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 	 {
 		 ZeroMemory(&p_SoundData, sizeof(p_SoundData));
 		 memcpy(&p_SoundData, data, PS_PlaySound);
-		 memcpy(((char*)&p_SoundData + PS_PlaySound), ((char*)data + PS_PlaySound), p_SoundData.NameSize);
+		 memcpy(((char*)&p_SoundData + PS_PlaySound), ((char*)data + PS_PlaySound), p_SoundData.DataSize);
 		 SoundManager::Get().PlayQueue(p_SoundData.SoundName, p_SoundData.Position, p_SoundData.MaxDistance);
 	 }	break;
 	 case PACKET_ChatMessage:
 	 {
 		 ZeroMemory(&p_ChatMessage, sizeof(p_ChatMessage));
 		 memcpy(&p_ChatMessage, data, PS_ChatMessage);
-		 memcpy(((char*)&p_ChatMessage + PS_ChatMessage), ((char*)data + PS_ChatMessage), p_ChatMessage.MsgSize);
+		 memcpy(((char*)&p_ChatMessage + PS_ChatMessage), ((char*)data + PS_ChatMessage), p_ChatMessage.DataSize);
 		 m_pChatList->push_string(p_ChatMessage.Message);
 		 *m_pChatList->m_fValue = 0.0f;
 	 }	break;
@@ -231,7 +231,7 @@ void PacketManager::SendPlaySound(const string_view& soundName, const D3DXVECTOR
 	p_SoundData.Position = position;
 	p_SoundData.MaxDistance = maxDistance;
 	memcpy(p_SoundData.SoundName, soundName.data(), soundName.size());
-	p_SoundData.NameSize = (char)soundName.size();
+	p_SoundData.DataSize = (char)soundName.size();
 
 	SendPacket((char*)&p_SoundData, (USHORT)(PS_PlaySound + soundName.size()), PACKET_PlaySound);
 }

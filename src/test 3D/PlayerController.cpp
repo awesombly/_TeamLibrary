@@ -76,7 +76,7 @@ bool PlayerController::Frame(const float& spf, const float& accTime)	noexcept
 				Packet_TakeObject p_TakeObject;
 				p_TakeObject.KeyValue = ++PacketManager::Get().PlayerKeyCount;
 				memcpy(p_TakeObject.ObjectName, objName.data(), strSize);
-				p_TakeObject.MsgSize = (UCHAR)strSize;
+				p_TakeObject.DataSize = (UCHAR)strSize;
 				p_TakeObject.Position = { RandomNormal() * 1000.0f - 500.0f, 800.0f, RandomNormal() * 1000.0f - 500.0f };
 				p_TakeObject.Rotation = Quaternion::Base;
 				p_TakeObject.Scale = Vector3::One * 0.5f;
@@ -143,6 +143,40 @@ bool PlayerController::Release() noexcept
 
 void PlayerController::SetAnim(AHeroObj* pObject, const ECharacter& eCharacter, const EAction& eAction, const D3DXVECTOR3& forward) noexcept
 {
+	static auto pMeleeHitEvent = [](Collider* pA, Collider* pB) {
+		if (pB == nullptr)
+		{
+			auto pEffect = new GameObject(L"HitEffect", ObjectManager::Get().TakeComponent(L"Boom2"));
+			pEffect->SetPosition(pA->m_pParent->GetWorldPosition());
+			ObjectManager::Get().PushObject(pEffect);
+			//pA->ClearIgnoreList();
+		}
+		else
+		{
+			if (pB->m_eTag != ETag::Collider) return;
+
+			pB->SetForce((Normalize(pB->GetCenter() - pA->GetCenter()) + Vector3::Up * 0.6f) * 230.0f);
+			pB->m_pParent->OperHP(-0.4f);
+			if (pB->m_pParent == PlayerController::Get().GetParent())
+			{
+				((JPanel*)PlayerController::Get().m_pHitEffect)->EffectPlay();
+			}
+			if (pB->m_pParent->GetHP() <= 0.0f)
+			{
+				Packet_PlayerDead p_PlayerDead;
+				p_PlayerDead.KeyValue = pB->m_pParent->m_keyValue;
+				PacketManager::Get().SendPacket((char*)&p_PlayerDead, (USHORT)sizeof(Packet_PlayerDead), PACKET_PlayerDead);
+			}
+			else
+			{
+				pA->AddIgnoreList(pB);
+			}
+			auto pEffect = new GameObject(L"HitEffect", ObjectManager::Get().TakeComponent(L"Boom2"));
+			pEffect->SetPosition(pA->m_pParent->GetWorldPosition());
+			ObjectManager::Get().PushObject(pEffect);
+		}
+	};
+
 	switch (eCharacter)
 	{
 	case ECharacter::EGuard:
@@ -202,14 +236,13 @@ void PlayerController::SetAnim(AHeroObj* pObject, const ECharacter& eCharacter, 
 			auto pDagger = ObjectManager::Get().TakeObject(L"Dagger");
 			pDagger->SetPosition(pObject->GetPosition() + pObject->GetForward() * 40.0f + pObject->GetUp() * 65.0f + pObject->GetRight() * 20.0f);
 			pDagger->SetRotation(pObject->GetRotation());
-			//pDagger->SetScale(Vector3::One * 1.0f);
 			pDagger->SetForce((forward + Vector3::Up * 0.15f) * 500.0f);
 			((Collider*)pDagger->GetComponentList(EComponent::Collider)->front())->AddIgnoreList((Collider*)pObject->GetComponentList(EComponent::Collider)->front());
 			SoundManager::Get().PlayQueue("SE_throw01.mp3", pObject->GetWorldPosition(), 1000.0f);
 		}	break;
 		case EAction::Melee:
 		{
-			pObject->SetANIM_OneTime(Guard_PANCH);
+			pObject->SetANIM_OneTime(Guard_PUNCH);
 			SoundManager::Get().PlayQueue("SV_Guard_Punch.mp3", pObject->GetWorldPosition(), 1000.0f);
 			
 			auto pCollider = new Collider(20.0f);
@@ -218,41 +251,11 @@ void PlayerController::SetAnim(AHeroObj* pObject, const ECharacter& eCharacter, 
 			pMelee->SetPosition(pObject->GetForward() * 45.0f + Vector3::Up * 30.0f);
 			pMelee->SetRotation(pObject->GetRotation());
 			pMelee->UpdateMatrix();
-			pCollider->CollisionEvent = [](Collider* pA, Collider* pB) {
-				if (pB == nullptr)
-				{
-					auto pEffect = new GameObject(L"HitEffect", ObjectManager::Get().TakeComponent(L"Boom2"));
-					pEffect->SetPosition(pA->m_pParent->GetWorldPosition());
-					ObjectManager::Get().PushObject(pEffect);
-					//pA->ClearIgnoreList();
-				}
-				else
-				{
-					if (pB->m_eTag != ETag::Collider) return;
-
-					pB->SetForce(((pB->GetCenter() - pA->GetCenter()) + Vector3::Up * 0.6f) * 230.0f);
-					pB->m_pParent->OperHP(-0.4f);
-					if (pB->m_pParent->GetHP() <= 0.0f)
-					{
-						Packet_PlayerDead p_PlayerDead;
-						p_PlayerDead.KeyValue = pB->m_pParent->m_keyValue;
-						PacketManager::Get().SendPacket((char*)&p_PlayerDead, (USHORT)sizeof(Packet_PlayerDead), PACKET_PlayerDead);
-					}
-					else
-					{
-						pA->AddIgnoreList(pB);
-					}
-					auto pEffect = new GameObject(L"HitEffect", ObjectManager::Get().TakeComponent(L"Boom2"));
-					pEffect->SetPosition(pA->m_pParent->GetWorldPosition());
-					ObjectManager::Get().PushObject(pEffect);
-				}
-			};
+			pCollider->CollisionEvent = pMeleeHitEvent;
 			pCollider->AddIgnoreList((Collider*)pObject->GetComponentList(EComponent::Collider)->front());
 			pCollider->m_eTag = ETag::Dummy;
 			pCollider->SetGravityScale(0.0f);
 			pCollider->usePhysics(false);
-			//pCollider->AddIgnoreList()
-
 		}	break;
 		}
 	}	break;
@@ -304,7 +307,6 @@ void PlayerController::SetAnim(AHeroObj* pObject, const ECharacter& eCharacter, 
 		 	auto pChicken = ObjectManager::Get().TakeObject(L"Chicken");
 		 	pChicken->SetPosition(pObject->GetPosition() + pObject->GetForward() * 40.0f + pObject->GetUp() * 65.0f + pObject->GetRight() * 20.0f);
 		 	pChicken->SetRotation(pObject->GetRotation());
-		 	//pDagger->SetScale(Vector3::One * 1.0f);
 		 	pChicken->SetForce((forward + Vector3::Up * 0.15f) * 500.0f);
 		 	((Collider*)pChicken->GetComponentList(EComponent::Collider)->front())->AddIgnoreList((Collider*)pObject->GetComponentList(EComponent::Collider)->front());
 		 	SoundManager::Get().PlayQueue("SE_chicken.mp3", pObject->GetWorldPosition(), 1000.0f);
@@ -314,41 +316,13 @@ void PlayerController::SetAnim(AHeroObj* pObject, const ECharacter& eCharacter, 
 		 	pObject->SetANIM_OneTime(Zombie_PUNCH);
 		 	SoundManager::Get().PlayQueue("SE_zombie_hit01.mp3", pObject->GetWorldPosition(), 1000.0f);
 		 
-		 	auto pCollider = new Collider(20.0f);
-		 	auto pMelee = new GameObject(L"Melee", { pCollider, new CEventTimer(0.5f) });
-		 	pMelee->SetParent(pObject);
-		 	pMelee->SetPosition(pObject->GetForward() * 45.0f + Vector3::Up * 30.0f);
-		 	pMelee->SetRotation(pObject->GetRotation());
+			auto pCollider = new Collider(20.0f);
+			auto pMelee = new GameObject(L"Melee", { pCollider, new CEventTimer(0.5f) });
+			pMelee->SetParent(pObject);
+			pMelee->SetPosition(pObject->GetForward() * 45.0f + Vector3::Up * 30.0f);
+			pMelee->SetRotation(pObject->GetRotation());
 			pMelee->UpdateMatrix();
-		 	pCollider->CollisionEvent = [](Collider* pA, Collider* pB) {
-		 		if (pB == nullptr)
-		 		{
-		 			auto pEffect = new GameObject(L"HitEffect", ObjectManager::Get().TakeComponent(L"Boom2"));
-		 			pEffect->SetPosition(pA->m_pParent->GetWorldPosition());
-		 			ObjectManager::Get().PushObject(pEffect);
-		 			//pA->ClearIgnoreList();
-		 		}
-		 		else
-		 		{
-		 			if (pB->m_eTag != ETag::Collider) return;
-		 
-		 			pB->SetForce((pA->m_pParent->GetForward() + Vector3::Up * 0.5f) * 300.0f);
-		 			pB->m_pParent->OperHP(-0.4f);
-		 			if (pB->m_pParent->GetHP() <= 0.0f)
-		 			{
-		 				Packet_PlayerDead p_PlayerDead;
-		 				p_PlayerDead.KeyValue = pB->m_pParent->m_keyValue;
-		 				PacketManager::Get().SendPacket((char*)&p_PlayerDead, (USHORT)sizeof(Packet_PlayerDead), PACKET_PlayerDead);
-		 			}
-					else
-					{
-						pA->AddIgnoreList(pB);
-					}
-		 			auto pEffect = new GameObject(L"HitEffect", ObjectManager::Get().TakeComponent(L"Boom2"));
-		 			pEffect->SetPosition(pA->m_pParent->GetWorldPosition());
-		 			ObjectManager::Get().PushObject(pEffect);
-		 		}
-		 	};
+			pCollider->CollisionEvent = pMeleeHitEvent;
 		 	pCollider->AddIgnoreList((Collider*)pObject->GetComponentList(EComponent::Collider)->front());
 		 	pCollider->m_eTag = ETag::Dummy;
 		 	pCollider->SetGravityScale(0.0f);
@@ -421,7 +395,7 @@ void PlayerController::PlayerInput(const float& spf) noexcept
 			eAction = EAction::Dash;
 		}
 		// 근접 공격
-		if (Input::GetKeyState('V') == EKeyState::DOWN &&
+		if (Input::GetKeyState(VK_MBUTTON) == EKeyState::DOWN &&
 			m_curDelayMelee <= 0.0f)
 		{
 			m_curDelayMelee = m_DelayMelee;
@@ -441,7 +415,7 @@ void PlayerController::PlayerInput(const float& spf) noexcept
 	}
 	if (isFly && Input::GetKeyState(EMouseButton::Right) == EKeyState::HOLD)
 	{
-		m_MP -= 0.5f * spf;
+		m_MP -= 0.65f * spf;
 		if (m_MP <= 0.0f)
 		{
 			isFly = false;
@@ -477,7 +451,7 @@ void PlayerController::PlayerInput(const float& spf) noexcept
 	m_curAction = eAction;
 
 	// 동기화 요청
-	if (Input::GetKeyState(VK_CONTROL) == EKeyState::DOWN &&
+	if (Input::GetKeyState(VK_ADD) == EKeyState::DOWN &&
 		!PacketManager::Get().isHost)
 	{
 		PacketManager::Get().SendPacket('\0', 1, PACKET_ReqSync);
@@ -494,7 +468,7 @@ void PlayerController::PlayerInput(const float& spf) noexcept
 		Packet_TakeObject p_TakeObject;
 		p_TakeObject.KeyValue = ++PacketManager::Get().PlayerKeyCount;
 		memcpy(p_TakeObject.ObjectName, objName.data(), strSize);
-		p_TakeObject.MsgSize = (UCHAR)strSize;
+		p_TakeObject.DataSize = (UCHAR)strSize;
 		p_TakeObject.Position = { RandomNormal() * 1000.0f - 500.0f, 800.0f, RandomNormal() * 1000.0f - 500.0f };
 		p_TakeObject.Rotation = Quaternion::Base;
 		p_TakeObject.Scale = Vector3::One * 0.5f;

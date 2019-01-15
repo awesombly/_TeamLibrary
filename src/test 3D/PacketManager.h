@@ -9,13 +9,14 @@
 class PacketManager : public ISingleton<PacketManager>
 {
 public:
-	bool isHost;
+	list<UserInfo> UserList;
 	PP::PPSender* pSender;
+	bool isHost;
 
-	wstring InputIP;
 	UINT	PlayerKeyCount = 10000;
 	queue< PP::PPPacketForProcess> PacketHistory;
 	///
+	wstring InputIP;
 	JListCtrl*   m_pChatList = nullptr;
 public:
 	void SendPlaySound(const string_view& soundName, const D3DXVECTOR3& position, const float& maxDistance) noexcept;

@@ -76,7 +76,7 @@ bool GameScene::Frame() noexcept
 			// 패킷 전송
 			Packet_ChatMessage p_ChatMessage;
 			memcpy(p_ChatMessage.Message, m_chatMessage.data(), strSize);
-			p_ChatMessage.MsgSize = (UCHAR)strSize;
+			p_ChatMessage.DataSize = (UCHAR)strSize;
 			PacketManager::Get().SendPacket((char*)&p_ChatMessage, (USHORT)(PS_ChatMessage + strSize), PACKET_ChatMessage);
 
 			m_chatMessage.clear();
