@@ -239,7 +239,7 @@
 ^ParentName Help_Panel
 ^KeyState 135 135
 ^bRender 0
-^Position -204.000000 151.000000 0.000000
+^Position -219.000000 159.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 70.000000 50.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
@@ -512,116 +512,18 @@
 ^pfEventClick 7274
 ^vpEventClick 
 
-^Type 777
-^NodeName Matching_Loading_Panel
-^ParentName Root
-^KeyState 135 135
-^bRender 0
-^Position 0.000000 0.000000 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 1.000000 1.000000 1.000000
-
-^Type 788
-^NodeName Matching_Loading_BackGround
-^ParentName Matching_Loading_Panel
+^Type 778
+^NodeName Matching_Exit
+^ParentName Matching_Panel
 ^KeyState 135 135
 ^bRender 1
-^Position 0.000000 0.000000 0.000000
+^Position 150.000000 50.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 150.000000 150.000000 1.000000
+^Scale 20.000000 20.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
-^tx_Normal black.png
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick 
-
-^Type 785
-^NodeName Matching_Loading_List
-^ParentName Matching_Loading_Panel
-^KeyState 135 135
-^bRender 1
-^Position 0.000000 38.377853 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 140.000000 100.000000 1.000000
-^Color 1.000000 1.000000 1.000000 1.000000
-^TextSize 50.000000
-^RectColumn 4
-^tx_Normal White.png
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick 
-
-^Type 783
-^NodeName Matching_Loading_Start
-^ParentName Matching_Loading_Panel
-^KeyState 135 135
-^bRender 1
-^Position 0.000000 -100.000000 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 50.000000 25.000000 1.000000
-^Color 1.000000 1.000000 1.000000 1.000000
-^strText Start
-^TextSize 35.000000
-^tx_Normal btn_177.png
-^tx_Hover btn_176.png
-^tx_Press btn_176.png
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick 
-
-^Type 788
-^NodeName Matching_Line1
-^ParentName Matching_Loading_Panel
-^KeyState 135 135
-^bRender 1
-^Position 0.000000 90.000000 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 140.000000 1.000000 1.000000
-^Color 1.000000 1.000000 1.000000 1.000000
-^tx_Normal black.png
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick 
-
-^Type 788
-^NodeName Matching_Line2
-^ParentName Matching_Loading_Panel
-^KeyState 135 135
-^bRender 1
-^Position 0.000000 40.000000 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 140.000000 1.000000 1.000000
-^Color 1.000000 1.000000 1.000000 1.000000
-^tx_Normal black.png
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick 
-
-^Type 788
-^NodeName Matching_Line3
-^ParentName Matching_Loading_Panel
-^KeyState 135 135
-^bRender 1
-^Position 0.000000 -10.000000 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 140.000000 1.000000 1.000000
-^Color 1.000000 1.000000 1.000000 1.000000
-^tx_Normal black.png
+^tx_Normal btn_175.png
+^tx_Hover btn_174.png
+^tx_Press btn_174.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -637,7 +539,7 @@
 ^KeyState 135 135
 ^bRender 1
 ^bLoop 1
-^Position 921.000000 -1.000000 0.000000
+^Position 922.000000 -23.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 1.000000 1.000000 1.000000
 ^AnimTime 1.000000
@@ -707,7 +609,7 @@
 ^KeyState 135 135
 ^bRender 1
 ^bLoop 1
-^Position 921.000000 -1.000000 0.000000
+^Position 922.000000 -23.000000 0.000000
 ^Rotate 0.000000 0.000000 -0.261799
 ^Scale 15.000000 15.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
@@ -731,9 +633,9 @@
 ^KeyState 135 135
 ^bRender 1
 ^bLoop 0
-^Position 911.000000 9.000000 0.000000
+^Position 912.000000 -13.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 3.588819 3.588819 1.000000
+^Scale 3.653445 3.653445 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
 ^AnimTime 0.500000
 ^AnimUV 3 2 
