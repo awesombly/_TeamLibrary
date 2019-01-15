@@ -8,12 +8,14 @@ private:
 	friend class XSingleton<XObjectController>;
 public:
 	bool m_bSelect = false;
+	BOOL m_bSetCollider = FALSE;
 	TString m_szSelectObject;
 	int m_iSelectMatNum = -1;
 	bool m_bTransparency = false;
 	D3DXMATRIX m_matView;
 	D3DXMATRIX m_matProj;
 public:
+	void SetColliderSwitch(BOOL bSetCollider) { m_bSetCollider = bSetCollider; }
 	TString AddObject(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, TString szFileName);
 	bool AddObjectWorldMat(TString szObj, D3DXMATRIX matWorld);
 	D3DXMATRIX GetObjectWorldMat(TString szObj, int iSelectMatNum);
