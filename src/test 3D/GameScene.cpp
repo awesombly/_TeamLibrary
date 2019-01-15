@@ -6,20 +6,30 @@ bool GameScene::Init() noexcept
 {
 	m_pPlayer->Init();
 	FirstInit();
-
+	//I_Object.ViewColliderSwitch();
 	for (auto& [name, matrixList] : I_Object.m_ObjectMatrix)
 	{
 		for (auto& matrix : matrixList)
 		{
-			auto pObject = new GameObject(L"test");
-			pObject->SetPosition(matrix._41, matrix._42, matrix._43);
 			//pObject->SetRotation();
+			//D3DXVECTOR3 scale, rotation, position;
+			//matrix.
+			//D3DXMatrixDecompose(, matrix)
 
-			for (auto& collider : I_Object.m_ObjectCollider[name].ColliderOBB)
+			for (int i = 0; i < I_Object.m_ObjectCollider[name].ColliderAABB.size(); ++i)
 			{
-				auto pCollider = new ColliderOBB(collider.vMin, collider.vMax);
+				auto pObject = new GameObject(L"Dummy");
+				auto pCollider = new ColliderOBB(I_Object.m_ObjectCollider[name].ColliderAABB[i].vMin, I_Object.m_ObjectCollider[name].ColliderAABB[i].vMax);
 				pObject->AddComponent(pCollider);
-				pCollider->m_pivot = collider.vCenter;
+				pObject->SetPosition(matrix._41, matrix._42, matrix._43);
+				pObject->SetRotation(I_Object.m_ObjectCollider[name].qRotation[i]);
+				pObject->SetHP(10000.0f);
+				pCollider->m_pivot = I_Object.m_ObjectCollider[name].ColliderAABB[i].vCenter;
+				pCollider->usePhysics(false);
+				pCollider->SetGravityScale(0.0f);
+
+				pObject->Frame(0.0f, 0.0f);
+				//ObjectManager::Get().PushObject(pObject);
 			}
 		}
 	}
@@ -235,13 +245,13 @@ void GameScene::DrawBoundingBox()	noexcept
 		}	break;
 		case ECollider::Sphere:
 		{
+			pSphere->SetPosition(iter->GetCenter());
+			pSphere->SetRotation(Quaternion::Base);
+			pSphere->SetScale(iter->GetWorldRadius() * Vector3::One);
+			pSphere->Frame(0.0f, 0.0f);
+			pSphere->Render(DxManager::GetDContext());
 		}	break;
 		}
-		pSphere->SetPosition(iter->GetCenter());
-		pSphere->SetRotation(Quaternion::Base);
-		pSphere->SetScale(iter->GetWorldRadius() * Vector3::One);
-		pSphere->Frame(0.0f, 0.0f);
-		pSphere->Render(DxManager::GetDContext());
 	}
 	DxManager::Get().SetRasterizerState(ERasterS::Current);
 }

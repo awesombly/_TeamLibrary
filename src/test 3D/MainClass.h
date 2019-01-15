@@ -1,44 +1,3 @@
-#pragma once
-//#ifdef NDEBUG
-//	#ifdef _DEBUG
-//		#undef _DEBUG
-//	#endif
-//#endif
-
-#ifdef _DEBUG
-	#pragma comment( lib, "ACoreLibTEAM_d.lib")
-	#pragma comment( lib, "libppnetwork_d.lib")
-	#pragma comment( lib, "UIToolLib_d.lib")
-#else
-	#pragma comment( lib, "ACoreLibTEAM.lib")
-	#pragma comment( lib, "libppnetwork.lib")
-	#pragma comment( lib, "UIToolLib.lib")
-#endif
-
-#include "CoreDX.h"
-///
-#include "MaxImporter.h"
-#include "SkySphere.h"
-#include "SkyBox.h"
-#include "ParticleSystem.h"
-#include "Raycast.h"
-#include "Light.h"
-#include "PlaneUI.h"
-#include "RLine.h"
-#include "RSphere.h"
-#include "RCube.h"
-#include "CTransformer.h"
-#include "ColliderAABB.h"
-#include "ColliderOBB.h"
-
-#include "AHeroObj.h"
-#include "JPanel.h"
-
-//#include "XCamera.h"
-#include "XQuadTreeIndex.h"
-#include "XMapImporter.h"
-
-
 // =====================================================================
 // 카메라 조작(Shift 누르고)
 // {
@@ -70,6 +29,46 @@
 // 각 씬은 MainClass에서 static으로 선언된 변수에 접근할 수 있습니다.(static 아니면 에러뜸)
 //
 // =====================================================================
+
+#pragma once
+//#ifdef NDEBUG
+//	#ifdef _DEBUG
+//		#undef _DEBUG
+//	#endif
+//#endif
+#ifdef _DEBUG
+#pragma comment( lib, "ACoreLibTEAM_d.lib")
+#pragma comment( lib, "libppnetwork_d.lib")
+#pragma comment( lib, "UIToolLib_d.lib")
+#else
+#pragma comment( lib, "ACoreLibTEAM.lib")
+#pragma comment( lib, "libppnetwork.lib")
+#pragma comment( lib, "UIToolLib.lib")
+#endif
+///
+#include "MaxImporter.h"
+#include "SkySphere.h"
+//#include "SkyBox.h"
+#include "ParticleSystem.h"
+#include "Raycast.h"
+#include "Light.h"
+#include "PlaneUI.h"
+#include "RLine.h"
+#include "RSphere.h"
+#include "RCube.h"
+#include "CTransformer.h"
+#include "ColliderAABB.h"
+#include "ColliderOBB.h"
+
+#include "AHeroObj.h"
+
+#include "MainClass.h"
+#include "CoreDX.h"
+
+//#include "XCamera.h"
+#include "XQuadTreeIndex.h"
+#include "XMapImporter.h"
+
 
 enum class ESceneName : char {
 	Intro = 0,
@@ -107,7 +106,7 @@ public:
 	void MsgEvent(const MSG& _message)	noexcept;
 	// 씬 설정
 	void SetScene(const ESceneName& sceneName, const bool& useRelease = true) noexcept;
-	void MainClass::LoadSceneInput()	noexcept;
+	void LoadSceneInput()	noexcept;
 
 	//void SendMovedObject()	noexcept;
 

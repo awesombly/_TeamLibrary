@@ -38,18 +38,21 @@ bool Collider::Frame(const float& spf, const float& accTime)	noexcept
 
 	// 충돌 체크
 	CollisionAllCheck(spf);
-
-	// 최소 높이
-	if (m_pParent->GetPosition().y < m_mapHeight)
+	
+	if (usePhysics())
 	{
-		isGround(true);
-		// Y 고정 말고 현재 Collider 피벗 따라 다르게 해야댐
-		m_pParent->SetPositionY(m_mapHeight);
-		m_pPhysics->m_force -= m_pPhysics->m_force * m_pPhysics->m_drag;
-		m_pPhysics->m_force.y = -m_pPhysics->m_repulsion;
-		//m_pPhysics->m_force = Vector3::Zero;
-		if(CollisionEvent != nullptr)
-			CollisionEvent(this, nullptr);
+		// 최소 높이
+		if (m_pParent->GetPosition().y < m_mapHeight)
+		{
+			isGround(true);
+			// Y 고정 말고 현재 Collider 피벗 따라 다르게 해야댐
+			m_pParent->SetPositionY(m_mapHeight);
+			m_pPhysics->m_force -= m_pPhysics->m_force * m_pPhysics->m_drag;
+			m_pPhysics->m_force.y = -m_pPhysics->m_repulsion;
+			//m_pPhysics->m_force = Vector3::Zero;
+			if (CollisionEvent != nullptr)
+				CollisionEvent(this, nullptr);
+		}
 	}
 	return true;
 	accTime;
@@ -138,9 +141,9 @@ bool Collider::CollisionAllCheck(const float& spf) noexcept
 			/////iter->m_force = Vector3::Zero;
 
 			if (m_pPhysics->m_usePhysics)
-				m_pPhysics->m_force = Normalize(GetCenter() - iter->GetCenter()) * 100;
+				m_pPhysics->m_force = Normalize(GetCenter() - iter->GetCenter()) * 130;
 			if (iter->m_pPhysics->m_usePhysics)
-				iter->m_pPhysics->m_force = Normalize(iter->GetCenter() - GetCenter()) * 100;
+				iter->m_pPhysics->m_force = Normalize(iter->GetCenter() - GetCenter()) * 130;
 
 			//m_pPhysics->m_force = Vector3::Zero;
 			////isMoving(false);

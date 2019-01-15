@@ -47,7 +47,7 @@ private:
 public:
 	Collider*  m_pMeleeCollider = nullptr;
 
-	const float	m_DelayRespawn  = 8.0f;
+	const float	m_DelayRespawn  = 998.0f;
 	const float	m_DelayThrow	= 0.3f;
 	const float	m_DelayDash		= 1.0f;
 	const float	m_DelayMelee	= 1.0f;

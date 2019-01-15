@@ -463,39 +463,43 @@ void PlayerController::PlayerInput(const float& spf) noexcept
 
 	if (Input::GetKeyState('X') == EKeyState::DOWN)
 	{
-		if (PacketManager::Get().isHost)
-		{
-			static size_t strSize = 0;
-			wstring objName = L"Zombie";
-			strSize = objName.size() * 2;
-			strSize = strSize > 100 ? 100 : strSize;
+		static Packet_ReqAddPlayer p_ReqAddPlayer;
+		p_ReqAddPlayer.ECharacter = ECharacter::EZombie;
+		PacketManager::Get().ReqSendPacket((char*)&p_ReqAddPlayer, (USHORT)sizeof(Packet_ReqAddPlayer), PACKET_ReqAddPlayer);
 
-			Packet_TakeObject p_TakeObject;
-			p_TakeObject.KeyValue = ++PacketManager::Get().PlayerKeyCount;
-			memcpy(p_TakeObject.ObjectName, objName.data(), strSize);
-			p_TakeObject.DataSize = (UCHAR)strSize;
-			p_TakeObject.Position = { RandomNormal() * 1000.0f - 500.0f, 150.0f, RandomNormal() * 1000.0f - 500.0f };
-			p_TakeObject.Rotation = Quaternion::Base;
-			p_TakeObject.Scale = Vector3::One * 0.5f;
-
-			PP::PPPacketForProcess packetSend;
-			PacketManager::Get().SendPacket((char*)&p_TakeObject, (USHORT)sizeof(Packet_TakeObject), PACKET_TakeObject);
-
-			// ºùÀÇ ÆÄÆ®
-			static Packet_PossessPlayer p_character;
-			p_character.KeyValue = p_TakeObject.KeyValue;
-			p_character.ECharacter = PlayerController::ECharacter::EZombie;
-			memcpy(packetSend.m_Packet.m_Payload, (void*)&p_character, sizeof(Packet_PossessPlayer));
-			packetSend.m_Packet.m_Header.m_type = (PP::PPPacketType)PACKET_PossessPlayer;
-			packetSend.m_Packet.m_Header.m_len = (USHORT)(sizeof(Packet_PossessPlayer) + PACKET_HEADER_SIZE);
-			PacketManager::Get().InterceptPacket(packetSend.m_Packet.m_Header.m_type, packetSend.m_Packet.m_Payload);
-		}
-		else
-		{
-			static Packet_ReqAddPlayer p_ReqAddPlayer;
-			p_ReqAddPlayer.ECharacter = ECharacter::EZombie;
-			PacketManager::Get().SendPacket((char*)&p_ReqAddPlayer, (USHORT)sizeof(Packet_ReqAddPlayer), PACKET_ReqAddPlayer);
-		}
+		///if (PacketManager::Get().isHost)
+		///{
+		///	static size_t strSize = 0;
+		///	wstring objName = L"Zombie";
+		///	strSize = objName.size() * 2;
+		///	strSize = strSize > 100 ? 100 : strSize;
+		///
+		///	Packet_TakeObject p_TakeObject;
+		///	p_TakeObject.KeyValue = ++PacketManager::Get().PlayerKeyCount;
+		///	memcpy(p_TakeObject.ObjectName, objName.data(), strSize);
+		///	p_TakeObject.DataSize = (UCHAR)strSize;
+		///	p_TakeObject.Position = { RandomNormal() * 1000.0f - 500.0f, 150.0f, RandomNormal() * 1000.0f - 500.0f };
+		///	p_TakeObject.Rotation = Quaternion::Base;
+		///	p_TakeObject.Scale = Vector3::One * 0.5f;
+		///
+		///	PP::PPPacketForProcess packetSend;
+		///	PacketManager::Get().SendPacket((char*)&p_TakeObject, (USHORT)sizeof(Packet_TakeObject), PACKET_TakeObject);
+		///
+		///	// ºùÀÇ ÆÄÆ®
+		///	static Packet_PossessPlayer p_character;
+		///	p_character.KeyValue = p_TakeObject.KeyValue;
+		///	p_character.ECharacter = PlayerController::ECharacter::EZombie;
+		///	memcpy(packetSend.m_Packet.m_Payload, (void*)&p_character, sizeof(Packet_PossessPlayer));
+		///	packetSend.m_Packet.m_Header.m_type = (PP::PPPacketType)PACKET_PossessPlayer;
+		///	packetSend.m_Packet.m_Header.m_len = (USHORT)(sizeof(Packet_PossessPlayer) + PACKET_HEADER_SIZE);
+		///	PacketManager::Get().InterceptPacket(packetSend.m_Packet.m_Header.m_type, packetSend.m_Packet.m_Payload);
+		///}
+		///else
+		///{
+		///	static Packet_ReqAddPlayer p_ReqAddPlayer;
+		///	p_ReqAddPlayer.ECharacter = ECharacter::EZombie;
+		///	PacketManager::Get().SendPacket((char*)&p_ReqAddPlayer, (USHORT)sizeof(Packet_ReqAddPlayer), PACKET_ReqAddPlayer);
+		///}
 		//static size_t strSize = 0;
 		//wstring objName = L"Zombie";
 		//strSize = objName.size() * 2;
@@ -520,39 +524,42 @@ void PlayerController::PlayerInput(const float& spf) noexcept
 	}
 	if (Input::GetKeyState('Z') == EKeyState::DOWN)
 	{
-		if (PacketManager::Get().isHost)
-		{
-			static size_t strSize = 0;
-			wstring objName = L"Guard";
-			strSize = objName.size() * 2;
-			strSize = strSize > 100 ? 100 : strSize;
-
-			Packet_TakeObject p_TakeObject;
-			p_TakeObject.KeyValue = ++PacketManager::Get().PlayerKeyCount;
-			memcpy(p_TakeObject.ObjectName, objName.data(), strSize);
-			p_TakeObject.DataSize = (UCHAR)strSize;
-			p_TakeObject.Position = { RandomNormal() * 1000.0f - 500.0f, 150.0f, RandomNormal() * 1000.0f - 500.0f };
-			p_TakeObject.Rotation = Quaternion::Base;
-			p_TakeObject.Scale = Vector3::One * 0.5f;
-
-			PP::PPPacketForProcess packetSend;
-			PacketManager::Get().SendPacket((char*)&p_TakeObject, (USHORT)sizeof(Packet_TakeObject), PACKET_TakeObject);
-
-			// ºùÀÇ ÆÄÆ®
-			static Packet_PossessPlayer p_character;
-			p_character.KeyValue = p_TakeObject.KeyValue;
-			p_character.ECharacter = PlayerController::ECharacter::EGuard;
-			memcpy(packetSend.m_Packet.m_Payload, (void*)&p_character, sizeof(Packet_PossessPlayer));
-			packetSend.m_Packet.m_Header.m_type = (PP::PPPacketType)PACKET_PossessPlayer;
-			packetSend.m_Packet.m_Header.m_len = (USHORT)(sizeof(Packet_PossessPlayer) + PACKET_HEADER_SIZE);
-			PacketManager::Get().InterceptPacket(packetSend.m_Packet.m_Header.m_type, packetSend.m_Packet.m_Payload);
-		}
-		else
-		{
-			static Packet_ReqAddPlayer p_ReqAddPlayer;
-			p_ReqAddPlayer.ECharacter = ECharacter::EGuard;
-			PacketManager::Get().SendPacket((char*)&p_ReqAddPlayer, (USHORT)sizeof(Packet_ReqAddPlayer), PACKET_ReqAddPlayer);
-		}
+		static Packet_ReqAddPlayer p_ReqAddPlayer;
+		p_ReqAddPlayer.ECharacter = ECharacter::EZombie;
+		PacketManager::Get().ReqSendPacket((char*)&p_ReqAddPlayer, (USHORT)sizeof(Packet_ReqAddPlayer), PACKET_ReqAddPlayer);
+		///if (PacketManager::Get().isHost)
+		///{
+		///	static size_t strSize = 0;
+		///	wstring objName = L"Guard";
+		///	strSize = objName.size() * 2;
+		///	strSize = strSize > 100 ? 100 : strSize;
+		///
+		///	Packet_TakeObject p_TakeObject;
+		///	p_TakeObject.KeyValue = ++PacketManager::Get().PlayerKeyCount;
+		///	memcpy(p_TakeObject.ObjectName, objName.data(), strSize);
+		///	p_TakeObject.DataSize = (UCHAR)strSize;
+		///	p_TakeObject.Position = { RandomNormal() * 1000.0f - 500.0f, 150.0f, RandomNormal() * 1000.0f - 500.0f };
+		///	p_TakeObject.Rotation = Quaternion::Base;
+		///	p_TakeObject.Scale = Vector3::One * 0.5f;
+		///
+		///	PP::PPPacketForProcess packetSend;
+		///	PacketManager::Get().SendPacket((char*)&p_TakeObject, (USHORT)sizeof(Packet_TakeObject), PACKET_TakeObject);
+		///
+		///	// ºùÀÇ ÆÄÆ®
+		///	static Packet_PossessPlayer p_character;
+		///	p_character.KeyValue = p_TakeObject.KeyValue;
+		///	p_character.ECharacter = PlayerController::ECharacter::EGuard;
+		///	memcpy(packetSend.m_Packet.m_Payload, (void*)&p_character, sizeof(Packet_PossessPlayer));
+		///	packetSend.m_Packet.m_Header.m_type = (PP::PPPacketType)PACKET_PossessPlayer;
+		///	packetSend.m_Packet.m_Header.m_len = (USHORT)(sizeof(Packet_PossessPlayer) + PACKET_HEADER_SIZE);
+		///	PacketManager::Get().InterceptPacket(packetSend.m_Packet.m_Header.m_type, packetSend.m_Packet.m_Payload);
+		///}
+		///else
+		///{
+		///	static Packet_ReqAddPlayer p_ReqAddPlayer;
+		///	p_ReqAddPlayer.ECharacter = ECharacter::EGuard;
+		///	PacketManager::Get().SendPacket((char*)&p_ReqAddPlayer, (USHORT)sizeof(Packet_ReqAddPlayer), PACKET_ReqAddPlayer);
+		///}
 	}
 
 	spf;

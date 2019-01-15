@@ -2,12 +2,13 @@
 #include "ObjectManager.h"
 #include "SoundManager.h"
 #include "PlayerController.h"
+//#include "MainClass.cpp"
 #include "Collider.h"
 
 #include "../network/PPRecvPacketPoolServer.h"					//클라이언트 클래스 정의.
 
 
-void PacketManager::SendPacket(const char* data, const USHORT& size, const USHORT& packeyType/*, const PP::PPSendMode& sendMode*/) noexcept
+void PacketManager::SendPacket(const char* data, const USHORT& size, const USHORT& packeyType) noexcept
 {
 	if (isHost)
 	{
@@ -42,7 +43,8 @@ void PacketManager::ReqSendPacket(const char* data, const USHORT& size, const US
 		packet.m_Packet.m_Header.m_type = (PP::PPPacketType)packeyType;
 		packet.m_Packet.m_Header.m_len = (USHORT)(size + PACKET_HEADER_SIZE);
 
-		PP::PPRecvPacketPoolServer::GetInstance().push_back();
+		PP::PPRecvPacketPoolServer::GetInstance().push_back(packet);
+		PacketFunc();
 	}
 	else
 	{

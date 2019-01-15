@@ -1,10 +1,13 @@
 #pragma once
+#include <functional>
 #include "ISingleton.h"
 #include "MyProtocol.h"
 #include "uiheader.h"
 
 #include "../network/PPTCPIOCPClient.h"
 #include "../network/PPRecvPacketPool.h"
+
+
 
 class PacketManager : public ISingleton<PacketManager>
 {
@@ -18,6 +21,8 @@ public:
 	///
 	wstring InputIP;
 	JListCtrl*   m_pChatList = nullptr;
+	//
+	std::function<int()> PacketFunc;
 public:
 	void SendPlaySound(const string_view& soundName, const D3DXVECTOR3& position, const float& maxDistance) noexcept;
 
