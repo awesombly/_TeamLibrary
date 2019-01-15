@@ -26,8 +26,6 @@
 
 enum EPacketProtocol : USHORT {
 	PACKET_SetTransform		= 1000,
-	PACKET_SetTransform,
-	PACKET_SetTransform,
 	PACKET_SetPosition,
 	PACKET_SetRotation,
 	PACKET_SetScale,
