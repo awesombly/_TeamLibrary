@@ -212,7 +212,7 @@ void LobbyScene::LoadUI() noexcept
 	// ÆÐ³ÎÃ¢
 	m_toGuestPanel = m_toGuestIP->m_pParent;
 	// ¸ÅÄª, ½ÃÀÛ ÀÌÆå
-	JTextCtrl* AutoMatching = (JTextCtrl*)pUIRoot->find_child(L"Matching_Loading_Start");
+	JTextCtrl* AutoMatching = (JTextCtrl*)pUIRoot->find_child(L"Matching_Login");
 	static auto pMatching = [](void* pScene) {
 		auto pMain = ((MainClass*)pScene);
 		pMain->ConnectMatchingServer();
@@ -222,6 +222,17 @@ void LobbyScene::LoadUI() noexcept
 	
 	m_pStartEffect = (JPanel*)pUIRoot->find_child(L"effect_hos"); //1234
 	
+	auto pID = (JEditCtrl*)pUIRoot->find_child(L"Matching_ID");
+	// pID->GetString();
+	auto pPass = (JEditCtrl*)pUIRoot->find_child(L"Matching_PW");
+
+	auto pLogin = (JTextCtrl*)pUIRoot->find_child(L"Matching_Login");
+
+	//auto pLoading = (JListCtrl*)pUIRoot->find_child(L"Matching_Loading_List");
+	//pLoading->push_string(L"¢¾¢¾¢¾¢¾");
+	//pLoading->push_string(L"¢¾¢¾¢¾¢¾");
+	//pLoading->push_string(L"¢¾¢¾¢¾¢¾");
+	//pLoading->push_string(L"¢¾¢¾¢¾¢¾");
 	//auto pID = (JEditCtrl*)pUIRoot->find_child(L"Matching_ID");
 	//// pID->GetString();
 	//auto pPass = (JEditCtrl*)pUIRoot->find_child(L"Matching_PW");

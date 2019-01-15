@@ -29,6 +29,11 @@ namespace UI
 		pHelpImg->PreEvent.first = E_HELP_IMG;
 		pHelpImg->PreEvent.second = pHelpImg;
 
+		JPanel* pHelpImg2 = (JPanel*)pRoot->find_child(L"D_AutoMatching");
+		if (pHelpImg2 == nullptr) return;
+		pHelpImg2->PreEvent.first = E_HELP_IMG;
+		pHelpImg2->PreEvent.second = pHelpImg2;
+
 		// effect
 		JPanel* pEff1 = (JPanel*)pRoot->find_child(L"fadeout");
 		if (pEff1 == nullptr) return;
@@ -50,11 +55,10 @@ namespace UI
 		AutoMatching->EventClick.first = E_REVERSE_SHOW;
 		AutoMatching->EventClick.second = pMatching_Panel;
 
-		JPanel* pLoginBtn = (JPanel*)pRoot->find_child(L"Matching_Login");
-		JPanel* pMatching_Loading = (JPanel*)pRoot->find_child(L"Matching_Loading_Panel");
-		if (pLoginBtn == nullptr) return;
-		pLoginBtn->EventClick.first = E_LOGIN_BUTTON;
-		pLoginBtn->EventClick.second = pMatching_Loading;
+		JPanel* pMatchingExit = (JPanel*)pRoot->find_child(L"Matching_Exit");
+		if(pMatchingExit == nullptr) return;
+		pMatchingExit->EventClick.first = E_NOTSHOW;
+		pMatchingExit->EventClick.second = pMatchingExit->m_pParent;
 	}
 	static void LobbyEvent(JPanel* pRoot)
 	{

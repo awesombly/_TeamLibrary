@@ -270,18 +270,18 @@ namespace UI
 		}
 		if (!pPanel->m_bEffect)
 		{
-			if (pPanel->m_vScl.x >= 40.0f || pPanel->m_vScl.y >= 40.0f)
+			if (pPanel->m_vScl.x >= 25.0f || pPanel->m_vScl.y >= 25.0f)
 			{
-				if (pPanel->m_vScl.x >= 40.0f)
-					pPanel->m_vScl.x -= Timer::SPF * 200.0f; // 2ÃÊ¿¡ ¾ø¾îÁü
-				if (pPanel->m_vScl.y >= 40.0f)
-					pPanel->m_vScl.y -= Timer::SPF * 200.0f; // 2ÃÊ¿¡ ¾ø¾îÁü
+				if (pPanel->m_vScl.x >= 25.0f)
+					pPanel->m_vScl.x -= Timer::SPF * 150.0f; // 2ÃÊ¿¡ ¾ø¾îÁü
+				if (pPanel->m_vScl.y >= 25.0f)
+					pPanel->m_vScl.y -= Timer::SPF * 150.0f; // 2ÃÊ¿¡ ¾ø¾îÁü
 			}
 		}
 		if (pPanel->m_bEffect)
 		{
-			pPanel->m_vScl.x = 100.0f;
-			pPanel->m_vScl.y = 100.0f;
+			pPanel->m_vScl.x = 50.0f;
+			pPanel->m_vScl.y = 50.0f;
 			pPanel->m_bEffect = false;
 		}
 	}
