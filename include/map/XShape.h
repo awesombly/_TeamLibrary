@@ -53,16 +53,17 @@ public:
 	D3DXMATRIX GetWorldMatrix() { return m_matWorld; }
 	D3DXMATRIX GetViewMatrix() { return m_matView; }
 	D3DXMATRIX GetProjMatrix() { return m_matProj; }
+	void Multiply(D3DXVECTOR3& vec3, D3DXMATRIX mat)
+	{
+		D3DXVECTOR3 temp = { vec3.x,vec3.y,vec3.z };
+		vec3.x = temp.x*mat._11 + temp.y*mat._21 + temp.z*mat._31;
+		vec3.y = temp.x*mat._12 + temp.y*mat._22 + temp.z*mat._32;
+		vec3.z = temp.x*mat._13 + temp.y*mat._23 + temp.z*mat._33;
+	}
 public:
 	virtual bool Init() noexcept { return true; }
-	virtual bool Frame(const float& spf, const float& accTime) noexcept {
-		return true; spf
-			; accTime;
-	}
-	virtual bool Render(ID3D11DeviceContext* pContext) noexcept {
-		return true; pContext
-			;
-	}
+	virtual bool Frame(const float& spf, const float& accTime) noexcept { return true; }
+	virtual bool Render(ID3D11DeviceContext* pContext) noexcept { return true; }
 	virtual bool Release() noexcept { return true; }
 public:
 	XShape();
@@ -93,6 +94,10 @@ class XBoxShape :public XShape
 public:
 	virtual void SetVertex();
 	virtual void SetIndex();
+	void SetCollider(ID3D11DeviceContext* pContext, X_Box collider);
+	void SetColliderVertex(ID3D11DeviceContext* pContext);
+	void SetRotateCollider(ID3D11DeviceContext* pContext, X_Box collider, D3DXMATRIX matRotation);
+	void Rotate(ID3D11DeviceContext* pContext, D3DXMATRIX matRotation);
 public:
 	bool Create(TCHAR* szVertexShaderFile, TCHAR* szPixelShaderFile, char* szVSFunctionName, char* szPSFunctionName);
 	virtual bool Init() noexcept;

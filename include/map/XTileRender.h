@@ -4,7 +4,7 @@
 
 // XSpreatController에서 Texture를 생성하고
 // XMultiTextureRender에서는 4장의 Alpha Blending된 텍스처를 혼합해서 Render
-class XMultiTextureRender:public XQuadTreeIndex
+class XTileRender:public XQuadTreeIndex
 {
 public:
 	virtual bool Init() override;
@@ -12,7 +12,7 @@ public:
 	virtual bool Render(ID3D11DeviceContext* pContext) override;
 	virtual bool Release() override;
 public:
-	XMultiTextureRender();
-	virtual ~XMultiTextureRender();
+	XTileRender();
+	virtual ~XTileRender();
 };
 

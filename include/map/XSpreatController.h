@@ -24,7 +24,7 @@ public:
 	// 알파맵만 볼지 멀티텍스처를 볼지 상태값 세팅
 	void SetSpreatViewState(SpreatView SpreatViewState);
 	void SetSpreatColor(AlphaColor color) { m_SpreatColor = color; }
-	void SetSpreatMode(SpreatMode mode = SpreatMode_Basic) { m_SpreatMode = mode; }
+	void SetSpreatMode(SpreatMode mode = SpreatMode_Basic) { m_SpreatMode = mode; }	
 	// 알파맵 텍스처를 생성.
 	HRESULT CreateSpreatTexture();
 	// 생성한 Texture에 직접 접근해서 컬러값을 바꿈.
