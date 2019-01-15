@@ -9,7 +9,6 @@ bool GameScene::Init() noexcept
 	{
 		for (int matIndex = 0; matIndex < matrixList.Matrix.size(); ++matIndex)
 		{
-			D3DXVECTOR3 center = Vector3::Zero;
 			for (int colIndex = 0; colIndex < I_Object.m_ObjectCollider[name].ColliderAABB.size(); ++colIndex)
 			{
 				auto pObject = new GameObject(L"Dummy");
@@ -18,13 +17,12 @@ bool GameScene::Init() noexcept
 				pObject->SetPosition(matrixList.vLocation[matIndex]);
 				pObject->SetRotation(QuatToRotation(matrixList.qRotation[matIndex]) + QuatToRotation(I_Object.m_ObjectCollider[name].qRotation[colIndex]));
 				pObject->SetHP(10000.0f);
-				center = Product(I_Object.m_ObjectCollider[name].ColliderAABB[colIndex].vCenter, matrixList.vScale[matIndex]);
-				pCollider->m_pivot = center;
+				pCollider->m_pivot = Product(I_Object.m_ObjectCollider[name].ColliderAABB[colIndex].vCenter, matrixList.vScale[matIndex]);;
 				pCollider->usePhysics(false);
 				pCollider->SetGravityScale(0.0f);
 	
-				pObject->Frame(0.0f, 0.0f);
-				//ObjectManager::Get().PushObject(pObject);
+				//pObject->Frame(0.0f, 0.0f);
+				ObjectManager::Get().PushObject(pObject);
 			}
 		}
 	}
@@ -96,15 +94,17 @@ bool GameScene::Frame() noexcept
 	{
 		if (PlayerController::Get().isChatting())
 		{
-			static size_t strSize = 0;
-			strSize = m_chatMessage.size() * 2;
-			strSize = strSize > 200 ? 200 : strSize;
-			// 패킷 전송
-			Packet_ChatMessage p_ChatMessage;
-			memcpy(p_ChatMessage.Message, m_chatMessage.data(), strSize);
-			p_ChatMessage.DataSize = (UCHAR)strSize;
-			PacketManager::Get().SendPacket((char*)&p_ChatMessage, (USHORT)(PS_ChatMessage + strSize), PACKET_ChatMessage);
-
+			if (!m_chatMessage.empty())
+			{
+				static size_t strSize = 0;
+				strSize = m_chatMessage.size() * 2;
+				strSize = strSize > 200 ? 200 : strSize;
+				// 패킷 전송
+				Packet_ChatMessage p_ChatMessage;
+				memcpy(p_ChatMessage.Message, m_chatMessage.data(), strSize);
+				p_ChatMessage.DataSize = (UCHAR)strSize;
+				PacketManager::Get().SendPacket((char*)&p_ChatMessage, (USHORT)(PS_ChatMessage + strSize), PACKET_ChatMessage);
+			}
 			m_chatMessage.clear();
 			m_pChat->End();
 			m_pChat->Clear();
@@ -353,11 +353,13 @@ void GameScene::LoadUI() noexcept
 
 	// 쳐맞 효과
 	PlayerController::Get().m_pHitEffect = (JPanel*)pUIRoot->find_child(L"fadeout"); //1234
-	PlayerController::Get().m_pRespawnEffect = (JPanel*)pUIRoot->find_child(L"fadeout_white"); //1234
+	PlayerController::Get().m_pRespawnEffect = (JSpriteCtrl*)pUIRoot->find_child(L"JohnSprite");// (JPanel*)pUIRoot->find_child(L"fadeout_white"); //1234
 	//PlayerController::Get().m_pRespawnEffect = (JPanel*)pUIRoot->find_child(L"fadein"); //1234
+	//auto pJohnEffect = (JSpriteCtrl*)pUIRoot->find_child(L"JohnSprite");
 
 	m_pChat = (JEditCtrl*)pUIRoot->find_child(L"Chat_Edit");
 
+	//pJohnEffect->EffectPlay();
 	ObjectManager::Get().PushObject(pUIRoot);
 	UI::InGameEvent(pUIRoot);
 }

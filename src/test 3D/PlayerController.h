@@ -6,6 +6,7 @@
 class Collider;
 class Camera;
 class AHeroObj;
+class Renderer;
 
 class PlayerController : public GameObject, public ISingleton<PlayerController>
 {
@@ -43,11 +44,11 @@ private:
 	POINT		m_setMouseScreen;
 	POINT		m_setMouseClient;
 
-	Component* m_pEffectFly = nullptr;
+	Component*	m_pEffectFly = nullptr;
+	Renderer*	m_pUserTitle = nullptr;
 public:
-	Collider*  m_pMeleeCollider = nullptr;
-
-	const float	m_DelayRespawn  = 998.0f;
+	///
+	const float	m_DelayRespawn  = 8.0f;
 	const float	m_DelayThrow	= 0.3f;
 	const float	m_DelayDash		= 1.0f;
 	const float	m_DelayMelee	= 1.0f;

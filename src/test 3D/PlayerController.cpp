@@ -8,41 +8,17 @@
 
 #include "uiheader.h"
 #include "JPanel.h"
+#include "RPlane.h"
 
 bool PlayerController::Init() noexcept
 {
 	GameObject::Init();
-	if (m_pMeleeCollider == nullptr)
+	if (m_pUserTitle == nullptr)
 	{
-		//m_pMeleeCollider = new Collider(20.0f);
-		//m_pMeleeCollider->CollisionEvent = [](Collider* pA, Collider* pB) {
-		//	if (pB != nullptr)
-		//	{
-		//		pB->SetForce((Normalize(pB->GetCenter() - pA->GetCenter()) + Vector3::Up * 0.3f) * 100.0f);
-		//		pB->m_pParent->OperHP(-0.15f);
-		//		if (pB->m_pParent->GetHP() <= 0.0f)
-		//		{
-		//			auto pCollider = new Collider(140.0f);
-		//			pCollider->CollisionEvent = [](Collider* pMe, Collider* pYou) {
-		//				if (pYou != nullptr)
-		//					pYou->SetForce((Normalize(pYou->GetCenter() - pMe->GetCenter()) + Vector3::Up * 0.3f) * 300.0f);
-		//			};
-		//			pCollider->AddIgnoreList(pA);
-		//			pCollider->AddIgnoreList(pB);
-		//			auto pEffect = new GameObject(L"DeadEffect", { pCollider, ObjectManager::Get().TakeComponent(L"Boom3") });
-		//			pEffect->SetPosition(pB->GetCenter());
-		//			ObjectManager::Get().PushObject(pEffect);
-		//
-		//			ObjectManager::Get().DisableObject(pB->m_pParent);
-		//		}
-		//	}
-		//	auto pEffect = new GameObject(L"HitEffect", ObjectManager::Get().TakeComponent(L"Boom2"));
-		//	pEffect->SetPosition(pA->m_pParent->GetWorldPosition());
-		//};
-		//AddComponent(m_pMeleeCollider);
-		//m_pMeleeCollider->SetGravityScale(0.0f);
-		//m_pMeleeCollider->usePhysics(false);
-		//m_pMeleeCollider->AddIgnoreList()
+		auto pObject = new GameObject(L"UserTitle", m_pUserTitle = new RPlane(L"UserTitle", L"ui/dog.png"));
+		pObject->SetPosition(Vector3::Up * 50.0f);
+		pObject->isBillBoard(true);
+		pObject->SetParent(this);
 	}
 	return true;
 }
@@ -57,7 +33,6 @@ bool PlayerController::Frame(const float& spf, const float& accTime)	noexcept
 	{
 		PlayerInput(spf);
 		CameraInput(spf);
-		// m_pMeleeCollider->m_pivot = m_pParent->GetForward() * 80.0f;
 	}
 	else if(m_pParent == nullptr)
 	{
