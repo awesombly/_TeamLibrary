@@ -65,6 +65,11 @@ namespace UI
 		if (pMatchingExit == nullptr) return;
 		pMatchingExit->EventClick.first = E_NOTSHOW;
 		pMatchingExit->EventClick.second = pMatchingExit->m_pParent;
+
+		JImageCtrl* pDrag = (JImageCtrl*)pRoot->find_child(L"Drag_Img");
+		if (pDrag == nullptr) return;
+		pDrag->PreEvent.first = E_DRAG;
+		pDrag->PreEvent.second = pDrag;
 	}
 	static void InGameEvent(JPanel* pRoot)
 	{

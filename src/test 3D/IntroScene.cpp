@@ -7,7 +7,7 @@ bool IntroScene::Init() noexcept
 {
 	FirstInit();
 	// UI
-	//LoadUI();
+	LoadUI();
 	///
 	m_isLoading = false;
 	return true;
@@ -20,7 +20,6 @@ bool IntroScene::Frame() noexcept
 	DxManager::Get().Frame();
 	ObjectManager::Get().Frame(Timer::SPF, Timer::AccumulateTime);
 	SoundManager::Get().Frame();
-	SetScene(ESceneName::Lobby);
 	return true;
 }
 
@@ -270,5 +269,14 @@ void IntroScene::LoadUI() noexcept
 	pUIRoot->m_objType = EObjType::UI;
 	JParser par;
 	par.FileLoad(DxManager::GetDevice(), L"../../data/ui/Intro", *pUIRoot);
-	 UI::IntroEvent(pUIRoot);
+	ObjectManager::Get().PushObject(pUIRoot);
+	static auto GotoLobby = [](void* pScene) {
+		((IntroScene*)pScene)->SetScene(ESceneName::Lobby);
+	};
+
+	JButtonCtrl* pBtn = (JButtonCtrl*)pUIRoot->find_child(L"gamestart");
+	pBtn->EventClick.first = GotoLobby;
+	pBtn->EventClick.second = this;
+
+	UI::IntroEvent(pUIRoot);
 }
