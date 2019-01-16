@@ -196,7 +196,7 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 		 pCollider->CollisionEvent = [](Collider* pMe, Collider* pYou) {
 			 if (pYou != nullptr && pYou->m_eTag == ETag::Collider)
 			 {
-				 pYou->SetForce((Normalize(pYou->GetCenter() - pMe->GetCenter()) + Vector3::Up) * 300.0f);
+				 pYou->SetForce((Normalize(pYou->GetCenter() - pMe->GetCenter()) + Vector3::Up * 1.5f) * 250.0f);
 				 pMe->AddIgnoreList(pYou);
 			 }
 		 };

@@ -11,6 +11,7 @@ bool LobbyScene::Init() noexcept
 	LoadUI();
 
 	m_pBackHero = (AHeroObj*)ObjectManager::Get().TakeObject(L"Guard", false);
+	ObjectManager::Get().RemoveComponent(m_pBackHero->GetComponentList(EComponent::Renderer)->front());
 	m_pBackHero->SetPosition(-40.0f, -28.0f, 30.0f);
 	m_pBackHero->SetRotation(Quaternion::Left * PI * 0.8f);
 	m_pBackHero->SetGravityScale(0.0f);
