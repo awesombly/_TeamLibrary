@@ -16,7 +16,6 @@ struct ParticleInfo
 	bool m_isBillBoard				= true;
 	bool m_isRepeat					= true;
 	bool m_isScreen					= false;
-	//bool m_isFollow					= false;
 	//bool DUMMY						= false;
 	bool m_isScalarScale			= true;
 
@@ -82,8 +81,9 @@ private:
 	UINT Strides[2];				// 정점 크기
 	UINT Offsets[2];				// 시작 오프셋
 
-	float m_spawnFrame = 0.0f;
-	bool  m_needUpdateBuffer = false;
+	bool  m_isFollow			= false;
+	bool  m_needUpdateBuffer	= false;
+	float m_spawnFrame			= 0.0f;
 private:
 	void	SpawnParticle()											noexcept;
 	HRESULT Create()												noexcept override;
@@ -110,6 +110,8 @@ public:
 	void isScreen(const bool& isScreen)			noexcept;
 	bool isScalarScale()						noexcept;
 	void isScalarScale(const bool& isScalar)	noexcept;
+	bool isFollow()								noexcept;
+	void isFollow(const bool& isFollow)			noexcept;
 
 	bool PostRender(ID3D11DeviceContext* pDContext)		noexcept override;
 	bool Init()											noexcept override;

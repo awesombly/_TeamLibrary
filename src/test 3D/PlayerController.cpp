@@ -127,9 +127,9 @@ void PlayerController::SetAnim(AHeroObj* pObject, const ECharacter& eCharacter, 
 	static auto pMeleeHitEvent = [](Collider* pA, Collider* pB) {
 		if (pB == nullptr)
 		{
-			auto pEffect = new GameObject(L"HitEffect", ObjectManager::Get().TakeComponent(L"Boom2"));
+			auto pEffect = ObjectManager::Get().TakeObject(L"Boom2");
 			pEffect->SetPosition(pA->m_pParent->GetWorldPosition());
-			ObjectManager::Get().PushObject(pEffect);
+			//ObjectManager::Get().PushObject(pEffect);
 			//pA->ClearIgnoreList();
 		}
 		else
@@ -152,9 +152,9 @@ void PlayerController::SetAnim(AHeroObj* pObject, const ECharacter& eCharacter, 
 			{
 				pA->AddIgnoreList(pB);
 			}
-			auto pEffect = new GameObject(L"HitEffect", ObjectManager::Get().TakeComponent(L"Boom2"));
+			auto pEffect = ObjectManager::Get().TakeObject(L"Boom2");
 			pEffect->SetPosition(pA->m_pParent->GetWorldPosition());
-			ObjectManager::Get().PushObject(pEffect);
+			//ObjectManager::Get().PushObject(pEffect);
 		}
 	};
 
@@ -391,8 +391,9 @@ void PlayerController::PlayerInput(const float& spf) noexcept
 	{
 		isFly = true;
 		eAction = EAction::Fly;
-		m_pEffectFly = ObjectManager::Get().TakeComponent(L"Fly");
-		m_pParent->AddComponent(m_pEffectFly);
+		m_pEffectFly = ObjectManager::Get().TakeObject(L"Fly"); //ObjectManager::Get().TakeComponent(L"Fly");
+		m_pEffectFly->SetParent(m_pParent);
+		//m_pParent->AddComponent(m_pEffectFly);
 	}
 	if (isFly && Input::GetKeyState(EMouseButton::Right) == EKeyState::HOLD)
 	{
@@ -403,7 +404,7 @@ void PlayerController::PlayerInput(const float& spf) noexcept
 			eAction = EAction::FlyEnd;
 			if (m_pEffectFly != nullptr)
 			{
-				ObjectManager::Get().DisableComponent(m_pEffectFly);
+				ObjectManager::Get().DisableObject(m_pEffectFly);
 				m_pEffectFly = nullptr;
 			}
 		}
@@ -419,7 +420,7 @@ void PlayerController::PlayerInput(const float& spf) noexcept
 		eAction = EAction::FlyEnd;
 		if (m_pEffectFly != nullptr)
 		{
-			ObjectManager::Get().DisableComponent(m_pEffectFly);
+			ObjectManager::Get().DisableObject(m_pEffectFly);
 			m_pEffectFly = nullptr;
 		}
 	}
@@ -448,7 +449,7 @@ void PlayerController::PlayerInput(const float& spf) noexcept
 	if (Input::GetKeyState('Z') == EKeyState::DOWN)
 	{
 		static Packet_ReqAddPlayer p_ReqAddPlayer;
-		p_ReqAddPlayer.ECharacter = ECharacter::EZombie;
+		p_ReqAddPlayer.ECharacter = ECharacter::EGuard;
 		PacketManager::Get().ReqSendPacket((char*)&p_ReqAddPlayer, (USHORT)sizeof(Packet_ReqAddPlayer), PACKET_ReqAddPlayer);
 	}
 
@@ -465,9 +466,9 @@ void PlayerController::SendAnimTransform(const EAction& eAction, const ECharacte
 	case EAction::Dash:
 	{
 		if (m_pParent->isMoving())
-			p_AnimTransform.Force = (m_pParent->m_pPhysics->m_direction * 1.5f + Vector3::Up * 60.0f);
+			p_AnimTransform.Force = (m_pParent->m_pPhysics->m_direction * 1.8f + Vector3::Up * 60.0f);
 		else
-			p_AnimTransform.Force = (Normalize(m_pParent->GetForward()) * m_moveSpeed * 1.5f + Vector3::Up * 60.0f);
+			p_AnimTransform.Force = (Normalize(m_pParent->GetForward()) * m_moveSpeed * 1.8f + Vector3::Up * 60.0f);
 	}	break;
 	case EAction::Jump:
 	{

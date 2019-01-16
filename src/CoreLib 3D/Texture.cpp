@@ -22,7 +22,7 @@ Texture* Texture::CreateShaderResourceView(const wstring_view& srcUrl) noexcept
 	D3DX11CreateShaderResourceViewFromFile(DxManager::GetDevice(), srcUrl.data(), NULL, NULL, &m_pSRView, NULL);
 	if (m_pSRView == nullptr)
 	{
-		ErrorMessage(L""s + __FUNCTIONW__ + L" -> " + srcUrl.data() + L" : Load Error!");
+		ErrorMessage(L""s + __FUNCTIONW__ + L" -> Load Error : " + srcUrl.data() );
 		delete this;
 		return nullptr;
 	}
@@ -33,7 +33,7 @@ Texture* Texture::CreateShaderResourceView(const wstring_view& srcUrl) noexcept
 	src->QueryInterface(__uuidof(ID3D11Texture2D), (void**)&tex2D);
 	if (tex2D == nullptr)
 	{
-		ErrorMessage(L""s + __FUNCTIONW__ + L" -> " + srcUrl.data() + L" : Query Error!");
+		ErrorMessage(L""s + __FUNCTIONW__ + L" -> Query Error : " + srcUrl.data());
 		return this;
 	}
 	tex2D->GetDesc(&m_texDesc);

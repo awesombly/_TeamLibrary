@@ -130,11 +130,16 @@ bool IntroScene::FirstInit() noexcept
 
 		// Effect ·Îµå
 		//ObjectManager::Get().SetProtoComponent(m_pParser->CreateFromParticle(L"Snow.eff", L"../../data/script"));
-		ObjectManager::Get().SetProtoComponent(m_pParser->CreateFromParticle(L"Boom.eff", L"../../data/script"));
-		ObjectManager::Get().SetProtoComponent(m_pParser->CreateFromParticle(L"Boom2.eff", L"../../data/script"));
-		ObjectManager::Get().SetProtoComponent(m_pParser->CreateFromParticle(L"Boom3.eff", L"../../data/script"));
+		ObjectManager::Get().SetProtoObject(new GameObject(L"Boom", m_pParser->CreateFromParticle(L"Boom.eff", L"../../data/script"), EObjType::Effect));
+		ObjectManager::Get().SetProtoObject(new GameObject(L"Boom2", m_pParser->CreateFromParticle(L"Boom2.eff", L"../../data/script"), EObjType::Effect));
+		ObjectManager::Get().SetProtoObject(new GameObject(L"Boom3", m_pParser->CreateFromParticle(L"Boom3.eff", L"../../data/script"), EObjType::Effect));
+		//ObjectManager::Get().SetProtoObject(new GameObject(L"Fire", m_pParser->CreateFromParticle(L"Fire.eff", L"../../data/script"), EObjType::Effect));
+		ObjectManager::Get().SetProtoObject(new GameObject(L"Fly", m_pParser->CreateFromParticle(L"Fly.eff", L"../../data/script"), EObjType::Effect));
+		//ObjectManager::Get().SetProtoComponent(m_pParser->CreateFromParticle(L"Boom.eff", L"../../data/script"));
+		//ObjectManager::Get().SetProtoComponent(m_pParser->CreateFromParticle(L"Boom2.eff", L"../../data/script"));
+		//ObjectManager::Get().SetProtoComponent(m_pParser->CreateFromParticle(L"Boom3.eff", L"../../data/script"));
 		ObjectManager::Get().SetProtoComponent(m_pParser->CreateFromParticle(L"Fire.eff", L"../../data/script"));
-		ObjectManager::Get().SetProtoComponent(m_pParser->CreateFromParticle(L"Fly.eff", L"../../data/script"));
+		//ObjectManager::Get().SetProtoComponent(m_pParser->CreateFromParticle(L"Fly.eff", L"../../data/script"));
 		//ObjectManager::Get().SetProtoComponent(m_pParser->CreateFromParticle(L"Bigbang.eff", L"../../data/script"));
 		//ObjectManager::Get().SetProtoComponent(m_pParser->CreateFromParticle(L"Shock.eff", L"../../data/script"));
 		//ObjectManager::Get().SetProtoComponent(m_pParser->CreateFromParticle(L"Atom.eff", L"../../data/script"));
@@ -152,9 +157,9 @@ bool IntroScene::FirstInit() noexcept
 		static auto pDaggerHit = [](Collider* pA, Collider* pB) {
 			if (pB == nullptr)
 			{
-				auto pEffect = new GameObject(L"HitEffect", ObjectManager::Get().TakeComponent(L"Boom2"));
+				auto pEffect = ObjectManager::Get().TakeObject(L"Boom2");// new GameObject(L"HitEffect", ObjectManager::Get().TakeComponent(L"Boom2"));
 				pEffect->SetPosition(pA->m_pParent->GetWorldPosition());
-				ObjectManager::Get().PushObject(pEffect);
+				//ObjectManager::Get().PushObject(pEffect);
 				//pA->ClearIgnoreList();
 				ObjectManager::Get().DisableObject(pA->m_pParent);
 			}
@@ -174,9 +179,9 @@ bool IntroScene::FirstInit() noexcept
 					p_PlayerDead.KeyValue = pB->m_pParent->m_keyValue;
 					PacketManager::Get().SendPacket((char*)&p_PlayerDead, (USHORT)sizeof(Packet_PlayerDead), PACKET_PlayerDead);
 				}
-				auto pEffect = new GameObject(L"HitEffect", ObjectManager::Get().TakeComponent(L"Boom2"));
+				auto pEffect = ObjectManager::Get().TakeObject(L"Boom2");
 				pEffect->SetPosition(pA->m_pParent->GetWorldPosition());
-				ObjectManager::Get().PushObject(pEffect);
+				//ObjectManager::Get().PushObject(pEffect);
 				//pA->ClearIgnoreList();
 				ObjectManager::Get().DisableObject(pA->m_pParent);
 			}

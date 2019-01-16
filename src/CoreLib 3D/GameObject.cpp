@@ -129,6 +129,8 @@ bool GameObject::Release() noexcept
 	}
 	m_childList.clear();
 	m_components.clear();
+	if (m_pPhysics != nullptr)
+		delete m_pPhysics;
 	//delete this;
 	return true;
 }

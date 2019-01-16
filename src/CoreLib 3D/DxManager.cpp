@@ -296,7 +296,7 @@ HRESULT DxManager::LoadVertexShader(const wstring_view& loadUrl, const string_vi
 							   shaderFlags, 0, nullptr, &pOutputBuf, &pErrorBuf, nullptr);
 	if (FAILED(hr))
 	{
-		ErrorMessage(""s + __FUNCTION__ + " -> " + funcName.data() + " : Shader Load Error!", true);
+		ErrorMessage(""s + __FUNCTION__ + " -> : Shader Load Error : " + funcName.data() , true);
 		return E_FAIL;
 	}
 	m_pD3dDevice->CreateVertexShader(pOutputBuf->GetBufferPointer(), pOutputBuf->GetBufferSize(), nullptr, &pVShader);
@@ -304,7 +304,7 @@ HRESULT DxManager::LoadVertexShader(const wstring_view& loadUrl, const string_vi
 
 	if (FAILED(LoadInputLayout(pOutputBuf, funcName)))
 	{
-		ErrorMessage(""s + __FUNCTION__ + " -> " + funcName.data() + " : 레이아웃 생성 실패!", true);
+		ErrorMessage(""s + __FUNCTION__ + " -> 레이아웃 생성 실패 : " + funcName.data() , true);
 		return E_FAIL;
 	}
 
@@ -327,7 +327,7 @@ HRESULT DxManager::LoadPixelShader(const wstring_view& loadUrl, const string_vie
 							   shaderFlags, 0, nullptr, &pOutputBuf, &pErrorBuf, nullptr);
 	if (FAILED(hr))
 	{
-		ErrorMessage(""s + __FUNCTION__ + " : Shader Load Error!", true);
+		ErrorMessage(""s + __FUNCTION__ + " -> Shader Load Error!", true);
 		return E_FAIL;
 	}
 	m_pD3dDevice->CreatePixelShader(pOutputBuf->GetBufferPointer(), pOutputBuf->GetBufferSize(), nullptr, &pPShader);
@@ -352,7 +352,7 @@ HRESULT DxManager::LoadGeometryShader(const wstring_view& loadUrl, const string_
 							   shaderFlags, 0, nullptr, &pOutputBuf, &pErrorBuf, nullptr);
 	if (FAILED(hr))
 	{
-		ErrorMessage(""s + __FUNCTION__ + " -> " + funcName.data() + " : Shader Load Error!", true);
+		ErrorMessage(""s + __FUNCTION__ + " -> Shader Load Error : " + funcName.data(), true);
 		return E_FAIL;
 	}
 	m_pD3dDevice->CreateGeometryShader(pOutputBuf->GetBufferPointer(), pOutputBuf->GetBufferSize(), nullptr, &pGShader);
@@ -506,6 +506,9 @@ HRESULT DxManager::CreateDepthStencilState()
 	m_pD3dDevice->CreateDepthStencilState(&dsDescDepth, &m_DepthList[EDepthS::Basic]);
 	dsDescDepth.StencilEnable = true;
 	m_pD3dDevice->CreateDepthStencilState(&dsDescDepth, &m_DepthList[EDepthS::D_Less_S_Always]);
+	dsDescDepth.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ZERO;
+	m_pD3dDevice->CreateDepthStencilState(&dsDescDepth, &m_DepthList[EDepthS::D_Less_NoWrite]);
+	dsDescDepth.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
 	dsDescDepth.DepthFunc = D3D11_COMPARISON_ALWAYS;
 	dsDescDepth.StencilEnable = false;
 	m_pD3dDevice->CreateDepthStencilState(&dsDescDepth, &m_DepthList[EDepthS::D_Always_S_Off]);

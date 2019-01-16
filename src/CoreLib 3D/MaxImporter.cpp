@@ -72,11 +72,12 @@ bool MaxImporter::CreateFromFile(GameObject** ppReturnObj, const wstring_view& f
 		// ¹ÝÈ¯µÉ °´Ã¼
 		if (*ppReturnObj == nullptr)
 		{
-			*ppReturnObj = new GameObject(m_filePath.filename().c_str(), pParticle);
+			*ppReturnObj = new GameObject(m_filePath.filename().c_str(), pParticle, EObjType::Effect);
 		}
 		else
 		{
 			(*ppReturnObj)->m_myName = m_filePath.filename().c_str();
+			(*ppReturnObj)->m_objType = EObjType::Effect;
 			(*ppReturnObj)->AddComponent(pParticle);
 		}
 	}

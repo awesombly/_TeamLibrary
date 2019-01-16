@@ -34,6 +34,7 @@ enum class EDepthS : char {
 	D_Off_S_Less,
 	D_Off_S_Off,
 	D_Off_NoWrite,
+	D_Less_NoWrite,
 	size
 };
 enum class ESamTextureS : char {

@@ -11,9 +11,10 @@ enum class EObjType : char {
 	Map,
 	Object,
 	Image,
-	UI,
 	Camera,
 	Light,
+	Effect,
+	UI,
 };
 
 

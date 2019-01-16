@@ -44,7 +44,7 @@ private:
 	POINT		m_setMouseScreen;
 	POINT		m_setMouseClient;
 
-	Component*	m_pEffectFly = nullptr;
+	GameObject*	m_pEffectFly = nullptr;
 public:
 	GameObject*	m_pUserTitle = nullptr;
 	///

@@ -83,13 +83,9 @@ bool ParticleSystem::Frame(const float& spf, const float& accTime) noexcept
 		}
 		if (!iter->Frame(spf, accTime))
 		{
-				m_dataList[curData].numTexture = -0.9f;
-				m_disabledParticle.push(iter);
-				//m_dataList.pop_back();
-				//m_particleList.remove(iter);
-				//CreateInstanceBuffer();
-				continue;
-			//}
+			m_dataList[curData].numTexture = -0.9f;
+			m_disabledParticle.push(iter);
+			continue;
 		}
 		m_dataList[curData].numTexture = 1.0f;
 		// 이동 처리(중력 방향때메 빼둠)
@@ -99,9 +95,18 @@ bool ParticleSystem::Frame(const float& spf, const float& accTime) noexcept
 		D3DXMatrixScaling(&matScale, iter->m_scale.x, iter->m_scale.y, iter->m_scale.z);
 		D3DXMatrixRotationYawPitchRoll(&matRotation, iter->m_rotation.y, iter->m_rotation.x, iter->m_rotation.z);
 		m_dataList[curData].matWorld = matScale * matRotation;
-		m_dataList[curData].matWorld._41 = iter->m_position.x;
-		m_dataList[curData].matWorld._42 = iter->m_position.y;
-		m_dataList[curData].matWorld._43 = iter->m_position.z;
+		if (m_isFollow)
+		{
+			m_dataList[curData].matWorld._41 = m_pParent->GetPosition().x + iter->m_position.x;
+			m_dataList[curData].matWorld._42 = m_pParent->GetPosition().y + iter->m_position.y;
+			m_dataList[curData].matWorld._43 = m_pParent->GetPosition().z + iter->m_position.z;
+		}
+		else
+		{
+			m_dataList[curData].matWorld._41 = iter->m_position.x;
+			m_dataList[curData].matWorld._42 = iter->m_position.y;
+			m_dataList[curData].matWorld._43 = iter->m_position.z;
+		}
 		D3DXMatrixTranspose(&m_dataList[curData].matWorld, &m_dataList[curData].matWorld);
 		
 		if (m_isBillBoard)
@@ -131,9 +136,11 @@ bool ParticleSystem::Render(ID3D11DeviceContext* pDContext) noexcept
 {
 	if (!m_isEnable || m_dataList.empty() || m_pInstanceBuffer == nullptr)	return false;
 	// 인스턴스 갱신
+	DxManager::Get().SetDepthStencilState(EDepthS::D_Less_NoWrite);
 	UpdateInstanceBuffer(pDContext);
 	PrevRender(pDContext);
 	PostRender(pDContext);
+	DxManager::Get().SetDepthStencilState(EDepthS::Current);
 	return true;
 }
 
@@ -186,7 +193,8 @@ void ParticleSystem::SpawnParticle() noexcept
 	pParticle->m_scale = Product(pParticle->m_scale, m_pParent->GetWorldScale());
 	// 위치
 	pParticle->SetInitPosition(m_minInitPosition, m_maxInitPosition);
-	pParticle->m_position += m_pParent->GetWorldPosition();
+	if(!m_isFollow)
+		pParticle->m_position += m_pParent->GetWorldPosition();
 	// 방향
 	pParticle->SetDirection(m_minDirection, m_maxDirection);
 	D3DXVec3TransformNormal(&pParticle->m_direction, &pParticle->m_direction, &m_pParent->GetRotationMatrix());
@@ -393,6 +401,7 @@ void ParticleSystem::isScreen(const bool& isScreen) noexcept
 {
 	m_isScreen = isScreen;
 }
+
 bool ParticleSystem::isScalarScale() noexcept
 {
 	return m_isScalarScale;
@@ -400,6 +409,15 @@ bool ParticleSystem::isScalarScale() noexcept
 void ParticleSystem::isScalarScale(const bool& isScalar) noexcept
 {
 	m_isScalarScale = isScalar;
+}
+
+bool ParticleSystem::isFollow() noexcept
+{
+	return m_isFollow;
+}
+void ParticleSystem::isFollow(const bool& isFollow) noexcept
+{
+	m_isFollow = isFollow;
 }
 
 
@@ -424,5 +442,6 @@ Component* ParticleSystem::cloneAddition() noexcept
 
 	m_pInstanceBuffer = nullptr;
 	CreateInstanceBuffer();
+	Init();
 	return this;
 }

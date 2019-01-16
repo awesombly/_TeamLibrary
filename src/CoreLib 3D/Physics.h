@@ -1,30 +1,30 @@
 #pragma once
 #include "header.h"
 
-union q3FeaturePair
-{
-	struct
-	{
-		UCHAR inR;
-		UCHAR outR;
-		UCHAR inI;
-		UCHAR outI;
-	};
-	int key;
-};
-
-struct q3Contact
-{
-	D3DXVECTOR3 position;			// 접촉점 월드 좌표
-	float penetration;				// 충돌 침투 깊이
-	float normalImpulse;			// 누적 노말 충격
-	float tangentImpulse[2];		// 누적 마찰 충격
-	float bias;						// Restitution + baumgarte
-	float normalMass;				// 노말 제한 질량
-	float tangentMass[2];			// 접선 제한 질량
-	q3FeaturePair fp;				// 접점에 대한 A와 B의 기능?
-	UCHAR warmStarted;				// 디버그 랜더용?
-};
+//union q3FeaturePair
+//{
+//	struct
+//	{
+//		UCHAR inR;
+//		UCHAR outR;
+//		UCHAR inI;
+//		UCHAR outI;
+//	};
+//	int key;
+//};
+//
+//struct q3Contact
+//{
+//	D3DXVECTOR3 position;			// 접촉점 월드 좌표
+//	float penetration;				// 충돌 침투 깊이
+//	float normalImpulse;			// 누적 노말 충격
+//	float tangentImpulse[2];		// 누적 마찰 충격
+//	float bias;						// Restitution + baumgarte
+//	float normalMass;				// 노말 제한 질량
+//	float tangentMass[2];			// 접선 제한 질량
+//	q3FeaturePair fp;				// 접점에 대한 A와 B의 기능?
+//	UCHAR warmStarted;				// 디버그 랜더용?
+//};
 
 
 struct PhysicsInfo
@@ -40,7 +40,7 @@ struct PhysicsInfo
 
 	float m_mass		 = 1.0f;				// 질량
 	float m_repulsion	 = 0.3f;				// 반발 계수
-	float m_drag		 = 0.5f;				// 마찰력
+	float m_drag		 = 0.3f;				// 마찰력
 	float m_damping		 = 0.3f;				// 항력
 	//float m_angularDamping = 0.2f;			// 회전 항력
 	///

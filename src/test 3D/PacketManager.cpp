@@ -192,7 +192,8 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 			 PlayerController::Get().DeadEvent();
 		 }
 		 auto pCollider = new Collider(140.0f);
-		 auto pEffect = new GameObject(L"DeadEffect", { pCollider, ObjectManager::Get().TakeComponent(L"Boom3") });
+		 auto pEffect = ObjectManager::Get().TakeObject(L"Boom3");
+		 pEffect->AddComponent(pCollider);
 		 pCollider->CollisionEvent = [](Collider* pMe, Collider* pYou) {
 			 if (pYou != nullptr && pYou->m_eTag == ETag::Collider)
 			 {
@@ -207,7 +208,7 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 		 //pCollider->AddIgnoreList(pB);
 		 
 		 pEffect->SetPosition(ObjectManager::KeyObjects[p_PlayerDead.KeyValue]->GetPosition() + Vector3::Up * 40.0f);
-		 ObjectManager::Get().PushObject(pEffect);
+		 //ObjectManager::Get().PushObject(pEffect);
 		 ObjectManager::Get().DisableObject(ObjectManager::KeyObjects[p_PlayerDead.KeyValue]);
 	 }	break;
 	 case PACKET_PlaySound:
