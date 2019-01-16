@@ -4,25 +4,25 @@
 
 bool GameScene::Init() noexcept
 {
-	I_Object.ViewColliderSwitch();
+	//I_Object.ViewColliderSwitch();
 	for (auto& [name, matrixList] : I_Object.m_ObjectMatrix)
 	{
 		for (int matIndex = 0; matIndex < matrixList.Matrix.size(); ++matIndex)
 		{
 			for (int colIndex = 0; colIndex < I_Object.m_ObjectCollider[name].ColliderAABB.size(); ++colIndex)
 			{
-				auto pObject = new GameObject(L"Dummy");
 				auto pCollider = new ColliderOBB(Product(I_Object.m_ObjectCollider[name].ColliderAABB[colIndex].vMin, matrixList.vScale[matIndex]), Product(I_Object.m_ObjectCollider[name].ColliderAABB[colIndex].vMax, matrixList.vScale[matIndex]));
-				pObject->AddComponent(pCollider);
+				auto pObject = new GameObject(L"Dummy", pCollider);
 				pObject->SetPosition(matrixList.vLocation[matIndex]);
 				pObject->SetRotation(QuatToRotation(matrixList.qRotation[matIndex]) + QuatToRotation(I_Object.m_ObjectCollider[name].qRotation[colIndex]));
 				pObject->SetHP(10000.0f);
-				pCollider->m_pivot = Product(I_Object.m_ObjectCollider[name].ColliderAABB[colIndex].vCenter, matrixList.vScale[matIndex]);;
+				auto center = Product(I_Object.m_ObjectCollider[name].ColliderAABB[colIndex].vCenter, matrixList.vScale[matIndex]);
+				pCollider->m_pivot = center;
 				pCollider->usePhysics(false);
 				pCollider->SetGravityScale(0.0f);
 	
-				//pObject->Frame(0.0f, 0.0f);
-				ObjectManager::Get().PushObject(pObject);
+				pObject->Frame(0.0f, 0.0f);
+				//ObjectManager::Get().PushObject(pObject);
 			}
 		}
 	}
@@ -58,17 +58,17 @@ bool GameScene::Init() noexcept
 	ObjectManager::KeyCount = 1000;
 	auto pHero = (AHeroObj*)ObjectManager::Get().TakeObject(L"Guard");
 	//pHero->GetLeftHandPos
-	pHero->AddComponent(ObjectManager::Get().TakeComponent(L"Fire"));
+	//pHero->AddComponent(ObjectManager::Get().TakeComponent(L"Fire"));
 	m_pPlayer->Possess(pHero);
 	m_pPlayer->ResetOption();
 
+	ObjectManager::Get().TakeObject(L"Guard")->SetPosition(RandomNormal() * 1000.0f - 500.0f, RandomNormal() * 150.0f, RandomNormal() * 1000.0f - 500.0f);
 	//ObjectManager::Get().TakeObject(L"Guard")->SetPosition(RandomNormal() * 1000.0f - 500.0f, RandomNormal() * 150.0f, RandomNormal() * 1000.0f - 500.0f);
 	//ObjectManager::Get().TakeObject(L"Guard")->SetPosition(RandomNormal() * 1000.0f - 500.0f, RandomNormal() * 150.0f, RandomNormal() * 1000.0f - 500.0f);
-	//ObjectManager::Get().TakeObject(L"Guard")->SetPosition(RandomNormal() * 1000.0f - 500.0f, RandomNormal() * 150.0f, RandomNormal() * 1000.0f - 500.0f);
+	ObjectManager::Get().TakeObject(L"Zombie")->SetPosition(RandomNormal() * 1000.0f - 500.0f, RandomNormal() * 150.0f, RandomNormal() * 1000.0f - 500.0f);
 	//ObjectManager::Get().TakeObject(L"Zombie")->SetPosition(RandomNormal() * 1000.0f - 500.0f, RandomNormal() * 150.0f, RandomNormal() * 1000.0f - 500.0f);
 	//ObjectManager::Get().TakeObject(L"Zombie")->SetPosition(RandomNormal() * 1000.0f - 500.0f, RandomNormal() * 150.0f, RandomNormal() * 1000.0f - 500.0f);
-	//ObjectManager::Get().TakeObject(L"Zombie")->SetPosition(RandomNormal() * 1000.0f - 500.0f, RandomNormal() * 150.0f, RandomNormal() * 1000.0f - 500.0f);
-	//ObjectManager::Get().TakeObject(L"Bird")->SetPosition(RandomNormal()	* 1000.0f - 500.0f, RandomNormal() * 150.0f, RandomNormal() * 1000.0f - 500.0f);
+	ObjectManager::Get().TakeObject(L"Bird")->SetPosition(RandomNormal()	* 1000.0f - 500.0f, RandomNormal() * 150.0f, RandomNormal() * 1000.0f - 500.0f);
 	//ObjectManager::Get().TakeObject(L"Bird")->SetPosition(RandomNormal()	* 1000.0f - 500.0f, RandomNormal() * 150.0f, RandomNormal() * 1000.0f - 500.0f);
 	//ObjectManager::Get().TakeObject(L"Bird")->SetPosition(RandomNormal()	* 1000.0f - 500.0f, RandomNormal() * 150.0f, RandomNormal() * 1000.0f - 500.0f);
 #pragma endregion
@@ -183,10 +183,7 @@ bool GameScene::Render() noexcept
 	DxManager::Get().Render();
 	ObjectManager::Get().Render(DxManager::Get().GetDContext());
 	SoundManager::Get().Render();
-	//if(m_hitRay)
-	//	Raycast::DrawRay(DxManager::Get().GetDContext(), Color::Red);
-	//else
-	//	Raycast::DrawRay(DxManager::Get().GetDContext(), Color::Green);
+
 	// 바운딩 박스 표시
 	if (m_pCheckBox->m_bCheck)
 	{

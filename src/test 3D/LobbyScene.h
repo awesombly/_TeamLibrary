@@ -6,9 +6,8 @@
 class LobbyScene : public MainClass
 {
 public:
-	bool m_isStart = false;
-
-	AHeroObj* m_pBackHero = nullptr;
+	bool	  m_isStart		= false;
+	AHeroObj* m_pBackHero	= nullptr;
 	///
 	//JPanel*		m_toHost		= nullptr;
 	//JPanel*		m_toGuest		= nullptr;
@@ -18,6 +17,9 @@ public:
 public:
 	void LoadUI()				noexcept override;
 	bool FirstInit()			noexcept override;
+
+	void StartToHost()					 override;
+	void StartToGuest()					 override;
 
 	virtual bool Init()			noexcept override;
 	virtual bool Frame()		noexcept override;

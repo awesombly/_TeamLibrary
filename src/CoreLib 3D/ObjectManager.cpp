@@ -322,12 +322,20 @@ GameObject* ObjectManager::TakeObject(const wstring_view& objName, const bool& p
 		// ´ë±â Ç®ÀÌ ÀÖ´Ù¸é ²¨³»¿È
 		pObject = m_DisabledPull[objName].top();
 		m_DisabledPull[objName].pop();
-		auto pColliders = pObject->GetComponentList(EComponent::Collider);
-		if (pColliders != nullptr)
+		auto pComp = pObject->GetComponentList(EComponent::Collider);
+		if (pComp != nullptr)
 		{
-			for (auto& iter : *pColliders)
+			for (auto& iter : *pComp)
 			{
 				PushCollider((Collider*)iter);
+			}
+		}
+		pComp = pObject->GetComponentList(EComponent::Renderer);
+		if (pComp != nullptr)
+		{
+			for (auto& iter : *pComp)
+			{
+				iter->Update();
 			}
 		}
 	}

@@ -80,6 +80,7 @@ bool IntroScene::FirstInit() noexcept
 	if (m_isFirstInit)
 	{
 		m_isFirstInit = false;
+		ErrorMessage("Intro Loading Start.");
 		// 폰트 설정
 		WriteManager::Get().SetText({ 0, 0 }, L"", D2D1::ColorF::Black, 20, L"Yu Gothic");
 		WriteManager::Get().SetFontSizeAlign(20, EAlign::Center, EAlign::Center);
@@ -87,13 +88,6 @@ bool IntroScene::FirstInit() noexcept
 		m_pParser = new MaxImporter();
 		
 		LoadSound();
-		// ========================= 캐릭터 초기화 ===========================
-		I_CHARMGR.Init();
-		if (!I_CHARMGR.Load(DxManager::GetDevice(), DxManager::GetDContext(), TablePATH))		//경로 중요함
-		{
-			return false;
-		}
-
 		GameObject* pObject = nullptr;
 		Collider*   pCollider = nullptr;
 		// 컴포넌트 등록
@@ -147,6 +141,13 @@ bool IntroScene::FirstInit() noexcept
 		//ObjectManager::Get().SetProtoComponent(m_pParser->CreateFromParticle(L"WheelWind.eff", L"../../data/script"));
 		///
 
+		// ========================= 캐릭터 초기화 ===========================
+		ErrorMessage("Intro Character Loading.");
+		I_CHARMGR.Init();
+		if (!I_CHARMGR.Load(DxManager::GetDevice(), DxManager::GetDContext(), TablePATH))		//경로 중요함
+		{
+			return false;
+		}
 		// 단검 충돌시
 		static auto pDaggerHit = [](Collider* pA, Collider* pB) {
 			if (pB == nullptr)
@@ -191,7 +192,7 @@ bool IntroScene::FirstInit() noexcept
 		pCollider = new Collider(15.0f);
 		pCollider->m_pivot = Vector3::Up * 8.0f + Vector3::Forward * 2.5f;
 		pCollider->CollisionEvent = pDaggerHit;
-		pHeroObj->AddComponent(pCollider);
+		pHeroObj->AddComponent({ pCollider, ObjectManager::Get().TakeComponent(L"Fire") });
 		ObjectManager::Get().SetProtoObject(pHeroObj);
 
 		// 닭
@@ -204,7 +205,7 @@ bool IntroScene::FirstInit() noexcept
 		pCollider = new Collider(15.0f);
 		pCollider->m_pivot = Vector3::Up * 8.0f + Vector3::Forward * 2.5f;
 		pCollider->CollisionEvent = pDaggerHit;
-		pHeroObj->AddComponent(pCollider);
+		pHeroObj->AddComponent({ pCollider, ObjectManager::Get().TakeComponent(L"Fire") });
 		ObjectManager::Get().SetProtoObject(pHeroObj);
 
 		// 기사 
@@ -216,7 +217,7 @@ bool IntroScene::FirstInit() noexcept
 		pHeroObj->m_objType = EObjType::Object;
 		pHeroObj->SetScale(Vector3::One * 0.5f);
 		pCollider = new ColliderOBB({ -13.0f, 0.0f , -13.0f }, { 13.0f, 80.0f , 13.0f });
-		pHeroObj->AddComponent(pCollider);
+		pHeroObj->AddComponent({ pCollider, ObjectManager::Get().TakeComponent(L"Fire") });
 		pCollider->m_pivot *= 0.5f;
 		ObjectManager::Get().SetProtoObject(pHeroObj);
 
@@ -229,7 +230,7 @@ bool IntroScene::FirstInit() noexcept
 		pHeroObj->m_objType = EObjType::Object;
 		pHeroObj->SetScale(Vector3::One * 0.5f);
 		pCollider = new ColliderOBB({ -13.0f, 0.0f , -13.0f }, { 13.0f, 80.0f , 13.0f });
-		pHeroObj->AddComponent(pCollider);
+		pHeroObj->AddComponent({ pCollider, ObjectManager::Get().TakeComponent(L"Fire") });
 		pCollider->m_pivot *= 0.5f;
 		ObjectManager::Get().SetProtoObject(pHeroObj);
 
@@ -241,12 +242,13 @@ bool IntroScene::FirstInit() noexcept
 		pHeroObj->m_objType = EObjType::Object;
 		pHeroObj->SetScale(Vector3::One * 7.0f);
 		pCollider = new ColliderOBB({ -1.0f, 0.0f , -1.0f }, { 1.0f, 2.0f , 1.0f });
-		pHeroObj->AddComponent(pCollider);
+		pHeroObj->AddComponent({ pCollider, ObjectManager::Get().TakeComponent(L"Fire") });
 		pCollider->m_pivot *= 7.0f;
 		pCollider->SetGravityScale(0.3f);
 		ObjectManager::Get().SetProtoObject(pHeroObj);
 
 		// =============================== 맵 생성 =================================
+		ErrorMessage("Intro Map Loading.");
 		m_Importer.Import();
 		m_pMap = new XMap();
 		//m_pMap = (XMap*)new GameObject(L"");

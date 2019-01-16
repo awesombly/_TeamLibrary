@@ -104,14 +104,16 @@ public:
 	static XMapImporter		m_Importer;					// 세이브 데이터 로더
 public:
 	int m_iMatchingStatus = 0;
-	std::string m_strHostIPv4;
+	static std::string m_strHostIPv4;
 public:
 	void MsgEvent(const MSG& _message)	noexcept;
 	// 씬 설정
 	void SetScene(const ESceneName& sceneName, const bool& useRelease = true) noexcept;
 	void LoadSceneInput()	noexcept;
-
 	//void SendMovedObject()	noexcept;
+
+	virtual void StartToHost() {};
+	virtual void StartToGuest() {};
 
 	virtual void LoadUI()				noexcept { return; };
 	virtual bool FirstInit()			noexcept { return true; };
