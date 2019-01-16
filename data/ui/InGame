@@ -14,18 +14,16 @@
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 1.000000 1.000000 1.000000
 
-^Type 778
+^Type 788
 ^NodeName Timer_back
 ^ParentName Time_Panel
 ^KeyState 135 135
 ^bRender 1
-^Position 0.000000 281.166534 0.000000
+^Position 0.000000 281.691681 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 35.000000 15.000000 1.000000
-^Color 1.000000 1.000000 1.000000 1.000000
-^tx_Normal backimg_000.png
-^tx_Hover backimg_000.png
-^tx_Press backimg_000.png
+^Color 0.000000 0.000000 0.000000 0.400000
+^tx_Normal White.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -263,25 +261,6 @@
 ^pfEventClick 7274
 ^vpEventClick 
 
-^Type 780
-^VHType 1446
-^NodeName Skill_0
-^ParentName Game_Panel
-^KeyState 135 135
-^bRender 1
-^Position 368.333008 -261.166260 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 26.000000 26.000000 1.000000
-^Color 1.000000 1.000000 1.000000 1.000000
-^tx_BackGround UI_SP01-sharedassets1.assets.split0-108.png
-^tx_FrontGround black.png
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick 
-
 ^Type 777
 ^NodeName respawn_panel
 ^ParentName Game_Panel
@@ -331,6 +310,44 @@
 ^pfEventClick 7274
 ^vpEventClick 
 
+^Type 780
+^VHType 1446
+^NodeName Skill_Left
+^ParentName Game_Panel
+^KeyState 135 135
+^bRender 1
+^Position -368.668457 -260.988007 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 26.000000 26.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_BackGround boots_mobile-5301437f3fd3acb46bc8924e850b75cf-1.png
+^tx_FrontGround black.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 780
+^VHType 1446
+^NodeName Skill_Right
+^ParentName Game_Panel
+^KeyState 135 135
+^bRender 1
+^Position 368.333008 -261.166260 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 26.000000 26.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_BackGround axe_mobile-d4d9e8a208f1f964783b426340fc8c29-1.png
+^tx_FrontGround black.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
 ^Type 788
 ^NodeName CrossHair
 ^ParentName Game_Panel
@@ -338,8 +355,8 @@
 ^bRender 1
 ^Position 0.000000 0.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 42.499874 42.499874 1.000000
-^Color 0.000000 1.000000 0.000000 1.000000
+^Scale 37.155560 37.155560 1.000000
+^Color 0.000000 0.000000 0.000000 1.000000
 ^tx_Normal CrossHair.png
 ^pfEventHover 7274
 ^vpEventHover 
@@ -376,7 +393,7 @@
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 1.000000 1.000000 1.000000
 
-^Type 778
+^Type 788
 ^NodeName Set_BackGround
 ^ParentName Set_Panel
 ^KeyState 135 135
@@ -384,10 +401,42 @@
 ^Position 0.000000 0.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 200.000000 200.000000 1.000000
-^Color 1.000000 1.000000 1.000000 1.000000
-^tx_Normal tile-6b2a1a39575b98c45936cc0169a9010f-1.png
-^tx_Hover tile-6b2a1a39575b98c45936cc0169a9010f-1.png
-^tx_Press tile-6b2a1a39575b98c45936cc0169a9010f-1.png
+^Color 1.000000 0.500000 0.500000 1.000000
+^tx_Normal White.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName Set_Volum_Back
+^ParentName Set_Panel
+^KeyState 135 135
+^bRender 1
+^Position 0.000000 110.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 190.000000 30.000000 1.000000
+^Color 0.500000 0.500000 0.500000 1.000000
+^tx_Normal White.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName Set_Mouse_Back
+^ParentName Set_Panel
+^KeyState 135 135
+^bRender 1
+^Position 0.000000 40.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 190.000000 30.000000 1.000000
+^Color 0.500000 0.500000 0.500000 1.000000
+^tx_Normal White.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -402,31 +451,12 @@
 ^ParentName Set_Panel
 ^KeyState 135 135
 ^bRender 1
-^Position 40.000000 120.000000 0.000000
+^Position 30.000000 110.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 140.000000 2.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
-^tx_Bar blue.png
+^tx_Bar White.png
 ^tx_Handle filled-circle_icon-icons.com_72757.png
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick 
-
-^Type 778
-^NodeName Set_Volum_Img
-^ParentName Set_Panel
-^KeyState 135 135
-^bRender 1
-^Position -150.000000 120.000000 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 30.000000 30.000000 1.000000
-^Color 1.000000 1.000000 1.000000 1.000000
-^tx_Normal icon_150.png
-^tx_Hover icon_150.png
-^tx_Press icon_150.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -441,31 +471,12 @@
 ^ParentName Set_Panel
 ^KeyState 135 135
 ^bRender 1
-^Position 40.000000 40.000000 0.000000
+^Position 30.000000 40.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 140.000000 2.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
-^tx_Bar blue.png
+^tx_Bar White.png
 ^tx_Handle filled-circle_icon-icons.com_72757.png
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick 
-
-^Type 778
-^NodeName Set_Mouse_Img
-^ParentName Set_Panel
-^KeyState 135 135
-^bRender 1
-^Position -150.000000 40.000000 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 30.000000 30.000000 1.000000
-^Color 1.000000 1.000000 1.000000 1.000000
-^tx_Normal btn_959.png
-^tx_Hover btn_959.png
-^tx_Press btn_959.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -492,27 +503,6 @@
 ^pfEventClick 7276
 ^vpEventClick Set_Panel
 
-^Type 783
-^NodeName Set_GameExit
-^ParentName Set_Panel
-^KeyState 135 135
-^bRender 1
-^Position 124.177338 -153.675186 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 50.000000 20.000000 1.000000
-^Color 1.000000 1.000000 1.000000 1.000000
-^strText Exit
-^TextSize 25.000000
-^tx_Normal btn_076.png
-^tx_Hover btn_077.png
-^tx_Press btn_077.png
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick 
-
 ^Type 782
 
 ^SpriteType 6429
@@ -521,7 +511,7 @@
 ^KeyState 135 135
 ^bRender 1
 ^bLoop 1
-^Position 42.340454 -149.452454 0.000000
+^Position 80.000000 -170.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 27.000000 27.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
@@ -549,12 +539,116 @@
 ^ParentName Set_Panel
 ^KeyState 135 135
 ^bRender 1
-^Position -12.000000 -148.000000 0.000000
+^Position 30.000000 -170.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 25.000000 25.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
 ^tx_Disable common_btn_check_selected.png
 ^tx_Enable common_btn_check_unselected.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 778
+^NodeName Set_GameExit
+^ParentName Set_Panel
+^KeyState 135 135
+^bRender 1
+^Position 150.000000 -170.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 40.000000 20.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_Normal btn_177.png
+^tx_Hover btn_176.png
+^tx_Press btn_176.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName Set_GameExit_txt
+^ParentName Set_Panel
+^KeyState 135 135
+^bRender 1
+^Position 150.000000 -170.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 20.000000 10.000000 1.000000
+^Color 0.000000 0.000000 0.000000 1.000000
+^tx_Normal 종료.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName Set_Volum_Img_Back
+^ParentName Set_Panel
+^KeyState 135 135
+^bRender 1
+^Position -160.000000 110.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 25.000000 25.000000 1.000000
+^Color 0.700000 0.700000 0.700000 1.000000
+^tx_Normal White.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName Set_Mouse_Img_Back
+^ParentName Set_Panel
+^KeyState 135 135
+^bRender 1
+^Position -160.000000 40.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 25.000000 25.000000 1.000000
+^Color 0.700000 0.700000 0.700000 1.000000
+^tx_Normal White.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName Set_Mouse_Img
+^ParentName Set_Panel
+^KeyState 135 135
+^bRender 1
+^Position -160.000000 40.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 20.000000 20.000000 1.000000
+^Color 0.000000 0.000000 0.000000 1.000000
+^tx_Normal generic_mouse_3387.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName Set_Volum_Img
+^ParentName Set_Panel
+^KeyState 135 135
+^bRender 1
+^Position -160.000000 110.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 20.000000 20.000000 1.000000
+^Color 0.000000 0.000000 0.000000 1.000000
+^tx_Normal loudvolume_87512.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -663,27 +757,6 @@
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 1.000000 1.000000 1.000000
 
-^Type 783
-^NodeName State_Title
-^ParentName State_Default_Panel
-^KeyState 135 135
-^bRender 1
-^Position 0.000000 125.819145 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 100.000000 25.000000 1.000000
-^Color 0.500000 0.500000 0.500000 0.900000
-^strText DeathMatch
-^TextSize 40.000000
-^tx_Normal White.png
-^tx_Hover White.png
-^tx_Press White.png
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick 
-
 ^Type 788
 ^NodeName State_Back2
 ^ParentName State_Default_Panel
@@ -728,6 +801,23 @@
 ^Scale 240.000000 20.000000 1.000000
 ^Color 0.500000 0.500000 0.500000 0.500000
 ^tx_Normal White.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName State_Title
+^ParentName State_Default_Panel
+^KeyState 135 135
+^bRender 1
+^Position -0.000000 120.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 200.000000 25.000000 1.000000
+^Color 0.000000 0.000000 0.000000 1.000000
+^tx_Normal 데스매치.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -1398,7 +1488,7 @@
 ^KeyState 135 135
 ^bRender 1
 ^bLoop 1
-^Position 204.000000 184.000000 0.000000
+^Position 97.000000 -80.000000 0.000000
 ^Rotate 0.000000 0.000000 -0.261799
 ^Scale 15.000000 15.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
@@ -1406,30 +1496,6 @@
 ^AnimUV 2 2 
 ^SPRITESTART 1 
 ^Ghost2-a8030e16d3339d54c9ade70d2dbc4b91-1.png
-^SPRITEEND
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick 
-
-^Type 782
-
-^SpriteType 6429
-^NodeName mouse_click_sprite_clone
-^ParentName mouse_click_sprite_panel
-^KeyState 135 135
-^bRender 1
-^bLoop 0
-^Position 194.000000 194.000000 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 1.500008 1.500008 1.000000
-^Color 1.000000 1.000000 1.000000 1.000000
-^AnimTime 0.500000
-^AnimUV 2 2 
-^SPRITESTART 1 
-^PropertyButtonFavouriteFill-468cdd1c31f3046448a59ed378113993-1.png
 ^SPRITEEND
 ^pfEventHover 7274
 ^vpEventHover 
