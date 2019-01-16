@@ -94,7 +94,7 @@ bool GameScene::Frame() noexcept
 	{
 		if (PlayerController::Get().isChatting())
 		{
-			if (!m_chatMessage.empty())
+			if (!m_chatMessage.empty() && CheatMessage())
 			{
 				static size_t strSize = 0;
 				strSize = m_chatMessage.size() * 2;
@@ -201,6 +201,63 @@ bool GameScene::Release() noexcept
 	ObjectManager::Get().PopObject(ObjectManager::Cameras[ECamera::Main]);
 	ObjectManager::Get().Release();
 	m_Rule.Release();
+	return true;
+}
+
+bool GameScene::CheatMessage() noexcept
+{
+	auto finder = m_chatMessage.find(L" ");
+	if (finder != wstring::npos) 
+	{
+		auto str = m_chatMessage.substr(0, finder);
+		if (str._Equal(L"Respawn"))
+		{
+			auto cha = m_chatMessage.substr(finder + 1);
+			if (cha._Equal(L"Guard"))
+			{
+				PlayerController::Get().SendReqRespawn(PlayerController::ECharacter::EGuard);
+				return false;
+			}
+			else if (cha._Equal(L"Zombie"))
+			{
+				PlayerController::Get().SendReqRespawn(PlayerController::ECharacter::EZombie);
+				return false;
+			}
+		}
+		else if (str._Equal(L"Dead"))
+		{
+			Packet_PlayerDead p_PlayerDead;
+			p_PlayerDead.KeyValue = PlayerController::Get().GetParent()->m_keyValue;
+			PacketManager::Get().SendPacket((char*)&p_PlayerDead, (USHORT)sizeof(Packet_PlayerDead), PACKET_PlayerDead);
+			return false;
+		}
+		else if (str._Equal(L"MoveSpeed"))
+		{
+			PlayerController::Get().m_moveSpeed = (float)atof(WCharToChar(m_chatMessage.substr(finder + 1).c_str()));
+			return false;
+		}
+		else if (str._Equal(L"JumpPower"))
+		{
+			PlayerController::Get().m_jumpPower = (float)atof(WCharToChar(m_chatMessage.substr(finder + 1).c_str()));
+			return false;
+		}
+		else if (str._Equal(L"Scale"))
+		{
+			auto scale = (float)atof(WCharToChar(m_chatMessage.substr(finder + 1).c_str()));
+			Packet_Vector3 p_SetScale;
+			p_SetScale.KeyValue = PlayerController::Get().GetParent()->m_keyValue;
+			p_SetScale.Vec3 = { scale, scale, scale };
+			PacketManager::Get().SendPacket((char*)&p_SetScale, (USHORT)sizeof(Packet_Vector3), PACKET_SetScale);
+			return false;
+		}
+		else if (str._Equal(L"HP"))
+		{
+			Packet_SetHP p_SetHP;
+			p_SetHP.KeyValue = PlayerController::Get().GetParent()->m_keyValue;
+			p_SetHP.HP = (float)atof(WCharToChar(m_chatMessage.substr(finder + 1).c_str()));
+			PacketManager::Get().SendPacket((char*)&p_SetHP, (USHORT)sizeof(Packet_SetHP), PACKET_SetHP);
+		}
+	}
 	return true;
 }
 
@@ -349,7 +406,7 @@ void GameScene::LoadUI() noexcept
 	//JTextCtrl* respawntxt = (JTextCtrl*)pUIRoot->find_child(L"respawn_txt");	 // text
 
 	// 쳐맞 효과
-	PlayerController::Get().m_pHitEffect = (JPanel*)pUIRoot->find_child(L"fadeout"); //1234
+	PlayerController::Get().m_pHitEffect = (JSpriteCtrl*)pUIRoot->find_child(L"JohnSprite"); // (JPanel*)pUIRoot->find_child(L"fadeout"); //1234
 	PlayerController::Get().m_pRespawnEffect = (JSpriteCtrl*)pUIRoot->find_child(L"JohnSprite");// (JPanel*)pUIRoot->find_child(L"fadeout_white"); //1234
 	//PlayerController::Get().m_pRespawnEffect = (JPanel*)pUIRoot->find_child(L"fadein"); //1234
 	//auto pJohnEffect = (JSpriteCtrl*)pUIRoot->find_child(L"JohnSprite");

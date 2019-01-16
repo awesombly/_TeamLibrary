@@ -71,6 +71,7 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 	static Packet_TakeObject	p_TakeObject;
 	static Packet_SyncObjects	p_SyncObjects;
 	static Packet_PlayerDead	p_PlayerDead;
+	static Packet_SetHP			p_SetHP;
 
 	memcpy(&p_KeyValue, data, sizeof(Packet_KeyValue));
 	if (sendMode			< 2000 &&
@@ -103,7 +104,16 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 	 case PACKET_SetScale:
 	 {
 		 memcpy(&p_Vector3, data, sizeof(Packet_Vector3));
+		 auto preScale = ObjectManager::KeyObjects[p_Vector3.KeyValue]->GetScaleAverage();
 		 ObjectManager::KeyObjects[p_Vector3.KeyValue]->SetScale(p_Vector3.Vec3);
+		 auto pCollider = ObjectManager::KeyObjects[p_Vector3.KeyValue]->GetComponentList(EComponent::Collider);
+		 if (pCollider != nullptr)
+		 {
+			 for (auto& iter : *pCollider)
+			 {
+				 ((Collider*)iter)->m_pivot *= (p_Vector3.Vec3.x / preScale);
+			 }
+		 }
 	 }	break;
 	 case PACKET_Translate:
 	 {
@@ -238,6 +248,11 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 			 if(ObjectManager::KeyObjects[p_SyncObjects.Data[i].KeyValue]->m_pPhysics != nullptr)
 				ObjectManager::KeyObjects[p_SyncObjects.Data[i].KeyValue]->SetForce(p_SyncObjects.Data[i].Force);
 		 }
+	 }	break;
+	 case PACKET_SetHP:
+	 {
+		 memcpy(&p_SetHP, data, sizeof(Packet_SetHP));
+		 ObjectManager::KeyObjects[p_SetHP.KeyValue]->SetHP(p_SetHP.HP);
 	 }	break;
 	 default:
 	 {

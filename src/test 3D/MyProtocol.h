@@ -34,6 +34,7 @@ enum EPacketProtocol : USHORT {
 	PACKET_Scaling,
 	PACKET_SetAnimTransform,
 	PACKET_PlayerDead,
+	PACKET_SetHP,
 	// ¿¹¿Ü
 	PACKET_ReqSync			= 2000,
 	PACKET_ReqSyncSpawns,
@@ -72,6 +73,12 @@ struct UserInfo
 struct Packet_PlayerDead
 {
 	UINT KeyValue;
+};
+
+struct Packet_SetHP
+{
+	UINT KeyValue;
+	float HP;
 };
 
 struct Packet_TakeObject

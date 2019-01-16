@@ -23,6 +23,7 @@ public:
 	GameRule	m_Rule;
 public:
 	void DrawBoundingBox()		noexcept;
+	bool CheatMessage()			noexcept;
 
 	void LoadUI()				noexcept override;
 	bool FirstInit()			noexcept override;

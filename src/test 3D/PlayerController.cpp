@@ -35,6 +35,19 @@ bool PlayerController::Frame(const float& spf, const float& accTime)	noexcept
 	{
 		PlayerInput(spf);
 		CameraInput(spf);
+
+		// 초기화
+		if (Input::GetKeyState('R') == EKeyState::DOWN)
+		{
+			Input::isDebug = !Input::isDebug;
+			ResetOption();
+		}
+		if (Input::GetKeyState(VK_SUBTRACT) == EKeyState::DOWN)
+		{
+			m_curDelayRespawn = -9999.9f;
+			CutParentPost();
+			ObjectManager::Cameras[ECamera::Main]->CutParentPost();
+		}
 	}
 	else if(m_pParent == nullptr)
 	{
@@ -43,66 +56,14 @@ bool PlayerController::Frame(const float& spf, const float& accTime)	noexcept
 		{
 			((JPanel*)m_pRespawn)->m_bRender = false;
 			m_curDelayRespawn = 0.0f;
-			if (PacketManager::Get().isHost)
-			{
-				static size_t strSize = 0;
-				wstring objName = L"Guard";
-				strSize = objName.size() * 2;
-				strSize = strSize > 100 ? 100 : strSize;
 
-				Packet_TakeObject p_TakeObject;
-				p_TakeObject.KeyValue = ++PacketManager::Get().PlayerKeyCount;
-				memcpy(p_TakeObject.ObjectName, objName.data(), strSize);
-				p_TakeObject.DataSize = (UCHAR)strSize;
-				p_TakeObject.Position = { RandomNormal() * 1000.0f - 500.0f, 150.0f, RandomNormal() * 1000.0f - 500.0f };
-				p_TakeObject.Rotation = Quaternion::Base;
-				p_TakeObject.Scale = Vector3::One * 0.5f;
-
-				PP::PPPacketForProcess packetSend;
-				//memcpy(packetSend.m_Packet.m_Payload, (void*)&p_TakeObject, PS_TakeObject + strSize);
-				//packetSend.m_socketSession = 0;
-				//packetSend.m_Packet.m_Header.m_type = (PP::PPPacketType)PACKET_TakeObject;
-				//packetSend.m_Packet.m_Header.m_len = (USHORT)(sizeof(Packet_TakeObject) + PACKET_HEADER_SIZE);
-				//PacketManager::Get().PacketHistory.push(packetSend);	// 패킷 기록
-
-				//pSender->Broadcast(packetSend);
-				//PacketManager::Get().InterceptPacket(packetSend.m_Packet.m_Header.m_type, packetSend.m_Packet.m_Payload);
-				PacketManager::Get().SendPacket((char*)&p_TakeObject, (USHORT)sizeof(Packet_TakeObject), PACKET_TakeObject);
-
-				// 빙의 파트
-				static Packet_PossessPlayer p_character;
-				p_character.KeyValue = p_TakeObject.KeyValue;
-				p_character.ECharacter = PlayerController::ECharacter::EGuard;
-				memcpy(packetSend.m_Packet.m_Payload, (void*)&p_character, sizeof(Packet_PossessPlayer));
-				packetSend.m_Packet.m_Header.m_type = (PP::PPPacketType)PACKET_PossessPlayer;
-				packetSend.m_Packet.m_Header.m_len = (USHORT)(sizeof(Packet_PossessPlayer) + PACKET_HEADER_SIZE);
-				//pSender->Send(packetSend);
-				PacketManager::Get().InterceptPacket(packetSend.m_Packet.m_Header.m_type, packetSend.m_Packet.m_Payload);
-			}
-			else
-			{
-				Packet_ReqAddPlayer p_ReqAddPlayer;
-				p_ReqAddPlayer.ECharacter = ECharacter::EGuard;
-				PacketManager::Get().SendPacket((char*)&p_ReqAddPlayer, (USHORT)sizeof(Packet_ReqAddPlayer), PACKET_ReqAddPlayer);
-				//PacketManager::Get().SendPacket('\0', 0, PACKET_ReqAddPlayer);
-			}
+			if(RandomNormal() <= 0.5f)
+				SendReqRespawn(ECharacter::EGuard);
+			else 
+				SendReqRespawn(ECharacter::EZombie);
 			return true;
 		}
 	}
-
-	// 초기화
-	if (Input::GetKeyState('R') == EKeyState::DOWN)
-	{
-		Input::isDebug = !Input::isDebug;
-		ResetOption();
-	}
-	if (Input::GetKeyState(VK_SUBTRACT) == EKeyState::DOWN)
-	{
-		m_curDelayRespawn = -9999.9f;
-		CutParentPost();
-		ObjectManager::Cameras[ECamera::Main]->CutParentPost();
-	}
-
 	return true;
 }
 
@@ -442,15 +403,11 @@ void PlayerController::PlayerInput(const float& spf) noexcept
 
 	if (Input::GetKeyState('X') == EKeyState::DOWN)
 	{
-		static Packet_ReqAddPlayer p_ReqAddPlayer;
-		p_ReqAddPlayer.ECharacter = ECharacter::EZombie;
-		PacketManager::Get().ReqSendPacket((char*)&p_ReqAddPlayer, (USHORT)sizeof(Packet_ReqAddPlayer), PACKET_ReqAddPlayer);
+		SendReqRespawn(ECharacter::EGuard);
 	}
 	if (Input::GetKeyState('Z') == EKeyState::DOWN)
 	{
-		static Packet_ReqAddPlayer p_ReqAddPlayer;
-		p_ReqAddPlayer.ECharacter = ECharacter::EGuard;
-		PacketManager::Get().ReqSendPacket((char*)&p_ReqAddPlayer, (USHORT)sizeof(Packet_ReqAddPlayer), PACKET_ReqAddPlayer);
+		SendReqRespawn(ECharacter::EZombie);
 	}
 
 	spf;
@@ -466,9 +423,9 @@ void PlayerController::SendAnimTransform(const EAction& eAction, const ECharacte
 	case EAction::Dash:
 	{
 		if (m_pParent->isMoving())
-			p_AnimTransform.Force = (m_pParent->m_pPhysics->m_direction * 1.8f + Vector3::Up * 60.0f);
+			p_AnimTransform.Force = (m_pParent->m_pPhysics->m_direction * 2.0f + Vector3::Up * 60.0f);
 		else
-			p_AnimTransform.Force = (Normalize(m_pParent->GetForward()) * m_moveSpeed * 1.8f + Vector3::Up * 60.0f);
+			p_AnimTransform.Force = (Normalize(m_pParent->GetForward()) * m_moveSpeed * 2.0f + Vector3::Up * 60.0f);
 	}	break;
 	case EAction::Jump:
 	{
@@ -544,6 +501,12 @@ void PlayerController::SendAnimTransform(const EAction& eAction, const ECharacte
 	PacketManager::Get().SendPacket((char*)&p_AnimTransform, sizeof(Packet_AnimTransform), PACKET_SetAnimTransform);
 }
 
+void PlayerController::SendReqRespawn(const ECharacter& eCharacter) noexcept
+{
+	static Packet_ReqAddPlayer p_ReqAddPlayer;
+	p_ReqAddPlayer.ECharacter = eCharacter;
+	PacketManager::Get().ReqSendPacket((char*)&p_ReqAddPlayer, (USHORT)sizeof(Packet_ReqAddPlayer), PACKET_ReqAddPlayer);
+}
 
 void PlayerController::CameraInput(const float& spf) noexcept
 {

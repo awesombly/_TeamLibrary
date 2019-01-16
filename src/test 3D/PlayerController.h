@@ -22,20 +22,18 @@ public:
 		EDummy = 0, EGuard, EZombie,
 	};
 private:
-	enum class EDirection : char {
-		Middle = 0, Left, Right, 
-	};
+	//enum class EDirection : char {
+	//	Middle = 0, Left, Right, 
+	//};
 	bool		m_isChatting = false;
 
 	Camera*		m_pCamera		= nullptr;
 	ECharacter  m_curCharacter;			// 현재 캐릭터
 	EAction		m_curAction;			// 현재 눌린 액션
 	EAction		m_curAnim;				// 실제 애니메이션
-	EDirection  m_MouseDirection;
+	//EDirection  m_MouseDirection;
 	///
-	D3DXVECTOR3 m_direction;
-	float		m_moveSpeed		= 100.0f;
-	float		m_jumpPower		= 150.0f;
+	//D3DXVECTOR3 m_direction;
 
 	//bool		m_toIdle		= false;
 	float		m_prevRotY		= 0.0f;
@@ -46,6 +44,9 @@ private:
 
 	GameObject*	m_pEffectFly = nullptr;
 public:
+	float		m_moveSpeed		= 100.0f;
+	float		m_jumpPower		= 150.0f;
+
 	GameObject*	m_pUserTitle = nullptr;
 	///
 	const float	m_DelayRespawn  = 8.0f;
@@ -77,6 +78,7 @@ public:
 	void DeadEvent()																noexcept;
 
 	void SendAnimTransform(const EAction& eAction, const ECharacter& eCharacter)	noexcept;
+	void SendReqRespawn(const ECharacter& eCharacter)								noexcept;
 
 	void isChatting(const bool& isChat)												noexcept;
 	bool isChatting()														  const noexcept;
