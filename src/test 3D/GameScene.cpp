@@ -339,8 +339,11 @@ void GameScene::LoadUI() noexcept
 	pProj->SetValue(m_pPlayer->m_MP, 1.0f); // °ª bind
 
 	// Right Icon
-	auto pIcon = (JProgressBar*)pUIRoot->find_child(L"Skill_0");
+	auto pIcon = (JProgressBar*)pUIRoot->find_child(L"Skill_Right");
 	pIcon->SetValue(PlayerController::Get().m_curDelayThrow, PlayerController::Get().m_DelayThrow);
+
+	//auto pIcon = (JProgressBar*)pUIRoot->find_child(L"Skill_Left"); // dash , left skill icon
+
 	// Option Slider
 	static auto pSetVolume = [](void* pSlider) {
 		SoundManager::Get().SetMasterVolume(*((JSliderCtrl*)pSlider)->GetValue());
