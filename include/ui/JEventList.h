@@ -329,62 +329,62 @@ namespace UI
 		JPanel* pParent = (JPanel*)vp;
 		if (!pParent->m_bRender) return;
 		pParent->m_fUITimer += Timer::SPF;
-		if (pParent->m_fUITimer >= 0.1f && pParent->m_fUITimer <= 1.1f)
+		if (pParent->m_fUITimer >= 0.0f && pParent->m_fUITimer <= 1.0f)
 		{
-			JPanel* pChild = pParent->find_child(L"fight_1");
+			JPanel* pChild = pParent->find_child(L"fight_3");
 			pChild->m_bRender = true;
-			if (pChild->m_vScl.x >= 30.0f || pChild->m_vScl.y >= 50.0f)
+			if (pChild->m_vScl.x >= 30.0f || pChild->m_vScl.y >= 40.0f)
 			{
 				if (pChild->m_vScl.x >= 30.0f)
 					pChild->m_vScl.x -= Timer::SPF * 1500.0f; // 2ÃÊ¿¡ ¾ø¾îÁü
-				if (pChild->m_vScl.y >= 50.0f)
+				if (pChild->m_vScl.y >= 40.0f)
 					pChild->m_vScl.y -= Timer::SPF * 1500.0f; // 2ÃÊ¿¡ ¾ø¾îÁü
 			}
 		}
-		else if (pParent->m_fUITimer >= 1.1f && pParent->m_fUITimer <= 2.1f)
+		else if (pParent->m_fUITimer >= 1.0f && pParent->m_fUITimer <= 2.0f)
 		{
-			JPanel* pRender = pParent->find_child(L"fight_1");
+			JPanel* pRender = pParent->find_child(L"fight_3");
 			pRender->m_bRender = false;
 			JPanel* pChild = pParent->find_child(L"fight_2");
 			pChild->m_bRender = true;
-			if (pChild->m_vScl.x >= 30.0f || pChild->m_vScl.y >= 50.0f)
+			if (pChild->m_vScl.x >= 30.0f || pChild->m_vScl.y >= 40.0f)
 			{
 				if (pChild->m_vScl.x >= 30.0f)
 					pChild->m_vScl.x -= Timer::SPF * 1500.0f; // 2ÃÊ¿¡ ¾ø¾îÁü
-				if (pChild->m_vScl.y >= 50.0f)
+				if (pChild->m_vScl.y >= 40.0f)
 					pChild->m_vScl.y -= Timer::SPF * 1500.0f; // 2ÃÊ¿¡ ¾ø¾îÁü
 			}
 		}
-		else if (pParent->m_fUITimer >= 2.1f && pParent->m_fUITimer <= 3.1f)
+		else if (pParent->m_fUITimer >= 2.0f && pParent->m_fUITimer <= 3.0f)
 		{
 			JPanel* pRender = pParent->find_child(L"fight_2");
 			pRender->m_bRender = false;
-			JPanel* pChild = pParent->find_child(L"fight_3");
+			JPanel* pChild = pParent->find_child(L"fight_1");
 			pChild->m_bRender = true;
-			if (pChild->m_vScl.x >= 30.0f || pChild->m_vScl.y >= 50.0f)
+			if (pChild->m_vScl.x >= 30.0f || pChild->m_vScl.y >= 40.0f)
 			{
 				if (pChild->m_vScl.x >= 30.0f)
 					pChild->m_vScl.x -= Timer::SPF * 1500.0f; // 2ÃÊ¿¡ ¾ø¾îÁü
-				if (pChild->m_vScl.y >= 50.0f)
+				if (pChild->m_vScl.y >= 40.0f)
 					pChild->m_vScl.y -= Timer::SPF * 1500.0f; // 2ÃÊ¿¡ ¾ø¾îÁü
 			}
 		}
-		else if (pParent->m_fUITimer >= 3.1f && pParent->m_fUITimer <= 5.1f)
+		else if (pParent->m_fUITimer >= 3.0f && pParent->m_fUITimer <= 5.0f)
 		{
-			JPanel* pRender = pParent->find_child(L"fight_3");
+			JPanel* pRender = pParent->find_child(L"fight_1");
 			pRender->m_bRender = false;
 			JPanel* pChild = pParent->find_child(L"Fight");
 			pChild->m_bRender = true;
 			if (pChild->m_pShape->m_cbData.vColor.w <= 1.0f)
 				pChild->m_pShape->m_cbData.vColor.w += Timer::SPF * 2.0f;
 		}
-		else if (pParent->m_fUITimer >= 5.1f && pParent->m_fUITimer <= 7.1f)
+		else if (pParent->m_fUITimer >= 5.0f && pParent->m_fUITimer <= 7.0f)
 		{
 			JPanel* pChild = pParent->find_child(L"Fight");
 			if (pChild->m_pShape->m_cbData.vColor.w >= 0.0f)
 				pChild->m_pShape->m_cbData.vColor.w -= Timer::SPF * 2.0f;
 		}
-		else if (pParent->m_fUITimer >= 7.1f)
+		else if (pParent->m_fUITimer >= 7.0f)
 		{
 			JPanel* pChild = pParent->find_child(L"Fight");
 			pChild->m_bRender = false;
