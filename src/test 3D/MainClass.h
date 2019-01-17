@@ -68,6 +68,16 @@
 //#include "XCamera.h"
 #include "XQuadTreeIndex.h"
 #include "XMapImporter.h"
+///
+#include "../network/PPTCPIOCPServer.h"							//서버 클래스 정의.
+#include "../network/PPTCPIOCPClient.h"							//서버 구동시 필요합니다. 싱글톤 객체.
+#include "../network/PPRecvPacketPoolServer.h"					//클라이언트 클래스 정의.
+#include "../network/PPRecvPacketPoolClient.h"					//클라이언트 구동시 필요합니다. 싱글톤 객체
+#include "../network/PPProtocolMatchingServer.h"		//매칭 서버용 패킷
+PP::PPSender*		 g_pSender = PP::GetSender();		//동적 패킷 전송 객체
+PP::PPTCPIOCPClient* g_pClient = PP::GetClient();
+PP::PPTCPIOCPServer* g_pServer = PP::GetServer();		//동적 서버객체
+
 
 
 enum class ESceneName : char {
@@ -103,7 +113,7 @@ public:
 	static XQuadTreeIndex*	m_pMapTree;					// 맵->공간분할, LOD시 수정 예정
 	static XMapImporter		m_Importer;					// 세이브 데이터 로더
 public:
-	int m_iMatchingStatus = 0;
+	static int m_iMatchingStatus;
 	static std::string m_strHostIPv4;
 public:
 	void MsgEvent(const MSG& _message)	noexcept;

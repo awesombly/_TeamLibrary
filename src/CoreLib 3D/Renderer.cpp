@@ -504,6 +504,7 @@ vector<Sprite>::iterator& Renderer::GetCurSprite() noexcept
 }
 
 
+
 void Renderer::UpdateTextureUV()
 {
 	static D3DXVECTOR4 posVector;
@@ -537,7 +538,6 @@ void Renderer::UpdateTextureUV()
 	if(m_pVertexBuffer != nullptr)
 		DxManager::GetDContext()->UpdateSubresource(m_pVertexBuffer, 0, nullptr, &m_vertexList.at(0), 0, 0);
 }
-
 void Renderer::EndSpriteEvent()
 {
 	m_curSprite = m_pSpriteList->begin();

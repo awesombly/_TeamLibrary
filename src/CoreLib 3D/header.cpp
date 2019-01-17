@@ -198,14 +198,8 @@ const D3DXMATRIX MatrixTranspose(const D3DXMATRIX& matrix) noexcept
 const D3DXVECTOR3 QuatToRotation(const D3DXQUATERNION& quat) noexcept
 {
 	D3DXVECTOR3 rotation;
-	rotation.x = atan2f(2.0f * (quat.y*quat.z + quat.w*quat.x), 
-								quat.w*quat.w - quat.x*quat.x - quat.y*quat.
-								y + quat.z*quat.z);
-
+	rotation.x = atan2f(2.0f * (quat.y*quat.z + quat.w*quat.x), quat.w*quat.w - quat.x*quat.x - quat.y*quat.y + quat.z*quat.z);
 	rotation.y = asinf(-2.0f * (quat.x*quat.z - quat.w*quat.y));
-
-	rotation.z = atan2f(2.0f * (quat.x*quat.y + quat.w*quat.z), 
-								quat.w*quat.w + quat.x*quat.x - quat.y*quat.y - quat.z*quat.z);
-
+	rotation.z = atan2f(2.0f * (quat.x*quat.y + quat.w*quat.z), quat.w*quat.w + quat.x*quat.x - quat.y*quat.y - quat.z*quat.z);
 	return rotation;
 }

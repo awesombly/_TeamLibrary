@@ -7,6 +7,7 @@ class LobbyScene : public MainClass
 {
 public:
 	bool	  m_isStart		= false;
+	bool	  m_isMatching = false;
 	AHeroObj* m_pBackHero	= nullptr;
 	AHeroObj* m_pBackGuard  = nullptr;
 	AHeroObj* m_pBackZombie = nullptr;
