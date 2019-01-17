@@ -319,63 +319,63 @@ namespace UI
 
 		if (!pParent->m_bRender) return;
 		pParent->m_fUITimer += Timer::SPF;
-		if (pParent->m_fUITimer >= 0.0f && pParent->m_fUITimer <= 0.8f)
-		{
-			JPanel* pChild = pParent->find_child(L"left");
-			if (pChild->m_vPos.x >= 0.0f)
-			{
-				pChild->m_vPos.x = 0.0f;
-				return;
-			}
-			pChild->m_vPos.x += Timer::SPF * 800.0f * 3.0f;
-		}
-		else if (pParent->m_fUITimer >= 0.8f && pParent->m_fUITimer <= 1.6f)
-		{
-			JPanel* pChild = pParent->find_child(L"top");
-			if (pChild->m_vPos.y <= 0.0f)
-			{
-				pChild->m_vPos.y = 0.0f;
-				return;
-			}
-			pChild->m_vPos.y -= Timer::SPF * 600.0f * 3.0f;
-		}
-		else if (pParent->m_fUITimer >= 1.6f && pParent->m_fUITimer <= 2.4f)
-		{
-			JPanel* pChild = pParent->find_child(L"right");
-			if (pChild->m_vPos.x <= 0.0f)
-			{
-				pChild->m_vPos.x = 0.0f;
-				return;
-			}
-			pChild->m_vPos.x -= Timer::SPF * 800.0f * 3.0f;
-		}
-		else if (pParent->m_fUITimer >= 2.4f && pParent->m_fUITimer <= 3.2f)
-		{
-			JPanel* pChild = pParent->find_child(L"bottom");
-			if (pChild->m_vPos.y >= 0.0f)
-			{
-				pChild->m_vPos.y = 0.0f;
-				return;
-			}
-			pChild->m_vPos.y += Timer::SPF * 600.0f * 3.0f;
-		}
-		else if (pParent->m_fUITimer >= 3.2f && pParent->m_fUITimer <= 4.0f)
-		{
-			JPanel* pChild = pParent->find_child(L"left2");
-			if (pChild->m_vPos.x >= 0.0f)
-			{
-				pChild->m_vPos.x = 0.0f;
-				return;
-			}
-			pChild->m_vPos.x += Timer::SPF * 800.0f * 3.0f;
-		}
-		else if (pParent->m_fUITimer >= 4.0f && pParent->m_fUITimer <= 5.0f)
+		//if (pParent->m_fUITimer >= 0.0f && pParent->m_fUITimer <= 0.8f)
+		//{
+		//	JPanel* pChild = pParent->find_child(L"left");
+		//	if (pChild->m_vPos.x >= 0.0f)
+		//	{
+		//		pChild->m_vPos.x = 0.0f;
+		//		return;
+		//	}
+		//	pChild->m_vPos.x += Timer::SPF * 800.0f * 3.0f;
+		//}
+		//else if (pParent->m_fUITimer >= 0.8f && pParent->m_fUITimer <= 1.6f)
+		//{
+		//	JPanel* pChild = pParent->find_child(L"top");
+		//	if (pChild->m_vPos.y <= 0.0f)
+		//	{
+		//		pChild->m_vPos.y = 0.0f;
+		//		return;
+		//	}
+		//	pChild->m_vPos.y -= Timer::SPF * 600.0f * 3.0f;
+		//}
+		//else if (pParent->m_fUITimer >= 1.6f && pParent->m_fUITimer <= 2.4f)
+		//{
+		//	JPanel* pChild = pParent->find_child(L"right");
+		//	if (pChild->m_vPos.x <= 0.0f)
+		//	{
+		//		pChild->m_vPos.x = 0.0f;
+		//		return;
+		//	}
+		//	pChild->m_vPos.x -= Timer::SPF * 800.0f * 3.0f;
+		//}
+		//else if (pParent->m_fUITimer >= 2.4f && pParent->m_fUITimer <= 3.2f)
+		//{
+		//	JPanel* pChild = pParent->find_child(L"bottom");
+		//	if (pChild->m_vPos.y >= 0.0f)
+		//	{
+		//		pChild->m_vPos.y = 0.0f;
+		//		return;
+		//	}
+		//	pChild->m_vPos.y += Timer::SPF * 600.0f * 3.0f;
+		//}
+		//else if (pParent->m_fUITimer >= 3.2f && pParent->m_fUITimer <= 4.0f)
+		//{
+		//	JPanel* pChild = pParent->find_child(L"left2");
+		//	if (pChild->m_vPos.x >= 0.0f)
+		//	{
+		//		pChild->m_vPos.x = 0.0f;
+		//		return;
+		//	}
+		//	pChild->m_vPos.x += Timer::SPF * 800.0f * 3.0f;
+		//}
+		if (pParent->m_fUITimer >= 0.0f && pParent->m_fUITimer <= 1.0f)
 		{
 			JPanel* pChild = pParent->find_child(L"fadein");
 			if (pChild->m_pShape->m_cbData.vColor.w <= 1.0f)
 				pChild->m_pShape->m_cbData.vColor.w += Timer::SPF * 2.0f;
 		}
-		else if (pParent->m_fUITimer >= 5.0f && pParent->m_fUITimer <= 6.5f)
+		else if (pParent->m_fUITimer >= 1.0f && pParent->m_fUITimer <= 2.5f)
 		{
 			JPanel* pParticle = pParent->find_child(L"snow_particle");
 			pParticle->m_bRender = true;
@@ -396,19 +396,19 @@ namespace UI
 					pChild->m_vScl.y = 50.0f;
 			}
 		}
-		else if (pParent->m_fUITimer >= 6.5f && pParent->m_fUITimer <= 7.5f)
+		else if (pParent->m_fUITimer >= 2.5f && pParent->m_fUITimer <= 3.5f)
 		{
 			JPanel* pChild = pParent->find_child(L"teamname");
 			if (pChild->m_pShape->m_cbData.vColor.w <= 1.0f)
 				pChild->m_pShape->m_cbData.vColor.w += Timer::SPF * 2.0f;
 		}
-		else if (pParent->m_fUITimer >= 7.5f && pParent->m_fUITimer <= 8.5f)
+		else if (pParent->m_fUITimer >= 3.5f && pParent->m_fUITimer <= 4.5f)
 		{
 			JPanel* pChild = pParent->find_child(L"team");
 			if (pChild->m_pShape->m_cbData.vColor.w <= 1.0f)
 				pChild->m_pShape->m_cbData.vColor.w += Timer::SPF * 2.0f;
 		}
-		else if (pParent->m_fUITimer >= 8.5f && pParent->m_fUITimer <= 9.5f)
+		else if (pParent->m_fUITimer >= 4.5f && pParent->m_fUITimer <= 5.5f)
 		{
 			JPanel* pChild = pParent->find_child(L"gamestart");
 			pChild->m_bRender = true;
