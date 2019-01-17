@@ -23,6 +23,7 @@ public:
 	///
 	wstring				InputIP;
 	JListCtrl*			pChatList		= nullptr;
+
 	JPanel*				pUserPanel[4];
 	JListCtrl*			pKillDisplay	= nullptr;
 	//

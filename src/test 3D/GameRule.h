@@ -21,12 +21,13 @@ public:
 	JPanel*		 m_FightPanel;
 	JPanel*		 m_TimeOverPanel;
 
+	JPanel*		 m_pStatePanel = nullptr;
 public:
 	float GetPlayTime();
 	float GetReadyTime();
 
 	void SetPlayTime(float ftime);
-	void SetHideTime(float ftime);
+	void SetReadyTime(float ftime);
 	void SetResultPanel(JPanel* pUIRoot);
 	
 	virtual bool Init()		noexcept override;

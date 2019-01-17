@@ -131,5 +131,5 @@ public:
 	
 	int StartupServer();
 	int StartupClient();
-	int ConnectMatchingServer();
+	int ConnectMatchingServer(const short& playerCnt);
 };

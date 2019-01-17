@@ -9,11 +9,19 @@ bool LobbyScene::Init() noexcept
 	// UI
 	LoadUI();
 
-	m_pBackHero = (AHeroObj*)ObjectManager::Get().TakeObject(L"Guard", false);
-	ObjectManager::Get().RemoveComponent(m_pBackHero->GetComponentList(EComponent::Renderer)->front());
-	m_pBackHero->SetPosition(-40.0f, -28.0f, 30.0f);
-	m_pBackHero->SetRotation(Quaternion::Left * PI * 0.8f);
-	m_pBackHero->SetGravityScale(0.0f);
+	m_pBackGuard = (AHeroObj*)ObjectManager::Get().TakeObject(L"Guard", false);
+	ObjectManager::Get().RemoveComponent(m_pBackGuard->GetComponentList(EComponent::Renderer)->front());
+	m_pBackGuard->SetPosition(-40.0f, -28.0f, 30.0f);
+	m_pBackGuard->SetRotation(Quaternion::Left * PI * 0.8f);
+	m_pBackGuard->SetGravityScale(0.0f);
+
+	m_pBackZombie = (AHeroObj*)ObjectManager::Get().TakeObject(L"Zombie", false);
+	ObjectManager::Get().RemoveComponent(m_pBackZombie->GetComponentList(EComponent::Renderer)->front());
+	m_pBackZombie->SetPosition(-40.0f, -28.0f, 30.0f);
+	m_pBackZombie->SetRotation(Quaternion::Left * PI * 0.8f);
+	m_pBackZombie->SetGravityScale(0.0f);
+
+	SelectCharacter(PlayerController::ECharacter::EGuard);
 	///
 	SoundManager::Get().SetBGM("bgm_Title01.mp3");
 	m_isLoading = false;
@@ -112,7 +120,8 @@ bool LobbyScene::Frame() noexcept
 				StartupServer();
 				SetScene(ESceneName::Main);
 
-				PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
+				PlayerController::Get().SendReqRespawn(PlayerController::Get().m_selectCharacter);
+				//PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
 			}
 			else
 			{
@@ -121,8 +130,11 @@ bool LobbyScene::Frame() noexcept
 				SetScene(ESceneName::Main);
 				while (PacketManager::Get().pMyInfo->UserSocket == 0);	// 소켓 받을때까지 대기
 
-				PacketManager::Get().SendPacket('\0', 0, PACKET_ReqAddPlayer);
-				PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
+				PlayerController::Get().SendReqRespawn(PlayerController::Get().m_selectCharacter);
+				//PlayerController::Get()Packet_ReqAddPlayer p_ReqAddPlayer;
+				//p_ReqAddPlayer.ECharacter = PlayerController::Get().m_selectCharacter;
+				//PacketManager::Get().SendPacket((char*)&p_ReqAddPlayer, (USHORT)sizeof(Packet_ReqAddPlayer), PACKET_ReqAddPlayer);
+				//PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
 			}
 			return true;
 		}
@@ -145,9 +157,40 @@ bool LobbyScene::Render() noexcept
 // 릴리즈
 bool LobbyScene::Release() noexcept
 {
-	ObjectManager::Get().RemoveObject(m_pBackHero);
+	ObjectManager::Get().RemoveObject(m_pBackGuard);
+	ObjectManager::Get().RemoveObject(m_pBackZombie);
 	ObjectManager::Get().Release();
 	return true;
+}
+
+void LobbyScene::SelectCharacter(const PlayerController::ECharacter& eCharacter) noexcept
+{
+	switch (eCharacter)
+	{
+	 case PlayerController::ECharacter::EGuard:
+	 {
+		 m_pBackHero = m_pBackGuard;
+		 PlayerController::Get().m_selectCharacter = PlayerController::ECharacter::EGuard;
+	 }	break;
+	 case PlayerController::ECharacter::EZombie:
+	 {
+		 m_pBackHero = m_pBackZombie;
+		 PlayerController::Get().m_selectCharacter = PlayerController::ECharacter::EZombie;
+	 }	break;
+	 default:
+	 {
+		 if (PlayerController::Get().m_selectCharacter == PlayerController::ECharacter::EGuard)
+		 {
+			 m_pBackHero = m_pBackZombie;
+			 PlayerController::Get().m_selectCharacter = PlayerController::ECharacter::EZombie;
+		 }
+		 else
+		 {
+			 m_pBackHero = m_pBackGuard;
+			 PlayerController::Get().m_selectCharacter = PlayerController::ECharacter::EGuard;
+		 }
+	 }	break;
+	}
 }
 
 
@@ -163,7 +206,10 @@ bool LobbyScene::FirstInit() noexcept
 
 void LobbyScene::StartToHost()
 {
-	m_pBackHero->SetANIM_OneTime(Guard_DASHJUMP);
+	if(PlayerController::Get().m_selectCharacter == PlayerController::ECharacter::EGuard)
+		m_pBackHero->SetANIM_OneTime(Guard_DASHJUMP);
+	else
+		m_pBackHero->SetANIM_OneTime(Zombie_DASHJUMP);
 	m_pStartEffect->EffectPlay();
 	SoundManager::Get().Play("SV_Guard_Shout.mp3");
 	PacketManager::Get().isHost = true;
@@ -172,7 +218,10 @@ void LobbyScene::StartToHost()
 
 void LobbyScene::StartToGuest()
 {
-	m_pBackHero->SetANIM_OneTime(Guard_DASHJUMP);
+	if (PlayerController::Get().m_selectCharacter == PlayerController::ECharacter::EGuard)
+		m_pBackHero->SetANIM_OneTime(Guard_DASHJUMP);
+	else
+		m_pBackHero->SetANIM_OneTime(Zombie_DASHJUMP);
 	m_pStartEffect->EffectPlay();
 	SoundManager::Get().Play("SV_Guard_Shout.mp3");
 	PacketManager::Get().isHost = false;
@@ -220,17 +269,39 @@ void LobbyScene::LoadUI() noexcept
 	m_toGuestIP->m_Text = L"IP : ~." + PacketManager::Get().InputIP;
 	// 패널창
 	m_toGuestPanel = m_toGuestIP->m_pParent;
-	// 매칭, 시작 이펙
-	JButtonCtrl* AutoMatching = (JButtonCtrl*)pUIRoot->find_child(L"D_AutoMatching");
-	static auto pMatching = [](void* pScene) {
-		auto pMain = ((LobbyScene*)pScene);
-		pMain->ConnectMatchingServer();
+	// 매칭
+	auto pMatching2 = [](void* pScene) {
+		((LobbyScene*)pScene)->ConnectMatchingServer(2);
 	};
-	AutoMatching->EventClick.first = pMatching;
-	AutoMatching->EventClick.second = this;
-	
+	auto pMatching3 = [](void* pScene) {
+		((LobbyScene*)pScene)->ConnectMatchingServer(3);
+	};
+	auto pMatching4 = [](void* pScene) {
+		((LobbyScene*)pScene)->ConnectMatchingServer(4);
+	};
+	JButtonCtrl* pMatchButton = (JButtonCtrl*)pUIRoot->find_child(L"Matching_Two");
+	pMatchButton->EventClick.first  = pMatching2;
+	pMatchButton->EventClick.second = this;
+	pMatchButton = (JButtonCtrl*)pUIRoot->find_child(L"Matching_Three");
+	pMatchButton->EventClick.first = pMatching3;
+	pMatchButton->EventClick.second = this;
+	pMatchButton = (JButtonCtrl*)pUIRoot->find_child(L"Matching_Four");
+	pMatchButton->EventClick.first = pMatching4;
+	pMatchButton->EventClick.second = this;
+	// 시작 이펙
 	m_pStartEffect = (JPanel*)pUIRoot->find_child(L"effect_hos"); //1234
-	
+	// 캐릭터 선택
+	auto pSelectChange = [](void* pScene) {
+		auto pLobby = (LobbyScene*)pScene;
+		pLobby->SelectCharacter(PlayerController::ECharacter::EDummy);
+	};
+	JButtonCtrl* pCharSelect = (JButtonCtrl*)pUIRoot->find_child(L"Char_Left");
+	pCharSelect->EventClick.first = pSelectChange;
+	pCharSelect->EventClick.second = this;
+	pCharSelect = (JButtonCtrl*)pUIRoot->find_child(L"Char_Right");
+	pCharSelect->EventClick.first = pSelectChange;
+	pCharSelect->EventClick.second = this;
+
 	//m_pID = (JEditCtrl*)pUIRoot->find_child(L"Matching_ID");
 	// pID->GetString();
 	//m_pPass = (JEditCtrl*)pUIRoot->find_child(L"Matching_PW");

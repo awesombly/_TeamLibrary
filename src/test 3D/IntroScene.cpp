@@ -287,7 +287,7 @@ void IntroScene::LoadUI() noexcept
 
 		PacketManager::Get().pMyInfo = new UserInfo();
 		PacketManager::Get().pMyInfo->DataSize = (UCHAR)pIntro->m_pID->GetString().size() * 2;
-		PacketManager::Get().pMyInfo->DataSize = PacketManager::Get().pMyInfo->DataSize > 20 ? 20 : PacketManager::Get().pMyInfo->DataSize;
+		PacketManager::Get().pMyInfo->DataSize = PacketManager::Get().pMyInfo->DataSize > 12 ? 12 : PacketManager::Get().pMyInfo->DataSize;
 		memcpy(PacketManager::Get().pMyInfo->UserID, pIntro->m_pID->GetString().c_str(), PacketManager::Get().pMyInfo->DataSize);
 		PacketManager::Get().pMyInfo->UserSocket = 0;
 		//m_pPW->GetString();

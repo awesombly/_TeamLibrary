@@ -2,12 +2,12 @@
 #include "WriteManager.h"
 #include "SoundManager.h"
 
+
+
 bool GameRule::Init() noexcept
 {
 	return true;
 }
-
-
 
 bool GameRule::Frame()	noexcept
 {
@@ -41,6 +41,8 @@ bool GameRule::Frame()	noexcept
 		if (m_bPlayEnd != true) {
 			m_bPlayEnd = true;
 			SoundManager::Get().Play("SE_game_time_end.mp3");
+			m_pStatePanel->m_bRender = true;
+			m_pStatePanel->PreEvent.first = nullptr;
 		}
 		m_TimerText->m_Text = '0';
 	}
@@ -69,7 +71,7 @@ void GameRule::SetResultPanel(JPanel* pUIRoot)
 {
 	m_GWinPanel = (JPanel*)pUIRoot->find_child(L"GuardWin");
 	m_ZWinPanel = (JPanel*)pUIRoot->find_child(L"ZombieWin");
-
+	m_pStatePanel = (JPanel*)pUIRoot->find_child(L"State_Panel");
 	m_FightPanel = (JPanel*)pUIRoot->find_child(L"fight_panel");
 	m_TimeOverPanel = (JPanel*)pUIRoot->find_child(L"TimeOver");
 }
@@ -90,7 +92,7 @@ void GameRule::SetPlayTime(float ftime)
 	m_fPlayTime = ftime;
 }
 
-void GameRule::SetHideTime(float ftime)
+void GameRule::SetReadyTime(float ftime)
 {
 	m_fReadyTime = ftime;
 }

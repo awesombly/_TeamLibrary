@@ -57,10 +57,7 @@ bool PlayerController::Frame(const float& spf, const float& accTime)	noexcept
 			((JPanel*)m_pRespawn)->m_bRender = false;
 			m_curDelayRespawn = 0.0f;
 
-			if(RandomNormal() <= 0.5f)
-				SendReqRespawn(ECharacter::EGuard);
-			else 
-				SendReqRespawn(ECharacter::EZombie);
+			SendReqRespawn(m_selectCharacter);
 			return true;
 		}
 	}

@@ -1,13 +1,15 @@
 #pragma once
 #include "MainClass.h"
 #include "uiheader.h"
-
+#include "PlayerController.h"
 
 class LobbyScene : public MainClass
 {
 public:
 	bool	  m_isStart		= false;
 	AHeroObj* m_pBackHero	= nullptr;
+	AHeroObj* m_pBackGuard  = nullptr;
+	AHeroObj* m_pBackZombie = nullptr;
 	///
 	//JPanel*		m_toHost		= nullptr;
 	//JPanel*		m_toGuest		= nullptr;
@@ -15,6 +17,7 @@ public:
 	JPanel*		m_toGuestPanel	= nullptr;
 	JPanel*		m_pStartEffect	= nullptr;
 public:
+	void SelectCharacter(const PlayerController::ECharacter& eCharacter) noexcept;
 	void LoadUI()				noexcept override;
 	bool FirstInit()			noexcept override;
 

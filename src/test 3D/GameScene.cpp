@@ -91,6 +91,8 @@ bool GameScene::Init() noexcept
 	SoundManager::Get().SetBGM("bgm_ingame01.mp3");
 	Timer::AccumulateTime = 0.0f;
 	m_isLoading = false;
+	m_Rule.SetReadyTime(7.0f);
+	m_Rule.SetPlayTime(30.0f);
 	return true;
 }
 
@@ -439,8 +441,8 @@ void GameScene::LoadUI() noexcept
 
 	m_pChat = (JEditCtrl*)pUIRoot->find_child(L"Chat_Edit");
 
-	//JPanel* sang = (JPanel*)pUIRoot->find_child(L"State_Panel");
-	// if(sang->m_bRender)
+	// 상황판
+	
 
 	/* Name Kill Death Score */
 	//m_pUser1->PreEvent.first; // bRender 상관없이 돌아감
