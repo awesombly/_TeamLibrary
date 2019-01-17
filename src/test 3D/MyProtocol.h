@@ -1,28 +1,8 @@
 #pragma once
 #pragma warning(disable : 4063)
-
 #include "header.h"
 
-//#define PACKET_SetTransform			1000
-//#define PACKET_SetPosition			1001
-//#define PACKET_SetRotation			1002
-//#define PACKET_SetScale				1003
-//#define PACKET_Translate			1004
-//#define PACKET_Rotate				1005
-//#define PACKET_Scaling				1006
-//#define PACKET_SetAnimTransform		1008
-//#define PACKET_PlayerDead			1009
-//// 예외
-//#define PACKET_ReqSync				2000
-//#define PACKET_ReqSyncSpawns		2001
-//#define PACKET_ReqAddPlayer			2002
-//#define PACKET_HostAddPlayer		2003
-//// Key X
-//#define PACKET_SyncObjects			3016
-//#define PACKET_ChatMessage			3015
-//#define PACKET_PlaySound			3012
-//#define PACKET_TakeObject			3011
-//#define PACKET_PossessPlayer		3013
+
 
 enum EPacketProtocol : USHORT {
 	PACKET_SetTransform		= 1000,
@@ -35,17 +15,17 @@ enum EPacketProtocol : USHORT {
 	PACKET_SetAnimTransform,
 	PACKET_PlayerDead,
 	PACKET_SetHP,
-	// 예외
+	// 클라 요청
 	PACKET_ReqSync			= 2000,
 	PACKET_ReqSyncSpawns,
 	PACKET_ReqAddPlayer,
-	//PACKET_HostAddPlayer,
 	// Key X
 	PACKET_SyncObjects		= 3000,
 	PACKET_ChatMessage,
 	PACKET_PlaySound,
 	PACKET_TakeObject,
 	PACKET_PossessPlayer,
+	PACKET_SendUserInfo,
 };
 
 // 패킷 배열 제외 사이즈
@@ -54,20 +34,21 @@ enum EPacketProtocol : USHORT {
 #define PS_ChatMessage				1
 #define PS_PlaySound				17
 #define PS_TakeObject				45
+#define PS_UserInfo					18
 
 
 #pragma pack(push, 1)
 struct UserInfo
 {
-	UINT UserSocket;
-	UINT IconNum;
-	UINT Score;
-	WORD KillCount;
-	WORD DeathCount;
-	bool isDead;
+	UINT UserSocket = 0;
+	UINT IconNum	= 0;
+	UINT Score		= 0;
+	WORD KillCount	= 0;
+	WORD DeathCount	= 0;
+	bool isDead		= false;
 
-	UCHAR DataSize;
-	WCHAR UserID[21];
+	UCHAR DataSize	= 0;
+	WCHAR UserID[11];
 };
 
 struct Packet_PlayerDead

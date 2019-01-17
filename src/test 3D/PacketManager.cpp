@@ -187,6 +187,15 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 		 pObject->SetScale(p_TakeObject.Scale);
 		 pObject->SetHP(1.0f);
 	 }	break;
+	 case PACKET_SendUserInfo:
+	 {
+		 auto pUser = new UserInfo();
+
+		 memcpy((char*)pUser, data, PS_UserInfo);
+		 memcpy(((char*)pUser + PS_UserInfo), ((char*)data + PS_UserInfo), pUser->DataSize);
+
+		 UserList.push_back(pUser);
+	 }	break;
 	 case PACKET_PossessPlayer:
 	 {
 		 memcpy(&p_PossessPlayer, data, sizeof(Packet_PossessPlayer));

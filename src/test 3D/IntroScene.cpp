@@ -270,12 +270,26 @@ void IntroScene::LoadUI() noexcept
 	par.FileLoad(DxManager::GetDevice(), L"../../data/ui/Intro", *pUIRoot);
 	ObjectManager::Get().PushObject(pUIRoot);
 	static auto GotoLobby = [](void* pScene) {
+		auto pIntro = (IntroScene*)pScene;
+
+		PacketManager::Get().pMyInfo = new UserInfo();
+		PacketManager::Get().pMyInfo->DataSize = (UCHAR)pIntro->m_pID->GetString().size() * 2;
+		PacketManager::Get().pMyInfo->DataSize = PacketManager::Get().pMyInfo->DataSize > 20 ? 20 : PacketManager::Get().pMyInfo->DataSize;
+		memcpy(PacketManager::Get().pMyInfo->UserID, pIntro->m_pID->GetString().c_str(), PacketManager::Get().pMyInfo->DataSize);
+		PacketManager::Get().pMyInfo->UserSocket = 0;
+		//m_pPW->GetString();
+
 		((IntroScene*)pScene)->SetScene(ESceneName::Lobby);
 	};
 
-	JButtonCtrl* pBtn = (JButtonCtrl*)pUIRoot->find_child(L"gamestart");
+	m_pID = (JEditCtrl*)pUIRoot->find_child(L"Login_ID");
+	m_pPW = (JEditCtrl*)pUIRoot->find_child(L"Login_PW");
+
+	JButtonCtrl* pBtn = (JButtonCtrl*)pUIRoot->find_child(L"Login_Enter");
 	pBtn->EventClick.first = GotoLobby;
 	pBtn->EventClick.second = this;
+
+
 
 	UI::IntroEvent(pUIRoot);
 }

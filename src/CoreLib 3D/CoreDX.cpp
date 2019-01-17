@@ -7,13 +7,14 @@ bool	Core::isPlaying = true;
 
 bool Core::GameRun() noexcept
 {
-	if (!GameInit())
-		return false;
-	
 	// 쓰레드 가동
 	std::thread gameTimer(&Timer::Frame, &m_Timer);
 	//std::thread gameFrame(&Core::GameFrame, this);
 	//std::thread gameRender(&Core::GameRender, this);
+
+	if (!GameInit())
+		return false;
+	
 
 	// 메인 쓰레드 루프
 	//while (MessageProcess());

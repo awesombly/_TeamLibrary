@@ -47,7 +47,7 @@ public:
 	float		m_moveSpeed		= 100.0f;
 	float		m_jumpPower		= 150.0f;
 
-	GameObject*	m_pUserTitle = nullptr;
+	//GameObject*	m_pUserTitle = nullptr;
 	///
 	const float	m_DelayRespawn  = 8.0f;
 	const float	m_DelayThrow	= 0.3f;
@@ -63,6 +63,7 @@ public:
 	//float		m_HP = 1.0f;
 	float		m_MP = 1.0f;
 	
+	void*       m_pOption		 = nullptr;
 	void*		m_pHpBar		 = nullptr;		// Ã¼·Â¹Ù
 	void*		m_pRespawn		 = nullptr;
 	void*		m_pRespawnBar	 = nullptr;

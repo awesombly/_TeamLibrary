@@ -1,11 +1,13 @@
 #pragma once
 #include "MainClass.h"
+#include "uiheader.h"
 
 
 class IntroScene : public MainClass
 {
 public:
-
+	JEditCtrl*  m_pID = nullptr;
+	JEditCtrl*  m_pPW = nullptr;
 public:
 	void LoadSound()			noexcept;
 	void LoadUI()				noexcept override;

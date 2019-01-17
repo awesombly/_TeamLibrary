@@ -40,25 +40,24 @@ bool GameScene::Init() noexcept
 	//pEffect->SetPosition(Vector3::Up * 400.0f + Vector3::Left * 700.0f);
 	//ObjectManager::Get().PushObject(pEffect);
 
-	auto pParticle = m_pParser->CreateFromParticle(L"Shock.eff", L"../../data/script");
-	pParticle->isRepeat(true);
-	pEffect = new GameObject(L"Shock", pParticle, EObjType::Effect);
-	pEffect->SetPosition(Vector3::Up * 400.0f + Vector3::Right * 700.0f);
-	ObjectManager::Get().PushObject(pEffect);
+	//auto pParticle = m_pParser->CreateFromParticle(L"Shock.eff", L"../../data/script");
+	//pParticle->isRepeat(true);
+	//pEffect = new GameObject(L"Shock", pParticle, EObjType::Effect);
+	//pEffect->SetPosition(Vector3::Up * 400.0f + Vector3::Right * 700.0f);
+	//ObjectManager::Get().PushObject(pEffect);
 
 	pEffect = new GameObject(L"WheelWind", { m_pParser->CreateFromParticle(L"WheelWind.eff", L"../../data/script"), new CTransformer(Vector3::Zero, Quaternion::Left * 3.0f) }, EObjType::Effect);
-	pEffect->SetPosition(Vector3::Up * 400.0f + Vector3::Forward * 700.0f);
+	pEffect->SetPosition(Vector3::Up * 400.0f + Vector3::Forward * 500.0f);
 	ObjectManager::Get().PushObject(pEffect);
 
 	pEffect = new GameObject(L"Atom", { m_pParser->CreateFromParticle(L"Atom.eff", L"../../data/script"), new CTransformer(Vector3::Zero, {3.0f, 5.0f, 7.0f, 0.0f}) }, EObjType::Effect);
-	pEffect->SetPosition(Vector3::Up * 400.0f + Vector3::Backward * 700.0f);
+	pEffect->SetPosition(Vector3::Up * 400.0f + Vector3::Backward * 500.0f);
 	ObjectManager::Get().PushObject(pEffect);
 
 	// ==================================================================================
 	ObjectManager::KeyCount = 1000;
 	auto pHero = (AHeroObj*)ObjectManager::Get().TakeObject(L"Guard");
 	//pHero->GetLeftHandPos
-	//pHero->AddComponent(ObjectManager::Get().TakeComponent(L"Fire"));
 	m_pPlayer->Possess(pHero);
 	m_pPlayer->ResetOption();
 
@@ -94,8 +93,10 @@ bool GameScene::Frame() noexcept
 	{
 		if (PlayerController::Get().isChatting())
 		{
-			if (!m_chatMessage.empty() && CheatMessage())
+			if (!m_chatMessage.empty())
 			{
+				CheatMessage();		// 명령어 체크
+
 				static size_t strSize = 0;
 				strSize = m_chatMessage.size() * 2;
 				strSize = strSize > 200 ? 200 : strSize;
@@ -256,6 +257,7 @@ bool GameScene::CheatMessage() noexcept
 			p_SetHP.KeyValue = PlayerController::Get().GetParent()->m_keyValue;
 			p_SetHP.HP = (float)atof(WCharToChar(m_chatMessage.substr(finder + 1).c_str()));
 			PacketManager::Get().SendPacket((char*)&p_SetHP, (USHORT)sizeof(Packet_SetHP), PACKET_SetHP);
+			return false;
 		}
 	}
 	return true;
@@ -338,11 +340,12 @@ void GameScene::LoadUI() noexcept
 	auto pProj = (JProgressBar*)pUIRoot->find_child(L"MP_Progress");
 	pProj->SetValue(m_pPlayer->m_MP, 1.0f); // 값 bind
 
-	// Right Icon
+	// Skill Icon
 	auto pIcon = (JProgressBar*)pUIRoot->find_child(L"Skill_Right");
 	pIcon->SetValue(PlayerController::Get().m_curDelayThrow, PlayerController::Get().m_DelayThrow);
-
-	//auto pIcon = (JProgressBar*)pUIRoot->find_child(L"Skill_Left"); // dash , left skill icon
+	
+	pIcon = (JProgressBar*)pUIRoot->find_child(L"Skill_Left"); // dash , left skill icon
+	pIcon->SetValue(PlayerController::Get().m_curDelayDash, PlayerController::Get().m_DelayDash);
 
 	// Option Slider
 	static auto pSetVolume = [](void* pSlider) {
@@ -415,6 +418,8 @@ void GameScene::LoadUI() noexcept
 	//auto pJohnEffect = (JSpriteCtrl*)pUIRoot->find_child(L"JohnSprite");
 
 	m_pChat = (JEditCtrl*)pUIRoot->find_child(L"Chat_Edit");
+
+	PlayerController::Get().m_pOption = (JPanel*)pUIRoot->find_child(L"Set_Panel");
 
 	//pJohnEffect->EffectPlay();
 	ObjectManager::Get().PushObject(pUIRoot);

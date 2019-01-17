@@ -77,7 +77,7 @@ bool Collider::CollisionAllCheck(const float& spf) noexcept
 	m_CollisionList.push_front(this);
 	for (auto& iter : ObjectManager::Get().GetColliderList())
 	{
-		if (iter == nullptr || iter->m_pParent == nullptr)
+		if (iter->m_pParent == nullptr)
 		{
 			ErrorMessage(""s + __FUNCTION__ + " -> Parent is Null!");
 			continue;

@@ -3,7 +3,6 @@
 #include "JEventBind.h"
 #include "JState.h"
 
-
 bool LobbyScene::Init() noexcept
 {
 	FirstInit();
@@ -112,6 +111,8 @@ bool LobbyScene::Frame() noexcept
 				m_isStart = false;
 				StartupServer();
 				SetScene(ESceneName::Main);
+
+				PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
 			}
 			else
 			{
@@ -120,7 +121,9 @@ bool LobbyScene::Frame() noexcept
 				SetScene(ESceneName::Main);
 
 				PacketManager::Get().SendPacket('\0', 0, PACKET_ReqAddPlayer);
+				PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
 			}
+			return true;
 		}
 	}
 	return true;
@@ -185,26 +188,9 @@ void LobbyScene::LoadUI() noexcept
 		}
 		m_strHostIPv4 = "192.168.0."s + WCharToChar(PacketManager::Get().InputIP.c_str());
 		((LobbyScene*)pScene)->StartToGuest();
-		///((LobbyScene*)pScene)->m_pBackHero->SetANIM_OneTime(Guard_DASHJUMP);
-		///((LobbyScene*)pScene)->m_pStartEffect->EffectPlay();
-		///SoundManager::Get().Play("SV_Guard_Shout.mp3");
-		///PacketManager::Get().isHost = false;
-		///((LobbyScene*)pScene)->m_isStart = true;
-		/*((LobbyScene*)pScene)->StartupClient();
-		((LobbyScene*)pScene)->SetScene(ESceneName::Main);
-
-		PacketManager::Get().SendPacket('\0', 0, PACKET_ReqAddPlayer);
-		PacketManager::Get().SendPacket('\0', 0, PACKET_ReqSyncSpawns);*/
 	};
 	static auto pToHost = [](void* pScene) {
 		((LobbyScene*)pScene)->StartToHost();
-		///((LobbyScene*)pScene)->m_pBackHero->SetANIM_OneTime(Guard_DASHJUMP);
-		///((LobbyScene*)pScene)->m_pStartEffect->EffectPlay();
-		///SoundManager::Get().Play("SV_Guard_Shout.mp3");
-		///PacketManager::Get().isHost = true;
-		///((LobbyScene*)pScene)->m_isStart = true;
-		/*((LobbyScene*)pScene)->StartupServer();
-		((LobbyScene*)pScene)->SetScene(ESceneName::Main);*/
 	};
 	static auto pToExit = [](void* pScene) {
 		exit(0); pScene;
@@ -225,7 +211,7 @@ void LobbyScene::LoadUI() noexcept
 	pPanel->EventClick.first = pToGuest;
 	pPanel->EventClick.second = this;
 	// Exit
-	pPanel = (JTextCtrl*)pUIRoot->find_child(L"D_Exit");
+	pPanel = (JButtonCtrl*)pUIRoot->find_child(L"D_Exit");
 	pPanel->EventClick.first = pToExit;
 	pPanel->EventClick.second = this;
 	// IP Ã¢
@@ -234,26 +220,23 @@ void LobbyScene::LoadUI() noexcept
 	// ÆÐ³ÎÃ¢
 	m_toGuestPanel = m_toGuestIP->m_pParent;
 	// ¸ÅÄª, ½ÃÀÛ ÀÌÆå
-	JTextCtrl* AutoMatching = (JTextCtrl*)pUIRoot->find_child(L"Matching_Login");
+	JButtonCtrl* AutoMatching = (JButtonCtrl*)pUIRoot->find_child(L"D_AutoMatching");
 	static auto pMatching = [](void* pScene) {
-		auto pMain = ((MainClass*)pScene);
+		auto pMain = ((LobbyScene*)pScene);
 		pMain->ConnectMatchingServer();
+
+		//pScene->g_pClient->ReqSocketNumber();
 	};
 	AutoMatching->EventClick.first = pMatching;
 	AutoMatching->EventClick.second = this;
 	
 	m_pStartEffect = (JPanel*)pUIRoot->find_child(L"effect_hos"); //1234
 	
-	//auto pID = (JEditCtrl*)pUIRoot->find_child(L"Matching_ID");
-	//// pID->GetString();
-	//auto pPass = (JEditCtrl*)pUIRoot->find_child(L"Matching_PW");
-	//
-	//auto pLogin = (JTextCtrl*)pUIRoot->find_child(L"Matching_Login");
+	//m_pID = (JEditCtrl*)pUIRoot->find_child(L"Matching_ID");
+	// pID->GetString();
+	//m_pPass = (JEditCtrl*)pUIRoot->find_child(L"Matching_PW");
 
 	//auto pLoading = (JListCtrl*)pUIRoot->find_child(L"Matching_Loading_List");
-	//pLoading->push_string(L"¢¾¢¾¢¾¢¾");
-	//pLoading->push_string(L"¢¾¢¾¢¾¢¾");
-	//pLoading->push_string(L"¢¾¢¾¢¾¢¾");
 	//pLoading->push_string(L"¢¾¢¾¢¾¢¾");
 	//auto pID = (JEditCtrl*)pUIRoot->find_child(L"Matching_ID");
 	//// pID->GetString();
@@ -269,4 +252,3 @@ void LobbyScene::LoadUI() noexcept
 	ObjectManager::Get().PushObject(pUIRoot);
 	UI::LobbyEvent(pUIRoot);	
 }
-
