@@ -11,13 +11,13 @@ bool LobbyScene::Init() noexcept
 
 	m_pBackGuard = (AHeroObj*)ObjectManager::Get().TakeObject(L"Guard", false);
 	ObjectManager::Get().RemoveComponent(m_pBackGuard->GetComponentList(EComponent::Renderer)->front());
-	m_pBackGuard->SetPosition(-40.0f, -28.0f, 30.0f);
+	m_pBackGuard->SetPosition(-40.0f, -31.0f, 35.0f);
 	m_pBackGuard->SetRotation(Quaternion::Left * PI * 0.8f);
 	m_pBackGuard->SetGravityScale(0.0f);
 
 	m_pBackZombie = (AHeroObj*)ObjectManager::Get().TakeObject(L"Zombie", false);
 	ObjectManager::Get().RemoveComponent(m_pBackZombie->GetComponentList(EComponent::Renderer)->front());
-	m_pBackZombie->SetPosition(-40.0f, -28.0f, 30.0f);
+	m_pBackZombie->SetPosition(-40.0f, -31.0f, 35.0f);
 	m_pBackZombie->SetRotation(Quaternion::Left * PI * 0.8f);
 	m_pBackZombie->SetGravityScale(0.0f);
 
@@ -110,7 +110,7 @@ bool LobbyScene::Frame() noexcept
 		static float frameCount = 0.0f;
 		frameCount += Timer::SPF;
 		m_pBackHero->Scaling(-Vector3::One * 0.21f * Timer::SPF);
-		m_pBackHero->Translate(Vector3::One * 16.0f * Timer::SPF);
+		m_pBackHero->Translate(Vector3::One * 6.0f * Timer::SPF);
 		if (frameCount > 2.0f)
 		{
 			// 시작
@@ -121,7 +121,6 @@ bool LobbyScene::Frame() noexcept
 				SetScene(ESceneName::Main);
 
 				PlayerController::Get().SendReqRespawn(PlayerController::Get().m_selectCharacter);
-				//PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
 			}
 			else
 			{
@@ -131,10 +130,6 @@ bool LobbyScene::Frame() noexcept
 				while (PacketManager::Get().pMyInfo->UserSocket == 0);	// 소켓 받을때까지 대기
 
 				PlayerController::Get().SendReqRespawn(PlayerController::Get().m_selectCharacter);
-				//PlayerController::Get()Packet_ReqAddPlayer p_ReqAddPlayer;
-				//p_ReqAddPlayer.ECharacter = PlayerController::Get().m_selectCharacter;
-				//PacketManager::Get().SendPacket((char*)&p_ReqAddPlayer, (USHORT)sizeof(Packet_ReqAddPlayer), PACKET_ReqAddPlayer);
-				//PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
 			}
 			return true;
 		}

@@ -6,7 +6,6 @@
 class Collider;
 class Camera;
 class AHeroObj;
-//class Renderer;
 
 class PlayerController : public GameObject, public ISingleton<PlayerController>
 {
@@ -22,20 +21,13 @@ public:
 		EDummy = 0, EGuard, EZombie,
 	};
 private:
-	//enum class EDirection : char {
-	//	Middle = 0, Left, Right, 
-	//};
 	bool		m_isChatting = false;
 
 	Camera*		m_pCamera		= nullptr;
 	ECharacter  m_curCharacter;			// 현재 캐릭터
 	EAction		m_curAction;			// 현재 눌린 액션
 	EAction		m_curAnim;				// 실제 애니메이션
-	//EDirection  m_MouseDirection;
-	///
-	//D3DXVECTOR3 m_direction;
 
-	//bool		m_toIdle		= false;
 	float		m_prevRotY		= 0.0f;
 	float		m_prevMouseDir	= 1.0f;
 	// 마우스 고정용
@@ -47,8 +39,6 @@ public:
 	ECharacter  m_selectCharacter;		// 선택 캐릭터
 	float		m_moveSpeed		= 100.0f;
 	float		m_jumpPower		= 150.0f;
-
-	//GameObject*	m_pUserTitle = nullptr;
 	///
 	const float	m_DelayRespawn  = 8.0f;
 	const float	m_DelayThrow	= 0.3f;

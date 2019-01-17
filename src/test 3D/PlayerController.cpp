@@ -13,22 +13,12 @@
 bool PlayerController::Init() noexcept
 {
 	GameObject::Init();
-	//if (m_pUserTitle == nullptr)
-	//{
-		//m_pUserTitle = new GameObject(L"UserTitle", new RPlane(L"UserTitle", L"ui/dog.png", "VS_Basic", "PS_Basic"));
-		//m_pUserTitle->SetPosition(Vector3::Up * 20.0f);
-		//m_pUserTitle->isBillBoard(true);
-		//m_pUserTitle->SetParent(this);
-		//m_pUserTitle->SetScale(12.0f, 5.0f, 5.0f);
-		//ObjectManager::Get().PushObject(m_pUserTitle);
-	//}
 	return true;
 }
 
 bool PlayerController::Frame(const float& spf, const float& accTime)	noexcept
 {
 	GameObject::Frame(spf, accTime);
-	//m_pUserTitle->SetPosition(m_pParent->GetPosition() + Vector3::Up * 50.0f);
 	if (!m_isChatting &&
 		!((JPanel*)m_pOption)->m_bRender &&
 		m_pParent != nullptr)
