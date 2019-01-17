@@ -54,6 +54,7 @@ struct UserInfo
 struct Packet_PlayerDead
 {
 	UINT KeyValue;
+	UINT DeadUser;
 	UINT KillUser;
 };
 
