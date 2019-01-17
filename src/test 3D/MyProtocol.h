@@ -31,9 +31,9 @@ enum EPacketProtocol : USHORT {
 // 패킷 배열 제외 사이즈
 #define PS_UserInfo					13
 #define PS_SyncObjects				2
-#define PS_ChatMessage				1
+#define PS_ChatMessage				5
 #define PS_PlaySound				17
-#define PS_TakeObject				45
+#define PS_TakeObject				49
 #define PS_UserInfo					18
 
 
@@ -54,6 +54,7 @@ struct UserInfo
 struct Packet_PlayerDead
 {
 	UINT KeyValue;
+	UINT KillUser;
 };
 
 struct Packet_SetHP
@@ -65,6 +66,7 @@ struct Packet_SetHP
 struct Packet_TakeObject
 {
 	UINT KeyValue;
+	UINT UserSocket;
 	//D3DXVECTOR3 Force;
 	D3DXVECTOR3 Position;
 	D3DXVECTOR3 Scale;
@@ -76,7 +78,7 @@ struct Packet_TakeObject
 
 struct Packet_ChatMessage
 {
-	//UINT KeyValue;
+	UINT UserSocket;
 	UCHAR DataSize;
 	WCHAR Message[101];
 };

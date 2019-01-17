@@ -12,17 +12,18 @@
 class PacketManager : public ISingleton<PacketManager>
 {
 public:
-	list<UserInfo*>	UserList;
-	UserInfo*		pMyInfo;
+	vector<UserInfo*>	UserList;
+	UserInfo*			pMyInfo;
 
-	PP::PPSender* pSender;
-	bool isHost;
+	PP::PPSender*		pSender;
+	bool				isHost;
 
-	UINT	PlayerKeyCount = 10000;
+	UINT				PlayerKeyCount = 10000;
 	queue< PP::PPPacketForProcess> PacketHistory;
 	///
-	wstring InputIP;
-	JListCtrl*   m_pChatList = nullptr;
+	wstring				InputIP;
+	JListCtrl*			pChatList = nullptr;
+	JPanel*				pUserPanel[4];
 	//
 	std::function<int()> PacketFunc;
 public:
