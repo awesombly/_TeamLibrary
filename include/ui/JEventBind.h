@@ -155,6 +155,11 @@ namespace UI
 		if (pTimeOver == nullptr) return;
 		pTimeOver->PreEvent.first = E_FADEINOUT;
 		pTimeOver->PreEvent.second = pTimeOver;
+
+		JListCtrl* pKillToDeath = (JListCtrl*)pRoot->find_child(L"KilltoDeath");
+		if (pKillToDeath == nullptr) return;
+		pKillToDeath->PreEvent.first = E_KILLTODEATH;
+		pKillToDeath->PreEvent.second = pKillToDeath;
 	}
 }/*
 L"^frame_000_delay-0.03s.jpg
