@@ -70,7 +70,7 @@ public:
 	void*		m_pRespawnEffect = nullptr;
 	void*		m_pHitEffect	 = nullptr;
 public:
-	static void SetAnim(AHeroObj* pObject, const ECharacter& eCharacter, const EAction& eAction, const D3DXVECTOR3& forward = Vector3::Zero) noexcept;
+	static void SetAnim(AHeroObj* pObject, const UINT& socket, const ECharacter& eCharacter, const EAction& eAction, const D3DXVECTOR3& forward = Vector3::Zero) noexcept;
 
 	void PlayerInput(const float& spf)												noexcept;
 	void CameraInput(const float& spf)												noexcept;
