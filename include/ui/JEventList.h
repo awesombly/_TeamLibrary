@@ -463,19 +463,19 @@ namespace UI
 			pParticle->m_bRender = true;
 			JPanel* pChild = pParent->find_child(L"title");
 			pChild->m_bRender = true;
-			if (pChild->m_vScl.x >= 150.0f || pChild->m_vScl.y >= 50.0f)
+			if (pChild->m_vScl.x >= 150.0f || pChild->m_vScl.y >= 25.0f)
 			{
 				if (pChild->m_vScl.x >= 150.0f)
 					pChild->m_vScl.x -= Timer::SPF * 2000.0f; // 2ÃÊ¿¡ ¾ø¾îÁü
-				if (pChild->m_vScl.y >= 50.0f)
+				if (pChild->m_vScl.y >= 25.0f)
 					pChild->m_vScl.y -= Timer::SPF * 2000.0f; // 2ÃÊ¿¡ ¾ø¾îÁü
 			}
-			if (pChild->m_vScl.x <= 150.0f || pChild->m_vScl.y <= 50.0f)
+			if (pChild->m_vScl.x <= 150.0f || pChild->m_vScl.y <= 25.0f)
 			{
 				if (pChild->m_vScl.x <= 150.0f)
 					pChild->m_vScl.x = 150.0f;
-				if (pChild->m_vScl.y <= 50.0f)
-					pChild->m_vScl.y = 50.0f;
+				if (pChild->m_vScl.y <= 25.0f)
+					pChild->m_vScl.y = 25.0f;
 			}
 		}
 		else if (pParent->m_fUITimer >= 2.5f && pParent->m_fUITimer <= 3.5f)
@@ -517,5 +517,12 @@ namespace UI
 			pList->m_pText.erase(pDel);
 			pList->m_fUITimer = 0.0f;
 		}
+	}
+	static void E_CHATENTER(void* vp)
+	{
+		JPanel* pEnter = (JPanel*)vp;
+		JPanel* pEdit = (JPanel*)pEnter->find_root()->find_child(L"Chat_Edit");
+		
+		pEnter->m_bRender = pEdit->m_bRender;
 	}
 }

@@ -5,111 +5,90 @@ namespace UI
 	static void IntroEvent(JPanel* pRoot)
 	{
 		JPanel* pEffect = pRoot->find_child(L"effect_panel");
-		if (pEffect == nullptr) return;
 		pEffect->PreEvent.first = E_INTRO;
 		pEffect->PreEvent.second = pEffect;
 		
 		JPanel* pGameStart = pRoot->find_child(L"gamestart");
-		if (pGameStart == nullptr) return;
 		JPanel* pLogin = pRoot->find_child(L"Login_Panel");
-		if (pLogin == nullptr) return;
 		pGameStart->EventClick.first = E_REVERSE_SHOW;
 		pGameStart->EventClick.second = pLogin;
 			   
 		JPanel* pLoginExit = (JPanel*)pRoot->find_child(L"Login_Exit");
-		if (pLoginExit == nullptr) return;
 		pLoginExit->EventClick.first = E_NOTSHOW;
 		pLoginExit->EventClick.second = pLoginExit->m_pParent;
 	}
 	static void LobbyEvent(JPanel* pRoot)
 	{
 		JPanel* pGuest = (JPanel*)pRoot->find_child(L"Guest");
-		if (pGuest == nullptr) return;
 		JPanel* pGuestBtn = (JPanel*)pRoot->find_child(L"D_Guest");
-		if (pGuestBtn == nullptr) return;
 		pGuestBtn->EventClick.first = E_REVERSE_SHOW;
 		pGuestBtn->EventClick.second = pGuest;
 
 		JPanel* pGuestExit = (JPanel*)pRoot->find_child(L"G_Exit");
-		if (pGuestExit == nullptr) return;
 		pGuestExit->EventClick.first = E_NOTSHOW;
 		pGuestExit->EventClick.second = pGuestExit->m_pParent;
 
 		JPanel* pMouseParticle = pRoot->find_child(L"mouse_particle");
-		if (pMouseParticle == nullptr) return;
 		pMouseParticle->PreEvent.first = UI::E_MOUSE_PARTICLE;
 		pMouseParticle->PreEvent.second = pMouseParticle;
 
 		JPanel* pMouseCursor = pRoot->find_child(L"mouse_cursor");
-		if (pMouseCursor == nullptr) return;
 		pMouseCursor->PreEvent.first = UI::E_MOUSE_CURSOR;
 		pMouseCursor->PreEvent.second = pMouseCursor;
 
 		JSpriteCtrl* pCursorClick = (JSpriteCtrl*)pRoot->find_child(L"mouse_click_sprite");
-		if (pCursorClick == nullptr) return;
 		pCursorClick->PreEvent.first = E_MOUSE_CLICK_SPRITE;
 		pCursorClick->PreEvent.second = pCursorClick;
 
 		JSpriteCtrl* pCursorErase = (JSpriteCtrl*)pRoot->find_child(L"mouse_click_sprite_panel");
-		if (pCursorErase == nullptr) return;
 		pCursorErase->PreEvent.first = E_MOUSE_SPRITE_ERASE;
 		pCursorErase->PreEvent.second = pCursorErase;
 
 		JPanel* pHelpImg = (JPanel*)pRoot->find_child(L"HelpRect");
-		if (pHelpImg == nullptr) return;
 		pHelpImg->PreEvent.first = E_HELP_IMG;
 		pHelpImg->PreEvent.second = pHelpImg;
 
 		// effect
 		JPanel* pEff1 = (JPanel*)pRoot->find_child(L"fadeout");
-		if (pEff1 == nullptr) return;
 		pEff1->PreEvent.first = E_FADEOUT;
 		pEff1->PreEvent.second = pEff1;
 
 		JPanel* pEff2 = (JPanel*)pRoot->find_child(L"fadein");
-		if (pEff2 == nullptr) return;
 		pEff2->PreEvent.first = E_FADEIN;
 		pEff2->PreEvent.second = pEff2;
 
 		JPanel* pEff4 = (JPanel*)pRoot->find_child(L"effect_hos");
-		if (pEff4 == nullptr) return;
 		pEff4->PreEvent.first = E_HOS;
 		pEff4->PreEvent.second = pEff4;
 
-		//JPanel* pMatching_Panel = (JPanel*)pRoot->find_child(L"Matching_Panel");
-		//JPanel* AutoMatching = (JPanel*)pRoot->find_child(L"D_AutoMatching");
-		//AutoMatching->EventClick.first = E_REVERSE_SHOW;
-		//AutoMatching->EventClick.second = pMatching_Panel;
+		JPanel* pMatching_Panel = (JPanel*)pRoot->find_child(L"Matching_Panel");
+		JPanel* AutoMatching = (JPanel*)pRoot->find_child(L"D_AutoMatching");
+		AutoMatching->EventClick.first = E_REVERSE_SHOW;
+		AutoMatching->EventClick.second = pMatching_Panel;
 
-		//JPanel* pMatchingExit = (JPanel*)pRoot->find_child(L"Matching_Exit");
-		//if (pMatchingExit == nullptr) return;
-		//pMatchingExit->EventClick.first = E_NOTSHOW;
-		//pMatchingExit->EventClick.second = pMatchingExit->m_pParent;
+		JPanel* pMatchingExit = (JPanel*)pRoot->find_child(L"Matching_Exit");
+		pMatchingExit->EventClick.first = E_NOTSHOW;
+		pMatchingExit->EventClick.second = pMatchingExit->m_pParent;
 
 		JImageCtrl* pDrag = (JImageCtrl*)pRoot->find_child(L"Drag_Img");
-		if (pDrag == nullptr) return;
 		pDrag->PreEvent.first = E_DRAG;
 		pDrag->PreEvent.second = pDrag;
 	}
 	static void InGameEvent(JPanel* pRoot)
 	{
 		JPanel* pMouseCursor = pRoot->find_child(L"mouse_cursor");
-		if (pMouseCursor == nullptr) return;
 		pMouseCursor->PreEvent.first = UI::E_MOUSE_CURSOR;
 		pMouseCursor->PreEvent.second = pMouseCursor;
 
 		JSpriteCtrl* pCursorClick = (JSpriteCtrl*)pRoot->find_child(L"mouse_click_sprite");
-		if (pCursorClick == nullptr) return;
 		pCursorClick->PreEvent.first = E_MOUSE_CLICK_SPRITE;
 		pCursorClick->PreEvent.second = pCursorClick;
 
 		JSpriteCtrl* pCursorErase = (JSpriteCtrl*)pRoot->find_child(L"mouse_click_sprite_panel");
-		if (pCursorErase == nullptr) return;
 		pCursorErase->PreEvent.first = E_MOUSE_SPRITE_ERASE;
 		pCursorErase->PreEvent.second = pCursorErase;
 
 		JPanel* pStatePanel = (JPanel*)pRoot->find_child(L"State_Panel");
-		if (pStatePanel == nullptr) return;
 		pStatePanel->PreEvent.first = E_STATE_SHOW;
 		pStatePanel->PreEvent.second = pStatePanel;
 
@@ -123,17 +102,14 @@ namespace UI
 
 		// effect
 		JPanel* pEff1 = (JPanel*)pRoot->find_child(L"fadeout");
-		if (pEff1 == nullptr) return;
 		pEff1->PreEvent.first = E_FADEOUT;
 		pEff1->PreEvent.second = pEff1;
 
 		JPanel* pEff3 = (JPanel*)pRoot->find_child(L"fadeout_white");
-		if (pEff3 == nullptr) return;
 		pEff3->PreEvent.first = E_FADEOUT;
 		pEff3->PreEvent.second = pEff3;
 
 		JPanel* pEff2 = (JPanel*)pRoot->find_child(L"fadein");
-		if (pEff2 == nullptr) return;
 		pEff2->PreEvent.first = E_FADEIN;
 		pEff2->PreEvent.second = pEff2;
 
@@ -142,24 +118,24 @@ namespace UI
 		pJohn->PreEvent.second = pJohn;
 
 		JPanel* pCrossHair = (JPanel*)pRoot->find_child(L"CrossHair");
-		if (pCrossHair == nullptr) return;
 		pCrossHair->PreEvent.first = E_CROSSHAIR;
 		pCrossHair->PreEvent.second = pCrossHair;
 
 		JPanel* pFight = (JPanel*)pRoot->find_child(L"fight_panel");
-		if (pFight == nullptr) return;
 		pFight->PreEvent.first = E_FIGHT;
 		pFight->PreEvent.second = pFight;
 
 		JPanel* pTimeOver = (JPanel*)pRoot->find_child(L"TimeOver");
-		if (pTimeOver == nullptr) return;
 		pTimeOver->PreEvent.first = E_FADEINOUT;
 		pTimeOver->PreEvent.second = pTimeOver;
 
 		JListCtrl* pKillToDeath = (JListCtrl*)pRoot->find_child(L"KilltoDeath");
-		if (pKillToDeath == nullptr) return;
 		pKillToDeath->PreEvent.first = E_KILLTODEATH;
 		pKillToDeath->PreEvent.second = pKillToDeath;
+
+		JPanel* pChatEnter = (JPanel*)pRoot->find_child(L"Chat_Enter");
+		pChatEnter->PreEvent.first = E_CHATENTER;
+		pChatEnter->PreEvent.second = pChatEnter;
 	}
 }/*
 L"^frame_000_delay-0.03s.jpg

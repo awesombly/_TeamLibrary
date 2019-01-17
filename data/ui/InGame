@@ -253,7 +253,28 @@
 ^Scale 200.000000 10.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
 ^TextSize 20.000000
-^tx_Normal White.png
+^tx_Normal ChatEdit.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 783
+^NodeName Chat_Enter
+^ParentName Chat_Panel
+^KeyState 135 135
+^bRender 0
+^Position 220.000000 -159.500000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 20.000000 11.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^strText 확인
+^TextSize 13.000000
+^tx_Normal btn_177.png
+^tx_Hover btn_176.png
+^tx_Press btn_176.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -666,6 +687,51 @@
 ^SPRITESTART 1 
 ^guard.png
 ^SPRITEEND
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 777
+^NodeName respawn_panel
+^ParentName Root
+^KeyState 135 135
+^bRender 0
+^Position 0.000000 0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 1.000000 1.000000 1.000000
+
+^Type 780
+^VHType 1447
+^NodeName respawn_prog
+^ParentName respawn_panel
+^KeyState 135 135
+^bRender 1
+^Position 0.000000 -72.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 150.000000 10.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_BackGround black.png
+^tx_FrontGround White.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName respawn_txt
+^ParentName respawn_panel
+^KeyState 135 135
+^bRender 1
+^Position 0.000000 -40.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 100.000000 20.000000 1.000000
+^Color 0.000000 0.000000 0.000000 1.000000
+^tx_Normal 리스폰.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -1726,55 +1792,6 @@
 ^frame_148_delay-0.03s.jpg
 ^frame_149_delay-0.03s.jpg
 ^SPRITEEND
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick 
-
-^Type 777
-^NodeName respawn_panel
-^ParentName Root
-^KeyState 135 135
-^bRender 0
-^Position 0.000000 0.000000 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 1.000000 1.000000 1.000000
-
-^Type 780
-^VHType 1447
-^NodeName respawn_prog
-^ParentName respawn_panel
-^KeyState 135 135
-^bRender 1
-^Position 0.000000 -72.000000 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 150.000000 10.000000 1.000000
-^Color 1.000000 1.000000 1.000000 1.000000
-^tx_BackGround black.png
-^tx_FrontGround White.png
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick 
-
-^Type 783
-^NodeName respawn_txt
-^ParentName respawn_panel
-^KeyState 135 135
-^bRender 1
-^Position 0.000000 -48.684788 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 150.000000 20.000000 1.000000
-^Color 1.000000 1.000000 1.000000 1.000000
-^strText RESPAWN
-^TextSize 35.000000
-^tx_Normal Alpha.png
-^tx_Hover Alpha.png
-^tx_Press Alpha.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274

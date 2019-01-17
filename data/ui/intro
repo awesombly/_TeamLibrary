@@ -175,11 +175,11 @@
 ^ParentName effect_panel
 ^KeyState 135 135
 ^bRender 0
-^Position 0.000000 200.000000 0.000000
+^Position 0.000000 190.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 1000.000000 1000.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
-^tx_Normal Title.png
+^tx_Normal 타이틀로고.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
