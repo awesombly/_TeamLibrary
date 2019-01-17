@@ -164,7 +164,7 @@ bool IntroScene::FirstInit() noexcept
 			{
 				if (pB->m_eTag != ETag::Collider) return;
 
-				pB->SetForce((Normalize(-pA->GetTotalForce()) + Vector3::Up) * 120.0f);
+				pB->SetForce((Normalize(-pA->GetTotalForce()) + Vector3::Up) * 80.0f);
 				pB->m_pParent->OperHP(-0.15f);
 				if (pB->m_pParent == PlayerController::Get().GetParent())
 				{
@@ -199,9 +199,9 @@ bool IntroScene::FirstInit() noexcept
 		pHeroObj->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
 		pHeroObj->m_myName = L"Dagger";
 		pHeroObj->m_objType = EObjType::Object;
-		pHeroObj->SetScale(Vector3::One * 0.8f);
+		pHeroObj->SetScale(Vector3::One * 0.6f);
 		pCollider = new Collider(15.0f);
-		pCollider->m_pivot = Vector3::Up * 8.0f + Vector3::Forward * 2.5f;
+		pCollider->m_pivot = Vector3::Up * 6.0f + Vector3::Forward * 2.5f;
 		pCollider->CollisionEvent = pDaggerHit;
 		pHeroObj->AddComponent({ pCollider, ObjectManager::Get().TakeComponent(L"Fire") });
 		pHeroObj->m_pPhysics->UserSocket = (UINT)-1;
@@ -213,9 +213,9 @@ bool IntroScene::FirstInit() noexcept
 		pHeroObj->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
 		pHeroObj->m_myName = L"Chicken";
 		pHeroObj->m_objType = EObjType::Object;
-		pHeroObj->SetScale(Vector3::One * 0.8f);
+		pHeroObj->SetScale(Vector3::One * 0.6f);
 		pCollider = new Collider(15.0f);
-		pCollider->m_pivot = Vector3::Up * 8.0f + Vector3::Forward * 2.5f;
+		pCollider->m_pivot = Vector3::Up * 6.0f + Vector3::Forward * 2.5f;
 		pCollider->CollisionEvent = pDaggerHit;
 		pHeroObj->AddComponent({ pCollider, ObjectManager::Get().TakeComponent(L"Fire") });
 		pHeroObj->m_pPhysics->UserSocket = (UINT)-1;
@@ -228,10 +228,10 @@ bool IntroScene::FirstInit() noexcept
 		pHeroObj->SetANIM_Loop(Guard_IDLE);
 		pHeroObj->m_myName = L"Guard";
 		pHeroObj->m_objType = EObjType::Object;
-		pHeroObj->SetScale(Vector3::One * 0.5f);
+		pHeroObj->SetScale(Vector3::One * 0.2f);
 		pCollider = new ColliderOBB({ -13.0f, 0.0f , -13.0f }, { 13.0f, 80.0f , 13.0f });
 		pHeroObj->AddComponent({ pCollider, ObjectManager::Get().TakeComponent(L"Fire") });
-		pCollider->m_pivot *= 0.5f;
+		pCollider->m_pivot *= 0.2f;
 		pHeroObj->m_pPhysics->UserSocket = (UINT)-1;
 		ObjectManager::Get().SetProtoObject(pHeroObj);
 
@@ -242,10 +242,10 @@ bool IntroScene::FirstInit() noexcept
 		pHeroObj->SetANIM_Loop(Zombie_IDLE);
 		pHeroObj->m_myName = L"Zombie";
 		pHeroObj->m_objType = EObjType::Object;
-		pHeroObj->SetScale(Vector3::One * 0.5f);
+		pHeroObj->SetScale(Vector3::One * 0.2f);
 		pCollider = new ColliderOBB({ -13.0f, 0.0f , -13.0f }, { 13.0f, 80.0f , 13.0f });
 		pHeroObj->AddComponent({ pCollider, ObjectManager::Get().TakeComponent(L"Fire") });
-		pCollider->m_pivot *= 0.5f;
+		pCollider->m_pivot *= 0.2f;
 		pHeroObj->m_pPhysics->UserSocket = (UINT)-1;
 		ObjectManager::Get().SetProtoObject(pHeroObj);
 
@@ -255,10 +255,10 @@ bool IntroScene::FirstInit() noexcept
 		pHeroObj->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
 		pHeroObj->m_myName = L"Bird";
 		pHeroObj->m_objType = EObjType::Object;
-		pHeroObj->SetScale(Vector3::One * 7.0f);
+		pHeroObj->SetScale(Vector3::One * 4.0f);
 		pCollider = new ColliderOBB({ -1.0f, 0.0f , -1.0f }, { 1.0f, 2.0f , 1.0f });
 		pHeroObj->AddComponent({ pCollider, ObjectManager::Get().TakeComponent(L"Fire") });
-		pCollider->m_pivot *= 7.0f;
+		pCollider->m_pivot *= 4.0f;
 		pCollider->SetGravityScale(0.3f);
 		pHeroObj->m_pPhysics->UserSocket = (UINT)-1;
 		ObjectManager::Get().SetProtoObject(pHeroObj);

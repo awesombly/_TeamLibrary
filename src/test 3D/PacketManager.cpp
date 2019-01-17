@@ -249,24 +249,21 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 				 }
 			 }
 		 }
-		 auto pCollider = new Collider(140.0f);
+		 auto pCollider = new Collider(70.0f);
 		 auto pEffect = ObjectManager::Get().TakeObject(L"Boom3");
 		 pEffect->AddComponent(pCollider);
 		 pCollider->CollisionEvent = [](Collider* pMe, Collider* pYou) {
 			 if (pYou != nullptr && pYou->m_eTag == ETag::Collider)
 			 {
-				 pYou->SetForce((Normalize(pYou->GetCenter() - pMe->GetCenter()) + Vector3::Up * 1.5f) * 250.0f);
+				 pYou->SetForce((Normalize(pYou->GetCenter() - pMe->GetCenter()) + Vector3::Up * 1.5f) * 120.0f);
 				 pMe->AddIgnoreList(pYou);
 			 }
 		 };
 		 pCollider->m_eTag = ETag::Dummy;
 		 pCollider->SetGravityScale(0.0f);
 		 pCollider->usePhysics(false);
-		 //pCollider->AddIgnoreList(pA);
-		 //pCollider->AddIgnoreList(pB);
 		 
-		 pEffect->SetPosition(ObjectManager::KeyObjects[p_PlayerDead.KeyValue]->GetPosition() + Vector3::Up * 40.0f);
-		 //ObjectManager::Get().PushObject(pEffect);
+		 pEffect->SetPosition(ObjectManager::KeyObjects[p_PlayerDead.KeyValue]->GetPosition() + Vector3::Up * 15.0f);
 		 ObjectManager::Get().DisableObject(ObjectManager::KeyObjects[p_PlayerDead.KeyValue]);
 
 		 // Àü±¤ÆÇ ÀÔ·Â
@@ -306,7 +303,7 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 			 {
 				 if (iter == pMyInfo)
 				 {
-					 pMyInfo->Score += 5;
+					 pMyInfo->Score += 2;
 					 PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
 				 }
 				 pChatList->push_string(iter->UserID + L" : "s + p_ChatMessage.Message);

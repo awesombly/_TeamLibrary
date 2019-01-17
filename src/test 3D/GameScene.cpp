@@ -37,7 +37,7 @@ bool GameScene::Init() noexcept
 	}
 
 #pragma region Basic
-	GameObject* pEffect = nullptr;
+	//GameObject* pEffect = nullptr;
 	//m_pParser->CreateFromFile(&pEffect, L"Snow.eff", L"../../data/script");
 	//pEffect->SetPosition(Vector3::Up * 400.0f);
 	//ObjectManager::Get().PushObject(pEffect);
@@ -52,13 +52,13 @@ bool GameScene::Init() noexcept
 	//pEffect->SetPosition(Vector3::Up * 400.0f + Vector3::Right * 700.0f);
 	//ObjectManager::Get().PushObject(pEffect);
 
-	pEffect = new GameObject(L"WheelWind", { m_pParser->CreateFromParticle(L"WheelWind.eff", L"../../data/script"), new CTransformer(Vector3::Zero, Quaternion::Left * 3.0f) }, EObjType::Effect);
-	pEffect->SetPosition(Vector3::Up * 400.0f + Vector3::Forward * 500.0f);
-	ObjectManager::Get().PushObject(pEffect);
+	//pEffect = new GameObject(L"WheelWind", { m_pParser->CreateFromParticle(L"WheelWind.eff", L"../../data/script"), new CTransformer(Vector3::Zero, Quaternion::Left * 3.0f) }, EObjType::Effect);
+	//pEffect->SetPosition(Vector3::Up * 400.0f + Vector3::Forward * 500.0f);
+	//ObjectManager::Get().PushObject(pEffect);
 
-	pEffect = new GameObject(L"Atom", { m_pParser->CreateFromParticle(L"Atom.eff", L"../../data/script"), new CTransformer(Vector3::Zero, {3.0f, 5.0f, 7.0f, 0.0f}) }, EObjType::Effect);
-	pEffect->SetPosition(Vector3::Up * 400.0f + Vector3::Backward * 500.0f);
-	ObjectManager::Get().PushObject(pEffect);
+	//pEffect = new GameObject(L"Atom", { m_pParser->CreateFromParticle(L"Atom.eff", L"../../data/script"), new CTransformer(Vector3::Zero, {3.0f, 5.0f, 7.0f, 0.0f}) }, EObjType::Effect);
+	//pEffect->SetPosition(Vector3::Up * 400.0f + Vector3::Backward * 500.0f);
+	//ObjectManager::Get().PushObject(pEffect);
 
 	// ==================================================================================
 	ObjectManager::KeyCount = 1000;

@@ -13,12 +13,14 @@ bool LobbyScene::Init() noexcept
 	ObjectManager::Get().RemoveComponent(m_pBackGuard->GetComponentList(EComponent::Renderer)->front());
 	m_pBackGuard->SetPosition(-40.0f, -31.0f, 35.0f);
 	m_pBackGuard->SetRotation(Quaternion::Left * PI * 0.8f);
+	m_pBackGuard->SetScale(Vector3::One * 0.5f);
 	m_pBackGuard->SetGravityScale(0.0f);
 
 	m_pBackZombie = (AHeroObj*)ObjectManager::Get().TakeObject(L"Zombie", false);
 	ObjectManager::Get().RemoveComponent(m_pBackZombie->GetComponentList(EComponent::Renderer)->front());
 	m_pBackZombie->SetPosition(-40.0f, -31.0f, 35.0f);
 	m_pBackZombie->SetRotation(Quaternion::Left * PI * 0.8f);
+	m_pBackZombie->SetScale(Vector3::One * 0.5f);
 	m_pBackZombie->SetGravityScale(0.0f);
 
 	SelectCharacter(PlayerController::ECharacter::EGuard);

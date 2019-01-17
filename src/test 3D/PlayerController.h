@@ -37,8 +37,8 @@ private:
 	GameObject*	m_pEffectFly = nullptr;
 public:
 	ECharacter  m_selectCharacter;		// 선택 캐릭터
-	float		m_moveSpeed		= 100.0f;
-	float		m_jumpPower		= 150.0f;
+	float		m_moveSpeed		= 40.0f;
+	float		m_jumpPower		= 70.0f;
 	///
 	const float	m_DelayRespawn  = 8.0f;
 	const float	m_DelayThrow	= 0.3f;
