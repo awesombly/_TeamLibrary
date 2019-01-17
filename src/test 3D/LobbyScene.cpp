@@ -104,7 +104,7 @@ bool LobbyScene::Frame() noexcept
 	ObjectManager::Get().Frame(Timer::SPF, Timer::AccumulateTime);
 	SoundManager::Get().Frame();
 	m_pBackHero->Frame(Timer::SPF, Timer::AccumulateTime);
-
+	// 게임 시작
 	if (m_isStart)
 	{
 		static float frameCount = 0.0f;
@@ -134,7 +134,7 @@ bool LobbyScene::Frame() noexcept
 			return true;
 		}
 	}
-
+	// 매칭 완료
 	if (m_iMatchingStatus != 0) {
 		if (!m_isMatching)
 		{
