@@ -188,7 +188,7 @@ bool IntroScene::FirstInit() noexcept
 				//ObjectManager::Get().PushObject(pEffect);
 				//pA->ClearIgnoreList();
 				
-				SoundManager::Get().PlayQueue("SE_HIT.mp3", pA->m_pParent->GetWorldPosition(), 1000.0f);
+				PacketManager::Get().SendPlaySound("SE_HIT.mp3", pA->m_pParent->GetWorldPosition(), 1000.0f);
 				ObjectManager::Get().DisableObject(pA->m_pParent);
 			}
 		};
