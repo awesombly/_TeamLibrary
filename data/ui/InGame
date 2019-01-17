@@ -1048,6 +1048,23 @@
 ^pfEventClick 7274
 ^vpEventClick 
 
+^Type 788
+^NodeName State_User1_isDead
+^ParentName State_User1
+^KeyState 135 135
+^bRender 0
+^Position 0.000000 -25.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 240.000000 20.000000 1.000000
+^Color 1.000000 0.000000 0.000000 0.500000
+^tx_Normal White.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
 ^Type 777
 ^NodeName State_User2
 ^ParentName State_Panel
@@ -1151,6 +1168,23 @@
 ^Scale 20.000000 20.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
 ^tx_Normal font2.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName State_User2_isDead
+^ParentName State_User2
+^KeyState 135 135
+^bRender 0
+^Position 0.000000 -70.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 240.000000 20.000000 1.000000
+^Color 1.000000 0.000000 0.000000 0.500000
+^tx_Normal White.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -1268,6 +1302,23 @@
 ^pfEventClick 7274
 ^vpEventClick 
 
+^Type 788
+^NodeName State_User3_isDead
+^ParentName State_User3
+^KeyState 135 135
+^bRender 0
+^Position 0.000000 -115.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 240.000000 20.000000 1.000000
+^Color 1.000000 0.000000 0.000000 0.500000
+^tx_Normal White.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
 ^Type 777
 ^NodeName State_User4
 ^ParentName State_Panel
@@ -1371,6 +1422,23 @@
 ^Scale 20.000000 20.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
 ^tx_Normal font4.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName State_User4_isDead
+^ParentName State_User4
+^KeyState 135 135
+^bRender 0
+^Position 0.000000 -160.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 240.000000 20.000000 1.000000
+^Color 1.000000 0.000000 0.000000 0.500000
+^tx_Normal White.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
