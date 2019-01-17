@@ -8,6 +8,18 @@ namespace UI
 		if (pEffect == nullptr) return;
 		pEffect->PreEvent.first = E_INTRO;
 		pEffect->PreEvent.second = pEffect;
+		
+		JPanel* pGameStart = pRoot->find_child(L"gamestart");
+		if (pGameStart == nullptr) return;
+		JPanel* pLogin = pRoot->find_child(L"Login_Panel");
+		if (pLogin == nullptr) return;
+		pGameStart->EventClick.first = E_REVERSE_SHOW;
+		pGameStart->EventClick.second = pLogin;
+			   
+		JPanel* pLoginExit = (JPanel*)pRoot->find_child(L"Login_Exit");
+		if (pLoginExit == nullptr) return;
+		pLoginExit->EventClick.first = E_NOTSHOW;
+		pLoginExit->EventClick.second = pLoginExit->m_pParent;
 	}
 	static void LobbyEvent(JPanel* pRoot)
 	{
@@ -69,15 +81,15 @@ namespace UI
 		pEff4->PreEvent.first = E_HOS;
 		pEff4->PreEvent.second = pEff4;
 
-		JPanel* pMatching_Panel = (JPanel*)pRoot->find_child(L"Matching_Panel");
-		JPanel* AutoMatching = (JPanel*)pRoot->find_child(L"D_AutoMatching");
-		AutoMatching->EventClick.first = E_REVERSE_SHOW;
-		AutoMatching->EventClick.second = pMatching_Panel;
+		//JPanel* pMatching_Panel = (JPanel*)pRoot->find_child(L"Matching_Panel");
+		//JPanel* AutoMatching = (JPanel*)pRoot->find_child(L"D_AutoMatching");
+		//AutoMatching->EventClick.first = E_REVERSE_SHOW;
+		//AutoMatching->EventClick.second = pMatching_Panel;
 
-		JPanel* pMatchingExit = (JPanel*)pRoot->find_child(L"Matching_Exit");
-		if (pMatchingExit == nullptr) return;
-		pMatchingExit->EventClick.first = E_NOTSHOW;
-		pMatchingExit->EventClick.second = pMatchingExit->m_pParent;
+		//JPanel* pMatchingExit = (JPanel*)pRoot->find_child(L"Matching_Exit");
+		//if (pMatchingExit == nullptr) return;
+		//pMatchingExit->EventClick.first = E_NOTSHOW;
+		//pMatchingExit->EventClick.second = pMatchingExit->m_pParent;
 
 		JImageCtrl* pDrag = (JImageCtrl*)pRoot->find_child(L"Drag_Img");
 		if (pDrag == nullptr) return;

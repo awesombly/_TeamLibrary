@@ -240,6 +240,159 @@
 ^pfEventClick 7274
 ^vpEventClick 
 
+^Type 777
+^NodeName Login_Panel
+^ParentName effect_panel
+^KeyState 135 135
+^bRender 0
+^Position 0.000000 0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 1.000000 1.000000 1.000000
+
+^Type 788
+^NodeName Login_BackGround
+^ParentName Login_Panel
+^KeyState 135 135
+^bRender 1
+^Position 0.000000 0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 150.000000 50.000000 1.000000
+^Color 0.300000 0.300000 0.300000 1.000000
+^tx_Normal White.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 787
+^NodeName Login_ID
+^ParentName Login_Panel
+^KeyState 135 135
+^bRender 1
+^bPrivate 0
+^Position 0.000000 15.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 70.000000 10.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^TextSize 15.000000
+^tx_Normal White.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 787
+^NodeName Login_PW
+^ParentName Login_Panel
+^KeyState 135 135
+^bRender 1
+^bPrivate 1
+^Position 0.000000 -15.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 70.000000 10.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^TextSize 15.000000
+^tx_Normal White.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 778
+^NodeName Login_Enter
+^ParentName Login_Panel
+^KeyState 135 135
+^bRender 1
+^Position 110.000000 0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 30.000000 20.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_Normal btn_177.png
+^tx_Hover btn_176.png
+^tx_Press btn_176.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName Login_ID_txt
+^ParentName Login_Panel
+^KeyState 135 135
+^bRender 1
+^Position -110.000000 15.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 30.000000 10.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_Normal 아이디.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName Login_PW_txt
+^ParentName Login_Panel
+^KeyState 135 135
+^bRender 1
+^Position -110.000000 -15.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 30.000000 10.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_Normal 패스워드.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName Login_Enter_txt
+^ParentName Login_Panel
+^KeyState 135 135
+^bRender 1
+^Position 110.000000 0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 20.000000 10.000000 1.000000
+^Color 0.000000 0.000000 0.000000 1.000000
+^tx_Normal 로그인.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 778
+^NodeName Login_Exit
+^ParentName Login_Panel
+^KeyState 135 135
+^bRender 1
+^Position 148.000000 44.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 15.000000 15.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_Normal btn_175.png
+^tx_Hover btn_174.png
+^tx_Press btn_174.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
 ^Type 784
 
 ^SpriteType 6429
