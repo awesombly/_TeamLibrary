@@ -5,6 +5,11 @@
 
 bool GameScene::Init() noexcept
 {
+	m_pPlayer->Init();
+	// UI
+	LoadUI();
+	FirstInit();
+
 	//I_Object.ViewColliderSwitch();
 	for (auto& [name, matrixList] : I_Object.m_ObjectMatrix)
 	{
@@ -30,9 +35,6 @@ bool GameScene::Init() noexcept
 			}
 		}
 	}
-
-	m_pPlayer->Init();
-	FirstInit();
 
 #pragma region Basic
 	GameObject* pEffect = nullptr;
@@ -64,17 +66,7 @@ bool GameScene::Init() noexcept
 	//pHero->GetLeftHandPos
 	m_pPlayer->Possess(pHero);
 	m_pPlayer->ResetOption();
-
-	//ObjectManager::Get().TakeObject(L"Guard")->SetPosition(RandomNormal() * 1000.0f - 500.0f, RandomNormal() * 150.0f, RandomNormal() * 1000.0f - 500.0f);
-	//ObjectManager::Get().TakeObject(L"Guard")->SetPosition(RandomNormal() * 1000.0f - 500.0f, RandomNormal() * 150.0f, RandomNormal() * 1000.0f - 500.0f);
-	//ObjectManager::Get().TakeObject(L"Guard")->SetPosition(RandomNormal() * 1000.0f - 500.0f, RandomNormal() * 150.0f, RandomNormal() * 1000.0f - 500.0f);
-	//ObjectManager::Get().TakeObject(L"Zombie")->SetPosition(RandomNormal() * 1000.0f - 500.0f, RandomNormal() * 150.0f, RandomNormal() * 1000.0f - 500.0f);
-	//ObjectManager::Get().TakeObject(L"Zombie")->SetPosition(RandomNormal() * 1000.0f - 500.0f, RandomNormal() * 150.0f, RandomNormal() * 1000.0f - 500.0f);
-	//ObjectManager::Get().TakeObject(L"Zombie")->SetPosition(RandomNormal() * 1000.0f - 500.0f, RandomNormal() * 150.0f, RandomNormal() * 1000.0f - 500.0f);
-	//ObjectManager::Get().TakeObject(L"Bird")->SetPosition(RandomNormal()	* 1000.0f - 500.0f, RandomNormal() * 150.0f, RandomNormal() * 1000.0f - 500.0f);
-	//ObjectManager::Get().TakeObject(L"Bird")->SetPosition(RandomNormal()	* 1000.0f - 500.0f, RandomNormal() * 150.0f, RandomNormal() * 1000.0f - 500.0f);
-	//ObjectManager::Get().TakeObject(L"Bird")->SetPosition(RandomNormal()	* 1000.0f - 500.0f, RandomNormal() * 150.0f, RandomNormal() * 1000.0f - 500.0f);
-
+	///
 	ObjectManager::Get().TakeObject(L"Guard")->SetPosition( -500, 150.0f, 450);
 	ObjectManager::Get().TakeObject(L"Guard")->SetPosition( -200, 150.0f, -100);
 	ObjectManager::Get().TakeObject(L"Guard")->SetPosition( -100, 150.0f, 350);
@@ -85,14 +77,12 @@ bool GameScene::Init() noexcept
 	ObjectManager::Get().TakeObject(L"Bird")->SetPosition(  200, 150.0f, 150);
 	ObjectManager::Get().TakeObject(L"Bird")->SetPosition(  400, 150.0f, -400);
 #pragma endregion
-	// UI
-	LoadUI();
 	///
 	SoundManager::Get().SetBGM("bgm_ingame01.mp3");
 	Timer::AccumulateTime = 0.0f;
 	m_isLoading = false;
 	m_Rule.SetReadyTime(7.0f);
-	m_Rule.SetPlayTime(30.0f);
+	m_Rule.SetPlayTime(60.0f);
 	return true;
 }
 
@@ -357,10 +347,72 @@ void GameScene::LoadUI() noexcept
 	pUIRoot->m_objType = EObjType::UI;
 	JParser par;
 	par.FileLoad(DxManager::GetDevice(), L"../../data/ui/InGame", *pUIRoot);
+	// HP, MP
 	PlayerController::Get().m_pHpBar = (JProgressBar*)pUIRoot->find_child(L"HP_Progress");
-	//pProj->SetValue(m_pPlayer->m_HP, 1.0f); // 값 bind
 	auto pProj = (JProgressBar*)pUIRoot->find_child(L"MP_Progress");
 	pProj->SetValue(m_pPlayer->m_MP, 1.0f); // 값 bind
+
+	// 상황판
+	/* Name Kill Death Score */
+	//m_pUser1->PreEvent.first; // bRender 상관없이 돌아감
+	PacketManager::Get().pUserPanel[0] = (JPanel*)pUIRoot->find_child(L"State_User1");
+	PacketManager::Get().pUserPanel[0]->PostEvent.first = [](void* pVoid) {	 // bRender가 트루일때만 돌아감
+		if (PacketManager::Get().UserList.empty())
+			return;
+		auto pUserPanel = (JPanel*)pVoid;
+		auto iter = pUserPanel->m_pChildList.begin();
+		((JTextCtrl*)(*iter))->m_Text = PacketManager::Get().UserList[0]->UserID;
+		((JTextCtrl*)(*++iter))->m_Text = to_wstring(PacketManager::Get().UserList[0]->KillCount);
+		((JTextCtrl*)(*++iter))->m_Text = to_wstring(PacketManager::Get().UserList[0]->DeathCount);
+		((JTextCtrl*)(*++iter))->m_Text = to_wstring(PacketManager::Get().UserList[0]->Score);
+		((JTextCtrl*)(*++++iter))->m_bRender = PacketManager::Get().UserList[0]->isDead;
+	};
+	PacketManager::Get().pUserPanel[0]->PostEvent.second = PacketManager::Get().pUserPanel[0];
+
+	PacketManager::Get().pUserPanel[1] = (JPanel*)pUIRoot->find_child(L"State_User2");
+	PacketManager::Get().pUserPanel[1]->PostEvent.first = [](void* pVoid) {
+		if (PacketManager::Get().UserList.size() < 2)
+			return;
+		auto pUserPanel = (JPanel*)pVoid;
+		auto iter = pUserPanel->m_pChildList.begin();
+		((JTextCtrl*)(*iter))->m_Text = PacketManager::Get().UserList[1]->UserID;
+		((JTextCtrl*)(*++iter))->m_Text = to_wstring(PacketManager::Get().UserList[1]->KillCount);
+		((JTextCtrl*)(*++iter))->m_Text = to_wstring(PacketManager::Get().UserList[1]->DeathCount);
+		((JTextCtrl*)(*++iter))->m_Text = to_wstring(PacketManager::Get().UserList[1]->Score);
+		((JTextCtrl*)(*++++iter))->m_bRender = PacketManager::Get().UserList[1]->isDead;
+	};
+	PacketManager::Get().pUserPanel[1]->PostEvent.second = PacketManager::Get().pUserPanel[1];
+
+	PacketManager::Get().pUserPanel[2] = (JPanel*)pUIRoot->find_child(L"State_User3");
+	PacketManager::Get().pUserPanel[2]->PostEvent.first = [](void* pVoid) {
+		if (PacketManager::Get().UserList.size() < 3)
+			return;
+		auto pUserPanel = (JPanel*)pVoid;
+		auto iter = pUserPanel->m_pChildList.begin();
+		((JTextCtrl*)(*iter))->m_Text = PacketManager::Get().UserList[2]->UserID;
+		((JTextCtrl*)(*++iter))->m_Text = to_wstring(PacketManager::Get().UserList[2]->KillCount);
+		((JTextCtrl*)(*++iter))->m_Text = to_wstring(PacketManager::Get().UserList[2]->DeathCount);
+		((JTextCtrl*)(*++iter))->m_Text = to_wstring(PacketManager::Get().UserList[2]->Score);
+		((JTextCtrl*)(*++++iter))->m_bRender = PacketManager::Get().UserList[2]->isDead;
+	};
+	PacketManager::Get().pUserPanel[2]->PostEvent.second = PacketManager::Get().pUserPanel[2];
+
+	PacketManager::Get().pUserPanel[3] = (JPanel*)pUIRoot->find_child(L"State_User4");
+	PacketManager::Get().pUserPanel[3]->PostEvent.first = [](void* pVoid) {
+		if (PacketManager::Get().UserList.size() < 4)
+			return;
+		auto pUserPanel = (JPanel*)pVoid;
+		auto iter = pUserPanel->m_pChildList.begin();
+		((JTextCtrl*)(*iter))->m_Text = PacketManager::Get().UserList[3]->UserID;
+		((JTextCtrl*)(*++iter))->m_Text = to_wstring(PacketManager::Get().UserList[3]->KillCount);
+		((JTextCtrl*)(*++iter))->m_Text = to_wstring(PacketManager::Get().UserList[3]->DeathCount);
+		((JTextCtrl*)(*++iter))->m_Text = to_wstring(PacketManager::Get().UserList[3]->Score);
+		((JTextCtrl*)(*++++iter))->m_bRender = PacketManager::Get().UserList[3]->isDead;
+	};
+	PacketManager::Get().pUserPanel[3]->PostEvent.second = PacketManager::Get().pUserPanel[3];
+	// 옵션, 전광판
+	PlayerController::Get().m_pOption = (JPanel*)pUIRoot->find_child(L"Set_Panel");
+	PacketManager::Get().pKillDisplay = (JListCtrl*)pUIRoot->find_child(L"KilltoDeath");
 
 	// Skill Icon
 	auto pIcon = (JProgressBar*)pUIRoot->find_child(L"Skill_Right");
@@ -434,76 +486,12 @@ void GameScene::LoadUI() noexcept
 	//JTextCtrl* respawntxt = (JTextCtrl*)pUIRoot->find_child(L"respawn_txt");	 // text
 
 	// 쳐맞 효과
-	PlayerController::Get().m_pHitEffect = (JSpriteCtrl*)pUIRoot->find_child(L"JohnSprite"); // (JPanel*)pUIRoot->find_child(L"fadeout"); //1234
+	PlayerController::Get().m_pHitEffect = (JPanel*)pUIRoot->find_child(L"fadeout"); //1234
 	PlayerController::Get().m_pRespawnEffect = (JSpriteCtrl*)pUIRoot->find_child(L"JohnSprite");// (JPanel*)pUIRoot->find_child(L"fadeout_white"); //1234
 	//PlayerController::Get().m_pRespawnEffect = (JPanel*)pUIRoot->find_child(L"fadein"); //1234
 	//auto pJohnEffect = (JSpriteCtrl*)pUIRoot->find_child(L"JohnSprite");
 
 	m_pChat = (JEditCtrl*)pUIRoot->find_child(L"Chat_Edit");
-
-	// 상황판
-	
-
-	/* Name Kill Death Score */
-	//m_pUser1->PreEvent.first; // bRender 상관없이 돌아감
-	PacketManager::Get().pUserPanel[0] = (JPanel*)pUIRoot->find_child(L"State_User1");
-	PacketManager::Get().pUserPanel[0]->PostEvent.first = [](void* pVoid) {	 // bRender가 트루일때만 돌아감
-		if (PacketManager::Get().UserList.empty())
-			return;
-		auto pUserPanel = (JPanel*)pVoid;
-		auto iter = pUserPanel->m_pChildList.begin();
-		((JTextCtrl*)(*iter))->m_Text	= PacketManager::Get().UserList[0]->UserID;
-		((JTextCtrl*)(*++iter))->m_Text = to_wstring(PacketManager::Get().UserList[0]->KillCount);
-		((JTextCtrl*)(*++iter))->m_Text = to_wstring(PacketManager::Get().UserList[0]->DeathCount);
-		((JTextCtrl*)(*++iter))->m_Text = to_wstring(PacketManager::Get().UserList[0]->Score);
-		((JTextCtrl*)(*++++iter))->m_bRender = PacketManager::Get().UserList[0]->isDead;
-	};
-	PacketManager::Get().pUserPanel[0]->PostEvent.second = PacketManager::Get().pUserPanel[0];
-
-	PacketManager::Get().pUserPanel[1] = (JPanel*)pUIRoot->find_child(L"State_User2");
-	PacketManager::Get().pUserPanel[1]->PostEvent.first = [](void* pVoid) {
-		if (PacketManager::Get().UserList.size() < 2)
-			return;
-		auto pUserPanel = (JPanel*)pVoid;
-		auto iter = pUserPanel->m_pChildList.begin();
-		((JTextCtrl*)(*iter))->m_Text	= PacketManager::Get().UserList[1]->UserID;
-		((JTextCtrl*)(*++iter))->m_Text = to_wstring(PacketManager::Get().UserList[1]->KillCount);
-		((JTextCtrl*)(*++iter))->m_Text = to_wstring(PacketManager::Get().UserList[1]->DeathCount);
-		((JTextCtrl*)(*++iter))->m_Text = to_wstring(PacketManager::Get().UserList[1]->Score);
-		((JTextCtrl*)(*++++iter))->m_bRender = PacketManager::Get().UserList[1]->isDead;
-	};
-	PacketManager::Get().pUserPanel[1]->PostEvent.second = PacketManager::Get().pUserPanel[1];
-
-	PacketManager::Get().pUserPanel[2] = (JPanel*)pUIRoot->find_child(L"State_User3");
-	PacketManager::Get().pUserPanel[2]->PostEvent.first = [](void* pVoid) {
-		if (PacketManager::Get().UserList.size() < 3)
-			return;
-		auto pUserPanel = (JPanel*)pVoid;
-		auto iter = pUserPanel->m_pChildList.begin();
-		((JTextCtrl*)(*iter))->m_Text	= PacketManager::Get().UserList[2]->UserID;
-		((JTextCtrl*)(*++iter))->m_Text = to_wstring(PacketManager::Get().UserList[2]->KillCount);
-		((JTextCtrl*)(*++iter))->m_Text = to_wstring(PacketManager::Get().UserList[2]->DeathCount);
-		((JTextCtrl*)(*++iter))->m_Text = to_wstring(PacketManager::Get().UserList[2]->Score);
-		((JTextCtrl*)(*++++iter))->m_bRender = PacketManager::Get().UserList[2]->isDead;
-	};
-	PacketManager::Get().pUserPanel[2]->PostEvent.second = PacketManager::Get().pUserPanel[2];
-
-	PacketManager::Get().pUserPanel[3] = (JPanel*)pUIRoot->find_child(L"State_User4");
-	PacketManager::Get().pUserPanel[3]->PostEvent.first = [](void* pVoid) {
-		if (PacketManager::Get().UserList.size() < 4)
-			return;
-		auto pUserPanel = (JPanel*)pVoid;
-		auto iter = pUserPanel->m_pChildList.begin();
-		((JTextCtrl*)(*iter))->m_Text	= PacketManager::Get().UserList[3]->UserID;
-		((JTextCtrl*)(*++iter))->m_Text = to_wstring(PacketManager::Get().UserList[3]->KillCount);
-		((JTextCtrl*)(*++iter))->m_Text = to_wstring(PacketManager::Get().UserList[3]->DeathCount);
-		((JTextCtrl*)(*++iter))->m_Text = to_wstring(PacketManager::Get().UserList[3]->Score);
-		((JTextCtrl*)(*++++iter))->m_bRender = PacketManager::Get().UserList[3]->isDead;
-	};
-	PacketManager::Get().pUserPanel[3]->PostEvent.second = PacketManager::Get().pUserPanel[3];
-	// 옵션, 전광판
-	PlayerController::Get().m_pOption = (JPanel*)pUIRoot->find_child(L"Set_Panel");
-	PacketManager::Get().pKillDisplay = (JListCtrl*)pUIRoot->find_child(L"KilltoDeath");
 
 
 	ObjectManager::Get().PushObject(pUIRoot);

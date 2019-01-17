@@ -192,10 +192,10 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 	 {
 		 memcpy(&p_KeyValue, data, sizeof(Packet_KeyValue));
 		 // 유저 목록에 있으면 갱신
-		 //for (auto* iter : UserList)
 		 for (int i = 0; i < UserList.size(); ++i)
 		 {
-			 pUserPanel[i]->m_bRender = true;
+			 if(pUserPanel[i] != nullptr)
+				pUserPanel[i]->m_bRender = true;
 			 if (UserList[i]->UserSocket == p_KeyValue.KeyValue)
 			 {
 				 memcpy((char*)UserList[i], data, PS_UserInfo);
