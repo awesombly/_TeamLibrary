@@ -223,6 +223,22 @@ namespace UI
 			pPanel->m_bEffect = false;
 		}
 	}
+	static void E_FADEINOUT(void* vp)
+	{
+		JPanel* pChild = (JPanel*)vp;
+		if (!pChild->m_bRender) return;
+		pChild->m_fUITimer += Timer::SPF;
+		if (pChild->m_fUITimer >= 0.0f && pChild->m_fUITimer <= 1.0f)
+		{
+			if (pChild->m_pShape->m_cbData.vColor.w <= 1.0f)
+				pChild->m_pShape->m_cbData.vColor.w += Timer::SPF * 2.0f;
+		}
+		else if (pChild->m_fUITimer >= 2.0f && pChild->m_fUITimer <= 3.0f)
+		{
+			if (pChild->m_pShape->m_cbData.vColor.w >= 0.0f)
+				pChild->m_pShape->m_cbData.vColor.w -= Timer::SPF * 2.0f;
+		}
+	}
 	static void E_EFFECT3(void* vp)
 	{
 		JPanel* pPanel = (JPanel*)vp;
@@ -306,6 +322,72 @@ namespace UI
 			//pParent->m_bRender = false;
 			pImg->m_vScl.x = 0;
 			pImg->m_vScl.y = 0;
+		}
+	}
+	static void E_FIGHT(void* vp)
+	{
+		JPanel* pParent = (JPanel*)vp;
+		if (!pParent->m_bRender) return;
+		pParent->m_fUITimer += Timer::SPF;
+		if (pParent->m_fUITimer >= 0.1f && pParent->m_fUITimer <= 1.1f)
+		{
+			JPanel* pChild = pParent->find_child(L"fight_1");
+			pChild->m_bRender = true;
+			if (pChild->m_vScl.x >= 30.0f || pChild->m_vScl.y >= 50.0f)
+			{
+				if (pChild->m_vScl.x >= 30.0f)
+					pChild->m_vScl.x -= Timer::SPF * 1500.0f; // 2ÃÊ¿¡ ¾ø¾îÁü
+				if (pChild->m_vScl.y >= 50.0f)
+					pChild->m_vScl.y -= Timer::SPF * 1500.0f; // 2ÃÊ¿¡ ¾ø¾îÁü
+			}
+		}
+		else if (pParent->m_fUITimer >= 1.1f && pParent->m_fUITimer <= 2.1f)
+		{
+			JPanel* pRender = pParent->find_child(L"fight_1");
+			pRender->m_bRender = false;
+			JPanel* pChild = pParent->find_child(L"fight_2");
+			pChild->m_bRender = true;
+			if (pChild->m_vScl.x >= 30.0f || pChild->m_vScl.y >= 50.0f)
+			{
+				if (pChild->m_vScl.x >= 30.0f)
+					pChild->m_vScl.x -= Timer::SPF * 1500.0f; // 2ÃÊ¿¡ ¾ø¾îÁü
+				if (pChild->m_vScl.y >= 50.0f)
+					pChild->m_vScl.y -= Timer::SPF * 1500.0f; // 2ÃÊ¿¡ ¾ø¾îÁü
+			}
+		}
+		else if (pParent->m_fUITimer >= 2.1f && pParent->m_fUITimer <= 3.1f)
+		{
+			JPanel* pRender = pParent->find_child(L"fight_2");
+			pRender->m_bRender = false;
+			JPanel* pChild = pParent->find_child(L"fight_3");
+			pChild->m_bRender = true;
+			if (pChild->m_vScl.x >= 30.0f || pChild->m_vScl.y >= 50.0f)
+			{
+				if (pChild->m_vScl.x >= 30.0f)
+					pChild->m_vScl.x -= Timer::SPF * 1500.0f; // 2ÃÊ¿¡ ¾ø¾îÁü
+				if (pChild->m_vScl.y >= 50.0f)
+					pChild->m_vScl.y -= Timer::SPF * 1500.0f; // 2ÃÊ¿¡ ¾ø¾îÁü
+			}
+		}
+		else if (pParent->m_fUITimer >= 3.1f && pParent->m_fUITimer <= 5.1f)
+		{
+			JPanel* pRender = pParent->find_child(L"fight_3");
+			pRender->m_bRender = false;
+			JPanel* pChild = pParent->find_child(L"Fight");
+			pChild->m_bRender = true;
+			if (pChild->m_pShape->m_cbData.vColor.w <= 1.0f)
+				pChild->m_pShape->m_cbData.vColor.w += Timer::SPF * 2.0f;
+		}
+		else if (pParent->m_fUITimer >= 5.1f && pParent->m_fUITimer <= 7.1f)
+		{
+			JPanel* pChild = pParent->find_child(L"Fight");
+			if (pChild->m_pShape->m_cbData.vColor.w >= 0.0f)
+				pChild->m_pShape->m_cbData.vColor.w -= Timer::SPF * 2.0f;
+		}
+		else if (pParent->m_fUITimer >= 7.1f)
+		{
+			JPanel* pChild = pParent->find_child(L"Fight");
+			pChild->m_bRender = false;
 		}
 	}
 	static void E_INTRO(void* vp)

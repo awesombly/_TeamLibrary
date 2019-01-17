@@ -170,7 +170,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const ECharacter& eCharacter, 
 		case EAction::Dance3:
 		{
 			pObject->SetANIM_OneTime(Guard_DANCE3);
-			SoundManager::Get().PlayQueue("SE_Dance04.mp3", pObject->GetWorldPosition(), 1000.0f);
+			SoundManager::Get().PlayQueue("SE_Dance01.mp3", pObject->GetWorldPosition(), 1000.0f);
 		}	break;
 		case EAction::Throw:
 		{

@@ -11,6 +11,18 @@ namespace UI
 	}
 	static void LobbyEvent(JPanel* pRoot)
 	{
+		JPanel* pGuest = (JPanel*)pRoot->find_child(L"Guest");
+		if (pGuest == nullptr) return;
+		JPanel* pGuestBtn = (JPanel*)pRoot->find_child(L"D_Guest");
+		if (pGuestBtn == nullptr) return;
+		pGuestBtn->EventClick.first = E_REVERSE_SHOW;
+		pGuestBtn->EventClick.second = pGuest;
+
+		JPanel* pGuestExit = (JPanel*)pRoot->find_child(L"G_Exit");
+		if (pGuestExit == nullptr) return;
+		pGuestExit->EventClick.first = E_NOTSHOW;
+		pGuestExit->EventClick.second = pGuestExit->m_pParent;
+
 		JPanel* pMouseParticle = pRoot->find_child(L"mouse_particle");
 		if (pMouseParticle == nullptr) return;
 		pMouseParticle->PreEvent.first = UI::E_MOUSE_PARTICLE;
@@ -126,6 +138,16 @@ namespace UI
 		if (pCrossHair == nullptr) return;
 		pCrossHair->PreEvent.first = E_CROSSHAIR;
 		pCrossHair->PreEvent.second = pCrossHair;
+
+		JPanel* pFight = (JPanel*)pRoot->find_child(L"fight_panel");
+		if (pFight == nullptr) return;
+		pFight->PreEvent.first = E_FIGHT;
+		pFight->PreEvent.second = pFight;
+
+		JPanel* pTimeOver = (JPanel*)pRoot->find_child(L"TimeOver");
+		if (pTimeOver == nullptr) return;
+		pTimeOver->PreEvent.first = E_FADEINOUT;
+		pTimeOver->PreEvent.second = pTimeOver;
 	}
 }/*
 L"^frame_000_delay-0.03s.jpg
