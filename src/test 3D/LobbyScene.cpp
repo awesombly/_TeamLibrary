@@ -134,44 +134,6 @@ bool LobbyScene::Frame() noexcept
 			return true;
 		}
 	}
-	// 매칭 완료
-	if (m_iMatchingStatus != 0) {
-		if (!m_isMatching)
-		{
-			m_isMatching = true;
-			OutputDebugStringW(L"자동매칭 성립, 5초 뒤에 시작합니다\n");
-			g_pClient->Release();
-		}
-
-		static float startFrame = 0.0f;
-		startFrame += Timer::SPF;
-		if (startFrame >= 5.0f)
-		{
-			switch (m_iMatchingStatus) {
-			case 1: {
-				OutputDebugStringW(L"호스트로 시작합니다.\n");
-				m_iMatchingStatus = 0;
-
-				StartToHost();
-				break;
-			}
-			case 2: {
-				std::string strTemp;
-				strTemp.append("IP: ");
-				strTemp.append(m_strHostIPv4);
-				OutputDebugStringW(L"게스트로 시작합니다.\n");
-				OutputDebugStringA(m_strHostIPv4.c_str());
-				m_iMatchingStatus = 0;
-
-				StartToGuest();
-				break;
-			}
-			default: {
-				break;
-			}
-			}
-		}
-	}
 	return true;
 }
 

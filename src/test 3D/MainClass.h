@@ -69,14 +69,6 @@
 #include "XQuadTreeIndex.h"
 #include "XMapImporter.h"
 ///
-#include "../network/PPTCPIOCPServer.h"							//서버 클래스 정의.
-#include "../network/PPTCPIOCPClient.h"							//서버 구동시 필요합니다. 싱글톤 객체.
-#include "../network/PPRecvPacketPoolServer.h"					//클라이언트 클래스 정의.
-#include "../network/PPRecvPacketPoolClient.h"					//클라이언트 구동시 필요합니다. 싱글톤 객체
-#include "../network/PPProtocolMatchingServer.h"		//매칭 서버용 패킷
-PP::PPSender*		 g_pSender = PP::GetSender();		//동적 패킷 전송 객체
-PP::PPTCPIOCPClient* g_pClient = PP::GetClient();
-PP::PPTCPIOCPServer* g_pServer = PP::GetServer();		//동적 서버객체
 
 
 
@@ -104,6 +96,8 @@ private:
 	static list<GameObject*>		m_BulletList;
 	static GameObject*				m_pEnemy;
 	static list<GameObject*>		m_EnemyList;
+
+	bool	  m_isMatching = false;
 public:
 	static MaxImporter*		m_pParser;
 	static bool				m_isLoading;
@@ -124,6 +118,7 @@ public:
 
 	virtual void StartToHost() {};
 	virtual void StartToGuest() {};
+	void MatchingCheck();
 
 	virtual void LoadUI()				noexcept { return; };
 	virtual bool FirstInit()			noexcept { return true; };
