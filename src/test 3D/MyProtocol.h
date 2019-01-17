@@ -54,6 +54,7 @@ struct UserInfo
 struct Packet_PlayerDead
 {
 	UINT KeyValue;
+	UINT DeadUser;
 	UINT KillUser;
 };
 
@@ -154,6 +155,7 @@ struct Packet_Transform
 struct Packet_AnimTransform
 {
 	UINT KeyValue;
+	UINT UserSocket;
 	D3DXVECTOR3 Position;
 	D3DXVECTOR3 Force;
 	D3DXVECTOR3 Direction;

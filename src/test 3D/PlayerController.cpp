@@ -83,7 +83,7 @@ bool PlayerController::Release() noexcept
 
 
 
-void PlayerController::SetAnim(AHeroObj* pObject, const ECharacter& eCharacter, const EAction& eAction, const D3DXVECTOR3& forward) noexcept
+void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECharacter& eCharacter, const EAction& eAction, const D3DXVECTOR3& forward) noexcept
 {
 	static auto pMeleeHitEvent = [](Collider* pA, Collider* pB) {
 		if (pB == nullptr)
@@ -107,6 +107,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const ECharacter& eCharacter, 
 			{
 				Packet_PlayerDead p_PlayerDead;
 				p_PlayerDead.KeyValue = pB->m_pParent->m_keyValue;
+				p_PlayerDead.DeadUser = pB->m_pPhysics->UserSocket;
 				p_PlayerDead.KillUser = pA->m_pPhysics->UserSocket;
 				PacketManager::Get().SendPacket((char*)&p_PlayerDead, (USHORT)sizeof(Packet_PlayerDead), PACKET_PlayerDead);
 			}
@@ -114,7 +115,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const ECharacter& eCharacter, 
 			{
 				if (PacketManager::Get().pMyInfo->UserSocket == pA->m_pPhysics->UserSocket)
 				{
-					PacketManager::Get().pMyInfo->Score += 100;
+					PacketManager::Get().pMyInfo->Score += 200;
 					PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
 				}
 				pA->AddIgnoreList(pB);
@@ -185,6 +186,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const ECharacter& eCharacter, 
 			pDagger->SetPosition(pObject->GetPosition() + pObject->GetForward() * 40.0f + pObject->GetUp() * 65.0f + pObject->GetRight() * 20.0f);
 			pDagger->SetRotation(pObject->GetRotation());
 			pDagger->SetForce((forward + Vector3::Up * 0.15f) * 500.0f);
+			pDagger->m_pPhysics->UserSocket = socket;
 			((Collider*)pDagger->GetComponentList(EComponent::Collider)->front())->AddIgnoreList((Collider*)pObject->GetComponentList(EComponent::Collider)->front());
 			SoundManager::Get().PlayQueue("SE_throw01.mp3", pObject->GetWorldPosition(), 1000.0f);
 		}	break;
@@ -199,6 +201,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const ECharacter& eCharacter, 
 			pMelee->SetPosition(pObject->GetForward() * 45.0f + Vector3::Up * 30.0f);
 			pMelee->SetRotation(pObject->GetRotation());
 			pMelee->UpdateMatrix();
+			pMelee->m_pPhysics->UserSocket = socket;
 			pCollider->CollisionEvent = pMeleeHitEvent;
 			pCollider->AddIgnoreList((Collider*)pObject->GetComponentList(EComponent::Collider)->front());
 			pCollider->m_eTag = ETag::Dummy;
@@ -256,6 +259,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const ECharacter& eCharacter, 
 		 	pChicken->SetPosition(pObject->GetPosition() + pObject->GetForward() * 40.0f + pObject->GetUp() * 65.0f + pObject->GetRight() * 20.0f);
 		 	pChicken->SetRotation(pObject->GetRotation());
 		 	pChicken->SetForce((forward + Vector3::Up * 0.15f) * 500.0f);
+			pChicken->m_pPhysics->UserSocket = socket;
 		 	((Collider*)pChicken->GetComponentList(EComponent::Collider)->front())->AddIgnoreList((Collider*)pObject->GetComponentList(EComponent::Collider)->front());
 		 	SoundManager::Get().PlayQueue("SE_chicken.mp3", pObject->GetWorldPosition(), 1000.0f);
 		 }	break;
@@ -270,6 +274,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const ECharacter& eCharacter, 
 			pMelee->SetPosition(pObject->GetForward() * 45.0f + Vector3::Up * 30.0f);
 			pMelee->SetRotation(pObject->GetRotation());
 			pMelee->UpdateMatrix();
+			pMelee->m_pPhysics->UserSocket = socket;
 			pCollider->CollisionEvent = pMeleeHitEvent;
 		 	pCollider->AddIgnoreList((Collider*)pObject->GetComponentList(EComponent::Collider)->front());
 		 	pCollider->m_eTag = ETag::Dummy;
@@ -409,10 +414,14 @@ void PlayerController::PlayerInput(const float& spf) noexcept
 
 	if (Input::GetKeyState('X') == EKeyState::DOWN)
 	{
+		if (m_pParent != nullptr)
+			m_pParent->m_pPhysics->UserSocket = (UINT)-1;
 		SendReqRespawn(ECharacter::EGuard);
 	}
 	if (Input::GetKeyState('Z') == EKeyState::DOWN)
 	{
+		if (m_pParent != nullptr)
+			m_pParent->m_pPhysics->UserSocket = (UINT)-1;
 		SendReqRespawn(ECharacter::EZombie);
 	}
 
@@ -499,6 +508,7 @@ void PlayerController::SendAnimTransform(const EAction& eAction, const ECharacte
 	}	break;
 	}
 	p_AnimTransform.KeyValue = m_pParent->m_keyValue;
+	p_AnimTransform.UserSocket = PacketManager::Get().pMyInfo->UserSocket;
 	p_AnimTransform.Position = m_pParent->GetPosition();
 	p_AnimTransform.Rotation = m_pParent->GetRotation();
 	m_prevRotY = p_AnimTransform.Rotation.y;

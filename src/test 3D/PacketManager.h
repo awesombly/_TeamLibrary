@@ -18,12 +18,13 @@ public:
 	PP::PPSender*		pSender;
 	bool				isHost;
 
-	UINT				PlayerKeyCount = 10000;
+	UINT				PlayerKeyCount	= 10000;
 	queue< PP::PPPacketForProcess> PacketHistory;
 	///
 	wstring				InputIP;
-	JListCtrl*			pChatList = nullptr;
+	JListCtrl*			pChatList		= nullptr;
 	JPanel*				pUserPanel[4];
+	JListCtrl*			pKillDisplay	= nullptr;
 	//
 	std::function<int()> PacketFunc;
 public:

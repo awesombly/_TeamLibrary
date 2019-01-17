@@ -78,7 +78,7 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 		p_KeyValue.KeyValue != (UINT)-1			 &&
 		ObjectManager::KeyObjects.find(p_KeyValue.KeyValue) == ObjectManager::KeyObjects.end())
 	{
-		ErrorMessage("KeyObject is Null : " + to_string(p_KeyValue.KeyValue));
+		ErrorMessage("KeyObject is Null(" + to_string(sendMode) + ") : " + to_string(p_KeyValue.KeyValue));
 		return;
 	}
 
@@ -135,7 +135,7 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 		 memcpy(&p_AnimTransform, data, sizeof(Packet_AnimTransform));
 		 if (p_AnimTransform.ECharacter != PlayerController::ECharacter::EDummy)
 		 {
-			 PlayerController::SetAnim((AHeroObj*)ObjectManager::KeyObjects[p_AnimTransform.KeyValue], (PlayerController::ECharacter)p_AnimTransform.ECharacter, (PlayerController::EAction)p_AnimTransform.EAnimState, p_AnimTransform.Direction);
+			 PlayerController::SetAnim((AHeroObj*)ObjectManager::KeyObjects[p_AnimTransform.KeyValue], p_AnimTransform.UserSocket, (PlayerController::ECharacter)p_AnimTransform.ECharacter, (PlayerController::EAction)p_AnimTransform.EAnimState, p_AnimTransform.Direction);
 		 }
 		 ObjectManager::KeyObjects[p_AnimTransform.KeyValue]->SetPosition(p_AnimTransform.Position);
 		 ObjectManager::KeyObjects[p_AnimTransform.KeyValue]->SetRotation(p_AnimTransform.Rotation);
@@ -192,8 +192,8 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 	 {
 		 memcpy(&p_KeyValue, data, sizeof(Packet_KeyValue));
 		 // 유저 목록에 있으면 갱신
-		 for (int i = 0; i < UserList.size(); ++i)
 		 //for (auto* iter : UserList)
+		 for (int i = 0; i < UserList.size(); ++i)
 		 {
 			 pUserPanel[i]->m_bRender = true;
 			 if (UserList[i]->UserSocket == p_KeyValue.KeyValue)
@@ -242,7 +242,7 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 				 if (iter->UserSocket == p_PlayerDead.KillUser)
 				 {
 					 ++(iter->KillCount);
-					 iter->Score += 1500;
+					 iter->Score += 500;
 					 PacketManager::Get().SendPacket((char*)iter, (USHORT)(PS_UserInfo + iter->DataSize), PACKET_SendUserInfo);
 					 break;
 				 }
@@ -267,6 +267,25 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 		 pEffect->SetPosition(ObjectManager::KeyObjects[p_PlayerDead.KeyValue]->GetPosition() + Vector3::Up * 40.0f);
 		 //ObjectManager::Get().PushObject(pEffect);
 		 ObjectManager::Get().DisableObject(ObjectManager::KeyObjects[p_PlayerDead.KeyValue]);
+
+		 // 전광판 입력
+		 if (p_PlayerDead.DeadUser == (UINT)-1)
+			 return;
+		 wstring killer, dead;
+		 for (auto& iter : UserList)
+		 {
+			 if (iter->UserSocket == p_PlayerDead.DeadUser)
+			 {
+				 dead = iter->UserID;
+			 }
+			 if (iter->UserSocket == p_PlayerDead.KillUser)
+			 {
+				 killer = iter->UserID;
+			 }
+		 }
+		 if (killer.empty())
+			 killer = dead;
+		 pKillDisplay->push_string(killer + L" -> " + dead);
 	 }	break;
 	 case PACKET_PlaySound:
 	 {
@@ -286,7 +305,7 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 			 {
 				 if (iter == pMyInfo)
 				 {
-					 pMyInfo->Score += 10;
+					 pMyInfo->Score += 5;
 					 PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
 				 }
 				 pChatList->push_string(iter->UserID + L" : "s + p_ChatMessage.Message);

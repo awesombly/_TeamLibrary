@@ -87,15 +87,25 @@ bool GameScene::Init() noexcept
 	m_pPlayer->Possess(pHero);
 	m_pPlayer->ResetOption();
 
-	ObjectManager::Get().TakeObject(L"Guard")->SetPosition(RandomNormal() * 1000.0f - 500.0f, RandomNormal() * 150.0f, RandomNormal() * 1000.0f - 500.0f);
-	ObjectManager::Get().TakeObject(L"Guard")->SetPosition(RandomNormal() * 1000.0f - 500.0f, RandomNormal() * 150.0f, RandomNormal() * 1000.0f - 500.0f);
-	ObjectManager::Get().TakeObject(L"Guard")->SetPosition(RandomNormal() * 1000.0f - 500.0f, RandomNormal() * 150.0f, RandomNormal() * 1000.0f - 500.0f);
-	ObjectManager::Get().TakeObject(L"Zombie")->SetPosition(RandomNormal() * 1000.0f - 500.0f, RandomNormal() * 150.0f, RandomNormal() * 1000.0f - 500.0f);
-	ObjectManager::Get().TakeObject(L"Zombie")->SetPosition(RandomNormal() * 1000.0f - 500.0f, RandomNormal() * 150.0f, RandomNormal() * 1000.0f - 500.0f);
-	ObjectManager::Get().TakeObject(L"Zombie")->SetPosition(RandomNormal() * 1000.0f - 500.0f, RandomNormal() * 150.0f, RandomNormal() * 1000.0f - 500.0f);
-	ObjectManager::Get().TakeObject(L"Bird")->SetPosition(RandomNormal()	* 1000.0f - 500.0f, RandomNormal() * 150.0f, RandomNormal() * 1000.0f - 500.0f);
-	ObjectManager::Get().TakeObject(L"Bird")->SetPosition(RandomNormal()	* 1000.0f - 500.0f, RandomNormal() * 150.0f, RandomNormal() * 1000.0f - 500.0f);
-	ObjectManager::Get().TakeObject(L"Bird")->SetPosition(RandomNormal()	* 1000.0f - 500.0f, RandomNormal() * 150.0f, RandomNormal() * 1000.0f - 500.0f);
+	//ObjectManager::Get().TakeObject(L"Guard")->SetPosition(RandomNormal() * 1000.0f - 500.0f, RandomNormal() * 150.0f, RandomNormal() * 1000.0f - 500.0f);
+	//ObjectManager::Get().TakeObject(L"Guard")->SetPosition(RandomNormal() * 1000.0f - 500.0f, RandomNormal() * 150.0f, RandomNormal() * 1000.0f - 500.0f);
+	//ObjectManager::Get().TakeObject(L"Guard")->SetPosition(RandomNormal() * 1000.0f - 500.0f, RandomNormal() * 150.0f, RandomNormal() * 1000.0f - 500.0f);
+	//ObjectManager::Get().TakeObject(L"Zombie")->SetPosition(RandomNormal() * 1000.0f - 500.0f, RandomNormal() * 150.0f, RandomNormal() * 1000.0f - 500.0f);
+	//ObjectManager::Get().TakeObject(L"Zombie")->SetPosition(RandomNormal() * 1000.0f - 500.0f, RandomNormal() * 150.0f, RandomNormal() * 1000.0f - 500.0f);
+	//ObjectManager::Get().TakeObject(L"Zombie")->SetPosition(RandomNormal() * 1000.0f - 500.0f, RandomNormal() * 150.0f, RandomNormal() * 1000.0f - 500.0f);
+	//ObjectManager::Get().TakeObject(L"Bird")->SetPosition(RandomNormal()	* 1000.0f - 500.0f, RandomNormal() * 150.0f, RandomNormal() * 1000.0f - 500.0f);
+	//ObjectManager::Get().TakeObject(L"Bird")->SetPosition(RandomNormal()	* 1000.0f - 500.0f, RandomNormal() * 150.0f, RandomNormal() * 1000.0f - 500.0f);
+	//ObjectManager::Get().TakeObject(L"Bird")->SetPosition(RandomNormal()	* 1000.0f - 500.0f, RandomNormal() * 150.0f, RandomNormal() * 1000.0f - 500.0f);
+
+	ObjectManager::Get().TakeObject(L"Guard")->SetPosition( -500, 150.0f, 450);
+	ObjectManager::Get().TakeObject(L"Guard")->SetPosition( -200, 150.0f, -100);
+	ObjectManager::Get().TakeObject(L"Guard")->SetPosition( -100, 150.0f, 350);
+	ObjectManager::Get().TakeObject(L"Zombie")->SetPosition(-400, 150.0f, -200);
+	ObjectManager::Get().TakeObject(L"Zombie")->SetPosition(300, 150.0f, 0);
+	ObjectManager::Get().TakeObject(L"Zombie")->SetPosition(100, 150.0f, -300);
+	ObjectManager::Get().TakeObject(L"Bird")->SetPosition(  -300, 150.0f, 250);
+	ObjectManager::Get().TakeObject(L"Bird")->SetPosition(  200, 150.0f, 150);
+	ObjectManager::Get().TakeObject(L"Bird")->SetPosition(  400, 150.0f, -400);
 #pragma endregion
 	// UI
 	LoadUI();
@@ -259,6 +269,7 @@ bool GameScene::CheatMessage() noexcept
 				Packet_PlayerDead p_PlayerDead;
 				p_PlayerDead.KeyValue = PlayerController::Get().GetParent()->m_keyValue;
 				p_PlayerDead.KillUser = (UINT)-1;
+				p_PlayerDead.DeadUser = PacketManager::Get().pMyInfo->UserSocket;
 				PacketManager::Get().SendPacket((char*)&p_PlayerDead, (USHORT)sizeof(Packet_PlayerDead), PACKET_PlayerDead);
 			}
 			return false;
@@ -510,10 +521,11 @@ void GameScene::LoadUI() noexcept
 		((JTextCtrl*)(*++++iter))->m_bRender = PacketManager::Get().UserList[3]->isDead;
 	};
 	PacketManager::Get().pUserPanel[3]->PostEvent.second = PacketManager::Get().pUserPanel[3];
-
+	// ¿É¼Ç, Àü±¤ÆÇ
 	PlayerController::Get().m_pOption = (JPanel*)pUIRoot->find_child(L"Set_Panel");
+	PacketManager::Get().pKillDisplay = (JListCtrl*)pUIRoot->find_child(L"KilltoDeath");
 
-	//pJohnEffect->EffectPlay();
+
 	ObjectManager::Get().PushObject(pUIRoot);
 	UI::InGameEvent(pUIRoot);
 }

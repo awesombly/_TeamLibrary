@@ -13,6 +13,8 @@ namespace UI
 			const TCHAR* szNORMAL, const TCHAR* szHOVER, const TCHAR* szPRESS,
 			const char* PSName = "PS", const TCHAR* szShaderName = L"../../data/ui/shader/DefaultUI.hlsl");
 		void* uiclone();
+		wstring GetString();
+		void SetString(wstring strData);
 	public:
 		void Update();
 		bool Frame(const float& spf, const float& accTime) noexcept override;

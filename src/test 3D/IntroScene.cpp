@@ -74,7 +74,7 @@ bool IntroScene::FirstInit() noexcept
 		m_isFirstInit = false;
 		ErrorMessage("Intro Loading Start.");
 		// 폰트 설정
-		WriteManager::Get().SetText({ 0, 0 }, L"", D2D1::ColorF::Black, 20, L"Yu Gothic");
+		WriteManager::Get().SetText({ 0, 0 }, L"", D2D1::ColorF::Black, 20, L"휴면둥근헤드라인");
 		WriteManager::Get().SetFontSizeAlign(20, EAlign::Center, EAlign::Center);
 		//
 		m_pParser = new MaxImporter();
@@ -145,6 +145,7 @@ bool IntroScene::FirstInit() noexcept
 		{
 			return false;
 		}
+		ErrorMessage("Intro Prototype Loading.");
 		// 단검 충돌시
 		static auto pDaggerHit = [](Collider* pA, Collider* pB) {
 			if (pB == nullptr)
@@ -169,12 +170,13 @@ bool IntroScene::FirstInit() noexcept
 				{
 					Packet_PlayerDead p_PlayerDead;
 					p_PlayerDead.KeyValue = pB->m_pParent->m_keyValue;
+					p_PlayerDead.DeadUser = pB->m_pPhysics->UserSocket;
 					p_PlayerDead.KillUser = pA->m_pPhysics->UserSocket;
 					PacketManager::Get().SendPacket((char*)&p_PlayerDead, (USHORT)sizeof(Packet_PlayerDead), PACKET_PlayerDead);
 				}
 				else if (PacketManager::Get().pMyInfo->UserSocket == pA->m_pPhysics->UserSocket)
 				{
-					PacketManager::Get().pMyInfo->Score += 100;
+					PacketManager::Get().pMyInfo->Score += 50;
 					PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
 				}
 				auto pEffect = ObjectManager::Get().TakeObject(L"Boom2");
@@ -196,6 +198,7 @@ bool IntroScene::FirstInit() noexcept
 		pCollider->m_pivot = Vector3::Up * 8.0f + Vector3::Forward * 2.5f;
 		pCollider->CollisionEvent = pDaggerHit;
 		pHeroObj->AddComponent({ pCollider, ObjectManager::Get().TakeComponent(L"Fire") });
+		pHeroObj->m_pPhysics->UserSocket = (UINT)-1;
 		ObjectManager::Get().SetProtoObject(pHeroObj);
 
 		// 닭
@@ -209,6 +212,7 @@ bool IntroScene::FirstInit() noexcept
 		pCollider->m_pivot = Vector3::Up * 8.0f + Vector3::Forward * 2.5f;
 		pCollider->CollisionEvent = pDaggerHit;
 		pHeroObj->AddComponent({ pCollider, ObjectManager::Get().TakeComponent(L"Fire") });
+		pHeroObj->m_pPhysics->UserSocket = (UINT)-1;
 		ObjectManager::Get().SetProtoObject(pHeroObj);
 
 		// 기사 
@@ -222,6 +226,7 @@ bool IntroScene::FirstInit() noexcept
 		pCollider = new ColliderOBB({ -13.0f, 0.0f , -13.0f }, { 13.0f, 80.0f , 13.0f });
 		pHeroObj->AddComponent({ pCollider, ObjectManager::Get().TakeComponent(L"Fire") });
 		pCollider->m_pivot *= 0.5f;
+		pHeroObj->m_pPhysics->UserSocket = (UINT)-1;
 		ObjectManager::Get().SetProtoObject(pHeroObj);
 
 		// 좀비
@@ -235,6 +240,7 @@ bool IntroScene::FirstInit() noexcept
 		pCollider = new ColliderOBB({ -13.0f, 0.0f , -13.0f }, { 13.0f, 80.0f , 13.0f });
 		pHeroObj->AddComponent({ pCollider, ObjectManager::Get().TakeComponent(L"Fire") });
 		pCollider->m_pivot *= 0.5f;
+		pHeroObj->m_pPhysics->UserSocket = (UINT)-1;
 		ObjectManager::Get().SetProtoObject(pHeroObj);
 
 		// 새
@@ -248,6 +254,7 @@ bool IntroScene::FirstInit() noexcept
 		pHeroObj->AddComponent({ pCollider, ObjectManager::Get().TakeComponent(L"Fire") });
 		pCollider->m_pivot *= 7.0f;
 		pCollider->SetGravityScale(0.3f);
+		pHeroObj->m_pPhysics->UserSocket = (UINT)-1;
 		ObjectManager::Get().SetProtoObject(pHeroObj);
 
 		// =============================== 맵 생성 =================================
