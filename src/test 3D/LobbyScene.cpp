@@ -162,7 +162,7 @@ void LobbyScene::StartToHost()
 	m_pBackHero->SetANIM_OneTime(Guard_DASHJUMP);
 	m_pStartEffect->EffectPlay();
 	SoundManager::Get().Play("SV_Guard_Shout.mp3");
-	PacketManager::Get().isHost = false;
+	PacketManager::Get().isHost = true;
 	m_isStart = true;
 }
 
@@ -171,7 +171,7 @@ void LobbyScene::StartToGuest()
 	m_pBackHero->SetANIM_OneTime(Guard_DASHJUMP);
 	m_pStartEffect->EffectPlay();
 	SoundManager::Get().Play("SV_Guard_Shout.mp3");
-	PacketManager::Get().isHost = true;
+	PacketManager::Get().isHost = false;
 	m_isStart = true;
 }
 
