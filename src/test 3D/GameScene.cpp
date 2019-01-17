@@ -494,6 +494,16 @@ void GameScene::LoadUI() noexcept
 	m_pChat = (JEditCtrl*)pUIRoot->find_child(L"Chat_Edit");
 
 
+
+
+
+
+
+
+
+	//JPanel* pEndingUI = (JPanel*)pUIRoot->find_child(L"Effect_Ending_Panel");
+	// pEndingUI->m_bRender; // ½ÇÇàµÊ
+
 	ObjectManager::Get().PushObject(pUIRoot);
 	UI::InGameEvent(pUIRoot);
 }

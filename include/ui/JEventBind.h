@@ -73,6 +73,14 @@ namespace UI
 		JImageCtrl* pDrag = (JImageCtrl*)pRoot->find_child(L"Drag_Img");
 		pDrag->PreEvent.first = E_DRAG;
 		pDrag->PreEvent.second = pDrag;
+
+		JPanel* pisMatching = (JPanel*)pRoot->find_child(L"isMatching_Sprite_Panel");
+		pisMatching->PreEvent.first = E_ISMATCHING;
+		pisMatching->PreEvent.second = pisMatching;
+
+		JPanel* pisMatchingTitle = (JPanel*)pRoot->find_child(L"isMatching_Title");
+		pisMatchingTitle->PreEvent.first = E_FONTCOLOR;
+		pisMatchingTitle->PreEvent.second = pisMatchingTitle;
 	}
 	static void InGameEvent(JPanel* pRoot)
 	{
@@ -136,6 +144,10 @@ namespace UI
 		JPanel* pChatEnter = (JPanel*)pRoot->find_child(L"Chat_Enter");
 		pChatEnter->PreEvent.first = E_CHATENTER;
 		pChatEnter->PreEvent.second = pChatEnter;
+
+		JPanel* pEndingEffect = (JPanel*)pRoot->find_child(L"Effect_Ending_Panel");
+		pEndingEffect->PreEvent.first = E_ENDING_EFFECT;
+		pEndingEffect->PreEvent.second = pEndingEffect;
 	}
 }/*
 L"^frame_000_delay-0.03s.jpg

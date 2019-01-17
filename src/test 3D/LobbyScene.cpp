@@ -316,6 +316,20 @@ void LobbyScene::LoadUI() noexcept
 	//pLogin->EventClick.first = ;
 	//pLogin->EventClick.second = pUIRoot->find_child(L"Matching_Loading_Panel");
 
+
+
+
+
+
+
+
+
+
+
+	//JPanel* pisMatching = (JPanel*)pUIRoot->find_child(L"isMatching_Sprite_Panel");
+	//pisMatching->m_bRender = true;
+
+
 	ObjectManager::Get().PushObject(pUIRoot);
 	UI::LobbyEvent(pUIRoot);	
 }

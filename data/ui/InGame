@@ -203,6 +203,23 @@
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 1.000000 1.000000 1.000000
 
+^Type 788
+^NodeName Chat_Log_Back
+^ParentName Chat_Panel
+^KeyState 135 135
+^bRender 1
+^Position 0.000000 -271.834656 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 229.833908 24.167107 1.000000
+^Color 0.000000 0.000000 0.000000 1.000000
+^tx_Normal White.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
 ^Type 785
 ^NodeName Chat_Log
 ^ParentName Chat_Panel
@@ -210,8 +227,8 @@
 ^bRender 1
 ^Position 0.000000 -271.834656 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 229.333893 23.333754 1.000000
-^Color 1.000000 1.000000 1.000000 1.000000
+^Scale 229.833908 24.167107 1.000000
+^Color 1.000000 1.000000 1.000000 0.500000
 ^TextSize 13.000000
 ^RectColumn 4
 ^tx_Normal White.png
@@ -229,11 +246,11 @@
 ^ParentName Chat_Panel
 ^KeyState 135 135
 ^bRender 1
-^Position 226.000000 -272.000000 0.000000
+^Position 226.000000 -268.760651 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 3.000000 23.000000 1.000000
+^Scale 3.000000 20.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
-^tx_Bar White.png
+^tx_Bar Alpha.png
 ^tx_Handle PropertyButtonFavouriteFilled-f49031973d301466f8844bd153a56efc-1.png
 ^pfEventHover 7274
 ^vpEventHover 
@@ -253,6 +270,7 @@
 ^Scale 200.000000 10.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
 ^TextSize 20.000000
+^TextLength 0
 ^tx_Normal ChatEdit.png
 ^pfEventHover 7274
 ^vpEventHover 
@@ -327,7 +345,7 @@
 ^bRender 1
 ^Position 0.000000 0.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 34.612984 34.612984 1.000000
+^Scale 34.999748 34.999748 1.000000
 ^Color 0.000000 0.000000 0.000000 1.000000
 ^tx_Normal CrossHair.png
 ^pfEventHover 7274
@@ -1516,7 +1534,7 @@
 ^NodeName mouse_click_sprite_panel
 ^ParentName Root
 ^KeyState 135 135
-^bRender 1
+^bRender 0
 ^Position 0.000000 0.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 1.000000 1.000000 1.000000
@@ -1553,7 +1571,7 @@
 ^KeyState 135 135
 ^bRender 1
 ^bLoop 1
-^Position 656.000000 -253.000000 0.000000
+^Position 215.000000 183.000000 0.000000
 ^Rotate 0.000000 0.000000 -0.261799
 ^Scale 15.000000 15.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
@@ -1577,9 +1595,9 @@
 ^KeyState 135 135
 ^bRender 1
 ^bLoop 0
-^Position 646.000000 -243.000000 0.000000
+^Position 205.000000 193.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 4.577411 4.577411 1.000000
+^Scale 1.500008 1.500008 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
 ^AnimTime 0.500000
 ^AnimUV 2 2 
@@ -1910,6 +1928,83 @@
 ^Scale 200.000000 40.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 0.000000
 ^tx_Normal Fight.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 777
+^NodeName Effect_Ending_Panel
+^ParentName Root
+^KeyState 135 135
+^bRender 0
+^Position 0.000000 0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 1.000000 1.000000 1.000000
+
+^Type 788
+^NodeName Effect_Ending_Back
+^ParentName Effect_Ending_Panel
+^KeyState 135 135
+^bRender 1
+^Position 0.000000 0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 400.000000 300.000000 1.000000
+^Color 0.000000 0.000000 0.000000 0.000000
+^tx_Normal White.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName Effect_Ending_0
+^ParentName Effect_Ending_Panel
+^KeyState 135 135
+^bRender 1
+^Position -100.000000 80.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 50.000000 25.000000 1.000000
+^Color 1.000000 1.000000 1.000000 0.000000
+^tx_Normal Ending_0.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName Effect_Ending_1
+^ParentName Effect_Ending_Panel
+^KeyState 135 135
+^bRender 1
+^Position 0.000000 0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 70.000000 40.000000 1.000000
+^Color 1.000000 1.000000 1.000000 0.000000
+^tx_Normal Ending_1.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName Effect_Ending_2
+^ParentName Effect_Ending_Panel
+^KeyState 135 135
+^bRender 1
+^Position 150.000000 -110.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 150.000000 40.000000 1.000000
+^Color 1.000000 1.000000 1.000000 0.000000
+^tx_Normal Ending_2.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274

@@ -10,6 +10,7 @@ namespace UI
 		wstring m_PreText;
 		wstring m_strPrivate;
 		D3DXVECTOR4 m_rtText;
+		int m_iMaxLength = 0;
 		float m_fSize;
 		bool m_bFocus = false;
 		bool m_bPrivate = false;

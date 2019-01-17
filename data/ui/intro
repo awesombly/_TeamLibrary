@@ -277,6 +277,7 @@
 ^Scale 70.000000 10.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
 ^TextSize 15.000000
+^TextLength 6
 ^tx_Normal ChatEdit.png
 ^pfEventHover 7274
 ^vpEventHover 
@@ -296,6 +297,7 @@
 ^Scale 70.000000 10.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
 ^TextSize 15.000000
+^TextLength 20
 ^tx_Normal ChatEdit.png
 ^pfEventHover 7274
 ^vpEventHover 

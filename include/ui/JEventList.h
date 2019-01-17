@@ -522,7 +522,83 @@ namespace UI
 	{
 		JPanel* pEnter = (JPanel*)vp;
 		JPanel* pEdit = (JPanel*)pEnter->find_root()->find_child(L"Chat_Edit");
-		
+
 		pEnter->m_bRender = pEdit->m_bRender;
+	}
+	static void E_ISMATCHING(void* vp)
+	{
+		JPanel* pParent = (JPanel*)vp;
+
+		if (!pParent->m_bRender) return;
+		pParent->m_fUITimer += Timer::SPF;
+		auto pChild = pParent->m_pChildList.begin();
+		auto pSprite1 = ++pChild;
+		auto pSprite2 = ++pChild;
+		auto pSprite3 = ++pChild;
+		auto pSprite4 = ++pChild;
+
+		if (pParent->m_fUITimer >= 0.2f && pParent->m_fUITimer <= 0.4f)
+		{
+			(*pSprite1)->m_bRender = true;
+		}
+		else if (pParent->m_fUITimer >= 0.4f && pParent->m_fUITimer <= 0.6f)
+		{
+			(*pSprite2)->m_bRender = true;
+		}
+		else if (pParent->m_fUITimer >= 0.6f && pParent->m_fUITimer <= 0.8f)
+		{
+			(*pSprite3)->m_bRender = true;
+		}
+		else if (pParent->m_fUITimer >= 0.8f && pParent->m_fUITimer <= 1.0f)
+		{
+			(*pSprite4)->m_bRender = true;
+		}
+		else if (pParent->m_fUITimer > 1.0f)
+		{
+			(*pSprite1)->m_bRender = false;
+			(*pSprite2)->m_bRender = false;
+			(*pSprite3)->m_bRender = false;
+			(*pSprite4)->m_bRender = false;
+			pParent->m_fUITimer = 0.0f;
+		}
+	}
+	static void E_FONTCOLOR(void* vp)
+	{
+		JPanel* pPanel = (JPanel*)vp;
+
+		pPanel->m_pShape->m_cbData.vColor = 
+			JDxHelper::vRand(D3DXVECTOR4(0.0f,0.0f,0.0f,1.0f), D3DXVECTOR4(1.0f, 1.0f, 1.0f,1.0f));
+	}
+	static void E_ENDING_EFFECT(void* vp)
+	{
+		JPanel* pParent = (JPanel*)vp;
+
+		if (!pParent->m_bRender) return;
+		pParent->m_fUITimer += Timer::SPF;
+		auto pBack = (JImageCtrl*)pParent->find_child(L"Effect_Ending_Back");
+		auto ptxt1 = (JImageCtrl*)pParent->find_child(L"Effect_Ending_0");
+		auto ptxt2 = (JImageCtrl*)pParent->find_child(L"Effect_Ending_1");
+		auto ptxt3 = (JImageCtrl*)pParent->find_child(L"Effect_Ending_2");
+
+		if (pParent->m_fUITimer >= 0.0f && pParent->m_fUITimer <= 1.0f)
+		{
+			if (pBack->m_pShape->m_cbData.vColor.w <= 1.0f)
+				pBack->m_pShape->m_cbData.vColor.w += Timer::SPF * 2.0f;
+		}
+		else if (pParent->m_fUITimer >= 1.0f && pParent->m_fUITimer <= 2.0f)
+		{
+			if (ptxt1->m_pShape->m_cbData.vColor.w <= 1.0f)
+				ptxt1->m_pShape->m_cbData.vColor.w += Timer::SPF * 2.0f;
+		}
+		else if (pParent->m_fUITimer >= 3.0f && pParent->m_fUITimer <= 4.0f)
+		{
+			if (ptxt2->m_pShape->m_cbData.vColor.w <= 1.0f)
+				ptxt2->m_pShape->m_cbData.vColor.w += Timer::SPF * 2.0f;
+		}
+		else if (pParent->m_fUITimer >= 4.0f && pParent->m_fUITimer <= 5.0f)
+		{
+			if (ptxt3->m_pShape->m_cbData.vColor.w <= 1.0f)
+				ptxt3->m_pShape->m_cbData.vColor.w += Timer::SPF * 2.0f;
+		}
 	}
 }
