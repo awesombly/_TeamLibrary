@@ -35,12 +35,12 @@
 ^Scale 50.000000 50.000000 1.000000
 ^AnimTime 1.000000
 ^AnimUV 0 0 
-^ParticleSize 16
+^ParticleSize 8
 ^ParticleScale 25.000000 50.000000
 ^MinStartPos -350.000000 -250.000000 -1.000000
 ^MaxStartPos 350.000000 250.000000 -1.000000
 ^TurnDir 0 0 0
-^MinColor 1.000000 1.000000 1.000000 1.000000
+^MinColor 0.000000 0.000000 0.000000 1.000000
 ^MaxColor 1.000000 1.000000 1.000000 1.000000
 ^LifeTime 1.000000 1.000000
 ^MinDir -0.000000 -0.000000 0.000000
@@ -277,7 +277,7 @@
 ^Scale 70.000000 10.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
 ^TextSize 15.000000
-^tx_Normal White.png
+^tx_Normal ChatEdit.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -296,7 +296,7 @@
 ^Scale 70.000000 10.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
 ^TextSize 15.000000
-^tx_Normal White.png
+^tx_Normal ChatEdit.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -331,7 +331,7 @@
 ^Position -110.000000 15.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 30.000000 10.000000 1.000000
-^Color 1.000000 1.000000 1.000000 1.000000
+^Color 0.000000 0.000000 0.000000 1.000000
 ^tx_Normal 아이디.png
 ^pfEventHover 7274
 ^vpEventHover 
@@ -348,7 +348,7 @@
 ^Position -110.000000 -15.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 30.000000 10.000000 1.000000
-^Color 1.000000 1.000000 1.000000 1.000000
+^Color 0.000000 0.000000 0.000000 1.000000
 ^tx_Normal 패스워드.png
 ^pfEventHover 7274
 ^vpEventHover 
