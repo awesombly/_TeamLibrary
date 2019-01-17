@@ -181,6 +181,7 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 		 memcpy(((char*)&p_TakeObject + PS_TakeObject), ((char*)data + PS_TakeObject), p_TakeObject.DataSize);
 
 		 auto pObject = ObjectManager::Get().TakeObject(p_TakeObject.ObjectName);
+		 pObject->m_pPhysics->UserSocket = p_TakeObject.UserSocket;
 		 pObject->SetKeyValue(p_TakeObject.KeyValue);
 		 pObject->SetPosition(p_TakeObject.Position);
 		 pObject->SetRotation(p_TakeObject.Rotation);
@@ -189,11 +190,31 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 	 }	break;
 	 case PACKET_SendUserInfo:
 	 {
+		 memcpy(&p_KeyValue, data, sizeof(Packet_KeyValue));
+		 // 유저 목록에 있으면 갱신
+		 for (int i = 0; i < UserList.size(); ++i)
+		 //for (auto* iter : UserList)
+		 {
+			 pUserPanel[i]->m_bRender = true;
+			 if (UserList[i]->UserSocket == p_KeyValue.KeyValue)
+			 {
+				 memcpy((char*)UserList[i], data, PS_UserInfo);
+				 memcpy(((char*)UserList[i] + PS_UserInfo), ((char*)data + PS_UserInfo), UserList[i]->DataSize);
+				 return;
+			 }
+		 }
+		 // 유저 목록에 없는데 자신이면 추가
+		 if (pMyInfo->UserSocket == p_KeyValue.KeyValue)
+		 {
+			 memcpy((char*)pMyInfo, data, PS_UserInfo);
+			 memcpy(((char*)pMyInfo + PS_UserInfo), ((char*)data + PS_UserInfo), pMyInfo->DataSize);
+			 UserList.push_back(pMyInfo);
+			 return;
+		 }
+		 // 새 유저면 생성
 		 auto pUser = new UserInfo();
-
 		 memcpy((char*)pUser, data, PS_UserInfo);
 		 memcpy(((char*)pUser + PS_UserInfo), ((char*)data + PS_UserInfo), pUser->DataSize);
-
 		 UserList.push_back(pUser);
 	 }	break;
 	 case PACKET_PossessPlayer:
@@ -201,6 +222,9 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 		 memcpy(&p_PossessPlayer, data, sizeof(Packet_PossessPlayer));
 		 PlayerController::Get().Possess(ObjectManager::KeyObjects[p_PossessPlayer.KeyValue]);
 		 ((JPanel*)PlayerController::Get().m_pRespawnEffect)->EffectPlay();
+
+		 pMyInfo->isDead = false;
+		 PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
 	 }	break;
 	 case PACKET_PlayerDead:
 	 {
@@ -208,7 +232,21 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 		 
 		 if (PlayerController::Get().GetParent() == ObjectManager::KeyObjects[p_PlayerDead.KeyValue])
 		 {
+			 ++pMyInfo->DeathCount;
+			 pMyInfo->isDead = true;
+			 PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
 			 PlayerController::Get().DeadEvent();
+
+			 for (auto& iter : UserList)
+			 {
+				 if (iter->UserSocket == p_PlayerDead.KillUser)
+				 {
+					 ++(iter->KillCount);
+					 iter->Score += 1500;
+					 PacketManager::Get().SendPacket((char*)iter, (USHORT)(PS_UserInfo + iter->DataSize), PACKET_SendUserInfo);
+					 break;
+				 }
+			 }
 		 }
 		 auto pCollider = new Collider(140.0f);
 		 auto pEffect = ObjectManager::Get().TakeObject(L"Boom3");
@@ -242,8 +280,19 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 		 ZeroMemory(&p_ChatMessage, sizeof(p_ChatMessage));
 		 memcpy(&p_ChatMessage, data, PS_ChatMessage);
 		 memcpy(((char*)&p_ChatMessage + PS_ChatMessage), ((char*)data + PS_ChatMessage), p_ChatMessage.DataSize);
-		 m_pChatList->push_string(p_ChatMessage.Message);
-		 *m_pChatList->m_fValue = 0.0f;
+		 for (auto& iter : UserList)
+		 {
+			 if (iter->UserSocket == p_ChatMessage.UserSocket)
+			 {
+				 if (iter == pMyInfo)
+				 {
+					 pMyInfo->Score += 10;
+					 PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
+				 }
+				 pChatList->push_string(iter->UserID + L" : "s + p_ChatMessage.Message);
+				*pChatList->m_fValue = 0.0f;
+			 }
+		 }
 	 }	break;
 	 case PACKET_SyncObjects:
 	 {

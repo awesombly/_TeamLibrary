@@ -107,10 +107,16 @@ void PlayerController::SetAnim(AHeroObj* pObject, const ECharacter& eCharacter, 
 			{
 				Packet_PlayerDead p_PlayerDead;
 				p_PlayerDead.KeyValue = pB->m_pParent->m_keyValue;
+				p_PlayerDead.KillUser = pA->m_pPhysics->UserSocket;
 				PacketManager::Get().SendPacket((char*)&p_PlayerDead, (USHORT)sizeof(Packet_PlayerDead), PACKET_PlayerDead);
 			}
 			else
 			{
+				if (PacketManager::Get().pMyInfo->UserSocket == pA->m_pPhysics->UserSocket)
+				{
+					PacketManager::Get().pMyInfo->Score += 100;
+					PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
+				}
 				pA->AddIgnoreList(pB);
 			}
 			auto pEffect = ObjectManager::Get().TakeObject(L"Boom2");

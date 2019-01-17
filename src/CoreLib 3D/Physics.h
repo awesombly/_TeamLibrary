@@ -33,11 +33,12 @@ struct PhysicsInfo
 	bool m_isMoving		 = false;
 	bool m_isGround		 = false;
 
-	float m_GravityScale = 1.0f;				// 중력크기
+	UINT UserSocket		 = 0;
 
 	D3DXVECTOR3 m_force		= Vector3::Zero;	// 적용중인 힘
 	D3DXVECTOR3 m_direction = Vector3::Zero;	// 이동 힘
 
+	float m_GravityScale = 1.0f;				// 중력크기
 	float m_mass		 = 1.0f;				// 질량
 	float m_repulsion	 = 0.3f;				// 반발 계수
 	float m_drag		 = 0.3f;				// 마찰력

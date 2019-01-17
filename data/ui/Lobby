@@ -590,3 +590,20 @@
 ^vpEventPress 
 ^pfEventClick 7274
 ^vpEventClick 
+
+^Type 788
+^NodeName HelpRect
+^ParentName Root
+^KeyState 135 135
+^bRender 1
+^Position -320.000000 140.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 50.000000 60.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_Normal Alpha.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
