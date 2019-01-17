@@ -1,16 +1,6 @@
 #include "GameScene.h"
 #include "PacketManager.h"
 #include "JEventBind.h"
-const D3DXVECTOR3 QuatToRotationA(D3DXVECTOR3& vec3, D3DXMATRIX mat)
-{
-	D3DXVECTOR3 temp = { vec3.x,vec3.y,vec3.z };
-	vec3.x = temp.x*mat._11 + temp.y*mat._21 + temp.z*mat._31;
-	vec3.y = temp.x*mat._12 + temp.y*mat._22 + temp.z*mat._32;
-	vec3.z = temp.x*mat._13 + temp.y*mat._23 + temp.z*mat._33;
-
-	return vec3;
-}
-
 
 
 bool GameScene::Init() noexcept
@@ -26,23 +16,11 @@ bool GameScene::Init() noexcept
 				auto pObject = new GameObject(L"Dummy", pCollider);
 
 				pObject->SetPosition(matrixList.vLocation[matIndex]);
-			//	pObject->SetRotation(QuatToRotation(matrixList.qRotation[matIndex]) + QuatToRotation(I_Object.m_ObjectCollider[name].qRotation[colIndex]));
-
-				//pObject->SetRotation(QuatToRotationA(D3DXVECTOR3(matrixList.qRotation[matIndex].x, matrixList.qRotation[matIndex].y, matrixList.qRotation[matIndex].z), matrixList.Matrix[matIndex]));
-
-
-				pObject->SetRotation(QuatToRotationA(D3DXVECTOR3(matrixList.Matrix[matIndex]._41, matrixList.Matrix[matIndex]._42, matrixList.Matrix[matIndex]._43), matrixList.Matrix[matIndex]));
-									//I_Object.m_ObjectCollider[name].ColliderAABB[colIndex].vCenter));
-
-
-
+				pObject->SetRotation(QuatToRotation(matrixList.qRotation[matIndex]) + QuatToRotation(I_Object.m_ObjectCollider[name].qRotation[colIndex]));
 				pObject->SetHP(10000.0f);
 				auto center = Product(I_Object.m_ObjectCollider[name].ColliderAABB[colIndex].vCenter, matrixList.vScale[matIndex]);
 				
 				pCollider->m_pivot = center;
-				//pCollider->m_pivot.x -= matrixList.Matrix[matIndex]._41 * matrixList.vScale[matIndex].x;
-				///pCollider->m_pivot.y = matrixList.Matrix[matIndex]._42;// *matrixList.vScale[matIndex].y;
-				//pCollider->m_pivot.z -= matrixList.Matrix[matIndex]._43 * matrixList.vScale[matIndex].z;
 
 				pCollider->usePhysics(false);
 				pCollider->SetGravityScale(0.0f);

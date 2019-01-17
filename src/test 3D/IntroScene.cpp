@@ -222,7 +222,7 @@ bool IntroScene::FirstInit() noexcept
 		pHeroObj->SetANIM_Loop(Guard_IDLE);
 		pHeroObj->m_myName = L"Guard";
 		pHeroObj->m_objType = EObjType::Object;
-		pHeroObj->SetScale(Vector3::One * 0.1f);
+		pHeroObj->SetScale(Vector3::One * 0.5f);
 		pCollider = new ColliderOBB({ -13.0f, 0.0f , -13.0f }, { 13.0f, 80.0f , 13.0f });
 		pHeroObj->AddComponent({ pCollider, ObjectManager::Get().TakeComponent(L"Fire") });
 		pCollider->m_pivot *= 0.5f;
