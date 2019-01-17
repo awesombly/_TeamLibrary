@@ -184,7 +184,7 @@ void LobbyScene::LoadUI() noexcept
 			return;
 		}
 		m_strHostIPv4 = "192.168.0."s + WCharToChar(PacketManager::Get().InputIP.c_str());
-		((LobbyScene*)pScene)->StartToHost();
+		((LobbyScene*)pScene)->StartToGuest();
 		///((LobbyScene*)pScene)->m_pBackHero->SetANIM_OneTime(Guard_DASHJUMP);
 		///((LobbyScene*)pScene)->m_pStartEffect->EffectPlay();
 		///SoundManager::Get().Play("SV_Guard_Shout.mp3");
@@ -197,7 +197,7 @@ void LobbyScene::LoadUI() noexcept
 		PacketManager::Get().SendPacket('\0', 0, PACKET_ReqSyncSpawns);*/
 	};
 	static auto pToHost = [](void* pScene) {
-		((LobbyScene*)pScene)->StartToGuest();
+		((LobbyScene*)pScene)->StartToHost();
 		///((LobbyScene*)pScene)->m_pBackHero->SetANIM_OneTime(Guard_DASHJUMP);
 		///((LobbyScene*)pScene)->m_pStartEffect->EffectPlay();
 		///SoundManager::Get().Play("SV_Guard_Shout.mp3");
