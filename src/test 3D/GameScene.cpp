@@ -82,7 +82,7 @@ bool GameScene::Init() noexcept
 	Timer::AccumulateTime = 0.0f;
 	m_isLoading = false;
 	m_Rule.SetReadyTime(7.0f);
-	m_Rule.SetPlayTime(60.0f);
+	m_Rule.SetPlayTime(180.0f);
 	return true;
 }
 

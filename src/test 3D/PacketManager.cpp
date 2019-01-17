@@ -225,6 +225,7 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 
 		 pMyInfo->isDead = false;
 		 PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
+		 SoundManager::Get().Play("SV_jocena.mp3");
 	 }	break;
 	 case PACKET_PlayerDead:
 	 {

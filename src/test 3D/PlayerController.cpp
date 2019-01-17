@@ -621,12 +621,15 @@ void PlayerController::Possess(GameObject* pObject) noexcept
 
 void PlayerController::DeadEvent() noexcept
 {
+
 	SetPosition(m_pParent->GetPosition());
 	SetRotation(m_pParent->GetRotation());
 	CutParent();
 	m_curDelayRespawn = 0.0f;
 	((JPanel*)m_pRespawn)->m_bRender = true;
 	((JProgressBar*)m_pRespawnBar)->SetValue(m_curDelayRespawn, m_DelayRespawn);
+	SoundManager::Get().Play("SE_dead.mp3");
+
 }
 
 
