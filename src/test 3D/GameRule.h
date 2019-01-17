@@ -7,19 +7,23 @@
 class GameRule : public IBasis
 {
 protected:
-	float m_fPlayTime;
-	float m_fHideTime;
-	bool  m_bSeek;
-	bool  m_bGameEnd;
+	float m_fReadyTime, m_fPlayTime;
+	bool  m_bPlayEnd, m_bPlayStart;
+
+	//bool  m_bSPlay, m_bSPlayOver;
 public:
 	JTextCtrl*	 m_TimerText;
 
 
 	JPanel*		 m_ZWinPanel;
 	JPanel*		 m_GWinPanel;
+
+	JPanel*		 m_FightPanel;
+	JPanel*		 m_TimeOverPanel;
+
 public:
 	float GetPlayTime();
-	float GetHideTime();
+	float GetReadyTime();
 
 	void SetPlayTime(float ftime);
 	void SetHideTime(float ftime);

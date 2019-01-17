@@ -1,6 +1,6 @@
 #include "GameRule.h"
 #include "WriteManager.h"
-
+#include "SoundManager.h"
 
 bool GameRule::Init() noexcept
 {
@@ -13,38 +13,37 @@ bool GameRule::Init() noexcept
 
 bool GameRule::Frame()	noexcept
 {
-
-	if (m_bSeek == true)
+	if (m_bPlayStart == false)
 	{
-		//WriteManager::Get().SetFontColor(D2D1::ColorF::Blue);
-		m_TimerText->m_Text = to_wstring(GetHideTime() - Timer::AccumulateTime).substr(0, 5);
-
+		m_TimerText->m_Text = to_wstring(GetReadyTime() - Timer::AccumulateTime).substr(0, 5);
+		m_FightPanel->m_bRender=true;
 	}
 	else
 	{
-
-		//WriteManager::Get().SetFontColor(D2D1::ColorF::Red);
 		m_TimerText->m_Text = to_wstring(GetPlayTime() - Timer::AccumulateTime).substr(0, 5);
-
 	}
 
-	if (GetHideTime() - Timer::AccumulateTime <=0)
-	{
-		m_bSeek = false; 
 
-		m_GWinPanel->m_bRender = true;
-		m_ZWinPanel->m_bRender = false;
+	if (GetReadyTime() - Timer::AccumulateTime <=0)
+	{
+		//////////////////////
+		if (m_bPlayStart != true) {
+			m_bPlayStart = true;
+			SoundManager::Get().Play("SE_game_time_start.mp3");
+		}
 	}
 
 	if (GetPlayTime() - Timer::AccumulateTime <= 0)
 	{
-		m_bGameEnd = true;
+		/////////////////////
+		m_TimeOverPanel->m_bRender = true;
 
-		m_GWinPanel->m_bRender = false;
-		m_ZWinPanel->m_bRender = true;
+		if (m_bPlayEnd != true) {
+			m_bPlayEnd = true;
+			SoundManager::Get().Play("SE_game_time_end.mp3");
+		}
 		m_TimerText->m_Text = '0';
 	}
-
 
 	return true;
 }
@@ -60,6 +59,8 @@ bool GameRule::Release()	noexcept
 	m_TimerText->Release();
 	delete m_GWinPanel;
 	delete m_ZWinPanel;
+	delete m_FightPanel;
+	delete m_TimeOverPanel;
 	return true;
 }
 
@@ -68,6 +69,9 @@ void GameRule::SetResultPanel(JPanel* pUIRoot)
 {
 	m_GWinPanel = (JPanel*)pUIRoot->find_child(L"GuardWin");
 	m_ZWinPanel = (JPanel*)pUIRoot->find_child(L"ZombieWin");
+
+	m_FightPanel = (JPanel*)pUIRoot->find_child(L"fight_panel");
+	m_TimeOverPanel = (JPanel*)pUIRoot->find_child(L"TimeOver");
 }
 
 
@@ -75,27 +79,30 @@ float GameRule::GetPlayTime()
 {
 	return m_fPlayTime;
 }
-float GameRule::GetHideTime() {
-	return m_fHideTime;
-}
 
+float GameRule::GetReadyTime() 
+{
+	return m_fReadyTime;
+}
 
 void GameRule::SetPlayTime(float ftime)
 {
 	m_fPlayTime = ftime;
 }
+
 void GameRule::SetHideTime(float ftime)
 {
-	m_fHideTime = ftime;
+	m_fReadyTime = ftime;
 }
 
 
 GameRule::GameRule()
 {
-	m_bSeek = true;
-	m_bGameEnd = false;
-	m_fPlayTime = 180.0f;
-	m_fHideTime = 20.0f;
+	m_bPlayEnd = false;
+	m_bPlayStart = false;
+
+	m_fPlayTime = 20.0f;
+	m_fReadyTime = 6;
 }
 
 
