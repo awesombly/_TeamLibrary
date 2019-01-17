@@ -306,7 +306,7 @@
 ^bRender 1
 ^Position 0.000000 0.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 32.499653 32.499653 1.000000
+^Scale 30.000000 30.000000 1.000000
 ^Color 0.000000 0.000000 0.000000 1.000000
 ^tx_Normal CrossHair.png
 ^pfEventHover 7274
@@ -785,20 +785,16 @@
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 1.000000 1.000000 1.000000
 
-^Type 783
-^NodeName State_Info_Img
+^Type 788
+^NodeName State_Info_Index
 ^ParentName State_Info_Panel
 ^KeyState 135 135
 ^bRender 1
 ^Position -210.000000 30.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 25.000000 15.000000 1.000000
+^Scale 20.000000 10.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
-^strText 순번
-^TextSize 20.000000
-^tx_Normal White.png
-^tx_Hover White.png
-^tx_Press White.png
+^tx_Normal 순번.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -806,20 +802,16 @@
 ^pfEventClick 7274
 ^vpEventClick 
 
-^Type 783
+^Type 788
 ^NodeName State_Info_NickName
 ^ParentName State_Info_Panel
 ^KeyState 135 135
 ^bRender 1
 ^Position -75.000000 30.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 100.000000 15.000000 1.000000
+^Scale 30.000000 10.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
-^strText 이름
-^TextSize 20.000000
-^tx_Normal White.png
-^tx_Hover White.png
-^tx_Press White.png
+^tx_Normal 닉네임.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -827,20 +819,16 @@
 ^pfEventClick 7274
 ^vpEventClick 
 
-^Type 783
+^Type 788
 ^NodeName State_Info_Kill
 ^ParentName State_Info_Panel
 ^KeyState 135 135
 ^bRender 1
 ^Position 75.000000 30.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 25.000000 15.000000 1.000000
+^Scale 10.000000 10.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
-^strText Kill
-^TextSize 20.000000
-^tx_Normal White.png
-^tx_Hover White.png
-^tx_Press White.png
+^tx_Normal 킬.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -848,20 +836,16 @@
 ^pfEventClick 7274
 ^vpEventClick 
 
-^Type 783
+^Type 788
 ^NodeName State_Info_Death
 ^ParentName State_Info_Panel
 ^KeyState 135 135
 ^bRender 1
 ^Position 140.000000 30.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 25.000000 15.000000 1.000000
+^Scale 20.000000 10.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
-^strText Death
-^TextSize 20.000000
-^tx_Normal White.png
-^tx_Hover White.png
-^tx_Press White.png
+^tx_Normal 데스.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -869,20 +853,16 @@
 ^pfEventClick 7274
 ^vpEventClick 
 
-^Type 783
+^Type 788
 ^NodeName State_Info_Score
 ^ParentName State_Info_Panel
 ^KeyState 135 135
 ^bRender 1
 ^Position 205.000000 30.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 25.000000 15.000000 1.000000
+^Scale 20.000000 10.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
-^strText Score
-^TextSize 20.000000
-^tx_Normal White.png
-^tx_Hover White.png
-^tx_Press White.png
+^tx_Normal 점수.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -962,7 +942,7 @@
 ^NodeName State_User1
 ^ParentName State_Panel
 ^KeyState 135 135
-^bRender 1
+^bRender 0
 ^Position 0.000000 0.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 1.000000 1.000000 1.000000
@@ -1072,7 +1052,7 @@
 ^NodeName State_User2
 ^ParentName State_Panel
 ^KeyState 135 135
-^bRender 1
+^bRender 0
 ^Position 0.000000 0.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 1.000000 1.000000 1.000000
@@ -1087,7 +1067,7 @@
 ^Scale 100.000000 15.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
 ^strText Sample
-^TextSize 15.000000
+^TextSize 30.000000
 ^tx_Normal White.png
 ^tx_Hover White.png
 ^tx_Press White.png
@@ -1108,7 +1088,7 @@
 ^Scale 25.000000 15.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
 ^strText Sample
-^TextSize 15.000000
+^TextSize 30.000000
 ^tx_Normal White.png
 ^tx_Hover White.png
 ^tx_Press White.png
@@ -1129,7 +1109,7 @@
 ^Scale 25.000000 15.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
 ^strText Sample
-^TextSize 15.000000
+^TextSize 30.000000
 ^tx_Normal White.png
 ^tx_Hover White.png
 ^tx_Press White.png
@@ -1150,7 +1130,7 @@
 ^Scale 25.000000 15.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
 ^strText Sample
-^TextSize 15.000000
+^TextSize 30.000000
 ^tx_Normal White.png
 ^tx_Hover White.png
 ^tx_Press White.png
@@ -1182,7 +1162,7 @@
 ^NodeName State_User3
 ^ParentName State_Panel
 ^KeyState 135 135
-^bRender 1
+^bRender 0
 ^Position 0.000000 0.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 1.000000 1.000000 1.000000
@@ -1197,7 +1177,7 @@
 ^Scale 100.000000 15.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
 ^strText Sample
-^TextSize 15.000000
+^TextSize 30.000000
 ^tx_Normal White.png
 ^tx_Hover White.png
 ^tx_Press White.png
@@ -1218,7 +1198,7 @@
 ^Scale 25.000000 15.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
 ^strText Sample
-^TextSize 15.000000
+^TextSize 30.000000
 ^tx_Normal White.png
 ^tx_Hover White.png
 ^tx_Press White.png
@@ -1239,7 +1219,7 @@
 ^Scale 25.000000 15.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
 ^strText Sample
-^TextSize 15.000000
+^TextSize 30.000000
 ^tx_Normal White.png
 ^tx_Hover White.png
 ^tx_Press White.png
@@ -1260,7 +1240,7 @@
 ^Scale 25.000000 15.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
 ^strText Sample
-^TextSize 15.000000
+^TextSize 30.000000
 ^tx_Normal White.png
 ^tx_Hover White.png
 ^tx_Press White.png
@@ -1292,7 +1272,7 @@
 ^NodeName State_User4
 ^ParentName State_Panel
 ^KeyState 135 135
-^bRender 1
+^bRender 0
 ^Position 0.000000 0.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 1.000000 1.000000 1.000000
@@ -1307,7 +1287,7 @@
 ^Scale 100.000000 15.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
 ^strText Sample
-^TextSize 15.000000
+^TextSize 30.000000
 ^tx_Normal White.png
 ^tx_Hover White.png
 ^tx_Press White.png
@@ -1328,7 +1308,7 @@
 ^Scale 25.000000 15.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
 ^strText Sample
-^TextSize 15.000000
+^TextSize 30.000000
 ^tx_Normal White.png
 ^tx_Hover White.png
 ^tx_Press White.png
@@ -1349,7 +1329,7 @@
 ^Scale 25.000000 15.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
 ^strText Sample
-^TextSize 15.000000
+^TextSize 30.000000
 ^tx_Normal White.png
 ^tx_Hover White.png
 ^tx_Press White.png
@@ -1370,7 +1350,7 @@
 ^Scale 25.000000 15.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
 ^strText Sample
-^TextSize 15.000000
+^TextSize 30.000000
 ^tx_Normal White.png
 ^tx_Hover White.png
 ^tx_Press White.png

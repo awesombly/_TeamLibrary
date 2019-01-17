@@ -55,15 +55,10 @@ namespace UI
 		pCursorErase->PreEvent.first = E_MOUSE_SPRITE_ERASE;
 		pCursorErase->PreEvent.second = pCursorErase;
 
-		JPanel* pHelpImg = (JPanel*)pRoot->find_child(L"D_Host");
+		JPanel* pHelpImg = (JPanel*)pRoot->find_child(L"HelpRect");
 		if (pHelpImg == nullptr) return;
 		pHelpImg->PreEvent.first = E_HELP_IMG;
 		pHelpImg->PreEvent.second = pHelpImg;
-
-		JPanel* pHelpImg2 = (JPanel*)pRoot->find_child(L"D_AutoMatching");
-		if (pHelpImg2 == nullptr) return;
-		pHelpImg2->PreEvent.first = E_HELP_IMG;
-		pHelpImg2->PreEvent.second = pHelpImg2;
 
 		// effect
 		JPanel* pEff1 = (JPanel*)pRoot->find_child(L"fadeout");
