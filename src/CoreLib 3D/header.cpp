@@ -198,8 +198,40 @@ const D3DXMATRIX MatrixTranspose(const D3DXMATRIX& matrix) noexcept
 const D3DXVECTOR3 QuatToRotation(const D3DXQUATERNION& quat) noexcept
 {
 	D3DXVECTOR3 rotation;
-	rotation.x = atan2f(2.0f * (quat.y*quat.z + quat.w*quat.x), quat.w*quat.w - quat.x*quat.x - quat.y*quat.y + quat.z*quat.z);
+	rotation.x = atan2f(2.0f * (quat.y*quat.z + quat.w*quat.x), 
+								quat.w*quat.w - quat.x*quat.x - quat.y*quat.
+								y + quat.z*quat.z);
+
 	rotation.y = asinf(-2.0f * (quat.x*quat.z - quat.w*quat.y));
-	rotation.z = atan2f(2.0f * (quat.x*quat.y + quat.w*quat.z), quat.w*quat.w + quat.x*quat.x - quat.y*quat.y - quat.z*quat.z);
+
+	rotation.z = atan2f(2.0f * (quat.x*quat.y + quat.w*quat.z), 
+								quat.w*quat.w + quat.x*quat.x - quat.y*quat.y - quat.z*quat.z);
+
 	return rotation;
 }
+//
+//const D3DXVECTOR3 QuatToRotationA(D3DXVECTOR3& vec3, D3DXMATRIX mat)
+//{
+//	D3DXVECTOR3 temp = { vec3.x,vec3.y,vec3.z };
+//	vec3.x = temp.x*mat._11 + temp.y*mat._21 + temp.z*mat._31;
+//	vec3.y = temp.x*mat._12 + temp.y*mat._22 + temp.z*mat._32;
+//	vec3.z = temp.x*mat._13 + temp.y*mat._23 + temp.z*mat._33;
+//
+//	return vec3;
+//}
+
+void Multiply(D3DXVECTOR3& vec3, D3DXMATRIX mat)
+{
+	D3DXVECTOR3 temp = { vec3.x,vec3.y,vec3.z };
+	vec3.x = temp.x*mat._11 + temp.y*mat._21 + temp.z*mat._31;
+	vec3.y = temp.x*mat._12 + temp.y*mat._22 + temp.z*mat._32;
+	vec3.z = temp.x*mat._13 + temp.y*mat._23 + temp.z*mat._33;
+}
+
+
+//void Transform::SetRotation(const D3DXVECTOR3& rotation) noexcept
+//{
+//	m_rotation.x = rotation.x;
+//	m_rotation.y = rotation.y;
+//	m_rotation.z = rotation.z;
+//}

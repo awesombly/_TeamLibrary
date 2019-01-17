@@ -4,8 +4,6 @@
 
 bool GameRule::Init() noexcept
 {
-
-
 	return true;
 }
 
@@ -24,18 +22,20 @@ bool GameRule::Frame()	noexcept
 	}
 
 
+
+
+	//시작시 스타트 사운드 재생
 	if (GetReadyTime() - Timer::AccumulateTime <=0)
 	{
-		//////////////////////
 		if (m_bPlayStart != true) {
 			m_bPlayStart = true;
 			SoundManager::Get().Play("SE_game_time_start.mp3");
 		}
 	}
 
+	//게임종료시 사운드 재생
 	if (GetPlayTime() - Timer::AccumulateTime <= 0)
 	{
-		/////////////////////
 		m_TimeOverPanel->m_bRender = true;
 
 		if (m_bPlayEnd != true) {
