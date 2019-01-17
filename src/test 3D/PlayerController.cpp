@@ -109,6 +109,8 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 			}
 			auto pEffect = ObjectManager::Get().TakeObject(L"Boom2");
 			pEffect->SetPosition(pA->m_pParent->GetWorldPosition());
+			
+			SoundManager::Get().PlayQueue("SE_HIT.mp3", pA->m_pParent->GetWorldPosition(), 1000.0f);
 			//ObjectManager::Get().PushObject(pEffect);
 		}
 	};
@@ -621,12 +623,16 @@ void PlayerController::Possess(GameObject* pObject) noexcept
 
 void PlayerController::DeadEvent() noexcept
 {
+	PacketManager::Get().SendPlaySound("SE_dead.mp3", GetWorldPosition(), 1000.0f);
 	SetPosition(m_pParent->GetPosition());
 	SetRotation(m_pParent->GetRotation());
 	CutParent();
 	m_curDelayRespawn = 0.0f;
 	((JPanel*)m_pRespawn)->m_bRender = true;
 	((JProgressBar*)m_pRespawnBar)->SetValue(m_curDelayRespawn, m_DelayRespawn);
+	//SoundManager::Get().PlayQueue("SE_dead.mp3", pA->m_pParent->GetWorldPosition(), 1000.0f);
+
+
 }
 
 

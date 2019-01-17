@@ -65,6 +65,10 @@ void IntroScene::LoadSound() noexcept
 	SoundManager::Get().Load("SE_zombie_hit02.mp3");
 	SoundManager::Get().Load("SV_Guard_Shout.mp3");
 	SoundManager::Get().Load("SV_Guard_Punch.mp3");
+	SoundManager::Get().Load("SV_gogogo.mp3");
+	SoundManager::Get().Load("SV_jocena.mp3");
+	SoundManager::Get().Load("SE_dead.mp3");
+
 }
 
 bool IntroScene::FirstInit() noexcept
@@ -183,6 +187,8 @@ bool IntroScene::FirstInit() noexcept
 				pEffect->SetPosition(pA->m_pParent->GetWorldPosition());
 				//ObjectManager::Get().PushObject(pEffect);
 				//pA->ClearIgnoreList();
+				
+				PacketManager::Get().SendPlaySound("SE_HIT.mp3", pA->m_pParent->GetWorldPosition(), 1000.0f);
 				ObjectManager::Get().DisableObject(pA->m_pParent);
 			}
 		};

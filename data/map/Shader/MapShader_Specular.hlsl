@@ -80,21 +80,6 @@ VS_OUT VS(VS_IN input)
 	return output;
 }
 
-//float4 PS(VS_OUT input) : SV_TARGET
-//{ddddddd
-//	float4 vAlphaMap = AlphaMap.Sample(sample0,input.t);
-//
-//	// 눈에 보이도록하기 위해
-//	if (vAlphaMap.x + vAlphaMap.y + vAlphaMap.z + vTextureColor.w <= 0)
-//	{
-//		vTextureColor.w = 1.0f;
-//	}
-//
-//	float4 vDiffuse = Diffuse(input.n);
-//	float4 vSpecular = Specular(input.n);
-//	float4 vFinalColor = input.c * (vDiffuse + vSpecular) *vTextureColor;
-//	return vFinalColor;
-//}
 
 float4 PS(VS_OUT input) : SV_TARGET
 {
@@ -102,10 +87,10 @@ float4 PS(VS_OUT input) : SV_TARGET
 	float4 vAlphaMap = AlphaMap.Sample(sample0,input.t);
 	// 나머지 텍스처들을 섞어준다.
 	float4 vMultiTexture;
-	vMultiTexture = AlphaTexture1.Sample(sample0, input.t*10) * vAlphaMap.x;
-	vMultiTexture += AlphaTexture2.Sample(sample0, input.t*10) * vAlphaMap.y;
-	vMultiTexture += AlphaTexture3.Sample(sample0, input.t*10) * vAlphaMap.z;
-	vMultiTexture += AlphaTexture4.Sample(sample0, input.t*10) * vAlphaMap.w;
+	vMultiTexture = AlphaTexture1.Sample(sample0, input.t*10.0f) * vAlphaMap.x;
+	vMultiTexture += AlphaTexture2.Sample(sample0, input.t*10.0f) * vAlphaMap.y;
+	vMultiTexture += AlphaTexture3.Sample(sample0, input.t*10.0f) * vAlphaMap.z;
+	vMultiTexture += AlphaTexture4.Sample(sample0, input.t*10.0f) * vAlphaMap.w;
 	
 	float4 vDiffuse = Diffuse(input.n);
 	float4 vSpecular = Specular(input.n);

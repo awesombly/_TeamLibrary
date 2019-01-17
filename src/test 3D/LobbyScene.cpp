@@ -244,7 +244,7 @@ void LobbyScene::StartToHost()
 	else
 		m_pBackHero->SetANIM_OneTime(Zombie_DASHJUMP);
 	m_pStartEffect->EffectPlay();
-	SoundManager::Get().Play("SV_Guard_Shout.mp3");
+	SoundManager::Get().Play("SV_gogogo.mp3");
 	PacketManager::Get().isHost = true;
 	m_isStart = true;
 }
@@ -256,7 +256,7 @@ void LobbyScene::StartToGuest()
 	else
 		m_pBackHero->SetANIM_OneTime(Zombie_DASHJUMP);
 	m_pStartEffect->EffectPlay();
-	SoundManager::Get().Play("SV_Guard_Shout.mp3");
+	SoundManager::Get().Play("SV_gogogo.mp3");
 	PacketManager::Get().isHost = false;
 	m_isStart = true;
 }
