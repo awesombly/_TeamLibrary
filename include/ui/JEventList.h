@@ -511,7 +511,7 @@ namespace UI
 		if (pList->m_pText.size() == pList->m_iCols) return;
 		pList->m_fTemp = 1.0f;
 		pList->m_fUITimer += Timer::SPF;
-		if (pList->m_fUITimer >= 1.0f)
+		if (pList->m_fUITimer >= 2.0f)
 		{
 			auto pDel = ----------pList->m_pText.end();
 			pList->m_pText.erase(pDel);
