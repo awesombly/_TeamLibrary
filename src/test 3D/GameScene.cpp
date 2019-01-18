@@ -178,12 +178,12 @@ bool GameScene::Frame() noexcept
 		objIter != ObjectManager::Get().GetObjectList(EObjType::Object)->end(); ++objIter)
 	{
 		auto& position = (*objIter)->GetPosition();
-		if (position.x < -230.0f)
-			(*objIter)->SetPositionX(-230.0f);
-		if (position.x > -455.0f)
+		if (position.x > 460.0f)
+			(*objIter)->SetPositionX(460.0f);
+		if (position.x < -455.0f)
 			(*objIter)->SetPositionX(-455.0f);
-		if (position.z > 320.0f)
-			(*objIter)->SetPositionZ(320.0f);
+		if (position.z > 460.0f)
+			(*objIter)->SetPositionZ(460.0f);
 		if (position.z < -400.0f)
 			(*objIter)->SetPositionZ(-400.0f);
 	}
