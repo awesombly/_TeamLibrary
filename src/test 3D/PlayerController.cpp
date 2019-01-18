@@ -188,7 +188,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 			auto pCollider = new Collider(8.0f);
 			auto pMelee = new GameObject(L"Melee", { pCollider, new CEventTimer(0.5f) });
 			pMelee->SetParent(pObject);
-			pMelee->SetPosition(pObject->GetForward() * 45.0f + Vector3::Up * 25.0f);
+			pMelee->SetPosition(pObject->GetForward() * 45.0f + pObject->GetUp() * 45.0f);
 			pMelee->SetRotation(pObject->GetRotation());
 			pMelee->UpdateMatrix();
 			pMelee->m_pPhysics->UserSocket = socket;
@@ -261,7 +261,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 			auto pCollider = new Collider(8.0f);
 			auto pMelee = new GameObject(L"Melee", { pCollider, new CEventTimer(0.5f) });
 			pMelee->SetParent(pObject);
-			pMelee->SetPosition(pObject->GetForward() * 45.0f + Vector3::Up * 25.0f);
+			pMelee->SetPosition(pObject->GetForward() * 45.0f + pObject->GetUp() * 45.0f);
 			pMelee->SetRotation(pObject->GetRotation());
 			pMelee->UpdateMatrix();
 			pMelee->m_pPhysics->UserSocket = socket;

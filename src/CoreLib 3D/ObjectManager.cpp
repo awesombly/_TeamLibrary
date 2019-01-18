@@ -413,7 +413,7 @@ void ObjectManager::DisableObject(GameObject* pObject) noexcept
 			for (auto& iter : *pColliders)
 			{
 				((Collider*)iter)->ClearIgnoreList(false);
-				ObjectManager::Get().PopCollider((Collider*)iter);
+				ObjectManager::Get().PopCollider((Collider*)iter, false);
 			}
 		}
 	};
@@ -526,7 +526,7 @@ void ObjectManager::DisableComponent(Component* pComponent) noexcept
 
 		if (pComp->m_comptType == EComponent::Collider)
 		{
-			ObjectManager::Get().PopCollider((Collider*)pComp);
+			ObjectManager::Get().PopCollider((Collider*)pComp, false);
 		}
 	};
 
@@ -538,14 +538,34 @@ forward_list<Collider*>& ObjectManager::GetColliderList() noexcept
 	return m_ColliderList;
 }
 
-void ObjectManager::PushCollider(Collider* pCollider) noexcept
+void ObjectManager::PushCollider(Collider* pCollider, const bool& isPostEvent) noexcept
 {
-	m_ColliderList.push_front(pCollider);
+	if (isPostEvent)
+	{
+		static auto pPushEvent = [](void* pCollider, void*) {
+			ObjectManager::Get().PushCollider((Collider*)pCollider, false);
+		};
+		PostFrameEvent.emplace(pPushEvent, pCollider, nullptr);
+	}
+	else
+	{
+		m_ColliderList.push_front(pCollider);
+	}
 }
 
-void ObjectManager::PopCollider(Collider* pCollider) noexcept
+void ObjectManager::PopCollider(Collider* pCollider, const bool& isPostEvent) noexcept
 {
-	m_ColliderList.remove(pCollider);
+	if (isPostEvent)
+	{
+		static auto pPopEvent = [](void* pCollider, void*) {
+			ObjectManager::Get().PopCollider((Collider*)pCollider, false);
+		};
+		PostFrameEvent.emplace(pPopEvent, pCollider, nullptr);
+	}
+	else
+	{
+		m_ColliderList.remove(pCollider);
+	}
 }
 
 

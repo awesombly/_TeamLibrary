@@ -65,8 +65,8 @@ public:
 	bool RemoveComponent(Component* pComponent)					noexcept;	// 컴포넌트 제거("")
 	// 충돌체 리스트 추가, 제거
 	forward_list<Collider*>& GetColliderList()					noexcept;
-	void PushCollider(Collider* pCollider)						noexcept;
-	void PopCollider(Collider* pCollider)						noexcept;
+	void PushCollider(Collider* pCollider, const bool& isPostEvent = true) noexcept;
+	void PopCollider(Collider* pCollider, const bool& isPostEvent = true)  noexcept;
 
 	// 인스턴스 리스트 넣기, 빼기
 	InstanceRenderer* PushInstance(InstanceRenderer* pInstance) noexcept;
