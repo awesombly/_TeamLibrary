@@ -11,30 +11,30 @@ bool GameScene::Init() noexcept
 	FirstInit();
 
 	//I_Object.ViewColliderSwitch();
-	for (auto& [name, matrixList] : I_Object.m_ObjectMatrix)
-	{
-		for (int matIndex = 0; matIndex < matrixList.Matrix.size(); ++matIndex)
-		{
-			for (int colIndex = 0; colIndex < I_Object.m_ObjectCollider[name].ColliderAABB.size(); ++colIndex)
-			{
-				auto pCollider = new ColliderOBB(Product(I_Object.m_ObjectCollider[name].ColliderAABB[colIndex].vMin, matrixList.vScale[matIndex]), Product(I_Object.m_ObjectCollider[name].ColliderAABB[colIndex].vMax, matrixList.vScale[matIndex]));
-				auto pObject = new GameObject(L"Dummy", pCollider);
+	//for (auto& [name, matrixList] : I_Object.m_ObjectMatrix)
+	//{
+	//	for (int matIndex = 0; matIndex < matrixList.Matrix.size(); ++matIndex)
+	//	{
+	//		for (int colIndex = 0; colIndex < I_Object.m_ObjectCollider[name].ColliderAABB.size(); ++colIndex)
+	//		{
+	//			auto pCollider = new ColliderOBB(Product(I_Object.m_ObjectCollider[name].ColliderAABB[colIndex].vMin, matrixList.vScale[matIndex]), Product(I_Object.m_ObjectCollider[name].ColliderAABB[colIndex].vMax, matrixList.vScale[matIndex]));
+	//			auto pObject = new GameObject(L"Dummy", pCollider);
 
-				pObject->SetPosition(matrixList.vLocation[matIndex]);
-				pObject->SetRotation(QuatToRotation(matrixList.qRotation[matIndex]) + QuatToRotation(I_Object.m_ObjectCollider[name].qRotation[colIndex]));
-				pObject->SetHP(10000.0f);
-				auto center = Product(I_Object.m_ObjectCollider[name].ColliderAABB[colIndex].vCenter, matrixList.vScale[matIndex]);
-				
-				pCollider->m_pivot = center;
+	//			pObject->SetPosition(matrixList.vLocation[matIndex]);
+	//			pObject->SetRotation(QuatToRotation(matrixList.qRotation[matIndex]) + QuatToRotation(I_Object.m_ObjectCollider[name].qRotation[colIndex]));
+	//			pObject->SetHP(10000.0f);
+	//			auto center = Product(I_Object.m_ObjectCollider[name].ColliderAABB[colIndex].vCenter, matrixList.vScale[matIndex]);
+	//			
+	//			pCollider->m_pivot = center;
 
-				pCollider->usePhysics(false);
-				pCollider->SetGravityScale(0.0f);
-	
-				pObject->Frame(0.0f, 0.0f);
-				//ObjectManager::Get().PushObject(pObject);
-			}
-		}
-	}
+	//			pCollider->usePhysics(false);
+	//			pCollider->SetGravityScale(0.0f);
+	//
+	//			pObject->Frame(0.0f, 0.0f);
+	//			//ObjectManager::Get().PushObject(pObject);
+	//		}
+	//	}
+	//}
 
 #pragma region Basic
 	//GameObject* pEffect = nullptr;
