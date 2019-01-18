@@ -165,7 +165,7 @@ bool IntroScene::FirstInit() noexcept
 
 				if (pB->m_eTag != ETag::Collider) return;
 				//PacketManager::Get().SendPlaySound("SE_HIT.mp3", pA->m_pParent->GetWorldPosition(), 1000.0f);
-				SoundManager::Get().Play("SE_HIT.mp3");//, pObject->GetWorldPosition(), 1000.0f);
+				//SoundManager::Get().Play("SE_HIT.mp3");//, pObject->GetWorldPosition(), 1000.0f);
 
 				pB->SetForce((Normalize(-pA->GetTotalForce()) + Vector3::Up) * 80.0f);
 				pB->m_pParent->OperHP(-0.15f);
