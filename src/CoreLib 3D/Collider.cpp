@@ -21,7 +21,7 @@ Collider::Collider(const float& radius)
 
 Collider::~Collider()
 {
-	ObjectManager::Get().PopCollider(this);
+	ObjectManager::Get().PopCollider(this, false);
 }
 
 bool Collider::Init() noexcept

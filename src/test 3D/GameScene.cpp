@@ -216,6 +216,8 @@ bool GameScene::Frame() noexcept
 	// ¸Ê ³ôÀÌ
 	for (auto& iter : ObjectManager::Get().GetColliderList())
 	{
+		if (iter == nullptr || iter->m_pParent == nullptr)
+			continue;
 		iter->m_mapHeight = m_pMap->GetHeight(iter->m_pParent->GetWorldPosition().x, iter->m_pParent->GetWorldPosition().z);
 	}
 	return true;

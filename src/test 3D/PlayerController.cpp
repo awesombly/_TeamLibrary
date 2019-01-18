@@ -533,7 +533,7 @@ void PlayerController::StartGiantMode() noexcept
 	{
 		if (m_pParent == nullptr)
 			break;
-		SendGiantMode(0.033f);
+		SendGiantMode(0.04f);
 		frameCount += 0.15f;
 		this_thread::sleep_for(chrono::milliseconds(150));
 		ResetOption();
