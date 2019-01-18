@@ -65,17 +65,17 @@ bool GameScene::Init() noexcept
 	auto pHero = (AHeroObj*)ObjectManager::Get().TakeObject(L"Guard");
 	//pHero->GetLeftHandPos
 	m_pPlayer->Possess(pHero);
-	m_pPlayer->ResetOption();
+	//m_pPlayer->ResetOption();
 	///
-	ObjectManager::Get().TakeObject(L"Guard")->SetPosition( -500, 150.0f, 450);
-	ObjectManager::Get().TakeObject(L"Guard")->SetPosition( -200, 150.0f, -100);
-	ObjectManager::Get().TakeObject(L"Guard")->SetPosition( -100, 150.0f, 350);
-	ObjectManager::Get().TakeObject(L"Zombie")->SetPosition(-400, 150.0f, -200);
-	ObjectManager::Get().TakeObject(L"Zombie")->SetPosition(300, 150.0f, 0);
-	ObjectManager::Get().TakeObject(L"Zombie")->SetPosition(100, 150.0f, -300);
-	ObjectManager::Get().TakeObject(L"Bird")->SetPosition(  -300, 150.0f, 250);
-	ObjectManager::Get().TakeObject(L"Bird")->SetPosition(  200, 150.0f, 150);
-	ObjectManager::Get().TakeObject(L"Bird")->SetPosition(  400, 150.0f, -400);
+	ObjectManager::Get().TakeObject(L"Guard")->SetPosition( -500, 65.5f, 450);
+	ObjectManager::Get().TakeObject(L"Guard")->SetPosition( -200, 65.5f, -100);
+	ObjectManager::Get().TakeObject(L"Guard")->SetPosition( -100, 65.5f, 350);
+	ObjectManager::Get().TakeObject(L"Zombie")->SetPosition(-400, 65.5f, -200);
+	ObjectManager::Get().TakeObject(L"Zombie")->SetPosition(300, 65.5f, 0);
+	ObjectManager::Get().TakeObject(L"Zombie")->SetPosition(100, 65.5f, -300);
+	ObjectManager::Get().TakeObject(L"Bird")->SetPosition(  -300, 65.5f, 250);
+	ObjectManager::Get().TakeObject(L"Bird")->SetPosition(  200, 65.5f, 150);
+	ObjectManager::Get().TakeObject(L"Bird")->SetPosition(  400, 65.5f, -400);
 #pragma endregion
 	///
 	SoundManager::Get().SetBGM("bgm_ingame01.mp3");
@@ -172,6 +172,21 @@ bool GameScene::Frame() noexcept
 	DxManager::Get().Frame();
 	ObjectManager::Get().Frame(Timer::SPF, Timer::AccumulateTime);
 	SoundManager::Get().Frame();
+
+	// 경계 막기
+	for (auto objIter = ObjectManager::Get().GetObjectList(EObjType::Object)->begin();
+		objIter != ObjectManager::Get().GetObjectList(EObjType::Object)->end(); ++objIter)
+	{
+		auto& position = (*objIter)->GetPosition();
+		if (position.x < -230.0f)
+			(*objIter)->SetPositionX(-230.0f);
+		if (position.x > -455.0f)
+			(*objIter)->SetPositionX(-455.0f);
+		if (position.z > 320.0f)
+			(*objIter)->SetPositionZ(320.0f);
+		if (position.z < -400.0f)
+			(*objIter)->SetPositionZ(-400.0f);
+	}
 
 	// 맵 높이
 	for (auto& iter : ObjectManager::Get().GetColliderList())

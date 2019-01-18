@@ -223,7 +223,7 @@ bool IntroScene::FirstInit() noexcept
 
 		// 기사 
 		pHeroObj = new AHeroObj();
-		pHeroObj->SetPlayerCharacter(Guard, 0.0f, 100.0f, 0.0f);
+		pHeroObj->SetPlayerCharacter(Guard);
 		pHeroObj->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
 		pHeroObj->SetANIM_Loop(Guard_IDLE);
 		pHeroObj->m_myName = L"Guard";
@@ -237,7 +237,7 @@ bool IntroScene::FirstInit() noexcept
 
 		// 좀비
 		pHeroObj = new AHeroObj();
-		pHeroObj->SetPlayerCharacter(Zombie, 80.0f, 200.0f, -300.0f);
+		pHeroObj->SetPlayerCharacter(Zombie);
 		pHeroObj->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
 		pHeroObj->SetANIM_Loop(Zombie_IDLE);
 		pHeroObj->m_myName = L"Zombie";
@@ -251,7 +251,7 @@ bool IntroScene::FirstInit() noexcept
 
 		// 새
 		pHeroObj = new AHeroObj();
-		pHeroObj->SetPlayerCharacter(NPC_Bird, 0.0f, 80.0f, 300.0f);
+		pHeroObj->SetPlayerCharacter(NPC_Bird);
 		pHeroObj->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
 		pHeroObj->m_myName = L"Bird";
 		pHeroObj->m_objType = EObjType::Object;

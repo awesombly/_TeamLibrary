@@ -53,7 +53,7 @@ bool PlayerController::Frame(const float& spf, const float& accTime)	noexcept
 		}
 	}
 
-	///ErrorMessage(GetWorldPosition().x)
+	ErrorMessage(to_string(GetWorldPosition().x) + ", " + to_string(GetWorldPosition().y) + ", " + to_string(GetWorldPosition().z));
 	return true;
 }
 
@@ -190,7 +190,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 			auto pCollider = new Collider(8.0f);
 			auto pMelee = new GameObject(L"Melee", { pCollider, new CEventTimer(0.5f) });
 			pMelee->SetParent(pObject);
-			pMelee->SetPosition(pObject->GetForward() * 18.0f + Vector3::Up * 12.0f);
+			pMelee->SetPosition(pObject->GetForward() * 45.0f + Vector3::Up * 25.0f);
 			pMelee->SetRotation(pObject->GetRotation());
 			pMelee->UpdateMatrix();
 			pMelee->m_pPhysics->UserSocket = socket;
@@ -263,7 +263,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 			auto pCollider = new Collider(8.0f);
 			auto pMelee = new GameObject(L"Melee", { pCollider, new CEventTimer(0.5f) });
 			pMelee->SetParent(pObject);
-			pMelee->SetPosition(pObject->GetForward() * 18.0f + Vector3::Up * 12.0f);
+			pMelee->SetPosition(pObject->GetForward() * 45.0f + Vector3::Up * 25.0f);
 			pMelee->SetRotation(pObject->GetRotation());
 			pMelee->UpdateMatrix();
 			pMelee->m_pPhysics->UserSocket = socket;
@@ -431,9 +431,9 @@ void PlayerController::SendAnimTransform(const EAction& eAction, const ECharacte
 	case EAction::Dash:
 	{
 		if (m_pParent->isMoving())
-			p_AnimTransform.Force = (m_pParent->m_pPhysics->m_direction * 2.0f + Vector3::Up * 40.0f);
+			p_AnimTransform.Force = (m_pParent->m_pPhysics->m_direction * 1.5f + Vector3::Up * 30.0f);
 		else
-			p_AnimTransform.Force = (Normalize(m_pParent->GetForward()) * m_moveSpeed * 2.0f + Vector3::Up * 40.0f);
+			p_AnimTransform.Force = (Normalize(m_pParent->GetForward()) * m_moveSpeed * 1.5f + Vector3::Up * 30.0f);
 	}	break;
 	case EAction::Jump:
 	{
@@ -584,9 +584,9 @@ void PlayerController::ResetOption() noexcept
 	SetPosition(Vector3::Zero);
 	SetRotation(Quaternion::Base);
 	m_pCamera = ObjectManager::Cameras[ECamera::Main];
-	m_pCamera->SetPosition(Vector3::Up * 20.0f);
+	m_pCamera->SetPosition(Vector3::Up * 100.0f * m_pParent->GetScaleAverage());
 	m_pCamera->SetRotation(Quaternion::Left * PI + Quaternion::Up * PI * 0.2f);
-	m_pCamera->m_armLength = 2.5f;
+	m_pCamera->m_armLength = 12.5f * m_pParent->GetScaleAverage();
 	m_pCamera->m_lerpMoveSpeed = 6.0f;
 	m_pCamera->m_lerpRotateSpeed = 6.0f;
 }
@@ -628,6 +628,7 @@ void PlayerController::Possess(GameObject* pObject) noexcept
 void PlayerController::DeadEvent() noexcept
 {
 	PacketManager::Get().SendPlaySound("SE_dead.mp3", GetWorldPosition(), 1000.0f);
+	m_pParent->SetHP(0.0f);
 	SetPosition(m_pParent->GetPosition());
 	SetRotation(m_pParent->GetRotation());
 	CutParent();
