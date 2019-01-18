@@ -112,7 +112,6 @@ bool IntroScene::FirstInit() noexcept
 				(pYou->m_pParent->m_myName == L"Guard" || pYou->m_pParent->m_myName == L"Zombie"))
 			{
 				if (pYou->m_eTag != ETag::Collider) return;
-				//SoundManager::Get().Play("SE_HIT.mp3");//, pObject->GetWorldPosition(), 1000.0f);
 
 				pYou->m_pParent->SetHP(1.0f);
 				// 플레이어 충돌 이벤트
