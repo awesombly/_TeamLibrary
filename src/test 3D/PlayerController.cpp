@@ -157,17 +157,17 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 		case EAction::Dance1:
 		{
 			pObject->SetANIM_OneTime(Guard_DANCE1);
-			SoundManager::Get().PlayQueue("SE_Dance01.mp3", pObject->GetWorldPosition(), 1000.0f);
+			SoundManager::Get().Play("SE_Dance01.mp3");// , pObject->GetWorldPosition(), 1000.0f);
 		}	break;
 		case EAction::Dance2:
 		{
 			pObject->SetANIM_OneTime(Guard_DANCE2);
-			SoundManager::Get().PlayQueue("SE_Dance02.mp3", pObject->GetWorldPosition(), 1000.0f);
+			SoundManager::Get().Play("SE_Dance02.mp3");//, pObject->GetWorldPosition(), 1000.0f);
 		}	break;
 		case EAction::Dance3:
 		{
 			pObject->SetANIM_OneTime(Guard_DANCE3);
-			SoundManager::Get().PlayQueue("SE_Dance01.mp3", pObject->GetWorldPosition(), 1000.0f);
+			SoundManager::Get().Play("SE_Dance01.mp3");// , pObject->GetWorldPosition(), 1000.0f);
 		}	break;
 		case EAction::Throw:
 		{
@@ -235,12 +235,12 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 		 case EAction::Dance1:
 		 {
 		 	pObject->SetANIM_OneTime(Zombie_DANCE1);
-		 	SoundManager::Get().PlayQueue("SE_Dance01.mp3", pObject->GetWorldPosition(), 1000.0f);
+			SoundManager::Get().Play("SE_Dance01.mp3");// , pObject->GetWorldPosition(), 1000.0f);
 		 }	break;
 		 case EAction::Dance2:
 		 {
 		 	pObject->SetANIM_OneTime(Zombie_DANCE2);
-		 	SoundManager::Get().PlayQueue("SE_Dance02.mp3", pObject->GetWorldPosition(), 1000.0f);
+			SoundManager::Get().Play("SE_Dance02.mp3");// pObject->GetWorldPosition(), 1000.0f);
 		 }	break;
 		 case EAction::Throw:
 		 {

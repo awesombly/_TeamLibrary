@@ -162,7 +162,9 @@ bool IntroScene::FirstInit() noexcept
 			}
 			else
 			{
+
 				if (pB->m_eTag != ETag::Collider) return;
+				PacketManager::Get().SendPlaySound("SE_HIT.mp3", pA->m_pParent->GetWorldPosition(), 1000.0f);
 
 				pB->SetForce((Normalize(-pA->GetTotalForce()) + Vector3::Up) * 80.0f);
 				pB->m_pParent->OperHP(-0.15f);
@@ -185,11 +187,10 @@ bool IntroScene::FirstInit() noexcept
 				}
 				auto pEffect = ObjectManager::Get().TakeObject(L"Boom2");
 				pEffect->SetPosition(pA->m_pParent->GetWorldPosition());
-				//ObjectManager::Get().PushObject(pEffect);
+				//ObjectManager::Get().PushOdw  d ddddddadawddddddddddddddddddddddddddddddddddddddddddbject(pEffect);
 				//pA->ClearIgnoreList();
 				
-				//PacketManager::Get().SendPlaySound("SE_HIT.mp3", pA->m_pParent->GetWorldPosition(), 1000.0f);
-				ObjectManager::Get().DisableObject(pA->m_pParent);
+	ObjectManager::Get().DisableObject(pA->m_pParent);
 			}
 		};
 
