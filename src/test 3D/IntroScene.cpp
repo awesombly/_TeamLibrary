@@ -69,7 +69,7 @@ void IntroScene::LoadSound() noexcept
 	SoundManager::Get().Load("SV_jocena.mp3");
 	SoundManager::Get().Load("SE_dead.mp3");
 	SoundManager::Get().Load("SE_HIT.mp3");
-
+	SoundManager::Get().Load("SE_Rudy.mp3");
 }
 
 bool IntroScene::FirstInit() noexcept
@@ -377,6 +377,6 @@ void IntroScene::LoadUI() noexcept
 	pBtn->EventClick.second = this;
 
 
-
+	SoundManager::Get().SetBGM("SE_Rudy.mp3");
 	UI::IntroEvent(pUIRoot);
 }
