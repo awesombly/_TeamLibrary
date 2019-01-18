@@ -187,7 +187,7 @@ bool GameScene::Frame() noexcept
 			p_TakeObject.Position = Vector3::Up * 120.0f;
 			p_TakeObject.Rotation = Quaternion::Base;
 			p_TakeObject.Scale = Vector3::One;
-			p_TakeObject.HP = 3.0f;
+			p_TakeObject.HP = 100.0f;
 			p_TakeObject.UserSocket = (UINT)-1;
 			PacketManager::Get().SendPacket((char*)&p_TakeObject, (USHORT)(PS_TakeObject + strSize), PACKET_TakeObject);
 		}
