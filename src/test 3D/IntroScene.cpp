@@ -108,7 +108,8 @@ bool IntroScene::FirstInit() noexcept
 		pCollider->SetGravityScale(0.0f);
 		pCollider->usePhysics(false);
 		pCollider->CollisionEvent = [](Collider* pMe, Collider* pYou) {
-			if (pYou != nullptr)
+			if (pYou != nullptr &&
+				(pYou->m_pParent->m_myName == L"Guard" || pYou->m_pParent->m_myName == L"Zombie"))
 			{
 				if (pYou->m_eTag != ETag::Collider) return;
 				//SoundManager::Get().Play("SE_HIT.mp3");//, pObject->GetWorldPosition(), 1000.0f);
