@@ -68,6 +68,7 @@ void IntroScene::LoadSound() noexcept
 	SoundManager::Get().Load("SV_gogogo.mp3");
 	SoundManager::Get().Load("SV_jocena.mp3");
 	SoundManager::Get().Load("SE_dead.mp3");
+	SoundManager::Get().Load("SE_HIT.mp3");
 
 }
 
