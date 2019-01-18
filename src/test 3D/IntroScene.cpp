@@ -82,7 +82,23 @@ bool IntroScene::FirstInit() noexcept
 		WriteManager::Get().SetFontSizeAlign(20, EAlign::Center, EAlign::Center);
 		//
 		m_pParser = new MaxImporter();
-		
+		// Effect 로드
+		//ObjectManager::Get().SetProtoComponent(m_pParser->CreateFromParticle(L"Snow.eff", L"../../data/script"));
+		ObjectManager::Get().SetProtoObject(new GameObject(L"Boom", m_pParser->CreateFromParticle(L"Boom.eff", L"../../data/script"), EObjType::Effect));
+		ObjectManager::Get().SetProtoObject(new GameObject(L"Boom2", m_pParser->CreateFromParticle(L"Boom2.eff", L"../../data/script"), EObjType::Effect));
+		ObjectManager::Get().SetProtoObject(new GameObject(L"Boom3", m_pParser->CreateFromParticle(L"Boom3.eff", L"../../data/script"), EObjType::Effect));
+		//ObjectManager::Get().SetProtoObject(new GameObject(L"Fire", m_pParser->CreateFromParticle(L"Fire.eff", L"../../data/script"), EObjType::Effect));
+		ObjectManager::Get().SetProtoObject(new GameObject(L"Fly", m_pParser->CreateFromParticle(L"Fly.eff", L"../../data/script"), EObjType::Effect));
+		//ObjectManager::Get().SetProtoComponent(m_pParser->CreateFromParticle(L"Boom.eff", L"../../data/script"));
+		//ObjectManager::Get().SetProtoComponent(m_pParser->CreateFromParticle(L"Boom2.eff", L"../../data/script"));
+		//ObjectManager::Get().SetProtoComponent(m_pParser->CreateFromParticle(L"Boom3.eff", L"../../data/script"));
+		ObjectManager::Get().SetProtoComponent(m_pParser->CreateFromParticle(L"Fire.eff", L"../../data/script"));
+		//ObjectManager::Get().SetProtoComponent(m_pParser->CreateFromParticle(L"Fly.eff", L"../../data/script"));
+		//ObjectManager::Get().SetProtoComponent(m_pParser->CreateFromParticle(L"Bigbang.eff", L"../../data/script"));
+		//ObjectManager::Get().SetProtoComponent(m_pParser->CreateFromParticle(L"Shock.eff", L"../../data/script"));
+		//ObjectManager::Get().SetProtoComponent(m_pParser->CreateFromParticle(L"Atom.eff", L"../../data/script"));
+		//ObjectManager::Get().SetProtoComponent(m_pParser->CreateFromParticle(L"WheelWind.eff", L"../../data/script"));
+		///
 		LoadSound();
 		GameObject* pObject = nullptr;
 		Collider*   pCollider = nullptr;
@@ -124,23 +140,6 @@ bool IntroScene::FirstInit() noexcept
 		pObject->SetScale(Vector3::One * 7);
 		pObject->SetParent(ObjectManager::Get().Lights.front());
 
-		// Effect 로드
-		//ObjectManager::Get().SetProtoComponent(m_pParser->CreateFromParticle(L"Snow.eff", L"../../data/script"));
-		ObjectManager::Get().SetProtoObject(new GameObject(L"Boom", m_pParser->CreateFromParticle(L"Boom.eff", L"../../data/script"), EObjType::Effect));
-		ObjectManager::Get().SetProtoObject(new GameObject(L"Boom2", m_pParser->CreateFromParticle(L"Boom2.eff", L"../../data/script"), EObjType::Effect));
-		ObjectManager::Get().SetProtoObject(new GameObject(L"Boom3", m_pParser->CreateFromParticle(L"Boom3.eff", L"../../data/script"), EObjType::Effect));
-		//ObjectManager::Get().SetProtoObject(new GameObject(L"Fire", m_pParser->CreateFromParticle(L"Fire.eff", L"../../data/script"), EObjType::Effect));
-		ObjectManager::Get().SetProtoObject(new GameObject(L"Fly", m_pParser->CreateFromParticle(L"Fly.eff", L"../../data/script"), EObjType::Effect));
-		//ObjectManager::Get().SetProtoComponent(m_pParser->CreateFromParticle(L"Boom.eff", L"../../data/script"));
-		//ObjectManager::Get().SetProtoComponent(m_pParser->CreateFromParticle(L"Boom2.eff", L"../../data/script"));
-		//ObjectManager::Get().SetProtoComponent(m_pParser->CreateFromParticle(L"Boom3.eff", L"../../data/script"));
-		ObjectManager::Get().SetProtoComponent(m_pParser->CreateFromParticle(L"Fire.eff", L"../../data/script"));
-		//ObjectManager::Get().SetProtoComponent(m_pParser->CreateFromParticle(L"Fly.eff", L"../../data/script"));
-		//ObjectManager::Get().SetProtoComponent(m_pParser->CreateFromParticle(L"Bigbang.eff", L"../../data/script"));
-		//ObjectManager::Get().SetProtoComponent(m_pParser->CreateFromParticle(L"Shock.eff", L"../../data/script"));
-		//ObjectManager::Get().SetProtoComponent(m_pParser->CreateFromParticle(L"Atom.eff", L"../../data/script"));
-		//ObjectManager::Get().SetProtoComponent(m_pParser->CreateFromParticle(L"WheelWind.eff", L"../../data/script"));
-		///
 
 		// ========================= 캐릭터 초기화 ===========================
 		ErrorMessage("Intro Character Loading.");
