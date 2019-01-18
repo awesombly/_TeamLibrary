@@ -33,7 +33,7 @@ enum EPacketProtocol : USHORT {
 #define PS_SyncObjects				2
 #define PS_ChatMessage				5
 #define PS_PlaySound				17
-#define PS_TakeObject				49
+#define PS_TakeObject				53
 #define PS_UserInfo					18
 
 
@@ -72,6 +72,7 @@ struct Packet_TakeObject
 	D3DXVECTOR3 Position;
 	D3DXVECTOR3 Scale;
 	D3DXQUATERNION Rotation;
+	float HP;
 
 	UCHAR DataSize;
 	WCHAR ObjectName[51];

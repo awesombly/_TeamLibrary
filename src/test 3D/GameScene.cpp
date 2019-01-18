@@ -19,14 +19,14 @@ bool GameScene::Init() noexcept
 	//		{
 	//			auto pCollider = new ColliderOBB(Product(I_Object.m_ObjectCollider[name].ColliderAABB[colIndex].vMin, matrixList.vScale[matIndex]), Product(I_Object.m_ObjectCollider[name].ColliderAABB[colIndex].vMax, matrixList.vScale[matIndex]));
 	//			auto pObject = new GameObject(L"Dummy", pCollider);
-
+	//
 	//			pObject->SetPosition(matrixList.vLocation[matIndex]);
 	//			pObject->SetRotation(QuatToRotation(matrixList.qRotation[matIndex]) + QuatToRotation(I_Object.m_ObjectCollider[name].qRotation[colIndex]));
 	//			pObject->SetHP(10000.0f);
 	//			auto center = Product(I_Object.m_ObjectCollider[name].ColliderAABB[colIndex].vCenter, matrixList.vScale[matIndex]);
 	//			
 	//			pCollider->m_pivot = center;
-
+	//
 	//			pCollider->usePhysics(false);
 	//			pCollider->SetGravityScale(0.0f);
 	//
@@ -167,6 +167,31 @@ bool GameScene::Frame() noexcept
 
 	// 시간 출력
 	m_Rule.Frame();
+	if (PacketManager::Get().isHost)
+	{
+		static float itemFrame = 0.0f;
+		itemFrame += Timer::SPF;
+		// 템 생성
+		if (itemFrame >= 60.0f)
+		{
+			itemFrame = 0.0f;
+
+			wstring objName = L"Atom";
+			size_t  strSize = objName.size() * 2;
+			strSize = strSize > 100 ? 100 : strSize;
+
+			Packet_TakeObject p_TakeObject;
+			p_TakeObject.KeyValue = ++PacketManager::Get().PlayerKeyCount;
+			memcpy(p_TakeObject.ObjectName, objName.data(), strSize);
+			p_TakeObject.DataSize = (UCHAR)strSize;
+			p_TakeObject.Position = Vector3::Up * 120.0f;
+			p_TakeObject.Rotation = Quaternion::Base;
+			p_TakeObject.Scale = Vector3::One;
+			p_TakeObject.HP = 3.0f;
+			p_TakeObject.UserSocket = (UINT)-1;
+			PacketManager::Get().SendPacket((char*)&p_TakeObject, (USHORT)(PS_TakeObject + strSize), PACKET_TakeObject);
+		}
+	}
 	///
 	m_pMapTree->Frame();
 	DxManager::Get().Frame();

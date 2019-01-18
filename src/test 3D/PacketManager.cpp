@@ -186,7 +186,16 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 		 pObject->SetPosition(p_TakeObject.Position);
 		 pObject->SetRotation(p_TakeObject.Rotation);
 		 pObject->SetScale(p_TakeObject.Scale);
-		 pObject->SetHP(1.0f);
+		 pObject->SetHP(p_TakeObject.HP);
+		 // 플레이어면 충돌 이벤트 제거
+		 if (pObject->m_myName == L"Guard" || pObject->m_myName == L"Zombie")
+		 {
+			 auto pColliderList = pObject->GetComponentList(EComponent::Collider);
+			 if (pColliderList != nullptr)
+			 {
+				 ((Collider*)pColliderList->front())->CollisionEvent = nullptr;
+			 }
+		 }
 	 }	break;
 	 case PACKET_SendUserInfo:
 	 {

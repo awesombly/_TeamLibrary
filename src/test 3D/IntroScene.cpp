@@ -83,6 +83,10 @@ bool IntroScene::FirstInit() noexcept
 		WriteManager::Get().SetFontSizeAlign(20, EAlign::Center, EAlign::Center);
 		//
 		m_pParser = new MaxImporter();
+		LoadSound();
+		///
+		GameObject* pObject = nullptr;
+		Collider*   pCollider = nullptr;
 		// Effect 로드
 		//ObjectManager::Get().SetProtoComponent(m_pParser->CreateFromParticle(L"Snow.eff", L"../../data/script"));
 		ObjectManager::Get().SetProtoObject(new GameObject(L"Boom", m_pParser->CreateFromParticle(L"Boom.eff", L"../../data/script"), EObjType::Effect));
@@ -99,11 +103,71 @@ bool IntroScene::FirstInit() noexcept
 		//ObjectManager::Get().SetProtoComponent(m_pParser->CreateFromParticle(L"Shock.eff", L"../../data/script"));
 		//ObjectManager::Get().SetProtoComponent(m_pParser->CreateFromParticle(L"Atom.eff", L"../../data/script"));
 		//ObjectManager::Get().SetProtoComponent(m_pParser->CreateFromParticle(L"WheelWind.eff", L"../../data/script"));
-		///
-		LoadSound();
-		GameObject* pObject = nullptr;
-		Collider*   pCollider = nullptr;
-		// 컴포넌트 등록
+		pCollider = new Collider(80.0f);
+		pObject = new GameObject(L"Atom", { pCollider, m_pParser->CreateFromParticle(L"Atom.eff", L"../../data/script"), new CTransformer(Vector3::Zero, {3.0f, 5.0f, 7.0f, 0.0f}) }, EObjType::Effect);
+		pCollider->SetGravityScale(0.0f);
+		pCollider->usePhysics(false);
+		pCollider->CollisionEvent = [](Collider* pMe, Collider* pYou) {
+			if (pYou != nullptr)
+			{
+				if (pYou->m_eTag != ETag::Collider) return;
+				//SoundManager::Get().Play("SE_HIT.mp3");//, pObject->GetWorldPosition(), 1000.0f);
+
+				pYou->m_pParent->SetHP(1.0f);
+				// 플레이어 충돌 이벤트
+				pYou->CollisionEvent = [](Collider* pA, Collider* pB) {
+					if(pB != nullptr)
+					{
+						if (pB->m_eTag != ETag::Collider) return;
+
+						//pB->SetForce((Normalize(pB->GetCenter() - pA->GetCenter()) + Vector3::Up) * 130.0f);
+						if (pB->m_pParent == PlayerController::Get().GetParent())
+						{
+							((JPanel*)PlayerController::Get().m_pHitEffect)->EffectPlay();
+						}
+						pB->m_pParent->OperHP(-1.1f);
+						if (pB->m_pParent->GetHP() <= 0.0f)
+						{
+							Packet_PlayerDead p_PlayerDead;
+							p_PlayerDead.KeyValue = pB->m_pParent->m_keyValue;
+							p_PlayerDead.DeadUser = pB->m_pPhysics->UserSocket;
+							p_PlayerDead.KillUser = pA->m_pPhysics->UserSocket;
+							PacketManager::Get().SendPacket((char*)&p_PlayerDead, (USHORT)sizeof(Packet_PlayerDead), PACKET_PlayerDead);
+						}
+						//else
+						//{
+						//	if (PacketManager::Get().pMyInfo->UserSocket == pA->m_pPhysics->UserSocket)
+						//	{
+						//		PacketManager::Get().pMyInfo->Score += 400;
+						//		PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
+						//	}
+						//	pA->AddIgnoreList(pB);
+						//}
+						auto pEffect = ObjectManager::Get().TakeObject(L"Boom2");
+						pEffect->SetPosition(pA->m_pParent->GetWorldPosition());
+					}
+				};
+				// 대상이 자신
+				if (pYou->m_pParent == PlayerController::Get().GetParent())
+				{
+					((JPanel*)PlayerController::Get().m_pRespawn)->EffectPlay();
+					// SetHP
+					Packet_SetHP p_SetHP;
+					p_SetHP.KeyValue = PlayerController::Get().GetParent()->m_keyValue;
+					p_SetHP.HP = 1.0f;
+					PacketManager::Get().SendPacket((char*)&p_SetHP, (USHORT)sizeof(Packet_SetHP), PACKET_SetHP);
+					// Score
+					PacketManager::Get().pMyInfo->Score += 777;
+					PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
+					// Giant
+					std::thread giant(&PlayerController::StartGiantMode, &PlayerController::Get());
+					giant.detach();
+				}
+				ObjectManager::Get().DisableObject(pMe->m_pParent);
+			}
+		};
+		ObjectManager::Get().SetProtoObject(pObject);
+		/// 컴포넌트 등록
 		ObjectManager::Get().SetProtoComponent(new RPlane(L"Plane", L"None.png"));
 		ObjectManager::Get().SetProtoComponent(new RCube(L"Cube", L"None.png"));
 		ObjectManager::Get().SetProtoComponent(new RSphere(20, L"Sphere", L"None.png"));
@@ -188,10 +252,10 @@ bool IntroScene::FirstInit() noexcept
 				}
 				auto pEffect = ObjectManager::Get().TakeObject(L"Boom2");
 				pEffect->SetPosition(pA->m_pParent->GetWorldPosition());
-				//ObjectManager::Get().PushOdw  d ddddddadawddddddddddddddddddddddddddddddddddddddddddbject(pEffect);
+				//ObjectManager::Get().PushObject(pEffect);
 				//pA->ClearIgnoreList();
-				
-	ObjectManager::Get().DisableObject(pA->m_pParent);
+
+				ObjectManager::Get().DisableObject(pA->m_pParent);
 			}
 		};
 
@@ -202,6 +266,7 @@ bool IntroScene::FirstInit() noexcept
 		pHeroObj->m_myName = L"Dagger";
 		pHeroObj->m_objType = EObjType::Object;
 		pHeroObj->SetScale(Vector3::One * 0.6f);
+		pHeroObj->SetHP(100.0f);
 		pCollider = new Collider(15.0f);
 		pCollider->m_pivot = Vector3::Up * 6.0f + Vector3::Forward * 2.5f;
 		pCollider->CollisionEvent = pDaggerHit;
@@ -216,6 +281,7 @@ bool IntroScene::FirstInit() noexcept
 		pHeroObj->m_myName = L"Chicken";
 		pHeroObj->m_objType = EObjType::Object;
 		pHeroObj->SetScale(Vector3::One * 0.6f);
+		pHeroObj->SetHP(100.0f);
 		pCollider = new Collider(15.0f);
 		pCollider->m_pivot = Vector3::Up * 6.0f + Vector3::Forward * 2.5f;
 		pCollider->CollisionEvent = pDaggerHit;

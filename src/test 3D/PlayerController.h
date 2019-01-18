@@ -60,6 +60,8 @@ public:
 	void*		m_pRespawnBar	 = nullptr;
 	void*		m_pRespawnEffect = nullptr;
 	void*		m_pHitEffect	 = nullptr;
+private:
+	void SendGiantMode(const float& spf)											noexcept;
 public:
 	static void SetAnim(AHeroObj* pObject, const UINT& socket, const ECharacter& eCharacter, const EAction& eAction, const D3DXVECTOR3& forward = Vector3::Zero) noexcept;
 
@@ -71,6 +73,7 @@ public:
 
 	void SendAnimTransform(const EAction& eAction, const ECharacter& eCharacter)	noexcept;
 	void SendReqRespawn(const ECharacter& eCharacter)								noexcept;
+	void StartGiantMode()															noexcept;
 
 	void isChatting(const bool& isChat)												noexcept;
 	bool isChatting()														  const noexcept;

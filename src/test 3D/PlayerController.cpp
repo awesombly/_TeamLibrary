@@ -192,6 +192,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 			pMelee->SetRotation(pObject->GetRotation());
 			pMelee->UpdateMatrix();
 			pMelee->m_pPhysics->UserSocket = socket;
+			pMelee->SetHP(100.0f);
 			pCollider->CollisionEvent = pMeleeHitEvent;
 			pCollider->AddIgnoreList((Collider*)pObject->GetComponentList(EComponent::Collider)->front());
 			pCollider->m_eTag = ETag::Dummy;
@@ -265,6 +266,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 			pMelee->SetRotation(pObject->GetRotation());
 			pMelee->UpdateMatrix();
 			pMelee->m_pPhysics->UserSocket = socket;
+			pMelee->SetHP(100.0f);
 			pCollider->CollisionEvent = pMeleeHitEvent;
 		 	pCollider->AddIgnoreList((Collider*)pObject->GetComponentList(EComponent::Collider)->front());
 		 	pCollider->m_eTag = ETag::Dummy;
@@ -515,6 +517,31 @@ void PlayerController::SendReqRespawn(const ECharacter& eCharacter) noexcept
 	PacketManager::Get().ReqSendPacket((char*)&p_ReqAddPlayer, (USHORT)sizeof(Packet_ReqAddPlayer), PACKET_ReqAddPlayer);
 }
 
+void PlayerController::SendGiantMode(const float& spf) noexcept
+{
+	Packet_Vector3 p_SetScale;
+	p_SetScale.KeyValue = m_pParent->m_keyValue;
+	p_SetScale.Vec3 = m_pParent->GetScale() + Vector3::One * spf;
+	PacketManager::Get().SendPacket((char*)&p_SetScale, (USHORT)sizeof(Packet_Vector3), PACKET_SetScale);
+}
+
+void PlayerController::StartGiantMode() noexcept
+{
+	PacketManager::Get().SendPlaySound("SE_jajan.mp3", GetWorldPosition(), 1000.0f);
+	float frameCount = 0.0f;
+	while (frameCount <= 3.0f)
+	{
+		if (m_pParent == nullptr)
+			break;
+		SendGiantMode(0.033f);
+		frameCount += 0.15f;
+		this_thread::sleep_for(chrono::milliseconds(150));
+		ResetOption();
+	}
+	m_moveSpeed = 120.0f;
+	m_jumpPower = 100.0f;
+}
+
 void PlayerController::CameraInput(const float& spf) noexcept
 {
 	static const float MinCameraY = -PI * 0.2f;
@@ -626,10 +653,12 @@ void PlayerController::Possess(GameObject* pObject) noexcept
 void PlayerController::DeadEvent() noexcept
 {
 	PacketManager::Get().SendPlaySound("SE_dead.mp3", GetWorldPosition(), 1000.0f);
+	m_moveSpeed = 40.0f;
+	m_jumpPower = 70.0f;
 	m_pParent->SetHP(0.0f);
 	SetPosition(m_pParent->GetPosition());
 	SetRotation(m_pParent->GetRotation());
-	CutParent();
+	CutParentPost();
 	m_curDelayRespawn = 0.0f;
 	((JPanel*)m_pRespawn)->m_bRender = true;
 	((JProgressBar*)m_pRespawnBar)->SetValue(m_curDelayRespawn, m_DelayRespawn);
