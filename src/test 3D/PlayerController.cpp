@@ -338,6 +338,7 @@ void PlayerController::PlayerInput(const float& spf) noexcept
 		{
 			m_curDelayDash = m_DelayDash;
 			eAction = EAction::Dash;
+			SoundManager::Get().Play("SE_jump02.mp3");
 		}
 		// 근접 공격
 		if (Input::GetKeyState('E') == EKeyState::DOWN &&
