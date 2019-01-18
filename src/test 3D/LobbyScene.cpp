@@ -268,12 +268,15 @@ void LobbyScene::LoadUI() noexcept
 	m_toGuestPanel = m_toGuestIP->m_pParent;
 	// ¸ÅÄª
 	auto pMatching2 = [](void* pScene) {
+		((LobbyScene*)pScene)->m_pIsMatching->m_bRender = true;
 		((LobbyScene*)pScene)->ConnectMatchingServer(2);
 	};
 	auto pMatching3 = [](void* pScene) {
+		((LobbyScene*)pScene)->m_pIsMatching->m_bRender = true;
 		((LobbyScene*)pScene)->ConnectMatchingServer(3);
 	};
 	auto pMatching4 = [](void* pScene) {
+		((LobbyScene*)pScene)->m_pIsMatching->m_bRender = true;
 		((LobbyScene*)pScene)->ConnectMatchingServer(4);
 	};
 	JButtonCtrl* pMatchButton = (JButtonCtrl*)pUIRoot->find_child(L"Matching_Two");
@@ -316,19 +319,8 @@ void LobbyScene::LoadUI() noexcept
 	//pLogin->EventClick.first = ;
 	//pLogin->EventClick.second = pUIRoot->find_child(L"Matching_Loading_Panel");
 
-
-
-
-
-
-
-
-
-
-
-	//JPanel* pisMatching = (JPanel*)pUIRoot->find_child(L"isMatching_Sprite_Panel");
-	//pisMatching->m_bRender = true;
-
+	// ¸ÅÄª ´ë±â
+	m_pIsMatching = (JPanel*)pUIRoot->find_child(L"isMatching_Panel");
 
 	ObjectManager::Get().PushObject(pUIRoot);
 	UI::LobbyEvent(pUIRoot);	

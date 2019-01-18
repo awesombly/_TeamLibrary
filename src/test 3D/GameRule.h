@@ -14,7 +14,7 @@ protected:
 public:
 	JTextCtrl*	 m_TimerText;
 
-
+	JPanel*		 m_pEndingUI;
 	JPanel*		 m_ZWinPanel;
 	JPanel*		 m_GWinPanel;
 

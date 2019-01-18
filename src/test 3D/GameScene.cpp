@@ -535,15 +535,6 @@ void GameScene::LoadUI() noexcept
 
 
 
-
-
-
-
-
-
-	//JPanel* pEndingUI = (JPanel*)pUIRoot->find_child(L"Effect_Ending_Panel");
-	// pEndingUI->m_bRender; // ½ÇÇàµÊ
-
 	ObjectManager::Get().PushObject(pUIRoot);
 	UI::InGameEvent(pUIRoot);
 }

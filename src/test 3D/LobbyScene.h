@@ -11,11 +11,10 @@ public:
 	AHeroObj* m_pBackGuard  = nullptr;
 	AHeroObj* m_pBackZombie = nullptr;
 	///
-	//JPanel*		m_toHost		= nullptr;
-	//JPanel*		m_toGuest		= nullptr;
 	JTextCtrl*	m_toGuestIP		= nullptr;
 	JPanel*		m_toGuestPanel	= nullptr;
 	JPanel*		m_pStartEffect	= nullptr;
+	JPanel*		m_pIsMatching = nullptr;
 public:
 	void SelectCharacter(const PlayerController::ECharacter& eCharacter) noexcept;
 	void LoadUI()				noexcept override;

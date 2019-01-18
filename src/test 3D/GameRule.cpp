@@ -44,8 +44,11 @@ bool GameRule::Frame()	noexcept
 			m_pStatePanel->m_bRender = true;
 			m_pStatePanel->PreEvent.first = nullptr;
 		}
-		if(Input::GetKeyState(VK_SPACE) == EKeyState::DOWN)
+		if (Input::GetKeyState(VK_SPACE) == EKeyState::DOWN)
+		{
 			m_pStatePanel->m_bRender = false;
+			m_pEndingUI->m_bRender = true;
+		}
 		m_TimerText->m_Text = '0';
 	}
 
@@ -71,6 +74,7 @@ bool GameRule::Release()	noexcept
 
 void GameRule::SetResultPanel(JPanel* pUIRoot)
 {
+	m_pEndingUI = (JPanel*)pUIRoot->find_child(L"Effect_Ending_Panel");
 	m_GWinPanel = (JPanel*)pUIRoot->find_child(L"GuardWin");
 	m_ZWinPanel = (JPanel*)pUIRoot->find_child(L"ZombieWin");
 	m_pStatePanel = (JPanel*)pUIRoot->find_child(L"State_Panel");
