@@ -52,8 +52,6 @@ bool PlayerController::Frame(const float& spf, const float& accTime)	noexcept
 			return true;
 		}
 	}
-
-	ErrorMessage(to_string(GetWorldPosition().x) + ", " + to_string(GetWorldPosition().y) + ", " + to_string(GetWorldPosition().z));
 	return true;
 }
 
