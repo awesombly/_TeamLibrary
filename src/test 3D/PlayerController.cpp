@@ -111,7 +111,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 			auto pEffect = ObjectManager::Get().TakeObject(L"Boom2");
 			pEffect->SetPosition(pA->m_pParent->GetWorldPosition());
 			
-			SoundManager::Get().PlayQueue("SE_HIT.mp3", pA->m_pParent->GetWorldPosition(), 1000.0f);
+			//SoundManager::Get().PlayQueue("SE_HIT.mp3", pA->m_pParent->GetWorldPosition(), 1000.0f);
 			//ObjectManager::Get().PushObject(pEffect);
 		}
 	};
