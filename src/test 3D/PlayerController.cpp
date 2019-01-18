@@ -134,25 +134,25 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 		case EAction::BackwardLeft:
 		{
 			pObject->SetANIM_Loop(Guard_LEFT);
-			SoundManager::Get().PlayQueue("SE_footstep.mp3", pObject->GetWorldPosition(), 1000.0f);
+			//SoundManager::Get().PlayQueue("SE_footstep.mp3", pObject->GetWorldPosition(), 1000.0f);
 		}	break;
 		case EAction::Right:
 		case EAction::BackwardRight:
 		{
 			pObject->SetANIM_Loop(Guard_RIGHT);
-			SoundManager::Get().PlayQueue("SE_footstep.mp3", pObject->GetWorldPosition(), 1000.0f);
+			//SoundManager::Get().PlayQueue("SE_footstep.mp3", pObject->GetWorldPosition(), 1000.0f);
 		}	break;
 		case EAction::Forward:
 		case EAction::ForwardLeft:
 		case EAction::ForwardRight:
 		{
 			pObject->SetANIM_Loop(Guard_HAPPYWALK);
-			SoundManager::Get().PlayQueue("SE_footstep.mp3", pObject->GetWorldPosition(), 1000.0f);
+		//	SoundManager::Get().PlayQueue("SE_footstep.mp3", pObject->GetWorldPosition(), 1000.0f);
 		}	break;
 		case EAction::Backward:
 		{
 			pObject->SetANIM_Loop(Guard_BACKWARD);
-			SoundManager::Get().PlayQueue("SE_footstep.mp3", pObject->GetWorldPosition(), 1000.0f);
+			//SoundManager::Get().PlayQueue("SE_footstep.mp3", pObject->GetWorldPosition(), 1000.0f);
 		}	break;
 		case EAction::Dance1:
 		{
