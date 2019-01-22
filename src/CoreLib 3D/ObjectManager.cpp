@@ -1,6 +1,7 @@
 #include "ObjectManager.h"
 #include "ColliderAABB.h"
 #include "ColliderOBB.h"
+#include <fstream>
 
 map<UINT, GameObject*> ObjectManager::KeyObjects;
 UINT				   ObjectManager::KeyCount = 0;
@@ -229,49 +230,88 @@ bool ObjectManager::Release() noexcept
 // 스트라이트 리스트
 bool ObjectManager::ReadSpriteScript() noexcept
 {
-	FILE* fp;
-	_wfopen_s(&fp, L"../../data/script/sprite.txt", L"rt");
-	if (fp == nullptr)
+	//FILE* fp;
+	//_wfopen_s(&fp, L"../../data/script/sprite.txt", L"rt");
+	//if (fp == nullptr)
+	//{
+	//	ErrorMessage(__FUNCTIONW__ + L" -> 파일 읽기 실패!"s);
+	//	return false;
+	//}
+	//
+	//TCHAR _buffer[100] = { 0, };
+	//TCHAR _objName[25] = { 0, };
+	//TCHAR _bitName[25] = { 0, };
+	//
+	//D3DXVECTOR4 _vector4;
+	//float _frame = 0.0f;
+	//Texture* _pTexture = nullptr;
+	//
+	//_fgetts(_buffer, _countof(_buffer), fp);					// 한줄 읽기
+	//while (wcscmp(_buffer, L"end\n"))
+	//{
+	//	_stscanf_s(_buffer, L"%s %s", _objName, 25, _bitName, 25);	// 객체 이름, 갯수
+	//
+	//	_fgetts(_buffer, _countof(_buffer), fp);
+	//	while (wcscmp(_buffer, L"\n"))
+	//	{
+	//		_stscanf_s(_buffer, L"%f %f %f %f %f",								// 스프라이트 정보(프레임, 좌표)
+	//			&_frame,
+	//			&_vector4.x, &_vector4.y,
+	//			&_vector4.z, &_vector4.w);
+	//
+	//		_pTexture = DxManager::Get().GetTexture(_bitName);
+	//		_vector4.x /= _pTexture->GetTexWidth();
+	//		_vector4.y /= _pTexture->GetTexHeight();
+	//		_vector4.z /= _pTexture->GetTexWidth();
+	//		_vector4.w /= _pTexture->GetTexHeight();
+	//
+	//		m_SpriteList[_objName].emplace_back(_pTexture, _frame, _vector4);
+	//		_fgetts(_buffer, _countof(_buffer), fp);
+	//	}
+	//	_fgetts(_buffer, _countof(_buffer), fp);
+	//}
+	//
+	//fclose(fp);
+
+	std::wifstream readStream(L"../../data/script/sprite.txt");
+	if (!readStream.is_open())
 	{
-		ErrorMessage(__FUNCTIONW__ + L" -> 파일 읽기 실패!"s);
+		ErrorMessage(__FUNCTION__ + " -> Read File Error!"s);
 		return false;
 	}
 
-	TCHAR _buffer[100] = { 0, };
-	TCHAR _objName[25] = { 0, };
-	TCHAR _bitName[25] = { 0, };
-
+	Texture*	_pTexture = nullptr;
+	float		_frame	  = 0.0f;
 	D3DXVECTOR4 _vector4;
-	float _frame = 0.0f;
-	Texture* _pTexture = nullptr;
+	wstring		_objName, _srcName;
+	wstring		subString;
 
-	_fgetts(_buffer, _countof(_buffer), fp);					// 한줄 읽기
-	while (wcscmp(_buffer, L"end\n"))
+	while (std::getline(readStream, subString))
 	{
-		_stscanf_s(_buffer, L"%s %s", _objName, 25, _bitName, 25);	// 객체 이름, 갯수
+		if (subString.empty()) 
+			break;
+		wistringstream lineStream(subString);
+		lineStream >> _objName >> _srcName;
 
-		_fgetts(_buffer, _countof(_buffer), fp);
-		while (wcscmp(_buffer, L"\n"))
+		_pTexture = DxManager::Get().GetTexture(_srcName);
+		while (std::getline(readStream, subString))
 		{
-			_stscanf_s(_buffer, L"%f %f %f %f %f",								// 스프라이트 정보(프레임, 좌표)
-				&_frame,
-				&_vector4.x, &_vector4.y,
-				&_vector4.z, &_vector4.w);
+			if (subString.empty())
+				break;
+			wistringstream lineStream2(subString);
+			//
+			_frame	 = 0.0f;
+			_vector4 = Vector4::Zero;
+			lineStream2 >> _frame >> _vector4.x >> _vector4.y >> _vector4.z >> _vector4.w;
 
-			_pTexture = DxManager::Get().GetTexture(_bitName);
 			_vector4.x /= _pTexture->GetTexWidth();
 			_vector4.y /= _pTexture->GetTexHeight();
 			_vector4.z /= _pTexture->GetTexWidth();
 			_vector4.w /= _pTexture->GetTexHeight();
 
 			m_SpriteList[_objName].emplace_back(_pTexture, _frame, _vector4);
-			_fgetts(_buffer, _countof(_buffer), fp);
 		}
-		_fgetts(_buffer, _countof(_buffer), fp);
 	}
-
-	fclose(fp);
-
 	return true;
 }
 

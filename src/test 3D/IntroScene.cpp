@@ -6,8 +6,8 @@
 bool IntroScene::Init() noexcept
 {
 	ErrorMessage(__FUNCTION__ + " -> Start."s);
-	//FirstInit();
-	LoadSound();
+	FirstInit();
+	//LoadSound();
 	// UI
 	LoadUI();
 	///
@@ -207,129 +207,129 @@ bool IntroScene::FirstInit() noexcept
 			return false;
 		}
 		ErrorMessage(__FUNCTION__ + " -> Object Setting."s);
-		// 단검 충돌시
-		static auto pDaggerHit = [](Collider* pA, Collider* pB) {
-			if (pB == nullptr)
-			{
-				auto pEffect = ObjectManager::Get().TakeObject(L"Boom2");
-				pEffect->SetPosition(pA->m_pParent->GetWorldPosition());
-				ObjectManager::Get().DisableObject(pA->m_pParent);
-			}
-			else
-			{
+		//// 단검 충돌시
+		//static auto pDaggerHit = [](Collider* pA, Collider* pB) {
+		//	if (pB == nullptr)
+		//	{
+		//		auto pEffect = ObjectManager::Get().TakeObject(L"Boom2");
+		//		pEffect->SetPosition(pA->m_pParent->GetWorldPosition());
+		//		ObjectManager::Get().DisableObject(pA->m_pParent);
+		//	}
+		//	else
+		//	{
 
-				if (pB->m_eTag != ETag::Collider) return;
-				//SoundManager::Get().Play("SE_HIT.mp3");//, pObject->GetWorldPosition(), 1000.0f);
+		//		if (pB->m_eTag != ETag::Collider) return;
+		//		//SoundManager::Get().Play("SE_HIT.mp3");//, pObject->GetWorldPosition(), 1000.0f);
 
-				pB->SetForce((Normalize(-pA->GetTotalForce()) + Vector3::Up) * 80.0f);
-				pB->m_pParent->OperHP(-0.15f);
-				if (pB->m_pParent == PlayerController::Get().GetParent())
-				{
-					((JPanel*)PlayerController::Get().m_pHitEffect)->EffectPlay();
-				}
-				if (pB->m_pParent->GetHP() <= 0.0f)
-				{
-					Packet_PlayerDead p_PlayerDead;
-					p_PlayerDead.KeyValue = pB->m_pParent->m_keyValue;
-					p_PlayerDead.DeadUser = pB->m_pPhysics->UserSocket;
-					p_PlayerDead.KillUser = pA->m_pPhysics->UserSocket;
-					PacketManager::Get().SendPacket((char*)&p_PlayerDead, (USHORT)sizeof(Packet_PlayerDead), PACKET_PlayerDead);
-				}
-				else if (PacketManager::Get().pMyInfo->UserSocket == pA->m_pPhysics->UserSocket)
-				{
-					PacketManager::Get().pMyInfo->Score += 50;
-					PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
-				}
-				auto pEffect = ObjectManager::Get().TakeObject(L"Boom2");
-				pEffect->SetPosition(pA->m_pParent->GetWorldPosition());
+		//		pB->SetForce((Normalize(-pA->GetTotalForce()) + Vector3::Up) * 80.0f);
+		//		pB->m_pParent->OperHP(-0.15f);
+		//		if (pB->m_pParent == PlayerController::Get().GetParent())
+		//		{
+		//			((JPanel*)PlayerController::Get().m_pHitEffect)->EffectPlay();
+		//		}
+		//		if (pB->m_pParent->GetHP() <= 0.0f)
+		//		{
+		//			Packet_PlayerDead p_PlayerDead;
+		//			p_PlayerDead.KeyValue = pB->m_pParent->m_keyValue;
+		//			p_PlayerDead.DeadUser = pB->m_pPhysics->UserSocket;
+		//			p_PlayerDead.KillUser = pA->m_pPhysics->UserSocket;
+		//			PacketManager::Get().SendPacket((char*)&p_PlayerDead, (USHORT)sizeof(Packet_PlayerDead), PACKET_PlayerDead);
+		//		}
+		//		else if (PacketManager::Get().pMyInfo->UserSocket == pA->m_pPhysics->UserSocket)
+		//		{
+		//			PacketManager::Get().pMyInfo->Score += 50;
+		//			PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
+		//		}
+		//		auto pEffect = ObjectManager::Get().TakeObject(L"Boom2");
+		//		pEffect->SetPosition(pA->m_pParent->GetWorldPosition());
 
-				ObjectManager::Get().DisableObject(pA->m_pParent);
-			}
-		};
+		//		ObjectManager::Get().DisableObject(pA->m_pParent);
+		//	}
+		//};
 
-		// 단검
-		auto pHeroObj = new AHeroObj();
-		pHeroObj->SetPlayerCharacter(ITEM_Dagger);
-		pHeroObj->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-		pHeroObj->m_myName = L"Dagger";
-		pHeroObj->m_objType = EObjType::Object;
-		pHeroObj->SetScale(Vector3::One * 0.6f);
-		pHeroObj->SetHP(100.0f);
-		pCollider = new Collider(15.0f);
-		pCollider->m_pivot = Vector3::Up * 6.0f + Vector3::Forward * 2.5f;
-		pCollider->CollisionEvent = pDaggerHit;
-		pHeroObj->AddComponent({ pCollider, ObjectManager::Get().TakeComponent(L"Fire") });
-		pHeroObj->m_pPhysics->UserSocket = (UINT)-1;
-		ObjectManager::Get().SetProtoObject(pHeroObj);
+		//// 단검
+		//auto pHeroObj = new AHeroObj();
+		//pHeroObj->SetPlayerCharacter(ITEM_Dagger);
+		//pHeroObj->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+		//pHeroObj->m_myName = L"Dagger";
+		//pHeroObj->m_objType = EObjType::Object;
+		//pHeroObj->SetScale(Vector3::One * 0.6f);
+		//pHeroObj->SetHP(100.0f);
+		//pCollider = new Collider(15.0f);
+		//pCollider->m_pivot = Vector3::Up * 6.0f + Vector3::Forward * 2.5f;
+		//pCollider->CollisionEvent = pDaggerHit;
+		//pHeroObj->AddComponent({ pCollider, ObjectManager::Get().TakeComponent(L"Fire") });
+		//pHeroObj->m_pPhysics->UserSocket = (UINT)-1;
+		//ObjectManager::Get().SetProtoObject(pHeroObj);
 
-		// 닭
-		pHeroObj = new AHeroObj();
-		pHeroObj->SetPlayerCharacter(NPC_Chicken);
-		pHeroObj->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-		pHeroObj->m_myName = L"Chicken";
-		pHeroObj->m_objType = EObjType::Object;
-		pHeroObj->SetScale(Vector3::One * 0.6f);
-		pHeroObj->SetHP(100.0f);
-		pCollider = new Collider(15.0f);
-		pCollider->m_pivot = Vector3::Up * 6.0f + Vector3::Forward * 2.5f;
-		pCollider->CollisionEvent = pDaggerHit;
-		pHeroObj->AddComponent({ pCollider, ObjectManager::Get().TakeComponent(L"Fire") });
-		pHeroObj->m_pPhysics->UserSocket = (UINT)-1;
-		ObjectManager::Get().SetProtoObject(pHeroObj);
+		//// 닭
+		//pHeroObj = new AHeroObj();
+		//pHeroObj->SetPlayerCharacter(NPC_Chicken);
+		//pHeroObj->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+		//pHeroObj->m_myName = L"Chicken";
+		//pHeroObj->m_objType = EObjType::Object;
+		//pHeroObj->SetScale(Vector3::One * 0.6f);
+		//pHeroObj->SetHP(100.0f);
+		//pCollider = new Collider(15.0f);
+		//pCollider->m_pivot = Vector3::Up * 6.0f + Vector3::Forward * 2.5f;
+		//pCollider->CollisionEvent = pDaggerHit;
+		//pHeroObj->AddComponent({ pCollider, ObjectManager::Get().TakeComponent(L"Fire") });
+		//pHeroObj->m_pPhysics->UserSocket = (UINT)-1;
+		//ObjectManager::Get().SetProtoObject(pHeroObj);
 
-		// 기사 
-		pHeroObj = new AHeroObj();
-		pHeroObj->SetPlayerCharacter(Guard);
-		pHeroObj->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-		pHeroObj->SetANIM_Loop(Guard_IDLE);
-		pHeroObj->m_myName = L"Guard";
-		pHeroObj->m_objType = EObjType::Object;
-		pHeroObj->SetScale(Vector3::One * 0.2f);
-		pCollider = new ColliderOBB({ -13.0f, 0.0f , -13.0f }, { 13.0f, 80.0f , 13.0f });
-		pHeroObj->AddComponent({ pCollider/*, ObjectManager::Get().TakeComponent(L"Fire")*/ });
-		pCollider->m_pivot *= 0.2f;
-		pHeroObj->m_pPhysics->UserSocket = (UINT)-1;
-		ObjectManager::Get().SetProtoObject(pHeroObj);
+		//// 기사 
+		//pHeroObj = new AHeroObj();
+		//pHeroObj->SetPlayerCharacter(Guard);
+		//pHeroObj->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+		//pHeroObj->SetANIM_Loop(Guard_IDLE);
+		//pHeroObj->m_myName = L"Guard";
+		//pHeroObj->m_objType = EObjType::Object;
+		//pHeroObj->SetScale(Vector3::One * 0.2f);
+		//pCollider = new ColliderOBB({ -13.0f, 0.0f , -13.0f }, { 13.0f, 80.0f , 13.0f });
+		//pHeroObj->AddComponent({ pCollider/*, ObjectManager::Get().TakeComponent(L"Fire")*/ });
+		//pCollider->m_pivot *= 0.2f;
+		//pHeroObj->m_pPhysics->UserSocket = (UINT)-1;
+		//ObjectManager::Get().SetProtoObject(pHeroObj);
 
-		// 좀비
-		pHeroObj = new AHeroObj();
-		pHeroObj->SetPlayerCharacter(Zombie);
-		pHeroObj->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-		pHeroObj->SetANIM_Loop(Zombie_IDLE);
-		pHeroObj->m_myName = L"Zombie";
-		pHeroObj->m_objType = EObjType::Object;
-		pHeroObj->SetScale(Vector3::One * 0.2f);
-		pCollider = new ColliderOBB({ -13.0f, 0.0f , -13.0f }, { 13.0f, 80.0f , 13.0f });
-		pHeroObj->AddComponent({ pCollider/*, ObjectManager::Get().TakeComponent(L"Fire")*/ });
-		pCollider->m_pivot *= 0.2f;
-		pHeroObj->m_pPhysics->UserSocket = (UINT)-1;
-		ObjectManager::Get().SetProtoObject(pHeroObj);
+		//// 좀비
+		//pHeroObj = new AHeroObj();
+		//pHeroObj->SetPlayerCharacter(Zombie);
+		//pHeroObj->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+		//pHeroObj->SetANIM_Loop(Zombie_IDLE);
+		//pHeroObj->m_myName = L"Zombie";
+		//pHeroObj->m_objType = EObjType::Object;
+		//pHeroObj->SetScale(Vector3::One * 0.2f);
+		//pCollider = new ColliderOBB({ -13.0f, 0.0f , -13.0f }, { 13.0f, 80.0f , 13.0f });
+		//pHeroObj->AddComponent({ pCollider/*, ObjectManager::Get().TakeComponent(L"Fire")*/ });
+		//pCollider->m_pivot *= 0.2f;
+		//pHeroObj->m_pPhysics->UserSocket = (UINT)-1;
+		//ObjectManager::Get().SetProtoObject(pHeroObj);
 
-		// 새
-		pHeroObj = new AHeroObj();
-		pHeroObj->SetPlayerCharacter(NPC_Bird);
-		pHeroObj->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-		pHeroObj->m_myName = L"Bird";
-		pHeroObj->m_objType = EObjType::Object;
-		pHeroObj->SetScale(Vector3::One * 4.0f);
-		pCollider = new ColliderOBB({ -1.0f, 0.0f , -1.0f }, { 1.0f, 2.0f , 1.0f });
-		pHeroObj->AddComponent({ pCollider/*, ObjectManager::Get().TakeComponent(L"Fire")*/ });
-		pCollider->m_pivot *= 4.0f;
-		pCollider->SetGravityScale(0.3f);
-		pHeroObj->m_pPhysics->UserSocket = (UINT)-1;
-		ObjectManager::Get().SetProtoObject(pHeroObj);
+		//// 새
+		//pHeroObj = new AHeroObj();
+		//pHeroObj->SetPlayerCharacter(NPC_Bird);
+		//pHeroObj->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+		//pHeroObj->m_myName = L"Bird";
+		//pHeroObj->m_objType = EObjType::Object;
+		//pHeroObj->SetScale(Vector3::One * 4.0f);
+		//pCollider = new ColliderOBB({ -1.0f, 0.0f , -1.0f }, { 1.0f, 2.0f , 1.0f });
+		//pHeroObj->AddComponent({ pCollider/*, ObjectManager::Get().TakeComponent(L"Fire")*/ });
+		//pCollider->m_pivot *= 4.0f;
+		//pCollider->SetGravityScale(0.3f);
+		//pHeroObj->m_pPhysics->UserSocket = (UINT)-1;
+		//ObjectManager::Get().SetProtoObject(pHeroObj);
 
 		// =============================== 맵 생성 =================================
 		ErrorMessage(__FUNCTION__ + " -> Map Loading."s);
-		m_Importer.Import();
-		m_pMap = new XMap();
-		m_pMap->Create(DxManager::Get().GetDevice(), DxManager::Get().GetDContext(), &m_Importer, _T("../../Data/Map/Shader/MapShader_Specular.hlsl"), _T("../../Data/Map/Shader/MapShader_Color_Specular.hlsl"), "VS", "PS");
-		m_pMapTree = new XQuadTreeIndex();
-		m_pMapTree->Build(m_pMap);
-		m_pMap->m_objType = EObjType::Map;
-		m_pMap->isGlobal();
-		m_pMap->isStatic();
-		//ObjectManager::Get().PushObject(m_pMap);
+		//m_Importer.Import();
+		//m_pMap = new XMap();
+		//m_pMap->Create(DxManager::Get().GetDevice(), DxManager::Get().GetDContext(), &m_Importer, _T("../../Data/Map/Shader/MapShader_Specular.hlsl"), _T("../../Data/Map/Shader/MapShader_Color_Specular.hlsl"), "VS", "PS");
+		//m_pMapTree = new XQuadTreeIndex();
+		//m_pMapTree->Build(m_pMap);
+		//m_pMap->m_objType = EObjType::Map;
+		//m_pMap->isGlobal();
+		//m_pMap->isStatic();
+		////ObjectManager::Get().PushObject(m_pMap);
 		return true;
 	}
 	return false;
@@ -338,6 +338,7 @@ bool IntroScene::FirstInit() noexcept
 
 void IntroScene::LoadUI() noexcept
 {
+	ErrorMessage(__FUNCTION__ + " -> Start."s);
 	JPanel* pUIRoot = new JPanel(L"Intro");
 	pUIRoot->m_objType = EObjType::UI;
 	JParser par;

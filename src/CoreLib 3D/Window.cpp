@@ -17,10 +17,8 @@ bool Window::MessageProcess()
 {
 	while (Core::isPlaying)
 	{
-		ErrorMessage(__FUNCTION__ + " -> Process."s);
 		if (PeekMessage(&message, NULL, 0, 0, PM_REMOVE))
 		{
-			ErrorMessage(__FUNCTION__ + " -> Loop."s);
 			// 메세지 해석
 			TranslateMessage(&message);
 			// 메세지->프로시져 전달
@@ -35,7 +33,6 @@ bool Window::MessageProcess()
 			return true;
 		}
 	}
-	ErrorMessage(__FUNCTION__ + " -> End."s);
 	return false;
 }
 

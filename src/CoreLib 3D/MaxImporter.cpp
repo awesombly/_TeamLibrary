@@ -40,10 +40,10 @@ ParticleSystem* MaxImporter::CreateFromParticle(const wstring_view& fileName, co
 	ifstream readStream(m_filePath);
 	if (!readStream.is_open())
 		return nullptr;
-	// 파일 크기 얻기
-	readStream.seekg(0, ios::end);
-	m_fileSize = readStream.tellg();
-	readStream.seekg(0, ios::beg);
+	//// 파일 크기 얻기
+	//readStream.seekg(0, ios::end);
+	//m_fileSize = readStream.tellg();
+	//readStream.seekg(0, ios::beg);
 
 	m_LineBuffers.emplace_front("");
 	m_curLineIter = m_LineBuffers.begin();

@@ -4,7 +4,6 @@
 //#include "ChattingBox.h"
 #include "CoreDX.h"
 
-bool  Timer::doFrame = false;
 float Timer::SPF = 0.0f;
 int	  Timer::FPS = 0;
 float Timer::AccumulateTime = 0.0f;
@@ -34,7 +33,7 @@ bool Timer::Frame() noexcept
 {
 	while (Core::isPlaying)
 	{
-		//std::lock_guard<mutex> lock(m_mutex);
+		std::lock_guard<mutex> lock(m_mutex);
 		// 프레임까지 계산
 		QueryPerformanceCounter(&m_CurrentTick);
 		m_ElapseTime = (float)(m_CurrentTick.QuadPart - m_BeforeTick.QuadPart) / m_Frequency.QuadPart;
@@ -60,9 +59,6 @@ bool Timer::Frame() noexcept
 				m_FrameCnt = 0;
 				if (Input::isDebug)
 				{
-					//m_InfoStream.str(L"");
-					//m_InfoStream << L"Time : " << AccumulateTime << L",   FPS : " << FPS << endl;
-					//OutputDebugString(m_InfoStream.str().c_str());
 					ErrorMessage("Time : " + to_string(AccumulateTime) + ",   FPS : " + to_string(FPS));
 				}
 
@@ -76,10 +72,9 @@ bool Timer::Frame() noexcept
 			}
 			m_BeforeTick.QuadPart = m_CurrentTick.QuadPart;
 
-			//m_FrameEvent.notify_all();
-			doFrame = true;
+			m_FrameEvent.notify_all();
+			std::this_thread::yield();
 		}
-		std::this_thread::yield();
 	}
 	{
 		std::lock_guard<mutex> lock(m_mutex);

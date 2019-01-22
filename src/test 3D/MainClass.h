@@ -46,6 +46,8 @@
 #pragma comment( lib, "UIToolLib.lib")
 #endif
 ///
+#include "CoreDX.h"
+///
 #include "MaxImporter.h"
 #include "SkySphere.h"
 //#include "SkyBox.h"
@@ -59,12 +61,9 @@
 #include "CTransformer.h"
 #include "ColliderAABB.h"
 #include "ColliderOBB.h"
-
+///
 #include "AHeroObj.h"
-
-#include "MainClass.h"
-#include "CoreDX.h"
-
+///
 //#include "XCamera.h"
 #include "XQuadTreeIndex.h"
 #include "XMapImporter.h"
@@ -120,7 +119,7 @@ public:
 	void MatchingCheck();
 
 	virtual void LoadUI()				noexcept { return; };
-	virtual bool FirstInit()			noexcept { return true; };
+	virtual bool FirstInit()			noexcept;
 
 	virtual bool Init()					noexcept override;
 	virtual bool Frame()				noexcept override;

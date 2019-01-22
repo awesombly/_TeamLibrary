@@ -203,17 +203,12 @@ bool DxManager::PrevRender() noexcept
 
 bool DxManager::PostRender() noexcept
 {
-	//ErrorMessage(__FUNCTION__ + " -> Start."s);
 	m_RTDSView.DrawView(m_pD3dContext);
-	//ErrorMessage(__FUNCTION__ + " -> 1."s);
 	WriteManager::Get().End();
 	//  ¹é¹öÆÛ ³»¿ë Å¬¸®ÇÎ
-	//ErrorMessage(__FUNCTION__ + " -> 2."s);
 	m_pSwapChain->Present(0, 0);					
 	// ·»´õ, ±íÀÌ ºä Å¬¸®¾î
-	//ErrorMessage(__FUNCTION__ + " -> 3."s);
 	m_RTDSView.ClearView(m_pD3dContext);
-	//ErrorMessage(__FUNCTION__ + " -> End."s);
 	return true;
 }
 
