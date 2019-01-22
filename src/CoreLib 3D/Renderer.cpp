@@ -457,7 +457,7 @@ HRESULT Renderer::CreateConstBuffer(const void* data, const UINT& dataSize, ID3D
 
 	if (pConstBuffer == nullptr)
 	{
-		ErrorMessage(""s + __FUNCTION__ " ->  Null Parameter");
+		ErrorMessage(__FUNCTION__ + " ->  Null Parameter"s);
 		return E_FAIL;
 	}
 	else if (*pConstBuffer != nullptr)
@@ -523,7 +523,7 @@ void Renderer::UpdateTextureUV()
 	auto size = m_vertexList.size();
 	//if (size % 4 != 0)
 	//{
-	//	ErrorMessage(""s + __FUNCTION__ + " -> vertexList is small!");
+	//	ErrorMessage__FUNCTION__ + " -> vertexList is small!"s);
 	//	return;
 	//}
 	for (int i = 0; i < size; i += 4)

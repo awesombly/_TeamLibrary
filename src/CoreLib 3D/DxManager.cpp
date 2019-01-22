@@ -11,7 +11,7 @@ bool DxManager::Init() noexcept
 		FAILED(CreateGIFactory()) ||
 		FAILED(CreateSwapChain()) )
 	{
-		ErrorMessage(""s + __FUNCTION__ + " -> DX 초기화 실패!");
+		ErrorMessage(__FUNCTION__ + " -> DX 초기화 실패!"s);
 		return false;
 	}
 	// 쉐이더 로드
@@ -22,7 +22,7 @@ bool DxManager::Init() noexcept
 		FAILED(CreateBlendState()) ||
 		FAILED(CreateDepthStencilState()))
 	{
-		ErrorMessage(""s + __FUNCTION__ + " -> 상태 객체 생성 실패!");
+		ErrorMessage(__FUNCTION__ + " -> 상태 객체 생성 실패!"s);
 		return false;
 	}
 	// 상태들 기본값 적용
@@ -36,7 +36,7 @@ bool DxManager::Init() noexcept
 	m_pSwapChain->GetBuffer(0, __uuidof(IDXGISurface), (void**)&pBackBuffer);
 	if (!WriteManager::GetInstance().Init(pBackBuffer))
 	{
-		ErrorMessage(""s + __FUNCTION__ + " -> Write Init Failed!");
+		ErrorMessage(__FUNCTION__ + " -> Write Init Failed!"s);
 		return false;
 	}
 
@@ -203,12 +203,17 @@ bool DxManager::PrevRender() noexcept
 
 bool DxManager::PostRender() noexcept
 {
+	//ErrorMessage(__FUNCTION__ + " -> Start."s);
 	m_RTDSView.DrawView(m_pD3dContext);
+	//ErrorMessage(__FUNCTION__ + " -> 1."s);
 	WriteManager::Get().End();
 	//  백버퍼 내용 클리핑
+	//ErrorMessage(__FUNCTION__ + " -> 2."s);
 	m_pSwapChain->Present(0, 0);					
 	// 렌더, 깊이 뷰 클리어
+	//ErrorMessage(__FUNCTION__ + " -> 3."s);
 	m_RTDSView.ClearView(m_pD3dContext);
+	//ErrorMessage(__FUNCTION__ + " -> End."s);
 	return true;
 }
 
@@ -261,7 +266,7 @@ Texture* DxManager::GetTexture(const wstring_view& textureName, const bool& isFu
 		return LoadShaderResourceView(textureName, isFullPath);
 	if (iter->second == nullptr)
 	{
-		ErrorMessage(""s + __FUNCTION__ + " -> : Texture is Null");
+		ErrorMessage(__FUNCTION__ + " -> : Texture is Null"s);
 		return nullptr;
 	}
 	return iter->second;
@@ -296,7 +301,7 @@ HRESULT DxManager::LoadVertexShader(const wstring_view& loadUrl, const string_vi
 							   shaderFlags, 0, nullptr, &pOutputBuf, &pErrorBuf, nullptr);
 	if (FAILED(hr))
 	{
-		ErrorMessage(""s + __FUNCTION__ + " -> : Shader Load Error : " + funcName.data() , true);
+		ErrorMessage(__FUNCTION__ + " -> : Shader Load Error : "s + funcName.data() , true);
 		return E_FAIL;
 	}
 	m_pD3dDevice->CreateVertexShader(pOutputBuf->GetBufferPointer(), pOutputBuf->GetBufferSize(), nullptr, &pVShader);
@@ -304,7 +309,7 @@ HRESULT DxManager::LoadVertexShader(const wstring_view& loadUrl, const string_vi
 
 	if (FAILED(LoadInputLayout(pOutputBuf, funcName)))
 	{
-		ErrorMessage(""s + __FUNCTION__ + " -> 레이아웃 생성 실패 : " + funcName.data() , true);
+		ErrorMessage(__FUNCTION__ + " -> 레이아웃 생성 실패 : "s + funcName.data() , true);
 		return E_FAIL;
 	}
 
@@ -327,7 +332,7 @@ HRESULT DxManager::LoadPixelShader(const wstring_view& loadUrl, const string_vie
 							   shaderFlags, 0, nullptr, &pOutputBuf, &pErrorBuf, nullptr);
 	if (FAILED(hr))
 	{
-		ErrorMessage(""s + __FUNCTION__ + " -> Shader Load Error!", true);
+		ErrorMessage(__FUNCTION__ + " -> Shader Load Error!"s, true);
 		return E_FAIL;
 	}
 	m_pD3dDevice->CreatePixelShader(pOutputBuf->GetBufferPointer(), pOutputBuf->GetBufferSize(), nullptr, &pPShader);
@@ -352,7 +357,7 @@ HRESULT DxManager::LoadGeometryShader(const wstring_view& loadUrl, const string_
 							   shaderFlags, 0, nullptr, &pOutputBuf, &pErrorBuf, nullptr);
 	if (FAILED(hr))
 	{
-		ErrorMessage(""s + __FUNCTION__ + " -> Shader Load Error : " + funcName.data(), true);
+		ErrorMessage(__FUNCTION__ + " -> Shader Load Error : "s + funcName.data(), true);
 		return E_FAIL;
 	}
 	m_pD3dDevice->CreateGeometryShader(pOutputBuf->GetBufferPointer(), pOutputBuf->GetBufferSize(), nullptr, &pGShader);
@@ -611,7 +616,7 @@ HRESULT DxManager::CreateGIFactory()
 		FAILED(pDXGIAdapter->GetParent(__uuidof(IDXGIFactory), (void**)&m_pGIFactory)) ||
 		FAILED(CreateDXGIFactory(__uuidof(IDXGIFactory), (void**)&m_pGIFactory)))
 	{
-		ErrorMessage(""s + __FUNCTION__ + " -> InitError !");
+		ErrorMessage(__FUNCTION__ + " -> InitError !"s);
 		return E_FAIL;
 	}
 	return S_OK;

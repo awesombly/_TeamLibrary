@@ -47,7 +47,7 @@ bool GameRule::Frame()	noexcept
 		if (Input::GetKeyState(VK_SPACE) == EKeyState::DOWN)
 		{
 			m_pStatePanel->m_bRender = false;
-			m_pEndingUI->m_bRender = true;
+			//m_pEndingUI->m_bRender = true;
 		}
 		m_TimerText->m_Text = '0';
 	}

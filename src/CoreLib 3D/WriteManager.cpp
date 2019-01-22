@@ -56,7 +56,7 @@ bool WriteManager::CreateDeviceResource(IDXGISurface1* pSurface) noexcept
 		return false;
 	if (m_pRT == nullptr)
 	{
-		ErrorMessage(""s + __FUNCTION__ + " -> RenderTarget nullptr!");
+		ErrorMessage(__FUNCTION__ + " -> RenderTarget nullptr!"s);
 	}
 	else
 	{
@@ -123,7 +123,7 @@ void WriteManager::SetText(const D2D1_POINT_2F& layoutSize, const wstring_view& 
 	SetFontFamily(fontFamily);
 	if (FAILED(m_pWriteFactory->CreateTextLayout(text.data(), textLength, m_pTextFormat, layoutSize.x, layoutSize.y, &m_pTextLayout)))
 	{
-		ErrorMessage(""s + __FUNCTION__ + " -> TextLayout Error!");
+		ErrorMessage(__FUNCTION__ + " -> TextLayout Error!"s);
 	}
 	IDWriteTypography* pTypography;
 	DWRITE_TEXT_RANGE textRange = { 0, (UINT32)textLength };
@@ -135,7 +135,7 @@ void WriteManager::SetText(const D2D1_POINT_2F& layoutSize, const wstring_view& 
 		FAILED(m_pTextLayout->SetFontFamilyName(fontFamily.data(), textRange))	||
 		FAILED(m_pTextLayout->SetFontSize(fontSize, textRange)))
 	{
-		ErrorMessage(""s + __FUNCTION__ + " -> LayoutSetting Error!");
+		ErrorMessage(__FUNCTION__ + " -> LayoutSetting Error!"s);
 	}
 	m_pFontBrush->SetColor(color);
 	pTypography->Release();

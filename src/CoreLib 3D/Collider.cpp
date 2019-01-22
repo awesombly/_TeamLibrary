@@ -79,7 +79,7 @@ bool Collider::CollisionAllCheck(const float& spf) noexcept
 	{
 		if (iter->m_pParent == nullptr)
 		{
-			ErrorMessage(""s + __FUNCTION__ + " -> Parent is Null!");
+			ErrorMessage(__FUNCTION__ + " -> Parent is Null!"s);
 			continue;
 		}
 		// 자신 또는 처리된 객체 제외

@@ -117,7 +117,7 @@ bool MaxImporter::LoadFileData(GameObject** ppReturnObj) noexcept
 		if (findIter == m_AseTag.end())
 		{
 #ifdef _DEBUG
-			//ErrorMessage(L""s + __FUNCTIONW__ + L" -> 미등록된 태그! : " + m_subString);
+			//ErrorMessage(__FUNCTIONW__ + L" -> 미등록된 태그! : "s + m_subString);
 #endif
 			++m_curLineIter;
 			continue;
@@ -144,7 +144,7 @@ bool MaxImporter::LoadFileData(GameObject** ppReturnObj) noexcept
 		default:
 		{
 		#ifdef _DEBUG
-			ErrorMessage(""s + __FUNCTION__ + " -> 처리되지 않은 태그! : " + m_subString + "(" + to_string((int)findIter->second) + ")");
+			ErrorMessage(__FUNCTION__ + " -> 처리되지 않은 태그! : "s + m_subString + "(" + to_string((int)findIter->second) + ")");
 		#endif	
 		}	break;
 		}
@@ -229,7 +229,7 @@ bool MaxImporter::LoadMaterialList(const int& parentCnt) noexcept
 						pChild->pTexture = DxManager::GetInstance().GetTexture(L"Effect3d/"s + CharToWChar(m_subString.c_str()));
 						if (pChild->pTexture == nullptr)
 						{
-							ErrorMessage(""s + __FUNCTION__ + " -> Not Find Texture");
+							ErrorMessage(__FUNCTION__ + " -> Not Find Texture"s);
 						}
 					}
 				}
@@ -288,7 +288,7 @@ bool MaxImporter::LoadObject(const int& objCnt) noexcept
 					}
 					else
 					{
-						ErrorMessage(""s + __FUNCTION__ + " -> " + m_subString.data() + ", " + to_string(iter.MaterialIndex) + " : Material nullptr!");
+						ErrorMessage(__FUNCTION__ + " -> "s + m_subString.data() + ", " + to_string(iter.MaterialIndex) + " : Material nullptr!");
 						pInstance->m_pSpriteList->emplace_back(DxManager::GetInstance().GetTexture(L"None.png"), 0.0f);
 					}
 				}
@@ -368,7 +368,7 @@ bool MaxImporter::LoadObject(const int& objCnt) noexcept
 		auto finder = m_Objects.find(parentList[iter.first]);
 		if (finder == m_Objects.end())
 		{
-			ErrorMessage(""s + __FUNCTION__ + " -> : Parent Not Found!", true);
+			ErrorMessage(__FUNCTION__ + " -> : Parent Not Found!"s, true);
 		}
 		iter.second->SetParent(finder->second);
 	}

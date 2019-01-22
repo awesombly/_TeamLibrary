@@ -20,6 +20,7 @@ private:
 
 	//wostringstream  m_InfoStream;
 public:
+	static bool		doFrame;
 	static Timer*	Instance;
 	static float	SPF;			// 현재 프레임당 시간
 	static float	AccumulateTime;	// 총 누적 시간

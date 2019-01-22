@@ -2,7 +2,7 @@
 #include <fstream>
 
 #ifdef _DEBUG
-static std::wofstream debugStream(L"../../debugOut.txt", std::ios::app);
+static std::wofstream debugStream;// (L"../../debugOut.txt", std::ios::app);
 #endif
 
 void ErrorMessage(const string_view& msg, const bool& useLoop) noexcept
@@ -12,14 +12,14 @@ void ErrorMessage(const string_view& msg, const bool& useLoop) noexcept
 	static stringstream ostr;
 	ostr.str("");
 	ostr << endl << msg << "\t";
-	//try	{
 	OutputDebugStringA(ostr.str().c_str());
-	//debugStream.open(L"../../debugOut.txt", std::ios::app);
+
+	debugStream.open(L"../../debugOut.txt", std::ios::app);
 	if (debugStream.is_open())
+	{
 		debugStream << ostr.str().c_str();
-	//debugStream.close();
-	//}
-	//catch (...) { }
+		debugStream.close();
+	}
 	while (useLoop)
 	{
 		std::this_thread::sleep_for(std::chrono::seconds(1));
@@ -36,8 +36,13 @@ void ErrorMessage(const wstring_view& msg, const bool& useLoop) noexcept
 	ostr.str(L"");
 	ostr << endl << msg << L"\t";
 	OutputDebugStringW(ostr.str().c_str());
+
+	debugStream.open(L"../../debugOut.txt", std::ios::app);
 	if (debugStream.is_open())
+	{
 		debugStream << ostr.str().c_str();
+		debugStream.close();
+	}
 	while (useLoop)
 	{
 		std::this_thread::sleep_for(std::chrono::seconds(1));

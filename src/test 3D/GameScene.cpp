@@ -65,7 +65,6 @@ bool GameScene::Init() noexcept
 	auto pHero = (AHeroObj*)ObjectManager::Get().TakeObject(L"Guard");
 	//pHero->GetLeftHandPos
 	m_pPlayer->Possess(pHero);
-	//m_pPlayer->ResetOption();
 	///
 	ObjectManager::Get().TakeObject(L"Guard")->SetPosition( -500, 65.5f, 450);
 	ObjectManager::Get().TakeObject(L"Guard")->SetPosition( -200, 65.5f, -100);

@@ -233,7 +233,7 @@ bool ObjectManager::ReadSpriteScript() noexcept
 	_wfopen_s(&fp, L"../../data/script/sprite.txt", L"rt");
 	if (fp == nullptr)
 	{
-		ErrorMessage(L""s + __FUNCTIONW__ + L" -> 파일 읽기 실패!");
+		ErrorMessage(__FUNCTIONW__ + L" -> 파일 읽기 실패!"s);
 		return false;
 	}
 
@@ -312,7 +312,7 @@ GameObject* ObjectManager::TakeObject(const wstring_view& objName, const bool& p
 		auto&& iter = m_ProtoPull.find(objName);
 		if (iter == m_ProtoPull.end())
 		{
-			ErrorMessage(L""s + __FUNCTIONW__ + L" -> " + objName.data() + L" : 미등록된 오브젝트!");
+			ErrorMessage(__FUNCTIONW__ + L" -> "s + objName.data() + L" : 미등록된 오브젝트!");
 			return nullptr;
 		}
 		pObject = iter->second->clone();			// 복사
@@ -353,7 +353,7 @@ bool ObjectManager::SetProtoObject(GameObject* pObject) noexcept
 {
 	if (m_ProtoPull.find(pObject->m_myName) != m_ProtoPull.end())
 	{
-		ErrorMessage(""s + __FUNCTION__ + " -> 중복된 이름!");
+		ErrorMessage(__FUNCTION__ + " -> 중복된 이름!"s);
 		return false;
 	}
 	m_ProtoPull[pObject->m_myName] = pObject;
@@ -394,7 +394,7 @@ void ObjectManager::PopObject(GameObject* pObject) noexcept
 	auto&& iter = find(findList.begin(), findList.end(), pObject);
 	if (iter == findList.end())
 	{
-		//ErrorMessage(L""s + __FUNCTIONW__ + L" -> " + pObject->m_myName + L", Not Found!" );
+		//ErrorMessage(__FUNCTIONW__ + L" -> "s + pObject->m_myName + L", Not Found!" );
 		return;
 	}
 	findList.remove(*iter);
@@ -425,7 +425,7 @@ bool ObjectManager::RemoveObject(GameObject* pObject) noexcept
 {
 	if (pObject->isGlobal())
 	{
-		ErrorMessage(L""s + __FUNCTIONW__ + L" -> " + pObject->m_myName + L" : 삭제할 수 없는 오브젝트!");
+		ErrorMessage(__FUNCTIONW__ + L" -> "s + pObject->m_myName + L" : 삭제할 수 없는 오브젝트!");
 		return false;
 	}
 	pObject->isEnable(false);
@@ -476,7 +476,7 @@ Component* ObjectManager::TakeComponent(const wstring_view& compName) noexcept
 		auto&& iter = m_ComponentPull.find(compName.data());
 		if (iter == m_ComponentPull.end())
 		{
-			ErrorMessage(L""s + __FUNCTIONW__ + L" -> " + compName.data() + L" : 미등록된 컴포넌트!");
+			ErrorMessage(__FUNCTIONW__ + L" -> "s + compName.data() + L" : 미등록된 컴포넌트!");
 			return nullptr;
 		}
 		pComponent = iter->second->clone();			// 복사
@@ -496,7 +496,7 @@ bool ObjectManager::SetProtoComponent(Component* pComponent) noexcept
 {
 	if (m_ComponentPull.find(pComponent->m_myName) != m_ComponentPull.end())
 	{
-		ErrorMessage(""s + __FUNCTION__ + " -> 중복된 이름!");
+		ErrorMessage(__FUNCTION__ + " -> 중복된 이름!"s);
 		return false;
 	}
 	m_ComponentPull[pComponent->m_myName] = pComponent;
@@ -513,7 +513,7 @@ void ObjectManager::DisableComponent(Component* pComponent) noexcept
 {
 	if (pComponent == nullptr)
 	{
-		ErrorMessage(""s + __FUNCTION__ + " -> Component is Null");
+		ErrorMessage(__FUNCTION__ + " -> Component is Null"s);
 		return;
 	}
 
@@ -576,7 +576,7 @@ InstanceRenderer* ObjectManager::PushInstance(InstanceRenderer* pInstance) noexc
 	{
 		if (*iter == pInstance)
 		{
-			ErrorMessage(""s + __FUNCTION__ + " -> 이미 등록된 인스턴스!");
+			ErrorMessage(__FUNCTION__ + " -> 이미 등록된 인스턴스!"s);
 			return nullptr;
 		}
 	}
@@ -596,5 +596,5 @@ void ObjectManager::PopInstance(InstanceRenderer* pInstance) noexcept
 			return;
 		}
 	}
-	//ErrorMessage(L""s + __FUNCTIONW__ + L" -> " + pObject->m_myName + L", Not Found!" );
+	//ErrorMessage(__FUNCTIONW__ + L" -> "s + pObject->m_myName + L", Not Found!" );
 }

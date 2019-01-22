@@ -134,7 +134,7 @@ HRESULT Light::CreateConstBuffer(const void* data, const UINT& dataSize, ID3D11B
 
 	if (pConstBuffer == nullptr)
 	{
-		ErrorMessage(""s + __FUNCTION__ " ->  Null Parameter");
+		ErrorMessage(__FUNCTION__ " ->  Null Parameter"s);
 		return E_FAIL;
 	}
 	else

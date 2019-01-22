@@ -97,11 +97,11 @@ private:
 	static GameObject*				m_pEnemy;
 	static list<GameObject*>		m_EnemyList;
 
-	bool	  m_isMatching = false;
+	bool					m_isMatching = false;
 public:
-	static MaxImporter*		m_pParser;
-	static bool				m_isLoading;
 	bool					m_isFirstInit = true;
+	static bool				m_isLoading;
+	static MaxImporter*		m_pParser;
 	///
 	static XMap*			m_pMap;						// 맵
 	static XQuadTreeIndex*	m_pMapTree;					// 맵->공간분할, LOD시 수정 예정

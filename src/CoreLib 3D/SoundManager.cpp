@@ -44,7 +44,7 @@ bool SoundManager::Frame() noexcept
 		auto&[soundName, position, range] = m_SoundQueue.back();
 		if (m_SoundList.find(soundName) == m_SoundList.end())
 		{
-			ErrorMessage(""s + __FUNCTION__ + " -> Sound Not Find : " + soundName);
+			ErrorMessage(__FUNCTION__ + " -> Sound Not Find : "s + soundName);
 			m_SoundQueue.pop();
 			continue;
 		}

@@ -5,10 +5,13 @@
 
 bool IntroScene::Init() noexcept
 {
-	FirstInit();
+	ErrorMessage(__FUNCTION__ + " -> Start."s);
+	//FirstInit();
+	LoadSound();
 	// UI
 	LoadUI();
 	///
+	ErrorMessage(__FUNCTION__ + " -> End."s);
 	m_isLoading = false;
 	return true;
 }
@@ -77,7 +80,7 @@ bool IntroScene::FirstInit() noexcept
 	if (m_isFirstInit)
 	{
 		m_isFirstInit = false;
-		ErrorMessage("Intro Loading Start.");
+		ErrorMessage(__FUNCTION__ + " -> Start."s);
 		// 폰트 설정
 		WriteManager::Get().SetText({ 0, 0 }, L"", D2D1::ColorF::Black, 20, L"휴면둥근헤드라인");
 		WriteManager::Get().SetFontSizeAlign(20, EAlign::Center, EAlign::Center);
@@ -88,12 +91,11 @@ bool IntroScene::FirstInit() noexcept
 		GameObject* pObject = nullptr;
 		Collider*   pCollider = nullptr;
 		// Effect 로드
-		//ObjectManager::Get().SetProtoComponent(m_pParser->CreateFromParticle(L"Snow.eff", L"../../data/script"));
 		ObjectManager::Get().SetProtoObject(new GameObject(L"Boom", m_pParser->CreateFromParticle(L"Boom.eff", L"../../data/script"), EObjType::Effect));
 		ObjectManager::Get().SetProtoObject(new GameObject(L"Boom2", m_pParser->CreateFromParticle(L"Boom2.eff", L"../../data/script"), EObjType::Effect));
 		ObjectManager::Get().SetProtoObject(new GameObject(L"Boom3", m_pParser->CreateFromParticle(L"Boom3.eff", L"../../data/script"), EObjType::Effect));
-		//ObjectManager::Get().SetProtoObject(new GameObject(L"Fire", m_pParser->CreateFromParticle(L"Fire.eff", L"../../data/script"), EObjType::Effect));
-		ObjectManager::Get().SetProtoObject(new GameObject(L"Fly", m_pParser->CreateFromParticle(L"Fly.eff", L"../../data/script"), EObjType::Effect));
+		ObjectManager::Get().SetProtoObject(new GameObject(L"Fly", m_pParser->CreateFromParticle(L"Fire.eff", L"../../data/script"), EObjType::Effect));
+		//ObjectManager::Get().SetProtoComponent(m_pParser->CreateFromParticle(L"Snow.eff", L"../../data/script"));
 		//ObjectManager::Get().SetProtoComponent(m_pParser->CreateFromParticle(L"Boom.eff", L"../../data/script"));
 		//ObjectManager::Get().SetProtoComponent(m_pParser->CreateFromParticle(L"Boom2.eff", L"../../data/script"));
 		//ObjectManager::Get().SetProtoComponent(m_pParser->CreateFromParticle(L"Boom3.eff", L"../../data/script"));
@@ -104,7 +106,7 @@ bool IntroScene::FirstInit() noexcept
 		//ObjectManager::Get().SetProtoComponent(m_pParser->CreateFromParticle(L"Atom.eff", L"../../data/script"));
 		//ObjectManager::Get().SetProtoComponent(m_pParser->CreateFromParticle(L"WheelWind.eff", L"../../data/script"));
 		pCollider = new Collider(80.0f);
-		pObject = new GameObject(L"Atom", { pCollider, m_pParser->CreateFromParticle(L"Atom.eff", L"../../data/script"), new CTransformer(Vector3::Zero, {3.0f, 5.0f, 7.0f, 0.0f}) }, EObjType::Effect);
+		pObject = new GameObject(L"Atom", { pCollider, m_pParser->CreateFromParticle(L"Bigbang.eff", L"../../data/script"), new CTransformer(Vector3::Zero, {3.0f, 5.0f, 7.0f, 0.0f}) }, EObjType::Effect);
 		pCollider->SetGravityScale(0.0f);
 		pCollider->usePhysics(false);
 		pCollider->CollisionEvent = [](Collider* pMe, Collider* pYou) {
@@ -134,15 +136,6 @@ bool IntroScene::FirstInit() noexcept
 							p_PlayerDead.KillUser = pA->m_pPhysics->UserSocket;
 							PacketManager::Get().SendPacket((char*)&p_PlayerDead, (USHORT)sizeof(Packet_PlayerDead), PACKET_PlayerDead);
 						}
-						//else
-						//{
-						//	if (PacketManager::Get().pMyInfo->UserSocket == pA->m_pPhysics->UserSocket)
-						//	{
-						//		PacketManager::Get().pMyInfo->Score += 400;
-						//		PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
-						//	}
-						//	pA->AddIgnoreList(pB);
-						//}
 						auto pEffect = ObjectManager::Get().TakeObject(L"Boom2");
 						pEffect->SetPosition(pA->m_pParent->GetWorldPosition());
 					}
@@ -207,28 +200,25 @@ bool IntroScene::FirstInit() noexcept
 
 
 		// ========================= 캐릭터 초기화 ===========================
-		ErrorMessage("Intro Character Loading.");
+		ErrorMessage(__FUNCTION__ + " -> Character Loading."s);
 		I_CHARMGR.Init();
 		if (!I_CHARMGR.Load(DxManager::GetDevice(), DxManager::GetDContext(), TablePATH))		//경로 중요함
 		{
 			return false;
 		}
-		ErrorMessage("Intro Prototype Loading.");
+		ErrorMessage(__FUNCTION__ + " -> Object Setting."s);
 		// 단검 충돌시
 		static auto pDaggerHit = [](Collider* pA, Collider* pB) {
 			if (pB == nullptr)
 			{
-				auto pEffect = ObjectManager::Get().TakeObject(L"Boom2");// new GameObject(L"HitEffect", ObjectManager::Get().TakeComponent(L"Boom2"));
+				auto pEffect = ObjectManager::Get().TakeObject(L"Boom2");
 				pEffect->SetPosition(pA->m_pParent->GetWorldPosition());
-				//ObjectManager::Get().PushObject(pEffect);
-				//pA->ClearIgnoreList();
 				ObjectManager::Get().DisableObject(pA->m_pParent);
 			}
 			else
 			{
 
 				if (pB->m_eTag != ETag::Collider) return;
-				//PacketManager::Get().SendPlaySound("SE_HIT.mp3", pA->m_pParent->GetWorldPosition(), 1000.0f);
 				//SoundManager::Get().Play("SE_HIT.mp3");//, pObject->GetWorldPosition(), 1000.0f);
 
 				pB->SetForce((Normalize(-pA->GetTotalForce()) + Vector3::Up) * 80.0f);
@@ -252,8 +242,6 @@ bool IntroScene::FirstInit() noexcept
 				}
 				auto pEffect = ObjectManager::Get().TakeObject(L"Boom2");
 				pEffect->SetPosition(pA->m_pParent->GetWorldPosition());
-				//ObjectManager::Get().PushObject(pEffect);
-				//pA->ClearIgnoreList();
 
 				ObjectManager::Get().DisableObject(pA->m_pParent);
 			}
@@ -298,7 +286,7 @@ bool IntroScene::FirstInit() noexcept
 		pHeroObj->m_objType = EObjType::Object;
 		pHeroObj->SetScale(Vector3::One * 0.2f);
 		pCollider = new ColliderOBB({ -13.0f, 0.0f , -13.0f }, { 13.0f, 80.0f , 13.0f });
-		pHeroObj->AddComponent({ pCollider, ObjectManager::Get().TakeComponent(L"Fire") });
+		pHeroObj->AddComponent({ pCollider/*, ObjectManager::Get().TakeComponent(L"Fire")*/ });
 		pCollider->m_pivot *= 0.2f;
 		pHeroObj->m_pPhysics->UserSocket = (UINT)-1;
 		ObjectManager::Get().SetProtoObject(pHeroObj);
@@ -312,7 +300,7 @@ bool IntroScene::FirstInit() noexcept
 		pHeroObj->m_objType = EObjType::Object;
 		pHeroObj->SetScale(Vector3::One * 0.2f);
 		pCollider = new ColliderOBB({ -13.0f, 0.0f , -13.0f }, { 13.0f, 80.0f , 13.0f });
-		pHeroObj->AddComponent({ pCollider, ObjectManager::Get().TakeComponent(L"Fire") });
+		pHeroObj->AddComponent({ pCollider/*, ObjectManager::Get().TakeComponent(L"Fire")*/ });
 		pCollider->m_pivot *= 0.2f;
 		pHeroObj->m_pPhysics->UserSocket = (UINT)-1;
 		ObjectManager::Get().SetProtoObject(pHeroObj);
@@ -325,17 +313,16 @@ bool IntroScene::FirstInit() noexcept
 		pHeroObj->m_objType = EObjType::Object;
 		pHeroObj->SetScale(Vector3::One * 4.0f);
 		pCollider = new ColliderOBB({ -1.0f, 0.0f , -1.0f }, { 1.0f, 2.0f , 1.0f });
-		pHeroObj->AddComponent({ pCollider, ObjectManager::Get().TakeComponent(L"Fire") });
+		pHeroObj->AddComponent({ pCollider/*, ObjectManager::Get().TakeComponent(L"Fire")*/ });
 		pCollider->m_pivot *= 4.0f;
 		pCollider->SetGravityScale(0.3f);
 		pHeroObj->m_pPhysics->UserSocket = (UINT)-1;
 		ObjectManager::Get().SetProtoObject(pHeroObj);
 
 		// =============================== 맵 생성 =================================
-		ErrorMessage("Intro Map Loading.");
+		ErrorMessage(__FUNCTION__ + " -> Map Loading."s);
 		m_Importer.Import();
 		m_pMap = new XMap();
-		//m_pMap = (XMap*)new GameObject(L"");
 		m_pMap->Create(DxManager::Get().GetDevice(), DxManager::Get().GetDContext(), &m_Importer, _T("../../Data/Map/Shader/MapShader_Specular.hlsl"), _T("../../Data/Map/Shader/MapShader_Color_Specular.hlsl"), "VS", "PS");
 		m_pMapTree = new XQuadTreeIndex();
 		m_pMapTree->Build(m_pMap);

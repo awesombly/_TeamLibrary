@@ -7,31 +7,37 @@ bool	Core::isPlaying = true;
 
 bool Core::GameRun() noexcept
 {
-	// 쓰레드 가동
-	std::thread gameTimer(&Timer::Frame, &m_Timer);
-	//std::thread gameFrame(&Core::GameFrame, this);
-	//std::thread gameRender(&Core::GameRender, this);
-
 	if (!GameInit())
 		return false;
+
+	// 쓰레드 가동
+	//std::thread gameTimer(&Timer::Frame, &m_Timer);
+	//std::thread gameFrame(&Core::GameFrame, this);
+	//std::thread gameRender(&Core::GameRender, this);
 	
 
 	// 메인 쓰레드 루프
 	//while (MessageProcess());
-
+	ErrorMessage(__FUNCTION__ + " -> Loop Start."s);
 	while (isPlaying)
 	{
-		std::unique_lock<mutex> lock(m_Timer.m_mutex);
-		m_Timer.m_FrameEvent.wait(lock);
-		GameFrame();
+		//std::unique_lock<mutex> lock(m_Timer.m_mutex);
+		//m_Timer.m_FrameEvent.wait(lock);
+		//if (Timer::doFrame)
+		//{
+		//	Timer::doFrame = false;
+			GameFrame();
+			//ErrorMessage(__FUNCTION__ + " -> GameFrame End"s);
+//		}
 	}
+	ErrorMessage(__FUNCTION__ + " -> Loop End."s);
 	//{
 	//	std::unique_lock<mutex> lock(m_Timer.m_mutex);
-	//	ErrorMessage(""s + __FUNCTION__ + " -> Frame Exit!");
+	//	ErrorMessage(__FUNCTION__ + " -> Frame Exit!"s);
 	//	std::this_thread::yield();
 	//}
 
-	gameTimer.join();
+	//gameTimer.join();
 	//gameFrame.join();
 	//gameRender.join();
 
@@ -58,7 +64,7 @@ bool Core::GameInit() noexcept
 	if (!m_DxManager.Init()		|| !m_ObjectManager.Init() || 
 		!m_SoundManager.Init()	|| !Init())
 	{
-		ErrorMessage(""s + __FUNCTION__ + ", 초기화 실패!");
+		ErrorMessage(__FUNCTION__ + " -> Init Failed!"s);
 		return false;
 	}
 	return true;
@@ -80,7 +86,7 @@ bool Core::GameFrame() noexcept
 	//	std::this_thread::yield();
 	//}
 	//std::unique_lock<mutex> lock(m_Timer.m_mutex);
-	//ErrorMessage(""s + __FUNCTION__ + " -> Frame Exit!");
+	//ErrorMessage(__FUNCTION__ + " -> Frame Exit!"s);
 	//std::this_thread::sleep_for(chrono::milliseconds(100));
 	//m_Timer.m_RenderEvent.notify_all();
 	//std::this_thread::yield();
@@ -91,21 +97,28 @@ bool Core::GameFrame() noexcept
 	//	m_Timer.m_FrameEvent.wait(lock);
 
 		// Frame
+		ErrorMessage(__FUNCTION__ + " -> Message."s);
 		MessageProcess();
+		ErrorMessage(__FUNCTION__ + " -> Input Frame."s);
 		m_Input.Frame();
+		ErrorMessage(__FUNCTION__ + " -> Frame."s);
 		Frame();
 		m_Input.MouseUpdate();		// 마우스 홀드, 프리 체크
 		// Render
+		ErrorMessage(__FUNCTION__ + " -> PrevRender."s);
 		m_DxManager.PrevRender();
 		m_Timer.Render();
 		m_Input.Render();
+		ErrorMessage(__FUNCTION__ + " -> Render."s);
 		Render();
+		ErrorMessage(__FUNCTION__ + " -> PostRender."s);
 		m_DxManager.PostRender();
+		ErrorMessage(__FUNCTION__ + " -> End."s);
 //		std::this_thread::yield();
 //	}
 //	{
 //		std::unique_lock<mutex> lock(m_Timer.m_mutex);
-//		ErrorMessage(""s + __FUNCTION__ + " -> Frame Exit!");
+//		ErrorMessage(__FUNCTION__ + " -> Frame Exit!"s);
 //		std::this_thread::yield();
 //	}
 	return true;
@@ -130,7 +143,7 @@ bool Core::GameRender() noexcept
 	//	//std::this_thread::yield();
 	//}
 	//std::unique_lock<mutex> lock(m_Timer.m_mutex);
-	//ErrorMessage(""s + __FUNCTION__ + " -> Render Exit!");
+	//ErrorMessage(__FUNCTION__ + " -> Render Exit!"s);
 	return true;
 }
 

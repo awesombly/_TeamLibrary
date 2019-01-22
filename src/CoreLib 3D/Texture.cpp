@@ -22,7 +22,7 @@ Texture* Texture::CreateShaderResourceView(const wstring_view& srcUrl) noexcept
 	D3DX11CreateShaderResourceViewFromFile(DxManager::GetDevice(), srcUrl.data(), NULL, NULL, &m_pSRView, NULL);
 	if (m_pSRView == nullptr)
 	{
-		ErrorMessage(L""s + __FUNCTIONW__ + L" -> Load Error : " + srcUrl.data() );
+		ErrorMessage(__FUNCTIONW__ + L" -> Load Error : "s + srcUrl.data() );
 		delete this;
 		return nullptr;
 	}
@@ -33,7 +33,7 @@ Texture* Texture::CreateShaderResourceView(const wstring_view& srcUrl) noexcept
 	src->QueryInterface(__uuidof(ID3D11Texture2D), (void**)&tex2D);
 	if (tex2D == nullptr)
 	{
-		ErrorMessage(L""s + __FUNCTIONW__ + L" -> Query Error : " + srcUrl.data());
+		ErrorMessage(__FUNCTIONW__ + L" -> Query Error : "s + srcUrl.data());
 		return this;
 	}
 	tex2D->GetDesc(&m_texDesc);
@@ -49,7 +49,7 @@ HRESULT	Texture::SetShaderResource(ID3D11DeviceContext* pDContext, const UINT& s
 {
 	//if (m_pSRView == nullptr)
 	//{
-		//ErrorMessage(""s + __FUNCTION__ + " -> nullptr!");
+		//ErrorMessage(__FUNCTION__ + " -> nullptr!"s);
 		//return E_FAIL;
 	//}
 	pDContext->PSSetShaderResources(setSlot, 1, &m_pSRView);

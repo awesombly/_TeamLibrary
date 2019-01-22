@@ -35,40 +35,7 @@ bool RPlane::Release()	noexcept
 	return true;
 }
 
-//
-//bool RPlane::CollisionCheck(const POINT& point) const noexcept
-//{
-//	D3DXVECTOR3 tVector[4];
-//	for (int i = 0; i < 4; i++)
-//	{
-//		D3DXVec3TransformCoord(&tVector[i], &m_vertexList[i].pos, &m_matLocal);
-//		D3DXVec3TransformCoord(&tVector[i], &tVector[i], &m_pCamera->m_matView);
-//	}
-//	D3DXVECTOR4 rect;
-//	rect.x = tVector[0].x;
-//	rect.y = tVector[0].y;
-//	rect.z = tVector[1].x;
-//	rect.w = tVector[2].y;
-//	if (rect.x > rect.z)
-//	{
-//		rect.x = tVector[1].x;
-//		rect.z = tVector[0].x;
-//		//ErrorMessage(L""s + m_myName + L" -> 좌우반전");
-//	}
-//	if (rect.y > rect.w)
-//	{
-//		rect.y = tVector[2].y;
-//		rect.w = tVector[0].y;
-//		//ErrorMessage(L""s + m_myName + L" -> 상하반전");
-//	}
-//	if (point.x > rect.x && point.x < rect.z &&
-//		point.y > rect.y && point.y < rect.w)
-//	{
-//		ErrorMessage(L""s + m_myName + L" -> 충돌했셈!");
-//		return true;
-//	}
-//	return false;
-//}
+
 
 
 HRESULT RPlane::Create() noexcept
@@ -103,6 +70,5 @@ HRESULT RPlane::Create() noexcept
 
 Component* RPlane::clone() noexcept
 {
-	//return (Component*)(new RPlane(*this));
 	return (new RPlane(*this))->cloneAddition();
 }
