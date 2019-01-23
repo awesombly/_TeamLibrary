@@ -25,9 +25,6 @@ class AHeroObj : public AModel
 	PLAYER_SELECT			m_PlayerSelect;
 
 public:
-	//bool obbCollide = false;
-
-	
 
 	int						m_iObjectIndex;
 	ACharacter*				m_pChar;
@@ -45,11 +42,14 @@ public:
 	ComPtr<ID3D11Buffer>    m_pCBConstBoneWorld;
 	int						m_iMatrixIndex;
 	bool					m_bBoneRender;
+
+
+
 	
-	
-	D3DXMATRIX				m_pTestParent;
+	AHeroObj* m_Parent;
 
 	GameObject* clone() noexcept override;
+
 
 	D3DXVECTOR3 GetRightHandPos();
 	D3DXVECTOR3 GetLeftHandPos();

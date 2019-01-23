@@ -41,6 +41,7 @@ public:
 	bool m_bAnimPlay;
 	bool m_NoneANIM;
 
+
 public:
 	// 상수 버퍼 및 에니메이션 보간
 	void		SetBoneMatrices(ID3D11DeviceContext*    pContext);						//멤버 변수인 m_pMatrix를 사용하여 상수버퍼를 갱신
@@ -49,7 +50,7 @@ public:
 
 	bool		AniFrame(FLOAT fCurFrame, FLOAT fElapsedTime,
 		int iFirstFrame, int iLastFrame,
-		D3DXMATRIX* pMatrix);
+		D3DXMATRIX* pMatrix, D3DXMATRIX* pParent=0);
 
 
 public:
