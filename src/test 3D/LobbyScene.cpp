@@ -203,6 +203,7 @@ bool LobbyScene::FirstInit() noexcept
 
 void LobbyScene::StartToHost()
 {
+	MainClass::StartToHost();
 	if(PlayerController::Get().m_selectCharacter == PlayerController::ECharacter::EGuard)
 		m_pBackHero->SetANIM_OneTime(Guard_DASHJUMP);
 	//else
@@ -215,6 +216,7 @@ void LobbyScene::StartToHost()
 
 void LobbyScene::StartToGuest()
 {
+	MainClass::StartToGuest();
 	if (PlayerController::Get().m_selectCharacter == PlayerController::ECharacter::EGuard)
 		m_pBackHero->SetANIM_OneTime(Guard_DASHJUMP);
 	//else
@@ -269,20 +271,14 @@ void LobbyScene::LoadUI() noexcept
 	// ¸ÅÄª
 	auto pMatching2 = [](void* pScene) {
 		((LobbyScene*)pScene)->m_pIsMatching->m_bRender = true;
-		((LobbyScene*)pScene)->ConnectMatchingServer();
-		((LobbyScene*)pScene)->RequestSignIn(L"aaa", L"qqq");
 		((LobbyScene*)pScene)->RequestMatch(2);
 	};
 	auto pMatching3 = [](void* pScene) {
 		((LobbyScene*)pScene)->m_pIsMatching->m_bRender = true;
-		((LobbyScene*)pScene)->ConnectMatchingServer();
-		((LobbyScene*)pScene)->RequestSignIn(L"aaa", L"qqq");
 		((LobbyScene*)pScene)->RequestMatch(3);
 	};
 	auto pMatching4 = [](void* pScene) {
 		((LobbyScene*)pScene)->m_pIsMatching->m_bRender = true;
-		((LobbyScene*)pScene)->ConnectMatchingServer();
-		((LobbyScene*)pScene)->RequestSignIn(L"aaa", L"qqq");
 		((LobbyScene*)pScene)->RequestMatch(4);
 	};
 	JButtonCtrl* pMatchButton = (JButtonCtrl*)pUIRoot->find_child(L"Matching_Two");
@@ -307,23 +303,6 @@ void LobbyScene::LoadUI() noexcept
 	pCharSelect = (JButtonCtrl*)pUIRoot->find_child(L"Char_Right");
 	pCharSelect->EventClick.first = pSelectChange;
 	pCharSelect->EventClick.second = this;
-
-	//m_pID = (JEditCtrl*)pUIRoot->find_child(L"Matching_ID");
-	// pID->GetString();
-	//m_pPass = (JEditCtrl*)pUIRoot->find_child(L"Matching_PW");
-
-	//auto pLoading = (JListCtrl*)pUIRoot->find_child(L"Matching_Loading_List");
-	//pLoading->push_string(L"¢¾¢¾¢¾¢¾");
-	//auto pID = (JEditCtrl*)pUIRoot->find_child(L"Matching_ID");
-	//// pID->GetString();
-	//auto pPass = (JEditCtrl*)pUIRoot->find_child(L"Matching_PW");
-	//auto pLogin = (JTextCtrl*)pUIRoot->find_child(L"Matching_Login");
-	//
-	//auto pLoading = (JListCtrl*)pUIRoot->find_child(L"Matching_Loading_List");
-	//pLoading->push_string(L"¢¾¢¾¢¾¢¾");
-	///UI::E_LOGIN_BUTTON(pUIRoot->find_child(L"Matching_Loading_Panel"))
-	//pLogin->EventClick.first = ;
-	//pLogin->EventClick.second = pUIRoot->find_child(L"Matching_Loading_Panel");
 
 	// ¸ÅÄª ´ë±â
 	m_pIsMatching = (JPanel*)pUIRoot->find_child(L"isMatching_Panel");

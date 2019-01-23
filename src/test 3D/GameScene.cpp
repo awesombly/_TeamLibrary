@@ -519,7 +519,8 @@ void GameScene::LoadUI() noexcept
 
 	// 쳐맞 효과
 	PlayerController::Get().m_pHitEffect = (JPanel*)pUIRoot->find_child(L"fadeout"); //1234
-	PlayerController::Get().m_pRespawnEffect = (JSpriteCtrl*)pUIRoot->find_child(L"JohnSprite");// (JPanel*)pUIRoot->find_child(L"fadeout_white"); //1234
+	PlayerController::Get().m_pRespawnEffect = (JPanel*)pUIRoot->find_child(L"fadeout_white"); //1234
+	//(JSpriteCtrl*)pUIRoot->find_child(L"JohnSprite");
 	//PlayerController::Get().m_pRespawnEffect = (JPanel*)pUIRoot->find_child(L"fadein"); //1234
 	//auto pJohnEffect = (JSpriteCtrl*)pUIRoot->find_child(L"JohnSprite");
 

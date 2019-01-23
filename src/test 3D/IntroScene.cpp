@@ -6,13 +6,14 @@
 
 bool IntroScene::Init() noexcept
 {
-	ErrorMessage(__FUNCTION__ + " -> Start."s);
+
 	FirstInit();
-	//LoadSound();
 	// UI
+	LoadSound();
 	LoadUI();
+	// 서버 연결
+	ConnectMatchingServer();
 	///
-	ErrorMessage(__FUNCTION__ + " -> End."s);
 	m_isLoading = false;
 	return true;
 }
@@ -86,7 +87,6 @@ bool IntroScene::FirstInit() noexcept
 		WriteManager::Get().SetText({ 0, 0 }, L"", D2D1::ColorF::Black, 20, L"휴면둥근헤드라인");
 		WriteManager::Get().SetFontSizeAlign(20, EAlign::Center, EAlign::Center);
 		m_pParser = new MaxImporter();
-		LoadSound();
 		///
 		GameObject* pObject = nullptr;
 		Collider*   pCollider = nullptr;
@@ -250,15 +250,32 @@ void IntroScene::LoadUI() noexcept
 	ObjectManager::Get().PushObject(pUIRoot);
 	static auto GotoLobby = [](void* pScene) {
 		auto pIntro = (IntroScene*)pScene;
+		// 로그인 요청
+		pIntro->RequestSignIn(pIntro->m_pID->GetString().c_str(), pIntro->m_pPW->GetString().c_str());
+		pIntro->m_loginCheck = 0;
 
-		PacketManager::Get().pMyInfo = new UserInfo();
-		PacketManager::Get().pMyInfo->DataSize = (UCHAR)pIntro->m_pID->GetString().size() * 2;
-		PacketManager::Get().pMyInfo->DataSize = PacketManager::Get().pMyInfo->DataSize > 12 ? 12 : PacketManager::Get().pMyInfo->DataSize;
-		memcpy(PacketManager::Get().pMyInfo->UserID, pIntro->m_pID->GetString().c_str(), PacketManager::Get().pMyInfo->DataSize);
-		PacketManager::Get().pMyInfo->UserSocket = 0;
-		//m_pPW->GetString();
-
-		((IntroScene*)pScene)->SetScene(ESceneName::Lobby);
+		while (pIntro->m_loginCheck == 0)
+		{
+			ErrorMessage("로그인 루프");
+			if (pIntro->m_loginCheck == 1)
+			{
+				ErrorMessage("로그인 성공");
+				PacketManager::Get().pMyInfo = new UserInfo();
+				PacketManager::Get().pMyInfo->DataSize = (UCHAR)pIntro->m_pID->GetString().size() * 2;
+				PacketManager::Get().pMyInfo->DataSize = PacketManager::Get().pMyInfo->DataSize > 12 ? 12 : PacketManager::Get().pMyInfo->DataSize;
+				memcpy(PacketManager::Get().pMyInfo->UserID, pIntro->m_pID->GetString().c_str(), PacketManager::Get().pMyInfo->DataSize);
+				PacketManager::Get().pMyInfo->UserSocket = 0;
+				///
+				pIntro->SetScene(ESceneName::Lobby);
+				break;
+			}
+			if (pIntro->m_loginCheck == -1)
+			{
+				ErrorMessage("로그인 실패");
+				break;
+			}
+		}
+		ErrorMessage("로그인 ㄷㄷ");
 	};
 
 	m_pID = (JEditCtrl*)pUIRoot->find_child(L"Login_ID");

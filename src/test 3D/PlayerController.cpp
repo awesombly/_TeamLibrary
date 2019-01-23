@@ -302,7 +302,7 @@ void PlayerController::PlayerInput(const float& spf) noexcept
 			m_curDelayMelee <= 0.0f)
 		{
 			m_curDelayMelee = m_DelayMelee;
-			m_curDelayThrow = 0.6f;
+			m_curDelayThrow = m_DelayThrow;
 			m_curDelayDash += 0.3f;
 			eAction = EAction::Melee;
 		}

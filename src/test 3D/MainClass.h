@@ -100,6 +100,7 @@ private:
 public:
 	bool					m_isFirstInit = true;
 	static bool				m_isLoading;
+	static char				m_loginCheck;
 	static MaxImporter*		m_pParser;
 	///
 	static XMap*			m_pMap;						// ¸Ê
@@ -114,8 +115,8 @@ public:
 	void LoadSceneInput()	noexcept;
 	//void SendMovedObject()	noexcept;
 
-	virtual void StartToHost() {};
-	virtual void StartToGuest() {};
+	virtual void StartToHost();
+	virtual void StartToGuest();
 	void MatchingCheck();
 
 	virtual void LoadUI()				noexcept { return; };
