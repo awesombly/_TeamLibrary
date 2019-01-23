@@ -15,7 +15,7 @@ public:
 
 	float		m_attackRange;
 	float		m_moveSpeed;
-	float		m_damage;
+	//float		m_damage;
 public:
 	bool Init()											noexcept override;
 	bool Frame(const float& spf, const float& accTime)	noexcept override;

@@ -102,6 +102,7 @@ bool IntroScene::FirstInit() noexcept
 		pCollider->usePhysics(false);
 		pCollider->CollisionEvent = MyEvent::GiantItem;
 		ObjectManager::Get().SetProtoObject(pObject);
+		
 		/// 컴포넌트 등록
 		//ObjectManager::Get().SetProtoComponent(new RPlane(L"Plane", L"None.png"));
 		ObjectManager::Get().SetProtoComponent(new RCube(L"Cube", L"None.png"));
@@ -111,7 +112,7 @@ bool IntroScene::FirstInit() noexcept
 		//ObjectManager::Get().SetProtoComponent(new ColliderAABB(2.0f, -Vector3::One, Vector3::One));
 		//ObjectManager::Get().SetProtoComponent(new ColliderOBB(2.0f, -Vector3::One, Vector3::One));
 		//ObjectManager::Get().SetProtoComponent(new Collider(1));
-		
+	
 		// 월드 중심축
 		//RLine*		pSelectLines[3];
 		//pSelectLines[0] = (RLine*)ObjectManager::Get().TakeComponent(L"Line");
@@ -123,22 +124,22 @@ bool IntroScene::FirstInit() noexcept
 		//pObject = new GameObject(L"Center", { pSelectLines[0], pSelectLines[1], pSelectLines[2] });
 		//pObject->isGlobal(true);
 		//ObjectManager::Get().PushObject(pObject);
-		
-		//// 라이트
-		//auto pTrans = new CTransformer(Vector3::Up * 400.0f, Quaternion::Up * PI * 0.35f, Vector3::One);
-		//pTrans->TransEvent = [](Transform* pParent, Transform* pTrans, const float& spf, const float& accTime) {
-		//	pParent->SetTransform(*pTrans);
-		//	pParent->Translate({ cosf(0.5f * accTime) * 200.0f, 0.0f, sinf(0.5f * accTime) * 200.0f });
-		//	return; spf; accTime; pTrans;
-		//};
-		//ObjectManager::Get().Lights.front()->AddComponent({ pTrans });
-		//// 라이트 랜더러
-		//auto pShpere = (Renderer*)ObjectManager::GetInstance().TakeComponent(L"Sphere");
-		//pShpere->SetShaderLayout("VS_Basic", "PS_Basic");
-		//pObject = new GameObject(L"Sun", pShpere);
-		//pObject->isGlobal(true);
-		//pObject->SetScale(Vector3::One * 7);
-		//pObject->SetParent(ObjectManager::Get().Lights.front());
+
+		// 라이트
+		auto pTrans = new CTransformer(Vector3::Up * 400.0f, Quaternion::Up * PI * 0.35f, Vector3::One);
+		pTrans->TransEvent = [](Transform* pParent, Transform* pTrans, const float& spf, const float& accTime) {
+			pParent->SetTransform(*pTrans);
+			pParent->Translate({ cosf(0.5f * accTime) * 200.0f, 0.0f, sinf(0.5f * accTime) * 200.0f });
+			return; spf; accTime; pTrans;
+		};
+		ObjectManager::Get().Lights.front()->AddComponent({ pTrans });
+		// 라이트 랜더러
+		auto pShpere = (Renderer*)ObjectManager::GetInstance().TakeComponent(L"RowSphere");
+		pShpere->SetShaderLayout("VS_Basic", "PS_Basic");
+		pObject = new GameObject(L"Sun", pShpere);
+		pObject->isGlobal(true);
+		pObject->SetScale(Vector3::One * 7);
+		pObject->SetParent(ObjectManager::Get().Lights.front());
 
 
 		// ========================= 캐릭터 초기화 ===========================

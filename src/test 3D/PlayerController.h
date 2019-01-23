@@ -54,6 +54,7 @@ public:
 	//float		m_HP = 1.0f;
 	float		m_MP = 1.0f;
 	
+	GameObject* m_pHome			 = nullptr;
 	void*       m_pOption		 = nullptr;
 	void*		m_pHpBar		 = nullptr;		// Ã¼·Â¹Ù
 	void*		m_pRespawn		 = nullptr;

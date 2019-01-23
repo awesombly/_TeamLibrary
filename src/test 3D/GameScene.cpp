@@ -10,6 +10,22 @@ bool GameScene::Init() noexcept
 	LoadUI();
 	FirstInit();
 
+	ObjectManager::KeyCount = 1000;
+	auto pHero = (AHeroObj*)ObjectManager::Get().TakeObject(L"Guard");
+	//pHero->GetLeftHandPos
+	m_pPlayer->Possess(pHero);
+
+	auto pCollider = new Collider(1.0f);
+	auto pHome = new GameObject(L"Home", { pCollider , ObjectManager::Get().TakeComponent(L"RowSphere") }, EObjType::Dummy);
+	pHome->SetPosition(Vector3::Zero);
+	pHome->SetScale(Vector3::One * 25.0f);
+	pHome->SetGravityScale(0.0f);
+	pHome->usePhysics(false);
+	pHome->SetHP(100.0f);
+	//pCollider->CollisionEvent = 
+	ObjectManager::Get().PushObject(pHome);
+
+
 	//I_Object.ViewColliderSwitch();
 	//for (auto& [name, matrixList] : I_Object.m_ObjectMatrix)
 	//{
@@ -36,7 +52,6 @@ bool GameScene::Init() noexcept
 	//	}
 	//}
 
-#pragma region Basic
 	//GameObject* pEffect = nullptr;
 	//m_pParser->CreateFromFile(&pEffect, L"Snow.eff", L"../../data/script");
 	//pEffect->SetPosition(Vector3::Up * 400.0f);
@@ -60,22 +75,6 @@ bool GameScene::Init() noexcept
 	//pEffect->SetPosition(Vector3::Up * 400.0f + Vector3::Backward * 500.0f);
 	//ObjectManager::Get().PushObject(pEffect);
 
-	// ==================================================================================
-	ObjectManager::KeyCount = 1000;
-	auto pHero = (AHeroObj*)ObjectManager::Get().TakeObject(L"Guard");
-	//pHero->GetLeftHandPos
-	m_pPlayer->Possess(pHero);
-	///
-	//ObjectManager::Get().TakeObject(L"Zombie")->SetPosition( -500, 65.5f, 450);
-	//ObjectManager::Get().TakeObject(L"Zombie")->SetPosition( -200, 65.5f, -100);
-	//ObjectManager::Get().TakeObject(L"Zombie")->SetPosition( -100, 65.5f, 350);
-	//ObjectManager::Get().TakeObject(L"Zombie")->SetPosition(-400, 65.5f, -200);
-	//ObjectManager::Get().TakeObject(L"Zombie")->SetPosition(300, 65.5f, 0);
-	//ObjectManager::Get().TakeObject(L"Zombie")->SetPosition(100, 65.5f, -300);
-	//ObjectManager::Get().TakeObject(L"Bird")->SetPosition(  -300, 65.5f, 250);
-	//ObjectManager::Get().TakeObject(L"Bird")->SetPosition(  200, 65.5f, 150);
-	//ObjectManager::Get().TakeObject(L"Bird")->SetPosition(  400, 65.5f, -400);
-#pragma endregion
 	///
 	SoundManager::Get().SetBGM("bgm_ingame01.mp3");
 	Timer::AccumulateTime = 0.0f;

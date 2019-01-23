@@ -13,9 +13,9 @@ AIController::AIController()
 bool AIController::Init() noexcept
 {
 	m_isEnable = true;
-	m_attackRange = m_pParent->GetScaleAverage() * 2500.0f;
+	m_attackRange = m_pParent->GetScaleAverage() * 3000.0f;
 	m_moveSpeed   = RandomNormal() * 35.0f + 15.0f;
-	m_damage	  = 0.2f;// RandomNormal() * 0.3f + 0.1f;
+	//m_damage	  = 0.2f;// RandomNormal() * 0.3f + 0.1f;
 	return true;
 }
 
