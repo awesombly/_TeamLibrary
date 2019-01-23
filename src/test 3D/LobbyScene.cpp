@@ -269,15 +269,21 @@ void LobbyScene::LoadUI() noexcept
 	// ¸ÅÄª
 	auto pMatching2 = [](void* pScene) {
 		((LobbyScene*)pScene)->m_pIsMatching->m_bRender = true;
-		((LobbyScene*)pScene)->ConnectMatchingServer(2);
+		((LobbyScene*)pScene)->ConnectMatchingServer();
+		((LobbyScene*)pScene)->RequestSignIn(L"aaa", L"qqq");
+		((LobbyScene*)pScene)->RequestMatch(2);
 	};
 	auto pMatching3 = [](void* pScene) {
 		((LobbyScene*)pScene)->m_pIsMatching->m_bRender = true;
-		((LobbyScene*)pScene)->ConnectMatchingServer(3);
+		((LobbyScene*)pScene)->ConnectMatchingServer();
+		((LobbyScene*)pScene)->RequestSignIn(L"aaa", L"qqq");
+		((LobbyScene*)pScene)->RequestMatch(3);
 	};
 	auto pMatching4 = [](void* pScene) {
 		((LobbyScene*)pScene)->m_pIsMatching->m_bRender = true;
-		((LobbyScene*)pScene)->ConnectMatchingServer(4);
+		((LobbyScene*)pScene)->ConnectMatchingServer();
+		((LobbyScene*)pScene)->RequestSignIn(L"aaa", L"qqq");
+		((LobbyScene*)pScene)->RequestMatch(4);
 	};
 	JButtonCtrl* pMatchButton = (JButtonCtrl*)pUIRoot->find_child(L"Matching_Two");
 	pMatchButton->EventClick.first  = pMatching2;
