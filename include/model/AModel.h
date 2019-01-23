@@ -137,6 +137,8 @@ struct ObjWM
 	vector<D3DXMATRIX>	m_matCalculation;
 	vector<D3DXMATRIX>	m_matAnim;
 	vector<int>			m_iParent;
+
+
 	ObjWM(int iNumMesh)
 	{
 		m_pModel = NULL;
@@ -151,4 +153,6 @@ struct ObjWM
 			m_iParent[iMesh] = -1;
 		}
 	}
+	ObjWM();
+	~ObjWM();
 };
