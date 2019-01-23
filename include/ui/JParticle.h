@@ -1,5 +1,6 @@
 #pragma once
 #include "JTransform.h"
+#include "JSpriteCtrl.h"
 namespace UI
 {
 	class JParticle : public JTransform
