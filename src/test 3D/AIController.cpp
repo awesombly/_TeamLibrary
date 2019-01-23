@@ -37,9 +37,9 @@ bool AIController::Frame(const float& spf, const float& accTime)	noexcept
 	 	{
 	 		m_pParent->Translate(Normalize(m_Target - m_pParent->GetPosition()) * m_moveSpeed * spf);
 	 	}
-		m_pParent->SetFocus(m_Target);
-	 	//m_dirRotY = m_pParent->GetFocusY(m_Target);
-	 	//m_pParent->SetRotationY(Lerp(m_dirRotY, m_pParent->GetRotation().y, spf));
+		//m_pParent->SetFocus(m_Target);
+	 	m_dirRotY = m_pParent->GetFocusY(m_Target);
+	 	m_pParent->SetRotationY(Lerp(m_dirRotY, m_pParent->GetRotation().y, spf * 5.0f));
 		//D3DXVec3Lerp(Ler
 	 }	break;
 	 case EState::Attack:
