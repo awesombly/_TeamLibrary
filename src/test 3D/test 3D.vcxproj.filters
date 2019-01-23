@@ -20,6 +20,9 @@
       <Filter>Etc</Filter>
     </ClCompile>
     <ClCompile Include="GameRule.cpp" />
+    <ClCompile Include="AIController.cpp">
+      <Filter>Etc</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainClass.h">
@@ -44,6 +47,9 @@
       <Filter>Etc</Filter>
     </ClInclude>
     <ClInclude Include="GameRule.h" />
+    <ClInclude Include="AIController.h">
+      <Filter>Etc</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="MainCore">

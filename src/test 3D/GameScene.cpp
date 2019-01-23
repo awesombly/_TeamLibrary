@@ -66,15 +66,15 @@ bool GameScene::Init() noexcept
 	//pHero->GetLeftHandPos
 	m_pPlayer->Possess(pHero);
 	///
-	ObjectManager::Get().TakeObject(L"Guard")->SetPosition( -500, 65.5f, 450);
-	ObjectManager::Get().TakeObject(L"Guard")->SetPosition( -200, 65.5f, -100);
-	ObjectManager::Get().TakeObject(L"Guard")->SetPosition( -100, 65.5f, 350);
-	ObjectManager::Get().TakeObject(L"Zombie")->SetPosition(-400, 65.5f, -200);
-	ObjectManager::Get().TakeObject(L"Zombie")->SetPosition(300, 65.5f, 0);
-	ObjectManager::Get().TakeObject(L"Zombie")->SetPosition(100, 65.5f, -300);
-	ObjectManager::Get().TakeObject(L"Bird")->SetPosition(  -300, 65.5f, 250);
-	ObjectManager::Get().TakeObject(L"Bird")->SetPosition(  200, 65.5f, 150);
-	ObjectManager::Get().TakeObject(L"Bird")->SetPosition(  400, 65.5f, -400);
+	//ObjectManager::Get().TakeObject(L"Zombie")->SetPosition( -500, 65.5f, 450);
+	//ObjectManager::Get().TakeObject(L"Zombie")->SetPosition( -200, 65.5f, -100);
+	//ObjectManager::Get().TakeObject(L"Zombie")->SetPosition( -100, 65.5f, 350);
+	//ObjectManager::Get().TakeObject(L"Zombie")->SetPosition(-400, 65.5f, -200);
+	//ObjectManager::Get().TakeObject(L"Zombie")->SetPosition(300, 65.5f, 0);
+	//ObjectManager::Get().TakeObject(L"Zombie")->SetPosition(100, 65.5f, -300);
+	//ObjectManager::Get().TakeObject(L"Bird")->SetPosition(  -300, 65.5f, 250);
+	//ObjectManager::Get().TakeObject(L"Bird")->SetPosition(  200, 65.5f, 150);
+	//ObjectManager::Get().TakeObject(L"Bird")->SetPosition(  400, 65.5f, -400);
 #pragma endregion
 	///
 	SoundManager::Get().SetBGM("bgm_ingame01.mp3");
@@ -126,70 +126,11 @@ bool GameScene::Frame() noexcept
 		}
 	}
 
-	////Raycast::SetMousePick(Input::GetCursor(), 3000.0f);
-	//m_hitRay = false;
-	//auto forward = Normalize(ObjectManager::Get().Cameras[ECamera::Main]->GetForward());
-	////D3DXVec3TransformNormal(&forward, &forward, &m_pPlayer->GetRoot()->GetWorldMatrix());
-	//Raycast::SetRaycast(ObjectManager::Get().Cameras[ECamera::Main]->GetWorldPosition(), forward, 3000.0f);
-	//for (auto& iter : ObjectManager::Get().GetColliderList())
-	//{
-	//	if (iter->m_pParent == m_pPlayer->GetParent())
-	//		continue;
-	//	if (Raycast::Raycasting(iter))
-	//	{
-	//		m_hitRay = true;
-	//		if (Input::GetKeyState('V') == EKeyState::DOWN)
-	//		{
-	//			m_pPlayer->Possess(iter->m_pParent);
-	//		}
-	//	}
-	//}
-
-	//// 플레이어 변경
-	//if (Input::GetKeyState(VK_TAB) == EKeyState::DOWN)
-	//{
-	//	static auto curCollider = ObjectManager::Get().GetColliderList().begin();
-	//	/*if (curCollider == ObjectManager::Get().GetColliderList().end())
-	//		curCollider = ObjectManager::Get().GetColliderList().begin();*/
-	//	if (++curCollider == ObjectManager::Get().GetColliderList().end())
-	//		curCollider = ObjectManager::Get().GetColliderList().begin();
-	//	while ( (*curCollider)->m_eCollider == ECollider::Sphere ||
-	//			(*curCollider)->m_eTag		!= ETag::Collider)
-	//	{
-	//		++curCollider;
-	//		if (curCollider == ObjectManager::Get().GetColliderList().end())
-	//			curCollider = ObjectManager::Get().GetColliderList().begin();
-	//	}
-	//
-	//	m_pPlayer->Possess((*curCollider)->m_pParent);
-	//}
-
-	// 시간 출력
+	// 시간 출력, 호스트
 	m_Rule.Frame();
 	if (PacketManager::Get().isHost)
 	{
-		static float itemFrame = 0.0f;
-		itemFrame += Timer::SPF;
-		// 템 생성
-		if (itemFrame >= 60.0f)
-		{
-			itemFrame = 0.0f;
-
-			wstring objName = L"Atom";
-			size_t  strSize = objName.size() * 2;
-			strSize = strSize > 100 ? 100 : strSize;
-
-			Packet_TakeObject p_TakeObject;
-			p_TakeObject.KeyValue = ++PacketManager::Get().PlayerKeyCount;
-			memcpy(p_TakeObject.ObjectName, objName.data(), strSize);
-			p_TakeObject.DataSize = (UCHAR)strSize;
-			p_TakeObject.Position = Vector3::Up * 120.0f;
-			p_TakeObject.Rotation = Quaternion::Base;
-			p_TakeObject.Scale = Vector3::One;
-			p_TakeObject.HP = 100.0f;
-			p_TakeObject.UserSocket = (UINT)-1;
-			PacketManager::Get().SendPacket((char*)&p_TakeObject, (USHORT)(PS_TakeObject + strSize), PACKET_TakeObject);
-		}
+		HostFrame();
 	}
 	///
 	m_pMapTree->Frame();
@@ -198,8 +139,8 @@ bool GameScene::Frame() noexcept
 	SoundManager::Get().Frame();
 
 	// 경계 막기
-	for (auto objIter = ObjectManager::Get().GetObjectList(EObjType::Object)->begin();
-		objIter != ObjectManager::Get().GetObjectList(EObjType::Object)->end(); ++objIter)
+	for (auto objIter = ObjectManager::Get().GetObjectList(EObjType::Character)->begin();
+		objIter != ObjectManager::Get().GetObjectList(EObjType::Character)->end(); ++objIter)
 	{
 		auto& position = (*objIter)->GetPosition();
 		if (position.x > 460.0f)
@@ -361,6 +302,57 @@ void GameScene::DrawBoundingBox()	noexcept
 		}
 	}
 	DxManager::Get().SetRasterizerState(ERasterS::Current);
+}
+
+void GameScene::HostFrame() noexcept
+{
+	static Packet_TakeObject p_TakeObject;
+	static float itemFrame = 0.0f;
+	static float enemyFrame = 0.0f;
+	itemFrame += Timer::SPF;
+	enemyFrame += Timer::SPF;
+
+	// 템 생성
+	if (itemFrame >= 60.0f)
+	{
+		itemFrame = 0.0f;
+
+		wstring objName = L"Atom";
+		size_t  strSize = objName.size() * 2;
+		strSize = strSize > 100 ? 100 : strSize;
+
+		p_TakeObject.KeyValue = ++PacketManager::Get().PlayerKeyCount;
+		memcpy(p_TakeObject.ObjectName, objName.data(), strSize);
+		p_TakeObject.DataSize = (UCHAR)strSize;
+		p_TakeObject.Position = Vector3::Up * 120.0f;
+		p_TakeObject.Rotation = Quaternion::Base;
+		p_TakeObject.Scale = Vector3::One;
+		p_TakeObject.HP = 100.0f;
+		p_TakeObject.UserSocket = (UINT)-1;
+		PacketManager::Get().SendPacket((char*)&p_TakeObject, (USHORT)(PS_TakeObject + strSize), PACKET_TakeObject);
+	}
+	// 적 생성
+	if (enemyFrame >= 3.0f)
+	{
+		enemyFrame = 0.0f;
+
+		wstring objName = L"Zombie";
+		size_t  strSize = objName.size() * 2;
+		strSize = strSize > 100 ? 100 : strSize;
+
+		p_TakeObject.KeyValue = ++PacketManager::Get().PlayerKeyCount;
+		memcpy(p_TakeObject.ObjectName, objName.data(), strSize);
+		p_TakeObject.DataSize = (UCHAR)strSize;
+		p_TakeObject.Rotation = Quaternion::Base;
+		p_TakeObject.HP = 1.0f;
+		p_TakeObject.UserSocket = (UINT)-1;
+		for (int i = 0; i < PacketManager::Get().UserList.size(); ++i)
+		{
+			p_TakeObject.Position = { RandomNormal() * 800.0f - 400.0f, 60.0f, RandomNormal() * 800.0f - 400.0f };
+			p_TakeObject.Scale = (RandomNormal() * 0.2f + 0.1f) * Vector3::One;
+			PacketManager::Get().SendPacket((char*)&p_TakeObject, (USHORT)(PS_TakeObject + strSize), PACKET_TakeObject);
+		}
+	}
 }
 
 

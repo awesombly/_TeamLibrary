@@ -73,49 +73,6 @@ bool PlayerController::Release() noexcept
 
 void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECharacter& eCharacter, const EAction& eAction, const D3DXVECTOR3& forward) noexcept
 {
-	static auto pMeleeHitEvent = [](Collider* pA, Collider* pB) {
-		if (pB == nullptr)
-		{
-			auto pEffect = ObjectManager::Get().TakeObject(L"Boom2");
-			pEffect->SetPosition(pA->m_pParent->GetWorldPosition());
-			//ObjectManager::Get().PushObject(pEffect);
-			//pA->ClearIgnoreList();
-		}
-		else
-		{
-			if (pB->m_eTag != ETag::Collider) return;
-
-			pB->SetForce((Normalize(pB->GetCenter() - pA->GetCenter()) + Vector3::Up) * 130.0f);
-			pB->m_pParent->OperHP(-0.4f);
-			if (pB->m_pParent == PlayerController::Get().GetParent())
-			{
-				((JPanel*)PlayerController::Get().m_pHitEffect)->EffectPlay();
-			}
-			if (pB->m_pParent->GetHP() <= 0.0f)
-			{
-				Packet_PlayerDead p_PlayerDead;
-				p_PlayerDead.KeyValue = pB->m_pParent->m_keyValue;
-				p_PlayerDead.DeadUser = pB->m_pPhysics->UserSocket;
-				p_PlayerDead.KillUser = pA->m_pPhysics->UserSocket;
-				PacketManager::Get().SendPacket((char*)&p_PlayerDead, (USHORT)sizeof(Packet_PlayerDead), PACKET_PlayerDead);
-			}
-			else
-			{
-				if (PacketManager::Get().pMyInfo->UserSocket == pA->m_pPhysics->UserSocket)
-				{
-					PacketManager::Get().pMyInfo->Score += 200;
-					PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
-				}
-				pA->AddIgnoreList(pB);
-			}
-			auto pEffect = ObjectManager::Get().TakeObject(L"Boom2");
-			pEffect->SetPosition(pA->m_pParent->GetWorldPosition());
-			
-			//SoundManager::Get().PlayQueue("SE_HIT.mp3", pA->m_pParent->GetWorldPosition(), 1000.0f);
-			//ObjectManager::Get().PushObject(pEffect);
-		}
-	};
-
 	switch (eCharacter)
 	{
 	case ECharacter::EGuard:
@@ -193,7 +150,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 			pMelee->UpdateMatrix();
 			pMelee->m_pPhysics->UserSocket = socket;
 			pMelee->SetHP(100.0f);
-			pCollider->CollisionEvent = pMeleeHitEvent;
+			pCollider->CollisionEvent = MyEvent::MeleeHit;
 			pCollider->AddIgnoreList((Collider*)pObject->GetComponentList(EComponent::Collider)->front());
 			pCollider->m_eTag = ETag::Dummy;
 			pCollider->SetGravityScale(0.0f);
@@ -267,7 +224,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 			pMelee->UpdateMatrix();
 			pMelee->m_pPhysics->UserSocket = socket;
 			pMelee->SetHP(100.0f);
-			pCollider->CollisionEvent = pMeleeHitEvent;
+			pCollider->CollisionEvent = MyEvent::MeleeHit;
 		 	pCollider->AddIgnoreList((Collider*)pObject->GetComponentList(EComponent::Collider)->front());
 		 	pCollider->m_eTag = ETag::Dummy;
 		 	pCollider->SetGravityScale(0.0f);
@@ -608,12 +565,21 @@ void PlayerController::ResetOption() noexcept
 	///
 	SetPosition(Vector3::Zero);
 	SetRotation(Quaternion::Base);
+	m_moveSpeed = 40.0f;
+	m_jumpPower = 70.0f;
 	m_pCamera = ObjectManager::Cameras[ECamera::Main];
-	m_pCamera->SetPosition(Vector3::Up * 100.0f * m_pParent->GetScaleAverage());
 	m_pCamera->SetRotation(Quaternion::Left * PI + Quaternion::Up * PI * 0.2f);
-	m_pCamera->m_armLength = 12.5f * m_pParent->GetScaleAverage();
 	m_pCamera->m_lerpMoveSpeed = 6.0f;
 	m_pCamera->m_lerpRotateSpeed = 6.0f;
+	if (m_pParent == nullptr)
+		return;
+	m_pCamera->SetPosition(Vector3::Up * 100.0f * m_pParent->GetScaleAverage());
+	m_pCamera->m_armLength = 12.5f * m_pParent->GetScaleAverage();
+	auto pColliders = m_pParent->GetComponentList(EComponent::Collider);
+	{
+		((Collider*)pColliders->front())->CollisionEvent = nullptr;
+		((Collider*)pColliders->front())->m_pivot = Vector3::Up * 40.0f * m_pParent->GetScaleAverage();
+	}
 }
 
 void PlayerController::Possess(GameObject* pObject) noexcept
@@ -653,8 +619,6 @@ void PlayerController::Possess(GameObject* pObject) noexcept
 void PlayerController::DeadEvent() noexcept
 {
 	PacketManager::Get().SendPlaySound("SE_dead.mp3", GetWorldPosition(), 1000.0f);
-	m_moveSpeed = 40.0f;
-	m_jumpPower = 70.0f;
 	m_pParent->SetHP(0.0f);
 	SetPosition(m_pParent->GetPosition());
 	SetRotation(m_pParent->GetRotation());

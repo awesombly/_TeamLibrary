@@ -17,6 +17,7 @@ class ColliderOBB;
 class Collider : public Component, public Physics
 {
 protected:
+	const static float PushPower;
 	float m_radius;								// 반지름
 	
 	forward_list<Collider*> m_CollisionList;	// 체크된 충돌체

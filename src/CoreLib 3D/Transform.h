@@ -25,8 +25,10 @@ public:
 	void Rotate(const float& x, const float& y)						 noexcept;
 	void Scaling(const D3DXVECTOR3& scale)							 noexcept;
 	void Scaling(const float& x, const float& y, const float& z)	 noexcept;
-	// Setter
+	///
 	void SetFocus(const D3DXVECTOR3& target)						 noexcept;
+	const float GetFocusY(const D3DXVECTOR3& target)				 noexcept;
+	// Setter
 	void SetTransform(const Transform& transform)					 noexcept;
 	void SetPosition(const D3DXVECTOR3& position)					 noexcept;
 	void SetPosition(const float& x, const float& y, const float& z) noexcept;

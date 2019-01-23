@@ -24,6 +24,7 @@ public:
 public:
 	void DrawBoundingBox()		noexcept;
 	bool CheatMessage()			noexcept;
+	void HostFrame()			noexcept;
 
 	void LoadUI()				noexcept override;
 	bool FirstInit()			noexcept override;

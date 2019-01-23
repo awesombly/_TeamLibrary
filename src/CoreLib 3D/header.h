@@ -133,6 +133,7 @@ static constexpr float RadianToDegree(const float& radian) noexcept
 {
 	return radian * (180 / PI);
 }
+const float			 Lerp(const float& start, const float& end, const float& time)					 noexcept;
 const D3DXVECTOR3	 Lerp(const D3DXVECTOR3& start, const D3DXVECTOR3& end, const float& time)		 noexcept;
 const D3DXQUATERNION Lerp(const D3DXQUATERNION& start, const D3DXQUATERNION& end, const float& time) noexcept;
 const D3DXVECTOR3	 Product(const D3DXVECTOR3& vectorA, const D3DXVECTOR3& vectorB)				 noexcept;

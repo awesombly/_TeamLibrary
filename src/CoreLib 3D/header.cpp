@@ -115,14 +115,19 @@ wchar_t* CharToWChar(const char* str) noexcept
 
 
 
+const float Lerp(const float& start, const float& end, const float& time) noexcept
+{
+	return (1 - min(time, 1.0f)) * start + min(time, 1.0f) * end;
+}
+
 const D3DXVECTOR3 Lerp(const D3DXVECTOR3& start, const D3DXVECTOR3& end, const float& time) noexcept
 {
-	return (1 - time) * start + time * end;
+	return (1 - min(time, 1.0f)) * start + min(time, 1.0f) * end;
 }
 
 const D3DXQUATERNION Lerp(const D3DXQUATERNION& start, const D3DXQUATERNION& end, const float& time) noexcept
 {
-	return (1 - time) * start + time * end;
+	return (1 - min(time, 1.0f)) * start + min(time, 1.0f) * end;
 }
 
 const D3DXVECTOR3 Product(const D3DXVECTOR3& vectorA, const D3DXVECTOR3& vectorB) noexcept

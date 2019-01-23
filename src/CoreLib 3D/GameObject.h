@@ -7,9 +7,10 @@
 
 enum class EObjType : char {
 	Dummy,
-	//Collider,
 	Map,
 	Object,
+	Character,
+	Enemy,
 	Image,
 	Camera,
 	Light,

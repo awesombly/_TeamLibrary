@@ -77,6 +77,23 @@ void Transform::SetFocus(const D3DXVECTOR3& target) noexcept
 	else
 		m_rotation.y = -fRadian;
 }
+const float Transform::GetFocusY(const D3DXVECTOR3& target) noexcept
+{
+	D3DXVECTOR3 forward, dirTarget;
+	forward = GetForward();
+	forward.y = 0.0f;
+	dirTarget = target - m_position;
+	dirTarget.y = 0.0f;
+	D3DXVec3Normalize(&forward, &forward);
+	D3DXVec3Normalize(&dirTarget, &dirTarget);
+	float fRadian = acosf(D3DXVec3Dot(&dirTarget, &forward));
+
+	auto vRight = GetRight();
+	if (D3DXVec3Dot(&vRight, &dirTarget) > 0.0f)
+		return fRadian;
+	else
+		return -fRadian;
+}
 
 void Transform::SetTransform(const Transform& transform) noexcept
 {
