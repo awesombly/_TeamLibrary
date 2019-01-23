@@ -473,7 +473,7 @@ namespace MyEvent {
 			if (pB->m_eTag != ETag::Collider ||
 				pB->m_pParent->m_objType != EObjType::Enemy)
 				return;
-	
+			pA->m_pParent->OperHP(0.12f);
 			//pB->SetForce((Normalize(pB->GetCenter() - pA->GetCenter()) + Vector3::Up) * 130.0f);
 			pB->m_pParent->OperHP(-1.1f);
 			// 내가 맞았을때

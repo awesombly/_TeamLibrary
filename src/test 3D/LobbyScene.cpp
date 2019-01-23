@@ -205,8 +205,8 @@ void LobbyScene::StartToHost()
 {
 	if(PlayerController::Get().m_selectCharacter == PlayerController::ECharacter::EGuard)
 		m_pBackHero->SetANIM_OneTime(Guard_DASHJUMP);
-	else
-		m_pBackHero->SetANIM_OneTime(Zombie_DASHJUMP);
+	//else
+		//m_pBackHero->SetANIM_OneTime(Zombie_DASHJUMP);
 	m_pStartEffect->EffectPlay();
 	SoundManager::Get().Play("SV_gogogo.mp3");
 	PacketManager::Get().isHost = true;
@@ -217,8 +217,8 @@ void LobbyScene::StartToGuest()
 {
 	if (PlayerController::Get().m_selectCharacter == PlayerController::ECharacter::EGuard)
 		m_pBackHero->SetANIM_OneTime(Guard_DASHJUMP);
-	else
-		m_pBackHero->SetANIM_OneTime(Zombie_DASHJUMP);
+	//else
+		//m_pBackHero->SetANIM_OneTime(Zombie_DASHJUMP);
 	m_pStartEffect->EffectPlay();
 	SoundManager::Get().Play("SV_gogogo.mp3");
 	PacketManager::Get().isHost = false;

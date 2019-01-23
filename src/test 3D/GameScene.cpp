@@ -332,7 +332,7 @@ void GameScene::HostFrame() noexcept
 		PacketManager::Get().SendPacket((char*)&p_TakeObject, (USHORT)(PS_TakeObject + strSize), PACKET_TakeObject);
 	}
 	// Àû »ý¼º
-	if (enemyFrame >= 3.0f)
+	if (enemyFrame >= 4.0f)
 	{
 		enemyFrame = 0.0f;
 
@@ -348,7 +348,7 @@ void GameScene::HostFrame() noexcept
 		p_TakeObject.UserSocket = (UINT)-1;
 		for (int i = 0; i < PacketManager::Get().UserList.size(); ++i)
 		{
-			p_TakeObject.Position = { RandomNormal() * 800.0f - 400.0f, 60.0f, RandomNormal() * 800.0f - 400.0f };
+			p_TakeObject.Position = { RandomNormal() * 1000.0f - 500.0f, 60.0f, RandomNormal() * 1000.0f - 500.0f };
 			p_TakeObject.Scale = (RandomNormal() * 0.2f + 0.1f) * Vector3::One;
 			PacketManager::Get().SendPacket((char*)&p_TakeObject, (USHORT)(PS_TakeObject + strSize), PACKET_TakeObject);
 		}

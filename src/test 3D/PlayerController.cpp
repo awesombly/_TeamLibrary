@@ -142,7 +142,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 			pObject->SetANIM_OneTime(Guard_PUNCH);
 			SoundManager::Get().PlayQueue("SV_Guard_Punch.mp3", pObject->GetWorldPosition(), 1000.0f);
 			
-			auto pCollider = new Collider(8.0f);
+			auto pCollider = new Collider(pObject->GetScaleAverage() * 40.0f);
 			auto pMelee = new GameObject(L"Melee", { pCollider, new CEventTimer(0.5f) });
 			pMelee->SetParent(pObject);
 			pMelee->SetPosition(pObject->GetForward() * 45.0f + pObject->GetUp() * 45.0f);
@@ -216,7 +216,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 		 	pObject->SetANIM_OneTime(Zombie_PUNCH);
 		 	SoundManager::Get().PlayQueue("SE_zombie_hit01.mp3", pObject->GetWorldPosition(), 1000.0f);
 		 
-			auto pCollider = new Collider(8.0f);
+			auto pCollider = new Collider(pObject->GetScaleAverage() * 40.0f);
 			auto pMelee = new GameObject(L"Melee", { pCollider, new CEventTimer(0.5f) });
 			pMelee->SetParent(pObject);
 			pMelee->SetPosition(pObject->GetForward() * 45.0f + pObject->GetUp() * 45.0f);
@@ -575,11 +575,6 @@ void PlayerController::ResetOption() noexcept
 		return;
 	m_pCamera->SetPosition(Vector3::Up * 100.0f * m_pParent->GetScaleAverage());
 	m_pCamera->m_armLength = 12.5f * m_pParent->GetScaleAverage();
-	auto pColliders = m_pParent->GetComponentList(EComponent::Collider);
-	{
-		((Collider*)pColliders->front())->CollisionEvent = nullptr;
-		((Collider*)pColliders->front())->m_pivot = Vector3::Up * 40.0f * m_pParent->GetScaleAverage();
-	}
 }
 
 void PlayerController::Possess(GameObject* pObject) noexcept
@@ -592,7 +587,14 @@ void PlayerController::Possess(GameObject* pObject) noexcept
 		auto pPlayer = (PlayerController*)pVoid;
 		auto pObj = (GameObject*)pVoid2;
 		if (pObj->m_myName == L"Guard")
+		{
 			pPlayer->m_curCharacter = PlayerController::ECharacter::EGuard;
+			auto pColliders = pObj->GetComponentList(EComponent::Collider);
+			{
+				((Collider*)pColliders->front())->CollisionEvent = nullptr;
+				((Collider*)pColliders->front())->m_pivot = Vector3::Up * 40.0f * pObj->GetScaleAverage();
+			}
+		}
 		else if (pObj->m_myName == L"Zombie")
 			pPlayer->m_curCharacter = PlayerController::ECharacter::EZombie;
 		else

@@ -13,7 +13,7 @@ AIController::AIController()
 bool AIController::Init() noexcept
 {
 	m_isEnable = true;
-	m_attackRange = m_pParent->GetScaleAverage() * 1500.0f;
+	m_attackRange = m_pParent->GetScaleAverage() * 2500.0f;
 	m_moveSpeed   = RandomNormal() * 35.0f + 15.0f;
 	m_damage	  = 0.2f;// RandomNormal() * 0.3f + 0.1f;
 	return true;
@@ -37,8 +37,10 @@ bool AIController::Frame(const float& spf, const float& accTime)	noexcept
 	 	{
 	 		m_pParent->Translate(Normalize(m_Target - m_pParent->GetPosition()) * m_moveSpeed * spf);
 	 	}
-	 	m_dirRotY = m_pParent->GetFocusY(m_Target);
-	 	m_pParent->SetRotationY(Lerp(m_dirRotY, m_pParent->GetRotation().y, spf * 5.0f));
+		m_pParent->SetFocus(m_Target);
+	 	//m_dirRotY = m_pParent->GetFocusY(m_Target);
+	 	//m_pParent->SetRotationY(Lerp(m_dirRotY, m_pParent->GetRotation().y, spf));
+		//D3DXVec3Lerp(Ler
 	 }	break;
 	 case EState::Attack:
 	 {
