@@ -135,4 +135,6 @@ public:
 	int StartupServer();
 	int StartupClient();
 	int ConnectMatchingServer(const short& playerCnt);
+	int RequestMatch(const short& playerCnt);
+	int RequestSignIn(const wchar_t* wcharUsername, const wchar_t* wcharPassword);
 };

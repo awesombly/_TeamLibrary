@@ -62,4 +62,7 @@
       <UniqueIdentifier>{b2e2c52d-45cc-44d1-b214-e7e514288210}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\..\data\script\network.txt" />
+  </ItemGroup>
 </Project>
