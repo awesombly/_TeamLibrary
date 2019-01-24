@@ -30,18 +30,29 @@
 
 
 //////////////////////////////////////////////////////////////////////////
+//ZombieKing
+#define  Zombie_KING				L"zombie_king"
+//ANIM_COUNT  5
+#define	 Zombie_KING_JUMP_ATTACK	L"ZOMBIE_KING_JUMP_ATTACK.Mat"
+#define	 Zombie_KING_ATTACK			L"ZOMBIE_KING_ATTACK.Mat"
+#define	 Zombie_KING_WALK			L"ZOMBIE_KING_WALK.Mat"
+#define	 Zombie_KING_IDLE			L"ZOMBIE_KING_IDLE.Mat"
+
+
+//////////////////////////////////////////////////////////////////////////
 //Zombie
 //ANIM_COUNT  10
 #define  Zombie				L"zombie"
 //#define	 Zombie_ROLE			L"Zombie_ROLE.Mat"
+//#define	 Zombie_DASHJUMP	L"zombie_dashjump.Mat"
 #define	 Zombie_PUNCH		L"zombie_punch.Mat"
-#define	 Zombie_THROW		L"zombie_throw.Mat"
-#define	 Zombie_DANCE1		L"zombie_dance1.Mat"
-#define	 Zombie_DANCE2		L"zombie_dance2.Mat"
-#define	 Zombie_RUN			L"zombie_run.Mat"
-#define	 Zombie_FLY			L"zombie_fly.Mat"
-#define	 Zombie_LEFT		L"zombie_left.Mat"
-#define	 Zombie_RIGHT		L"zombie_right.Mat"
+//#define	 Zombie_THROW		L"zombie_throw.Mat"
+//#define	 Zombie_DANCE1		L"zombie_dance1.Mat"
+//#define	 Zombie_DANCE2		L"zombie_dance2.Mat"
+//#define	 Zombie_RUN			L"zombie_run.Mat"
+//#define	 Zombie_FLY			L"zombie_fly.Mat"
+//#define	 Zombie_LEFT		L"zombie_left.Mat"
+//#define	 Zombie_RIGHT		L"zombie_right.Mat"
 #define	 Zombie_BACKWARD	L"zombie_back.Mat"
 #define	 Zombie_FORWARD		L"zombie_walk.Mat"
 #define	 Zombie_IDLE		L"zombie_idle.Mat"

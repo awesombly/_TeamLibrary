@@ -1,5 +1,6 @@
 
-*NUMCHARACTER		5
+*NUMCHARACTER		6
+
 
 //////////////////////////////////////////////////////////////////////////
 *CHARACTERNAME		guard
@@ -25,20 +26,13 @@
 *SKIN_LOWER_BODY_COUNT	0
 
 //////////////////////////////////////////////////////////////////////////
-*CHARACTERNAME		zombie
+*CHARACTERNAME	zombie
 *SHADERFILENMAE		..\..\data\model\Character.hlsl
 
-*MATRIXMATRIXCOUNT  12
+*MATRIXMATRIXCOUNT  5
 *MATRIXFILENAME		..\..\data\model\zombie\zombie_dashjump.Mat
 *MATRIXFILENAME		..\..\data\model\zombie\zombie_punch.Mat
-*MATRIXFILENAME		..\..\data\model\zombie\zombie_throw.Mat
-*MATRIXFILENAME		..\..\data\model\zombie\zombie_dance1.Mat
-*MATRIXFILENAME		..\..\data\model\zombie\zombie_dance2.Mat
 *MATRIXFILENAME		..\..\data\model\zombie\zombie_run.Mat
-*MATRIXFILENAME		..\..\data\model\zombie\zombie_fly.Mat
-*MATRIXFILENAME		..\..\data\model\zombie\zombie_back.Mat
-*MATRIXFILENAME		..\..\data\model\zombie\zombie_left.Mat
-*MATRIXFILENAME		..\..\data\model\zombie\zombie_right.Mat
 *MATRIXFILENAME		..\..\data\model\zombie\zombie_walk.Mat
 *MATRIXFILENAME		..\..\data\model\zombie\zombie_idle.Mat
 
@@ -46,6 +40,23 @@
 *SKIN_UPPER_BODY	..\..\data\model\zombie\zombie.skm		null
 *SKIN_LOWER_BODY_COUNT	0
 
+
+//////////////////////////////////////////////////////////////////////////
+*CHARACTERNAME	zombie_king
+*SHADERFILENMAE		..\..\data\model\Character.hlsl
+
+*MATRIXMATRIXCOUNT  4
+*MATRIXFILENAME			..\..\data\model\zombieKing\ZOMBIE_KING_JUMP_ATTACK.Mat
+*MATRIXFILENAME			..\..\data\model\zombieKing\ZOMBIE_KING_ATTACK.Mat
+*MATRIXFILENAME			..\..\data\model\zombieKing\ZOMBIE_KING_WALK.Mat
+*MATRIXFILENAME			..\..\data\model\zombieKing\ZOMBIE_KING_IDLE.Mat
+
+
+
+*SKIN_UPPER_BODY_COUNT	1
+*SKIN_UPPER_BODY			..\..\data\model\zombieKing\ZOMBIE_KING.skm		null
+*SKIN_LOWER_BODY_COUNT	0
+*SKIN_LOWER_BODY	
 
 //////////////////////////////////////////////////////////////////////////
 
