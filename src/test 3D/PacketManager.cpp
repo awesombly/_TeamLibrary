@@ -229,11 +229,11 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 	{
 		memcpy(&p_PossessPlayer, data, sizeof(Packet_PossessPlayer));
 		PlayerController::Get().Possess(ObjectManager::KeyObjects[p_PossessPlayer.KeyValue]);
-		((JPanel*)PlayerController::Get().m_pRespawnEffect)->EffectPlay();
+		//((JPanel*)PlayerController::Get().m_pRespawnEffect)->EffectPlay();
 
 		pMyInfo->isDead = false;
 		PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
-		SoundManager::Get().Play("SV_jocena.mp3");
+		//SoundManager::Get().Play("SV_jocena.mp3");
 	}	break;
 	case PACKET_PlayerDead:
 	{
