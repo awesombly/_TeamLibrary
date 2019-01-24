@@ -527,7 +527,6 @@ void GameScene::LoadUI() noexcept
 	m_pChat = (JEditCtrl*)pUIRoot->find_child(L"Chat_Edit");
 
 
-
 	ObjectManager::Get().PushObject(pUIRoot);
 	UI::InGameEvent(pUIRoot);
 }
