@@ -294,6 +294,10 @@ void IntroScene::LoadUI() noexcept
 	pBtn->EventClick.first = GotoLobby;
 	pBtn->EventClick.second = this;
 
+	//JEditCtrl* pSignUpID = (JEditCtrl*)pUIRoot->find_child(L"SignUp_ID");
+	//JEditCtrl* pSignUpPW = (JEditCtrl*)pUIRoot->find_child(L"SignUp_PW");
+	//JEditCtrl* pSignUpPWCheck = (JEditCtrl*)pUIRoot->find_child(L"SignUp_PWCheck");
+	//JButtonCtrl* pSignUpEnter = (JButtonCtrl*)pUIRoot->find_child(L"SignUp_Enter");
 
 	SoundManager::Get().SetBGM("SE_Rudy.mp3");
 	UI::IntroEvent(pUIRoot);

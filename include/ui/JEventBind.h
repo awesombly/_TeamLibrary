@@ -16,6 +16,15 @@ namespace UI
 		JPanel* pLoginExit = (JPanel*)pRoot->find_child(L"Login_Exit");
 		pLoginExit->EventClick.first = E_NOTSHOW;
 		pLoginExit->EventClick.second = pLoginExit->m_pParent;
+
+		JPanel* pSignUp = (JPanel*)pRoot->find_child(L"Login_SignUp");
+		JPanel* pSignUpPanel = (JPanel*)pRoot->find_child(L"SignUp_Panel");
+		pSignUp->EventClick.first = E_REVERSE_SHOW;
+		pSignUp->EventClick.second = pSignUpPanel;
+
+		JPanel* pSignUpExit = (JPanel*)pRoot->find_child(L"SignUp_Top_Exit");
+		pSignUpExit->EventClick.first = E_NOTSHOW;
+		pSignUpExit->EventClick.second = pSignUpPanel;
 	}
 	static void LobbyEvent(JPanel* pRoot)
 	{
@@ -28,34 +37,34 @@ namespace UI
 		pGuestExit->EventClick.first = E_NOTSHOW;
 		pGuestExit->EventClick.second = pGuestExit->m_pParent;
 
-		JPanel* pMouseParticle = pRoot->find_child(L"mouse_particle");
-		pMouseParticle->PreEvent.first = UI::E_MOUSE_PARTICLE;
-		pMouseParticle->PreEvent.second = pMouseParticle;
+		//JPanel* pMouseParticle = pRoot->find_child(L"mouse_particle");
+		//pMouseParticle->PreEvent.first = UI::E_MOUSE_PARTICLE;
+		//pMouseParticle->PreEvent.second = pMouseParticle;
 
 		JPanel* pMouseCursor = pRoot->find_child(L"mouse_cursor");
 		pMouseCursor->PreEvent.first = UI::E_MOUSE_CURSOR;
 		pMouseCursor->PreEvent.second = pMouseCursor;
 
-		JSpriteCtrl* pCursorClick = (JSpriteCtrl*)pRoot->find_child(L"mouse_click_sprite");
-		pCursorClick->PreEvent.first = E_MOUSE_CLICK_SPRITE;
-		pCursorClick->PreEvent.second = pCursorClick;
-
-		JSpriteCtrl* pCursorErase = (JSpriteCtrl*)pRoot->find_child(L"mouse_click_sprite_panel");
-		pCursorErase->PreEvent.first = E_MOUSE_SPRITE_ERASE;
-		pCursorErase->PreEvent.second = pCursorErase;
+		//JSpriteCtrl* pCursorClick = (JSpriteCtrl*)pRoot->find_child(L"mouse_click_sprite");
+		//pCursorClick->PreEvent.first = E_MOUSE_CLICK_SPRITE;
+		//pCursorClick->PreEvent.second = pCursorClick;
+		//
+		//JSpriteCtrl* pCursorErase = (JSpriteCtrl*)pRoot->find_child(L"mouse_click_sprite_panel");
+		//pCursorErase->PreEvent.first = E_MOUSE_SPRITE_ERASE;
+		//pCursorErase->PreEvent.second = pCursorErase;
 
 		JPanel* pHelpImg = (JPanel*)pRoot->find_child(L"HelpRect");
 		pHelpImg->PreEvent.first = E_HELP_IMG;
 		pHelpImg->PreEvent.second = pHelpImg;
 
 		// effect
-		JPanel* pEff1 = (JPanel*)pRoot->find_child(L"fadeout");
-		pEff1->PreEvent.first = E_FADEOUT;
-		pEff1->PreEvent.second = pEff1;
+		//JPanel* pEff1 = (JPanel*)pRoot->find_child(L"fadeout");
+		//pEff1->PreEvent.first = E_FADEOUT;
+		//pEff1->PreEvent.second = pEff1;
 
-		JPanel* pEff2 = (JPanel*)pRoot->find_child(L"fadein");
-		pEff2->PreEvent.first = E_FADEIN;
-		pEff2->PreEvent.second = pEff2;
+		//JPanel* pEff2 = (JPanel*)pRoot->find_child(L"fadein");
+		//pEff2->PreEvent.first = E_FADEIN;
+		//pEff2->PreEvent.second = pEff2;
 
 		JPanel* pEff4 = (JPanel*)pRoot->find_child(L"effect_hos");
 		pEff4->PreEvent.first = E_HOS;
@@ -66,9 +75,9 @@ namespace UI
 		AutoMatching->EventClick.first = E_REVERSE_SHOW;
 		AutoMatching->EventClick.second = pMatching_Panel;
 
-		JPanel* pMatchingExit = (JPanel*)pRoot->find_child(L"Matching_Exit");
+		JPanel* pMatchingExit = (JPanel*)pRoot->find_child(L"Matching_Top_Exit");
 		pMatchingExit->EventClick.first = E_NOTSHOW;
-		pMatchingExit->EventClick.second = pMatchingExit->m_pParent;
+		pMatchingExit->EventClick.second = pMatching_Panel;
 
 		JImageCtrl* pDrag = (JImageCtrl*)pRoot->find_child(L"Drag_Img");
 		pDrag->PreEvent.first = E_DRAG;
@@ -88,13 +97,13 @@ namespace UI
 		pMouseCursor->PreEvent.first = UI::E_MOUSE_CURSOR;
 		pMouseCursor->PreEvent.second = pMouseCursor;
 
-		JSpriteCtrl* pCursorClick = (JSpriteCtrl*)pRoot->find_child(L"mouse_click_sprite");
-		pCursorClick->PreEvent.first = E_MOUSE_CLICK_SPRITE;
-		pCursorClick->PreEvent.second = pCursorClick;
-
-		JSpriteCtrl* pCursorErase = (JSpriteCtrl*)pRoot->find_child(L"mouse_click_sprite_panel");
-		pCursorErase->PreEvent.first = E_MOUSE_SPRITE_ERASE;
-		pCursorErase->PreEvent.second = pCursorErase;
+		//JSpriteCtrl* pCursorClick = (JSpriteCtrl*)pRoot->find_child(L"mouse_click_sprite");
+		//pCursorClick->PreEvent.first = E_MOUSE_CLICK_SPRITE;
+		//pCursorClick->PreEvent.second = pCursorClick;
+		//
+		//JSpriteCtrl* pCursorErase = (JSpriteCtrl*)pRoot->find_child(L"mouse_click_sprite_panel");
+		//pCursorErase->PreEvent.first = E_MOUSE_SPRITE_ERASE;
+		//pCursorErase->PreEvent.second = pCursorErase;
 
 		JPanel* pStatePanel = (JPanel*)pRoot->find_child(L"State_Panel");
 		pStatePanel->PreEvent.first = E_STATE_SHOW;
@@ -121,9 +130,9 @@ namespace UI
 		pEff2->PreEvent.first = E_FADEIN;
 		pEff2->PreEvent.second = pEff2;
 
-		JPanel* pJohn = (JPanel*)pRoot->find_child(L"JohnSprite");
-		pJohn->PreEvent.first = E_FADEOUT;
-		pJohn->PreEvent.second = pJohn;
+		//JPanel* pJohn = (JPanel*)pRoot->find_child(L"JohnSprite");
+		//pJohn->PreEvent.first = E_FADEOUT;
+		//pJohn->PreEvent.second = pJohn;
 
 		JPanel* pCrossHair = (JPanel*)pRoot->find_child(L"CrossHair");
 		pCrossHair->PreEvent.first = E_CROSSHAIR;

@@ -526,6 +526,10 @@ void GameScene::LoadUI() noexcept
 
 	m_pChat = (JEditCtrl*)pUIRoot->find_child(L"Chat_Edit");
 
+	//JPanel* pEnemyPanel = (JPanel*)pUIRoot->find_child(L"Enemy_Panel"); bRender true/false
+	//JProgressBar* pEnemyHP = (JProgressBar*)pUIRoot->find_child(L"Enemy_HP");
+	//JTextCtrl* pEnemyName = (JTextCtrl*)pUIRoot->find_child(L"Enemy_Name");
+	//JTextCtrl* pEnemyHPText = (JTextCtrl*)pUIRoot->find_child(L"Enemy_HP_txt");
 
 	ObjectManager::Get().PushObject(pUIRoot);
 	UI::InGameEvent(pUIRoot);
