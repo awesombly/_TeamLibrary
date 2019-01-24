@@ -28,8 +28,8 @@ bool AIController::Frame(const float& spf, const float& accTime)	noexcept
 	 case EState::Idle:
 	 {
 		 Init();
-	 	((AHeroObj*)m_pParent)->SetANIM_Loop(Zombie_RUN);
-	 	m_eState = EState::Move;
+	 	//((AHeroObj*)m_pParent)->SetANIM_Loop(Zombie_RUN);
+	 	//m_eState = EState::Move;
 	 }	break;
 	 case EState::Move:
 	 {

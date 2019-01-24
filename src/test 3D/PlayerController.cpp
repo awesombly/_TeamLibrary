@@ -173,18 +173,18 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 		 case EAction::Left:
 		 case EAction::BackwardLeft:
 		 {
-		 	pObject->SetANIM_Loop(Zombie_LEFT);
+		 	//pObject->SetANIM_Loop(Zombie_LEFT);
 		 }	break;
 		 case EAction::Right:
 		 case EAction::BackwardRight:
 		 {
-		 	pObject->SetANIM_Loop(Zombie_RIGHT);
+		 	//pObject->SetANIM_Loop(Zombie_RIGHT);
 		 }	break;
 		 case EAction::Forward:
 		 case EAction::ForwardLeft:
 		 case EAction::ForwardRight:
 		 {
-		 	pObject->SetANIM_Loop(Zombie_RUN);
+		 	//pObject->SetANIM_Loop(Zombie_RUN);
 		 }	break;
 		 case EAction::Backward:
 		 {
@@ -192,17 +192,17 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 		 }	break;
 		 case EAction::Dance1:
 		 {
-		 	pObject->SetANIM_OneTime(Zombie_DANCE1);
+		 	//pObject->SetANIM_OneTime(Zombie_DANCE1);
 			SoundManager::Get().Play("SE_Dance01.mp3");// , pObject->GetWorldPosition(), 1000.0f);
 		 }	break;
 		 case EAction::Dance2:
 		 {
-		 	pObject->SetANIM_OneTime(Zombie_DANCE2);
+		 	//pObject->SetANIM_OneTime(Zombie_DANCE2);
 			SoundManager::Get().Play("SE_Dance02.mp3");// pObject->GetWorldPosition(), 1000.0f);
 		 }	break;
 		 case EAction::Throw:
 		 {
-		 	pObject->SetANIM_OneTime(Zombie_THROW);
+		 	//pObject->SetANIM_OneTime(Zombie_THROW);
 		 	auto pChicken = ObjectManager::Get().TakeObject(L"Chicken");
 		 	pChicken->SetPosition(pObject->GetPosition() + pObject->GetForward() * 40.0f + pObject->GetUp() * 65.0f + pObject->GetRight() * 20.0f);
 		 	pChicken->SetRotation(pObject->GetRotation());
