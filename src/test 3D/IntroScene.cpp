@@ -6,13 +6,12 @@
 
 bool IntroScene::Init() noexcept
 {
-
 	FirstInit();
 	// UI
 	LoadSound();
 	LoadUI();
 	// 서버 연결
-	ConnectMatchingServer();
+	//ConnectMatchingServer();
 	///
 	m_isLoading = false;
 	return true;
@@ -250,16 +249,27 @@ void IntroScene::LoadUI() noexcept
 	ObjectManager::Get().PushObject(pUIRoot);
 	static auto GotoLobby = [](void* pScene) {
 		auto pIntro = (IntroScene*)pScene;
+
+		//if (m_loginCheck == -99)
+		{
+			PacketManager::Get().pMyInfo = new UserInfo();
+			PacketManager::Get().pMyInfo->DataSize = (UCHAR)pIntro->m_pID->GetString().size() * 2;
+			PacketManager::Get().pMyInfo->DataSize = PacketManager::Get().pMyInfo->DataSize > 12 ? 12 : PacketManager::Get().pMyInfo->DataSize;
+			memcpy(PacketManager::Get().pMyInfo->UserID, pIntro->m_pID->GetString().c_str(), PacketManager::Get().pMyInfo->DataSize);
+			PacketManager::Get().pMyInfo->UserSocket = 0;
+			///
+			pIntro->SetScene(ESceneName::Lobby);
+			ErrorMessage("서버 미접속");
+			return;
+		}
+
 		// 로그인 요청
 		pIntro->RequestSignIn(pIntro->m_pID->GetString().c_str(), pIntro->m_pPW->GetString().c_str());
 		pIntro->m_loginCheck = 0;
-
 		while (pIntro->m_loginCheck == 0)
 		{
-			ErrorMessage("로그인 루프");
 			if (pIntro->m_loginCheck == 1)
 			{
-				ErrorMessage("로그인 성공");
 				PacketManager::Get().pMyInfo = new UserInfo();
 				PacketManager::Get().pMyInfo->DataSize = (UCHAR)pIntro->m_pID->GetString().size() * 2;
 				PacketManager::Get().pMyInfo->DataSize = PacketManager::Get().pMyInfo->DataSize > 12 ? 12 : PacketManager::Get().pMyInfo->DataSize;
@@ -271,11 +281,10 @@ void IntroScene::LoadUI() noexcept
 			}
 			if (pIntro->m_loginCheck == -1)
 			{
-				ErrorMessage("로그인 실패");
 				break;
 			}
 		}
-		ErrorMessage("로그인 ㄷㄷ");
+		ErrorMessage("로그인 종료");
 	};
 
 	m_pID = (JEditCtrl*)pUIRoot->find_child(L"Login_ID");
