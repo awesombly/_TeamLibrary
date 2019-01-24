@@ -24,7 +24,6 @@ private:
 	bool		m_isChatting = false;
 
 	Camera*		m_pCamera		= nullptr;
-	ECharacter  m_curCharacter;			// 현재 캐릭터
 	EAction		m_curAction;			// 현재 눌린 액션
 	EAction		m_curAnim;				// 실제 애니메이션
 
@@ -35,25 +34,30 @@ private:
 	POINT		m_setMouseClient;
 
 	GameObject*	m_pEffectFly = nullptr;
+	///
+	float		m_EXP				= 0.0f;
+	UCHAR		m_statPoint			= 0;
 public:
+	ECharacter  m_curCharacter;			// 현재 캐릭터
 	ECharacter  m_selectCharacter;		// 선택 캐릭터
 	float		m_moveSpeed;
 	float		m_jumpPower;
 	///
-	const float	m_DelayRespawn  = 8.0f;
-	const float	m_DelayThrow	= 0.3f;
-	const float	m_DelayDash		= 1.0f;
-	const float	m_DelayMelee	= 1.0f;
-
-	float		m_curDelayRespawn = 0.0f;
-	float		m_curDelayThrow = 0.0f;
-	float		m_curDelayDash	= 0.0f;
-	float		m_curDelayMelee = 0.0f;
+	const float	m_DelayRespawn		 = 8.0f;
+	const float	m_DelayEnemyPanel	 = 3.0f;
+	const float	m_DelayThrow		 = 0.3f;
+	const float	m_DelayDash			 = 1.0f;
+	const float	m_DelayMelee		 = 1.0f;
+									 
+	float		m_curDelayRespawn	 = 0.0f;
+	float		m_curDelayEnemyPanel = 0.0f;
+	float		m_curDelayThrow		 = 0.0f;
+	float		m_curDelayDash		 = 0.0f;
+	float		m_curDelayMelee		 = 0.0f;
 
 	float		m_mouseSense = 0.5f;
-	//float		m_HP = 1.0f;
 	float		m_MP = 1.0f;
-	
+public:
 	GameObject* m_pHome			 = nullptr;
 	void*       m_pOption		 = nullptr;
 	void*		m_pHpBar		 = nullptr;		// 체력바
@@ -61,6 +65,10 @@ public:
 	void*		m_pRespawnBar	 = nullptr;
 	void*		m_pRespawnEffect = nullptr;
 	void*		m_pHitEffect	 = nullptr;
+	void*		m_pEnemyPanel	 = nullptr;		// JPanel
+	void*		m_pEnemyHP		 = nullptr;		// JProgressBar
+	void*		m_pEnemyName	 = nullptr;		// JTextCtrl
+	void*		m_pEnemyHPText	 = nullptr;		// JTextCtrl
 private:
 	void SendGiantMode(const float& spf)											noexcept;
 public:
@@ -71,6 +79,8 @@ public:
 	void ResetOption()																noexcept;
 	void Possess(GameObject* pObject)												noexcept;
 	void DeadEvent()																noexcept;
+	void HitEvent(Collider* pTarget)												noexcept;
+	void OperEXP(const float& value)												noexcept;
 
 	void SendAnimTransform(const EAction& eAction, const ECharacter& eCharacter)	noexcept;
 	void SendReqRespawn(const ECharacter& eCharacter)								noexcept;

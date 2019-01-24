@@ -16,7 +16,7 @@ bool GameScene::Init() noexcept
 	m_pPlayer->Possess(pHero);
 
 	auto pCollider = new Collider(1.0f);
-	auto pHome = new GameObject(L"Home", { pCollider , ObjectManager::Get().TakeComponent(L"RowSphere") }, EObjType::Dummy);
+	auto pHome = new GameObject(L"Shelter", { pCollider , ObjectManager::Get().TakeComponent(L"RowSphere") }, EObjType::Object);
 	pHome->SetPosition(Vector3::Zero);
 	pHome->SetScale(Vector3::One * 25.0f);
 	pHome->SetGravityScale(0.0f);
@@ -213,6 +213,46 @@ bool GameScene::CheatMessage() noexcept
 				return false;
 			}
 		}
+		else if (str._Equal(L"Dance"))
+		{
+			switch (atoi(WCharToChar(m_chatMessage.substr(finder + 1).c_str())))
+			{
+			 case 1:
+			 {
+			 	PlayerController::Get().SendAnimTransform(PlayerController::EAction::Dance1, PlayerController::Get().m_curCharacter);
+			 }	break;
+			 case 2:
+			 {
+			 	PlayerController::Get().SendAnimTransform(PlayerController::EAction::Dance2, PlayerController::Get().m_curCharacter);
+			 }	break;
+			 case 3:
+			 {
+			 	PlayerController::Get().SendAnimTransform(PlayerController::EAction::Dance3, PlayerController::Get().m_curCharacter);
+			 }	break;
+			}
+			return false;
+		}
+		else if (str._Equal(L"Spawn"))
+		{
+			Packet_TakeObject p_TakeObject;
+			wstring objName = L"Zombie";
+			size_t  strSize = objName.size() * 2;
+			strSize = strSize > 100 ? 100 : strSize;
+
+			memcpy(p_TakeObject.ObjectName, objName.data(), strSize);
+			p_TakeObject.DataSize = (UCHAR)strSize;
+			p_TakeObject.Rotation = Quaternion::Base;
+			p_TakeObject.HP = 1.0f;
+			p_TakeObject.UserSocket = (UINT)-1;
+			for (int i = 0; i < atoi(WCharToChar(m_chatMessage.substr(finder + 1).c_str())); ++i)
+			{
+				p_TakeObject.KeyValue = ++PacketManager::Get().PlayerKeyCount;
+				p_TakeObject.Position = { RandomNormal() * 1000.0f - 500.0f, 60.0f, RandomNormal() * 1000.0f - 500.0f };
+				p_TakeObject.Scale = (RandomNormal() * 0.2f + 0.1f) * Vector3::One;
+				PacketManager::Get().SendPacket((char*)&p_TakeObject, (USHORT)(PS_TakeObject + strSize), PACKET_TakeObject);
+			}
+			return false;
+		}
 		else if (str._Equal(L"Dead"))
 		{
 			if (PlayerController::Get().GetParent() != nullptr)
@@ -339,7 +379,6 @@ void GameScene::HostFrame() noexcept
 		size_t  strSize = objName.size() * 2;
 		strSize = strSize > 100 ? 100 : strSize;
 
-		p_TakeObject.KeyValue = ++PacketManager::Get().PlayerKeyCount;
 		memcpy(p_TakeObject.ObjectName, objName.data(), strSize);
 		p_TakeObject.DataSize = (UCHAR)strSize;
 		p_TakeObject.Rotation = Quaternion::Base;
@@ -347,6 +386,7 @@ void GameScene::HostFrame() noexcept
 		p_TakeObject.UserSocket = (UINT)-1;
 		for (int i = 0; i < PacketManager::Get().UserList.size(); ++i)
 		{
+			p_TakeObject.KeyValue = ++PacketManager::Get().PlayerKeyCount;
 			p_TakeObject.Position = { RandomNormal() * 1000.0f - 500.0f, 60.0f, RandomNormal() * 1000.0f - 500.0f };
 			p_TakeObject.Scale = (RandomNormal() * 0.2f + 0.1f) * Vector3::One;
 			PacketManager::Get().SendPacket((char*)&p_TakeObject, (USHORT)(PS_TakeObject + strSize), PACKET_TakeObject);
@@ -391,13 +431,13 @@ void GameScene::LoadUI() noexcept
 	PacketManager::Get().pUserPanel[0]->PostEvent.first = [](void* pVoid) {	 // bRender가 트루일때만 돌아감
 		if (PacketManager::Get().UserList.empty())
 			return;
-		auto pUserPanel = (JPanel*)pVoid;
-		auto iter = pUserPanel->m_pChildList.begin();
-		((JTextCtrl*)(*iter))->m_Text = PacketManager::Get().UserList[0]->UserID;
-		((JTextCtrl*)(*++iter))->m_Text = to_wstring(PacketManager::Get().UserList[0]->KillCount);
-		((JTextCtrl*)(*++iter))->m_Text = to_wstring(PacketManager::Get().UserList[0]->DeathCount);
-		((JTextCtrl*)(*++iter))->m_Text = to_wstring(PacketManager::Get().UserList[0]->Score);
-		((JTextCtrl*)(*++++iter))->m_bRender = PacketManager::Get().UserList[0]->isDead;
+		auto iter = ((JPanel*)pVoid)->m_pChildList.begin();
+		auto pUser = PacketManager::Get().UserList.begin()->second;
+		((JTextCtrl*)(*iter))->m_Text			= pUser->UserID;
+		((JTextCtrl*)(*++iter))->m_Text			= to_wstring(pUser->KillCount);
+		((JTextCtrl*)(*++iter))->m_Text			= to_wstring(pUser->DeathCount);
+		((JTextCtrl*)(*++iter))->m_Text			= to_wstring(pUser->Score);
+		((JTextCtrl*)(*++++iter))->m_bRender	= pUser->isDead;
 	};
 	PacketManager::Get().pUserPanel[0]->PostEvent.second = PacketManager::Get().pUserPanel[0];
 
@@ -405,13 +445,13 @@ void GameScene::LoadUI() noexcept
 	PacketManager::Get().pUserPanel[1]->PostEvent.first = [](void* pVoid) {
 		if (PacketManager::Get().UserList.size() < 2)
 			return;
-		auto pUserPanel = (JPanel*)pVoid;
-		auto iter = pUserPanel->m_pChildList.begin();
-		((JTextCtrl*)(*iter))->m_Text = PacketManager::Get().UserList[1]->UserID;
-		((JTextCtrl*)(*++iter))->m_Text = to_wstring(PacketManager::Get().UserList[1]->KillCount);
-		((JTextCtrl*)(*++iter))->m_Text = to_wstring(PacketManager::Get().UserList[1]->DeathCount);
-		((JTextCtrl*)(*++iter))->m_Text = to_wstring(PacketManager::Get().UserList[1]->Score);
-		((JTextCtrl*)(*++++iter))->m_bRender = PacketManager::Get().UserList[1]->isDead;
+		auto iter = ((JPanel*)pVoid)->m_pChildList.begin();
+		auto pUser = (++PacketManager::Get().UserList.begin())->second;
+		((JTextCtrl*)(*iter))->m_Text			= pUser->UserID;
+		((JTextCtrl*)(*++iter))->m_Text			= to_wstring(pUser->DeathCount);
+		((JTextCtrl*)(*++iter))->m_Text			= to_wstring(pUser->KillCount);
+		((JTextCtrl*)(*++iter))->m_Text			= to_wstring(pUser->Score);
+		((JTextCtrl*)(*++++iter))->m_bRender	= pUser->isDead;
 	};
 	PacketManager::Get().pUserPanel[1]->PostEvent.second = PacketManager::Get().pUserPanel[1];
 
@@ -419,13 +459,13 @@ void GameScene::LoadUI() noexcept
 	PacketManager::Get().pUserPanel[2]->PostEvent.first = [](void* pVoid) {
 		if (PacketManager::Get().UserList.size() < 3)
 			return;
-		auto pUserPanel = (JPanel*)pVoid;
-		auto iter = pUserPanel->m_pChildList.begin();
-		((JTextCtrl*)(*iter))->m_Text = PacketManager::Get().UserList[2]->UserID;
-		((JTextCtrl*)(*++iter))->m_Text = to_wstring(PacketManager::Get().UserList[2]->KillCount);
-		((JTextCtrl*)(*++iter))->m_Text = to_wstring(PacketManager::Get().UserList[2]->DeathCount);
-		((JTextCtrl*)(*++iter))->m_Text = to_wstring(PacketManager::Get().UserList[2]->Score);
-		((JTextCtrl*)(*++++iter))->m_bRender = PacketManager::Get().UserList[2]->isDead;
+		auto iter = ((JPanel*)pVoid)->m_pChildList.begin();
+		auto pUser = (++++PacketManager::Get().UserList.begin())->second;
+		((JTextCtrl*)(*iter))->m_Text			= pUser->UserID;
+		((JTextCtrl*)(*++iter))->m_Text			= to_wstring(pUser->DeathCount);
+		((JTextCtrl*)(*++iter))->m_Text			= to_wstring(pUser->KillCount);
+		((JTextCtrl*)(*++iter))->m_Text			= to_wstring(pUser->Score);
+		((JTextCtrl*)(*++++iter))->m_bRender	= pUser->isDead;
 	};
 	PacketManager::Get().pUserPanel[2]->PostEvent.second = PacketManager::Get().pUserPanel[2];
 
@@ -433,13 +473,13 @@ void GameScene::LoadUI() noexcept
 	PacketManager::Get().pUserPanel[3]->PostEvent.first = [](void* pVoid) {
 		if (PacketManager::Get().UserList.size() < 4)
 			return;
-		auto pUserPanel = (JPanel*)pVoid;
-		auto iter = pUserPanel->m_pChildList.begin();
-		((JTextCtrl*)(*iter))->m_Text = PacketManager::Get().UserList[3]->UserID;
-		((JTextCtrl*)(*++iter))->m_Text = to_wstring(PacketManager::Get().UserList[3]->KillCount);
-		((JTextCtrl*)(*++iter))->m_Text = to_wstring(PacketManager::Get().UserList[3]->DeathCount);
-		((JTextCtrl*)(*++iter))->m_Text = to_wstring(PacketManager::Get().UserList[3]->Score);
-		((JTextCtrl*)(*++++iter))->m_bRender = PacketManager::Get().UserList[3]->isDead;
+		auto iter = ((JPanel*)pVoid)->m_pChildList.begin();
+		auto pUser = (++++++PacketManager::Get().UserList.begin())->second;
+		((JTextCtrl*)(*iter))->m_Text			= pUser->UserID;
+		((JTextCtrl*)(*++iter))->m_Text			= to_wstring(pUser->DeathCount);
+		((JTextCtrl*)(*++iter))->m_Text			= to_wstring(pUser->KillCount);
+		((JTextCtrl*)(*++iter))->m_Text			= to_wstring(pUser->Score);
+		((JTextCtrl*)(*++++iter))->m_bRender	= pUser->isDead;
 	};
 	PacketManager::Get().pUserPanel[3]->PostEvent.second = PacketManager::Get().pUserPanel[3];
 	// 옵션, 전광판
@@ -518,18 +558,16 @@ void GameScene::LoadUI() noexcept
 	//JTextCtrl* respawntxt = (JTextCtrl*)pUIRoot->find_child(L"respawn_txt");	 // text
 
 	// 쳐맞 효과
-	PlayerController::Get().m_pHitEffect = (JPanel*)pUIRoot->find_child(L"fadeout"); //1234
-	PlayerController::Get().m_pRespawnEffect = (JPanel*)pUIRoot->find_child(L"fadeout_white"); //1234
-	//(JSpriteCtrl*)pUIRoot->find_child(L"JohnSprite");
-	//PlayerController::Get().m_pRespawnEffect = (JPanel*)pUIRoot->find_child(L"fadein"); //1234
-	//auto pJohnEffect = (JSpriteCtrl*)pUIRoot->find_child(L"JohnSprite");
+	PlayerController::Get().m_pHitEffect = (JPanel*)pUIRoot->find_child(L"fadeout"); 
+	PlayerController::Get().m_pRespawnEffect = (JPanel*)pUIRoot->find_child(L"fadeout_white"); 
+	//PlayerController::Get().m_pRespawnEffect = (JPanel*)pUIRoot->find_child(L"fadein"); //(L"JohnSprite");
 
 	m_pChat = (JEditCtrl*)pUIRoot->find_child(L"Chat_Edit");
-
-	//JPanel* pEnemyPanel = (JPanel*)pUIRoot->find_child(L"Enemy_Panel"); bRender true/false
-	//JProgressBar* pEnemyHP = (JProgressBar*)pUIRoot->find_child(L"Enemy_HP");
-	//JTextCtrl* pEnemyName = (JTextCtrl*)pUIRoot->find_child(L"Enemy_Name");
-	//JTextCtrl* pEnemyHPText = (JTextCtrl*)pUIRoot->find_child(L"Enemy_HP_txt");
+	// 적 체력바
+	PlayerController::Get().m_pEnemyPanel = (JPanel*)pUIRoot->find_child(L"Enemy_Panel"); //bRender true/false
+	PlayerController::Get().m_pEnemyHP = (JProgressBar*)pUIRoot->find_child(L"Enemy_HP");
+	PlayerController::Get().m_pEnemyName = (JTextCtrl*)pUIRoot->find_child(L"Enemy_Name");
+	PlayerController::Get().m_pEnemyHPText = (JTextCtrl*)pUIRoot->find_child(L"Enemy_HP_txt");
 
 	ObjectManager::Get().PushObject(pUIRoot);
 	UI::InGameEvent(pUIRoot);

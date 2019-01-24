@@ -28,8 +28,9 @@ bool AIController::Frame(const float& spf, const float& accTime)	noexcept
 	 case EState::Idle:
 	 {
 		 Init();
-	 	//((AHeroObj*)m_pParent)->SetANIM_Loop(Zombie_RUN);
-	 	//m_eState = EState::Move;
+	 	((AHeroObj*)m_pParent)->SetANIM_Loop(Zombie_FORWARD);
+	 	m_eState = EState::Move;
+		m_pParent->SetFocus(m_Target);
 	 }	break;
 	 case EState::Move:
 	 {
@@ -38,9 +39,8 @@ bool AIController::Frame(const float& spf, const float& accTime)	noexcept
 	 		m_pParent->Translate(Normalize(m_Target - m_pParent->GetPosition()) * m_moveSpeed * spf);
 	 	}
 		//m_pParent->SetFocus(m_Target);
-	 	m_dirRotY = m_pParent->GetFocusY(m_Target);
-	 	m_pParent->SetRotationY(Lerp(m_dirRotY, m_pParent->GetRotation().y, spf * 5.0f));
-		//D3DXVec3Lerp(Ler
+	 	//m_dirRotY = m_pParent->GetFocusY(m_Target);
+	 	//m_pParent->SetRotationY(Lerp(m_dirRotY, m_pParent->GetRotation().y, spf * 5.0f));
 	 }	break;
 	 case EState::Attack:
 	 {

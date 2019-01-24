@@ -52,6 +52,15 @@ bool PlayerController::Frame(const float& spf, const float& accTime)	noexcept
 			return true;
 		}
 	}
+	// 적 체력바
+	if (((JPanel*)m_pEnemyPanel)->m_bRender)
+	{
+		m_curDelayEnemyPanel -= spf;
+		if (m_curDelayEnemyPanel <= 0.0f)
+		{
+			((JPanel*)m_pEnemyPanel)->m_bRender = false;
+		}
+	}
 	return true;
 }
 
@@ -132,8 +141,10 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 			auto pDagger = ObjectManager::Get().TakeObject(L"Dagger");
 			pDagger->SetPosition(pObject->GetPosition() + pObject->GetForward() * 40.0f + pObject->GetUp() * 65.0f + pObject->GetRight() * 20.0f);
 			pDagger->SetRotation(pObject->GetRotation());
+			pDagger->SetScale(pObject->GetScaleAverage() * 3.0f * Vector3::One);
 			pDagger->SetForce((forward + Vector3::Up * 0.15f) * 300.0f);
 			pDagger->m_pPhysics->UserSocket = socket;
+			pDagger->SetDamage(0.25f, PacketManager::Get().UserList[socket]->StatStr);
 			((Collider*)pDagger->GetComponentList(EComponent::Collider)->front())->AddIgnoreList((Collider*)pObject->GetComponentList(EComponent::Collider)->front());
 			SoundManager::Get().PlayQueue("SE_throw01.mp3", pObject->GetWorldPosition(), 1000.0f);
 		}	break;
@@ -150,6 +161,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 			pMelee->UpdateMatrix();
 			pMelee->m_pPhysics->UserSocket = socket;
 			pMelee->SetHP(100.0f);
+			pMelee->SetDamage(0.5f, PacketManager::Get().UserList[socket]->StatStr);
 			pCollider->CollisionEvent = MyEvent::MeleeHit;
 			pCollider->AddIgnoreList((Collider*)pObject->GetComponentList(EComponent::Collider)->front());
 			pCollider->m_eTag = ETag::Dummy;
@@ -208,6 +220,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 		 	pChicken->SetRotation(pObject->GetRotation());
 		 	pChicken->SetForce((forward + Vector3::Up * 0.15f) * 300.0f);
 			pChicken->m_pPhysics->UserSocket = socket;
+			pChicken->SetDamage(0.25f, PacketManager::Get().UserList[socket]->StatStr);
 		 	((Collider*)pChicken->GetComponentList(EComponent::Collider)->front())->AddIgnoreList((Collider*)pObject->GetComponentList(EComponent::Collider)->front());
 		 	SoundManager::Get().PlayQueue("SE_chicken.mp3", pObject->GetWorldPosition(), 1000.0f);
 		 }	break;
@@ -224,6 +237,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 			pMelee->UpdateMatrix();
 			pMelee->m_pPhysics->UserSocket = socket;
 			pMelee->SetHP(100.0f);
+			pMelee->SetDamage(0.5f, PacketManager::Get().UserList[socket]->StatStr);
 			pCollider->CollisionEvent = MyEvent::MeleeHit;
 		 	pCollider->AddIgnoreList((Collider*)pObject->GetComponentList(EComponent::Collider)->front());
 		 	pCollider->m_eTag = ETag::Dummy;
@@ -308,6 +322,7 @@ void PlayerController::PlayerInput(const float& spf) noexcept
 		}
 	}
 
+	// 날기
 	static bool isFly = false;
 	if (Input::GetKeyState(EMouseButton::Right) == EKeyState::DOWN)
 	{
@@ -354,12 +369,12 @@ void PlayerController::PlayerInput(const float& spf) noexcept
 	}
 	m_curAction = eAction;
 
-	// 동기화 요청
-	if (Input::GetKeyState(VK_ADD) == EKeyState::DOWN &&
-		!PacketManager::Get().isHost)
-	{
-		PacketManager::Get().SendPacket('\0', 1, PACKET_ReqSync);
-	}
+	//// 동기화 요청
+	//if (Input::GetKeyState(VK_ADD) == EKeyState::DOWN &&
+	//	!PacketManager::Get().isHost)
+	//{
+	//	PacketManager::Get().SendPacket('\0', 1, PACKET_ReqSync);
+	//}
 
 
 	if (Input::GetKeyState('X') == EKeyState::DOWN)
@@ -490,9 +505,9 @@ void PlayerController::StartGiantMode() noexcept
 	{
 		if (m_pParent == nullptr)
 			break;
-		SendGiantMode(0.04f);
-		frameCount += 0.15f;
-		this_thread::sleep_for(chrono::milliseconds(150));
+		SendGiantMode(0.032f);
+		frameCount += 0.12f;
+		this_thread::sleep_for(chrono::milliseconds(120));
 		ResetOption();
 	}
 	m_moveSpeed = 120.0f;
@@ -589,10 +604,10 @@ void PlayerController::Possess(GameObject* pObject) noexcept
 		if (pObj->m_myName == L"Guard")
 		{
 			pPlayer->m_curCharacter = PlayerController::ECharacter::EGuard;
-			auto pColliders = pObj->GetComponentList(EComponent::Collider);
+			auto pCollider = pObj->GetCollider();
 			{
-				((Collider*)pColliders->front())->CollisionEvent = nullptr;
-				((Collider*)pColliders->front())->m_pivot = Vector3::Up * 40.0f * pObj->GetScaleAverage();
+				((Collider*)pCollider)->CollisionEvent = nullptr;
+				((Collider*)pCollider)->m_pivot = Vector3::Up * 40.0f * pObj->GetScaleAverage();
 			}
 		}
 		else if (pObj->m_myName == L"Zombie")
@@ -600,7 +615,7 @@ void PlayerController::Possess(GameObject* pObject) noexcept
 		else
 			pPlayer->m_curCharacter = PlayerController::ECharacter::EDummy;
 
-		((JProgressBar*)pPlayer->m_pHpBar)->SetValue(pObj->GetHP(), 1.0f);
+		((JProgressBar*)pPlayer->m_pHpBar)->SetValue(pObj->GetHP(), pObj->m_pPhysics->m_maxHP);
 		pPlayer->ResetOption();
 		SoundManager::Get().m_pListenerPos = &pObj->GetRoot()->GetPosition();
 	};
@@ -631,6 +646,34 @@ void PlayerController::DeadEvent() noexcept
 	//SoundManager::Get().PlayQueue("SE_dead.mp3", pA->m_pParent->GetWorldPosition(), 1000.0f);
 }
 
+void PlayerController::HitEvent(Collider* pTarget) noexcept
+{
+	m_curDelayEnemyPanel = m_DelayEnemyPanel;
+	((JPanel*)m_pEnemyPanel)->m_bRender = true;
+	
+	((JProgressBar*)m_pEnemyHP)->SetValue(pTarget->m_pParent->GetHP(), pTarget->m_pPhysics->m_maxHP);
+	((JTextCtrl*)m_pEnemyName)->SetString(pTarget->m_pParent->m_myName);
+	((JTextCtrl*)m_pEnemyHPText)->SetString(to_wstring((int)(pTarget->m_pParent->GetHP() * 100.0f)) + L" / " + to_wstring((int)(pTarget->m_pPhysics->m_maxHP * 100.0f)));
+}
+
+void PlayerController::OperEXP(const float& value) noexcept
+{
+	m_EXP += value;
+	if (m_EXP >= 1.0f)
+	{
+		m_EXP = 0.0f;
+		// LevelUp
+		++PacketManager::Get().pMyInfo->Level;
+		PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
+		// SetHP
+		Packet_SetHP p_SetHP;
+		p_SetHP.KeyValue = PlayerController::Get().GetParent()->m_keyValue;
+		p_SetHP.HP = 1.0f;
+		PacketManager::Get().SendPacket((char*)&p_SetHP, (USHORT)sizeof(Packet_SetHP), PACKET_SetHP);
+		//
+		m_statPoint += 4;
+	}
+}
 
 void PlayerController::isChatting(const bool& isChat) noexcept
 {

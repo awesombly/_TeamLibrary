@@ -29,12 +29,11 @@ enum EPacketProtocol : USHORT {
 };
 
 // 패킷 배열 제외 사이즈
-#define PS_UserInfo					13
+#define PS_UserInfo					23
 #define PS_SyncObjects				2
 #define PS_ChatMessage				5
 #define PS_PlaySound				17
 #define PS_TakeObject				53
-#define PS_UserInfo					18
 
 
 #pragma pack(push, 1)
@@ -46,6 +45,11 @@ struct UserInfo
 	WORD KillCount	= 0;
 	WORD DeathCount	= 0;
 	bool isDead		= false;
+	UCHAR Level		= 1;
+	UCHAR StatStr	= 0;
+	UCHAR StatDex	= 0;
+	UCHAR StatInt	= 0;
+	UCHAR StatCha	= 0;
 
 	UCHAR DataSize	= 0;
 	WCHAR UserID[11];

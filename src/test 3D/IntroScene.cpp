@@ -90,8 +90,11 @@ bool IntroScene::FirstInit() noexcept
 		GameObject* pObject = nullptr;
 		Collider*   pCollider = nullptr;
 		//// Effect 로드
-		ObjectManager::Get().SetProtoObject(new GameObject(L"Boom2", m_pParser->CreateFromParticle(L"Boom2.eff", L"../../data/script"), EObjType::Effect));
-		ObjectManager::Get().SetProtoObject(new GameObject(L"Boom3", m_pParser->CreateFromParticle(L"Boom3.eff", L"../../data/script"), EObjType::Effect));
+		ObjectManager::Get().SetProtoObject(new GameObject(L"Slash", m_pParser->CreateFromParticle(L"Slash.eff", L"../../data/script"), EObjType::Effect));
+		ObjectManager::Get().SetProtoObject(new GameObject(L"ZDead", m_pParser->CreateFromParticle(L"ZombieDead.eff", L"../../data/script"), EObjType::Effect));
+		ObjectManager::Get().SetProtoObject(new GameObject(L"ZAttack", m_pParser->CreateFromParticle(L"ZombieAttack.eff", L"../../data/script"), EObjType::Effect));
+		ObjectManager::Get().SetProtoObject(new GameObject(L"PAttack", m_pParser->CreateFromParticle(L"Boom2.eff", L"../../data/script"), EObjType::Effect));
+		ObjectManager::Get().SetProtoObject(new GameObject(L"PDead", m_pParser->CreateFromParticle(L"Boom3.eff", L"../../data/script"), EObjType::Effect));
 		ObjectManager::Get().SetProtoObject(new GameObject(L"Fly", m_pParser->CreateFromParticle(L"Fire.eff", L"../../data/script"), EObjType::Effect));
 		ObjectManager::Get().SetProtoComponent(m_pParser->CreateFromParticle(L"Fire.eff", L"../../data/script"));
 		// 아이템
@@ -154,14 +157,14 @@ bool IntroScene::FirstInit() noexcept
 		pHeroObj->SetPlayerCharacter(ITEM_Dagger);
 		pHeroObj->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
 		pHeroObj->m_myName = L"Dagger";
-		pHeroObj->m_objType = EObjType::Object;
+		pHeroObj->m_objType = EObjType::Dummy;
 		pHeroObj->SetScale(Vector3::One * 0.6f);
-		pHeroObj->SetHP(100.0f);
 		pCollider = new Collider(15.0f);
 		pCollider->m_pivot = Vector3::Up * 6.0f + Vector3::Forward * 2.5f;
 		pCollider->CollisionEvent = MyEvent::DaggerHit;
 		pHeroObj->AddComponent({ pCollider, ObjectManager::Get().TakeComponent(L"Fire") });
 		pHeroObj->m_pPhysics->UserSocket = (UINT)-1;
+		pHeroObj->SetHP(100.0f);
 		ObjectManager::Get().SetProtoObject(pHeroObj);
 
 		// 닭
@@ -169,14 +172,14 @@ bool IntroScene::FirstInit() noexcept
 		pHeroObj->SetPlayerCharacter(NPC_Chicken);
 		pHeroObj->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
 		pHeroObj->m_myName = L"Chicken";
-		pHeroObj->m_objType = EObjType::Object;
+		pHeroObj->m_objType = EObjType::Dummy;
 		pHeroObj->SetScale(Vector3::One * 0.6f);
-		pHeroObj->SetHP(100.0f);
 		pCollider = new Collider(15.0f);
 		pCollider->m_pivot = Vector3::Up * 6.0f + Vector3::Forward * 2.5f;
 		pCollider->CollisionEvent = MyEvent::DaggerHit;
 		pHeroObj->AddComponent({ pCollider, ObjectManager::Get().TakeComponent(L"Fire") });
 		pHeroObj->m_pPhysics->UserSocket = (UINT)-1;
+		pHeroObj->SetHP(100.0f);
 		ObjectManager::Get().SetProtoObject(pHeroObj);
 
 		// 기사 
@@ -206,6 +209,7 @@ bool IntroScene::FirstInit() noexcept
 		pCollider->m_pivot *= pHeroObj->GetScaleAverage();
 		pCollider->CollisionEvent = MyEvent::ZombieHit;
 		pHeroObj->m_pPhysics->UserSocket = (UINT)-1;
+		pHeroObj->m_pPhysics->m_damage = 0.21f;
 		ObjectManager::Get().SetProtoObject(pHeroObj);
 
 		// 새
@@ -294,6 +298,7 @@ void IntroScene::LoadUI() noexcept
 	pBtn->EventClick.first = GotoLobby;
 	pBtn->EventClick.second = this;
 
+	/// 회원가입
 	//JEditCtrl* pSignUpID = (JEditCtrl*)pUIRoot->find_child(L"SignUp_ID");
 	//JEditCtrl* pSignUpPW = (JEditCtrl*)pUIRoot->find_child(L"SignUp_PW");
 	//JEditCtrl* pSignUpPWCheck = (JEditCtrl*)pUIRoot->find_child(L"SignUp_PWCheck");

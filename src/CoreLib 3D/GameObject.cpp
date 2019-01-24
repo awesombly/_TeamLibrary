@@ -289,6 +289,14 @@ map<EComponent, forward_list<Component*> >& GameObject::GetComponentList() noexc
 	return m_components;
 }
 
+Collider* GameObject::GetCollider() noexcept
+{
+	auto&& iter = m_components.find(EComponent::Collider);
+	if (iter == m_components.end() || (*iter).second.empty())
+		return nullptr;
+	return (Collider*)iter->second.front();
+}
+
 void GameObject::SetWorldPosition(const D3DXVECTOR3& position) noexcept 
 {
 	m_position = position - m_pParent->GetWorldPosition();
@@ -404,29 +412,6 @@ void GameObject::SetKeyValue(const UINT& keyValue) noexcept
 	}
 	
 	ObjectManager::KeyObjects[m_keyValue = keyValue] = this;
-}
-
-void GameObject::OperHP(const float& value) noexcept
-{
-	m_HP += value;
-	//if (m_HP <= 0.0f)
-	//{
-	//	ObjectManager::Get().DisableObject(this);
-	//}
-}
-
-void GameObject::SetHP(const float& value) noexcept
-{
-	m_HP = value;
-	//if (m_HP <= 0.0f)
-	//{
-	//	ObjectManager::Get().DisableObject(this);
-	//}
-}
-
-const float& GameObject::GetHP() const noexcept
-{
-	return m_HP;
 }
 
 GameObject* GameObject::clone() noexcept

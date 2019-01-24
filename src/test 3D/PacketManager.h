@@ -12,8 +12,8 @@ class Collider;
 class PacketManager : public ISingleton<PacketManager>
 {
 public:
-	vector<UserInfo*>	UserList;
-	UserInfo*			pMyInfo;
+	map<UINT, UserInfo*> UserList;
+	UserInfo*			 pMyInfo;
 
 	PP::PPSender*		pSender;
 	bool				isHost;

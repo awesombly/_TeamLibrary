@@ -75,3 +75,38 @@ bool Physics::isGround() noexcept
 {
 	return m_pPhysics->m_isGround;
 }
+
+
+void Physics::SetDamage(const float& value, const UCHAR& stat)	noexcept
+{
+	m_pPhysics->m_damage = value + (value * stat * 0.15f);
+}
+void Physics::SetArmor(const UCHAR& armorStat)	noexcept
+{
+	m_pPhysics->m_armor = 5.0f / (5 + armorStat);
+}
+
+void Physics::OperHP(const float& value) noexcept
+{
+	m_pPhysics->m_curHP = max(m_pPhysics->m_curHP + value, 0.0f);
+}
+
+void Physics::HealHP(const float& value) noexcept
+{
+	m_pPhysics->m_curHP = min(m_pPhysics->m_curHP + value, m_pPhysics->m_maxHP);
+}
+
+void Physics::SetHP(const float& value) noexcept
+{
+	m_pPhysics->m_curHP = max(value, 0.0f);
+	if (value > m_pPhysics->m_maxHP)
+	{
+		m_pPhysics->m_maxHP = value;
+	}
+}
+
+
+const float& Physics::GetHP() const noexcept
+{
+	return m_pPhysics->m_curHP;
+}

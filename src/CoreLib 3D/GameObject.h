@@ -1,7 +1,8 @@
 #pragma once
 #include "Transform.h"
-#include "Component.h"
-#include "Physics.h"
+//#include "Component.h"
+//#include "Physics.h"
+#include "Collider.h"
 
 
 
@@ -36,7 +37,7 @@ protected:
 	bool  m_isStatic	= false;	// SRT 갱신 여부
 	bool  m_isBillBoard = false;	// 빌보드 행렬 적용 여부
 
-	float m_HP = 1.0f;
+	float m_HP;	// 안씀
 public:
 	virtual void UpdateMatrix()												noexcept;
 	UINT	 m_keyValue;							// 유일한 키값
@@ -49,6 +50,7 @@ public:
 	void RemoveComponent(Component* pComponent)								noexcept;
 	forward_list<Component*>* GetComponentList(const EComponent& eCompType) noexcept;
 	map<EComponent, forward_list<Component*> >& GetComponentList()			noexcept;
+	Collider* GetCollider()													noexcept;
 	// 부모 설정
 	virtual void SetParent(GameObject* pParent)						  	    noexcept;
 	GameObject*  GetParent()										  const noexcept;
@@ -70,9 +72,6 @@ public:
 	const D3DXMATRIX& GetRotationMatrix()							  const noexcept;
 
 	void SetKeyValue(const UINT& keyValue)									noexcept;
-	void OperHP(const float& value)											noexcept;
-	void SetHP(const float& value)											noexcept;
-	const float& GetHP()											  const noexcept;
 
 	bool isEnable()															noexcept;
 	void isEnable(const bool& isEnable, const bool& putDisablePool = false) noexcept;

@@ -34,6 +34,10 @@ struct PhysicsInfo
 	bool m_isGround		 = false;
 
 	UINT UserSocket		 = 0;
+	float m_maxHP		 = 1.0f;
+	float m_curHP		 = 1.0f;
+	float m_damage		 = 0.0f;
+	float m_armor		 = 1.0f;
 
 	D3DXVECTOR3 m_force		= Vector3::Zero;	// Àû¿ëÁßÀÎ Èû
 	D3DXVECTOR3 m_direction = Vector3::Zero;	// ÀÌµ¿ Èû
@@ -67,6 +71,13 @@ public:
 	const D3DXVECTOR3 GetTotalForce()				  const noexcept;
 	const float GetVelocity()						  const noexcept;
 	const float GetVelocitySq()						  const noexcept;
+	///
+	void SetDamage(const float& value, const UCHAR& stat)	noexcept;
+	void SetArmor(const UCHAR& armorStat)					noexcept;
+	void OperHP(const float& value)							noexcept;
+	void HealHP(const float& value)							noexcept;
+	void SetHP(const float& value)							noexcept;
+	const float& GetHP()							  const noexcept;
 	///
 	void usePhysics(const bool& usePhysics)					noexcept;
 	bool usePhysics()										noexcept;
