@@ -28,7 +28,7 @@
 ^NodeName click
 ^ParentName Root
 ^KeyState 135 135
-^bRender 1
+^bRender 0
 ^bLoop 1
 ^Position 0.000000 0.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
@@ -69,96 +69,11 @@
 ^Scale 1.000000 1.000000 1.000000
 
 ^Type 788
-^NodeName left
-^ParentName effect_panel
-^KeyState 135 135
-^bRender 1
-^Position -800.000000 0.000000 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 400.000000 300.000000 1.000000
-^Color 1.000000 1.000000 1.000000 1.000000
-^tx_Normal KakaoTalk_20181230_070516672.jpg
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick 
-
-^Type 788
-^NodeName top
-^ParentName effect_panel
-^KeyState 135 135
-^bRender 1
-^Position 0.000000 600.000000 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 400.000000 300.000000 1.000000
-^Color 1.000000 1.000000 1.000000 1.000000
-^tx_Normal KakaoTalk_20181230_070516776.jpg
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick 
-
-^Type 788
-^NodeName right
-^ParentName effect_panel
-^KeyState 135 135
-^bRender 1
-^Position 800.000000 0.000000 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 400.000000 300.000000 1.000000
-^Color 1.000000 1.000000 1.000000 1.000000
-^tx_Normal KakaoTalk_20181230_070517608.jpg
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick 
-
-^Type 788
-^NodeName bottom
-^ParentName effect_panel
-^KeyState 135 135
-^bRender 1
-^Position 0.000000 -600.000000 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 400.000000 300.000000 1.000000
-^Color 1.000000 1.000000 1.000000 1.000000
-^tx_Normal KakaoTalk_20181230_070517832.jpg
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick 
-
-^Type 788
-^NodeName left2
-^ParentName effect_panel
-^KeyState 135 135
-^bRender 1
-^Position -800.000000 0.000000 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 400.000000 300.000000 1.000000
-^Color 1.000000 1.000000 1.000000 1.000000
-^tx_Normal KakaoTalk_20190116_041500129.jpg
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick 
-
-^Type 788
 ^NodeName fadein
 ^ParentName effect_panel
 ^KeyState 135 135
 ^bRender 1
-^Position 0.000000 0.000000 0.000000
+^Position -0.000000 -0.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 400.000000 300.000000 1.000000
 ^Color 0.000000 0.000000 0.000000 0.000000
@@ -256,7 +171,7 @@
 ^bRender 1
 ^Position 0.000000 0.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 150.000000 50.000000 1.000000
+^Scale 150.000000 80.000000 1.000000
 ^Color 0.300000 0.300000 0.300000 1.000000
 ^tx_Normal White.png
 ^pfEventHover 7274
@@ -272,10 +187,11 @@
 ^KeyState 135 135
 ^bRender 1
 ^bPrivate 0
-^Position 0.000000 15.000000 0.000000
+^Position 5.000000 30.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 70.000000 10.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
+^Align 1
 ^TextSize 15.000000
 ^TextLength 6
 ^tx_Normal ChatEdit.png
@@ -292,10 +208,11 @@
 ^KeyState 135 135
 ^bRender 1
 ^bPrivate 1
-^Position 0.000000 -15.000000 0.000000
+^Position 5.000000 0.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 70.000000 10.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
+^Align 1
 ^TextSize 15.000000
 ^TextLength 20
 ^tx_Normal ChatEdit.png
@@ -311,7 +228,7 @@
 ^ParentName Login_Panel
 ^KeyState 135 135
 ^bRender 1
-^Position 110.000000 0.000000 0.000000
+^Position 115.000000 15.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 30.000000 20.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
@@ -330,9 +247,9 @@
 ^ParentName Login_Panel
 ^KeyState 135 135
 ^bRender 1
-^Position -110.000000 15.000000 0.000000
+^Position -108.000000 30.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 30.000000 10.000000 1.000000
+^Scale 30.000000 8.000000 1.000000
 ^Color 0.000000 0.000000 0.000000 1.000000
 ^tx_Normal 아이디.png
 ^pfEventHover 7274
@@ -347,11 +264,11 @@
 ^ParentName Login_Panel
 ^KeyState 135 135
 ^bRender 1
-^Position -110.000000 -15.000000 0.000000
+^Position -106.000000 0.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 30.000000 10.000000 1.000000
+^Scale 35.000000 10.000000 1.000000
 ^Color 0.000000 0.000000 0.000000 1.000000
-^tx_Normal 패스워드.png
+^tx_Normal 비밀번호.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -364,7 +281,7 @@
 ^ParentName Login_Panel
 ^KeyState 135 135
 ^bRender 1
-^Position 110.000000 0.000000 0.000000
+^Position 115.000000 15.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 20.000000 10.000000 1.000000
 ^Color 0.000000 0.000000 0.000000 1.000000
@@ -381,13 +298,398 @@
 ^ParentName Login_Panel
 ^KeyState 135 135
 ^bRender 1
-^Position 148.000000 44.000000 0.000000
+^Position 146.000000 77.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 15.000000 15.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
 ^tx_Normal btn_175.png
 ^tx_Hover btn_174.png
 ^tx_Press btn_174.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 778
+^NodeName Login_IDSearch
+^ParentName Login_Panel
+^KeyState 135 135
+^bRender 1
+^Position -100.000000 -50.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 40.000000 20.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_Normal btn_177.png
+^tx_Hover btn_176.png
+^tx_Press btn_176.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 778
+^NodeName Login_PWSearch
+^ParentName Login_Panel
+^KeyState 135 135
+^bRender 1
+^Position 0.000000 -50.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 40.000000 20.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_Normal btn_177.png
+^tx_Hover btn_176.png
+^tx_Press btn_176.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 778
+^NodeName Login_SignUp
+^ParentName Login_Panel
+^KeyState 135 135
+^bRender 1
+^Position 100.000000 -50.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 40.000000 20.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_Normal btn_177.png
+^tx_Hover btn_176.png
+^tx_Press btn_176.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName Login_SignUp_txt
+^ParentName Login_Panel
+^KeyState 135 135
+^bRender 1
+^Position 100.000000 -50.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 25.000000 10.000000 1.000000
+^Color 0.000000 0.000000 0.000000 1.000000
+^tx_Normal 회원가입.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName Login_IDSearch_txt
+^ParentName Login_Panel
+^KeyState 135 135
+^bRender 1
+^Position -100.000000 -50.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 30.000000 10.000000 1.000000
+^Color 0.000000 0.000000 0.000000 1.000000
+^tx_Normal 아이디찾기.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName Login_PWSearch_txt
+^ParentName Login_Panel
+^KeyState 135 135
+^bRender 1
+^Position 0.000000 -50.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 30.000000 10.000000 1.000000
+^Color 0.000000 0.000000 0.000000 1.000000
+^tx_Normal 비밀번호찾기.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 777
+^NodeName SignUp_Panel
+^ParentName effect_panel
+^KeyState 135 135
+^bRender 0
+^Position 0.000000 0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 1.000000 1.000000 1.000000
+
+^Type 788
+^NodeName SignUp_Back
+^ParentName SignUp_Panel
+^KeyState 135 135
+^bRender 1
+^Position 295.000000 0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 100.000000 130.000000 1.000000
+^Color 0.300000 0.300000 0.300000 1.000000
+^tx_Normal White.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName SignUp_ID_txt
+^ParentName SignUp_Panel
+^KeyState 135 135
+^bRender 1
+^Position 237.500015 73.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 31.000000 8.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_Normal 아이디.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 787
+^NodeName SignUp_ID
+^ParentName SignUp_Panel
+^KeyState 135 135
+^bRender 1
+^bPrivate 0
+^Position 295.000000 50.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 90.000000 10.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^Align 1
+^TextSize 15.000000
+^TextLength 6
+^tx_Normal ChatEdit.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName SignUp_PW_txt
+^ParentName SignUp_Panel
+^KeyState 135 135
+^bRender 1
+^Position 238.666687 25.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 35.000000 10.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_Normal 비밀번호.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 787
+^NodeName SignUp_PW
+^ParentName SignUp_Panel
+^KeyState 135 135
+^bRender 1
+^bPrivate 1
+^Position 295.000000 0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 90.000000 10.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^Align 1
+^TextSize 15.000000
+^TextLength 20
+^tx_Normal ChatEdit.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName SignUp_PWCheck_txt
+^ParentName SignUp_Panel
+^KeyState 135 135
+^bRender 1
+^Position 254.833359 -25.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 50.000000 10.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_Normal 비밀번호확인.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 787
+^NodeName SignUp_PWCheck
+^ParentName SignUp_Panel
+^KeyState 135 135
+^bRender 1
+^bPrivate 1
+^Position 295.000000 -50.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 90.000000 10.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^Align 1
+^TextSize 15.000000
+^TextLength 20
+^tx_Normal ChatEdit.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 778
+^NodeName SignUp_Enter
+^ParentName SignUp_Panel
+^KeyState 135 135
+^bRender 1
+^Position 295.000000 -96.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 50.000000 20.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_Normal btn_177.png
+^tx_Hover btn_176.png
+^tx_Press btn_176.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 777
+^NodeName SignUp_Top_Panel
+^ParentName SignUp_Panel
+^KeyState 135 135
+^bRender 1
+^Position 0.000000 0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 1.000000 1.000000 1.000000
+
+^Type 788
+^NodeName SignUp_Top_Back
+^ParentName SignUp_Top_Panel
+^KeyState 135 135
+^bRender 1
+^Position 295.000000 113.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 95.000000 10.000000 1.000000
+^Color 0.500000 0.500000 0.500000 1.000000
+^tx_Normal White.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 778
+^NodeName SignUp_Top_Exit
+^ParentName SignUp_Top_Panel
+^KeyState 135 135
+^bRender 1
+^Position 379.999878 113.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 11.000000 11.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_Normal btn01a.png
+^tx_Hover btn01g.png
+^tx_Press btn01g.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName SignUp_Top_ExitImg
+^ParentName SignUp_Top_Panel
+^KeyState 135 135
+^bRender 1
+^Position 380.000000 113.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 7.000000 7.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_Normal btn_959.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName SignUp_Top_Title
+^ParentName SignUp_Top_Panel
+^KeyState 135 135
+^bRender 1
+^Position 233.500107 112.666656 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 30.000000 10.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_Normal 회원가입.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 783
+^NodeName SignUp_Fail_Txt
+^ParentName SignUp_Panel
+^KeyState 135 135
+^bRender 0
+^Position 294.000000 2.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 80.000000 35.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^Align 0
+^strText 회원가입실패!
+^TextSize 35.000000
+^tx_Normal White.png
+^tx_Hover White.png
+^tx_Press White.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName SignUp_Enter_txt
+^ParentName SignUp_Panel
+^KeyState 135 135
+^bRender 1
+^Position 295.000000 -96.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 30.000000 10.000000 1.000000
+^Color 0.000000 0.000000 0.000000 1.000000
+^tx_Normal 회원가입.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274

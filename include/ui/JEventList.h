@@ -175,7 +175,7 @@ namespace UI
 	{
 		JPanel* pPanel = (JPanel*)vp;
 		JPanel* pRoot = pPanel->find_root();
-		JPanel* pMouse = pRoot->find_child(L"mouse_click_sprite_panel");
+		JPanel* pMouse = pRoot->find_child(L"mouse_cursor");
 		if (Input::GetKeyState(pPanel->m_pKeyDown) == EKeyState::DOWN)
 		{
 			pPanel->m_bRender = !pPanel->m_bRender;
@@ -511,7 +511,7 @@ namespace UI
 		if (pList->m_pText.size() == pList->m_iCols) return;
 		pList->m_fTemp = 1.0f;
 		pList->m_fUITimer += Timer::SPF;
-		if (pList->m_fUITimer >= 2.0f)
+		if (pList->m_fUITimer >= 1.0f)
 		{
 			auto pDel = ----------pList->m_pText.end();
 			pList->m_pText.erase(pDel);

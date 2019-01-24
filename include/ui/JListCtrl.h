@@ -1,5 +1,6 @@
 #pragma once
 #include "JImageCtrl.h"
+#include "WriteManager.h"
 namespace UI
 {
 	class JListCtrl : public JImageCtrl
@@ -11,6 +12,7 @@ namespace UI
 		std::vector<D3DXVECTOR4>	m_pTextrt; // text rect  image rect / cols
 		float*						m_fValue; // 0이면 맨앞의 string 1이면 맨뒤의 string
 		float						m_fTemp;
+		EAlign						m_Align = EAlign::Near;
 		//
 		float fDivisionValue;       // CurValue Increase
 	public:

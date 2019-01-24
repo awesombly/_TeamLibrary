@@ -50,7 +50,15 @@ namespace UI
 		/* int Random Range */
 		static int iRand(const int Min, const int Max)
 		{
-			return ((Max - Min) * ((int)rand() / RAND_MAX)) + Min;
+			return ((Max - Min) * ((float)rand() / RAND_MAX)) + Min;
+		}
+		static bool bRand()
+		{
+			int i = iRand(100, 100000);
+			if (i % 2 == 0)
+				return false;
+			else
+				return true;
 		}
 		/* Vector Rand Range */
 		static D3DXVECTOR3 vRand(const D3DXVECTOR3 Min, const D3DXVECTOR3 Max)

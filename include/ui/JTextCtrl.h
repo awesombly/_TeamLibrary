@@ -1,5 +1,6 @@
 #pragma once
 #include "JButtonCtrl.h"
+#include "WriteManager.h"
 namespace UI
 {
 	class JTextCtrl : public JButtonCtrl
@@ -8,6 +9,7 @@ namespace UI
 		wstring m_Text;
 		D3DXVECTOR4 m_rtText;
 		float m_fSize;
+		EAlign m_Align = EAlign::Center;
 	public:
 		bool Create(ID3D11Device* pDevice, wstring Text, float TextSize,
 			const TCHAR* szNORMAL, const TCHAR* szHOVER, const TCHAR* szPRESS,

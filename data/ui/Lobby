@@ -233,6 +233,7 @@
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 50.000000 10.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
+^Align 0
 ^strText IP:___.___.___.___
 ^TextSize 15.000000
 ^tx_Normal ChatEdit.png
@@ -423,10 +424,10 @@
 ^ParentName Matching_Panel
 ^KeyState 135 135
 ^bRender 1
-^Position 0.000000 0.000000 0.000000
+^Position 0.000000 16.012199 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 180.000000 50.000000 1.000000
-^Color 0.300000 0.300000 0.300000 1.000000
+^Color 0.000000 0.000000 0.000000 1.000000
 ^tx_Normal White.png
 ^pfEventHover 7274
 ^vpEventHover 
@@ -543,18 +544,78 @@
 ^pfEventClick 7274
 ^vpEventClick 
 
-^Type 778
-^NodeName Matching_Exit
+^Type 777
+^NodeName Matching_Top_Panel
 ^ParentName Matching_Panel
 ^KeyState 135 135
 ^bRender 1
-^Position 180.000000 43.000000 0.000000
+^Position 0.000000 0.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 20.000000 20.000000 1.000000
+^Scale 1.000000 1.000000 1.000000
+
+^Type 788
+^NodeName Matching_Top_Back
+^ParentName Matching_Top_Panel
+^KeyState 135 135
+^bRender 1
+^Position 0.000000 52.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 175.000000 10.000000 1.000000
+^Color 0.500000 0.500000 0.500000 1.000000
+^tx_Normal White.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 778
+^NodeName Matching_Top_Exit
+^ParentName Matching_Top_Panel
+^KeyState 135 135
+^bRender 1
+^Position 166.000000 52.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 11.000000 11.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
-^tx_Normal btn_175.png
-^tx_Hover btn_174.png
-^tx_Press btn_174.png
+^tx_Normal btn01a.png
+^tx_Hover btn01g.png
+^tx_Press btn01g.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName Matching_Top_Title
+^ParentName Matching_Top_Panel
+^KeyState 135 135
+^bRender 1
+^Position -145.422562 51.848328 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 25.000000 8.000000 1.000000
+^Color 0.000000 0.000000 0.000000 1.000000
+^tx_Normal ÀÚµ¿¸ÅÄª.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName Matching_Top_Exit_txt
+^ParentName Matching_Top_Panel
+^KeyState 135 135
+^bRender 1
+^Position 166.533905 51.833332 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 7.000000 7.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_Normal btn_959.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -803,87 +864,6 @@
 ^vpEventClick 
 
 ^Type 777
-^NodeName mouse_click_sprite_panel
-^ParentName Root
-^KeyState 135 135
-^bRender 1
-^Position 0.000000 0.000000 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 1.000000 1.000000 1.000000
-
-^Type 782
-
-^SpriteType 6429
-^NodeName mouse_click_sprite
-^ParentName mouse_click_sprite_panel
-^KeyState 135 135
-^bRender 1
-^bLoop 0
-^Position 1000.000000 0.000000 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 1.000000 1.000000 1.000000
-^Color 1.000000 1.000000 1.000000 1.000000
-^AnimTime 0.500000
-^AnimUV 3 2 
-^SPRITESTART 1 
-^PropertyButtonFavouriteFill-468cdd1c31f3046448a59ed378113993-1.png
-^SPRITEEND
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick 
-
-^Type 782
-
-^SpriteType 6430
-^NodeName mouse_cursor
-^ParentName mouse_click_sprite_panel
-^KeyState 135 135
-^bRender 1
-^bLoop 1
-^Position 646.000000 -258.000000 0.000000
-^Rotate 0.000000 0.000000 -0.261799
-^Scale 15.000000 15.000000 1.000000
-^Color 1.000000 1.000000 1.000000 1.000000
-^AnimTime 0.250000
-^AnimUV 2 2 
-^SPRITESTART 1 
-^Ghost2-a8030e16d3339d54c9ade70d2dbc4b91-1.png
-^SPRITEEND
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick 
-
-^Type 782
-
-^SpriteType 6429
-^NodeName mouse_click_sprite_clone
-^ParentName mouse_click_sprite_panel
-^KeyState 135 135
-^bRender 1
-^bLoop 0
-^Position 636.000000 -248.000000 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 3.222382 3.222382 1.000000
-^Color 1.000000 1.000000 1.000000 1.000000
-^AnimTime 0.500000
-^AnimUV 3 2 
-^SPRITESTART 1 
-^PropertyButtonFavouriteFill-468cdd1c31f3046448a59ed378113993-1.png
-^SPRITEEND
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick 
-
-^Type 777
 ^NodeName Drag_Panel
 ^ParentName Root
 ^KeyState 135 135
@@ -956,44 +936,6 @@
 ^vpEventClick 
 
 ^Type 778
-^NodeName fadeout
-^ParentName Root
-^KeyState 135 135
-^bRender 0
-^Position 0.000000 0.000000 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 400.000000 300.000000 1.000000
-^Color 1.000000 1.000000 1.000000 1.000000
-^tx_Normal red.png
-^tx_Hover red.png
-^tx_Press red.png
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick 
-
-^Type 778
-^NodeName fadein
-^ParentName Root
-^KeyState 135 135
-^bRender 0
-^Position 0.000000 0.000000 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 400.000000 300.000000 1.000000
-^Color 1.000000 1.000000 1.000000 1.000000
-^tx_Normal White.png
-^tx_Hover White.png
-^tx_Press White.png
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick 
-
-^Type 778
 ^NodeName effect_hos
 ^ParentName Root
 ^KeyState 135 135
@@ -1022,6 +964,30 @@
 ^Scale 50.000000 60.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
 ^tx_Normal Alpha.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 782
+
+^SpriteType 6430
+^NodeName mouse_cursor
+^ParentName Root
+^KeyState 135 135
+^bRender 1
+^bLoop 1
+^Position 646.000000 -258.000000 0.000000
+^Rotate 0.000000 0.000000 -0.261799
+^Scale 15.000000 15.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^AnimTime 0.250000
+^AnimUV 2 2 
+^SPRITESTART 1 
+^Ghost2-a8030e16d3339d54c9ade70d2dbc4b91-1.png
+^SPRITEEND
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274

@@ -40,6 +40,7 @@
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 30.000000 15.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
+^Align 0
 ^strText 타이무!
 ^TextSize 30.000000
 ^tx_Normal Alpha.png
@@ -229,6 +230,7 @@
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 229.833908 24.167107 1.000000
 ^Color 1.000000 1.000000 1.000000 0.500000
+^Align 1
 ^TextSize 13.000000
 ^RectColumn 4
 ^tx_Normal White.png
@@ -269,6 +271,7 @@
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 200.000000 10.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
+^Align 1
 ^TextSize 20.000000
 ^TextLength 0
 ^tx_Normal ChatEdit.png
@@ -288,6 +291,7 @@
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 20.000000 11.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
+^Align 0
 ^strText 확인
 ^TextSize 13.000000
 ^tx_Normal btn_177.png
@@ -364,9 +368,82 @@
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 150.000000 -50.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 0.000000
+^Align 2
 ^TextSize 30.000000
 ^RectColumn 4
 ^tx_Normal White.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 777
+^NodeName Enemy_Panel
+^ParentName Game_Panel
+^KeyState 135 135
+^bRender 1
+^Position 0.000000 0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 1.000000 1.000000 1.000000
+
+^Type 780
+^VHType 1447
+^NodeName Enemy_HP
+^ParentName Enemy_Panel
+^KeyState 135 135
+^bRender 1
+^Position 0.000000 200.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 200.000000 10.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_BackGround White.png
+^tx_FrontGround red.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 783
+^NodeName Enemy_Name
+^ParentName Enemy_Panel
+^KeyState 135 135
+^bRender 1
+^Position 0.000000 230.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 70.000000 20.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^Align 0
+^strText EnemyName
+^TextSize 25.000000
+^tx_Normal Alpha.png
+^tx_Hover Alpha.png
+^tx_Press Alpha.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 783
+^NodeName Enemy_HP_txt
+^ParentName Enemy_Panel
+^KeyState 135 135
+^bRender 1
+^Position 0.000000 200.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 200.000000 10.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^Align 0
+^strText 적HP넣으려면넣으세연
+^TextSize 15.000000
+^tx_Normal Alpha.png
+^tx_Hover Alpha.png
+^tx_Press Alpha.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -1040,6 +1117,7 @@
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 100.000000 15.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 0.500000
+^Align 0
 ^strText 닉넴
 ^TextSize 30.000000
 ^tx_Normal White.png
@@ -1061,6 +1139,7 @@
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 25.000000 15.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 0.500000
+^Align 0
 ^strText 11
 ^TextSize 30.000000
 ^tx_Normal White.png
@@ -1082,6 +1161,7 @@
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 25.000000 15.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 0.500000
+^Align 0
 ^strText 쥬금
 ^TextSize 30.000000
 ^tx_Normal White.png
@@ -1103,6 +1183,7 @@
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 30.000000 15.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 0.500000
+^Align 0
 ^strText 1234
 ^TextSize 30.000000
 ^tx_Normal White.png
@@ -1167,6 +1248,7 @@
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 100.000000 15.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 0.500000
+^Align 0
 ^strText Sample
 ^TextSize 30.000000
 ^tx_Normal White.png
@@ -1188,6 +1270,7 @@
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 25.000000 15.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 0.500000
+^Align 0
 ^strText Sample
 ^TextSize 30.000000
 ^tx_Normal White.png
@@ -1209,6 +1292,7 @@
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 25.000000 15.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 0.500000
+^Align 0
 ^strText Sample
 ^TextSize 30.000000
 ^tx_Normal White.png
@@ -1230,6 +1314,7 @@
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 30.000000 15.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 0.500000
+^Align 0
 ^strText Sample
 ^TextSize 30.000000
 ^tx_Normal White.png
@@ -1294,6 +1379,7 @@
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 100.000000 15.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 0.500000
+^Align 0
 ^strText Sample
 ^TextSize 30.000000
 ^tx_Normal White.png
@@ -1315,6 +1401,7 @@
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 25.000000 15.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 0.500000
+^Align 0
 ^strText Sample
 ^TextSize 30.000000
 ^tx_Normal White.png
@@ -1336,6 +1423,7 @@
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 25.000000 15.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 0.500000
+^Align 0
 ^strText Sample
 ^TextSize 30.000000
 ^tx_Normal White.png
@@ -1357,6 +1445,7 @@
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 30.000000 15.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 0.500000
+^Align 0
 ^strText Sample
 ^TextSize 30.000000
 ^tx_Normal White.png
@@ -1421,6 +1510,7 @@
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 100.000000 15.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 0.500000
+^Align 0
 ^strText Sample
 ^TextSize 30.000000
 ^tx_Normal White.png
@@ -1442,6 +1532,7 @@
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 25.000000 15.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 0.500000
+^Align 0
 ^strText Sample
 ^TextSize 30.000000
 ^tx_Normal White.png
@@ -1463,6 +1554,7 @@
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 25.000000 15.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 0.500000
+^Align 0
 ^strText Sample
 ^TextSize 30.000000
 ^tx_Normal White.png
@@ -1484,6 +1576,7 @@
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 30.000000 15.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 0.500000
+^Align 0
 ^strText Sample
 ^TextSize 30.000000
 ^tx_Normal White.png
@@ -1530,44 +1623,11 @@
 ^pfEventClick 7274
 ^vpEventClick 
 
-^Type 777
-^NodeName mouse_click_sprite_panel
-^ParentName Root
-^KeyState 135 135
-^bRender 0
-^Position 0.000000 0.000000 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 1.000000 1.000000 1.000000
-
-^Type 782
-
-^SpriteType 6429
-^NodeName mouse_click_sprite
-^ParentName mouse_click_sprite_panel
-^KeyState 135 135
-^bRender 1
-^bLoop 0
-^Position 1000.000000 1000.000000 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 1.000000 1.000000 1.000000
-^Color 1.000000 1.000000 1.000000 1.000000
-^AnimTime 0.500000
-^AnimUV 2 2 
-^SPRITESTART 1 
-^PropertyButtonFavouriteFill-468cdd1c31f3046448a59ed378113993-1.png
-^SPRITEEND
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick 
-
 ^Type 782
 
 ^SpriteType 6430
 ^NodeName mouse_cursor
-^ParentName mouse_click_sprite_panel
+^ParentName Root
 ^KeyState 135 135
 ^bRender 1
 ^bLoop 1
@@ -1579,30 +1639,6 @@
 ^AnimUV 2 2 
 ^SPRITESTART 1 
 ^Ghost2-a8030e16d3339d54c9ade70d2dbc4b91-1.png
-^SPRITEEND
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick 
-
-^Type 782
-
-^SpriteType 6429
-^NodeName mouse_click_sprite_clone
-^ParentName mouse_click_sprite_panel
-^KeyState 135 135
-^bRender 1
-^bLoop 0
-^Position 205.000000 193.000000 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 1.500008 1.500008 1.000000
-^Color 1.000000 1.000000 1.000000 1.000000
-^AnimTime 0.500000
-^AnimUV 2 2 
-^SPRITESTART 1 
-^PropertyButtonFavouriteFill-468cdd1c31f3046448a59ed378113993-1.png
 ^SPRITEEND
 ^pfEventHover 7274
 ^vpEventHover 
@@ -1661,179 +1697,6 @@
 ^tx_Normal White.png
 ^tx_Hover White.png
 ^tx_Press White.png
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick 
-
-^Type 782
-
-^SpriteType 6429
-^NodeName JohnSprite
-^ParentName Root
-^KeyState 135 135
-^bRender 0
-^bLoop 1
-^Position 0.000000 0.000000 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 400.000000 300.000000 1.000000
-^Color 1.000000 1.000000 1.000000 -0.000054
-^AnimTime 3.500000
-^AnimUV 0 0 
-^SPRITESTART 150 
-^frame_000_delay-0.03s.jpg
-^frame_001_delay-0.03s.jpg
-^frame_002_delay-0.03s.jpg
-^frame_003_delay-0.03s.jpg
-^frame_004_delay-0.03s.jpg
-^frame_005_delay-0.03s.jpg
-^frame_006_delay-0.03s.jpg
-^frame_007_delay-0.03s.jpg
-^frame_008_delay-0.03s.jpg
-^frame_009_delay-0.03s.jpg
-^frame_010_delay-0.03s.jpg
-^frame_011_delay-0.03s.jpg
-^frame_012_delay-0.03s.jpg
-^frame_013_delay-0.03s.jpg
-^frame_014_delay-0.03s.jpg
-^frame_015_delay-0.03s.jpg
-^frame_016_delay-0.03s.jpg
-^frame_017_delay-0.03s.jpg
-^frame_018_delay-0.03s.jpg
-^frame_019_delay-0.03s.jpg
-^frame_020_delay-0.03s.jpg
-^frame_021_delay-0.03s.jpg
-^frame_022_delay-0.03s.jpg
-^frame_023_delay-0.03s.jpg
-^frame_024_delay-0.03s.jpg
-^frame_025_delay-0.03s.jpg
-^frame_026_delay-0.03s.jpg
-^frame_027_delay-0.03s.jpg
-^frame_028_delay-0.03s.jpg
-^frame_029_delay-0.03s.jpg
-^frame_030_delay-0.03s.jpg
-^frame_031_delay-0.03s.jpg
-^frame_032_delay-0.03s.jpg
-^frame_033_delay-0.03s.jpg
-^frame_034_delay-0.03s.jpg
-^frame_035_delay-0.03s.jpg
-^frame_036_delay-0.03s.jpg
-^frame_037_delay-0.03s.jpg
-^frame_038_delay-0.03s.jpg
-^frame_039_delay-0.03s.jpg
-^frame_040_delay-0.03s.jpg
-^frame_041_delay-0.03s.jpg
-^frame_042_delay-0.03s.jpg
-^frame_043_delay-0.03s.jpg
-^frame_044_delay-0.03s.jpg
-^frame_045_delay-0.03s.jpg
-^frame_046_delay-0.03s.jpg
-^frame_047_delay-0.03s.jpg
-^frame_048_delay-0.03s.jpg
-^frame_049_delay-0.03s.jpg
-^frame_000_delay-0.03s.jpg
-^frame_051_delay-0.03s.jpg
-^frame_052_delay-0.03s.jpg
-^frame_053_delay-0.03s.jpg
-^frame_054_delay-0.03s.jpg
-^frame_055_delay-0.03s.jpg
-^frame_056_delay-0.03s.jpg
-^frame_057_delay-0.03s.jpg
-^frame_058_delay-0.03s.jpg
-^frame_059_delay-0.03s.jpg
-^frame_060_delay-0.03s.jpg
-^frame_061_delay-0.03s.jpg
-^frame_062_delay-0.03s.jpg
-^frame_063_delay-0.03s.jpg
-^frame_064_delay-0.03s.jpg
-^frame_065_delay-0.03s.jpg
-^frame_066_delay-0.03s.jpg
-^frame_067_delay-0.03s.jpg
-^frame_068_delay-0.03s.jpg
-^frame_069_delay-0.03s.jpg
-^frame_070_delay-0.03s.jpg
-^frame_071_delay-0.03s.jpg
-^frame_072_delay-0.03s.jpg
-^frame_073_delay-0.03s.jpg
-^frame_074_delay-0.03s.jpg
-^frame_075_delay-0.03s.jpg
-^frame_076_delay-0.03s.jpg
-^frame_077_delay-0.03s.jpg
-^frame_078_delay-0.03s.jpg
-^frame_079_delay-0.03s.jpg
-^frame_080_delay-0.03s.jpg
-^frame_081_delay-0.03s.jpg
-^frame_082_delay-0.03s.jpg
-^frame_083_delay-0.03s.jpg
-^frame_084_delay-0.03s.jpg
-^frame_085_delay-0.03s.jpg
-^frame_086_delay-0.03s.jpg
-^frame_087_delay-0.03s.jpg
-^frame_088_delay-0.03s.jpg
-^frame_089_delay-0.03s.jpg
-^frame_090_delay-0.03s.jpg
-^frame_091_delay-0.03s.jpg
-^frame_092_delay-0.03s.jpg
-^frame_093_delay-0.03s.jpg
-^frame_094_delay-0.03s.jpg
-^frame_095_delay-0.03s.jpg
-^frame_096_delay-0.03s.jpg
-^frame_097_delay-0.03s.jpg
-^frame_098_delay-0.03s.jpg
-^frame_099_delay-0.03s.jpg
-^frame_100_delay-0.03s.jpg
-^frame_101_delay-0.03s.jpg
-^frame_102_delay-0.03s.jpg
-^frame_103_delay-0.03s.jpg
-^frame_104_delay-0.03s.jpg
-^frame_105_delay-0.03s.jpg
-^frame_106_delay-0.03s.jpg
-^frame_107_delay-0.03s.jpg
-^frame_108_delay-0.03s.jpg
-^frame_109_delay-0.03s.jpg
-^frame_110_delay-0.03s.jpg
-^frame_111_delay-0.03s.jpg
-^frame_112_delay-0.03s.jpg
-^frame_113_delay-0.03s.jpg
-^frame_114_delay-0.03s.jpg
-^frame_115_delay-0.03s.jpg
-^frame_116_delay-0.03s.jpg
-^frame_117_delay-0.03s.jpg
-^frame_118_delay-0.03s.jpg
-^frame_119_delay-0.03s.jpg
-^frame_120_delay-0.03s.jpg
-^frame_121_delay-0.03s.jpg
-^frame_122_delay-0.03s.jpg
-^frame_123_delay-0.03s.jpg
-^frame_124_delay-0.03s.jpg
-^frame_125_delay-0.03s.jpg
-^frame_126_delay-0.03s.jpg
-^frame_127_delay-0.03s.jpg
-^frame_128_delay-0.03s.jpg
-^frame_129_delay-0.03s.jpg
-^frame_130_delay-0.03s.jpg
-^frame_131_delay-0.03s.jpg
-^frame_132_delay-0.03s.jpg
-^frame_133_delay-0.03s.jpg
-^frame_134_delay-0.03s.jpg
-^frame_135_delay-0.03s.jpg
-^frame_136_delay-0.03s.jpg
-^frame_137_delay-0.03s.jpg
-^frame_138_delay-0.03s.jpg
-^frame_139_delay-0.03s.jpg
-^frame_140_delay-0.03s.jpg
-^frame_141_delay-0.03s.jpg
-^frame_142_delay-0.03s.jpg
-^frame_143_delay-0.03s.jpg
-^frame_144_delay-0.03s.jpg
-^frame_145_delay-0.03s.jpg
-^frame_146_delay-0.03s.jpg
-^frame_147_delay-0.03s.jpg
-^frame_148_delay-0.03s.jpg
-^frame_149_delay-0.03s.jpg
-^SPRITEEND
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274

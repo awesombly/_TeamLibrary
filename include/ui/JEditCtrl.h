@@ -1,5 +1,6 @@
 #pragma once
 #include "JImageCtrl.h"
+#include "WriteManager.h"
 namespace UI
 {
 	class JEditCtrl : public JImageCtrl
@@ -14,6 +15,7 @@ namespace UI
 		float m_fSize;
 		bool m_bFocus = false;
 		bool m_bPrivate = false;
+		EAlign						m_Align = EAlign::Near;
 	public:
 		bool Create(ID3D11Device* pDevice, float TextSize, const TCHAR* szNORMAL, 
 			 const char* PSName = "PS", const TCHAR* szShaderName = L"../../data/ui/shader/DefaultUI.hlsl");
