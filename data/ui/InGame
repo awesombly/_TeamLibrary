@@ -394,7 +394,7 @@
 ^ParentName Enemy_Panel
 ^KeyState 135 135
 ^bRender 1
-^Position 0.000000 200.000000 0.000000
+^Position -1.000000 236.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 200.000000 10.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
@@ -408,17 +408,17 @@
 ^vpEventClick 
 
 ^Type 783
-^NodeName Enemy_Name
+^NodeName Enemy_HP_txt
 ^ParentName Enemy_Panel
 ^KeyState 135 135
 ^bRender 1
-^Position 0.000000 230.000000 0.000000
+^Position 0.000000 237.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 70.000000 20.000000 1.000000
+^Scale 200.000000 10.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
 ^Align 0
-^strText EnemyName
-^TextSize 25.000000
+^strText 적HP넣으려면넣으세연
+^TextSize 15.000000
 ^tx_Normal Alpha.png
 ^tx_Hover Alpha.png
 ^tx_Press Alpha.png
@@ -430,20 +430,20 @@
 ^vpEventClick 
 
 ^Type 783
-^NodeName Enemy_HP_txt
+^NodeName Enemy_Name
 ^ParentName Enemy_Panel
 ^KeyState 135 135
 ^bRender 1
-^Position 0.000000 200.000000 0.000000
+^Position 0.000000 260.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 200.000000 10.000000 1.000000
-^Color 1.000000 1.000000 1.000000 1.000000
-^Align 0
-^strText 적HP넣으려면넣으세연
-^TextSize 15.000000
-^tx_Normal Alpha.png
-^tx_Hover Alpha.png
-^tx_Press Alpha.png
+^Scale 200.000000 15.000000 1.000000
+^Color 1.000000 1.000000 1.000000 0.000000
+^Align 1
+^strText EnemyName
+^TextSize 30.000000
+^tx_Normal NO_IMAGE.png
+^tx_Hover NO_IMAGE.png
+^tx_Press NO_IMAGE.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -1119,7 +1119,7 @@
 ^Color 1.000000 1.000000 1.000000 0.500000
 ^Align 0
 ^strText 닉넴
-^TextSize 30.000000
+^TextSize 25.000000
 ^tx_Normal White.png
 ^tx_Hover White.png
 ^tx_Press White.png
@@ -1141,7 +1141,7 @@
 ^Color 1.000000 1.000000 1.000000 0.500000
 ^Align 0
 ^strText 11
-^TextSize 30.000000
+^TextSize 25.000000
 ^tx_Normal White.png
 ^tx_Hover White.png
 ^tx_Press White.png
@@ -1163,7 +1163,7 @@
 ^Color 1.000000 1.000000 1.000000 0.500000
 ^Align 0
 ^strText 쥬금
-^TextSize 30.000000
+^TextSize 25.000000
 ^tx_Normal White.png
 ^tx_Hover White.png
 ^tx_Press White.png
@@ -1184,8 +1184,8 @@
 ^Scale 30.000000 15.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 0.500000
 ^Align 0
-^strText 1234
-^TextSize 30.000000
+^strText 12345
+^TextSize 25.000000
 ^tx_Normal White.png
 ^tx_Hover White.png
 ^tx_Press White.png
@@ -1250,7 +1250,7 @@
 ^Color 1.000000 1.000000 1.000000 0.500000
 ^Align 0
 ^strText Sample
-^TextSize 30.000000
+^TextSize 25.000000
 ^tx_Normal White.png
 ^tx_Hover White.png
 ^tx_Press White.png
@@ -1272,7 +1272,7 @@
 ^Color 1.000000 1.000000 1.000000 0.500000
 ^Align 0
 ^strText Sample
-^TextSize 30.000000
+^TextSize 25.000000
 ^tx_Normal White.png
 ^tx_Hover White.png
 ^tx_Press White.png
@@ -1294,7 +1294,7 @@
 ^Color 1.000000 1.000000 1.000000 0.500000
 ^Align 0
 ^strText Sample
-^TextSize 30.000000
+^TextSize 25.000000
 ^tx_Normal White.png
 ^tx_Hover White.png
 ^tx_Press White.png
@@ -1316,7 +1316,7 @@
 ^Color 1.000000 1.000000 1.000000 0.500000
 ^Align 0
 ^strText Sample
-^TextSize 30.000000
+^TextSize 25.000000
 ^tx_Normal White.png
 ^tx_Hover White.png
 ^tx_Press White.png
@@ -1381,7 +1381,7 @@
 ^Color 1.000000 1.000000 1.000000 0.500000
 ^Align 0
 ^strText Sample
-^TextSize 30.000000
+^TextSize 25.000000
 ^tx_Normal White.png
 ^tx_Hover White.png
 ^tx_Press White.png
@@ -1403,7 +1403,7 @@
 ^Color 1.000000 1.000000 1.000000 0.500000
 ^Align 0
 ^strText Sample
-^TextSize 30.000000
+^TextSize 25.000000
 ^tx_Normal White.png
 ^tx_Hover White.png
 ^tx_Press White.png
@@ -1425,7 +1425,7 @@
 ^Color 1.000000 1.000000 1.000000 0.500000
 ^Align 0
 ^strText Sample
-^TextSize 30.000000
+^TextSize 25.000000
 ^tx_Normal White.png
 ^tx_Hover White.png
 ^tx_Press White.png
@@ -1447,7 +1447,7 @@
 ^Color 1.000000 1.000000 1.000000 0.500000
 ^Align 0
 ^strText Sample
-^TextSize 30.000000
+^TextSize 25.000000
 ^tx_Normal White.png
 ^tx_Hover White.png
 ^tx_Press White.png
@@ -1512,7 +1512,7 @@
 ^Color 1.000000 1.000000 1.000000 0.500000
 ^Align 0
 ^strText Sample
-^TextSize 30.000000
+^TextSize 25.000000
 ^tx_Normal White.png
 ^tx_Hover White.png
 ^tx_Press White.png
@@ -1534,7 +1534,7 @@
 ^Color 1.000000 1.000000 1.000000 0.500000
 ^Align 0
 ^strText Sample
-^TextSize 30.000000
+^TextSize 25.000000
 ^tx_Normal White.png
 ^tx_Hover White.png
 ^tx_Press White.png
@@ -1556,7 +1556,7 @@
 ^Color 1.000000 1.000000 1.000000 0.500000
 ^Align 0
 ^strText Sample
-^TextSize 30.000000
+^TextSize 25.000000
 ^tx_Normal White.png
 ^tx_Hover White.png
 ^tx_Press White.png
@@ -1578,7 +1578,7 @@
 ^Color 1.000000 1.000000 1.000000 0.500000
 ^Align 0
 ^strText Sample
-^TextSize 30.000000
+^TextSize 25.000000
 ^tx_Normal White.png
 ^tx_Hover White.png
 ^tx_Press White.png

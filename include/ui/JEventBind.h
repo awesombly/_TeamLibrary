@@ -58,13 +58,13 @@ namespace UI
 		pHelpImg->PreEvent.second = pHelpImg;
 
 		// effect
-		JPanel* pEff1 = (JPanel*)pRoot->find_child(L"fadeout");
-		pEff1->PreEvent.first = E_FADEOUT;
-		pEff1->PreEvent.second = pEff1;
+		//JPanel* pEff1 = (JPanel*)pRoot->find_child(L"fadeout");
+		//pEff1->PreEvent.first = E_FADEOUT;
+		//pEff1->PreEvent.second = pEff1;
 
-		JPanel* pEff2 = (JPanel*)pRoot->find_child(L"fadein");
-		pEff2->PreEvent.first = E_FADEIN;
-		pEff2->PreEvent.second = pEff2;
+		//JPanel* pEff2 = (JPanel*)pRoot->find_child(L"fadein");
+		//pEff2->PreEvent.first = E_FADEIN;
+		//pEff2->PreEvent.second = pEff2;
 
 		JPanel* pEff4 = (JPanel*)pRoot->find_child(L"effect_hos");
 		pEff4->PreEvent.first = E_HOS;
