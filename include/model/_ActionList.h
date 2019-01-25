@@ -41,7 +41,8 @@
 //////////////////////////////////////////////////////////////////////////
 //Zombie
 #define  Zombie				L"zombie"
-//ANIM_COUNT  4
+//ANIM_COUNT  5
+#define	 Zombie_RUN			L"zombie_run.Mat"
 #define	 Zombie_CRAWL		L"zombie_crawl.Mat"
 #define	 Zombie_ATTACK		L"zombie_attack.Mat"
 #define	 Zombie_WALK		L"zombie_walk.Mat"
