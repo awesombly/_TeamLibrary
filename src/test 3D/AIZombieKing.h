@@ -1,28 +1,16 @@
-#pragma once
-#include "Component.h"
+#include "AIZombie.h"
 
 
-class AIZombieKing : public Component
+class AIZombieKing : public AIZombie
 {
-private:
-	enum class EState {
-		Idle, Move, Attack,
-	};
 public:
-	EState		m_eState = EState::Idle;
-	EState		m_eDirState = EState::Idle;
-	D3DXVECTOR3 m_Target;
-	float		m_dirRotY;
 
-	float		m_attackRange;
-	float		m_moveSpeed;
-	float		m_delay = 0.0f;
 public:
 	bool Init()											noexcept override;
 	bool Frame(const float& spf, const float& accTime)	noexcept override;
 	bool Render(ID3D11DeviceContext* pDContext)			noexcept override;
 	bool Release()										noexcept override;
-	Component* clone() noexcept;
+	Component* clone()									noexcept override;
 public:
 	AIZombieKing();
 	virtual ~AIZombieKing() = default;

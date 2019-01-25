@@ -8,7 +8,7 @@
 
 AIZombieKing::AIZombieKing()
 {
-	m_myName = L"AIEx";
+	m_myName = L"AI";
 	m_comptType = EComponent::Etc;
 	//Init();
 }
@@ -18,7 +18,7 @@ bool AIZombieKing::Init() noexcept
 {
 	m_isEnable = true;
 	m_attackRange = m_pParent->GetScaleAverage() * 3000.0f;
-	m_moveSpeed = RandomNormal() * 15.0f + 5.0f;
+	m_moveSpeed = RandomNormal() * 5.0f + 15.0f;
 	return true;
 }
 
@@ -46,7 +46,7 @@ bool AIZombieKing::Frame(const float& spf, const float& accTime)	noexcept
 		}	break;
 		case EState::Attack:
 		{
-			m_delay = 0.7f;
+			m_delay = 0.55f;
 			((AHeroObj*)m_pParent)->SetANIM_OneTime(Zombie_KING_ATTACK);
 		}	break;
 		}
@@ -66,7 +66,7 @@ bool AIZombieKing::Frame(const float& spf, const float& accTime)	noexcept
 		{
 			if (VectorLengthSq(iter->GetPosition() - m_pParent->GetPosition()) <= m_attackRange)
 			{
-				m_pParent->SetRotationY(m_pParent->GetFocusY(m_Target = iter->GetPosition()) + PI * 0.25f);
+				m_pParent->SetRotationY(m_pParent->GetFocusY(m_Target = iter->GetPosition()) - PI * 0.5f);
 				m_eDirState = EState::Attack;
 				return true;
 			}
@@ -79,7 +79,7 @@ bool AIZombieKing::Frame(const float& spf, const float& accTime)	noexcept
 		}
 		else	// ÀÌµ¿
 		{
-			m_pParent->Translate(Normalize(m_Target - m_pParent->GetPosition()) * m_moveSpeed * spf);
+			m_pParent->Translate(Normalize(m_Target = PlayerController::Get().m_pHome->GetPosition() - m_pParent->GetPosition()) * m_moveSpeed * spf);
 		}
 	}	break;
 	case EState::Attack:
@@ -89,16 +89,20 @@ bool AIZombieKing::Frame(const float& spf, const float& accTime)	noexcept
 		auto pCollider = new Collider(m_pParent->GetScale().x * 50.0f);
 		auto pMelee = new GameObject(L"Melee", { pCollider, new CEventTimer(0.3f) });
 		pMelee->SetParent(m_pParent);
-		pMelee->SetPosition(m_pParent->GetForward() * 60.0f + m_pParent->GetUp() * 40.0f);
+		auto position = m_pParent->GetForward() * 60.0f + m_pParent->GetUp() * 40.0f;
+		pMelee->SetPosition(position);
 		pMelee->SetRotation(m_pParent->GetRotation());
 		pMelee->UpdateMatrix();
 		pMelee->m_pPhysics->UserSocket = (UINT)-1;
 		pMelee->SetHP(100.0f);
-		pMelee->m_pPhysics->m_damage = 0.4f;
+		pMelee->m_pPhysics->m_damage = 0.8f;
 		pCollider->CollisionEvent = MyEvent::ZombieAttack;
 		pCollider->m_eTag = ETag::Dummy;
 		pCollider->SetGravityScale(0.0f);
 		pCollider->usePhysics(false);
+		// ÀÌÆå
+		auto pEffect = ObjectManager::Get().TakeObject(L"ZAttack");
+		pEffect->SetPosition(position + m_pParent->GetPosition());
 		///
 		m_delay = 3.0f;
 		m_eDirState = EState::Move;

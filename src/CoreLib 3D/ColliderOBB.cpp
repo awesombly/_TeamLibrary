@@ -24,7 +24,7 @@ ColliderOBB::ColliderOBB(const D3DXVECTOR3& minPos, const D3DXVECTOR3& maxPos)
 
 bool ColliderOBB::Init() noexcept
 {
-	m_myName = L"ColliderOBB";
+	m_myName = L"COBB";
 	m_comptType = EComponent::Collider;
 	m_eCollider = ECollider::OBB;
 	return true;

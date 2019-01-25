@@ -15,6 +15,7 @@ enum EPacketProtocol : USHORT {
 	PACKET_SetAnimTransform,
 	PACKET_PlayerDead,
 	PACKET_SetHP,
+	PACKET_HealHP,
 	// 클라 요청
 	PACKET_ReqSync			= 2000,
 	PACKET_ReqSyncSpawns,
@@ -26,6 +27,7 @@ enum EPacketProtocol : USHORT {
 	PACKET_TakeObject,
 	PACKET_PossessPlayer,
 	PACKET_SendUserInfo,
+	PACKET_SendLevelUp,
 };
 
 // 패킷 배열 제외 사이즈
@@ -62,10 +64,10 @@ struct Packet_PlayerDead
 	UINT KillUser;
 };
 
-struct Packet_SetHP
+struct Packet_Float
 {
 	UINT KeyValue;
-	float HP;
+	float Value;
 };
 
 struct Packet_TakeObject

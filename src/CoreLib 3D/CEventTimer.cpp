@@ -24,7 +24,7 @@ bool CEventTimer::Init() noexcept
 	m_curDelay = 0.0f;
 	m_isEnable = true;
 	static auto pEvent = [](void* pTimer, void*) {
-		((CEventTimer*)pTimer)->isEnable(false);
+		//((CEventTimer*)pTimer)->isEnable(false);
 		ObjectManager::Get().RemoveObject(((CEventTimer*)pTimer)->m_pParent);
 	};
 	TimerEvent = { pEvent, this, nullptr };
@@ -33,7 +33,7 @@ bool CEventTimer::Init() noexcept
 
 bool CEventTimer::Frame(const float& spf, const float& accTime)	noexcept
 {
-	if (!m_isEnable) return false;
+	//if (!m_isEnable) return false;
 
 	m_curDelay += spf;
 	if (m_curDelay >= m_EventDelay)

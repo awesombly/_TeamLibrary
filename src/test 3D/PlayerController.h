@@ -38,7 +38,7 @@ private:
 	float		m_EXP				= 0.0f;
 	UCHAR		m_statPoint			= 0;
 	//
-	const float	MoveSpeed = 40.0f;
+	const float	MoveSpeed = 30.0f;
 	const float	JumpPower = 70.0f;
 public:
 	ECharacter  m_curCharacter;			// 현재 캐릭터
@@ -67,6 +67,8 @@ public:
 
 	void*       m_pOption		 = nullptr;
 	void*		m_pHpBar		 = nullptr;		// 체력바
+	void*		m_pLeftIcon		 = nullptr;		// JProgressBar
+	void*		m_pRightIcon	 = nullptr;		// JProgressBar
 	void*		m_pRespawn		 = nullptr;
 	void*		m_pRespawnBar	 = nullptr;
 	void*		m_pRespawnEffect = nullptr;

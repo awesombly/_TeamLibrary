@@ -9,6 +9,7 @@ namespace MyEvent {
 	void MeleeHit(Collider* pA, Collider* pB);
 	void ZombieHit(Collider* pA, Collider* pB);
 	void ZombieAttack(Collider* pA, Collider* pB);
+	void ZombieThrow(Collider* pA, Collider* pB);
 	void OneShots(Collider* pA, Collider* pB);
 	void GiantItem(Collider* pA, Collider* pB);
 

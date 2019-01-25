@@ -57,7 +57,6 @@ bool GameObject::Init() noexcept
 bool GameObject::Frame(const float& spf, const float& accTime) noexcept
 {
 	if (!m_isEnable || m_isStatic) return false;
-	//if (!m_isStatic)
 	UpdateMatrix();
 	if (m_pPhysics != nullptr && usePhysics())
 	{
@@ -71,7 +70,7 @@ bool GameObject::Frame(const float& spf, const float& accTime) noexcept
 		if (GetVelocitySq() > 20.0f)
 		{
 			//m_pParent->isMoved(true);
-			GetRoot()->Translate((GetTotalForce() + Vector3::Up * 5.0f) * spf);
+			GetRoot()->Translate((GetTotalForce() + Vector3::Up * 5.0f) * spf * m_pPhysics->m_mass);
 		}
 	}
 	for (auto& outIter : m_components)

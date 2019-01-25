@@ -244,7 +244,8 @@ void LobbyScene::LoadUI() noexcept
 		((LobbyScene*)pScene)->StartToHost();
 	};
 	static auto pToExit = [](void* pScene) {
-		exit(0); pScene;
+		//exit(0); 
+		Core::isPlaying = false; pScene;
 	};
 
 	JState::SetState(DxManager::GetDevice());

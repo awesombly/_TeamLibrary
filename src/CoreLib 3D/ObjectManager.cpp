@@ -437,6 +437,15 @@ void ObjectManager::PopObject(GameObject* pObject) noexcept
 		//ErrorMessage(__FUNCTIONW__ + L" -> "s + pObject->m_myName + L", Not Found!" );
 		return;
 	}
+	// 충돌체 제거
+	auto pColliders = pObject->GetComponentList(EComponent::Collider);
+	if (pColliders != nullptr)
+	{
+		for (auto& pCol : *pColliders)
+		{
+			PopCollider((Collider*)pCol, false);
+		}
+	}
 	findList.remove(*iter);
 }
 

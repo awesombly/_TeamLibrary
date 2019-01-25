@@ -67,6 +67,7 @@ LRESULT CALLBACK Window::WndProc(HWND hWnd, UINT msg,
 	case WM_DESTROY:
 	{
 		// 종료 메세지를 윈도우 프로시져에 등록
+		Core::isPlaying = false;
 		PostQuitMessage(0);
 	} break;
 	default:

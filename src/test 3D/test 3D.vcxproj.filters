@@ -32,6 +32,12 @@
     <ClCompile Include="AIZombie.cpp">
       <Filter>Controller</Filter>
     </ClCompile>
+    <ClCompile Include="AIZombieCast.cpp">
+      <Filter>Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="AIZombieCrawl.cpp">
+      <Filter>Controller</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainClass.h">
@@ -66,6 +72,12 @@
       <Filter>Controller</Filter>
     </ClInclude>
     <ClInclude Include="AIZombie.h">
+      <Filter>Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="AIZombieCrawl.h">
+      <Filter>Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="AIZombieCast.h">
       <Filter>Controller</Filter>
     </ClInclude>
   </ItemGroup>

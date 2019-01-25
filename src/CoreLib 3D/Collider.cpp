@@ -28,7 +28,7 @@ Collider::~Collider()
 
 bool Collider::Init() noexcept
 {
-	m_myName = L"ColliderSphere";
+	m_myName = L"CSphere";
 	m_comptType = EComponent::Collider;
 	m_eCollider = ECollider::Sphere;
 	return true;

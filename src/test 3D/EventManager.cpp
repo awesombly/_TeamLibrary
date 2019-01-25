@@ -20,7 +20,7 @@ namespace MyEvent {
 			if (pB->m_eTag == ETag::Dummy)
 				return;
 
-			pB->SetForce((Normalize(-pA->GetTotalForce()) + Vector3::Up) * 80.0f);
+			pB->SetForce((Normalize(-pA->GetTotalForce()) + Vector3::Up) * 70.0f);
 			pB->m_pParent->OperHP(-pA->m_pPhysics->m_damage);
 			// 내가 맞았을때
 			if (pB->m_pParent == PlayerController::Get().GetParent())
@@ -43,7 +43,7 @@ namespace MyEvent {
 			}
 		}
 		auto pEffect = ObjectManager::Get().TakeObject(L"PAttack");
-		pEffect->SetPosition(pA->m_pParent->GetWorldPosition());
+		pEffect->SetPosition(pA->m_pParent->GetPosition());
 		ObjectManager::Get().DisableObject(pA->m_pParent);
 		//SoundManager::Get().Play("SE_HIT.mp3");//, pObject->GetWorldPosition(), 1000.0f);
 	}
@@ -53,7 +53,7 @@ namespace MyEvent {
 		if (pB != nullptr &&
 			pB->m_eTag != ETag::Dummy)
 		{
-			pB->SetForce((Normalize(pB->GetCenter() - pA->GetCenter()) + Vector3::Up) * 130.0f);
+			pB->SetForce((Normalize(pB->GetCenter() - pA->GetCenter())) * 100.0f);
 			pB->m_pParent->OperHP(-pA->m_pPhysics->m_damage);
 			pA->AddIgnoreList(pB);
 			// 내가 맞았을때
@@ -86,7 +86,7 @@ namespace MyEvent {
 		if (pB != nullptr &&
 			pB->m_pParent->m_objType == EObjType::Character)
 		{
-			pB->SetForce((Normalize(pB->GetCenter() - pA->GetCenter())) * 60.0f);
+			pB->SetForce((Normalize(pB->GetCenter() - pA->GetCenter())) * 40.0f);
 			pB->m_pParent->OperHP(-pA->m_pPhysics->m_damage);
 			// 내가 맞았을때
 			if (pB->m_pParent == PlayerController::Get().GetParent())
@@ -108,7 +108,7 @@ namespace MyEvent {
 		if (pB != nullptr &&
 			pB->m_eTag == ETag::Ally)
 		{
-			pB->SetForce((Normalize(pB->GetCenter() - pA->GetCenter())) * 130.0f);
+			pB->SetForce((Normalize(pB->GetCenter() - pA->GetCenter())) * 100.0f);
 			pB->m_pParent->OperHP(-pA->m_pPhysics->m_damage);
 			pA->AddIgnoreList(pB);
 			// 내가 맞았을때
@@ -121,10 +121,35 @@ namespace MyEvent {
 				}
 			}
 			auto pEffect = ObjectManager::Get().TakeObject(L"ZAttack");
-			pEffect->SetPosition(pA->m_pParent->GetPosition());
+			pEffect->SetPosition(pA->m_pParent->GetWorldPosition());
 			//ObjectManager::Get().RemoveObject(pA->m_pParent);
 			//SoundManager::Get().PlayQueue("SE_HIT.mp3", pA->m_pParent->GetWorldPosition(), 1000.0f);
 		}
+	}
+
+	void ZombieThrow(Collider* pA, Collider* pB)
+	{
+		if (pB != nullptr)
+		{
+			if (pB->m_eTag != ETag::Ally)
+				return;
+
+			pB->SetForce((Normalize(-pA->GetTotalForce()) + Vector3::Up) * 80.0f);
+			pB->m_pParent->OperHP(-pA->m_pPhysics->m_damage);
+			// 내가 맞았을때
+			if (pB->m_pParent == PlayerController::Get().GetParent())
+			{
+				((JPanel*)PlayerController::Get().m_pHitEffect)->EffectPlay();
+				if (pB->m_pParent->GetHP() <= 0.0f)
+				{
+					PacketManager::Get().SendDeadEvent(pB->m_pParent->m_keyValue, pB->m_pPhysics->UserSocket, pA->m_pPhysics->UserSocket);
+				}
+			}
+		}
+		auto pEffect = ObjectManager::Get().TakeObject(L"ZAttack");
+		pEffect->SetPosition(pA->m_pParent->GetPosition());
+		ObjectManager::Get().DisableObject(pA->m_pParent);
+		//SoundManager::Get().Play("SE_HIT.mp3");//, pObject->GetWorldPosition(), 1000.0f);
 	}
 
 	void OneShots(Collider* pA, Collider* pB) {
@@ -149,7 +174,7 @@ namespace MyEvent {
 				}
 			}
 			auto pEffect = ObjectManager::Get().TakeObject(L"PAttack");
-			pEffect->SetPosition(pA->m_pParent->GetWorldPosition());
+			pEffect->SetPosition(pA->m_pParent->GetPosition());
 		}
 	}
 
@@ -157,21 +182,11 @@ namespace MyEvent {
 		if (pB != nullptr &&
 			(pB->m_pParent->m_objType == EObjType::Character))
 		{
-			pB->m_pParent->SetHP(1.0f);
 			// 플레이어 충돌 이벤트
 			pB->CollisionEvent = MyEvent::OneShots;
 			// 대상이 자신
 			if (pB->m_pParent == PlayerController::Get().GetParent())
 			{
-				((JPanel*)PlayerController::Get().m_pRespawn)->EffectPlay();
-				// SetHP
-				Packet_SetHP p_SetHP;
-				p_SetHP.KeyValue = PlayerController::Get().GetParent()->m_keyValue;
-				p_SetHP.HP = 1.0f;
-				PacketManager::Get().SendPacket((char*)&p_SetHP, (USHORT)sizeof(Packet_SetHP), PACKET_SetHP);
-				// Score
-				PacketManager::Get().pMyInfo->Score += 777;
-				PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
 				// Giant
 				std::thread giant(&PlayerController::StartGiantMode, &PlayerController::Get());
 				giant.detach();

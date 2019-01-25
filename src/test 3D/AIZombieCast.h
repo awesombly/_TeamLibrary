@@ -1,7 +1,8 @@
+#pragma once
 #include "AIZombie.h"
 
 
-class AIZombieEx : public AIZombie
+class AIZombieCast : public AIZombie
 {
 public:
 
@@ -12,6 +13,6 @@ public:
 	bool Release()										noexcept override;
 	Component* clone()									noexcept override;
 public:
-	AIZombieEx();
-	virtual ~AIZombieEx() = default;
+	AIZombieCast();
+	virtual ~AIZombieCast() = default;
 };

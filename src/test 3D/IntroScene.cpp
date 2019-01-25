@@ -4,6 +4,8 @@
 #include "PlayerController.h"
 #include "EventManager.h"
 #include "AIZombie.h"
+#include "AIZombieCrawl.h"
+#include "AIZombieCast.h"
 #include "AIZombieEx.h"
 #include "AIZombieKing.h"
 
@@ -166,11 +168,11 @@ bool IntroScene::FirstInit() noexcept
 		pHeroObj->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
 		pHeroObj->m_myName = L"Chicken";
 		pHeroObj->m_objType = EObjType::Dummy;
-		pHeroObj->SetScale(Vector3::One * 0.6f);
+		pHeroObj->SetScale(Vector3::One * 0.4f);
 		pCollider = new Collider(15.0f);
 		pHeroObj->AddComponent({ pCollider, ObjectManager::Get().TakeComponent(L"Fire") });
-		pCollider->m_pivot = Vector3::Up * 6.0f + Vector3::Forward * 2.5f;
-		pCollider->CollisionEvent = MyEvent::DaggerHit;
+		pCollider->m_pivot = Vector3::Up * 4.0f + Vector3::Forward * 2.5f;
+		pCollider->CollisionEvent = MyEvent::ZombieThrow;
 		pCollider->m_eTag = ETag::Dummy;
 		pHeroObj->m_pPhysics->UserSocket = (UINT)-1;
 		pHeroObj->SetHP(100.0f);
@@ -183,14 +185,11 @@ bool IntroScene::FirstInit() noexcept
 		pHeroObj->SetANIM_Loop(Guard_IDLE);
 		pHeroObj->m_myName = L"Guard";
 		pHeroObj->m_objType = EObjType::Character;
-		//pHeroObj->SetScale(Vector3::One * 0.2f);
 		pCollider = new ColliderOBB({ -13.0f, 0.0f , -13.0f }, { 13.0f, 80.0f , 13.0f });
 		pHeroObj->AddComponent({ pCollider/*, ObjectManager::Get().TakeComponent(L"Fire")*/ });
-		//pCollider->m_pivot *= pHeroObj->GetScaleAverage();
 		pCollider->m_eTag = ETag::Ally;
 		pHeroObj->m_pPhysics->UserSocket = (UINT)-1;
 		ObjectManager::Get().SetProtoObject(pHeroObj);
-
 		// 좀비
 		pHeroObj = new AHeroObj();
 		pHeroObj->SetPlayerCharacter(Zombie);
@@ -198,14 +197,42 @@ bool IntroScene::FirstInit() noexcept
 		pHeroObj->SetANIM_Loop(Zombie_IDLE);
 		pHeroObj->m_myName = L"Zombie";
 		pHeroObj->m_objType = EObjType::Enemy;
-		//pHeroObj->SetScale(Vector3::One * 0.2f);
 		pCollider = new ColliderOBB({ -13.0f, 0.0f , -13.0f }, { 13.0f, 80.0f , 13.0f });
-		pHeroObj->AddComponent({ pCollider, new AIZombie() /*, ObjectManager::Get().TakeComponent(L"Fire")*/ });
-		//pCollider->m_pivot *= pHeroObj->GetScaleAverage();
+		pHeroObj->AddComponent({ pCollider, new AIZombie() });
 		pCollider->CollisionEvent = MyEvent::ZombieHit;
 		pCollider->m_eTag = ETag::Enemy;
 		pHeroObj->m_pPhysics->UserSocket = (UINT)-1;
-		pHeroObj->m_pPhysics->m_damage = 0.1f;
+		pHeroObj->m_pPhysics->m_damage = 0.08f;
+		ObjectManager::Get().SetProtoObject(pHeroObj);
+		// 좀비 Cast
+		pHeroObj = new AHeroObj();
+		pHeroObj->SetPlayerCharacter(Zombie);
+		pHeroObj->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+		pHeroObj->SetANIM_Loop(Zombie_IDLE);
+		pHeroObj->m_myName = L"Caster";
+		pHeroObj->m_objType = EObjType::Enemy;
+		pCollider = new ColliderOBB({ -13.0f, 0.0f , -13.0f }, { 13.0f, 80.0f , 13.0f });
+		pHeroObj->AddComponent({ pCollider, new AIZombieCast() });
+		pCollider->CollisionEvent = MyEvent::ZombieHit;
+		pCollider->m_eTag = ETag::Enemy;
+		pHeroObj->m_pPhysics->UserSocket = (UINT)-1;
+		pHeroObj->m_pPhysics->m_damage = 0.08f;
+		ObjectManager::Get().SetProtoObject(pHeroObj);
+		// 좀비 Crawl
+		pHeroObj = new AHeroObj();
+		pHeroObj->SetPlayerCharacter(Zombie);
+		pHeroObj->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+		pHeroObj->SetANIM_Loop(Zombie_CRAWL);
+		pHeroObj->m_myName = L"Crawler";
+		pHeroObj->m_objType = EObjType::Enemy;
+		pCollider = new ColliderOBB({ -13.0f, 0.0f , -40.0f }, { 13.0f, 25.0f , 40.0f });
+		pHeroObj->AddComponent({ pCollider, new AIZombieCrawl() });
+		pCollider->CollisionEvent = MyEvent::ZombieHit;
+		pCollider->m_pPhysics->m_mass = 0.2f;
+		pCollider->m_pPhysics->m_damping = 1.0f;
+		pCollider->m_eTag = ETag::Enemy;
+		pHeroObj->m_pPhysics->UserSocket = (UINT)-1;
+		pHeroObj->m_pPhysics->m_damage = 0.3f;
 		ObjectManager::Get().SetProtoObject(pHeroObj);
 		// 좀비 Ex
 		pHeroObj = new AHeroObj();
@@ -214,14 +241,14 @@ bool IntroScene::FirstInit() noexcept
 		pHeroObj->SetANIM_Loop(ZombieEX_IDLE);
 		pHeroObj->m_myName = L"Mutant";
 		pHeroObj->m_objType = EObjType::Enemy;
-		//pHeroObj->SetScale(Vector3::One * 0.2f);
 		pCollider = new ColliderOBB({ -13.0f, 0.0f , -13.0f }, { 13.0f, 80.0f , 13.0f });
 		pHeroObj->AddComponent({ pCollider, new AIZombieEx() });
-		//pCollider->m_pivot *= pHeroObj->GetScaleAverage();
 		pCollider->CollisionEvent = MyEvent::ZombieHit;
+		pCollider->m_pPhysics->m_mass = 0.2f;
+		pCollider->m_pPhysics->m_damping = 1.0f;
 		pCollider->m_eTag = ETag::Enemy;
 		pHeroObj->m_pPhysics->UserSocket = (UINT)-1;
-		pHeroObj->m_pPhysics->m_damage = 0.1f;
+		pHeroObj->m_pPhysics->m_damage = 0.3f;
 		ObjectManager::Get().SetProtoObject(pHeroObj);
 		// 좀비 King
 		pHeroObj = new AHeroObj();
@@ -230,14 +257,14 @@ bool IntroScene::FirstInit() noexcept
 		pHeroObj->SetANIM_Loop(Zombie_KING_IDLE);
 		pHeroObj->m_myName = L"Tank";
 		pHeroObj->m_objType = EObjType::Enemy;
-		//pHeroObj->SetScale(Vector3::One * 0.2f);
 		pCollider = new ColliderOBB({ -13.0f, 0.0f , -13.0f }, { 13.0f, 80.0f , 13.0f });
 		pHeroObj->AddComponent({ pCollider, new AIZombieKing() });
-		//pCollider->m_pivot *= pHeroObj->GetScaleAverage();
 		pCollider->CollisionEvent = MyEvent::ZombieHit;
+		pCollider->m_pPhysics->m_mass = 0.1f;
+		pCollider->m_pPhysics->m_damping = 2.0f;
 		pCollider->m_eTag = ETag::Enemy;
 		pHeroObj->m_pPhysics->UserSocket = (UINT)-1;
-		pHeroObj->m_pPhysics->m_damage = 0.1f;
+		pHeroObj->m_pPhysics->m_damage = 0.4f;
 		ObjectManager::Get().SetProtoObject(pHeroObj);
 
 		//// 새

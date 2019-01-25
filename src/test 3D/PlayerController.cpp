@@ -5,11 +5,11 @@
 #include "PacketManager.h"
 #include "SoundManager.h"
 #include "CEventTimer.h"
+#include "EventManager.h"
+#include "AIZombie.h"
 
 #include "uiheader.h"
 #include "JPanel.h"
-#include "RPlane.h"
-#include "EventManager.h"
 
 bool PlayerController::Init() noexcept
 {
@@ -135,6 +135,14 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 		{
 			pObject->SetANIM_OneTime(Guard_DANCE3);
 			SoundManager::Get().Play("SE_Dance01.mp3");// , pObject->GetWorldPosition(), 1000.0f);
+			for (auto& iter : *ObjectManager::Get().GetObjectList(EObjType::Enemy))
+			{
+				if(auto pControllers = iter->GetComponentList(EComponent::Etc);
+					pControllers != nullptr)
+				{
+					((AIZombie*)pControllers->front())->m_Target = pObject->GetPosition();
+				}
+			}
 		}	break;
 		case EAction::Throw:
 		{
@@ -142,17 +150,17 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 			auto pDagger = ObjectManager::Get().TakeObject(L"Dagger");
 			pDagger->SetPosition(pObject->GetPosition() + pObject->GetForward() * 40.0f + pObject->GetUp() * 65.0f + pObject->GetRight() * 20.0f);
 			pDagger->SetRotation(pObject->GetRotation());
-			pDagger->SetScale(pObject->GetScale().x * 3.0f * Vector3::One);
+			//pDagger->SetScale(pObject->GetScale().x * 3.0f * Vector3::One);
 			pDagger->SetForce((forward + Vector3::Up * 0.15f) * 300.0f);
 			pDagger->m_pPhysics->UserSocket = socket;
 			pDagger->SetDamage(0.25f, PacketManager::Get().UserList[socket]->StatStr);
 			pDagger->GetCollider()->AddIgnoreList(pObject->GetCollider());
-			SoundManager::Get().PlayQueue("SE_throw01.mp3", pObject->GetWorldPosition(), 1000.0f);
+			SoundManager::Get().PlayQueue("SE_throw01.mp3", pObject->GetPosition(), 1000.0f);
 		}	break;
 		case EAction::Melee:
 		{
 			pObject->SetANIM_OneTime(Guard_PUNCH);
-			SoundManager::Get().PlayQueue("SV_Guard_Punch.mp3", pObject->GetWorldPosition(), 1000.0f);
+			SoundManager::Get().PlayQueue("SV_Guard_Punch.mp3", pObject->GetPosition(), 1000.0f);
 			
 			auto pCollider = new Collider(pObject->GetScale().x * 55.0f);
 			auto pMelee = new GameObject(L"Melee", { pCollider, new CEventTimer(0.5f) });
@@ -223,12 +231,12 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 			pChicken->m_pPhysics->UserSocket = socket;
 			pChicken->SetDamage(0.25f, PacketManager::Get().UserList[socket]->StatStr);
 		 	((Collider*)pChicken->GetComponentList(EComponent::Collider)->front())->AddIgnoreList((Collider*)pObject->GetComponentList(EComponent::Collider)->front());
-		 	SoundManager::Get().PlayQueue("SE_chicken.mp3", pObject->GetWorldPosition(), 1000.0f);
+		 	SoundManager::Get().PlayQueue("SE_chicken.mp3", pObject->GetPosition(), 1000.0f);
 		 }	break;
 		 case EAction::Melee:
 		 {
 		 	//pObject->SetANIM_OneTime(Zombie_PUNCH);
-		 	SoundManager::Get().PlayQueue("SE_zombie_hit01.mp3", pObject->GetWorldPosition(), 1000.0f);
+		 	SoundManager::Get().PlayQueue("SE_zombie_hit01.mp3", pObject->GetPosition(), 1000.0f);
 		 
 			auto pCollider = new Collider(pObject->GetScale().x * 40.0f);
 			auto pMelee = new GameObject(L"Melee", { pCollider, new CEventTimer(0.5f) });
@@ -287,7 +295,7 @@ void PlayerController::PlayerInput(const float& spf) noexcept
 	if (m_pParent->isGround() && Input::GetKeyState(VK_SPACE) == EKeyState::DOWN)
 	{
 		eAction = EAction::Jump;
-		PacketManager::Get().SendPlaySound("SE_jump01.mp3", PlayerController::Get().GetWorldPosition(), 1000.0f);
+		PacketManager::Get().SendPlaySound("SE_jump01.mp3", PlayerController::Get().GetPosition(), 1000.0f);
 	}
 
 	if (m_curCharacter != ECharacter::EDummy)
@@ -301,14 +309,14 @@ void PlayerController::PlayerInput(const float& spf) noexcept
 			m_MP >= 0.2f)
 		{
 			m_MP -= 0.2f;
-			m_curDelayThrow = m_DelayThrow - PacketManager::Get().pMyInfo->StatDex * m_DelayThrow * 0.15f;
+			m_curDelayThrow = m_DelayThrow;
 			eAction = EAction::Throw;
 		}
 		// ±¸¸£±â
 		if (Input::GetKeyState(VK_SHIFT) == EKeyState::DOWN &&
 			m_curDelayDash <= 0.0f)
 		{
-			m_curDelayDash = m_DelayDash - PacketManager::Get().pMyInfo->StatDex * m_DelayDash * 0.15f;
+			m_curDelayDash = m_DelayDash;
 			eAction = EAction::Dash;
 			SoundManager::Get().Play("SE_jump02.mp3");
 		}
@@ -500,7 +508,16 @@ void PlayerController::SendGiantMode(const float& spf) noexcept
 
 void PlayerController::StartGiantMode() noexcept
 {
-	PacketManager::Get().SendPlaySound("SE_jajan.mp3", GetWorldPosition(), 1000.0f);
+	PacketManager::Get().SendPlaySound("SE_jajan.mp3", GetPosition(), 1000.0f);
+	((JPanel*)m_pRespawn)->EffectPlay();
+	// Heal
+	Packet_Float p_SetHP;
+	p_SetHP.KeyValue = PlayerController::Get().GetParent()->m_keyValue;
+	p_SetHP.Value = 100.0f;
+	PacketManager::Get().SendPacket((char*)&p_SetHP, (USHORT)sizeof(Packet_Float), PACKET_HealHP);
+	//// Score
+	//PacketManager::Get().pMyInfo->Score += 777;
+
 	float frameCount = 0.0f;
 	while (frameCount <= 3.0f)
 	{
@@ -581,7 +598,6 @@ void PlayerController::ResetOption() noexcept
 	///
 	SetPosition(Vector3::Zero);
 	SetRotation(Quaternion::Base);
-	UpdateStatus();
 	m_pCamera = ObjectManager::Cameras[ECamera::Main];
 	m_pCamera->SetRotation(Quaternion::Left * PI + Quaternion::Up * PI * 0.2f);
 	m_pCamera->m_lerpMoveSpeed = 6.0f;
@@ -600,14 +616,17 @@ void PlayerController::UpdateStatus() noexcept
 	m_DelayEnemyPanel = 3.0f;
 	m_DelayRespawn = 8.0f * 5.0f / (5.0f + PacketManager::Get().pMyInfo->StatCha);
 	m_DelayThrow = 0.4f * 5.0f / (5.0f + PacketManager::Get().pMyInfo->StatDex);
-	m_DelayDash = 1.0f * 5.0f / (5.0f + PacketManager::Get().pMyInfo->StatDex);
+	m_DelayDash = 1.5f * 5.0f / (5.0f + PacketManager::Get().pMyInfo->StatDex);
 	m_DelayMelee = 1.0f * 5.0f / (5.0f + PacketManager::Get().pMyInfo->StatDex);
-	m_RegenMP = 0.3f + PacketManager::Get().pMyInfo->StatInt * 0.045f;
-
+	m_RegenMP = 0.3f + PacketManager::Get().pMyInfo->StatInt * 0.06f;
+	((JProgressBar*)m_pLeftIcon)->SetValue(m_curDelayDash, m_DelayDash);
+	((JProgressBar*)m_pRightIcon)->SetValue(m_curDelayThrow, m_DelayThrow); 
 	if (m_pParent != nullptr)
 	{
 		m_pParent->m_pPhysics->m_maxHP = 1.0f + PacketManager::Get().pMyInfo->StatInt * 0.2f;
+		((JProgressBar*)m_pHpBar)->SetValue(m_pParent->GetHP(), m_pParent->m_pPhysics->m_maxHP);
 	}
+	PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
 }
 
 void PlayerController::Possess(GameObject* pObject) noexcept
@@ -633,27 +652,18 @@ void PlayerController::Possess(GameObject* pObject) noexcept
 		else
 			pPlayer->m_curCharacter = PlayerController::ECharacter::EDummy;
 
-		((JProgressBar*)pPlayer->m_pHpBar)->SetValue(pObj->GetHP(), pObj->m_pPhysics->m_maxHP);
 		pPlayer->ResetOption();
+		pPlayer->UpdateStatus();
 		SoundManager::Get().m_pListenerPos = &pObj->GetRoot()->GetPosition();
 	};
 
 	ObjectManager::PostFrameEvent.emplace(pEvent, this, pObject);
-
-	//if (pCollider->m_pParent->m_myName == L"Guard")
-	//	m_curCharacter = PlayerController::ECharacter::EGuard;
-	//else if (pCollider->m_pParent->m_myName == L"Zombie")
-	//	m_curCharacter = PlayerController::ECharacter::EZombie;
-	//else
-	//	m_curCharacter = PlayerController::ECharacter::EDummy;
-	//((JProgressBar*)m_pHpBar)->SetValue(pCollider->GetHP(), 1.0f);
-	//ResetOption();
 }
 
 
 void PlayerController::DeadEvent() noexcept
 {
-	PacketManager::Get().SendPlaySound("SE_dead.mp3", GetWorldPosition(), 1000.0f);
+	PacketManager::Get().SendPlaySound("SE_dead.mp3", GetPosition(), 1000.0f);
 	m_pParent->SetHP(0.0f);
 	SetPosition(m_pParent->GetPosition());
 	SetRotation(m_pParent->GetRotation());
@@ -677,18 +687,12 @@ void PlayerController::HitEvent(Collider* pTarget) noexcept
 void PlayerController::OperEXP(const float& value) noexcept
 {
 	m_EXP += value;
-	if (m_EXP >= 1.0f)
+	if (m_EXP >= 1.0f && m_pParent != nullptr)
 	{
-		m_EXP = 0.0f;
+		m_EXP = -1.0f;
 		// LevelUp
 		++PacketManager::Get().pMyInfo->Level;
-		PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
-		// SetHP
-		Packet_SetHP p_SetHP;
-		p_SetHP.KeyValue = PlayerController::Get().GetParent()->m_keyValue;
-		p_SetHP.HP = 1.0f + PacketManager::Get().pMyInfo->StatInt * 0.2f;
-		PacketManager::Get().SendPacket((char*)&p_SetHP, (USHORT)sizeof(Packet_SetHP), PACKET_SetHP);
-		//
+		PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendLevelUp);
 		m_statPoint += 4;
 	}
 }

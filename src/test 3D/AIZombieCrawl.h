@@ -1,7 +1,7 @@
 #include "AIZombie.h"
 
 
-class AIZombieEx : public AIZombie
+class AIZombieCrawl : public AIZombie
 {
 public:
 
@@ -12,6 +12,6 @@ public:
 	bool Release()										noexcept override;
 	Component* clone()									noexcept override;
 public:
-	AIZombieEx();
-	virtual ~AIZombieEx() = default;
+	AIZombieCrawl();
+	virtual ~AIZombieCrawl() = default;
 };

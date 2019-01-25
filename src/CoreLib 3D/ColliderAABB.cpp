@@ -24,7 +24,7 @@ ColliderAABB::ColliderAABB(const D3DXVECTOR3& minPos, const D3DXVECTOR3& maxPos)
 
 bool ColliderAABB::Init() noexcept
 {
-	m_myName = L"ColliderAABB";
+	m_myName = L"CAABB";
 	m_comptType = EComponent::Collider;
 	m_eCollider = ECollider::AABB;
 	return true;

@@ -71,7 +71,7 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 	static Packet_TakeObject	p_TakeObject;
 	static Packet_SyncObjects	p_SyncObjects;
 	static Packet_PlayerDead	p_PlayerDead;
-	static Packet_SetHP			p_SetHP;
+	static Packet_Float			p_Float;
 
 	memcpy(&p_KeyValue, data, sizeof(Packet_KeyValue));
 	if (sendMode < 2000 &&
@@ -105,7 +105,6 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 	{
 		memcpy(&p_Vector3, data, sizeof(Packet_Vector3));
 		auto pObject = ObjectManager::KeyObjects[p_Vector3.KeyValue];
-		//auto preScale = pObject->GetScaleAverage();
 		pObject->SetScale(p_Vector3.Vec3);
 		auto pCollider = pObject->GetComponentList(EComponent::Collider);
 		if (pCollider != nullptr)
@@ -116,7 +115,6 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 				for (auto& iter : *pCollider)
 				{
 					((Collider*)iter)->m_pivot = Vector3::Up * 40.0f * pObject->GetScale().x;
-					//pObject->SetArmor(pObject->GetScaleAverage());
 				}
 			}
 		}
@@ -198,11 +196,26 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 			pObject->m_pPhysics->m_maxHP = p_TakeObject.HP;
 			pObject->SetGravityScale(pObject->GetScale().x * 5.0f);
 			pObject->GetCollider()->m_pivot = Vector3::Up * 40.0f * pObject->GetScale().x;
-			//if (auto iter = UserList.find(p_TakeObject.UserSocket);
-			//	iter != UserList.end())
-			//{
-			//	pObject->SetArmor(iter->second->StatInt);
-			//}
+		}
+	}	break;
+	case PACKET_SendLevelUp:
+	{
+		memcpy(&p_KeyValue, data, sizeof(Packet_KeyValue));
+		// 유저 정보 갱신
+		auto userIter = UserList.find(p_KeyValue.KeyValue);
+		if (userIter != UserList.end())
+		{
+			memcpy((char*)userIter->second, data, PS_UserInfo);
+			memcpy(((char*)userIter->second + PS_UserInfo), ((char*)data + PS_UserInfo), UserList[p_KeyValue.KeyValue]->DataSize);
+			pChatList->push_string(L"[LevelUp!] '"s + userIter->second->UserID + L"'  :  " + to_wstring(userIter->second->Level - 1) + L"  ->  " + to_wstring(userIter->second->Level));
+			// 체력 갱신
+			if (pMyInfo == userIter->second &&
+				PlayerController::Get().GetParent() != nullptr)
+			{
+				p_Float.KeyValue = PlayerController::Get().GetParent()->m_keyValue;
+				p_Float.Value = 1.0f + pMyInfo->StatInt * 0.2f;
+				PacketManager::Get().SendPacket((char*)&p_Float, (USHORT)sizeof(Packet_Float), PACKET_SetHP);
+			}
 		}
 	}	break;
 	case PACKET_SendUserInfo:
@@ -217,18 +230,9 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 			return;
 		}
 
-		//for (int i = 0; i < UserList.size(); ++i)
-		//{
-		//	if (pUserPanel[i] != nullptr)
-		//		pUserPanel[i]->m_bRender = true;
-		//	if (UserList[p_KeyValue.KeyValue]->UserSocket == p_KeyValue.KeyValue)
-		//	{
-		//	}
-		//}
 		// 유저 목록에 없는데 자신이면 추가
 		if (pMyInfo->UserSocket == p_KeyValue.KeyValue)
 		{
-			//if (pUserPanel[UserList.size()] != nullptr)
 			pUserPanel[UserList.size()]->m_bRender = true;
 			memcpy((char*)pMyInfo, data, PS_UserInfo);
 			memcpy(((char*)pMyInfo + PS_UserInfo), ((char*)data + PS_UserInfo), pMyInfo->DataSize);
@@ -236,7 +240,6 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 			return;
 		}
 		// 새 유저면 생성
-		//if (pUserPanel[UserList.size()] != nullptr)
 		pUserPanel[UserList.size()]->m_bRender = true;
 		auto pUser = new UserInfo();
 		memcpy((char*)pUser, data, PS_UserInfo);
@@ -301,7 +304,7 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 		// 맞은놈
 		if (p_PlayerDead.DeadUser == (UINT)-1)
 		{
-			dead = L"Zombie";
+			dead = pObject->m_myName;
 		}
 		else
 		{
@@ -310,14 +313,14 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 			{
 				dead = iter->second->UserID;
 				
-				pChatList->push_string(L"[System] '" + dead + L"'님이 사망했습니다.");
+				pChatList->push_string(L"[System] '" + dead + L"' 님이 사망 했습니다.");
 				*pChatList->m_fValue = 0.0f;
 			}
 		}
 		// 때린놈
 		if (p_PlayerDead.KillUser == (UINT)-1)
 		{
-			killer = L"Zombie";
+			killer = pObject->m_myName;
 		}
 		else
 		{
@@ -368,8 +371,18 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 	}	break;
 	case PACKET_SetHP:
 	{
-		memcpy(&p_SetHP, data, sizeof(Packet_SetHP));
-		ObjectManager::KeyObjects[p_SetHP.KeyValue]->SetHP(p_SetHP.HP);
+		memcpy(&p_Float, data, sizeof(Packet_Float));
+		ObjectManager::KeyObjects[p_Float.KeyValue]->SetHP(p_Float.Value);
+		if (PlayerController::Get().GetParent() != nullptr &&
+			PlayerController::Get().GetParent()->m_keyValue == p_Float.KeyValue)
+		{
+			PlayerController::Get().UpdateStatus();
+		}
+	}	break;
+	case PACKET_HealHP:
+	{
+		memcpy(&p_Float, data, sizeof(Packet_Float));
+		ObjectManager::KeyObjects[p_Float.KeyValue]->HealHP(p_Float.Value);
 	}	break;
 	default:
 	{

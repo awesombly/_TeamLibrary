@@ -33,13 +33,11 @@ bool Core::GameRun() noexcept
 	//	std::this_thread::yield();
 	//}
 
-	//gameTimer.join();
+	gameTimer.join();
 	//gameFrame.join();
 	//gameRender.join();
 
-	this_thread::sleep_for(chrono::milliseconds(100));
-	this_thread::yield();
-	GameRelease();
+	//GameRelease();
 	this_thread::sleep_for(chrono::milliseconds(100));
 	this_thread::yield();
 	// 모든 쓰레드 종료

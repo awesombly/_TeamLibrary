@@ -1,28 +1,25 @@
-#include "AIZombieEx.h"
+#include "AIZombieCast.h"
 #include "ObjectManager.h"
-//#include "GameObject.h"
 #include "AHeroObj.h"
 #include "CEventTimer.h"
 #include "EventManager.h"
 #include "PlayerController.h"
 
-AIZombieEx::AIZombieEx()
+AIZombieCast::AIZombieCast()
 {
 	m_myName = L"AI";
 	m_comptType = EComponent::Etc;
-	//Init();
 }
 
-
-bool AIZombieEx::Init() noexcept
+bool AIZombieCast::Init() noexcept
 {
 	m_isEnable = true;
-	m_attackRange = m_pParent->GetScaleAverage() * 2600.0f;
-	m_moveSpeed = RandomNormal() * 5.0f + 35.0f;
+	m_attackRange = m_pParent->GetScaleAverage() * 10000.0f;
+	m_moveSpeed = RandomNormal() * 10.0f + 20.0f;
 	return true;
 }
 
-bool AIZombieEx::Frame(const float& spf, const float& accTime)	noexcept
+bool AIZombieCast::Frame(const float& spf, const float& accTime)	noexcept
 {
 	if (!m_isEnable) return false;
 
@@ -41,13 +38,13 @@ bool AIZombieEx::Frame(const float& spf, const float& accTime)	noexcept
 		}	break;
 		case EState::Move:
 		{
-			((AHeroObj*)m_pParent)->SetANIM_Loop(ZombieEX_RUN);
+			((AHeroObj*)m_pParent)->SetANIM_Loop(Zombie_RUN);
 			m_pParent->SetFocus(m_Target = PlayerController::Get().m_pHome->GetPosition());
 		}	break;
 		case EState::Attack:
 		{
 			m_delay = 1.1f;
-			((AHeroObj*)m_pParent)->SetANIM_OneTime(ZombieEX_ATTACK);
+			((AHeroObj*)m_pParent)->SetANIM_OneTime(Zombie_ATTACK);
 		}	break;
 		}
 		return true;
@@ -86,25 +83,15 @@ bool AIZombieEx::Frame(const float& spf, const float& accTime)	noexcept
 	{
 		//SoundManager::Get().PlayQueue("SV_Guard_Punch.mp3", pObject->GetWorldPosition(), 1000.0f);
 
-		auto pCollider = new Collider(m_pParent->GetScale().x * 50.0f);
-		auto pMelee = new GameObject(L"Melee", { pCollider, new CEventTimer(0.3f) });
-		pMelee->SetParent(m_pParent);
-		auto position = m_pParent->GetForward() * 60.0f + m_pParent->GetUp() * 45.0f;
-		pMelee->SetPosition(position);
-		pMelee->SetRotation(m_pParent->GetRotation());
-		pMelee->UpdateMatrix();
-		pMelee->m_pPhysics->UserSocket = (UINT)-1;
-		pMelee->SetHP(100.0f);
-		pMelee->m_pPhysics->m_damage = 0.6f;
-		pCollider->CollisionEvent = MyEvent::ZombieAttack;
-		pCollider->m_eTag = ETag::Dummy;
-		pCollider->SetGravityScale(0.0f);
-		pCollider->usePhysics(false);
-		// ÀÌÆå
-		auto pEffect = ObjectManager::Get().TakeObject(L"ZAttack");
-		pEffect->SetPosition(position + m_pParent->GetPosition());
+		auto pChicken = ObjectManager::Get().TakeObject(L"Chicken");
+		pChicken->SetPosition(m_pParent->GetPosition() + m_pParent->GetForward() * 40.0f + m_pParent->GetUp() * 65.0f + m_pParent->GetRight() * 20.0f);
+		pChicken->SetRotation(m_pParent->GetRotation());
+		pChicken->SetScale(m_pParent->GetScale().x * 2.0f * Vector3::One);
+		pChicken->SetForce((m_pParent->GetForward() + Vector3::Up * 0.2f) * 250.0f);
+		pChicken->m_pPhysics->UserSocket = (UINT)-1;
+		pChicken->m_pPhysics->m_damage = 0.35f;
 		///
-		m_delay = 3.0f;
+		m_delay = 5.0f;
 		m_eDirState = EState::Move;
 	}	break;
 	}
@@ -112,20 +99,20 @@ bool AIZombieEx::Frame(const float& spf, const float& accTime)	noexcept
 	accTime;
 }
 
-bool AIZombieEx::Render(ID3D11DeviceContext* pDContext) noexcept
+bool AIZombieCast::Render(ID3D11DeviceContext* pDContext) noexcept
 {
 	return true;
 	pDContext;
 }
 
-bool AIZombieEx::Release()	noexcept
+bool AIZombieCast::Release()	noexcept
 {
 	return true;
 }
 
-Component* AIZombieEx::clone() noexcept
+Component* AIZombieCast::clone() noexcept
 {
-	auto pAI = new AIZombieEx(*this);
+	auto pAI = new AIZombieCast(*this);
 	pAI->m_eState = EState::Idle;
 	return (Component*)pAI;
 }

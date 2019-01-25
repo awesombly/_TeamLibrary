@@ -217,6 +217,8 @@ copy "$(SolutionDir)lib\*.dll" "$(OutputPath)\"</Command>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AIZombie.cpp" />
+    <ClCompile Include="AIZombieCast.cpp" />
+    <ClCompile Include="AIZombieCrawl.cpp" />
     <ClCompile Include="AIZombieEx.cpp" />
     <ClCompile Include="AIZombieKing.cpp" />
     <ClCompile Include="EventManager.cpp" />
@@ -230,6 +232,8 @@ copy "$(SolutionDir)lib\*.dll" "$(OutputPath)\"</Command>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AIZombie.h" />
+    <ClInclude Include="AIZombieCast.h" />
+    <ClInclude Include="AIZombieCrawl.h" />
     <ClInclude Include="AIZombieEx.h" />
     <ClInclude Include="AIZombieKing.h" />
     <ClInclude Include="EventManager.h" />
