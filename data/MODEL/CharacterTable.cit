@@ -38,8 +38,21 @@
 *SKIN_UPPER_BODY	..\..\data\model\zombie\zombie.skm		null
 *SKIN_LOWER_BODY_COUNT	0
 
-
 ////////////////////////////////////////////////////////////////////////// 3
+*CHARACTERNAME	zombieEX
+*SHADERFILENMAE		..\..\data\model\Character.hlsl
+
+*MATRIXMATRIXCOUNT  3
+*MATRIXFILENAME		..\..\data\model\zombieEX\zombieEX_run.Mat
+*MATRIXFILENAME		..\..\data\model\zombieEX\zombieEX_attack.Mat
+*MATRIXFILENAME		..\..\data\model\zombieEX\zombieEX_idle.Mat
+
+*SKIN_UPPER_BODY_COUNT	1
+*SKIN_UPPER_BODY		..\..\data\model\zombieEX\zombieEX.skm		null
+*SKIN_LOWER_BODY_COUNT	0
+
+
+////////////////////////////////////////////////////////////////////////// 4
 *CHARACTERNAME	zombie_king
 *SHADERFILENMAE		..\..\data\model\Character.hlsl
 
@@ -53,19 +66,6 @@
 *SKIN_UPPER_BODY			..\..\data\model\zombieKing\ZOMBIE_KING.skm		null
 *SKIN_LOWER_BODY_COUNT	0
 *SKIN_LOWER_BODY	
-
-////////////////////////////////////////////////////////////////////////// 4
-
-*CHARACTERNAME	NPC_bird
-*SHADERFILENMAE		..\..\data\model\Character.hlsl
-
-*MATRIXMATRIXCOUNT  1
-*MATRIXFILENAME		..\..\data\model\NPC_bird\NPC_bird.Mat
-
-*SKIN_UPPER_BODY_COUNT	1
-*SKIN_UPPER_BODY	..\..\data\model\NPC_bird\NPC_bird.skm		null
-*SKIN_LOWER_BODY_COUNT	0
-
 
 ////////////////////////////////////////////////////////////////////////// 5
 *CHARACTERNAME	NPC_Chicken
