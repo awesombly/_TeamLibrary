@@ -56,7 +56,8 @@
 *CHARACTERNAME	zombie_king
 *SHADERFILENMAE		..\..\data\model\Character.hlsl
 
-*MATRIXMATRIXCOUNT  4
+*MATRIXMATRIXCOUNT  5
+*MATRIXFILENAME			..\..\data\model\zombieKing\ZOMBIE_KING_ROAR.Mat
 *MATRIXFILENAME			..\..\data\model\zombieKing\ZOMBIE_KING_JUMP_ATTACK.Mat
 *MATRIXFILENAME			..\..\data\model\zombieKing\ZOMBIE_KING_ATTACK.Mat
 *MATRIXFILENAME			..\..\data\model\zombieKing\ZOMBIE_KING_WALK.Mat

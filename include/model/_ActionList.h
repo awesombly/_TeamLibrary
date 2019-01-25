@@ -30,7 +30,8 @@
 //////////////////////////////////////////////////////////////////////////
 //ZombieKing
 #define  Zombie_KING				L"zombie_king"
-//ANIM_COUNT  4
+//ANIM_COUNT  5
+#define	 Zombie_KING_ROAR			L"ZOMBIE_KING_ROAR.Mat"
 #define	 Zombie_KING_JUMP_ATTACK	L"ZOMBIE_KING_JUMP_ATTACK.Mat"
 #define	 Zombie_KING_ATTACK			L"ZOMBIE_KING_ATTACK.Mat"
 #define	 Zombie_KING_WALK			L"ZOMBIE_KING_WALK.Mat"
