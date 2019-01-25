@@ -1,9 +1,7 @@
-
 *NUMCHARACTER		6
 
-
-//////////////////////////////////////////////////////////////////////////
-*CHARACTERNAME		guard
+////////////////////////////////////////////////////////////////////////// 1
+*CHARACTERNAME	guard
 *SHADERFILENMAE		..\..\data\model\Character.hlsl
 
 *MATRIXMATRIXCOUNT  12
@@ -25,14 +23,13 @@
 *SKIN_UPPER_BODY	..\..\data\model\Guard_02\Guard_02.skm		null
 *SKIN_LOWER_BODY_COUNT	0
 
-//////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////// 2
 *CHARACTERNAME	zombie
 *SHADERFILENMAE		..\..\data\model\Character.hlsl
 
-*MATRIXMATRIXCOUNT  5
-*MATRIXFILENAME		..\..\data\model\zombie\zombie_dashjump.Mat
-*MATRIXFILENAME		..\..\data\model\zombie\zombie_punch.Mat
-*MATRIXFILENAME		..\..\data\model\zombie\zombie_run.Mat
+*MATRIXMATRIXCOUNT  4
+*MATRIXFILENAME		..\..\data\model\zombie\zombie_crawl.Mat
+*MATRIXFILENAME		..\..\data\model\zombie\zombie_attack.Mat
 *MATRIXFILENAME		..\..\data\model\zombie\zombie_walk.Mat
 *MATRIXFILENAME		..\..\data\model\zombie\zombie_idle.Mat
 
@@ -41,7 +38,7 @@
 *SKIN_LOWER_BODY_COUNT	0
 
 
-//////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////// 3
 *CHARACTERNAME	zombie_king
 *SHADERFILENMAE		..\..\data\model\Character.hlsl
 
@@ -51,16 +48,14 @@
 *MATRIXFILENAME			..\..\data\model\zombieKing\ZOMBIE_KING_WALK.Mat
 *MATRIXFILENAME			..\..\data\model\zombieKing\ZOMBIE_KING_IDLE.Mat
 
-
-
 *SKIN_UPPER_BODY_COUNT	1
 *SKIN_UPPER_BODY			..\..\data\model\zombieKing\ZOMBIE_KING.skm		null
 *SKIN_LOWER_BODY_COUNT	0
 *SKIN_LOWER_BODY	
 
-//////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////// 4
 
-*CHARACTERNAME		NPC_bird
+*CHARACTERNAME	NPC_bird
 *SHADERFILENMAE		..\..\data\model\Character.hlsl
 
 *MATRIXMATRIXCOUNT  1
@@ -71,9 +66,8 @@
 *SKIN_LOWER_BODY_COUNT	0
 
 
-
-//////////////////////////////////////////////////////////////////////////
-*CHARACTERNAME		NPC_Chicken
+////////////////////////////////////////////////////////////////////////// 5
+*CHARACTERNAME	NPC_Chicken
 *SHADERFILENMAE		..\..\data\model\Character.hlsl
 
 *MATRIXMATRIXCOUNT  1
@@ -84,10 +78,8 @@
 *SKIN_LOWER_BODY_COUNT	0
 
 
-
-
-//////////////////////////////////////////////////////////////////////////
-*CHARACTERNAME		ITEM_Dagger
+////////////////////////////////////////////////////////////////////////// 6
+*CHARACTERNAME	ITEM_Dagger
 *SHADERFILENMAE		..\..\data\model\Character.hlsl
 
 *MATRIXMATRIXCOUNT  1
