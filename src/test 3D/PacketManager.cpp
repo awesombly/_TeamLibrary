@@ -3,6 +3,7 @@
 #include "SoundManager.h"
 #include "PlayerController.h"
 #include "Collider.h"
+#include "EventManager.h"
 
 #include "../network/PPRecvPacketPoolServer.h"					//클라이언트 클래스 정의.
 
@@ -109,12 +110,12 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 		auto pCollider = pObject->GetComponentList(EComponent::Collider);
 		if (pCollider != nullptr)
 		{
-			pObject->SetGravityScale(pObject->GetScaleAverage() * 5.0f);
+			pObject->SetGravityScale(pObject->GetScale().x * 5.0f);
 			if (pObject->m_objType == EObjType::Character)
 			{
 				for (auto& iter : *pCollider)
 				{
-					((Collider*)iter)->m_pivot = Vector3::Up * 40.0f * pObject->GetScaleAverage();
+					((Collider*)iter)->m_pivot = Vector3::Up * 40.0f * pObject->GetScale().x;
 					//pObject->SetArmor(pObject->GetScaleAverage());
 				}
 			}
@@ -195,12 +196,13 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 		{
 			pObject->SetHP(p_TakeObject.HP);
 			pObject->m_pPhysics->m_maxHP = p_TakeObject.HP;
-			pObject->SetGravityScale(pObject->GetScaleAverage() * 5.0f);
-			if (auto iter = UserList.find(p_TakeObject.UserSocket);
-				iter != UserList.end())
-			{
-				pObject->SetArmor(iter->second->StatInt);
-			}
+			pObject->SetGravityScale(pObject->GetScale().x * 5.0f);
+			pObject->GetCollider()->m_pivot = Vector3::Up * 40.0f * pObject->GetScale().x;
+			//if (auto iter = UserList.find(p_TakeObject.UserSocket);
+			//	iter != UserList.end())
+			//{
+			//	pObject->SetArmor(iter->second->StatInt);
+			//}
 		}
 	}	break;
 	case PACKET_SendUserInfo:
@@ -262,7 +264,6 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 			pMyInfo->isDead = true;
 			PacketManager::Get().SendPacket((char*)pMyInfo, (USHORT)(PS_UserInfo + pMyInfo->DataSize), PACKET_SendUserInfo);
 			PlayerController::Get().DeadEvent();
-
 		}
 		// 죽인게 자신일시
 		if (pMyInfo->UserSocket == p_PlayerDead.KillUser)
@@ -271,6 +272,7 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 			pMyInfo->Score += 500;
 			PacketManager::Get().SendPacket((char*)pMyInfo, (USHORT)(PS_UserInfo + pMyInfo->DataSize), PACKET_SendUserInfo);
 		}
+		// 
 		switch (pObject->m_objType)
 		{
 		case EObjType::Character:
@@ -307,8 +309,10 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 			if (iter != UserList.end())
 			{
 				dead = iter->second->UserID;
+				
+				pChatList->push_string(L"[System] '" + dead + L"'님이 사망했습니다.");
+				*pChatList->m_fValue = 0.0f;
 			}
-
 		}
 		// 때린놈
 		if (p_PlayerDead.KillUser == (UINT)-1)
@@ -396,198 +400,4 @@ void PacketManager::SendDeadEvent(const UINT& keyValue, const UINT& deadSocket, 
 	p_PlayerDead.DeadUser = deadSocket;
 	p_PlayerDead.KillUser = killSocket;
 	PacketManager::Get().SendPacket((char*)&p_PlayerDead, (USHORT)sizeof(Packet_PlayerDead), PACKET_PlayerDead);
-}
-
-
-
-
-
-
-
-namespace MyEvent {
-
-	void ForceWave(Collider* pMe, Collider* pYou) {
-		if (pYou != nullptr && pYou->m_eTag == ETag::Collider)
-		{
-			pYou->SetForce((Normalize(pYou->GetCenter() - pMe->GetCenter()) + Vector3::Up) * 60.0f);
-			pMe->AddIgnoreList(pYou);
-		}
-	}
-
-	void DaggerHit(Collider* pA, Collider* pB) 
-	{
-		if (pB != nullptr)
-		{
-			if (pB->m_eTag != ETag::Collider ||
-				pB->m_pParent->m_objType == EObjType::Dummy)
-				return;
-
-			pB->SetForce((Normalize(-pA->GetTotalForce()) + Vector3::Up) * 80.0f);
-			pB->m_pParent->OperHP(-pA->m_pPhysics->m_damage * pB->m_pPhysics->m_armor);
-			// 내가 맞았을때
-			if (pB->m_pParent == PlayerController::Get().GetParent())
-			{
-				((JPanel*)PlayerController::Get().m_pHitEffect)->EffectPlay();
-			}
-			// 내가 때렸을때
-			else if (PacketManager::Get().pMyInfo->UserSocket == pA->m_pPhysics->UserSocket)
-			{
-				PlayerController::Get().HitEvent(pB);
-				if (pB->m_pParent->GetHP() <= 0.0f)
-				{
-					PacketManager::Get().SendDeadEvent(pB->m_pParent->m_keyValue, pB->m_pPhysics->UserSocket, pA->m_pPhysics->UserSocket);
-				}
-				else
-				{
-					PacketManager::Get().pMyInfo->Score += 50;
-					PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
-				}
-			}
-		}
-		auto pEffect = ObjectManager::Get().TakeObject(L"PAttack");
-		pEffect->SetPosition(pA->m_pParent->GetWorldPosition());
-		ObjectManager::Get().DisableObject(pA->m_pParent);
-		//SoundManager::Get().Play("SE_HIT.mp3");//, pObject->GetWorldPosition(), 1000.0f);
-	}
-
-	void MeleeHit(Collider* pA, Collider* pB)
-	{
-		if(pB != nullptr)
-		{
-			if (pB->m_eTag != ETag::Collider ||
-				pB->m_pParent->m_objType == EObjType::Dummy)
-				return;
-
-			pB->SetForce((Normalize(pB->GetCenter() - pA->GetCenter()) + Vector3::Up) * 130.0f);
-			pB->m_pParent->OperHP(-pA->m_pPhysics->m_damage * pB->m_pPhysics->m_armor);
-			// 내가 맞았을때
-			if (pB->m_pParent == PlayerController::Get().GetParent())
-			{
-				((JPanel*)PlayerController::Get().m_pHitEffect)->EffectPlay();
-			}
-			// 내가 때렸을때
-			else if (PacketManager::Get().pMyInfo->UserSocket == pA->m_pPhysics->UserSocket)
-			{
-				PlayerController::Get().HitEvent(pB);
-				if (pB->m_pParent->GetHP() <= 0.0f)
-				{
-					PacketManager::Get().SendDeadEvent(pB->m_pParent->m_keyValue, pB->m_pPhysics->UserSocket, pA->m_pPhysics->UserSocket);
-				}
-				else
-				{
-					PacketManager::Get().pMyInfo->Score += 200;
-					PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
-				}
-				pA->AddIgnoreList(pB);
-			}
-			auto pEffect = ObjectManager::Get().TakeObject(L"Slash");
-			pEffect->SetPosition(pA->m_pParent->GetWorldPosition());
-			//SoundManager::Get().PlayQueue("SE_HIT.mp3", pA->m_pParent->GetWorldPosition(), 1000.0f);
-		}
-	}
-
-	void ZombieHit(Collider* pA, Collider* pB)
-	{
-		if (pB != nullptr)
-		{
-			if (pB->m_eTag != ETag::Collider ||
-				pB->m_pParent->m_objType != EObjType::Character)
-				return;
-
-			pB->SetForce((Normalize(pB->GetCenter() - pA->GetCenter())) * 130.0f);
-			pB->m_pParent->OperHP(-pA->m_pPhysics->m_damage * pB->m_pPhysics->m_armor);
-			// 내가 맞았을때
-			if (pB->m_pParent == PlayerController::Get().GetParent())
-			{
-				((JPanel*)PlayerController::Get().m_pHitEffect)->EffectPlay();
-				if (pB->m_pParent->GetHP() <= 0.0f)
-				{
-					PacketManager::Get().SendDeadEvent(pB->m_pParent->m_keyValue, pB->m_pPhysics->UserSocket, pA->m_pPhysics->UserSocket);
-				}
-			}
-			auto pEffect = ObjectManager::Get().TakeObject(L"ZAttack");
-			pEffect->SetPosition(pA->m_pParent->GetWorldPosition());
-			//SoundManager::Get().PlayQueue("SE_HIT.mp3", pA->m_pParent->GetWorldPosition(), 1000.0f);
-		}
-	}
-
-	void OneShots(Collider* pA, Collider* pB) {
-		if (pB != nullptr)
-		{
-			if (pB->m_eTag != ETag::Collider ||
-				pB->m_pParent->m_objType != EObjType::Enemy)
-				return;
-			//pB->SetForce((Normalize(pB->GetCenter() - pA->GetCenter()) + Vector3::Up) * 130.0f);
-			///pA->m_pParent->HealHP(pB->m_pPhysics->m_damage * pA->m_pPhysics->m_armor * 0.6f);		0밑으로 가면 1로 됨?
-			pB->m_pParent->OperHP(-1.1f * pB->m_pPhysics->m_armor);
-			// 내가 맞았을때
-			if (pB->m_pParent == PlayerController::Get().GetParent())
-			{
-				((JPanel*)PlayerController::Get().m_pHitEffect)->EffectPlay();
-			}
-			// 내가 때렸을때
-			else if (PacketManager::Get().pMyInfo->UserSocket == pA->m_pPhysics->UserSocket)
-			{
-				PlayerController::Get().HitEvent(pB);
-				if (pB->m_pParent->GetHP() <= 0.0f)
-				{
-					PacketManager::Get().SendDeadEvent(pB->m_pParent->m_keyValue, pB->m_pPhysics->UserSocket, pA->m_pPhysics->UserSocket);
-				}
-			}
-			auto pEffect = ObjectManager::Get().TakeObject(L"PAttack");
-			pEffect->SetPosition(pA->m_pParent->GetWorldPosition());
-		}
-	}
-
-	void GiantItem(Collider* pA, Collider* pB) {
-		if (pB != nullptr &&
-			(pB->m_pParent->m_objType == EObjType::Character))
-		{
-			if (pB->m_eTag != ETag::Collider) return;
-
-			pB->m_pParent->SetHP(1.0f);
-			// 플레이어 충돌 이벤트
-			pB->CollisionEvent = MyEvent::OneShots;
-			// 대상이 자신
-			if (pB->m_pParent == PlayerController::Get().GetParent())
-			{
-				((JPanel*)PlayerController::Get().m_pRespawn)->EffectPlay();
-				// SetHP
-				Packet_SetHP p_SetHP;
-				p_SetHP.KeyValue = PlayerController::Get().GetParent()->m_keyValue;
-				p_SetHP.HP = 1.0f;
-				PacketManager::Get().SendPacket((char*)&p_SetHP, (USHORT)sizeof(Packet_SetHP), PACKET_SetHP);
-				// Score
-				PacketManager::Get().pMyInfo->Score += 777;
-				PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
-				// Giant
-				std::thread giant(&PlayerController::StartGiantMode, &PlayerController::Get());
-				giant.detach();
-			}
-			ObjectManager::Get().DisableObject(pA->m_pParent);
-		}
-	}
-
-
-	//////////////////////////////////////////////////////////////////
-	void BulletHit(Collider* pA, Collider* pB) 
-	{
-		if (pB->m_pParent->m_objType == EObjType::Object &&
-			pB->m_pParent->isEnable() &&
-			pA->m_pParent->isEnable())
-		{
-			pB->m_pParent->isEnable(false);
-			pA->m_pParent->isEnable(false);
-		}
-	};
-	void EnemyHit(Collider* pA, Collider* pB) 
-	{
-		if (pB->m_pParent->m_objType == EObjType::Image &&
-			pB->m_pParent->isEnable() &&
-			pA->m_pParent->isEnable())
-		{
-			pB->m_pParent->isEnable(false);
-			pA->m_pParent->isEnable(false);
-		}
-	};
 }

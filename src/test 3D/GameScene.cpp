@@ -16,14 +16,15 @@ bool GameScene::Init() noexcept
 	m_pPlayer->Possess(pHero);
 
 	auto pCollider = new Collider(1.0f);
-	auto pHome = new GameObject(L"Shelter", { pCollider , ObjectManager::Get().TakeComponent(L"RowSphere") }, EObjType::Object);
-	pHome->SetPosition(Vector3::Zero);
-	pHome->SetScale(Vector3::One * 25.0f);
-	pHome->SetGravityScale(0.0f);
-	pHome->usePhysics(false);
-	pHome->SetHP(100.0f);
+	pCollider->m_eTag = ETag::Ally;
+	PlayerController::Get().m_pHome = new GameObject(L"Shelter", { pCollider , ObjectManager::Get().TakeComponent(L"RowSphere") }, EObjType::Object);
+	PlayerController::Get().m_pHome->SetPosition(Vector3::Up * 20.0f);
+	PlayerController::Get().m_pHome->SetScale(Vector3::One * 25.0f);
+	PlayerController::Get().m_pHome->SetGravityScale(0.0f);
+	PlayerController::Get().m_pHome->usePhysics(false);
+	PlayerController::Get().m_pHome->SetHP(100.0f);
 	//pCollider->CollisionEvent = 
-	ObjectManager::Get().PushObject(pHome);
+	ObjectManager::Get().PushObject(PlayerController::Get().m_pHome);
 
 
 	//I_Object.ViewColliderSwitch();
@@ -249,6 +250,48 @@ bool GameScene::CheatMessage() noexcept
 				p_TakeObject.KeyValue = ++PacketManager::Get().PlayerKeyCount;
 				p_TakeObject.Position = { RandomNormal() * 1000.0f - 500.0f, 60.0f, RandomNormal() * 1000.0f - 500.0f };
 				p_TakeObject.Scale = (RandomNormal() * 0.2f + 0.1f) * Vector3::One;
+				PacketManager::Get().SendPacket((char*)&p_TakeObject, (USHORT)(PS_TakeObject + strSize), PACKET_TakeObject);
+			}
+			return false;
+		}
+		else if (str._Equal(L"SpawnEx"))
+		{
+			Packet_TakeObject p_TakeObject;
+			wstring objName = L"Mutant";
+			size_t  strSize = objName.size() * 2;
+			strSize = strSize > 100 ? 100 : strSize;
+
+			memcpy(p_TakeObject.ObjectName, objName.data(), strSize);
+			p_TakeObject.DataSize = (UCHAR)strSize;
+			p_TakeObject.Rotation = Quaternion::Base;
+			p_TakeObject.HP = 3.0f;
+			p_TakeObject.UserSocket = (UINT)-1;
+			for (int i = 0; i < atoi(WCharToChar(m_chatMessage.substr(finder + 1).c_str())); ++i)
+			{
+				p_TakeObject.KeyValue = ++PacketManager::Get().PlayerKeyCount;
+				p_TakeObject.Position = { RandomNormal() * 1000.0f - 500.0f, 60.0f, RandomNormal() * 1000.0f - 500.0f };
+				p_TakeObject.Scale = (RandomNormal() * 0.2f + 0.5f) * Vector3::One;
+				PacketManager::Get().SendPacket((char*)&p_TakeObject, (USHORT)(PS_TakeObject + strSize), PACKET_TakeObject);
+			}
+			return false;
+		}
+		else if (str._Equal(L"SpawnKing"))
+		{
+			Packet_TakeObject p_TakeObject;
+			wstring objName = L"Tank";
+			size_t  strSize = objName.size() * 2;
+			strSize = strSize > 100 ? 100 : strSize;
+
+			memcpy(p_TakeObject.ObjectName, objName.data(), strSize);
+			p_TakeObject.DataSize = (UCHAR)strSize;
+			p_TakeObject.Rotation = Quaternion::Base;
+			p_TakeObject.HP = 10.0f;
+			p_TakeObject.UserSocket = (UINT)-1;
+			for (int i = 0; i < atoi(WCharToChar(m_chatMessage.substr(finder + 1).c_str())); ++i)
+			{
+				p_TakeObject.KeyValue = ++PacketManager::Get().PlayerKeyCount;
+				p_TakeObject.Position = { RandomNormal() * 1000.0f - 500.0f, 60.0f, RandomNormal() * 1000.0f - 500.0f };
+				p_TakeObject.Scale = (RandomNormal() * 0.2f + 1.0f) * Vector3::One;
 				PacketManager::Get().SendPacket((char*)&p_TakeObject, (USHORT)(PS_TakeObject + strSize), PACKET_TakeObject);
 			}
 			return false;

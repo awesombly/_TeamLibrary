@@ -13,15 +13,24 @@
     <ClCompile Include="LobbyScene.cpp">
       <Filter>Scene</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerController.cpp">
-      <Filter>Etc</Filter>
-    </ClCompile>
     <ClCompile Include="PacketManager.cpp">
       <Filter>Etc</Filter>
     </ClCompile>
     <ClCompile Include="GameRule.cpp" />
-    <ClCompile Include="AIController.cpp">
+    <ClCompile Include="EventManager.cpp">
       <Filter>Etc</Filter>
+    </ClCompile>
+    <ClCompile Include="AIZombieEx.cpp">
+      <Filter>Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerController.cpp">
+      <Filter>Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="AIZombieKing.cpp">
+      <Filter>Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="AIZombie.cpp">
+      <Filter>Controller</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -37,9 +46,6 @@
     <ClInclude Include="LobbyScene.h">
       <Filter>Scene</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerController.h">
-      <Filter>Etc</Filter>
-    </ClInclude>
     <ClInclude Include="MyProtocol.h">
       <Filter>Etc</Filter>
     </ClInclude>
@@ -47,8 +53,20 @@
       <Filter>Etc</Filter>
     </ClInclude>
     <ClInclude Include="GameRule.h" />
-    <ClInclude Include="AIController.h">
+    <ClInclude Include="EventManager.h">
       <Filter>Etc</Filter>
+    </ClInclude>
+    <ClInclude Include="AIZombieEx.h">
+      <Filter>Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerController.h">
+      <Filter>Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="AIZombieKing.h">
+      <Filter>Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="AIZombie.h">
+      <Filter>Controller</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -60,6 +78,9 @@
     </Filter>
     <Filter Include="Etc">
       <UniqueIdentifier>{b2e2c52d-45cc-44d1-b214-e7e514288210}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Controller">
+      <UniqueIdentifier>{6528aa82-cce4-4df8-b4aa-efd5ffe1f716}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

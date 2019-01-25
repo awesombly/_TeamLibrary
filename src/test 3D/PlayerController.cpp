@@ -9,6 +9,7 @@
 #include "uiheader.h"
 #include "JPanel.h"
 #include "RPlane.h"
+#include "EventManager.h"
 
 bool PlayerController::Init() noexcept
 {
@@ -141,11 +142,11 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 			auto pDagger = ObjectManager::Get().TakeObject(L"Dagger");
 			pDagger->SetPosition(pObject->GetPosition() + pObject->GetForward() * 40.0f + pObject->GetUp() * 65.0f + pObject->GetRight() * 20.0f);
 			pDagger->SetRotation(pObject->GetRotation());
-			pDagger->SetScale(pObject->GetScaleAverage() * 3.0f * Vector3::One);
+			pDagger->SetScale(pObject->GetScale().x * 3.0f * Vector3::One);
 			pDagger->SetForce((forward + Vector3::Up * 0.15f) * 300.0f);
 			pDagger->m_pPhysics->UserSocket = socket;
 			pDagger->SetDamage(0.25f, PacketManager::Get().UserList[socket]->StatStr);
-			((Collider*)pDagger->GetComponentList(EComponent::Collider)->front())->AddIgnoreList((Collider*)pObject->GetComponentList(EComponent::Collider)->front());
+			pDagger->GetCollider()->AddIgnoreList(pObject->GetCollider());
 			SoundManager::Get().PlayQueue("SE_throw01.mp3", pObject->GetWorldPosition(), 1000.0f);
 		}	break;
 		case EAction::Melee:
@@ -153,17 +154,17 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 			pObject->SetANIM_OneTime(Guard_PUNCH);
 			SoundManager::Get().PlayQueue("SV_Guard_Punch.mp3", pObject->GetWorldPosition(), 1000.0f);
 			
-			auto pCollider = new Collider(pObject->GetScaleAverage() * 40.0f);
+			auto pCollider = new Collider(pObject->GetScale().x * 55.0f);
 			auto pMelee = new GameObject(L"Melee", { pCollider, new CEventTimer(0.5f) });
 			pMelee->SetParent(pObject);
-			pMelee->SetPosition(pObject->GetForward() * 45.0f + pObject->GetUp() * 45.0f);
+			pMelee->SetPosition(pObject->GetForward() * 50.0f + pObject->GetUp() * 45.0f);
 			pMelee->SetRotation(pObject->GetRotation());
 			pMelee->UpdateMatrix();
 			pMelee->m_pPhysics->UserSocket = socket;
 			pMelee->SetHP(100.0f);
 			pMelee->SetDamage(0.5f, PacketManager::Get().UserList[socket]->StatStr);
 			pCollider->CollisionEvent = MyEvent::MeleeHit;
-			pCollider->AddIgnoreList((Collider*)pObject->GetComponentList(EComponent::Collider)->front());
+			pCollider->AddIgnoreList(pObject->GetCollider());
 			pCollider->m_eTag = ETag::Dummy;
 			pCollider->SetGravityScale(0.0f);
 			pCollider->usePhysics(false);
@@ -200,7 +201,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 		 }	break;
 		 case EAction::Backward:
 		 {
-		 	pObject->SetANIM_Loop(Zombie_BACKWARD);
+		 	//pObject->SetANIM_Loop(Zombie_BACKWARD);
 		 }	break;
 		 case EAction::Dance1:
 		 {
@@ -226,10 +227,10 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 		 }	break;
 		 case EAction::Melee:
 		 {
-		 	pObject->SetANIM_OneTime(Zombie_PUNCH);
+		 	//pObject->SetANIM_OneTime(Zombie_PUNCH);
 		 	SoundManager::Get().PlayQueue("SE_zombie_hit01.mp3", pObject->GetWorldPosition(), 1000.0f);
 		 
-			auto pCollider = new Collider(pObject->GetScaleAverage() * 40.0f);
+			auto pCollider = new Collider(pObject->GetScale().x * 40.0f);
 			auto pMelee = new GameObject(L"Melee", { pCollider, new CEventTimer(0.5f) });
 			pMelee->SetParent(pObject);
 			pMelee->SetPosition(pObject->GetForward() * 45.0f + pObject->GetUp() * 45.0f);
@@ -300,14 +301,14 @@ void PlayerController::PlayerInput(const float& spf) noexcept
 			m_MP >= 0.2f)
 		{
 			m_MP -= 0.2f;
-			m_curDelayThrow = m_DelayThrow;
+			m_curDelayThrow = m_DelayThrow - PacketManager::Get().pMyInfo->StatDex * m_DelayThrow * 0.15f;
 			eAction = EAction::Throw;
 		}
 		// ±¸¸£±â
 		if (Input::GetKeyState(VK_SHIFT) == EKeyState::DOWN &&
 			m_curDelayDash <= 0.0f)
 		{
-			m_curDelayDash = m_DelayDash;
+			m_curDelayDash = m_DelayDash - PacketManager::Get().pMyInfo->StatDex * m_DelayDash * 0.15f;
 			eAction = EAction::Dash;
 			SoundManager::Get().Play("SE_jump02.mp3");
 		}
@@ -317,7 +318,7 @@ void PlayerController::PlayerInput(const float& spf) noexcept
 		{
 			m_curDelayMelee = m_DelayMelee;
 			m_curDelayThrow = m_DelayThrow;
-			m_curDelayDash += 0.3f;
+			//m_curDelayDash += 0.3f;
 			eAction = EAction::Melee;
 		}
 	}
@@ -348,7 +349,7 @@ void PlayerController::PlayerInput(const float& spf) noexcept
 	}
 	else
 	{
-		m_MP = min(m_MP + spf * 0.3f, 1.0f);
+		m_MP = min(m_MP + spf * m_RegenMP, 1.0f);
 	}
 
 	if (Input::GetKeyState(EMouseButton::Right) == EKeyState::UP)
@@ -510,8 +511,8 @@ void PlayerController::StartGiantMode() noexcept
 		this_thread::sleep_for(chrono::milliseconds(120));
 		ResetOption();
 	}
-	m_moveSpeed = 120.0f;
-	m_jumpPower = 100.0f;
+	m_moveSpeed = MoveSpeed * 3.0f + MoveSpeed * PacketManager::Get().pMyInfo->StatDex * 0.15f;
+	m_jumpPower = JumpPower * 2.0f;
 }
 
 void PlayerController::CameraInput(const float& spf) noexcept
@@ -580,16 +581,33 @@ void PlayerController::ResetOption() noexcept
 	///
 	SetPosition(Vector3::Zero);
 	SetRotation(Quaternion::Base);
-	m_moveSpeed = 40.0f;
-	m_jumpPower = 70.0f;
+	UpdateStatus();
 	m_pCamera = ObjectManager::Cameras[ECamera::Main];
 	m_pCamera->SetRotation(Quaternion::Left * PI + Quaternion::Up * PI * 0.2f);
 	m_pCamera->m_lerpMoveSpeed = 6.0f;
 	m_pCamera->m_lerpRotateSpeed = 6.0f;
 	if (m_pParent == nullptr)
 		return;
-	m_pCamera->SetPosition(Vector3::Up * 100.0f * m_pParent->GetScaleAverage());
-	m_pCamera->m_armLength = 12.5f * m_pParent->GetScaleAverage();
+	m_pCamera->SetPosition(Vector3::Up * 100.0f * m_pParent->GetScale().x);
+	m_pCamera->m_armLength = 12.5f * m_pParent->GetScale().x;
+}
+
+void PlayerController::UpdateStatus() noexcept
+{
+	m_moveSpeed = MoveSpeed + MoveSpeed * PacketManager::Get().pMyInfo->StatDex * 0.15f;
+	m_jumpPower = JumpPower;
+
+	m_DelayEnemyPanel = 3.0f;
+	m_DelayRespawn = 8.0f * 5.0f / (5.0f + PacketManager::Get().pMyInfo->StatCha);
+	m_DelayThrow = 0.4f * 5.0f / (5.0f + PacketManager::Get().pMyInfo->StatDex);
+	m_DelayDash = 1.0f * 5.0f / (5.0f + PacketManager::Get().pMyInfo->StatDex);
+	m_DelayMelee = 1.0f * 5.0f / (5.0f + PacketManager::Get().pMyInfo->StatDex);
+	m_RegenMP = 0.3f + PacketManager::Get().pMyInfo->StatInt * 0.045f;
+
+	if (m_pParent != nullptr)
+	{
+		m_pParent->m_pPhysics->m_maxHP = 1.0f + PacketManager::Get().pMyInfo->StatInt * 0.2f;
+	}
 }
 
 void PlayerController::Possess(GameObject* pObject) noexcept
@@ -607,7 +625,7 @@ void PlayerController::Possess(GameObject* pObject) noexcept
 			auto pCollider = pObj->GetCollider();
 			{
 				((Collider*)pCollider)->CollisionEvent = nullptr;
-				((Collider*)pCollider)->m_pivot = Vector3::Up * 40.0f * pObj->GetScaleAverage();
+				((Collider*)pCollider)->m_pivot = Vector3::Up * 40.0f * pObj->GetScale().x;
 			}
 		}
 		else if (pObj->m_myName == L"Zombie")
@@ -668,7 +686,7 @@ void PlayerController::OperEXP(const float& value) noexcept
 		// SetHP
 		Packet_SetHP p_SetHP;
 		p_SetHP.KeyValue = PlayerController::Get().GetParent()->m_keyValue;
-		p_SetHP.HP = 1.0f;
+		p_SetHP.HP = 1.0f + PacketManager::Get().pMyInfo->StatInt * 0.2f;
 		PacketManager::Get().SendPacket((char*)&p_SetHP, (USHORT)sizeof(Packet_SetHP), PACKET_SetHP);
 		//
 		m_statPoint += 4;

@@ -8,6 +8,7 @@ enum class ECollider : char {
 
 enum class ETag : char {
 	Collider, Dummy, 
+	Enemy, Ally, 
 };
 
 

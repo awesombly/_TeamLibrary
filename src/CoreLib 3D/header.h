@@ -113,6 +113,11 @@ namespace Matrix {
 									 0, 0, 0, 0 };
 };
 
+//namespace DataInfo {
+//	const static UINT UINTMax = (UINT)-1;
+//	const static UINT UINTMin = 0;
+//}
+
 
 void ErrorMessage(const string_view& msg, const bool& useLoop = false)	noexcept;
 void ErrorMessage(const wstring_view& msg, const bool& useLoop = false) noexcept;

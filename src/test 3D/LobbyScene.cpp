@@ -122,6 +122,7 @@ bool LobbyScene::Frame() noexcept
 				StartupServer();
 				SetScene(ESceneName::Main);
 
+				PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
 				PlayerController::Get().SendReqRespawn(PlayerController::Get().m_selectCharacter);
 			}
 			else
@@ -131,6 +132,7 @@ bool LobbyScene::Frame() noexcept
 				SetScene(ESceneName::Main);
 				while (PacketManager::Get().pMyInfo->UserSocket == 0);	// 소켓 받을때까지 대기
 
+				PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
 				PlayerController::Get().SendReqRespawn(PlayerController::Get().m_selectCharacter);
 			}
 			return true;
@@ -292,17 +294,17 @@ void LobbyScene::LoadUI() noexcept
 	pMatchButton->EventClick.second = this;
 	// 시작 이펙
 	m_pStartEffect = (JPanel*)pUIRoot->find_child(L"effect_hos"); //1234
-	// 캐릭터 선택
-	auto pSelectChange = [](void* pScene) {
-		auto pLobby = (LobbyScene*)pScene;
-		pLobby->SelectCharacter(PlayerController::ECharacter::EDummy);
-	};
-	JButtonCtrl* pCharSelect = (JButtonCtrl*)pUIRoot->find_child(L"Char_Left");
-	pCharSelect->EventClick.first = pSelectChange;
-	pCharSelect->EventClick.second = this;
-	pCharSelect = (JButtonCtrl*)pUIRoot->find_child(L"Char_Right");
-	pCharSelect->EventClick.first = pSelectChange;
-	pCharSelect->EventClick.second = this;
+	//// 캐릭터 선택
+	//auto pSelectChange = [](void* pScene) {
+	//	auto pLobby = (LobbyScene*)pScene;
+	//	pLobby->SelectCharacter(PlayerController::ECharacter::EDummy);
+	//};
+	//JButtonCtrl* pCharSelect = (JButtonCtrl*)pUIRoot->find_child(L"Char_Left");
+	//pCharSelect->EventClick.first = pSelectChange;
+	//pCharSelect->EventClick.second = this;
+	//pCharSelect = (JButtonCtrl*)pUIRoot->find_child(L"Char_Right");
+	//pCharSelect->EventClick.first = pSelectChange;
+	//pCharSelect->EventClick.second = this;
 
 	// 매칭 대기
 	m_pIsMatching = (JPanel*)pUIRoot->find_child(L"isMatching_Panel");

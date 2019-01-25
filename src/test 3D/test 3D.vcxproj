@@ -216,7 +216,10 @@ copy "$(SolutionDir)lib\*.dll" "$(OutputPath)\"</Command>
     </FxCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="AIController.cpp" />
+    <ClCompile Include="AIZombie.cpp" />
+    <ClCompile Include="AIZombieEx.cpp" />
+    <ClCompile Include="AIZombieKing.cpp" />
+    <ClCompile Include="EventManager.cpp" />
     <ClCompile Include="GameRule.cpp" />
     <ClCompile Include="LobbyScene.cpp" />
     <ClCompile Include="IntroScene.cpp" />
@@ -226,7 +229,10 @@ copy "$(SolutionDir)lib\*.dll" "$(OutputPath)\"</Command>
     <ClCompile Include="PlayerController.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AIController.h" />
+    <ClInclude Include="AIZombie.h" />
+    <ClInclude Include="AIZombieEx.h" />
+    <ClInclude Include="AIZombieKing.h" />
+    <ClInclude Include="EventManager.h" />
     <ClInclude Include="GameRule.h" />
     <ClInclude Include="LobbyScene.h" />
     <ClInclude Include="IntroScene.h" />

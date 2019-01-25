@@ -37,7 +37,7 @@ protected:
 	bool  m_isStatic	= false;	// SRT 갱신 여부
 	bool  m_isBillBoard = false;	// 빌보드 행렬 적용 여부
 
-	float m_HP;	// 안씀
+	float m__;	// 안씀
 public:
 	virtual void UpdateMatrix()												noexcept;
 	UINT	 m_keyValue;							// 유일한 키값
