@@ -2,6 +2,7 @@
 #include "PacketManager.h"
 #include "PlayerController.h"
 #include "ObjectManager.h"
+#include "UIManager.h"
 
 
 namespace MyEvent {
@@ -25,7 +26,7 @@ namespace MyEvent {
 			// 내가 맞았을때
 			if (pB->m_pParent == PlayerController::Get().GetParent())
 			{
-				((JPanel*)PlayerController::Get().m_pHitEffect)->EffectPlay();
+				((JPanel*)UIManager::Get().m_pHitEffect)->EffectPlay();
 			}
 			// 내가 때렸을때
 			else if (PacketManager::Get().pMyInfo->UserSocket == pA->m_pPhysics->UserSocket)
@@ -59,7 +60,7 @@ namespace MyEvent {
 			// 내가 맞았을때
 			if (pB->m_pParent == PlayerController::Get().GetParent())
 			{
-				((JPanel*)PlayerController::Get().m_pHitEffect)->EffectPlay();
+				UIManager::Get().m_pHitEffect->EffectPlay();
 			}
 			// 내가 때렸을때
 			else if (PacketManager::Get().pMyInfo->UserSocket == pA->m_pPhysics->UserSocket)
@@ -91,7 +92,7 @@ namespace MyEvent {
 			// 내가 맞았을때
 			if (pB->m_pParent == PlayerController::Get().GetParent())
 			{
-				((JPanel*)PlayerController::Get().m_pHitEffect)->EffectPlay();
+				UIManager::Get().m_pHitEffect->EffectPlay();
 				if (pB->m_pParent->GetHP() <= 0.0f)
 				{
 					PacketManager::Get().SendDeadEvent(pB->m_pParent->m_keyValue, pB->m_pPhysics->UserSocket, pA->m_pPhysics->UserSocket);
@@ -114,7 +115,7 @@ namespace MyEvent {
 			// 내가 맞았을때
 			if (pB->m_pParent == PlayerController::Get().GetParent())
 			{
-				((JPanel*)PlayerController::Get().m_pHitEffect)->EffectPlay();
+				UIManager::Get().m_pHitEffect->EffectPlay();
 				if (pB->m_pParent->GetHP() <= 0.0f)
 				{
 					PacketManager::Get().SendDeadEvent(pB->m_pParent->m_keyValue, pB->m_pPhysics->UserSocket, pA->m_pPhysics->UserSocket);
@@ -139,7 +140,7 @@ namespace MyEvent {
 			// 내가 맞았을때
 			if (pB->m_pParent == PlayerController::Get().GetParent())
 			{
-				((JPanel*)PlayerController::Get().m_pHitEffect)->EffectPlay();
+				UIManager::Get().m_pHitEffect->EffectPlay();
 				if (pB->m_pParent->GetHP() <= 0.0f)
 				{
 					PacketManager::Get().SendDeadEvent(pB->m_pParent->m_keyValue, pB->m_pPhysics->UserSocket, pA->m_pPhysics->UserSocket);
@@ -162,7 +163,7 @@ namespace MyEvent {
 			// 내가 맞았을때
 			if (pB->m_pParent == PlayerController::Get().GetParent())
 			{
-				((JPanel*)PlayerController::Get().m_pHitEffect)->EffectPlay();
+				UIManager::Get().m_pHitEffect->EffectPlay();
 			}
 			// 내가 때렸을때
 			else if (PacketManager::Get().pMyInfo->UserSocket == pA->m_pPhysics->UserSocket)

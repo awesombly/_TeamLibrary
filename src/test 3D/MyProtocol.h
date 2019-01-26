@@ -51,7 +51,7 @@ struct UserInfo
 	UCHAR StatStr	= 0;
 	UCHAR StatDex	= 0;
 	UCHAR StatInt	= 0;
-	UCHAR StatCha	= 0;
+	UCHAR StatLuk	= 0;
 
 	UCHAR DataSize	= 0;
 	WCHAR UserID[11];

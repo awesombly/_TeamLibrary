@@ -6,6 +6,7 @@
 class Collider;
 class Camera;
 class AHeroObj;
+class UIManager;
 
 class PlayerController : public GameObject, public ISingleton<PlayerController>
 {
@@ -34,15 +35,19 @@ private:
 	POINT		m_setMouseClient;
 
 	GameObject*	m_pEffectFly = nullptr;
+	GameObject* m_pTargetEnemy = nullptr;
 	///
 	float		m_EXP				= 0.0f;
-	UCHAR		m_statPoint			= 0;
+	float		m_NeedEXP			= 1.0f;
 	//
 	const float	MoveSpeed = 30.0f;
 	const float	JumpPower = 70.0f;
+	UIManager*  pUIManager = nullptr;
 public:
 	ECharacter  m_curCharacter;			// 현재 캐릭터
-	ECharacter  m_selectCharacter;		// 선택 캐릭터
+	//ECharacter  m_selectCharacter;		// 선택 캐릭터
+
+	UCHAR		m_statPoint			= 0;
 	float		m_moveSpeed;
 	float		m_jumpPower;
 	///
@@ -59,24 +64,12 @@ public:
 	float		m_curDelayDash		 = 0.0f;
 	float		m_curDelayMelee		 = 0.0f;
 
+	float		m_maxMP				 = 1.0f;
+	float		m_curMP				 = 0.0f;
 	float		m_mouseSense		 = 0.5f;
-	float		m_MP				 = 1.0f;
 public:
 	GameObject* m_pHome			 = nullptr;
 	const float HomeRadius		 = 1600.0f;
-
-	void*       m_pOption		 = nullptr;
-	void*		m_pHpBar		 = nullptr;		// 체력바
-	void*		m_pLeftIcon		 = nullptr;		// JProgressBar
-	void*		m_pRightIcon	 = nullptr;		// JProgressBar
-	void*		m_pRespawn		 = nullptr;
-	void*		m_pRespawnBar	 = nullptr;
-	void*		m_pRespawnEffect = nullptr;
-	void*		m_pHitEffect	 = nullptr;
-	void*		m_pEnemyPanel	 = nullptr;		// JPanel
-	void*		m_pEnemyHP		 = nullptr;		// JProgressBar
-	void*		m_pEnemyName	 = nullptr;		// JTextCtrl
-	void*		m_pEnemyHPText	 = nullptr;		// JTextCtrl
 private:
 	void SendGiantMode(const float& spf)											noexcept;
 public:

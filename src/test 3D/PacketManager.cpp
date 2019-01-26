@@ -4,6 +4,7 @@
 #include "PlayerController.h"
 #include "Collider.h"
 #include "EventManager.h"
+#include "UIManager.h"
 
 #include "../network/PPRecvPacketPoolServer.h"					//클라이언트 클래스 정의.
 
@@ -213,7 +214,7 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 				PlayerController::Get().GetParent() != nullptr)
 			{
 				p_Float.KeyValue = PlayerController::Get().GetParent()->m_keyValue;
-				p_Float.Value = 1.0f + pMyInfo->StatInt * 0.2f;
+				p_Float.Value = 1.0f + pMyInfo->StatLuk * 0.2f;
 				PacketManager::Get().SendPacket((char*)&p_Float, (USHORT)sizeof(Packet_Float), PACKET_SetHP);
 			}
 		}
@@ -250,7 +251,7 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 	{
 		memcpy(&p_PossessPlayer, data, sizeof(Packet_PossessPlayer));
 		PlayerController::Get().Possess(ObjectManager::KeyObjects[p_PossessPlayer.KeyValue]);
-		((JPanel*)PlayerController::Get().m_pRespawnEffect)->EffectPlay();
+		UIManager::Get().m_pRespawnEffect->EffectPlay();
 
 		pMyInfo->isDead = false;
 		PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
@@ -373,6 +374,7 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 	{
 		memcpy(&p_Float, data, sizeof(Packet_Float));
 		ObjectManager::KeyObjects[p_Float.KeyValue]->SetHP(p_Float.Value);
+		// 자신일시
 		if (PlayerController::Get().GetParent() != nullptr &&
 			PlayerController::Get().GetParent()->m_keyValue == p_Float.KeyValue)
 		{

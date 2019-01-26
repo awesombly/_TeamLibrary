@@ -11,7 +11,7 @@ enum class EKeyState : char {
 };
 
 enum EMouseButton : char {
-	Left = 1, Right= 2, Middle = 4,
+	Left = VK_LBUTTON, Right= VK_RBUTTON, Middle = VK_MBUTTON,
 };
 
 class Input : public ISingleton<Input>, public IBasis

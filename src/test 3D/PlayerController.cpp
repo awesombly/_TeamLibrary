@@ -4,40 +4,48 @@
 #include "ObjectManager.h"
 #include "PacketManager.h"
 #include "SoundManager.h"
-#include "CEventTimer.h"
 #include "EventManager.h"
+#include "CEventTimer.h"
 #include "AIZombie.h"
-
-#include "uiheader.h"
-#include "JPanel.h"
+#include "UIManager.h"
 
 bool PlayerController::Init() noexcept
 {
 	GameObject::Init();
+	pUIManager = &UIManager::Get();
 	return true;
 }
 
 bool PlayerController::Frame(const float& spf, const float& accTime)	noexcept
 {
 	GameObject::Frame(spf, accTime);
+	m_curMP = min(m_curMP + spf * m_RegenMP, m_maxMP);
+
 	if (!m_isChatting &&
-		!((JPanel*)m_pOption)->m_bRender &&
 		m_pParent != nullptr)
 	{
 		PlayerInput(spf);
-		CameraInput(spf);
-
-		// 초기화
-		if (Input::GetKeyState('R') == EKeyState::DOWN)
+		
+		if (pUIManager->m_pMouseIcon->m_bRender)
 		{
-			Input::isDebug = !Input::isDebug;
-			ResetOption();
+			UpdateStatus();
 		}
-		if (Input::GetKeyState(VK_SUBTRACT) == EKeyState::DOWN)
+		else
 		{
-			m_curDelayRespawn = -9999.9f;
-			CutParentPost();
-			ObjectManager::Cameras[ECamera::Main]->CutParentPost();
+			CameraInput(spf);
+
+			// 초기화
+			if (Input::GetKeyState('R') == EKeyState::DOWN)
+			{
+				Input::isDebug = !Input::isDebug;
+				ResetOption();
+			}
+			if (Input::GetKeyState(VK_SUBTRACT) == EKeyState::DOWN)
+			{
+				m_curDelayRespawn = -9999.9f;
+				CutParentPost();
+				ObjectManager::Cameras[ECamera::Main]->CutParentPost();
+			}
 		}
 	}
 	else if(m_pParent == nullptr)
@@ -46,20 +54,26 @@ bool PlayerController::Frame(const float& spf, const float& accTime)	noexcept
 		m_curDelayRespawn += spf;
 		if (m_curDelayRespawn >= m_DelayRespawn)
 		{
-			((JPanel*)m_pRespawn)->m_bRender = false;
+			pUIManager->m_pRespawn->m_bRender = false;
 			m_curDelayRespawn = 0.0f;
 
-			SendReqRespawn(m_selectCharacter);
+			SendReqRespawn(m_curCharacter);
 			return true;
 		}
 	}
+
 	// 적 체력바
-	if (((JPanel*)m_pEnemyPanel)->m_bRender)
+	if (pUIManager->m_pEnemyPanel->m_bRender)
 	{
 		m_curDelayEnemyPanel -= spf;
 		if (m_curDelayEnemyPanel <= 0.0f)
 		{
-			((JPanel*)m_pEnemyPanel)->m_bRender = false;
+			pUIManager->m_pEnemyPanel->m_bRender = false;
+		}
+		else if (m_pTargetEnemy->m_pPhysics->m_disHP > m_pTargetEnemy->GetHP())
+		{
+			m_pTargetEnemy->m_pPhysics->m_disHP = max<float>(m_pTargetEnemy->m_pPhysics->m_disHP - spf, m_pTargetEnemy->GetHP());
+			pUIManager->m_pEnemyHPText->SetString(to_wstring((int)(m_pTargetEnemy->GetHP() * 100.0f)) + L" / " + to_wstring((int)(m_pTargetEnemy->m_pPhysics->m_maxHP * 100.0f)));
 		}
 	}
 	return true;
@@ -292,59 +306,28 @@ void PlayerController::PlayerInput(const float& spf) noexcept
 	{
 		eAction = EAction::Dance3;
 	}
-	if (m_pParent->isGround() && Input::GetKeyState(VK_SPACE) == EKeyState::DOWN)
-	{
-		eAction = EAction::Jump;
-		PacketManager::Get().SendPlaySound("SE_jump01.mp3", PlayerController::Get().GetPosition(), 1000.0f);
-	}
 
-	if (m_curCharacter != ECharacter::EDummy)
-	{
-		m_curDelayThrow = max(m_curDelayThrow - spf, 0.0f);
-		m_curDelayDash  = max(m_curDelayDash  - spf, 0.0f);
-		m_curDelayMelee = max(m_curDelayMelee - spf, 0.0f);
-		// 던지기
-		if (Input::GetKeyState(EMouseButton::Left) == EKeyState::DOWN &&
-			m_curDelayThrow <= 0.0f &&
-			m_MP >= 0.2f)
-		{
-			m_MP -= 0.2f;
-			m_curDelayThrow = m_DelayThrow;
-			eAction = EAction::Throw;
-		}
-		// 구르기
-		if (Input::GetKeyState(VK_SHIFT) == EKeyState::DOWN &&
-			m_curDelayDash <= 0.0f)
-		{
-			m_curDelayDash = m_DelayDash;
-			eAction = EAction::Dash;
-			SoundManager::Get().Play("SE_jump02.mp3");
-		}
-		// 근접 공격
-		if (Input::GetKeyState('E') == EKeyState::DOWN &&
-			m_curDelayMelee <= 0.0f)
-		{
-			m_curDelayMelee = m_DelayMelee;
-			m_curDelayThrow = m_DelayThrow;
-			//m_curDelayDash += 0.3f;
-			eAction = EAction::Melee;
-		}
-	}
-
-	// 날기
 	static bool isFly = false;
-	if (Input::GetKeyState(EMouseButton::Right) == EKeyState::DOWN)
+	if (Input::GetKeyState(VK_SPACE) == EKeyState::DOWN)
 	{
-		isFly = true;
-		eAction = EAction::Fly;
-		m_pEffectFly = ObjectManager::Get().TakeObject(L"Fly"); //ObjectManager::Get().TakeComponent(L"Fly");
-		m_pEffectFly->SetParent(m_pParent);
-		//m_pParent->AddComponent(m_pEffectFly);
+		if (m_pParent->isGround())
+		{
+			eAction = EAction::Jump;
+			PacketManager::Get().SendPlaySound("SE_jump01.mp3", PlayerController::Get().GetPosition(), 1000.0f);
+		}
+		else
+		{
+			// 날기
+			isFly = true;
+			eAction = EAction::Fly;
+			m_pEffectFly = ObjectManager::Get().TakeObject(L"Fly");
+			m_pEffectFly->SetParent(m_pParent);
+		}
 	}
-	if (isFly && Input::GetKeyState(EMouseButton::Right) == EKeyState::HOLD)
+	if (isFly && Input::GetKeyState(VK_SPACE) == EKeyState::HOLD)
 	{
-		m_MP -= 0.65f * spf;
-		if (m_MP <= 0.0f)
+		m_curMP -= (0.65f + m_RegenMP) * spf;
+		if (m_curMP <= 0.0f)
 		{
 			isFly = false;
 			eAction = EAction::FlyEnd;
@@ -355,12 +338,7 @@ void PlayerController::PlayerInput(const float& spf) noexcept
 			}
 		}
 	}
-	else
-	{
-		m_MP = min(m_MP + spf * m_RegenMP, 1.0f);
-	}
-
-	if (Input::GetKeyState(EMouseButton::Right) == EKeyState::UP)
+	if (Input::GetKeyState(VK_SPACE) == EKeyState::UP)
 	{
 		isFly = false;
 		eAction = EAction::FlyEnd;
@@ -370,6 +348,38 @@ void PlayerController::PlayerInput(const float& spf) noexcept
 			m_pEffectFly = nullptr;
 		}
 	}
+
+
+	m_curDelayThrow = max(m_curDelayThrow - spf, 0.0f);
+	m_curDelayDash = max(m_curDelayDash - spf, 0.0f);
+	m_curDelayMelee = max(m_curDelayMelee - spf, 0.0f);
+	// 던지기
+	if (Input::GetKeyState(EMouseButton::Left) == EKeyState::DOWN &&
+		m_curDelayThrow <= 0.0f &&
+		m_curMP >= 0.2f)
+	{
+		m_curMP -= 0.2f;
+		m_curDelayThrow = m_DelayThrow;
+		eAction = EAction::Throw;
+	}
+	// 구르기
+	if (Input::GetKeyState(VK_SHIFT) == EKeyState::DOWN &&
+		m_curDelayDash <= 0.0f)
+	{
+		m_curDelayDash = m_DelayDash;
+		eAction = EAction::Dash;
+		SoundManager::Get().Play("SE_jump02.mp3");
+	}
+	// 근접 공격
+	if (Input::GetKeyState(VK_RBUTTON) == EKeyState::DOWN &&
+		m_curDelayMelee <= 0.0f)
+	{
+		m_curDelayMelee = m_DelayMelee;
+		m_curDelayThrow = m_DelayThrow;
+		//m_curDelayDash += 0.3f;
+		eAction = EAction::Melee;
+	}
+
 
 	if (eAction != m_curAction)
 	{
@@ -509,7 +519,7 @@ void PlayerController::SendGiantMode(const float& spf) noexcept
 void PlayerController::StartGiantMode() noexcept
 {
 	PacketManager::Get().SendPlaySound("SE_jajan.mp3", GetPosition(), 1000.0f);
-	((JPanel*)m_pRespawn)->EffectPlay();
+	pUIManager->m_pRespawn->EffectPlay();
 	// Heal
 	Packet_Float p_SetHP;
 	p_SetHP.KeyValue = PlayerController::Get().GetParent()->m_keyValue;
@@ -610,23 +620,47 @@ void PlayerController::ResetOption() noexcept
 
 void PlayerController::UpdateStatus() noexcept
 {
-	m_moveSpeed = MoveSpeed + MoveSpeed * PacketManager::Get().pMyInfo->StatDex * 0.15f;
+	auto pUserInfo = PacketManager::Get().pMyInfo;
+	m_moveSpeed = MoveSpeed + MoveSpeed * pUserInfo->StatDex * 0.15f;
 	m_jumpPower = JumpPower;
 
 	m_DelayEnemyPanel = 3.0f;
-	m_DelayRespawn = 8.0f * 5.0f / (5.0f + PacketManager::Get().pMyInfo->StatCha);
-	m_DelayThrow = 0.4f * 5.0f / (5.0f + PacketManager::Get().pMyInfo->StatDex);
-	m_DelayDash = 1.5f * 5.0f / (5.0f + PacketManager::Get().pMyInfo->StatDex);
-	m_DelayMelee = 1.0f * 5.0f / (5.0f + PacketManager::Get().pMyInfo->StatDex);
-	m_RegenMP = 0.3f + PacketManager::Get().pMyInfo->StatInt * 0.06f;
-	((JProgressBar*)m_pLeftIcon)->SetValue(m_curDelayDash, m_DelayDash);
-	((JProgressBar*)m_pRightIcon)->SetValue(m_curDelayThrow, m_DelayThrow); 
+	m_DelayRespawn = 8.0f * 5.0f / (5.0f + pUserInfo->StatLuk);
+	m_DelayThrow = 0.4f * 5.0f / (5.0f + pUserInfo->StatDex);
+	m_DelayDash = 1.5f * 5.0f / (5.0f + pUserInfo->StatDex);
+	m_DelayMelee = 1.0f * 5.0f / (5.0f + pUserInfo->StatDex);
+	pUIManager->m_pLeftIcon->SetValue(m_curDelayDash, m_DelayDash);
+	pUIManager->m_pRightIcon->SetValue(m_curDelayThrow, m_DelayThrow); 
+	m_RegenMP = 0.3f + pUserInfo->StatInt * 0.045f;
+	m_maxMP = 1.0f + pUserInfo->StatInt * 0.2f;
+	pUIManager->m_pMpBar->SetValue(m_curMP, m_maxMP);
+	pUIManager->m_pExpProgress->SetValue(m_EXP, m_NeedEXP);
 	if (m_pParent != nullptr)
 	{
-		m_pParent->m_pPhysics->m_maxHP = 1.0f + PacketManager::Get().pMyInfo->StatInt * 0.2f;
-		((JProgressBar*)m_pHpBar)->SetValue(m_pParent->GetHP(), m_pParent->m_pPhysics->m_maxHP);
+		m_pParent->m_pPhysics->m_maxHP = 1.0f + pUserInfo->StatLuk * 0.2f;
+		pUIManager->m_pHpBar->SetValue(m_pParent->GetHP(), m_pParent->m_pPhysics->m_maxHP);
+		pUIManager->m_pInfoHP->SetString(to_wstring((int)(m_pParent->GetHP() * 100.0f)) + L" / " + to_wstring((int)(m_pParent->m_pPhysics->m_maxHP * 100.0f)));
+		pUIManager->m_pInfoTitle->SetString(m_pParent->m_myName);
 	}
-	PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
+	
+	pUIManager->m_pInfoMP->SetString(to_wstring((int)(m_curMP * 100.0f)) + L" / " + to_wstring((int)(m_maxMP * 100.0f)));
+	pUIManager->m_pInfoMP->SetString(to_wstring((int)(m_curMP * 100.0f)) + L" / " + to_wstring((int)(m_maxMP * 100.0f)));
+	pUIManager->m_pInfoEXP->SetString(to_wstring((int)(m_EXP * 100.0f)) + L" / " + to_wstring((int)(m_NeedEXP * 100.0f)));
+	pUIManager->m_pInfoName->SetString(pUserInfo->UserID);
+	pUIManager->m_pInfoAttackSpeed->SetString(to_wstring(1.0f / (5.0f / (5.0f + pUserInfo->StatDex))).substr(0, 4));
+	pUIManager->m_pInfoMoveSpeed->SetString(to_wstring((int)(m_moveSpeed)));
+	pUIManager->m_pInfoLevel->SetString(to_wstring(pUserInfo->Level));
+	pUIManager->m_pInfoDamage->SetString(to_wstring(1.0f + pUserInfo->StatStr * 0.15f).substr(0, 4));
+	pUIManager->m_pInfoArmor->SetString(to_wstring(m_DelayRespawn).substr(0, 4));
+	pUIManager->m_pInfoSP->SetString(to_wstring(m_statPoint));
+	pUIManager->m_pInfoStr->SetString(to_wstring(pUserInfo->StatStr));
+	pUIManager->m_pInfoDex->SetString(to_wstring(pUserInfo->StatDex)); 
+	pUIManager->m_pInfoInt->SetString(to_wstring(pUserInfo->StatInt));
+	pUIManager->m_pInfoLuk->SetString(to_wstring(pUserInfo->StatLuk));
+	//pUIManager->m_pInfoStrBtn
+	//pUIManager->m_pInfoDexBtn
+	//pUIManager->m_pInfoIntBtn
+	//pUIManager->m_pInfoLukBtn
 }
 
 void PlayerController::Possess(GameObject* pObject) noexcept
@@ -655,6 +689,7 @@ void PlayerController::Possess(GameObject* pObject) noexcept
 		pPlayer->ResetOption();
 		pPlayer->UpdateStatus();
 		SoundManager::Get().m_pListenerPos = &pObj->GetRoot()->GetPosition();
+		PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
 	};
 
 	ObjectManager::PostFrameEvent.emplace(pEvent, this, pObject);
@@ -669,31 +704,32 @@ void PlayerController::DeadEvent() noexcept
 	SetRotation(m_pParent->GetRotation());
 	CutParentPost();
 	m_curDelayRespawn = 0.0f;
-	((JPanel*)m_pRespawn)->m_bRender = true;
-	((JProgressBar*)m_pRespawnBar)->SetValue(m_curDelayRespawn, m_DelayRespawn);
+	pUIManager->m_pRespawn->m_bRender = true;
+	pUIManager->m_pRespawnBar->SetValue(m_curDelayRespawn, m_DelayRespawn);
 	//SoundManager::Get().PlayQueue("SE_dead.mp3", pA->m_pParent->GetWorldPosition(), 1000.0f);
 }
 
 void PlayerController::HitEvent(Collider* pTarget) noexcept
 {
 	m_curDelayEnemyPanel = m_DelayEnemyPanel;
-	((JPanel*)m_pEnemyPanel)->m_bRender = true;
+	pUIManager->m_pEnemyPanel->m_bRender = true;
 	
-	((JProgressBar*)m_pEnemyHP)->SetValue(pTarget->m_pParent->GetHP(), pTarget->m_pPhysics->m_maxHP);
-	((JTextCtrl*)m_pEnemyName)->SetString(pTarget->m_pParent->m_myName);
-	((JTextCtrl*)m_pEnemyHPText)->SetString(to_wstring((int)(pTarget->m_pParent->GetHP() * 100.0f)) + L" / " + to_wstring((int)(pTarget->m_pPhysics->m_maxHP * 100.0f)));
+	m_pTargetEnemy = pTarget->m_pParent;
+	pUIManager->m_pEnemyHP->SetValue(pTarget->m_pPhysics->m_disHP, pTarget->m_pPhysics->m_maxHP);
+	pUIManager->m_pEnemyName->SetString(pTarget->m_pParent->m_myName);
 }
 
 void PlayerController::OperEXP(const float& value) noexcept
 {
-	m_EXP += value;
-	if (m_EXP >= 1.0f && m_pParent != nullptr)
+	m_EXP += value + PacketManager::Get().pMyInfo->StatLuk * 0.15f;
+	if (m_EXP >= m_NeedEXP && m_pParent != nullptr)
 	{
-		m_EXP = -1.0f;
 		// LevelUp
+		m_EXP -= m_NeedEXP;
+		m_NeedEXP = 1.0f + PacketManager::Get().pMyInfo->Level * 0.2f;
+		m_statPoint += 4;
 		++PacketManager::Get().pMyInfo->Level;
 		PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendLevelUp);
-		m_statPoint += 4;
 	}
 }
 

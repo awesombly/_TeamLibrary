@@ -229,6 +229,7 @@ copy "$(SolutionDir)lib\*.dll" "$(OutputPath)\"</Command>
     <ClCompile Include="MainClass.cpp" />
     <ClCompile Include="PacketManager.cpp" />
     <ClCompile Include="PlayerController.cpp" />
+    <ClCompile Include="UIManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AIZombie.h" />
@@ -245,6 +246,7 @@ copy "$(SolutionDir)lib\*.dll" "$(OutputPath)\"</Command>
     <ClInclude Include="MyProtocol.h" />
     <ClInclude Include="PacketManager.h" />
     <ClInclude Include="PlayerController.h" />
+    <ClInclude Include="UIManager.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\..\data\script\network.txt" />

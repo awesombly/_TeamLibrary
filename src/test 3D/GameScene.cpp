@@ -1,6 +1,7 @@
 #include "GameScene.h"
 #include "PacketManager.h"
 #include "JEventBind.h"
+#include "UIManager.h"
 
 
 bool GameScene::Init() noexcept
@@ -364,24 +365,28 @@ bool GameScene::CheatMessage() noexcept
 		{
 			PacketManager::Get().pMyInfo->StatStr = atoi(WCharToChar(m_chatMessage.substr(finder + 1).c_str()));
 			PlayerController::Get().UpdateStatus();
+			PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
 			return false;
 		}
 		else if (str._Equal(L"StatDex"))
 		{
 			PacketManager::Get().pMyInfo->StatDex = atoi(WCharToChar(m_chatMessage.substr(finder + 1).c_str()));
 			PlayerController::Get().UpdateStatus();
+			PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
 			return false;
 		}
 		else if (str._Equal(L"StatInt"))
 		{
 			PacketManager::Get().pMyInfo->StatInt = atoi(WCharToChar(m_chatMessage.substr(finder + 1).c_str()));
 			PlayerController::Get().UpdateStatus();
+			PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
 			return false;
 		}
-		else if (str._Equal(L"StatCha"))
+		else if (str._Equal(L"StatLuk"))
 		{
-			PacketManager::Get().pMyInfo->StatCha = atoi(WCharToChar(m_chatMessage.substr(finder + 1).c_str()));
+			PacketManager::Get().pMyInfo->StatLuk = atoi(WCharToChar(m_chatMessage.substr(finder + 1).c_str()));
 			PlayerController::Get().UpdateStatus();
+			PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
 			return false;
 		}
 		else if (str._Equal(L"Scale"))
@@ -563,9 +568,8 @@ void GameScene::LoadUI() noexcept
 	JParser par;
 	par.FileLoad(DxManager::GetDevice(), L"../../data/ui/InGame", *pUIRoot);
 	// HP, MP
-	PlayerController::Get().m_pHpBar = (JProgressBar*)pUIRoot->find_child(L"HP_Progress");
-	auto pProj = (JProgressBar*)pUIRoot->find_child(L"MP_Progress");
-	pProj->SetValue(m_pPlayer->m_MP, 1.0f); // 값 bind
+	UIManager::Get().m_pHpBar = (JProgressBar*)pUIRoot->find_child(L"HP_Progress");
+	UIManager::Get().m_pMpBar = (JProgressBar*)pUIRoot->find_child(L"MP_Progress");
 
 	// 상황판
 	/* Name Kill Death Score */
@@ -625,13 +629,14 @@ void GameScene::LoadUI() noexcept
 		((JTextCtrl*)(*++++iter))->m_bRender = pUser->isDead;
 	};
 	PacketManager::Get().pUserPanel[3]->PostEvent.second = PacketManager::Get().pUserPanel[3];
-	// 옵션, 전광판
-	PlayerController::Get().m_pOption = (JPanel*)pUIRoot->find_child(L"Set_Panel");
+	// 마우스, 옵션, 전광판
+	UIManager::Get().m_pMouseIcon = pUIRoot->find_child(L"mouse_cursor");
+	//PlayerController::Get().m_pOption = (JPanel*)pUIRoot->find_child(L"Set_Panel");
 	PacketManager::Get().pKillDisplay = (JListCtrl*)pUIRoot->find_child(L"KilltoDeath");
 
 	// Skill Icon
-	PlayerController::Get().m_pLeftIcon = (JProgressBar*)pUIRoot->find_child(L"Skill_Left");
-	PlayerController::Get().m_pRightIcon = (JProgressBar*)pUIRoot->find_child(L"Skill_Right");
+	UIManager::Get().m_pLeftIcon = (JProgressBar*)pUIRoot->find_child(L"Skill_Left");
+	UIManager::Get().m_pRightIcon = (JProgressBar*)pUIRoot->find_child(L"Skill_Right");
 
 	// Option Slider
 	static auto pSetVolume = [](void* pSlider) {
@@ -653,7 +658,8 @@ void GameScene::LoadUI() noexcept
 	PlayerController::Get().m_mouseSense = *m_pMouseSense->GetValue();
 	// Exit
 	static auto pGameExit = [](void* pScene) {
-		exit(0); pScene;
+		Core::isPlaying = false;
+		pScene;
 		//PlayerController::Get().CutParent();
 		//PacketManager::Get().pSender->Release();
 		//((MainClass*)pScene)->SetScene(ESceneName::Lobby);
@@ -681,7 +687,6 @@ void GameScene::LoadUI() noexcept
 			else
 			{
 				*pList->m_fValue = max(*pList->m_fValue - pList->fDivisionValue, 0.0f);
-				//pList->AddValue(clamp(pList->m_fValue - pList->fDivisionValue, 0.0f, 1.0f) - pList->m_fValue);
 			}
 		}
 	};
@@ -692,22 +697,64 @@ void GameScene::LoadUI() noexcept
 	//m_pList->m_fValue = pSlider->GetValue();
 
 	// 리스폰창
-	PlayerController::Get().m_pRespawn = (JPanel*)pUIRoot->find_child(L"respawn_panel");		 // bRender용
-	((JPanel*)PlayerController::Get().m_pRespawn)->m_bRender = false;
-	PlayerController::Get().m_pRespawnBar = (JProgressBar*)pUIRoot->find_child(L"respawn_prog"); // value 넣엇ㅅㅅ
+	UIManager::Get().m_pRespawn = (JPanel*)pUIRoot->find_child(L"respawn_panel");		 // bRender용
+	UIManager::Get().m_pRespawn->m_bRender = false;
+	UIManager::Get().m_pRespawnBar = (JProgressBar*)pUIRoot->find_child(L"respawn_prog"); // value 넣엇ㅅㅅ
 	//JTextCtrl* respawntxt = (JTextCtrl*)pUIRoot->find_child(L"respawn_txt");	 // text
 
 	// 쳐맞 효과
-	PlayerController::Get().m_pHitEffect = (JPanel*)pUIRoot->find_child(L"fadeout");
-	PlayerController::Get().m_pRespawnEffect = (JPanel*)pUIRoot->find_child(L"fadeout_white");
+	UIManager::Get().m_pHitEffect = (JPanel*)pUIRoot->find_child(L"fadeout");
+	UIManager::Get().m_pRespawnEffect = (JPanel*)pUIRoot->find_child(L"fadeout_white");
 	//PlayerController::Get().m_pRespawnEffect = (JPanel*)pUIRoot->find_child(L"fadein"); //(L"JohnSprite");
 
 	m_pChat = (JEditCtrl*)pUIRoot->find_child(L"Chat_Edit");
 	// 적 체력바
-	PlayerController::Get().m_pEnemyPanel = (JPanel*)pUIRoot->find_child(L"Enemy_Panel"); //bRender true/false
-	PlayerController::Get().m_pEnemyHP = (JProgressBar*)pUIRoot->find_child(L"Enemy_HP");
-	PlayerController::Get().m_pEnemyName = (JTextCtrl*)pUIRoot->find_child(L"Enemy_Name");
-	PlayerController::Get().m_pEnemyHPText = (JTextCtrl*)pUIRoot->find_child(L"Enemy_HP_txt");
+	UIManager::Get().m_pEnemyPanel = (JPanel*)pUIRoot->find_child(L"Enemy_Panel"); //bRender true/false
+	UIManager::Get().m_pEnemyPanel->m_bRender = false;
+	UIManager::Get().m_pEnemyHP = (JProgressBar*)pUIRoot->find_child(L"Enemy_HP");
+	UIManager::Get().m_pEnemyName = (JTextCtrl*)pUIRoot->find_child(L"Enemy_Name");
+	UIManager::Get().m_pEnemyHPText = (JTextCtrl*)pUIRoot->find_child(L"Enemy_HP_txt");
+
+	// 인포창
+	UIManager::Get().m_pExpProgress = (JProgressBar*)pUIRoot->find_child(L"Exp_Progress");
+	UIManager::Get().m_pInfoTitle = (JTextCtrl*)pUIRoot->find_child(L"Info_Title");
+	UIManager::Get().m_pInfoHP = (JTextCtrl*)pUIRoot->find_child(L"Info_HP");
+	UIManager::Get().m_pInfoMP = (JTextCtrl*)pUIRoot->find_child(L"Info_MP");
+	UIManager::Get().m_pInfoEXP = (JTextCtrl*)pUIRoot->find_child(L"Info_EXP");
+	UIManager::Get().m_pInfoName = (JTextCtrl*)pUIRoot->find_child(L"Info_Name");
+	UIManager::Get().m_pInfoAttackSpeed = (JTextCtrl*)pUIRoot->find_child(L"Info_AttackSpeed");
+	UIManager::Get().m_pInfoMoveSpeed = (JTextCtrl*)pUIRoot->find_child(L"Info_MoveSpeed");
+	UIManager::Get().m_pInfoLevel = (JTextCtrl*)pUIRoot->find_child(L"Info_Level");
+	UIManager::Get().m_pInfoDamage = (JTextCtrl*)pUIRoot->find_child(L"Info_Damage");
+	UIManager::Get().m_pInfoArmor = (JTextCtrl*)pUIRoot->find_child(L"Info_Armor");
+	UIManager::Get().m_pInfoSP = (JTextCtrl*)pUIRoot->find_child(L"Info_SP");
+	UIManager::Get().m_pInfoStr = (JTextCtrl*)pUIRoot->find_child(L"Info_STR");
+	UIManager::Get().m_pInfoDex = (JTextCtrl*)pUIRoot->find_child(L"Info_DEX");
+	UIManager::Get().m_pInfoInt = (JTextCtrl*)pUIRoot->find_child(L"Info_INT");
+	UIManager::Get().m_pInfoLuk = (JTextCtrl*)pUIRoot->find_child(L"Info_LUK");
+	auto pStatUp = [](void* pStat) {
+		SoundManager::Get().Play("SE_Click01.mp3");
+		if (PlayerController::Get().m_statPoint >= 1)
+		{
+			--PlayerController::Get().m_statPoint;
+			++(*(UCHAR*)pStat);
+			PlayerController::Get().UpdateStatus();
+			PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
+		}
+	};
+	UIManager::Get().m_pInfoStrBtn = (JTextCtrl*)pUIRoot->find_child(L"Info_STR_Btn");
+	UIManager::Get().m_pInfoStrBtn->EventClick.first = pStatUp;
+	UIManager::Get().m_pInfoStrBtn->EventClick.second = &PacketManager::Get().pMyInfo->StatStr;
+	UIManager::Get().m_pInfoDexBtn = (JTextCtrl*)pUIRoot->find_child(L"Info_DEX_btn");
+	UIManager::Get().m_pInfoDexBtn->EventClick.first = pStatUp;
+	UIManager::Get().m_pInfoDexBtn->EventClick.second = &PacketManager::Get().pMyInfo->StatDex;
+	UIManager::Get().m_pInfoIntBtn = (JTextCtrl*)pUIRoot->find_child(L"Info_INT_btn");
+	UIManager::Get().m_pInfoIntBtn->EventClick.first = pStatUp;
+	UIManager::Get().m_pInfoIntBtn->EventClick.second = &PacketManager::Get().pMyInfo->StatInt;
+	UIManager::Get().m_pInfoLukBtn = (JTextCtrl*)pUIRoot->find_child(L"Info_LUK_btn");
+	UIManager::Get().m_pInfoLukBtn->EventClick.first = pStatUp;
+	UIManager::Get().m_pInfoLukBtn->EventClick.second = &PacketManager::Get().pMyInfo->StatLuk;
+
 
 	ObjectManager::Get().PushObject(pUIRoot);
 	UI::InGameEvent(pUIRoot);

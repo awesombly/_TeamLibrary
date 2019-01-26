@@ -36,6 +36,7 @@ struct PhysicsInfo
 	UINT UserSocket		 = 0;
 	float m_maxHP		 = 1.0f;
 	float m_curHP		 = 1.0f;
+	float m_disHP		 = 1.0f;
 	float m_damage		 = 0.0f;
 	//float m_armor		 = 1.0f;
 

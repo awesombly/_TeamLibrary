@@ -123,7 +123,7 @@ bool LobbyScene::Frame() noexcept
 				SetScene(ESceneName::Main);
 
 				PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
-				PlayerController::Get().SendReqRespawn(PlayerController::Get().m_selectCharacter);
+				PlayerController::Get().SendReqRespawn(PlayerController::Get().m_curCharacter);
 			}
 			else
 			{
@@ -133,7 +133,7 @@ bool LobbyScene::Frame() noexcept
 				while (PacketManager::Get().pMyInfo->UserSocket == 0);	// 소켓 받을때까지 대기
 
 				PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
-				PlayerController::Get().SendReqRespawn(PlayerController::Get().m_selectCharacter);
+				PlayerController::Get().SendReqRespawn(PlayerController::Get().m_curCharacter);
 			}
 			return true;
 		}
@@ -169,24 +169,24 @@ void LobbyScene::SelectCharacter(const PlayerController::ECharacter& eCharacter)
 	 case PlayerController::ECharacter::EGuard:
 	 {
 		 m_pBackHero = m_pBackGuard;
-		 PlayerController::Get().m_selectCharacter = PlayerController::ECharacter::EGuard;
+		 PlayerController::Get().m_curCharacter = PlayerController::ECharacter::EGuard;
 	 }	break;
 	 case PlayerController::ECharacter::EZombie:
 	 {
 		 m_pBackHero = m_pBackZombie;
-		 PlayerController::Get().m_selectCharacter = PlayerController::ECharacter::EZombie;
+		 PlayerController::Get().m_curCharacter = PlayerController::ECharacter::EZombie;
 	 }	break;
 	 default:
 	 {
-		 if (PlayerController::Get().m_selectCharacter == PlayerController::ECharacter::EGuard)
+		 if (PlayerController::Get().m_curCharacter == PlayerController::ECharacter::EGuard)
 		 {
 			 m_pBackHero = m_pBackZombie;
-			 PlayerController::Get().m_selectCharacter = PlayerController::ECharacter::EZombie;
+			 PlayerController::Get().m_curCharacter = PlayerController::ECharacter::EZombie;
 		 }
 		 else
 		 {
 			 m_pBackHero = m_pBackGuard;
-			 PlayerController::Get().m_selectCharacter = PlayerController::ECharacter::EGuard;
+			 PlayerController::Get().m_curCharacter = PlayerController::ECharacter::EGuard;
 		 }
 	 }	break;
 	}
@@ -206,7 +206,7 @@ bool LobbyScene::FirstInit() noexcept
 void LobbyScene::StartToHost()
 {
 	MainClass::StartToHost();
-	if(PlayerController::Get().m_selectCharacter == PlayerController::ECharacter::EGuard)
+	if(PlayerController::Get().m_curCharacter == PlayerController::ECharacter::EGuard)
 		m_pBackHero->SetANIM_OneTime(Guard_DASHJUMP);
 	//else
 		//m_pBackHero->SetANIM_OneTime(Zombie_DASHJUMP);
@@ -219,7 +219,7 @@ void LobbyScene::StartToHost()
 void LobbyScene::StartToGuest()
 {
 	MainClass::StartToGuest();
-	if (PlayerController::Get().m_selectCharacter == PlayerController::ECharacter::EGuard)
+	if (PlayerController::Get().m_curCharacter == PlayerController::ECharacter::EGuard)
 		m_pBackHero->SetANIM_OneTime(Guard_DASHJUMP);
 	//else
 		//m_pBackHero->SetANIM_OneTime(Zombie_DASHJUMP);
