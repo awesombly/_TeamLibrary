@@ -1182,7 +1182,7 @@
 ^Color 1.000000 1.000000 1.000000 0.000000
 ^Align 1
 ^strText HP
-^TextSize 20.000000
+^TextSize 17.000000
 ^tx_Normal White.png
 ^tx_Hover NO_IMAGE.png
 ^tx_Press NO_IMAGE.png
@@ -1226,7 +1226,7 @@
 ^Color 1.000000 1.000000 1.000000 0.000000
 ^Align 1
 ^strText MP
-^TextSize 20.000000
+^TextSize 17.000000
 ^tx_Normal NO_IMAGE.png
 ^tx_Hover NO_IMAGE.png
 ^tx_Press NO_IMAGE.png
@@ -1270,7 +1270,7 @@
 ^Color 1.000000 1.000000 1.000000 0.000000
 ^Align 1
 ^strText EXP
-^TextSize 20.000000
+^TextSize 17.000000
 ^tx_Normal NO_IMAGE.png
 ^tx_Hover NO_IMAGE.png
 ^tx_Press NO_IMAGE.png
@@ -1314,7 +1314,7 @@
 ^Color 1.000000 1.000000 1.000000 0.000000
 ^Align 1
 ^strText 이름
-^TextSize 20.000000
+^TextSize 17.000000
 ^tx_Normal NO_IMAGE.png
 ^tx_Hover NO_IMAGE.png
 ^tx_Press NO_IMAGE.png
@@ -1358,7 +1358,7 @@
 ^Color 1.000000 1.000000 1.000000 0.000000
 ^Align 1
 ^strText 공속
-^TextSize 20.000000
+^TextSize 17.000000
 ^tx_Normal NO_IMAGE.png
 ^tx_Hover NO_IMAGE.png
 ^tx_Press NO_IMAGE.png
@@ -1402,7 +1402,7 @@
 ^Color 1.000000 1.000000 1.000000 0.000000
 ^Align 1
 ^strText 이속
-^TextSize 20.000000
+^TextSize 17.000000
 ^tx_Normal NO_IMAGE.png
 ^tx_Hover NO_IMAGE.png
 ^tx_Press NO_IMAGE.png
@@ -1446,7 +1446,7 @@
 ^Color 1.000000 1.000000 1.000000 0.000000
 ^Align 1
 ^strText 레벨
-^TextSize 20.000000
+^TextSize 17.000000
 ^tx_Normal White.png
 ^tx_Hover White.png
 ^tx_Press White.png
@@ -1490,7 +1490,7 @@
 ^Color 1.000000 1.000000 1.000000 0.000000
 ^Align 1
 ^strText 공격력
-^TextSize 20.000000
+^TextSize 17.000000
 ^tx_Normal NO_IMAGE.png
 ^tx_Hover NO_IMAGE.png
 ^tx_Press NO_IMAGE.png
@@ -1534,7 +1534,7 @@
 ^Color 1.000000 1.000000 1.000000 0.000000
 ^Align 1
 ^strText 방어력
-^TextSize 20.000000
+^TextSize 17.000000
 ^tx_Normal NO_IMAGE.png
 ^tx_Hover NO_IMAGE.png
 ^tx_Press NO_IMAGE.png
@@ -1764,7 +1764,7 @@
 ^Color 1.000000 1.000000 1.000000 0.000000
 ^Align 0
 ^strText STR
-^TextSize 20.000000
+^TextSize 17.000000
 ^tx_Normal NO_IMAGE.png
 ^tx_Hover NO_IMAGE.png
 ^tx_Press NO_IMAGE.png
@@ -1786,7 +1786,7 @@
 ^Color 1.000000 1.000000 1.000000 0.000000
 ^Align 0
 ^strText DEX
-^TextSize 20.000000
+^TextSize 17.000000
 ^tx_Normal NO_IMAGE.png
 ^tx_Hover NO_IMAGE.png
 ^tx_Press NO_IMAGE.png
@@ -1808,7 +1808,7 @@
 ^Color 1.000000 1.000000 1.000000 0.000000
 ^Align 0
 ^strText INT
-^TextSize 20.000000
+^TextSize 17.000000
 ^tx_Normal NO_IMAGE.png
 ^tx_Hover NO_IMAGE.png
 ^tx_Press NO_IMAGE.png
@@ -1830,7 +1830,7 @@
 ^Color 1.000000 1.000000 1.000000 0.000000
 ^Align 0
 ^strText LUK
-^TextSize 20.000000
+^TextSize 17.000000
 ^tx_Normal NO_IMAGE.png
 ^tx_Hover NO_IMAGE.png
 ^tx_Press NO_IMAGE.png
