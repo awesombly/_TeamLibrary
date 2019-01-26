@@ -154,9 +154,9 @@ namespace UI
 		pChatEnter->PreEvent.first = E_CHATENTER;
 		pChatEnter->PreEvent.second = pChatEnter;
 
-		JPanel* pEndingEffect = (JPanel*)pRoot->find_child(L"Effect_Ending_Panel");
-		pEndingEffect->PreEvent.first = E_ENDING_EFFECT;
-		pEndingEffect->PreEvent.second = pEndingEffect;
+		//JPanel* pEndingEffect = (JPanel*)pRoot->find_child(L"Effect_Ending_Panel");
+		//pEndingEffect->PreEvent.first = E_ENDING_EFFECT;
+		//pEndingEffect->PreEvent.second = pEndingEffect;
 	}
 }/*
 L"^frame_000_delay-0.03s.jpg

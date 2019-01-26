@@ -10,10 +10,17 @@ namespace UI
 		int m_iCols;
 		int m_iMaxItem;
 		JImageCtrl* m_pBack;
+		wstring m_strSlotBack;
 		std::vector<JSlot*> m_pItemList;
+		JSlot* m_pSelectSlot = nullptr;
+		//int m_iNumItem = 0;
 	public:
 		bool Create(ID3D11Device* pDevice, int iRow, int iCol, const TCHAR* szBack, const TCHAR* szSlotBack, const char* PSName = "PS", const TCHAR* szShaderName = L"../../data/ui/shader/DefaultUI.hlsl");
 		bool CreateItemSlot(ID3D11Device* pDevice, int iRow, int iCol, const TCHAR* szSlotBack);
+		bool AddItem(wstring strItem);
+		void DelItem();
+		void ClearItem();
+		void SortItem();
 	public:
 		void UpdateInventoryPos();
 		void Update();

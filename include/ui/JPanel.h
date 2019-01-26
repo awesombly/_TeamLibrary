@@ -5,6 +5,9 @@
 #include "JPlane.h"
 #include "JTextureMgr.h"
 #include "Input.h"
+//
+// Thread 설명 맨 밑
+//
 namespace UI
 {
 	enum ClickType
@@ -21,7 +24,7 @@ namespace UI
 	};
 	enum UIType
 	{
-		PANEL = 777, BUTTON, CHECK, PROGRESS, SLIDER, SPRITE, TEXT, PARTICLE, LIST, LISTBOX, EDIT, IMAGE, SLOT, INVENTORY,
+		PANEL = 777, BUTTON, CHECK, PROGRESS, SLIDER, SPRITE, TEXT, PARTICLE, LIST, LISTBOX, EDIT, IMAGE, SLOT, INVENTORY, INVENTORYSLOT,
 	};
 	enum EVENT_LIST
 	{
@@ -102,3 +105,26 @@ namespace UI
 		virtual ~JPanel();
 	};
 }
+//#include <thread>
+//static void TestThread(int iTest, float fTest)
+//{
+//
+//}
+//class SampleThread
+//{
+//public:
+//	void TestThread(int iTest, float fTest);
+//};
+//static void TestThreadStart()
+//{
+//	SampleThread* test = new SampleThread();
+//	//1)
+//	std::thread ThreadName(&TestThread, 1, 1.0f);
+//	if (ThreadName.joinable()) // join가능한상태인지
+//		ThreadName.join();     // 블록걸림 thread끝날때까지
+//	ThreadName.detach();	   // 관여안함 , ThreadName의 포인터해제 / 지역함수일때 detach안하고 블록나가면 뻥남
+//							   // join안할거면 detach시켜줍시다.
+//	//2)
+//	std::thread ThreadName2(&SampleThread::TestThread, &test, 1, 1.0f);
+//
+//}	

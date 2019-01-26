@@ -22,6 +22,8 @@ namespace UI
 		void ListWrite(JPanel* pChild);
 		void EditWrite(JPanel* pChild);
 		void ImageWrite(JPanel* pChild);
+		void SlotWrite(JPanel* pChild);
+		void InventoryWrite(JPanel* pChild);
 	public:
 		JUIWriter() {};
 		virtual ~JUIWriter() {};
