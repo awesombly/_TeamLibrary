@@ -646,7 +646,7 @@ namespace UI
 		JInventory* pInven = (JInventory*)vp;
 
 		auto& pItemList = JItem::Get()->m_pItemList;
-		int iRand = JDxHelper::iRand(0, pItemList.size() - 1);
+		int iRand = JDxHelper::iRand(0, (int)(pItemList.size() - 1));
 
 		wstring strItem;
 		int iCursor = 0;
