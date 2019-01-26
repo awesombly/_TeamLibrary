@@ -630,9 +630,15 @@ namespace UI
 			JPanel* pMouse = pRoot->find_child(L"mouse_cursor");
 			pPanel->m_bRender = !pPanel->m_bRender;
 			if (pPanel->m_bRender)
+			{
 				pMouse->m_bRender = true;
+				Input::isDebug = true;
+			}
 			else
+			{
 				pMouse->m_bRender = false;
+				Input::isDebug = false;
+			}
 		}
 	}
 	static void E_INVENTORY_SORT(void* vp)
