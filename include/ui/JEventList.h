@@ -632,12 +632,12 @@ namespace UI
 			if (pPanel->m_bRender)
 			{
 				pMouse->m_bRender = true;
-				Input::isDebug = true;
+				Input::isDebug = false;
 			}
 			else
 			{
 				pMouse->m_bRender = false;
-				Input::isDebug = false;
+				Input::isDebug = true;
 			}
 		}
 	}
