@@ -33,7 +33,7 @@ struct PhysicsInfo
 	bool m_isMoving		 = false;
 	bool m_isGround		 = false;
 
-	UINT UserSocket		 = 0;
+	UINT UserSocket		 = DataInfo::MaxUINT;
 	float m_maxHP		 = 1.0f;
 	float m_curHP		 = 1.0f;
 	float m_disHP		 = 1.0f;

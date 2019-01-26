@@ -8,6 +8,8 @@ class Camera;
 class AHeroObj;
 class UIManager;
 
+
+
 class PlayerController : public GameObject, public ISingleton<PlayerController>
 {
 public:
@@ -67,6 +69,8 @@ public:
 	float		m_maxMP				 = 1.0f;
 	float		m_curMP				 = 0.0f;
 	float		m_mouseSense		 = 0.5f;
+	// 들을 거리
+	const float SoundRange			 = 30000.0f;
 public:
 	GameObject* m_pHome			 = nullptr;
 	const float HomeRadius		 = 1600.0f;

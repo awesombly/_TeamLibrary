@@ -109,31 +109,27 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 		}	break;
 		case EAction::Jump:
 		{
-			///
+			SoundManager::Get().PlayQueue("SE_jump01.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
 		}	break;
 		case EAction::Left:
 		case EAction::BackwardLeft:
 		{
 			pObject->SetANIM_Loop(Guard_LEFT);
-			//SoundManager::Get().PlayQueue("SE_footstep.mp3", pObject->GetWorldPosition(), 1000.0f);
 		}	break;
 		case EAction::Right:
 		case EAction::BackwardRight:
 		{
 			pObject->SetANIM_Loop(Guard_RIGHT);
-			//SoundManager::Get().PlayQueue("SE_footstep.mp3", pObject->GetWorldPosition(), 1000.0f);
 		}	break;
 		case EAction::Forward:
 		case EAction::ForwardLeft:
 		case EAction::ForwardRight:
 		{
 			pObject->SetANIM_Loop(Guard_HAPPYWALK);
-		//	SoundManager::Get().PlayQueue("SE_footstep.mp3", pObject->GetWorldPosition(), 1000.0f);
 		}	break;
 		case EAction::Backward:
 		{
 			pObject->SetANIM_Loop(Guard_BACKWARD);
-			//SoundManager::Get().PlayQueue("SE_footstep.mp3", pObject->GetWorldPosition(), 1000.0f);
 		}	break;
 		case EAction::Dance1:
 		{
@@ -169,12 +165,12 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 			pDagger->m_pPhysics->UserSocket = socket;
 			pDagger->SetDamage(0.25f, PacketManager::Get().UserList[socket]->StatStr);
 			pDagger->GetCollider()->AddIgnoreList(pObject->GetCollider());
-			SoundManager::Get().PlayQueue("SE_throw01.mp3", pObject->GetPosition(), 1000.0f);
+			SoundManager::Get().PlayQueue("SE_throw01.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
 		}	break;
 		case EAction::Melee:
 		{
 			pObject->SetANIM_OneTime(Guard_PUNCH);
-			SoundManager::Get().PlayQueue("SV_Guard_Punch.mp3", pObject->GetPosition(), 1000.0f);
+			SoundManager::Get().PlayQueue("SV_Guard_Punch.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
 			
 			auto pCollider = new Collider(pObject->GetScale().x * 55.0f);
 			auto pMelee = new GameObject(L"Melee", { pCollider, new CEventTimer(0.5f) });
@@ -245,12 +241,12 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 			pChicken->m_pPhysics->UserSocket = socket;
 			pChicken->SetDamage(0.25f, PacketManager::Get().UserList[socket]->StatStr);
 		 	((Collider*)pChicken->GetComponentList(EComponent::Collider)->front())->AddIgnoreList((Collider*)pObject->GetComponentList(EComponent::Collider)->front());
-		 	SoundManager::Get().PlayQueue("SE_chicken.mp3", pObject->GetPosition(), 1000.0f);
+		 	SoundManager::Get().PlayQueue("SE_chicken.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
 		 }	break;
 		 case EAction::Melee:
 		 {
 		 	//pObject->SetANIM_OneTime(Zombie_PUNCH);
-		 	SoundManager::Get().PlayQueue("SE_zombie_hit01.mp3", pObject->GetPosition(), 1000.0f);
+		 	SoundManager::Get().PlayQueue("SE_zombie_hit01.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
 		 
 			auto pCollider = new Collider(pObject->GetScale().x * 40.0f);
 			auto pMelee = new GameObject(L"Melee", { pCollider, new CEventTimer(0.5f) });
@@ -313,7 +309,6 @@ void PlayerController::PlayerInput(const float& spf) noexcept
 		if (m_pParent->isGround())
 		{
 			eAction = EAction::Jump;
-			PacketManager::Get().SendPlaySound("SE_jump01.mp3", PlayerController::Get().GetPosition(), 1000.0f);
 		}
 		else
 		{
@@ -518,7 +513,7 @@ void PlayerController::SendGiantMode(const float& spf) noexcept
 
 void PlayerController::StartGiantMode() noexcept
 {
-	PacketManager::Get().SendPlaySound("SE_jajan.mp3", GetPosition(), 1000.0f);
+	PacketManager::Get().SendPlaySound("SE_jajan.mp3", m_pParent->GetPosition(), SoundRange);
 	pUIManager->m_pRespawn->EffectPlay();
 	// Heal
 	Packet_Float p_SetHP;
@@ -616,6 +611,7 @@ void PlayerController::ResetOption() noexcept
 		return;
 	m_pCamera->SetPosition(Vector3::Up * 100.0f * m_pParent->GetScale().x);
 	m_pCamera->m_armLength = 12.5f * m_pParent->GetScale().x;
+	Input::isDebug = false;
 }
 
 void PlayerController::UpdateStatus() noexcept
@@ -648,7 +644,7 @@ void PlayerController::UpdateStatus() noexcept
 	pUIManager->m_pInfoEXP->SetString(to_wstring((int)(m_EXP * 100.0f)) + L" / " + to_wstring((int)(m_NeedEXP * 100.0f)));
 	pUIManager->m_pInfoName->SetString(pUserInfo->UserID);
 	pUIManager->m_pInfoAttackSpeed->SetString(to_wstring(1.0f / (5.0f / (5.0f + pUserInfo->StatDex))).substr(0, 4));
-	pUIManager->m_pInfoMoveSpeed->SetString(to_wstring((int)(m_moveSpeed)));
+	pUIManager->m_pInfoMoveSpeed->SetString(to_wstring(1.0f + pUserInfo->StatDex * 0.15f).substr(0, 4));
 	pUIManager->m_pInfoLevel->SetString(to_wstring(pUserInfo->Level));
 	pUIManager->m_pInfoDamage->SetString(to_wstring(1.0f + pUserInfo->StatStr * 0.15f).substr(0, 4));
 	pUIManager->m_pInfoArmor->SetString(to_wstring(m_DelayRespawn).substr(0, 4));
@@ -698,7 +694,7 @@ void PlayerController::Possess(GameObject* pObject) noexcept
 
 void PlayerController::DeadEvent() noexcept
 {
-	PacketManager::Get().SendPlaySound("SE_dead.mp3", GetPosition(), 1000.0f);
+	PacketManager::Get().SendPlaySound("SE_dead.mp3", m_pParent->GetPosition(), SoundRange);
 	m_pParent->SetHP(0.0f);
 	SetPosition(m_pParent->GetPosition());
 	SetRotation(m_pParent->GetRotation());
@@ -706,7 +702,6 @@ void PlayerController::DeadEvent() noexcept
 	m_curDelayRespawn = 0.0f;
 	pUIManager->m_pRespawn->m_bRender = true;
 	pUIManager->m_pRespawnBar->SetValue(m_curDelayRespawn, m_DelayRespawn);
-	//SoundManager::Get().PlayQueue("SE_dead.mp3", pA->m_pParent->GetWorldPosition(), 1000.0f);
 }
 
 void PlayerController::HitEvent(Collider* pTarget) noexcept
@@ -721,14 +716,15 @@ void PlayerController::HitEvent(Collider* pTarget) noexcept
 
 void PlayerController::OperEXP(const float& value) noexcept
 {
-	m_EXP += value + PacketManager::Get().pMyInfo->StatLuk * 0.15f;
+	m_EXP += value + PacketManager::Get().pMyInfo->StatLuk * 0.1f;
 	if (m_EXP >= m_NeedEXP && m_pParent != nullptr)
 	{
 		// LevelUp
 		m_EXP -= m_NeedEXP;
-		m_NeedEXP = 1.0f + PacketManager::Get().pMyInfo->Level * 0.2f;
+		m_NeedEXP = 1.0f + PacketManager::Get().pMyInfo->Level * 0.3f;
 		m_statPoint += 4;
 		++PacketManager::Get().pMyInfo->Level;
+		PacketManager::Get().pMyInfo->KeyValue = m_pParent->m_keyValue;
 		PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendLevelUp);
 	}
 }

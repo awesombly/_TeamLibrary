@@ -46,7 +46,7 @@ namespace MyEvent {
 		auto pEffect = ObjectManager::Get().TakeObject(L"PAttack");
 		pEffect->SetPosition(pA->m_pParent->GetPosition());
 		ObjectManager::Get().DisableObject(pA->m_pParent);
-		//SoundManager::Get().Play("SE_HIT.mp3");//, pObject->GetWorldPosition(), 1000.0f);
+		//SoundManager::Get().Play("SE_HIT.mp3");//, pObject->GetWorldPosition(), SoundRange);
 	}
 
 	void MeleeHit(Collider* pA, Collider* pB)
@@ -76,9 +76,9 @@ namespace MyEvent {
 					PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
 				}
 			}
-			auto pEffect = ObjectManager::Get().TakeObject(L"Slash");
+			auto pEffect = ObjectManager::Get().TakeObject(L"PSlash");
 			pEffect->SetPosition(pA->m_pParent->GetWorldPosition());
-			//SoundManager::Get().PlayQueue("SE_HIT.mp3", pA->m_pParent->GetWorldPosition(), 1000.0f);
+			//SoundManager::Get().PlayQueue("SE_HIT.mp3", pA->m_pParent->GetWorldPosition(), SoundRange);
 		}
 	}
 
@@ -100,7 +100,7 @@ namespace MyEvent {
 			}
 			auto pEffect = ObjectManager::Get().TakeObject(L"ZAttack");
 			pEffect->SetPosition(pA->m_pParent->GetPosition());
-			//SoundManager::Get().PlayQueue("SE_HIT.mp3", pA->m_pParent->GetWorldPosition(), 1000.0f);
+			//SoundManager::Get().PlayQueue("SE_HIT.mp3", pA->m_pParent->GetWorldPosition(), SoundRange);
 		}
 	}
 
@@ -124,7 +124,7 @@ namespace MyEvent {
 			auto pEffect = ObjectManager::Get().TakeObject(L"ZAttack");
 			pEffect->SetPosition(pA->m_pParent->GetWorldPosition());
 			//ObjectManager::Get().RemoveObject(pA->m_pParent);
-			//SoundManager::Get().PlayQueue("SE_HIT.mp3", pA->m_pParent->GetWorldPosition(), 1000.0f);
+			//SoundManager::Get().PlayQueue("SE_HIT.mp3", pA->m_pParent->GetWorldPosition(), SoundRange);
 		}
 	}
 
@@ -150,7 +150,7 @@ namespace MyEvent {
 		auto pEffect = ObjectManager::Get().TakeObject(L"ZAttack");
 		pEffect->SetPosition(pA->m_pParent->GetPosition());
 		ObjectManager::Get().DisableObject(pA->m_pParent);
-		//SoundManager::Get().Play("SE_HIT.mp3");//, pObject->GetWorldPosition(), 1000.0f);
+		//SoundManager::Get().Play("SE_HIT.mp3");//, pObject->GetWorldPosition(), SoundRange);
 	}
 
 	void OneShots(Collider* pA, Collider* pB) {

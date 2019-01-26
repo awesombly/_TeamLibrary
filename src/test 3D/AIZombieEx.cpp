@@ -2,9 +2,9 @@
 #include "ObjectManager.h"
 //#include "GameObject.h"
 #include "AHeroObj.h"
-#include "CEventTimer.h"
 #include "EventManager.h"
 #include "PlayerController.h"
+#include "SoundManager.h"
 
 AIZombieEx::AIZombieEx()
 {
@@ -46,7 +46,7 @@ bool AIZombieEx::Frame(const float& spf, const float& accTime)	noexcept
 		}	break;
 		case EState::Attack:
 		{
-			m_delay = 1.1f;
+			m_delay = 1.3f;
 			((AHeroObj*)m_pParent)->SetANIM_OneTime(ZombieEX_ATTACK);
 		}	break;
 		}
@@ -84,25 +84,18 @@ bool AIZombieEx::Frame(const float& spf, const float& accTime)	noexcept
 	}	break;
 	case EState::Attack:
 	{
-		//SoundManager::Get().PlayQueue("SV_Guard_Punch.mp3", pObject->GetWorldPosition(), 1000.0f);
+		SoundManager::Get().PlayQueue("SE_zombie_hit01.mp3", m_pParent->GetPosition(), PlayerController::Get().SoundRange);
 
+		// °ø°Ý
 		auto pCollider = new Collider(m_pParent->GetScale().x * 50.0f);
-		auto pMelee = new GameObject(L"Melee", { pCollider, new CEventTimer(0.3f) });
-		pMelee->SetParent(m_pParent);
-		auto position = m_pParent->GetForward() * 60.0f + m_pParent->GetUp() * 45.0f;
-		pMelee->SetPosition(position);
-		pMelee->SetRotation(m_pParent->GetRotation());
-		pMelee->UpdateMatrix();
-		pMelee->m_pPhysics->UserSocket = (UINT)-1;
-		pMelee->SetHP(100.0f);
-		pMelee->m_pPhysics->m_damage = 0.6f;
+		auto pEffect = ObjectManager::Get().TakeObject(L"ZAttack2");
+		pEffect->AddComponent(pCollider);
+		pEffect->SetPosition(m_pParent->GetPosition() + m_pParent->GetForward() * 60.0f + m_pParent->GetUp() * 45.0f);
+		pEffect->m_pPhysics->m_damage = 0.6f;
 		pCollider->CollisionEvent = MyEvent::ZombieAttack;
 		pCollider->m_eTag = ETag::Dummy;
 		pCollider->SetGravityScale(0.0f);
 		pCollider->usePhysics(false);
-		// ÀÌÆå
-		auto pEffect = ObjectManager::Get().TakeObject(L"ZAttack");
-		pEffect->SetPosition(position + m_pParent->GetPosition());
 		///
 		m_delay = 3.0f;
 		m_eDirState = EState::Move;

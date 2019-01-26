@@ -42,7 +42,7 @@ enum EPacketProtocol : USHORT {
 struct UserInfo
 {
 	UINT UserSocket = 0;
-	UINT IconNum	= 0;
+	UINT KeyValue	= 0;
 	UINT Score		= 0;
 	WORD KillCount	= 0;
 	WORD DeathCount	= 0;

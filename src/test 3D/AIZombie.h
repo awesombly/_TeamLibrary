@@ -6,7 +6,7 @@ class AIZombie : public Component
 {
 protected:
 	enum class EState {
-		Idle, Move, Attack,
+		Idle, Move, Attack, Action1, Action2, Action3, Action4,
 	};
 public:
 	EState		m_eState		= EState::Idle;

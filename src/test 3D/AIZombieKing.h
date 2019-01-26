@@ -4,7 +4,9 @@
 class AIZombieKing : public AIZombie
 {
 public:
-
+	GameObject* m_Breath = nullptr;
+	float m_delayBreath = 0.0f;
+	float m_delayStump  = 0.0f;
 public:
 	bool Init()											noexcept override;
 	bool Frame(const float& spf, const float& accTime)	noexcept override;

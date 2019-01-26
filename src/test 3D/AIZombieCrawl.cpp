@@ -2,9 +2,9 @@
 #include "ObjectManager.h"
 //#include "GameObject.h"
 #include "AHeroObj.h"
-#include "CEventTimer.h"
 #include "EventManager.h"
 #include "PlayerController.h"
+#include "SoundManager.h"
 
 AIZombieCrawl::AIZombieCrawl()
 {
@@ -46,7 +46,7 @@ bool AIZombieCrawl::Frame(const float& spf, const float& accTime)	noexcept
 		}	break;
 		case EState::Attack:
 		{
-			//m_delay = 1.1f;
+			m_delay = 1.5f;
 			//((AHeroObj*)m_pParent)->SetANIM_OneTime(Zombie_ATTACK);
 		}	break;
 		}
@@ -71,19 +71,32 @@ bool AIZombieCrawl::Frame(const float& spf, const float& accTime)	noexcept
 		//		return true;
 		//	}
 		//}
-		//if (VectorLengthSq(m_Target - m_pParent->GetPosition()) <= m_attackRange + PlayerController::Get().HomeRadius)
-		//{
-		//	m_pParent->SetFocus(m_Target = PlayerController::Get().m_pHome->GetPosition());
-		//	m_eDirState = EState::Attack;
-		//	return true;
-		//}
-		//else	// 이동
-		//{
-			m_pParent->Translate(Normalize(m_Target - m_pParent->GetPosition()) * m_moveSpeed * spf);
-		//}
+		if (VectorLengthSq(m_Target - m_pParent->GetPosition()) <= m_attackRange + PlayerController::Get().HomeRadius)
+		{
+			m_pParent->SetFocus(m_Target);
+			m_eDirState = EState::Attack;
+			return true;
+		}
+		// 이동
+		m_pParent->Translate(Normalize(m_Target - m_pParent->GetPosition()) * m_moveSpeed * spf);
 	}	break;
 	case EState::Attack:
 	{
+		SoundManager::Get().PlayQueue("SE_zombie_hit01.mp3", m_pParent->GetPosition(), PlayerController::Get().SoundRange);
+		// 공격
+		auto pCollider = new Collider(m_pParent->GetScale().x * 300.0f);
+		auto pEffect = ObjectManager::Get().TakeObject(L"ZBoom");
+		pEffect->AddComponent(pCollider);
+		pEffect->SetPosition(m_pParent->GetPosition());
+		pEffect->m_pPhysics->m_damage = 0.8f;
+		pCollider->CollisionEvent = MyEvent::ZombieAttack;
+		pCollider->m_eTag = ETag::Dummy;
+		pCollider->SetGravityScale(0.0f);
+		pCollider->usePhysics(false);
+
+		ObjectManager::Get().DisableObject(m_pParent);
+		return false;
+		///
 	}	break;
 	}
 	return true;

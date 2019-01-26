@@ -187,7 +187,7 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 
 		auto pObject = ObjectManager::Get().TakeObject(p_TakeObject.ObjectName);
 		pObject->m_pPhysics->UserSocket = p_TakeObject.UserSocket;
-		pObject->SetKeyValue(p_TakeObject.KeyValue);
+		pObject->SetKeyValue(PlayerKeyCount = p_TakeObject.KeyValue);
 		pObject->SetPosition(p_TakeObject.Position);
 		pObject->SetRotation(p_TakeObject.Rotation);
 		pObject->SetScale(p_TakeObject.Scale);
@@ -209,14 +209,20 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 			memcpy((char*)userIter->second, data, PS_UserInfo);
 			memcpy(((char*)userIter->second + PS_UserInfo), ((char*)data + PS_UserInfo), UserList[p_KeyValue.KeyValue]->DataSize);
 			pChatList->push_string(L"[LevelUp!] '"s + userIter->second->UserID + L"'  :  " + to_wstring(userIter->second->Level - 1) + L"  ->  " + to_wstring(userIter->second->Level));
-			// 체력 갱신
-			if (pMyInfo == userIter->second &&
-				PlayerController::Get().GetParent() != nullptr)
+
+			// 체력 갱신, 이펙
+			auto iter = ObjectManager::KeyObjects.find(userIter->second->KeyValue);
+			if (iter != ObjectManager::KeyObjects.end())
 			{
-				p_Float.KeyValue = PlayerController::Get().GetParent()->m_keyValue;
-				p_Float.Value = 1.0f + pMyInfo->StatLuk * 0.2f;
-				PacketManager::Get().SendPacket((char*)&p_Float, (USHORT)sizeof(Packet_Float), PACKET_SetHP);
+				auto pEffect = ObjectManager::Get().TakeObject(L"PLevelUp");
+				pEffect->SetPosition(iter->second->GetCollider()->GetCenter());
+				iter->second->SetHP(1.0f + pMyInfo->StatLuk * 0.2f);
 			}
+		}
+		// 자신일시
+		if (pMyInfo == userIter->second)
+		{
+			PlayerController::Get().UpdateStatus();
 		}
 	}	break;
 	case PACKET_SendUserInfo:
@@ -269,13 +275,6 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 			PacketManager::Get().SendPacket((char*)pMyInfo, (USHORT)(PS_UserInfo + pMyInfo->DataSize), PACKET_SendUserInfo);
 			PlayerController::Get().DeadEvent();
 		}
-		// 죽인게 자신일시
-		if (pMyInfo->UserSocket == p_PlayerDead.KillUser)
-		{
-			++pMyInfo->KillCount;
-			pMyInfo->Score += 500;
-			PacketManager::Get().SendPacket((char*)pMyInfo, (USHORT)(PS_UserInfo + pMyInfo->DataSize), PACKET_SendUserInfo);
-		}
 		// 
 		switch (pObject->m_objType)
 		{
@@ -290,12 +289,64 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 			pCollider->usePhysics(false);
 			pEffect->SetPosition(pObject->GetCollider()->GetCenter());
 			PlayerController::Get().OperEXP(0.03f);
+			// 죽인게 자신일시
+			if (pMyInfo->UserSocket == p_PlayerDead.KillUser)
+			{
+				++pMyInfo->KillCount;
+				pMyInfo->Score += 500;
+				PacketManager::Get().SendPacket((char*)pMyInfo, (USHORT)(PS_UserInfo + pMyInfo->DataSize), PACKET_SendUserInfo);
+			}
 		}	break;
 		case EObjType::Enemy:
 		{
-			auto pEffect = ObjectManager::Get().TakeObject(L"ZDead");
-			pEffect->SetPosition(pObject->GetCollider()->GetCenter());
-			PlayerController::Get().OperEXP(0.13f);
+			switch (pObject->m_pPhysics->UserSocket)
+			{
+			case EZombie:
+			case ECaster:
+			case ECrawler:
+			{
+				auto pEffect = ObjectManager::Get().TakeObject(L"ZDead");
+				pEffect->SetPosition(pObject->GetCollider()->GetCenter());
+				PlayerController::Get().OperEXP(0.15f);
+				// 죽인게 자신일시
+				if (pMyInfo->UserSocket == p_PlayerDead.KillUser)
+				{
+					++pMyInfo->KillCount;
+					pMyInfo->Score += 300;
+					PacketManager::Get().SendPacket((char*)pMyInfo, (USHORT)(PS_UserInfo + pMyInfo->DataSize), PACKET_SendUserInfo);
+				}
+			}	break;
+			case EMutant:
+			{
+				auto pEffect = ObjectManager::Get().TakeObject(L"ZDead2");
+				pEffect->SetPosition(pObject->GetCollider()->GetCenter());
+				PlayerController::Get().OperEXP(1.0f);
+				// 죽인게 자신일시
+				if (pMyInfo->UserSocket == p_PlayerDead.KillUser)
+				{
+					++pMyInfo->KillCount;
+					pMyInfo->Score += 1000;
+					PacketManager::Get().SendPacket((char*)pMyInfo, (USHORT)(PS_UserInfo + pMyInfo->DataSize), PACKET_SendUserInfo);
+				}
+			}	break;
+			case ETank:
+			{
+				auto pEffect = ObjectManager::Get().TakeObject(L"ZDead3");
+				pEffect->SetPosition(pObject->GetCollider()->GetCenter());
+				PlayerController::Get().OperEXP(3.0f);
+				// 죽인게 자신일시
+				if (pMyInfo->UserSocket == p_PlayerDead.KillUser)
+				{
+					++pMyInfo->KillCount;
+					pMyInfo->Score += 5000;
+					PacketManager::Get().SendPacket((char*)pMyInfo, (USHORT)(PS_UserInfo + pMyInfo->DataSize), PACKET_SendUserInfo);
+				}
+			}	break;
+			case EDummy:
+				break;
+			default:
+				break;
+			}
 		}	break;
 		}
 		ObjectManager::Get().DisableObject(pObject);
@@ -303,7 +354,7 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 		// 전광판 입력
 		wstring killer, dead;
 		// 맞은놈
-		if (p_PlayerDead.DeadUser == (UINT)-1)
+		if (pObject->m_objType == EObjType::Enemy)
 		{
 			dead = pObject->m_myName;
 		}
@@ -319,7 +370,7 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 			}
 		}
 		// 때린놈
-		if (p_PlayerDead.KillUser == (UINT)-1)
+		if (p_PlayerDead.KillUser >= ESocketType::EZombie)
 		{
 			killer = pObject->m_myName;
 		}
@@ -415,4 +466,26 @@ void PacketManager::SendDeadEvent(const UINT& keyValue, const UINT& deadSocket, 
 	p_PlayerDead.DeadUser = deadSocket;
 	p_PlayerDead.KillUser = killSocket;
 	PacketManager::Get().SendPacket((char*)&p_PlayerDead, (USHORT)sizeof(Packet_PlayerDead), PACKET_PlayerDead);
+}
+
+void PacketManager::SendTakeObject(const wstring_view& objName, const UINT& socketNum, const float& hp, const float& minScale, const float& randScale, const UCHAR& spawnCount)  noexcept
+{
+	static Packet_TakeObject p_TakeObject;
+	static size_t			 strSize;
+
+	strSize = objName.size() * 2;
+	strSize = strSize > 100 ? 100 : strSize;
+
+	memcpy(p_TakeObject.ObjectName, objName.data(), strSize);
+	p_TakeObject.DataSize = (UCHAR)strSize;
+	p_TakeObject.Rotation = Quaternion::Base;
+	p_TakeObject.HP = hp;
+	p_TakeObject.UserSocket = socketNum;
+	for (int i = 0; i < spawnCount; ++i)
+	{
+		p_TakeObject.KeyValue = ++PacketManager::Get().PlayerKeyCount;
+		p_TakeObject.Position = { RandomNormal() * 1000.0f - 500.0f, 60.0f, RandomNormal() * 1000.0f - 500.0f };
+		p_TakeObject.Scale = (RandomNormal() * randScale + minScale) * Vector3::One;
+		PacketManager::Get().SendPacket((char*)&p_TakeObject, (USHORT)(PS_TakeObject + strSize), PACKET_TakeObject);
+	}
 }

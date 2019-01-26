@@ -91,15 +91,32 @@ bool IntroScene::FirstInit() noexcept
 		WriteManager::Get().SetText({ 0, 0 }, L"", D2D1::ColorF::Black, 20, L"휴면둥근헤드라인");
 		WriteManager::Get().SetFontSizeAlign(20, EAlign::Center, EAlign::Center);
 		m_pParser = new MaxImporter();
-		///
+
+		// ===================================== 캐릭터 초기화 ==============================================
+		ErrorMessage(__FUNCTION__ + " -> Character Loading."s);
+		I_CHARMGR.Init();
+		if (!I_CHARMGR.Load(DxManager::GetDevice(), DxManager::GetDContext(), TablePATH))		//경로 중요함
+		{
+			return false;
+		}
+		// ===================================== 오브젝트 초기화 ==============================================
+		ErrorMessage(__FUNCTION__ + " -> Object Setting."s);
 		GameObject* pObject = nullptr;
 		Collider*   pCollider = nullptr;
 		//// Effect 로드
-		ObjectManager::Get().SetProtoObject(new GameObject(L"Slash", m_pParser->CreateFromParticle(L"Slash.eff", L"../../data/script"), EObjType::Effect));
 		ObjectManager::Get().SetProtoObject(new GameObject(L"ZDead", m_pParser->CreateFromParticle(L"ZombieDead.eff", L"../../data/script"), EObjType::Effect));
+		ObjectManager::Get().SetProtoObject(new GameObject(L"ZDead2", m_pParser->CreateFromParticle(L"ZombieDead2.eff", L"../../data/script"), EObjType::Effect));
+		ObjectManager::Get().SetProtoObject(new GameObject(L"ZDead3", m_pParser->CreateFromParticle(L"ZombieDead3.eff", L"../../data/script"), EObjType::Effect));
+		ObjectManager::Get().SetProtoObject(new GameObject(L"ZBoom", m_pParser->CreateFromParticle(L"ZombieBoom.eff", L"../../data/script"), EObjType::Effect));
 		ObjectManager::Get().SetProtoObject(new GameObject(L"ZAttack", m_pParser->CreateFromParticle(L"ZombieAttack.eff", L"../../data/script"), EObjType::Effect));
-		ObjectManager::Get().SetProtoObject(new GameObject(L"PAttack", m_pParser->CreateFromParticle(L"Boom2.eff", L"../../data/script"), EObjType::Effect));
+		ObjectManager::Get().SetProtoObject(new GameObject(L"ZAttack2", m_pParser->CreateFromParticle(L"ZombieAttack2.eff", L"../../data/script"), EObjType::Effect));
+		ObjectManager::Get().SetProtoObject(new GameObject(L"ZAttack3", m_pParser->CreateFromParticle(L"ZombieAttack3.eff", L"../../data/script"), EObjType::Effect));
+		ObjectManager::Get().SetProtoObject(new GameObject(L"ZStump", m_pParser->CreateFromParticle(L"Stump.eff", L"../../data/script"), EObjType::Effect));
+		ObjectManager::Get().SetProtoObject(new GameObject(L"ZBreath", m_pParser->CreateFromParticle(L"Breath.eff", L"../../data/script"), EObjType::Effect));
 		ObjectManager::Get().SetProtoObject(new GameObject(L"PDead", m_pParser->CreateFromParticle(L"Boom3.eff", L"../../data/script"), EObjType::Effect));
+		ObjectManager::Get().SetProtoObject(new GameObject(L"PAttack", m_pParser->CreateFromParticle(L"Boom2.eff", L"../../data/script"), EObjType::Effect));
+		ObjectManager::Get().SetProtoObject(new GameObject(L"PSlash", m_pParser->CreateFromParticle(L"Slash.eff", L"../../data/script"), EObjType::Effect));
+		ObjectManager::Get().SetProtoObject(new GameObject(L"PLevelUp", m_pParser->CreateFromParticle(L"LevelUp.eff", L"../../data/script"), EObjType::Effect));
 		ObjectManager::Get().SetProtoObject(new GameObject(L"Fly", m_pParser->CreateFromParticle(L"Fire.eff", L"../../data/script"), EObjType::Effect));
 		ObjectManager::Get().SetProtoComponent(m_pParser->CreateFromParticle(L"Fire.eff", L"../../data/script"));
 		// 아이템
@@ -110,16 +127,11 @@ bool IntroScene::FirstInit() noexcept
 		pCollider->CollisionEvent = MyEvent::GiantItem;
 		pCollider->m_eTag = ETag::Dummy;
 		ObjectManager::Get().SetProtoObject(pObject);
-		
+
 		/// 컴포넌트 등록
-		//ObjectManager::Get().SetProtoComponent(new RPlane(L"Plane", L"None.png"));
 		ObjectManager::Get().SetProtoComponent(new RCube(L"Cube", L"None.png"));
 		//ObjectManager::Get().SetProtoComponent(new RSphere(20, L"Sphere", L"None.png"));
 		ObjectManager::Get().SetProtoComponent(new RSphere(10, L"RowSphere", L"None.png"));
-		//ObjectManager::Get().SetProtoComponent(new RLine(L"Line"));
-		//ObjectManager::Get().SetProtoComponent(new ColliderAABB(2.0f, -Vector3::One, Vector3::One));
-		//ObjectManager::Get().SetProtoComponent(new ColliderOBB(2.0f, -Vector3::One, Vector3::One));
-		//ObjectManager::Get().SetProtoComponent(new Collider(1));
 
 		// 라이트
 		auto pTrans = new CTransformer(Vector3::Up * 400.0f, Quaternion::Up * PI * 0.35f, Vector3::One);
@@ -130,22 +142,13 @@ bool IntroScene::FirstInit() noexcept
 		};
 		ObjectManager::Get().Lights.front()->AddComponent({ pTrans });
 		// 라이트 랜더러
-		auto pShpere = (Renderer*)ObjectManager::GetInstance().TakeComponent(L"RowSphere");
-		pShpere->SetShaderLayout("VS_Basic", "PS_Basic");
-		pObject = new GameObject(L"Sun", pShpere);
-		pObject->isGlobal(true);
-		pObject->SetScale(Vector3::One * 7);
-		pObject->SetParent(ObjectManager::Get().Lights.front());
+		//auto pShpere = (Renderer*)ObjectManager::GetInstance().TakeComponent(L"RowSphere");
+		//pShpere->SetShaderLayout("VS_Basic", "PS_Basic");
+		//pObject = new GameObject(L"Sun", pShpere);
+		//pObject->isGlobal(true);
+		//pObject->SetScale(Vector3::One * 7);
+		//pObject->SetParent(ObjectManager::Get().Lights.front());
 
-
-		// ========================= 캐릭터 초기화 ===========================
-		ErrorMessage(__FUNCTION__ + " -> Character Loading."s);
-		I_CHARMGR.Init();
-		if (!I_CHARMGR.Load(DxManager::GetDevice(), DxManager::GetDContext(), TablePATH))		//경로 중요함
-		{
-			return false;
-		}
-		ErrorMessage(__FUNCTION__ + " -> Object Setting."s);
 		// 단검
 		auto pHeroObj = new AHeroObj();
 		pHeroObj->SetPlayerCharacter(ITEM_Dagger);
@@ -201,7 +204,7 @@ bool IntroScene::FirstInit() noexcept
 		pHeroObj->AddComponent({ pCollider, new AIZombie() });
 		pCollider->CollisionEvent = MyEvent::ZombieHit;
 		pCollider->m_eTag = ETag::Enemy;
-		pHeroObj->m_pPhysics->UserSocket = (UINT)-1;
+		pHeroObj->m_pPhysics->UserSocket = ESocketType::EZombie;
 		pHeroObj->m_pPhysics->m_damage = 0.08f;
 		ObjectManager::Get().SetProtoObject(pHeroObj);
 		// 좀비 Cast
@@ -215,7 +218,7 @@ bool IntroScene::FirstInit() noexcept
 		pHeroObj->AddComponent({ pCollider, new AIZombieCast() });
 		pCollider->CollisionEvent = MyEvent::ZombieHit;
 		pCollider->m_eTag = ETag::Enemy;
-		pHeroObj->m_pPhysics->UserSocket = (UINT)-1;
+		pHeroObj->m_pPhysics->UserSocket = ESocketType::ECaster;
 		pHeroObj->m_pPhysics->m_damage = 0.08f;
 		ObjectManager::Get().SetProtoObject(pHeroObj);
 		// 좀비 Crawl
@@ -231,7 +234,7 @@ bool IntroScene::FirstInit() noexcept
 		pCollider->m_pPhysics->m_mass = 0.2f;
 		pCollider->m_pPhysics->m_damping = 1.0f;
 		pCollider->m_eTag = ETag::Enemy;
-		pHeroObj->m_pPhysics->UserSocket = (UINT)-1;
+		pHeroObj->m_pPhysics->UserSocket = ESocketType::ECrawler;
 		pHeroObj->m_pPhysics->m_damage = 0.3f;
 		ObjectManager::Get().SetProtoObject(pHeroObj);
 		// 좀비 Ex
@@ -247,7 +250,7 @@ bool IntroScene::FirstInit() noexcept
 		pCollider->m_pPhysics->m_mass = 0.2f;
 		pCollider->m_pPhysics->m_damping = 1.0f;
 		pCollider->m_eTag = ETag::Enemy;
-		pHeroObj->m_pPhysics->UserSocket = (UINT)-1;
+		pHeroObj->m_pPhysics->UserSocket = ESocketType::EMutant;
 		pHeroObj->m_pPhysics->m_damage = 0.3f;
 		ObjectManager::Get().SetProtoObject(pHeroObj);
 		// 좀비 King
@@ -263,7 +266,7 @@ bool IntroScene::FirstInit() noexcept
 		pCollider->m_pPhysics->m_mass = 0.1f;
 		pCollider->m_pPhysics->m_damping = 2.0f;
 		pCollider->m_eTag = ETag::Enemy;
-		pHeroObj->m_pPhysics->UserSocket = (UINT)-1;
+		pHeroObj->m_pPhysics->UserSocket = ESocketType::ETank;
 		pHeroObj->m_pPhysics->m_damage = 0.4f;
 		ObjectManager::Get().SetProtoObject(pHeroObj);
 
@@ -359,6 +362,6 @@ void IntroScene::LoadUI() noexcept
 	//JEditCtrl* pSignUpPWCheck = (JEditCtrl*)pUIRoot->find_child(L"SignUp_PWCheck");
 	//JButtonCtrl* pSignUpEnter = (JButtonCtrl*)pUIRoot->find_child(L"SignUp_Enter");
 
-	SoundManager::Get().SetBGM("SE_Rudy.mp3");
+	//SoundManager::Get().SetBGM("SE_Rudy.mp3");
 	UI::IntroEvent(pUIRoot);
 }

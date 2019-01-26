@@ -18,7 +18,7 @@ bool GameScene::Init() noexcept
 
 	auto pCollider = new Collider(1.0f);
 	pCollider->m_eTag = ETag::Ally;
-	PlayerController::Get().m_pHome = new GameObject(L"Shelter", { pCollider , ObjectManager::Get().TakeComponent(L"RowSphere") }, EObjType::Object);
+	PlayerController::Get().m_pHome = new GameObject(L"Shelter", { pCollider , ObjectManager::Get().TakeComponent(L"RowSphere") }, EObjType::Dummy);
 	PlayerController::Get().m_pHome->SetPosition(Vector3::Up * 20.0f);
 	PlayerController::Get().m_pHome->SetScale(Vector3::One * 25.0f);
 	PlayerController::Get().m_pHome->SetGravityScale(0.0f);
@@ -236,107 +236,27 @@ bool GameScene::CheatMessage() noexcept
 		}
 		else if (str._Equal(L"Zombie"))
 		{
-			Packet_TakeObject p_TakeObject;
-			wstring objName = L"Zombie";
-			size_t  strSize = objName.size() * 2;
-			strSize = strSize > 100 ? 100 : strSize;
-
-			memcpy(p_TakeObject.ObjectName, objName.data(), strSize);
-			p_TakeObject.DataSize = (UCHAR)strSize;
-			p_TakeObject.Rotation = Quaternion::Base;
-			p_TakeObject.HP = 1.0f;
-			p_TakeObject.UserSocket = (UINT)-1;
-			for (int i = 0; i < atoi(WCharToChar(m_chatMessage.substr(finder + 1).c_str())); ++i)
-			{
-				p_TakeObject.KeyValue = ++PacketManager::Get().PlayerKeyCount;
-				p_TakeObject.Position = { RandomNormal() * 1000.0f - 500.0f, 60.0f, RandomNormal() * 1000.0f - 500.0f };
-				p_TakeObject.Scale = (RandomNormal() * 0.2f + 0.1f) * Vector3::One;
-				PacketManager::Get().SendPacket((char*)&p_TakeObject, (USHORT)(PS_TakeObject + strSize), PACKET_TakeObject);
-			}
+			PacketManager::Get().SendTakeObject(str, ESocketType::EZombie, 1.0f, 0.1f, 0.2f, atoi(WCharToChar(m_chatMessage.substr(finder + 1).c_str())));
 			return false;
 		}
 		else if (str._Equal(L"Caster"))
 		{
-			Packet_TakeObject p_TakeObject;
-			wstring objName = L"Caster";
-			size_t  strSize = objName.size() * 2;
-			strSize = strSize > 100 ? 100 : strSize;
-
-			memcpy(p_TakeObject.ObjectName, objName.data(), strSize);
-			p_TakeObject.DataSize = (UCHAR)strSize;
-			p_TakeObject.Rotation = Quaternion::Base;
-			p_TakeObject.HP = 0.8f;
-			p_TakeObject.UserSocket = (UINT)-1;
-			for (int i = 0; i < atoi(WCharToChar(m_chatMessage.substr(finder + 1).c_str())); ++i)
-			{
-				p_TakeObject.KeyValue = ++PacketManager::Get().PlayerKeyCount;
-				p_TakeObject.Position = { RandomNormal() * 1000.0f - 500.0f, 60.0f, RandomNormal() * 1000.0f - 500.0f };
-				p_TakeObject.Scale = (RandomNormal() * 0.2f + 0.1f) * Vector3::One;
-				PacketManager::Get().SendPacket((char*)&p_TakeObject, (USHORT)(PS_TakeObject + strSize), PACKET_TakeObject);
-			}
+			PacketManager::Get().SendTakeObject(str, ESocketType::ECaster, 0.8f, 0.1f, 0.2f, atoi(WCharToChar(m_chatMessage.substr(finder + 1).c_str())));
 			return false;
 		}
 		else if (str._Equal(L"Crawler"))
 		{
-			Packet_TakeObject p_TakeObject;
-			wstring objName = L"Crawler";
-			size_t  strSize = objName.size() * 2;
-			strSize = strSize > 100 ? 100 : strSize;
-
-			memcpy(p_TakeObject.ObjectName, objName.data(), strSize);
-			p_TakeObject.DataSize = (UCHAR)strSize;
-			p_TakeObject.Rotation = Quaternion::Base;
-			p_TakeObject.HP = 0.6f;
-			p_TakeObject.UserSocket = (UINT)-1;
-			for (int i = 0; i < atoi(WCharToChar(m_chatMessage.substr(finder + 1).c_str())); ++i)
-			{
-				p_TakeObject.KeyValue = ++PacketManager::Get().PlayerKeyCount;
-				p_TakeObject.Position = { RandomNormal() * 1000.0f - 500.0f, 60.0f, RandomNormal() * 1000.0f - 500.0f };
-				p_TakeObject.Scale = (RandomNormal() * 0.2f + 0.1f) * Vector3::One;
-				PacketManager::Get().SendPacket((char*)&p_TakeObject, (USHORT)(PS_TakeObject + strSize), PACKET_TakeObject);
-			}
+			PacketManager::Get().SendTakeObject(str, ESocketType::ECrawler, 0.6f, 0.15f, 0.1f, atoi(WCharToChar(m_chatMessage.substr(finder + 1).c_str())));
 			return false;
 		}
 		else if (str._Equal(L"Mutant"))
 		{
-			Packet_TakeObject p_TakeObject;
-			wstring objName = L"Mutant";
-			size_t  strSize = objName.size() * 2;
-			strSize = strSize > 100 ? 100 : strSize;
-
-			memcpy(p_TakeObject.ObjectName, objName.data(), strSize);
-			p_TakeObject.DataSize = (UCHAR)strSize;
-			p_TakeObject.Rotation = Quaternion::Base;
-			p_TakeObject.HP = 5.0f;
-			p_TakeObject.UserSocket = (UINT)-1;
-			for (int i = 0; i < atoi(WCharToChar(m_chatMessage.substr(finder + 1).c_str())); ++i)
-			{
-				p_TakeObject.KeyValue = ++PacketManager::Get().PlayerKeyCount;
-				p_TakeObject.Position = { RandomNormal() * 1000.0f - 500.0f, 60.0f, RandomNormal() * 1000.0f - 500.0f };
-				p_TakeObject.Scale = (RandomNormal() * 0.2f + 0.45f) * Vector3::One;
-				PacketManager::Get().SendPacket((char*)&p_TakeObject, (USHORT)(PS_TakeObject + strSize), PACKET_TakeObject);
-			}
+			PacketManager::Get().SendTakeObject(str, ESocketType::EMutant, 5.0f, 0.45f, 0.2f, atoi(WCharToChar(m_chatMessage.substr(finder + 1).c_str())));
 			return false;
 		}
 		else if (str._Equal(L"Tank"))
 		{
-			Packet_TakeObject p_TakeObject;
-			wstring objName = L"Tank";
-			size_t  strSize = objName.size() * 2;
-			strSize = strSize > 100 ? 100 : strSize;
-
-			memcpy(p_TakeObject.ObjectName, objName.data(), strSize);
-			p_TakeObject.DataSize = (UCHAR)strSize;
-			p_TakeObject.Rotation = Quaternion::Base;
-			p_TakeObject.HP = 20.0f;
-			p_TakeObject.UserSocket = (UINT)-1;
-			for (int i = 0; i < atoi(WCharToChar(m_chatMessage.substr(finder + 1).c_str())); ++i)
-			{
-				p_TakeObject.KeyValue = ++PacketManager::Get().PlayerKeyCount;
-				p_TakeObject.Position = { RandomNormal() * 1000.0f - 500.0f, 60.0f, RandomNormal() * 1000.0f - 500.0f };
-				p_TakeObject.Scale = (RandomNormal() * 0.2f + 1.0f) * Vector3::One;
-				PacketManager::Get().SendPacket((char*)&p_TakeObject, (USHORT)(PS_TakeObject + strSize), PACKET_TakeObject);
-			}
+			PacketManager::Get().SendTakeObject(str, ESocketType::ETank, 20.0f, 1.0f, 0.2f, atoi(WCharToChar(m_chatMessage.substr(finder + 1).c_str())));
 			return false;
 		}
 		else if (str._Equal(L"Dead"))
@@ -517,28 +437,18 @@ void GameScene::HostFrame() noexcept
 		p_TakeObject.HP = 100.0f;
 		p_TakeObject.UserSocket = (UINT)-1;
 		PacketManager::Get().SendPacket((char*)&p_TakeObject, (USHORT)(PS_TakeObject + strSize), PACKET_TakeObject);
+		///
+		PacketManager::Get().SendTakeObject(L"Tank", ESocketType::ETank, 20.0f, 1.1f, 0.1f, 1);
 	}
 	// 利 积己
-	if (enemyFrame >= 4.0f)
+	if (enemyFrame >= 10.0f)
 	{
 		enemyFrame = 0.0f;
 
-		wstring objName = L"Zombie";
-		size_t  strSize = objName.size() * 2;
-		strSize = strSize > 100 ? 100 : strSize;
-
-		memcpy(p_TakeObject.ObjectName, objName.data(), strSize);
-		p_TakeObject.DataSize = (UCHAR)strSize;
-		p_TakeObject.Rotation = Quaternion::Base;
-		p_TakeObject.HP = 1.0f;
-		p_TakeObject.UserSocket = (UINT)-1;
-		for (int i = 0; i < PacketManager::Get().UserList.size(); ++i)
-		{
-			p_TakeObject.KeyValue = ++PacketManager::Get().PlayerKeyCount;
-			p_TakeObject.Position = { RandomNormal() * 1000.0f - 500.0f, 60.0f, RandomNormal() * 1000.0f - 500.0f };
-			p_TakeObject.Scale = (RandomNormal() * 0.2f + 0.1f) * Vector3::One;
-			PacketManager::Get().SendPacket((char*)&p_TakeObject, (USHORT)(PS_TakeObject + strSize), PACKET_TakeObject);
-		}
+		PacketManager::Get().SendTakeObject(L"Zombie", ESocketType::EZombie, 1.0f, 0.1f, 0.2f, (UCHAR)PacketManager::Get().UserList.size());
+		PacketManager::Get().SendTakeObject(L"Caster", ESocketType::ECaster, 0.8f, 0.1f, 0.2f, (UCHAR)PacketManager::Get().UserList.size());
+		PacketManager::Get().SendTakeObject(L"Crawler", ESocketType::ECrawler, 0.6f, 0.15f, 0.1f, (UCHAR)PacketManager::Get().UserList.size());
+		PacketManager::Get().SendTakeObject(L"Mutant", ESocketType::EMutant, 5.0f, 0.5f, 0.1f, 1);
 	}
 }
 
@@ -631,6 +541,7 @@ void GameScene::LoadUI() noexcept
 	PacketManager::Get().pUserPanel[3]->PostEvent.second = PacketManager::Get().pUserPanel[3];
 	// 付快胶, 可记, 傈堡魄
 	UIManager::Get().m_pMouseIcon = pUIRoot->find_child(L"mouse_cursor");
+	UIManager::Get().m_pMouseIcon->m_bRender = false;
 	//PlayerController::Get().m_pOption = (JPanel*)pUIRoot->find_child(L"Set_Panel");
 	PacketManager::Get().pKillDisplay = (JListCtrl*)pUIRoot->find_child(L"KilltoDeath");
 
