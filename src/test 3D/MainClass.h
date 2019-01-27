@@ -137,5 +137,6 @@ public:
 	int StartupClient();
 	int ConnectMatchingServer();
 	int RequestMatch(const short& playerCnt);
+	int RequestSignUp(const wchar_t* wcharUsername, const wchar_t* wcharPassword);
 	int RequestSignIn(const wchar_t* wcharUsername, const wchar_t* wcharPassword);
 };
