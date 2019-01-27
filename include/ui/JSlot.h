@@ -22,6 +22,7 @@ namespace UI
 		bool AddItem(wstring strItem);
 		bool AddItem(const int itxItem);
 		bool DelItem();
+		bool Empty();
 	public:
 		void Update();
 		bool Frame(const float& spf, const float& accTime) noexcept override;

@@ -1,0 +1,996 @@
+^Type 777
+^NodeName Root
+^ParentName 
+^Position 0.000000 0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 1.000000 1.000000 1.000000
+
+^Type 778
+^NodeName BackGround
+^ParentName Root
+^KeyState 135 135
+^bRender 1
+^Position 0.000000 0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 400.000000 300.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_Normal landscape-image-background-wallpapers-shanty-zombie-mukai-120557.jpg
+^tx_Hover landscape-image-background-wallpapers-shanty-zombie-mukai-120557.jpg
+^tx_Press landscape-image-background-wallpapers-shanty-zombie-mukai-120557.jpg
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 777
+^NodeName Default
+^ParentName Root
+^KeyState 135 135
+^bRender 1
+^Position 0.000000 0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 1.000000 1.000000 1.000000
+
+^Type 778
+^NodeName D_BackGround
+^ParentName Default
+^KeyState 135 135
+^bRender 1
+^Position -320.000000 121.585014 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 80.000000 100.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_Normal gray_wdim10.png
+^tx_Hover gray_wdim10.png
+^tx_Press gray_wdim10.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 778
+^NodeName D_AutoMatching
+^ParentName Default
+^KeyState 135 135
+^bRender 1
+^Position -320.000000 180.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 50.000000 20.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_Normal btn_177.png
+^tx_Hover btn_176.png
+^tx_Press btn_176.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 778
+^NodeName D_Host
+^ParentName Default
+^KeyState 135 135
+^bRender 1
+^Position -320.000000 140.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 50.000000 20.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_Normal btn_177.png
+^tx_Hover btn_176.png
+^tx_Press btn_176.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 778
+^NodeName D_Guest
+^ParentName Default
+^KeyState 135 135
+^bRender 1
+^Position -320.000000 100.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 50.000000 20.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_Normal btn_177.png
+^tx_Hover btn_176.png
+^tx_Press btn_176.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 778
+^NodeName D_Exit
+^ParentName Default
+^KeyState 135 135
+^bRender 1
+^Position -320.000000 60.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 50.000000 20.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_Normal btn_177.png
+^tx_Hover btn_176.png
+^tx_Press btn_176.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName D_Exit_txt
+^ParentName Default
+^KeyState 135 135
+^bRender 1
+^Position -320.000000 60.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 20.000000 10.000000 1.000000
+^Color 0.000000 0.000000 0.000000 1.000000
+^tx_Normal Á¾·á.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName D_Guest_txt
+^ParentName Default
+^KeyState 135 135
+^bRender 1
+^Position -320.000000 100.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 30.000000 10.000000 1.000000
+^Color 0.000000 0.000000 0.000000 1.000000
+^tx_Normal °Ô½ºÆ®.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName D_Host_txt
+^ParentName Default
+^KeyState 135 135
+^bRender 1
+^Position -320.000000 140.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 30.000000 10.000000 1.000000
+^Color 0.000000 0.000000 0.000000 1.000000
+^tx_Normal È£½ºÆ®.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName D_AutoMatching_txt
+^ParentName Default
+^KeyState 135 135
+^bRender 1
+^Position -320.000000 180.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 35.000000 10.000000 1.000000
+^Color 0.000000 0.000000 0.000000 1.000000
+^tx_Normal ÀÚµ¿¸ÅÄª.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 777
+^NodeName Guest
+^ParentName Root
+^KeyState 135 135
+^bRender 0
+^Position 0.000000 0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 1.000000 1.000000 1.000000
+
+^Type 778
+^NodeName G_BackGround
+^ParentName Guest
+^KeyState 135 135
+^bRender 1
+^Position 0.000000 0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 80.000000 80.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_Normal gray_wdim10.png
+^tx_Hover gray_wdim10.png
+^tx_Press gray_wdim10.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 783
+^NodeName G_IP
+^ParentName Guest
+^KeyState 135 135
+^bRender 1
+^Position 0.000000 28.992517 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 50.000000 10.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^Align 0
+^strText IP:___.___.___.___
+^TextSize 15.000000
+^tx_Normal ChatEdit.png
+^tx_Hover tile-6b2a1a39575b98c45936cc0169a9010f-1.png
+^tx_Press tile-6b2a1a39575b98c45936cc0169a9010f-1.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 778
+^NodeName G_Exit
+^ParentName Guest
+^KeyState 135 135
+^bRender 1
+^Position 67.000000 65.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 15.000000 15.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_Normal btn_175.png
+^tx_Hover btn_174.png
+^tx_Press btn_174.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7276
+^vpEventClick Guest
+
+^Type 778
+^NodeName G_Enter
+^ParentName Guest
+^KeyState 135 135
+^bRender 1
+^Position 0.000000 -25.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 50.000000 20.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_Normal btn_177.png
+^tx_Hover btn_176.png
+^tx_Press btn_176.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName G_Enter_txt
+^ParentName Guest
+^KeyState 135 135
+^bRender 1
+^Position 0.000000 -25.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 13.000000 13.000000 1.000000
+^Color 0.000000 0.000000 0.000000 1.000000
+^tx_Normal È®ÀÎ.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 777
+^NodeName Help_Panel
+^ParentName Root
+^KeyState 135 135
+^bRender 1
+^Position 0.000000 0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 1.000000 1.000000 1.000000
+
+^Type 778
+^NodeName Helptxt
+^ParentName Help_Panel
+^KeyState 135 135
+^bRender 0
+^Position -208.000000 97.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 70.000000 50.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_Normal 234324234.png
+^tx_Hover 234324234.png
+^tx_Press 234324234.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 777
+^NodeName Char_Panel
+^ParentName Root
+^KeyState 135 135
+^bRender 1
+^Position 0.000000 0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 1.000000 1.000000 1.000000
+
+^Type 778
+^NodeName Char_Left
+^ParentName Char_Panel
+^KeyState 135 135
+^bRender 1
+^Position -50.000000 -210.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 30.000000 30.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_Normal btn01a.png
+^tx_Hover btn01g.png
+^tx_Press btn01g.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 778
+^NodeName Char_Right
+^ParentName Char_Panel
+^KeyState 135 135
+^bRender 1
+^Position 50.000000 -210.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 30.000000 30.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_Normal btn01a.png
+^tx_Hover btn01g.png
+^tx_Press btn01g.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName Char_Left_Img
+^ParentName Char_Panel
+^KeyState 135 135
+^bRender 1
+^Position -52.000000 -210.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale -15.000000 20.000000 1.000000
+^Color 0.000000 0.000000 0.000000 1.000000
+^tx_Normal EquipChangeItemPopUp-5bd81ccd2ff9540119ecca99ea8514a3-1.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName Char_Right_Img
+^ParentName Char_Panel
+^KeyState 135 135
+^bRender 1
+^Position 52.000000 -210.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 15.000000 20.000000 1.000000
+^Color 0.000000 0.000000 0.000000 1.000000
+^tx_Normal EquipChangeItemPopUp-5bd81ccd2ff9540119ecca99ea8514a3-1.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 777
+^NodeName Matching_Panel
+^ParentName Root
+^KeyState 135 135
+^bRender 0
+^Position 0.000000 0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 1.000000 1.000000 1.000000
+
+^Type 788
+^NodeName Matching_Back
+^ParentName Matching_Panel
+^KeyState 135 135
+^bRender 1
+^Position 0.000000 16.012199 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 180.000000 50.000000 1.000000
+^Color 0.000000 0.000000 0.000000 1.000000
+^tx_Normal White.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 778
+^NodeName Matching_Two
+^ParentName Matching_Panel
+^KeyState 135 135
+^bRender 1
+^Position -110.000000 0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 50.000000 20.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_Normal btn_177.png
+^tx_Hover btn_176.png
+^tx_Press btn_176.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 778
+^NodeName Matching_Three
+^ParentName Matching_Panel
+^KeyState 135 135
+^bRender 1
+^Position 0.000000 0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 50.000000 20.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_Normal btn_177.png
+^tx_Hover btn_176.png
+^tx_Press btn_176.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 778
+^NodeName Matching_Four
+^ParentName Matching_Panel
+^KeyState 135 135
+^bRender 1
+^Position 110.000000 0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 50.000000 20.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_Normal btn_177.png
+^tx_Hover btn_176.png
+^tx_Press btn_176.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName Matching_Two_txt
+^ParentName Matching_Panel
+^KeyState 135 135
+^bRender 1
+^Position -110.000000 0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 15.000000 10.000000 1.000000
+^Color 0.000000 0.000000 0.000000 1.000000
+^tx_Normal 2ÀÎ.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName Matching_Three_txt
+^ParentName Matching_Panel
+^KeyState 135 135
+^bRender 1
+^Position 0.000000 0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 15.000000 10.000000 1.000000
+^Color 0.000000 0.000000 0.000000 1.000000
+^tx_Normal 3ÀÎ.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName Matching_Four_txt
+^ParentName Matching_Panel
+^KeyState 135 135
+^bRender 1
+^Position 110.000000 0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 15.000000 10.000000 1.000000
+^Color 0.000000 0.000000 0.000000 1.000000
+^tx_Normal 4ÀÎ.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 777
+^NodeName Matching_Top_Panel
+^ParentName Matching_Panel
+^KeyState 135 135
+^bRender 1
+^Position 0.000000 0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 1.000000 1.000000 1.000000
+
+^Type 788
+^NodeName Matching_Top_Back
+^ParentName Matching_Top_Panel
+^KeyState 135 135
+^bRender 1
+^Position 0.000000 52.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 175.000000 10.000000 1.000000
+^Color 0.500000 0.500000 0.500000 1.000000
+^tx_Normal White.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 778
+^NodeName Matching_Top_Exit
+^ParentName Matching_Top_Panel
+^KeyState 135 135
+^bRender 1
+^Position 166.000000 52.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 11.000000 11.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_Normal btn01a.png
+^tx_Hover btn01g.png
+^tx_Press btn01g.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName Matching_Top_Title
+^ParentName Matching_Top_Panel
+^KeyState 135 135
+^bRender 1
+^Position -145.422562 51.848328 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 25.000000 8.000000 1.000000
+^Color 0.000000 0.000000 0.000000 1.000000
+^tx_Normal ÀÚµ¿¸ÅÄª.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName Matching_Top_Exit_txt
+^ParentName Matching_Top_Panel
+^KeyState 135 135
+^bRender 1
+^Position 166.533905 51.833332 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 7.000000 7.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_Normal btn_959.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 777
+^NodeName isMatching_Panel
+^ParentName Root
+^KeyState 135 135
+^bRender 0
+^Position 0.000000 0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 1.000000 1.000000 1.000000
+
+^Type 788
+^NodeName isMatching_Back
+^ParentName isMatching_Panel
+^KeyState 135 135
+^bRender 1
+^Position 0.000000 0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 200.000000 100.000000 1.000000
+^Color 0.000000 0.000000 0.000000 1.000000
+^tx_Normal White.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName isMatching_Title
+^ParentName isMatching_Panel
+^KeyState 135 135
+^bRender 1
+^Position 0.000000 60.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 50.000000 25.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_Normal ¸ÅÄªÁß.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 777
+^NodeName isMatching_Sprite_Panel
+^ParentName isMatching_Panel
+^KeyState 135 135
+^bRender 1
+^Position 0.000000 0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 1.000000 1.000000 1.000000
+
+^Type 782
+
+^SpriteType 6430
+^NodeName isMatching_Sprite1
+^ParentName isMatching_Sprite_Panel
+^KeyState 135 135
+^bRender 1
+^bLoop 1
+^Position -160.000000 -30.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale -30.000000 30.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^AnimTime 0.250000
+^AnimUV 2 2 
+^SPRITESTART 1 
+^ux_evan_run_icon.png
+^SPRITEEND
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 782
+
+^SpriteType 6430
+^NodeName isMatching_Sprite2
+^ParentName isMatching_Sprite_Panel
+^KeyState 135 135
+^bRender 0
+^bLoop 1
+^Position -80.000000 -30.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale -30.000000 30.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^AnimTime 0.250000
+^AnimUV 2 2 
+^SPRITESTART 1 
+^ux_evan_run_icon.png
+^SPRITEEND
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 782
+
+^SpriteType 6430
+^NodeName isMatching_Sprite3
+^ParentName isMatching_Sprite_Panel
+^KeyState 135 135
+^bRender 0
+^bLoop 1
+^Position 0.000000 -30.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale -30.000000 30.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^AnimTime 0.250000
+^AnimUV 2 2 
+^SPRITESTART 1 
+^ux_evan_run_icon.png
+^SPRITEEND
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 782
+
+^SpriteType 6430
+^NodeName isMatching_Sprite4
+^ParentName isMatching_Sprite_Panel
+^KeyState 135 135
+^bRender 0
+^bLoop 1
+^Position 80.000000 -30.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale -30.000000 30.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^AnimTime 0.250000
+^AnimUV 2 2 
+^SPRITESTART 1 
+^ux_evan_run_icon.png
+^SPRITEEND
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 782
+
+^SpriteType 6430
+^NodeName isMatching_Sprite5
+^ParentName isMatching_Sprite_Panel
+^KeyState 135 135
+^bRender 0
+^bLoop 1
+^Position 160.000000 -30.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale -30.000000 30.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^AnimTime 0.250000
+^AnimUV 2 2 
+^SPRITESTART 1 
+^ux_evan_run_icon.png
+^SPRITEEND
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 782
+
+^SpriteType 6429
+^NodeName Icon_Sprite
+^ParentName Root
+^KeyState 135 135
+^bRender 1
+^bLoop 1
+^Position 357.049255 178.286285 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 40.000000 40.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^AnimTime 8.000000
+^AnimUV 0 0 
+^SPRITESTART 8 
+^icn_crime.png
+^icn_drug.png
+^icn_gamble.png
+^icn_horror.png
+^icn_ment.png
+^icn_sensation.png
+^icn_violence.png
+^icn_rate_18.png
+^SPRITEEND
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 784
+
+^SpriteType 6429
+^NodeName mouse_particle
+^ParentName Root
+^KeyState 135 135
+^bRender 1
+^bLoop 1
+^Position 646.000000 -258.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 1.000000 1.000000 1.000000
+^AnimTime 1.000000
+^AnimUV 0 0 
+^ParticleSize 128
+^ParticleScale 3.000000 7.000000
+^MinStartPos 0.000000 0.000000 -0.000000
+^MaxStartPos 0.000000 0.000000 -0.000000
+^TurnDir 0 0 0
+^MinColor 0.000000 0.000000 0.000000 0.300000
+^MaxColor 0.000000 0.000000 0.000000 0.600000
+^LifeTime 0.500000 1.000000
+^MinDir 0.000000 -1.000000 0.000000
+^MaxDir 2.000000 -1.000000 0.000000
+^MinDirAngle 0.000000 0.000000 -1.000000 1.000000
+^MaxDirAngle 0.000000 0.000000 1.000000 1.000000
+^MoveSpeed 150.000000 200.000000
+^RotSpeed 5.000000 10.000000
+^SPRITESTART 1
+^circle.png
+^SPRITEEND
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 777
+^NodeName Drag_Panel
+^ParentName Root
+^KeyState 135 135
+^bRender 1
+^Position 0.000000 0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 1.000000 1.000000 1.000000
+
+^Type 788
+^NodeName Drag_Img
+^ParentName Drag_Panel
+^KeyState 135 135
+^bRender 1
+^Position 636.000000 -248.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 0.000000 0.000000 1.000000
+^Color 0.000000 0.000000 0.000000 0.650000
+^tx_Normal White.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 777
+^NodeName snow_panel
+^ParentName Root
+^KeyState 135 135
+^bRender 1
+^Position 0.000000 0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 1.000000 1.000000 1.000000
+
+^Type 784
+
+^SpriteType 6429
+^NodeName snow_particle
+^ParentName snow_panel
+^KeyState 135 135
+^bRender 1
+^bLoop 1
+^Position 0.000000 0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 1.000000 1.000000 1.000000
+^AnimTime 1.000000
+^AnimUV 0 0 
+^ParticleSize 256
+^ParticleScale 1.000000 3.000000
+^MinStartPos -400.000000 300.000000 0.000000
+^MaxStartPos 400.000000 300.000000 0.000000
+^TurnDir 1 0 0
+^MinColor 1.000000 1.000000 1.000000 0.300000
+^MaxColor 1.000000 1.000000 1.000000 0.900000
+^LifeTime 5.000000 5.000000
+^MinDir -0.000000 -1.000000 0.000000
+^MaxDir 0.000000 -1.000000 0.000000
+^MinDirAngle 0.000000 0.000000 0.000000 1.000000
+^MaxDirAngle 0.000000 0.000000 0.000000 1.000000
+^MoveSpeed 100.000000 200.000000
+^RotSpeed 5.000000 10.000000
+^SPRITESTART 1
+^circle.png
+^SPRITEEND
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 778
+^NodeName effect_hos
+^ParentName Root
+^KeyState 135 135
+^bRender 0
+^Position 0.000000 -0.000000 0.000000
+^Rotate 0.000000 0.000000 -6243.313965
+^Scale 116.660446 116.660446 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_Normal 1708d9ad71702418_256x256.png
+^tx_Hover 1708d9ad71702418_256x256.png
+^tx_Press 1708d9ad71702418_256x256.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName HelpRect
+^ParentName Root
+^KeyState 135 135
+^bRender 1
+^Position -320.000000 140.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 50.000000 60.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_Normal Alpha.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 782
+
+^SpriteType 6430
+^NodeName mouse_cursor
+^ParentName Root
+^KeyState 135 135
+^bRender 1
+^bLoop 1
+^Position 646.000000 -258.000000 0.000000
+^Rotate 0.000000 0.000000 -0.261799
+^Scale 15.000000 15.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^AnimTime 0.250000
+^AnimUV 2 2 
+^SPRITESTART 1 
+^Ghost2-a8030e16d3339d54c9ade70d2dbc4b91-1.png
+^SPRITEEND
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick ýýýý
