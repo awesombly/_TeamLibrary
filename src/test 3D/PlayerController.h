@@ -24,6 +24,9 @@ public:
 	enum ECharacter : UCHAR {
 		EDummy = 0, EGuard, EZombie,
 	};
+	enum EItem : UCHAR {
+		Shock = 0, Bomb, 
+	};
 private:
 	bool		m_isChatting = false;
 
@@ -41,20 +44,17 @@ private:
 	GameObject* m_pTargetEnemy = nullptr;
 	///
 	float		m_EXP				= 0.0f;
-	float		m_NeedEXP			= 1.0f;
 	//
 	const float	MoveSpeed = 30.0f;
 	const float	JumpPower = 70.0f;
 	UIManager*  pUIManager = nullptr;
 	
-	void(*SlotEvent1)(PlayerController*, void*) = nullptr;
-	void(*SlotEvent2)(PlayerController*, void*) = nullptr;
-	void(*SlotEvent3)(PlayerController*, void*) = nullptr;
+	map<int, void(*)(PlayerController*, void*)> m_ItemList;
 public:
 	EAction		m_eAction;				// 눌린 애니메이션
 	ECharacter  m_curCharacter;			// 현재 캐릭터
-	//ECharacter  m_selectCharacter;		// 선택 캐릭터
 
+	float		m_NeedEXP			= 1.0f;
 	UCHAR		m_statPoint			= 0;
 	float		m_moveSpeed;
 	float		m_jumpPower;

@@ -83,7 +83,7 @@ bool AIZombieKing::Frame(const float& spf, const float& accTime)	noexcept
 		 case EState::Action3:
 		 {
 			 // а║гн
-			 m_delay = 4.0f;
+			 m_delay = 3.5f;
 			 m_pParent->SetForce(m_Target);
 			 auto pEffect = ObjectManager::Get().TakeObject(L"ZStump");
 			 pEffect->SetPosition(m_pParent->GetPosition() + Vector3::Up * 5.0f);

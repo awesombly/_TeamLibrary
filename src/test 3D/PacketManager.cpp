@@ -181,7 +181,7 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 	}	break;
 	case PACKET_TakeObject:
 	{
-		ZeroMemory(&p_TakeObject, sizeof(Packet_TakeObject));
+		ZeroMemory(&p_TakeObject.ObjectName, 100);
 		memcpy(&p_TakeObject, data, PS_TakeObject);
 		memcpy(((char*)&p_TakeObject + PS_TakeObject), ((char*)data + PS_TakeObject), p_TakeObject.DataSize);
 
@@ -199,6 +199,24 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 			pObject->GetCollider()->m_pivot = Vector3::Up * 40.0f * pObject->GetScale().x;
 		}
 	}	break;
+	case PACKET_SendNameUpdate:
+	{
+		memcpy(&p_KeyValue, data, sizeof(Packet_KeyValue));
+		// 유저 정보 갱신
+		auto userIter = UserList.find(p_KeyValue.KeyValue);
+		if (userIter != UserList.end())
+		{
+			const wstring preName = userIter->second->UserID;
+			memcpy((char*)userIter->second, data, PS_UserInfo);
+			memcpy(((char*)userIter->second + PS_UserInfo), ((char*)data + PS_UserInfo), UserList[p_KeyValue.KeyValue]->DataSize);
+			pChatList->push_string(L"[System] '"s + preName + L"' 님의 아이디가" + userIter->second->UserID + L" 로 변경 되였습니다.");
+		}
+		// 자신일시
+		if (pMyInfo == userIter->second)
+		{
+			UIManager::Get().m_pInfoName->SetString(PacketManager::Get().pMyInfo->UserID);
+		}
+	}	break;
 	case PACKET_SendLevelUp:
 	{
 		memcpy(&p_KeyValue, data, sizeof(Packet_KeyValue));
@@ -208,7 +226,7 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 		{
 			memcpy((char*)userIter->second, data, PS_UserInfo);
 			memcpy(((char*)userIter->second + PS_UserInfo), ((char*)data + PS_UserInfo), UserList[p_KeyValue.KeyValue]->DataSize);
-			pChatList->push_string(L"[LevelUp!] '"s + userIter->second->UserID + L"'  :  " + to_wstring(userIter->second->Level - 1) + L"  ->  " + to_wstring(userIter->second->Level));
+			pChatList->push_string(L"[LevelUp!] '"s + userIter->second->UserID + L"' 님이 " + to_wstring(userIter->second->Level) + L" Level이 되었습니다.");
 
 			// 체력 갱신, 이펙
 			auto iter = ObjectManager::KeyObjects.find(userIter->second->KeyValue);
@@ -216,7 +234,8 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 			{
 				auto pEffect = ObjectManager::Get().TakeObject(L"PLevelUp");
 				pEffect->SetPosition(iter->second->GetCollider()->GetCenter());
-				iter->second->SetHP(1.0f + pMyInfo->StatLuk * 0.2f);
+				iter->second->m_pPhysics->m_maxHP = 1.0f + pMyInfo->StatLuk * 0.2f;
+				iter->second->HealHP(iter->second->m_pPhysics->m_maxHP * 0.5f);
 			}
 		}
 		// 자신일시
@@ -468,15 +487,17 @@ void PacketManager::SendDeadEvent(const UINT& keyValue, const UINT& deadSocket, 
 	PacketManager::Get().SendPacket((char*)&p_PlayerDead, (USHORT)sizeof(Packet_PlayerDead), PACKET_PlayerDead);
 }
 
-void PacketManager::SendTakeObject(const wstring_view& objName, const UINT& socketNum, const float& hp, const float& minScale, const float& randScale, const UCHAR& spawnCount)  noexcept
+void PacketManager::SendTakeObject(const WCHAR* objName, const UINT& socketNum, const UCHAR& spawnCount, const float& hp, const float& minScale, const float& randScale, const D3DXVECTOR3& minPosition, const D3DXVECTOR3& randPosition)  noexcept
 {
 	static Packet_TakeObject p_TakeObject;
 	static size_t			 strSize;
 
-	strSize = objName.size() * 2;
+	//strSize = objName.size() * 2;
+	strSize = lstrlenW(objName) * 2;
 	strSize = strSize > 100 ? 100 : strSize;
 
-	memcpy(p_TakeObject.ObjectName, objName.data(), strSize);
+	ZeroMemory(&p_TakeObject.ObjectName, 100);
+	memcpy(p_TakeObject.ObjectName, objName, strSize);
 	p_TakeObject.DataSize = (UCHAR)strSize;
 	p_TakeObject.Rotation = Quaternion::Base;
 	p_TakeObject.HP = hp;
@@ -484,8 +505,8 @@ void PacketManager::SendTakeObject(const wstring_view& objName, const UINT& sock
 	for (int i = 0; i < spawnCount; ++i)
 	{
 		p_TakeObject.KeyValue = ++PacketManager::Get().PlayerKeyCount;
-		p_TakeObject.Position = { RandomNormal() * 1000.0f - 500.0f, 60.0f, RandomNormal() * 1000.0f - 500.0f };
-		p_TakeObject.Scale = (RandomNormal() * randScale + minScale) * Vector3::One;
+		p_TakeObject.Position = { randPosition.x * RandomNormal() + minPosition.x, randPosition.y * RandomNormal() + minPosition.y, randPosition.z * RandomNormal() + minPosition.z };
+		p_TakeObject.Scale = (randScale * RandomNormal() + minScale) * Vector3::One;
 		PacketManager::Get().SendPacket((char*)&p_TakeObject, (USHORT)(PS_TakeObject + strSize), PACKET_TakeObject);
 	}
 }

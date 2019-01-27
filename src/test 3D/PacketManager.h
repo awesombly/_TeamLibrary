@@ -41,7 +41,7 @@ public:
 	// 패킷 보내기
 	void SendPlaySound(const string_view& soundName, const D3DXVECTOR3& position, const float& maxDistance) noexcept;
 	void SendDeadEvent(const UINT& keyValue, const UINT& deadSocket, const UINT& killSocket) noexcept;
-	void SendTakeObject(const wstring_view& objName, const UINT& socketNum, const float& hp, const float& minScale, const float& randScale, const UCHAR& spawnCount) noexcept;
+	void SendTakeObject(const WCHAR* objName, const UINT& socketNum, const UCHAR& spawnCount, const float& hp, const float& minScale, const float& randScale, const D3DXVECTOR3& minPosition, const D3DXVECTOR3& randPosition)  noexcept;
 public:
 	friend class ISingleton<PacketManager>;
 	PacketManager()			 = default;

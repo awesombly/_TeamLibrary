@@ -70,7 +70,7 @@ bool GameObject::Frame(const float& spf, const float& accTime) noexcept
 		if (GetVelocitySq() > 20.0f)
 		{
 			//m_pParent->isMoved(true);
-			GetRoot()->Translate((GetTotalForce()) * spf * m_pPhysics->m_mass);
+			GetRoot()->Translate((GetTotalForce() + Vector3::Up) * spf * m_pPhysics->m_mass);
 		}
 	}
 	for (auto& outIter : m_components)

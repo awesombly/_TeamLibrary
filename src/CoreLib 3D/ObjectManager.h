@@ -24,10 +24,10 @@ class ObjectManager : public IDxBasis, public ISingleton<ObjectManager>
 private:
 	// 오브젝트 리스트
 	map<EObjType, forward_list<GameObject*> >	 m_ObjectList;		// 전체 순회용 리스트<타입>
-	map<wstring_view, stack<GameObject*> >		 m_DisabledPull;	// 대기 상태 풀<이름>
-	map<wstring_view, GameObject*>				 m_ProtoPull;		// 복사용 오브젝트 풀<이름>
+	map<wstring, stack<GameObject*> >			 m_DisabledPull;	// 대기 상태 풀<이름>
+	map<wstring, GameObject*>					 m_ProtoPull;		// 복사용 오브젝트 풀<이름>
 
-	map<wstring_view, stack<Component*> >		 m_DisabledPullComp;// 대기 상태 컴포넌트 풀
+	map<wstring, stack<Component*> >			 m_DisabledPullComp;// 대기 상태 컴포넌트 풀
 	map<wstring, Component*>					 m_ComponentPull;	// 복사용 컴포넌트
 
 	forward_list<Collider*>						 m_ColliderList;	// 충돌체 리스트

@@ -98,6 +98,7 @@ bool IntroScene::FirstInit() noexcept
 			return false;
 		}
 		// ===================================== 오브젝트 초기화 ==============================================
+		ErrorMessage(__FUNCTION__ + " -> Object Setting."s);
 		SetObjects();
 		// =============================== 맵 생성 =================================
 		ErrorMessage(__FUNCTION__ + " -> Map Loading."s);
@@ -118,7 +119,6 @@ bool IntroScene::FirstInit() noexcept
 
 void IntroScene::SetObjects() noexcept
 {
-	ErrorMessage(__FUNCTION__ + " -> Object Setting."s);
 	GameObject* pObject = nullptr;
 	Collider*   pCollider = nullptr;
 	
@@ -172,7 +172,7 @@ void IntroScene::SetObjects() noexcept
 
 	// 충격파
 	pCollider = new Collider(1.0f);
-	pObject = new GameObject(L"PShock", { pCollider, m_pParser->CreateFromParticle(L"Emission.eff", urlEffect), new CTransformer(Vector3::Zero, Quaternion::Zero, Vector3::One) }, EObjType::Effect);
+	pObject = new GameObject(L"PShock", { pCollider, m_pParser->CreateFromParticle(L"Emission.eff", urlEffect), new CTransformer(Vector3::Zero, Quaternion::Zero, Vector3::One * 30.0f) }, EObjType::Effect);
 	pCollider->SetGravityScale(0.0f);
 	pCollider->usePhysics(false);
 	pCollider->CollisionEvent = MyEvent::PlayerAttack;
@@ -183,7 +183,7 @@ void IntroScene::SetObjects() noexcept
 	pCollider = new Collider(1.0f);
 	pObject = new GameObject(L"PBomb", { pCollider, ObjectManager::Get().TakeComponent(L"Fire"), ObjectManager::GetInstance().TakeComponent(L"RowSphere") });
 	//pObject->m_pPhysics->m_damage = 0.5f;
-	pObject->SetScale(Vector3::One * 15.0f);
+	pObject->SetScale(Vector3::One * 10.0f);
 	pCollider->CollisionEvent = MyEvent::PlayerBomb;
 	pCollider->m_eTag = ETag::Dummy;
 	ObjectManager::Get().SetProtoObject(pObject);
@@ -410,5 +410,7 @@ void IntroScene::LoadUI() noexcept
 	pSignUpEnter->EventClick.second = this;
 
 	//SoundManager::Get().SetBGM("SE_Rudy.mp3");
+	// 허ㅚ원가입 성공 실패 등등 텍스트 넣어버리기
+	// m_pSignUpID = (JTextCtrl*)pUIRoot->find_child(L"Help_txt");
 	UI::IntroEvent(pUIRoot);
 }

@@ -357,10 +357,10 @@ map<wstring, vector<Sprite> >& ObjectManager::GetSpriteList() noexcept
 GameObject* ObjectManager::TakeObject(const wstring_view& objName, const bool& pushObject) noexcept
 {
 	GameObject* pObject = nullptr;
-	if (m_DisabledPull[objName].empty())
+	if (m_DisabledPull[objName.data()].empty())
 	{
 		//대기 풀이 비었다면 복사 생성
-		auto&& iter = m_ProtoPull.find(objName);
+		auto&& iter = m_ProtoPull.find(objName.data());
 		if (iter == m_ProtoPull.end())
 		{
 			ErrorMessage(__FUNCTIONW__ + L" -> "s + objName.data() + L" : 미등록된 오브젝트!");
@@ -371,8 +371,8 @@ GameObject* ObjectManager::TakeObject(const wstring_view& objName, const bool& p
 	else
 	{
 		// 대기 풀이 있다면 꺼내옴
-		pObject = m_DisabledPull[objName].top();
-		m_DisabledPull[objName].pop();
+		pObject = m_DisabledPull[objName.data()].top();
+		m_DisabledPull[objName.data()].pop();
 		auto pComp = pObject->GetComponentList(EComponent::Collider);
 		if (pComp != nullptr)
 		{
@@ -531,7 +531,7 @@ Component* ObjectManager::TakeComponent(const wstring_view& compName) noexcept
 {
 	Component* pComponent = nullptr;
 
-	if (m_DisabledPullComp[compName].empty())
+	if (m_DisabledPullComp[compName.data()].empty())
 	{
 		auto&& iter = m_ComponentPull.find(compName.data());
 		if (iter == m_ComponentPull.end())
@@ -544,8 +544,8 @@ Component* ObjectManager::TakeComponent(const wstring_view& compName) noexcept
 	else
 	{
 		// 대기 풀이 있다면 꺼내옴
-		pComponent = m_DisabledPullComp[compName].top();
-		m_DisabledPullComp[compName].pop();
+		pComponent = m_DisabledPullComp[compName.data()].top();
+		m_DisabledPullComp[compName.data()].pop();
 	}
 	//pComponent->Init();
 	pComponent->isEnable(true);

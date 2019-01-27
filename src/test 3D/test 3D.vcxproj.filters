@@ -103,5 +103,6 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\..\data\script\network.txt" />
+    <Text Include="..\..\data\ui\ItemList.txt" />
   </ItemGroup>
 </Project>

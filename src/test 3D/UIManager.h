@@ -22,11 +22,11 @@ public:
 	JTextCtrl*		m_pEnemyHPText		= nullptr;		// 
 	JProgressBar*	m_pExpProgress		= nullptr;		// 
 	// ÀÎÆ÷Ã¢
+	JEditCtrl*		m_pInfoName			= nullptr;
 	JTextCtrl*		m_pInfoHP			= nullptr;	
 	JTextCtrl*		m_pInfoMP			= nullptr;	
 	JTextCtrl*		m_pInfoTitle		= nullptr;
 	JTextCtrl*		m_pInfoEXP			= nullptr;	
-	JTextCtrl*		m_pInfoName			= nullptr;	
 	JTextCtrl*		m_pInfoAttackSpeed	= nullptr;
 	JTextCtrl*		m_pInfoMoveSpeed	= nullptr;
 	JTextCtrl*		m_pInfoLevel		= nullptr;	

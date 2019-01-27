@@ -2,6 +2,7 @@
 class Collider;
 class PlayerController;
 
+
 namespace MyEvent {
 	void ForceWave(Collider* pA, Collider* pB);
 	void PlayerAttack(Collider* pA, Collider* pB);

@@ -250,6 +250,7 @@ copy "$(SolutionDir)lib\*.dll" "$(OutputPath)\"</Command>
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\..\data\script\network.txt" />
+    <Text Include="..\..\data\ui\ItemList.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

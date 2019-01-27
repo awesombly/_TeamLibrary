@@ -17,8 +17,39 @@ bool PlayerController::Init() noexcept
 	if (pUIManager == nullptr)
 	{
 		pUIManager = &UIManager::Get();
-		SlotEvent1 = ActiveEvent::ShockWave;
-		SlotEvent2 = ActiveEvent::ThrowBomb;
+
+		auto& ItemIndex = JItem::Get()->m_pItemList;
+		// 템 설정
+		m_ItemList[ItemIndex[L"Berry_0"]]		= ActiveEvent::ShockWave;
+		m_ItemList[ItemIndex[L"Berry_1"]]		= ActiveEvent::ShockWave;
+		m_ItemList[ItemIndex[L"Book_0"]]		= ActiveEvent::ShockWave;
+		m_ItemList[ItemIndex[L"Book_1"]]		= ActiveEvent::ShockWave;
+		m_ItemList[ItemIndex[L"Cloak_0"]]		= ActiveEvent::ShockWave;
+		m_ItemList[ItemIndex[L"Cloak_1"]]		= ActiveEvent::ShockWave;
+		m_ItemList[ItemIndex[L"Coin_0"]]		= ActiveEvent::ShockWave;
+		m_ItemList[ItemIndex[L"Ball_0"]]		= ActiveEvent::ShockWave;
+		m_ItemList[ItemIndex[L"Ball_1"]]		= ActiveEvent::ShockWave;
+		m_ItemList[ItemIndex[L"Essence_0"]]		= ActiveEvent::ShockWave;
+		m_ItemList[ItemIndex[L"Flower_0"]]		= ActiveEvent::ShockWave;
+		m_ItemList[ItemIndex[L"Gems_0"]]		= ActiveEvent::ShockWave;
+		m_ItemList[ItemIndex[L"Gems_1"]]		= ActiveEvent::ShockWave;
+		m_ItemList[ItemIndex[L"MetalCase_0"]]	= ActiveEvent::ShockWave;
+		m_ItemList[ItemIndex[L"MetalCase_1"]]	= ActiveEvent::ShockWave;
+		m_ItemList[ItemIndex[L"Plate_0"]]		= ActiveEvent::ShockWave;
+		m_ItemList[ItemIndex[L"Sword_0"]]		= ActiveEvent::ShockWave;
+		m_ItemList[ItemIndex[L"Necklace_0"]]	= ActiveEvent::ShockWave;
+		m_ItemList[ItemIndex[L"Necklace_1"]]	= ActiveEvent::ShockWave;
+		m_ItemList[ItemIndex[L"Ornament_0"]]	= ActiveEvent::ThrowBomb;
+		m_ItemList[ItemIndex[L"Ornament_1"]]	= ActiveEvent::ThrowBomb;
+		m_ItemList[ItemIndex[L"Parchment_0"]]	= ActiveEvent::ThrowBomb;
+		m_ItemList[ItemIndex[L"Stone_0"]]		= ActiveEvent::ThrowBomb;
+		m_ItemList[ItemIndex[L"Stone_1"]]		= ActiveEvent::ThrowBomb;
+		m_ItemList[ItemIndex[L"Shirt_0"]]		= ActiveEvent::ThrowBomb;
+		m_ItemList[ItemIndex[L"Shirt_1"]]		= ActiveEvent::ThrowBomb;
+		m_ItemList[ItemIndex[L"Potion_0"]]		= ActiveEvent::ThrowBomb;
+		m_ItemList[ItemIndex[L"Potion_1"]]		= ActiveEvent::ThrowBomb;
+		m_ItemList[ItemIndex[L"Wood_0"]]		= ActiveEvent::ThrowBomb;
+		m_ItemList[ItemIndex[L"Wood_1"]]		= ActiveEvent::ThrowBomb;
 	}
 	return true;
 }
@@ -98,8 +129,6 @@ bool PlayerController::Release() noexcept
 	GameObject::Release();
 	return true;
 }
-
-
 
 
 void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECharacter& eCharacter, const EAction& eAction, const D3DXVECTOR3& forward) noexcept
@@ -199,7 +228,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 			// 충격파
 			pObject->SetANIM_OneTime(Guard_PUNCH);
 	 		auto pItem = ObjectManager::Get().TakeObject(L"PShock");
-			pItem->SetPosition(pObject->GetPosition() + pObject->GetUp() * 40.0f);
+			pItem->SetPosition(pObject->GetPosition() + pObject->GetUp() * 100.0f);
 			pItem->m_pPhysics->UserSocket = socket;
 			pItem->SetDamage(0.5f, PacketManager::Get().UserList[socket]->StatLuk);
 	 		SoundManager::Get().PlayQueue("SE_throw01.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
@@ -210,9 +239,10 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 			pObject->SetANIM_OneTime(Guard_THROW);
 			auto pItem = ObjectManager::Get().TakeObject(L"PBomb");
 			pItem->SetPosition(pObject->GetPosition() + pObject->GetForward() * 40.0f + pObject->GetUp() * 65.0f + pObject->GetRight() * 20.0f);
+			pItem->SetForce((forward + Vector3::Up) * 150.0f);
 			pItem->m_pPhysics->UserSocket = socket;
 			//pItem->SetDamage(1.0f, PacketManager::Get().UserList[socket]->StatLuk);
-			pItem->SetForce((forward + Vector3::Up) * 200.0f);
+			pItem->GetCollider()->AddIgnoreList(pObject->GetCollider());
 			SoundManager::Get().PlayQueue("SE_throw01.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
 		}	break;
 	 	}
@@ -243,18 +273,18 @@ void PlayerController::PlayerInput(const float& spf) noexcept
 	}
 	if (Input::GetKeyState('1') == EKeyState::DOWN)
 	{
-		if(SlotEvent1 != nullptr)
-			SlotEvent1(this, nullptr);
+		if(!pUIManager->m_pSlot1->m_bEmpty)
+			m_ItemList[pUIManager->m_pSlot1->m_pItem->m_pIndexList[0]](this, nullptr);
 	}
 	if (Input::GetKeyState('2') == EKeyState::DOWN)
 	{
-		if (SlotEvent2 != nullptr)
-			SlotEvent2(this, nullptr);
+		if (!pUIManager->m_pSlot2->m_bEmpty)
+			m_ItemList[pUIManager->m_pSlot2->m_pItem->m_pIndexList[0]](this, nullptr);
 	}
 	if (Input::GetKeyState('3') == EKeyState::DOWN)
 	{
-		if (SlotEvent3 != nullptr)
-			SlotEvent3(this, nullptr);
+		if (!pUIManager->m_pSlot3->m_bEmpty)
+			m_ItemList[pUIManager->m_pSlot3->m_pItem->m_pIndexList[0]](this, nullptr);
 	}
 
 	static bool isFly = false;
@@ -379,13 +409,6 @@ void PlayerController::SendAnimTransform(const EAction& eAction, const ECharacte
 	{
 		p_AnimTransform.Force = Vector3::Up * m_jumpPower;
 	}	break;
-	case EAction::Melee:
-	case EAction::Throw:
-	{
-		p_AnimTransform.Force = m_pParent->GetForce();
-		p_AnimTransform.Direction = ObjectManager::Cameras[ECamera::Main]->GetForward();
-		p_AnimTransform.Direction = Normalize(p_AnimTransform.Direction);
-	}	break;
 	case EAction::Left:
 	{
 		p_AnimTransform.Force = m_pParent->GetForce();
@@ -434,10 +457,14 @@ void PlayerController::SendAnimTransform(const EAction& eAction, const ECharacte
 		p_AnimTransform.Direction = m_pParent->GetBackward() + m_pParent->GetRight();
 		p_AnimTransform.Direction = Normalize(p_AnimTransform.Direction) * m_moveSpeed;
 	}	break;
+	//case EAction::Melee:
+	//case EAction::Throw:
 	default:
 	{
 		p_AnimTransform.Force = m_pParent->GetForce();
-		p_AnimTransform.Direction = Vector3::Zero;
+		p_AnimTransform.Direction = ObjectManager::Cameras[ECamera::Main]->GetForward();
+		p_AnimTransform.Direction = Normalize(p_AnimTransform.Direction);
+		//p_AnimTransform.Direction = Vector3::Zero;
 	}	break;
 	}
 	p_AnimTransform.KeyValue = m_pParent->m_keyValue;
@@ -564,13 +591,13 @@ void PlayerController::UpdateStatus() noexcept
 		m_pParent->m_pPhysics->m_maxHP = 1.0f + pUserInfo->StatLuk * 0.2f;
 		pUIManager->m_pHpBar->SetValue(m_pParent->GetHP(), m_pParent->m_pPhysics->m_maxHP);
 		pUIManager->m_pInfoHP->SetString(to_wstring((int)(m_pParent->GetHP() * 100.0f)) + L" / " + to_wstring((int)(m_pParent->m_pPhysics->m_maxHP * 100.0f)));
-		pUIManager->m_pInfoTitle->SetString(m_pParent->m_myName);
+		//pUIManager->m_pInfoTitle->SetString(m_pParent->m_myName);
 	}
 	
 	pUIManager->m_pInfoMP->SetString(to_wstring((int)(m_curMP * 100.0f)) + L" / " + to_wstring((int)(m_maxMP * 100.0f)));
 	pUIManager->m_pInfoMP->SetString(to_wstring((int)(m_curMP * 100.0f)) + L" / " + to_wstring((int)(m_maxMP * 100.0f)));
 	pUIManager->m_pInfoEXP->SetString(to_wstring((int)(m_EXP * 100.0f)) + L" / " + to_wstring((int)(m_NeedEXP * 100.0f)));
-	pUIManager->m_pInfoName->SetString(pUserInfo->UserID);
+	//pUIManager->m_pInfoName->SetString(pUserInfo->UserID);
 	pUIManager->m_pInfoAttackSpeed->SetString(to_wstring(1.0f / (5.0f / (5.0f + pUserInfo->StatDex))).substr(0, 4));
 	pUIManager->m_pInfoMoveSpeed->SetString(to_wstring(1.0f + pUserInfo->StatDex * 0.15f).substr(0, 4));
 	pUIManager->m_pInfoLevel->SetString(to_wstring(pUserInfo->Level));
@@ -581,10 +608,6 @@ void PlayerController::UpdateStatus() noexcept
 	pUIManager->m_pInfoDex->SetString(to_wstring(pUserInfo->StatDex)); 
 	pUIManager->m_pInfoInt->SetString(to_wstring(pUserInfo->StatInt));
 	pUIManager->m_pInfoLuk->SetString(to_wstring(pUserInfo->StatLuk));
-	//pUIManager->m_pInfoStrBtn
-	//pUIManager->m_pInfoDexBtn
-	//pUIManager->m_pInfoIntBtn
-	//pUIManager->m_pInfoLukBtn
 }
 
 void PlayerController::Possess(GameObject* pObject) noexcept
@@ -612,6 +635,10 @@ void PlayerController::Possess(GameObject* pObject) noexcept
 
 		pPlayer->ResetOption();
 		pPlayer->UpdateStatus();
+		// 상태창
+		UIManager::Get().m_pInfoName->SetString(PacketManager::Get().pMyInfo->UserID);
+		UIManager::Get().m_pInfoTitle->SetString(pObj->m_myName);
+
 		SoundManager::Get().m_pListenerPos = &pObj->GetRoot()->GetPosition();
 		PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
 	};
@@ -644,14 +671,14 @@ void PlayerController::HitEvent(Collider* pTarget) noexcept
 
 void PlayerController::OperEXP(const float& value) noexcept
 {
-	m_EXP += value + PacketManager::Get().pMyInfo->StatLuk * 0.1f;
+	m_EXP += value /*+ PacketManager::Get().pMyInfo->StatLuk * 0.1f*/;
 	if (m_EXP >= m_NeedEXP && m_pParent != nullptr)
 	{
 		// LevelUp
-		m_EXP -= m_NeedEXP;
-		m_NeedEXP = 1.0f + PacketManager::Get().pMyInfo->Level * 0.3f;
+		m_EXP = min(m_EXP - m_NeedEXP, m_NeedEXP);
 		m_statPoint += 4;
 		++PacketManager::Get().pMyInfo->Level;
+		m_NeedEXP = 1.0f + PacketManager::Get().pMyInfo->Level * 0.3f;
 		PacketManager::Get().pMyInfo->KeyValue = m_pParent->m_keyValue;
 		PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendLevelUp);
 	}
@@ -688,15 +715,17 @@ void PlayerController::StartVibration(float seconds, const float& shakePower) no
 {
 	//pUIManager->m_pRespawn->EffectPlay();
 
+	auto prevPosition = m_pCamera->GetPosition();
 	float randValue = shakePower * 2.0f;
 	while (seconds >= 0.0f)
 	{
-		m_pCamera->SetPosition(RandomNormal() * randValue - shakePower, RandomNormal() * randValue - shakePower, RandomNormal() * randValue - shakePower);
+		m_pCamera->SetPosition(prevPosition);
+		m_pCamera->Translate(randValue * RandomNormal() - shakePower, randValue * RandomNormal() - shakePower, randValue * RandomNormal() - shakePower);
 
 		seconds -= 0.03f;
 		this_thread::sleep_for(chrono::milliseconds(30));
 	}
-	m_pCamera->SetPosition(Vector3::Zero);
+	m_pCamera->SetPosition(prevPosition);
 }
 
 

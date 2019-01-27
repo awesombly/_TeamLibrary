@@ -50,14 +50,15 @@ namespace MyEvent {
 	void PlayerBomb(Collider* pA, Collider* pB)
 	{
 		if (pB != nullptr &&
-			pB->m_eTag == ETag::Enemy)
+			pB->m_eTag == ETag::Dummy)
 		{
-			auto pObject = ObjectManager::Get().TakeObject(L"PBoom");
-			pObject->SetPosition(pA->GetCenter());
-			pObject->m_pPhysics->m_damage = 1.0f;
-
-			ObjectManager::Get().DisableObject(pA->m_pParent);
+			return;
 		}
+		auto pObject = ObjectManager::Get().TakeObject(L"PBoom");
+		pObject->SetPosition(pA->m_pParent->GetPosition());
+		pObject->SetDamage(0.8f, PacketManager::Get().UserList[pA->m_pPhysics->UserSocket]->StatLuk);
+		pObject->m_pPhysics->UserSocket = pA->m_pPhysics->UserSocket;
+		ObjectManager::Get().DisableObject(pA->m_pParent);
 	}
 
 	void DaggerHit(Collider* pA, Collider* pB)
