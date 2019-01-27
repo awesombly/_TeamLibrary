@@ -43,6 +43,7 @@ public:
 	// 후처리 이벤트 등록용(함수, 인자, 인자)
 	static queue<tuple<void(*)(void*, void*), void*, void*> > PostFrameEvent;
 public:
+	void ProcessPostEvent()	noexcept;
 	// txt 파일 읽기
 	bool ReadSpriteScript()	noexcept;
 	// 카메라 설정

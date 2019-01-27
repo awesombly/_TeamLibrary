@@ -15,8 +15,6 @@ bool IntroScene::Init() noexcept
 	// UI
 	LoadSound();
 	LoadUI();
-	// 서버 연결
-	//ConnectMatchingServer();
 	///
 	m_isLoading = false;
 	return true;
@@ -231,8 +229,8 @@ bool IntroScene::FirstInit() noexcept
 		pCollider = new ColliderOBB({ -13.0f, 0.0f , -40.0f }, { 13.0f, 25.0f , 40.0f });
 		pHeroObj->AddComponent({ pCollider, new AIZombieCrawl() });
 		pCollider->CollisionEvent = MyEvent::ZombieHit;
-		pCollider->m_pPhysics->m_mass = 0.2f;
-		pCollider->m_pPhysics->m_damping = 1.0f;
+		pCollider->m_pPhysics->m_mass = 0.15f;
+		pCollider->m_pPhysics->m_damping = 1.5f;
 		pCollider->m_eTag = ETag::Enemy;
 		pHeroObj->m_pPhysics->UserSocket = ESocketType::ECrawler;
 		pHeroObj->m_pPhysics->m_damage = 0.3f;
@@ -247,8 +245,8 @@ bool IntroScene::FirstInit() noexcept
 		pCollider = new ColliderOBB({ -13.0f, 0.0f , -13.0f }, { 13.0f, 80.0f , 13.0f });
 		pHeroObj->AddComponent({ pCollider, new AIZombieEx() });
 		pCollider->CollisionEvent = MyEvent::ZombieHit;
-		pCollider->m_pPhysics->m_mass = 0.2f;
-		pCollider->m_pPhysics->m_damping = 1.0f;
+		pCollider->m_pPhysics->m_mass = 0.15f;
+		pCollider->m_pPhysics->m_damping = 1.5f;
 		pCollider->m_eTag = ETag::Enemy;
 		pHeroObj->m_pPhysics->UserSocket = ESocketType::EMutant;
 		pHeroObj->m_pPhysics->m_damage = 0.3f;
@@ -263,8 +261,8 @@ bool IntroScene::FirstInit() noexcept
 		pCollider = new ColliderOBB({ -13.0f, 0.0f , -13.0f }, { 13.0f, 80.0f , 13.0f });
 		pHeroObj->AddComponent({ pCollider, new AIZombieKing() });
 		pCollider->CollisionEvent = MyEvent::ZombieHit;
-		pCollider->m_pPhysics->m_mass = 0.1f;
-		pCollider->m_pPhysics->m_damping = 2.0f;
+		pCollider->m_pPhysics->m_mass = 0.05f;
+		pCollider->m_pPhysics->m_damping = 3.0f;
 		pCollider->m_eTag = ETag::Enemy;
 		pHeroObj->m_pPhysics->UserSocket = ESocketType::ETank;
 		pHeroObj->m_pPhysics->m_damage = 0.4f;
@@ -312,41 +310,50 @@ void IntroScene::LoadUI() noexcept
 	static auto GotoLobby = [](void* pScene) {
 		auto pIntro = (IntroScene*)pScene;
 
-		//if (m_loginCheck == -99)
+		if (!pIntro->m_pPW->GetString().empty())
 		{
-			PacketManager::Get().pMyInfo = new UserInfo();
-			PacketManager::Get().pMyInfo->DataSize = (UCHAR)pIntro->m_pID->GetString().size() * 2;
-			PacketManager::Get().pMyInfo->DataSize = PacketManager::Get().pMyInfo->DataSize > 12 ? 12 : PacketManager::Get().pMyInfo->DataSize;
-			memcpy(PacketManager::Get().pMyInfo->UserID, pIntro->m_pID->GetString().c_str(), PacketManager::Get().pMyInfo->DataSize);
-			PacketManager::Get().pMyInfo->UserSocket = 0;
-			///
-			pIntro->SetScene(ESceneName::Lobby);
-			ErrorMessage("서버 미접속");
-			return;
-		}
-
-		// 로그인 요청
-		pIntro->RequestSignIn(pIntro->m_pID->GetString().c_str(), pIntro->m_pPW->GetString().c_str());
-		pIntro->m_loginCheck = 0;
-		while (pIntro->m_loginCheck == 0)
-		{
-			if (pIntro->m_loginCheck == 1)
+			// 로그인이 처음이고 비번 입력시 서버 연결
+			int retValue = 0;
+			if (pIntro->m_loginCheck == 0)
 			{
-				PacketManager::Get().pMyInfo = new UserInfo();
-				PacketManager::Get().pMyInfo->DataSize = (UCHAR)pIntro->m_pID->GetString().size() * 2;
-				PacketManager::Get().pMyInfo->DataSize = PacketManager::Get().pMyInfo->DataSize > 12 ? 12 : PacketManager::Get().pMyInfo->DataSize;
-				memcpy(PacketManager::Get().pMyInfo->UserID, pIntro->m_pID->GetString().c_str(), PacketManager::Get().pMyInfo->DataSize);
-				PacketManager::Get().pMyInfo->UserSocket = 0;
-				///
-				pIntro->SetScene(ESceneName::Lobby);
-				break;
+				retValue = pIntro->ConnectMatchingServer();
 			}
-			if (pIntro->m_loginCheck == -1)
+			if (retValue == 0)
 			{
-				break;
+				// 로그인 요청
+				pIntro->RequestSignIn(pIntro->m_pID->GetString().c_str(), pIntro->m_pPW->GetString().c_str());
+				pIntro->m_loginCheck = 0;
+				while (pIntro->m_loginCheck == 0)
+				{
+					if (pIntro->m_loginCheck == 1)
+					{
+						PacketManager::Get().pMyInfo = new UserInfo();
+						PacketManager::Get().pMyInfo->DataSize = (UCHAR)pIntro->m_pID->GetString().size() * 2;
+						PacketManager::Get().pMyInfo->DataSize = PacketManager::Get().pMyInfo->DataSize > 12 ? 12 : PacketManager::Get().pMyInfo->DataSize;
+						memcpy(PacketManager::Get().pMyInfo->UserID, pIntro->m_pID->GetString().c_str(), PacketManager::Get().pMyInfo->DataSize);
+						PacketManager::Get().pMyInfo->UserSocket = 0;
+						///
+						pIntro->SetScene(ESceneName::Lobby);
+						break;
+					}
+					if (pIntro->m_loginCheck == -1)
+					{
+						break;
+					}
+				}
+				ErrorMessage("로그인 종료");
+				return;
 			}
 		}
-		ErrorMessage("로그인 종료");
+		// 비번 없거나 서버 미접속시
+		PacketManager::Get().pMyInfo = new UserInfo();
+		PacketManager::Get().pMyInfo->DataSize = (UCHAR)pIntro->m_pID->GetString().size() * 2;
+		PacketManager::Get().pMyInfo->DataSize = PacketManager::Get().pMyInfo->DataSize > 12 ? 12 : PacketManager::Get().pMyInfo->DataSize;
+		memcpy(PacketManager::Get().pMyInfo->UserID, pIntro->m_pID->GetString().c_str(), PacketManager::Get().pMyInfo->DataSize);
+		PacketManager::Get().pMyInfo->UserSocket = 0;
+		///
+		pIntro->SetScene(ESceneName::Lobby);
+		ErrorMessage("서버 미접속");
 	};
 
 	m_pID = (JEditCtrl*)pUIRoot->find_child(L"Login_ID");

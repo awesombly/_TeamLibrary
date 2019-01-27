@@ -55,8 +55,8 @@ public:
 	virtual void SetParent(GameObject* pParent)						  	    noexcept;
 	GameObject*  GetParent()										  const noexcept;
 	GameObject*  GetRoot()											  	    noexcept;
-	void		 CutParent(const bool& pushObject = true)			  	    noexcept;
-	void		 CutParentPost()										  	noexcept;
+	void		 CutParent(const bool& pushObject = true) noexcept;
+	void		 CutParent(const bool& pushObject, const bool& isPostEvent) noexcept;
 	forward_list<GameObject*>* GetChildList()						  	    noexcept;
 	// 부모월드 * 자식로컬
 	void SetWorldPosition(const D3DXVECTOR3& position)						noexcept;

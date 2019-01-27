@@ -200,7 +200,7 @@ namespace MyEvent {
 	//////////////////////////////////////////////////////////////////
 	void BulletHit(Collider* pA, Collider* pB)
 	{
-		if (pB->m_pParent->m_objType == EObjType::Object &&
+		if (pB->m_eTag == ETag::Enemy &&
 			pB->m_pParent->isEnable() &&
 			pA->m_pParent->isEnable())
 		{
@@ -210,7 +210,7 @@ namespace MyEvent {
 	};
 	void EnemyHit(Collider* pA, Collider* pB)
 	{
-		if (pB->m_pParent->m_objType == EObjType::Image &&
+		if (pB->m_eTag == ETag::Ally &&
 			pB->m_pParent->isEnable() &&
 			pA->m_pParent->isEnable())
 		{

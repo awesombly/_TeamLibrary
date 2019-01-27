@@ -45,8 +45,8 @@ bool AIZombieKing::Frame(const float& spf, const float& accTime)	noexcept
 		 }	break;
 		 case EState::Move:
 		 {
-			 m_pParent->m_pPhysics->m_mass = 0.1f;
-			 m_pParent->m_pPhysics->m_damping = 2.0f;
+			 m_pParent->m_pPhysics->m_mass = 0.05f;
+			 m_pParent->m_pPhysics->m_damping = 3.0f;
 		 	((AHeroObj*)m_pParent)->SetANIM_Loop(Zombie_KING_WALK);
 		 	m_pParent->SetFocus(m_Target = PlayerController::Get().m_pHome->GetPosition());
 		 }	break;
@@ -88,6 +88,9 @@ bool AIZombieKing::Frame(const float& spf, const float& accTime)	noexcept
 			 auto pEffect = ObjectManager::Get().TakeObject(L"ZStump");
 			 pEffect->SetPosition(m_pParent->GetPosition() + Vector3::Up * 5.0f);
 			 m_eDirState = EState::Move;
+			 // 카메라 진동
+			 std::thread vibrator(&PlayerController::StartVibration, &PlayerController::Get(), 2.5f, 6.0f);
+			 vibrator.detach();
 		 }	break;
 		}
 		return true;
@@ -117,7 +120,7 @@ bool AIZombieKing::Frame(const float& spf, const float& accTime)	noexcept
 				m_pParent->m_pPhysics->m_mass = 1.0f;
 				m_pParent->m_pPhysics->m_damping = 0.25f;
 				m_pParent->SetFocus(iter->GetPosition());
-				m_Target = (iter->GetPosition() - m_pParent->GetPosition()) * 1.5f + Vector3::Up * 100.0f;
+				m_Target = (iter->GetPosition() - m_pParent->GetPosition()) * 1.6f + Vector3::Up * 200.0f;
 				m_eDirState = EState::Action3;
 				m_delay = 0.5f;
 				((AHeroObj*)m_pParent)->SetANIM_OneTime(Zombie_KING_JUMP_ATTACK);

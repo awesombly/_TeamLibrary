@@ -438,7 +438,7 @@ void GameScene::HostFrame() noexcept
 		p_TakeObject.UserSocket = (UINT)-1;
 		PacketManager::Get().SendPacket((char*)&p_TakeObject, (USHORT)(PS_TakeObject + strSize), PACKET_TakeObject);
 		///
-		PacketManager::Get().SendTakeObject(L"Tank", ESocketType::ETank, 20.0f, 1.1f, 0.1f, 1);
+		PacketManager::Get().SendTakeObject(L"Tank", ESocketType::ETank, 15.0f * PacketManager::Get().UserList.size(), 1.1f, 0.1f, 1);
 	}
 	// 利 积己
 	if (enemyFrame >= 10.0f)
@@ -638,6 +638,8 @@ void GameScene::LoadUI() noexcept
 	UIManager::Get().m_pInfoLevel = (JTextCtrl*)pUIRoot->find_child(L"Info_Level");
 	UIManager::Get().m_pInfoDamage = (JTextCtrl*)pUIRoot->find_child(L"Info_Damage");
 	UIManager::Get().m_pInfoArmor = (JTextCtrl*)pUIRoot->find_child(L"Info_Armor");
+	auto pArmor = (JTextCtrl*)pUIRoot->find_child(L"Info_Armor_txt");
+	pArmor->SetString(L"府胶迄");
 	UIManager::Get().m_pInfoSP = (JTextCtrl*)pUIRoot->find_child(L"Info_SP");
 	UIManager::Get().m_pInfoStr = (JTextCtrl*)pUIRoot->find_child(L"Info_STR");
 	UIManager::Get().m_pInfoDex = (JTextCtrl*)pUIRoot->find_child(L"Info_DEX");

@@ -43,8 +43,8 @@ bool PlayerController::Frame(const float& spf, const float& accTime)	noexcept
 			if (Input::GetKeyState(VK_SUBTRACT) == EKeyState::DOWN)
 			{
 				m_curDelayRespawn = -9999.9f;
-				CutParentPost();
-				ObjectManager::Cameras[ECamera::Main]->CutParentPost();
+				CutParent(true, true);
+				ObjectManager::Cameras[ECamera::Main]->CutParent(true, true);
 			}
 		}
 	}
@@ -72,7 +72,7 @@ bool PlayerController::Frame(const float& spf, const float& accTime)	noexcept
 		}
 		else if (m_pTargetEnemy->m_pPhysics->m_disHP > m_pTargetEnemy->GetHP())
 		{
-			m_pTargetEnemy->m_pPhysics->m_disHP = max<float>(m_pTargetEnemy->m_pPhysics->m_disHP - spf, m_pTargetEnemy->GetHP());
+			m_pTargetEnemy->m_pPhysics->m_disHP = max<float>(m_pTargetEnemy->m_pPhysics->m_disHP - spf * m_pTargetEnemy->m_pPhysics->m_maxHP, m_pTargetEnemy->GetHP());
 			pUIManager->m_pEnemyHPText->SetString(to_wstring((int)(m_pTargetEnemy->GetHP() * 100.0f)) + L" / " + to_wstring((int)(m_pTargetEnemy->m_pPhysics->m_maxHP * 100.0f)));
 		}
 	}
@@ -511,32 +511,6 @@ void PlayerController::SendGiantMode(const float& spf) noexcept
 	PacketManager::Get().SendPacket((char*)&p_SetScale, (USHORT)sizeof(Packet_Vector3), PACKET_SetScale);
 }
 
-void PlayerController::StartGiantMode() noexcept
-{
-	PacketManager::Get().SendPlaySound("SE_jajan.mp3", m_pParent->GetPosition(), SoundRange);
-	pUIManager->m_pRespawn->EffectPlay();
-	// Heal
-	Packet_Float p_SetHP;
-	p_SetHP.KeyValue = PlayerController::Get().GetParent()->m_keyValue;
-	p_SetHP.Value = 100.0f;
-	PacketManager::Get().SendPacket((char*)&p_SetHP, (USHORT)sizeof(Packet_Float), PACKET_HealHP);
-	//// Score
-	//PacketManager::Get().pMyInfo->Score += 777;
-
-	float frameCount = 0.0f;
-	while (frameCount <= 3.0f)
-	{
-		if (m_pParent == nullptr)
-			break;
-		SendGiantMode(0.032f);
-		frameCount += 0.12f;
-		this_thread::sleep_for(chrono::milliseconds(120));
-		ResetOption();
-	}
-	m_moveSpeed = MoveSpeed * 3.0f + MoveSpeed * PacketManager::Get().pMyInfo->StatDex * 0.15f;
-	m_jumpPower = JumpPower * 2.0f;
-}
-
 void PlayerController::CameraInput(const float& spf) noexcept
 {
 	static const float MinCameraY = -PI * 0.2f;
@@ -698,7 +672,7 @@ void PlayerController::DeadEvent() noexcept
 	m_pParent->SetHP(0.0f);
 	SetPosition(m_pParent->GetPosition());
 	SetRotation(m_pParent->GetRotation());
-	CutParentPost();
+	CutParent(true, true);
 	m_curDelayRespawn = 0.0f;
 	pUIManager->m_pRespawn->m_bRender = true;
 	pUIManager->m_pRespawnBar->SetValue(m_curDelayRespawn, m_DelayRespawn);
@@ -728,6 +702,49 @@ void PlayerController::OperEXP(const float& value) noexcept
 		PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendLevelUp);
 	}
 }
+
+
+void PlayerController::StartGiantMode() noexcept
+{
+	PacketManager::Get().SendPlaySound("SE_jajan.mp3", m_pParent->GetPosition(), SoundRange);
+	pUIManager->m_pRespawn->EffectPlay();
+	// Heal
+	Packet_Float p_SetHP;
+	p_SetHP.KeyValue = PlayerController::Get().GetParent()->m_keyValue;
+	p_SetHP.Value = 100.0f;
+	PacketManager::Get().SendPacket((char*)&p_SetHP, (USHORT)sizeof(Packet_Float), PACKET_HealHP);
+	//// Score
+	//PacketManager::Get().pMyInfo->Score += 777;
+
+	float frameCount = 0.0f;
+	while (frameCount <= 3.0f)
+	{
+		if (m_pParent == nullptr)
+			break;
+		SendGiantMode(0.032f);
+		frameCount += 0.12f;
+		this_thread::sleep_for(chrono::milliseconds(120));
+		ResetOption();
+	}
+	m_moveSpeed = MoveSpeed * 3.0f + MoveSpeed * PacketManager::Get().pMyInfo->StatDex * 0.15f;
+	m_jumpPower = JumpPower * 2.0f;
+}
+
+void PlayerController::StartVibration(float seconds, const float& shakePower) noexcept
+{
+	//pUIManager->m_pRespawn->EffectPlay();
+
+	float randValue = shakePower * 2.0f;
+	while (seconds >= 0.0f)
+	{
+		SetPosition(RandomNormal() * randValue - shakePower, RandomNormal() * randValue - shakePower, RandomNormal() * randValue - shakePower);
+
+		seconds -= 0.04f;
+		this_thread::sleep_for(chrono::milliseconds(40));
+	}
+	SetPosition(Vector3::Zero);
+}
+
 
 void PlayerController::isChatting(const bool& isChat) noexcept
 {

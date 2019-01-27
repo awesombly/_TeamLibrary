@@ -227,6 +227,17 @@ bool ObjectManager::Release() noexcept
 	return true;
 }
 
+void ObjectManager::ProcessPostEvent()	noexcept
+{
+	// 후처리 이벤트
+	while (!PostFrameEvent.empty())
+	{
+		auto&[postEvent, param1, param2] = PostFrameEvent.front();
+		postEvent(param1, param2);
+		PostFrameEvent.pop();
+	}
+}
+
 // 스트라이트 리스트
 bool ObjectManager::ReadSpriteScript() noexcept
 {

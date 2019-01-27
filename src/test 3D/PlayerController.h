@@ -91,7 +91,9 @@ public:
 	void SendAnimTransform(const EAction& eAction, const ECharacter& eCharacter)	noexcept;
 	void SendReqRespawn(const ECharacter& eCharacter)								noexcept;
 	void StartGiantMode()															noexcept;
+	void StartVibration(float seconds, const float& shakePower)						noexcept;
 
+	// 없애고 ui 따라
 	void isChatting(const bool& isChat)												noexcept;
 	bool isChatting()														  const noexcept;
 
