@@ -14,7 +14,9 @@ namespace PP {
 		TYPE_REQ_SIGN_UP,
 		TYPE_ACK_SIGN_UP,
 		TYPE_REQ_SIGN_IN,
-		TYPE_ACK_SIGN_IN
+		TYPE_ACK_SIGN_IN,
+		TYPE_REQ_UPDATE_USERNAME,
+		TYPE_ACK_UPDATE_USERNAME,
 	};
 #pragma pack(push, 1)
 	struct PPPacketReqMatching {
@@ -33,7 +35,6 @@ namespace PP {
 	struct PPPacketReqSignUp : PPPPacketAccountInfo {};
 	//로그인을 위한 구조체
 	struct PPPacketReqSignIn : PPPPacketAccountInfo {};
-	
 	//쿼리 성공여부 알림을 위한 구조체
 	struct PPPacketAckQuery {
 		short m_sReturn;
@@ -42,5 +43,10 @@ namespace PP {
 	struct PPPacketAckSignUp : PPPacketAckQuery {};
 	//로그인 성공여부 알림을 위한 구조체
 	struct PPPacketAckSignIn : PPPacketAckQuery {};
+	//계정명 변경을 위한 구조체
+	struct PPPacketReqUpdateUsername {
+		wchar_t m_wcharUsername[16];
+		wchar_t m_wcharNewUsername[16];
+	};
 #pragma pack(pop)
 }
