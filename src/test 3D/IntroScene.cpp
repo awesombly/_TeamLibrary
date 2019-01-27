@@ -333,14 +333,15 @@ void IntroScene::LoadUI() noexcept
 			int retValue = 0;
 			if (pIntro->m_loginCheck == 0)
 			{
+				ErrorMessage(__FUNCTION__ + "서버 접속"s);
 				retValue = pIntro->ConnectMatchingServer();
 				pIntro->m_loginCheck = 99;
 			}
 			if (retValue == 0)
 			{
 				// 로그인 요청
-				pIntro->RequestSignIn(pIntro->m_pID->GetString().c_str(), pIntro->m_pPW->GetString().c_str());
 				pIntro->m_loginCheck = 0;
+				pIntro->RequestSignIn(pIntro->m_pID->GetString().c_str(), pIntro->m_pPW->GetString().c_str());
 				while (pIntro->m_loginCheck == 0)
 				{
 					if (pIntro->m_loginCheck == 1)
@@ -359,7 +360,7 @@ void IntroScene::LoadUI() noexcept
 						break;
 					}
 				}
-				ErrorMessage("로그인 종료");
+				ErrorMessage(__FUNCTION__ + "로그인 종료"s);
 				return;
 			}
 		}
@@ -371,7 +372,7 @@ void IntroScene::LoadUI() noexcept
 		PacketManager::Get().pMyInfo->UserSocket = 0;
 		///
 		pIntro->SetScene(ESceneName::Lobby);
-		ErrorMessage("서버 미접속");
+		ErrorMessage(__FUNCTION__ + "서버 미접속"s);
 	};
 
 	m_pID = (JEditCtrl*)pUIRoot->find_child(L"Login_ID");
