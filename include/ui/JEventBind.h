@@ -119,6 +119,7 @@ namespace UI
 
 		// effect
 		JPanel* pEff1 = (JPanel*)pRoot->find_child(L"fadeout");
+		pEff1->SetEventTime(1.0f);
 		pEff1->PreEvent.first = E_FADEOUT;
 		pEff1->PreEvent.second = pEff1;
 

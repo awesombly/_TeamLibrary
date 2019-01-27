@@ -60,6 +60,7 @@ namespace UI
 		std::pair<void(*)(void*), void*> EventClick; 
 		std::pair<void(*)(void*), void*> PreEvent;
 		std::pair<void(*)(void*), void*> PostEvent;
+		float m_fEventTime = 1.0f;
 	public:
 		int m_pKeyHold = VK_F24;
 		int m_pKeyDown = VK_F24;
@@ -93,6 +94,8 @@ namespace UI
 		void rtUpdate();
 		void* uiclone();
 	public:
+		void SetEventTime(const float fTime);
+		float GetEventTime();
 		void EffectPlay();
 		bool Init() noexcept override;
 		bool PreFrame(const float& spf, const float& accTime);

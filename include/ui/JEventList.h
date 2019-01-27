@@ -194,9 +194,7 @@ namespace UI
 		if (pPanel->m_bRender)
 		{
 			if (pPanel->m_pShape->m_cbData.vColor.w >= 0.0f)
-				pPanel->m_pShape->m_cbData.vColor.w -= Timer::SPF / 1.0f; // 2ÃÊ¿¡ ¾ø¾îÁü
-			//else
-			//	pPanel->m_bRender = false;
+				pPanel->m_pShape->m_cbData.vColor.w -= Timer::SPF / pPanel->m_fEventTime; // 2ÃÊ¿¡ ¾ø¾îÁü
 		}
 		if (pPanel->m_bEffect)
 		{
