@@ -172,7 +172,7 @@ void IntroScene::SetObjects() noexcept
 
 	// 충격파
 	pCollider = new Collider(1.0f);
-	pObject = new GameObject(L"PShock", { pCollider, m_pParser->CreateFromParticle(L"Emission.eff", urlEffect), new CTransformer(Vector3::Zero, Quaternion::Zero, Vector3::One * 30.0f) }, EObjType::Effect);
+	pObject = new GameObject(L"PShock", { pCollider, m_pParser->CreateFromParticle(L"Emission.eff", urlEffect), new CTransformer(Vector3::Zero, Quaternion::Zero, Vector3::One * 45.0f) }, EObjType::Effect);
 	pCollider->SetGravityScale(0.0f);
 	pCollider->usePhysics(false);
 	pCollider->CollisionEvent = MyEvent::PlayerAttack;
@@ -316,6 +316,66 @@ void IntroScene::SetObjects() noexcept
 }
 
 
+void GotoLobby2(void* pScene)
+{
+	auto pIntro = (IntroScene*)pScene;
+
+	if (!pIntro->m_pPW->GetString().empty())
+	{
+		// 로그인이 처음이고 비번 입력시 서버 연결
+		int retValue = 0;
+		if (pIntro->m_loginCheck == 0)
+		{
+			ErrorMessage(__FUNCTION__ + "서버 접속"s);
+			retValue = pIntro->ConnectMatchingServer();
+			pIntro->m_loginCheck = 99;
+		}
+		if (retValue == 0)
+		{
+			// 로그인 요청
+			pIntro->m_loginCheck = 0;
+			pIntro->RequestSignIn(pIntro->m_pID->GetString().c_str(), pIntro->m_pPW->GetString().c_str());
+			while (pIntro->m_loginCheck == 0)
+			{
+				ErrorMessage(__FUNCTION__ + " -> 로그인 루프"s);
+				if (pIntro->m_loginCheck == 1)
+				{
+					ErrorMessage(__FUNCTION__ + " -> 로그인 성공"s);
+					PacketManager::Get().pMyInfo = new UserInfo();
+					PacketManager::Get().pMyInfo->DataSize = (UCHAR)pIntro->m_pID->GetString().size() * 2;
+					PacketManager::Get().pMyInfo->DataSize = PacketManager::Get().pMyInfo->DataSize > 12 ? 12 : PacketManager::Get().pMyInfo->DataSize;
+					memcpy(PacketManager::Get().pMyInfo->UserID, pIntro->m_pID->GetString().c_str(), PacketManager::Get().pMyInfo->DataSize);
+					PacketManager::Get().pMyInfo->UserSocket = 0;
+					///
+					pIntro->SetScene(ESceneName::Lobby);
+					return;
+				}
+				if (pIntro->m_loginCheck == -1)
+				{
+					pIntro->m_pHelpText->SetString(L"로그인에 실패 하였습니다..");
+					pIntro->m_pHelpText->m_bRender = true;
+					ErrorMessage(__FUNCTION__ + " -> 로그인 실패"s);
+					return;
+				}
+			}
+		}
+		else
+		{
+			pIntro->m_pHelpText->SetString(L"서버 접속에 실패하였습니다.");
+			pIntro->m_pHelpText->m_bRender = true;
+		}
+	}
+	// 비번 없거나 서버 미접속시
+	PacketManager::Get().pMyInfo = new UserInfo();
+	PacketManager::Get().pMyInfo->DataSize = (UCHAR)pIntro->m_pID->GetString().size() * 2;
+	PacketManager::Get().pMyInfo->DataSize = PacketManager::Get().pMyInfo->DataSize > 12 ? 12 : PacketManager::Get().pMyInfo->DataSize;
+	memcpy(PacketManager::Get().pMyInfo->UserID, pIntro->m_pID->GetString().c_str(), PacketManager::Get().pMyInfo->DataSize);
+	PacketManager::Get().pMyInfo->UserSocket = 0;
+	///
+	pIntro->SetScene(ESceneName::Lobby);
+	ErrorMessage(__FUNCTION__ + " -> 서버 미접속"s);
+}
+
 void IntroScene::LoadUI() noexcept
 {
 	ErrorMessage(__FUNCTION__ + " -> Start."s);
@@ -324,62 +384,65 @@ void IntroScene::LoadUI() noexcept
 	JParser par;
 	par.FileLoad(DxManager::GetDevice(), L"../../data/ui/Intro", *pUIRoot);
 	ObjectManager::Get().PushObject(pUIRoot);
-	static auto GotoLobby = [](void* pScene) {
-		auto pIntro = (IntroScene*)pScene;
-
-		if (!pIntro->m_pPW->GetString().empty())
-		{
-			// 로그인이 처음이고 비번 입력시 서버 연결
-			int retValue = 0;
-			if (pIntro->m_loginCheck == 0)
-			{
-				ErrorMessage(__FUNCTION__ + "서버 접속"s);
-				retValue = pIntro->ConnectMatchingServer();
-				pIntro->m_loginCheck = 99;
-			}
-			if (retValue == 0)
-			{
-				// 로그인 요청
-				pIntro->m_loginCheck = 0;
-				pIntro->RequestSignIn(pIntro->m_pID->GetString().c_str(), pIntro->m_pPW->GetString().c_str());
-				while (pIntro->m_loginCheck == 0)
-				{
-					if (pIntro->m_loginCheck == 1)
-					{
-						PacketManager::Get().pMyInfo = new UserInfo();
-						PacketManager::Get().pMyInfo->DataSize = (UCHAR)pIntro->m_pID->GetString().size() * 2;
-						PacketManager::Get().pMyInfo->DataSize = PacketManager::Get().pMyInfo->DataSize > 12 ? 12 : PacketManager::Get().pMyInfo->DataSize;
-						memcpy(PacketManager::Get().pMyInfo->UserID, pIntro->m_pID->GetString().c_str(), PacketManager::Get().pMyInfo->DataSize);
-						PacketManager::Get().pMyInfo->UserSocket = 0;
-						///
-						pIntro->SetScene(ESceneName::Lobby);
-						break;
-					}
-					if (pIntro->m_loginCheck == -1)
-					{
-						break;
-					}
-				}
-				ErrorMessage(__FUNCTION__ + "로그인 종료"s);
-				return;
-			}
-		}
-		// 비번 없거나 서버 미접속시
-		PacketManager::Get().pMyInfo = new UserInfo();
-		PacketManager::Get().pMyInfo->DataSize = (UCHAR)pIntro->m_pID->GetString().size() * 2;
-		PacketManager::Get().pMyInfo->DataSize = PacketManager::Get().pMyInfo->DataSize > 12 ? 12 : PacketManager::Get().pMyInfo->DataSize;
-		memcpy(PacketManager::Get().pMyInfo->UserID, pIntro->m_pID->GetString().c_str(), PacketManager::Get().pMyInfo->DataSize);
-		PacketManager::Get().pMyInfo->UserSocket = 0;
-		///
-		pIntro->SetScene(ESceneName::Lobby);
-		ErrorMessage(__FUNCTION__ + "서버 미접속"s);
-	};
+	//static auto GotoLobby = [](void* pScene) {
+	//	auto pIntro = (IntroScene*)pScene;
+	//
+	//	if (!pIntro->m_pPW->GetString().empty())
+	//	{
+	//		// 로그인이 처음이고 비번 입력시 서버 연결
+	//		int retValue = 0;
+	//		if (pIntro->m_loginCheck == 0)
+	//		{
+	//			ErrorMessage(__FUNCTION__ + "서버 접속"s);
+	//			retValue = pIntro->ConnectMatchingServer();
+	//			pIntro->m_loginCheck = 99;
+	//		}
+	//		if (retValue == 0)
+	//		{
+	//			// 로그인 요청
+	//			pIntro->m_loginCheck = 0;
+	//			pIntro->RequestSignIn(pIntro->m_pID->GetString().c_str(), pIntro->m_pPW->GetString().c_str());
+	//			while (pIntro->m_loginCheck == 0)
+	//			{
+	//				ErrorMessage(__FUNCTION__ + " -> 로그인 루프"s);
+	//				if (pIntro->m_loginCheck == 1)
+	//				{
+	//					ErrorMessage(__FUNCTION__ + " -> 정보 전송"s);
+	//					PacketManager::Get().pMyInfo = new UserInfo();
+	//					PacketManager::Get().pMyInfo->DataSize = (UCHAR)pIntro->m_pID->GetString().size() * 2;
+	//					PacketManager::Get().pMyInfo->DataSize = PacketManager::Get().pMyInfo->DataSize > 12 ? 12 : PacketManager::Get().pMyInfo->DataSize;
+	//					memcpy(PacketManager::Get().pMyInfo->UserID, pIntro->m_pID->GetString().c_str(), PacketManager::Get().pMyInfo->DataSize);
+	//					PacketManager::Get().pMyInfo->UserSocket = 0;
+	//					///
+	//					pIntro->SetScene(ESceneName::Lobby);
+	//					return;
+	//				}
+	//				if (pIntro->m_loginCheck == -1)
+	//				{
+	//					ErrorMessage(__FUNCTION__ + " -> 로그인 실패"s);
+	//					return;
+	//				}
+	//			}
+	//			ErrorMessage(__FUNCTION__ + " -> 로그인 종료"s);
+	//			return;
+	//		}
+	//	};
+	//	// 비번 없거나 서버 미접속시
+	//	PacketManager::Get().pMyInfo = new UserInfo();
+	//	PacketManager::Get().pMyInfo->DataSize = (UCHAR)pIntro->m_pID->GetString().size() * 2;
+	//	PacketManager::Get().pMyInfo->DataSize = PacketManager::Get().pMyInfo->DataSize > 12 ? 12 : PacketManager::Get().pMyInfo->DataSize;
+	//	memcpy(PacketManager::Get().pMyInfo->UserID, pIntro->m_pID->GetString().c_str(), PacketManager::Get().pMyInfo->DataSize);
+	//	PacketManager::Get().pMyInfo->UserSocket = 0;
+	//	///
+	//	pIntro->SetScene(ESceneName::Lobby);
+	//	ErrorMessage(__FUNCTION__ + " -> 서버 미접속"s);
+	//};
 
 	m_pID = (JEditCtrl*)pUIRoot->find_child(L"Login_ID");
 	m_pPW = (JEditCtrl*)pUIRoot->find_child(L"Login_PW");
 
 	JButtonCtrl* pBtn = (JButtonCtrl*)pUIRoot->find_child(L"Login_Enter");
-	pBtn->EventClick.first = GotoLobby;
+	pBtn->EventClick.first = GotoLobby2;
 	pBtn->EventClick.second = this;
 
 	/// 회원가입
@@ -405,13 +468,19 @@ void IntroScene::LoadUI() noexcept
 			{
 				pIntro->RequestSignUp(pIntro->m_pSignUpID->GetString().c_str(), pIntro->m_pSignUpPW->GetString().c_str());
 			}
+			else
+			{
+				pIntro->m_pHelpText->SetString(L"잘못 입력된 값이 있습니다.");
+				pIntro->m_pHelpText->m_bRender = true;
+			}
 		}
 		ErrorMessage("회원가입 시도");
 	};
 	pSignUpEnter->EventClick.second = this;
+	// 알림창
+	m_pHelpText = (JTextCtrl*)pUIRoot->find_child(L"Help_txt");
 
 	//SoundManager::Get().SetBGM("SE_Rudy.mp3");
-	// 허ㅚ원가입 성공 실패 등등 텍스트 넣어버리기
-	// m_pSignUpID = (JTextCtrl*)pUIRoot->find_child(L"Help_txt");
 	UI::IntroEvent(pUIRoot);
 }
+

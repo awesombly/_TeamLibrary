@@ -119,6 +119,11 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 				}
 			}
 		}
+		if (PlayerController::Get().GetParent() != nullptr &&
+			PlayerController::Get().GetParent()->m_keyValue == p_Vector3.KeyValue)
+		{
+			PlayerController::Get().ResetOption();
+		}
 	}	break;
 	case PACKET_Translate:
 	{
@@ -133,7 +138,25 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 	case PACKET_Scaling:
 	{
 		memcpy(&p_Vector3, data, sizeof(Packet_Vector3));
-		ObjectManager::KeyObjects[p_Vector3.KeyValue]->Scaling(p_Vector3.Vec3);
+		auto pObject = ObjectManager::KeyObjects[p_Vector3.KeyValue];
+		pObject->Scaling(p_Vector3.Vec3);
+		auto pCollider = pObject->GetComponentList(EComponent::Collider);
+		if (pCollider != nullptr)
+		{
+			pObject->SetGravityScale(pObject->GetScale().x * 5.0f);
+			if (pObject->m_objType == EObjType::Character)
+			{
+				for (auto& iter : *pCollider)
+				{
+					((Collider*)iter)->m_pivot = Vector3::Up * 40.0f * pObject->GetScale().x;
+				}
+			}
+		}
+		if (PlayerController::Get().GetParent() != nullptr &&
+			PlayerController::Get().GetParent()->m_keyValue == p_Vector3.KeyValue)
+		{
+			PlayerController::Get().ResetOption();
+		}
 	}	break;
 	case PACKET_SetAnimTransform:
 	{
@@ -209,12 +232,11 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 			const wstring preName = userIter->second->UserID;
 			memcpy((char*)userIter->second, data, PS_UserInfo);
 			memcpy(((char*)userIter->second + PS_UserInfo), ((char*)data + PS_UserInfo), UserList[p_KeyValue.KeyValue]->DataSize);
-			pChatList->push_string(L"[System] '"s + preName + L"' 님의 아이디가" + userIter->second->UserID + L" 로 변경 되였습니다.");
-		}
-		// 자신일시
-		if (pMyInfo == userIter->second)
-		{
-			UIManager::Get().m_pInfoName->SetString(PacketManager::Get().pMyInfo->UserID);
+			// 자기가 아니라면
+			if (pMyInfo != userIter->second)
+			{
+				pChatList->push_string(L"[System] '"s + preName + L"' 님의 아이디가" + userIter->second->UserID + L" 로 변경 되였습니다.");
+			}
 		}
 	}	break;
 	case PACKET_SendLevelUp:
@@ -233,7 +255,8 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 			if (iter != ObjectManager::KeyObjects.end())
 			{
 				auto pEffect = ObjectManager::Get().TakeObject(L"PLevelUp");
-				pEffect->SetPosition(iter->second->GetCollider()->GetCenter());
+				//pEffect->SetPosition(iter->second->GetCollider()->GetCenter());
+				pEffect->SetParent(iter->second);
 				iter->second->m_pPhysics->m_maxHP = 1.0f + pMyInfo->StatLuk * 0.2f;
 				iter->second->HealHP(iter->second->m_pPhysics->m_maxHP * 0.5f);
 			}
@@ -251,8 +274,9 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 		auto userIter = UserList.find(p_KeyValue.KeyValue);
 		if (userIter != UserList.end())
 		{
-			memcpy((char*)UserList[p_KeyValue.KeyValue], data, PS_UserInfo);
-			memcpy(((char*)UserList[p_KeyValue.KeyValue] + PS_UserInfo), ((char*)data + PS_UserInfo), UserList[p_KeyValue.KeyValue]->DataSize);
+			auto pUserInfo = UserList[p_KeyValue.KeyValue];
+			memcpy((char*)pUserInfo, data, PS_UserInfo);
+			memcpy(((char*)pUserInfo + PS_UserInfo), ((char*)data + PS_UserInfo), pUserInfo->DataSize);
 			return;
 		}
 

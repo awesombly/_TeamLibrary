@@ -28,8 +28,7 @@ public:
 		Shock = 0, Bomb, 
 	};
 private:
-	bool		m_isChatting = false;
-
+	UIManager*  pUIManager		= nullptr;
 	Camera*		m_pCamera		= nullptr;
 	EAction		m_curAction;			// 현재 눌린 액션
 	EAction		m_curAnim;				// 실제 애니메이션
@@ -40,14 +39,14 @@ private:
 	POINT		m_setMouseScreen;
 	POINT		m_setMouseClient;
 
-	GameObject*	m_pEffectFly = nullptr;
-	GameObject* m_pTargetEnemy = nullptr;
+	GameObject*	m_pEffectFly	= nullptr;
+	GameObject* m_pTargetEnemy	= nullptr;
 	///
-	float		m_EXP				= 0.0f;
+	float		m_EXP			= 0.0f;
+	float		m_disEXP		= 0.0f;
 	//
 	const float	MoveSpeed = 30.0f;
 	const float	JumpPower = 70.0f;
-	UIManager*  pUIManager = nullptr;
 	
 	map<int, void(*)(PlayerController*, void*)> m_ItemList;
 public:
@@ -98,10 +97,6 @@ public:
 	void SendReqRespawn(const ECharacter& eCharacter)								noexcept;
 	void StartGiantMode()															noexcept;
 	void StartVibration(float seconds, const float& shakePower)						noexcept;
-
-	// 없애고 ui 따라
-	void isChatting(const bool& isChat)												noexcept;
-	bool isChatting()														  const noexcept;
 
 	bool Init()																		noexcept override;
 	bool Frame(const float& spf, const float& accTime)								noexcept override;

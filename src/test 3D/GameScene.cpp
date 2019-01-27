@@ -91,13 +91,13 @@ bool GameScene::Init() noexcept
 bool GameScene::Frame() noexcept
 {
 	// IME 채팅
-	if (PlayerController::Get().isChatting())
+	if (m_pChat->m_bRender)
 	{
 		m_chatMessage = m_pChat->GetString();
 	}
 	if (Input::GetKeyState(VK_RETURN) == EKeyState::DOWN)
 	{
-		if (PlayerController::Get().isChatting())
+		if (m_pChat->m_bRender)
 		{
 			if (!m_chatMessage.empty())
 			{
@@ -117,11 +117,9 @@ bool GameScene::Frame() noexcept
 			m_pChat->End();
 			m_pChat->Clear();
 			m_pChat->m_bRender = false;
-			PlayerController::Get().isChatting(false);
 		}
 		else
 		{
-			PlayerController::Get().isChatting(true);
 			m_pChat->Play();
 			m_pChat->m_bRender = true;
 		}
@@ -626,7 +624,7 @@ void GameScene::LoadUI() noexcept
 	UIManager::Get().m_pRespawnEffect = (JPanel*)pUIRoot->find_child(L"fadeout_white");
 	//PlayerController::Get().m_pRespawnEffect = (JPanel*)pUIRoot->find_child(L"fadein"); //(L"JohnSprite");
 
-	m_pChat = (JEditCtrl*)pUIRoot->find_child(L"Chat_Edit");
+	UIManager::Get().m_pChat = m_pChat = (JEditCtrl*)pUIRoot->find_child(L"Chat_Edit");
 	// 적 체력바
 	UIManager::Get().m_pEnemyPanel = (JPanel*)pUIRoot->find_child(L"Enemy_Panel"); //bRender true/false
 	UIManager::Get().m_pEnemyPanel->m_bRender = false;
@@ -661,6 +659,16 @@ void GameScene::LoadUI() noexcept
 			++(*(UCHAR*)pStat);
 			PlayerController::Get().UpdateStatus();
 			PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
+
+			// Luk 올렸을시
+			if (&PacketManager::Get().pMyInfo->StatLuk == pStat &&
+				PlayerController::Get().GetParent() != nullptr)
+			{
+				Packet_Vector3 p_Scailing;
+				p_Scailing.KeyValue = PlayerController::Get().GetParent()->m_keyValue;
+				p_Scailing.Vec3 = Vector3::One * 0.008f;
+				PacketManager::Get().SendPacket((char*)&p_Scailing, (USHORT)sizeof(Packet_Vector3), PACKET_Scaling);
+			}
 		}
 	};
 	UIManager::Get().m_pInfoStrBtn = (JTextCtrl*)pUIRoot->find_child(L"Info_STR_Btn");
@@ -688,15 +696,19 @@ void GameScene::LoadUI() noexcept
 	auto pNameChange = (JButtonCtrl*)pUIRoot->find_child(L"Info_Name_Change_Btn");
 	pNameChange->EventClick.first = [](void* pScene) {
 		// 아이디 변경
-		const wstring preName = PacketManager::Get().pMyInfo->UserID;
-		ZeroMemory(PacketManager::Get().pMyInfo->UserID, 20);
-		PacketManager::Get().pMyInfo->DataSize = (UCHAR)UIManager::Get().m_pInfoName->GetString().size() * 2;
-		PacketManager::Get().pMyInfo->DataSize = PacketManager::Get().pMyInfo->DataSize > 12 ? 12 : PacketManager::Get().pMyInfo->DataSize;
-		memcpy(PacketManager::Get().pMyInfo->UserID, UIManager::Get().m_pInfoName->GetString().c_str(), PacketManager::Get().pMyInfo->DataSize);
-		PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendNameUpdate);
+		auto pUser = PacketManager::Get().pMyInfo;
+		const wstring preName = pUser->UserID;
+		ZeroMemory(pUser->UserID, 20);
+		pUser->DataSize = (UCHAR)UIManager::Get().m_pInfoName->GetString().size() * 2;
+		pUser->DataSize = pUser->DataSize > 12 ? 12 : pUser->DataSize;
+		memcpy(pUser->UserID, UIManager::Get().m_pInfoName->GetString().c_str(), pUser->DataSize);
+		PacketManager::Get().SendPacket((char*)pUser, (USHORT)(PS_UserInfo + pUser->DataSize), PACKET_SendNameUpdate);
+		///
+		UIManager::Get().m_pInfoName->SetString(pUser->UserID);
+		PacketManager::Get().pChatList->push_string(L"[System] '"s + preName + L"' 님의 아이디가" + pUser->UserID + L" 로 변경 되였습니다.");
 		// 디비 변경
 		if(m_loginCheck == 1)
-			((GameScene*)pScene)->RequestUpdateUsername(preName.c_str(), PacketManager::Get().pMyInfo->UserID);
+			((GameScene*)pScene)->RequestUpdateUsername(preName.c_str(), pUser->UserID);
 	};
 	pNameChange->EventClick.second = this;
 

@@ -59,17 +59,16 @@ bool PlayerController::Frame(const float& spf, const float& accTime)	noexcept
 	GameObject::Frame(spf, accTime);
 	m_curMP = min(m_curMP + spf * m_RegenMP, m_maxMP);
 
-	if (!m_isChatting &&
+	if (!pUIManager->m_pChat->m_bRender &&
 		m_pParent != nullptr)
 	{
-		PlayerInput(spf);
-		
 		if (pUIManager->m_pMouseIcon->m_bRender)
 		{
 			UpdateStatus();
 		}
 		else
 		{
+			PlayerInput(spf);
 			CameraInput(spf);
 
 			// 초기화
@@ -110,10 +109,16 @@ bool PlayerController::Frame(const float& spf, const float& accTime)	noexcept
 		}
 		else if (m_pTargetEnemy->m_pPhysics->m_disHP > m_pTargetEnemy->GetHP())
 		{
-			m_pTargetEnemy->m_pPhysics->m_disHP = max<float>(m_pTargetEnemy->m_pPhysics->m_disHP - spf * m_pTargetEnemy->m_pPhysics->m_maxHP, m_pTargetEnemy->GetHP());
+			m_pTargetEnemy->m_pPhysics->m_disHP = max<float>(m_pTargetEnemy->m_pPhysics->m_disHP - spf * 0.5f * m_pTargetEnemy->m_pPhysics->m_maxHP, m_pTargetEnemy->GetHP());
 			pUIManager->m_pEnemyHPText->SetString(to_wstring((int)(m_pTargetEnemy->GetHP() * 100.0f)) + L" / " + to_wstring((int)(m_pTargetEnemy->m_pPhysics->m_maxHP * 100.0f)));
 		}
 	}
+	// 경치바
+	if (m_disEXP < m_EXP)
+	{
+		m_disEXP = min<float>(m_disEXP + spf * 0.5f, m_EXP);
+	}
+	
 	return true;
 }
 
@@ -391,6 +396,200 @@ void PlayerController::PlayerInput(const float& spf) noexcept
 	spf;
 }
 
+
+
+void PlayerController::CameraInput(const float& spf) noexcept
+{
+	static const float MinCameraY = -PI * 0.2f;
+	static const float MaxCameraY = PI * 0.4f;
+
+	// 마우스 고정
+	static POINT prevPoint = { 0, 0 };
+	prevPoint = Input::GetCursor();
+	SetCursorPos((int)m_setMouseScreen.x, (int)m_setMouseScreen.y);
+
+	Input::OperMoveMousePos({ (float)(-m_setMouseClient.x + prevPoint.x), (float)(-m_setMouseClient.y + prevPoint.y) });
+
+	// 카메라 Arm 조절
+	if (!pUIManager->m_pChat->m_bRender)
+	{
+		m_pCamera->m_armLength = std::clamp(m_pCamera->m_armLength - Input::GetWheelScroll() * m_mouseSense * spf, 0.0f, 80.0f);
+	}
+	// 회전
+	m_pCamera->SetRotationX(std::clamp(m_pCamera->GetRotation().x + Input::GetMouseMovePos().y * m_mouseSense * 0.004f, MinCameraY, MaxCameraY));
+	m_pParent->Rotate(0.0f, Input::GetMouseMovePos().x * m_mouseSense * 0.004f);
+	// 회전 동기화
+	if (abs(m_prevRotY - m_pParent->GetRotation().y) > 0.08f)
+	{
+		SendAnimTransform(m_curAnim, ECharacter::EDummy);
+	}
+
+	//static Packet_MouseRotate p_MouseRotate;
+	//if (Input::GetMouseMovePos().x > 0.0f &&
+	//	m_MouseDirection != EDirection::Right)
+	//{
+	//	m_MouseDirection = EDirection::Right;
+	//	m_prevMouseDir = p_MouseRotate.RotateSpeed = m_mouseSense * 0.1f;
+	//	p_MouseRotate.KeyValue = m_pParent->m_keyValue;
+	//	PacketManager::Get().SendPacket((char*)&p_MouseRotate, sizeof(Packet_MouseRotate), PACKET_MouseRotate);
+	//	
+	//	ErrorMessage("회전 : " + to_string(Input::GetMouseMovePos().x));
+	//}
+	//else if (Input::GetMouseMovePos().x < 0.0f &&
+	//		 m_MouseDirection != EDirection::Left)
+	//{
+	//	m_MouseDirection = EDirection::Left;
+	//	m_prevMouseDir = p_MouseRotate.RotateSpeed = -m_mouseSense * 0.1f;
+	//	p_MouseRotate.KeyValue = m_pParent->m_keyValue;
+	//	PacketManager::Get().SendPacket((char*)&p_MouseRotate, sizeof(Packet_MouseRotate), PACKET_MouseRotate);
+	//	ErrorMessage("회전 : " + to_string(Input::GetMouseMovePos().x));
+	//}
+	//else if (Input::GetMouseMovePos().x == 0.0f &&
+	//		 m_MouseDirection != EDirection::Middle)
+	//{
+	//	m_MouseDirection = EDirection::Middle;
+	//	m_prevMouseDir = p_MouseRotate.RotateSpeed = 0.0f;
+	//	p_MouseRotate.KeyValue = m_pParent->m_keyValue;
+	//	PacketManager::Get().SendPacket((char*)&p_MouseRotate, sizeof(Packet_MouseRotate), PACKET_MouseRotate);
+	//	ErrorMessage("회전 : " + to_string(Input::GetMouseMovePos().x));
+	//}
+}
+
+void PlayerController::ResetOption() noexcept
+{
+	Window::UpdateWindowRect();
+	m_setMouseScreen = { (LONG)Window::GetWinCenter().x, (LONG)Window::GetWinCenter().y };
+	m_setMouseClient = m_setMouseScreen;
+	ScreenToClient(Window::m_hWnd, &m_setMouseClient);
+	///
+	SetPosition(Vector3::Zero);
+	SetRotation(Quaternion::Base);
+	m_pCamera = ObjectManager::Cameras[ECamera::Main];
+	m_pCamera->SetRotation(Quaternion::Left * PI + Quaternion::Up * PI * 0.2f);
+	m_pCamera->m_lerpMoveSpeed = 6.0f;
+	m_pCamera->m_lerpRotateSpeed = 6.0f;
+	if (m_pParent == nullptr)
+		return;
+	m_pCamera->SetPosition(Vector3::Up * 100.0f * m_pParent->GetScale().x);
+	m_pCamera->m_armLength = 12.5f * m_pParent->GetScale().x;
+	Input::isDebug = false;
+}
+
+void PlayerController::UpdateStatus() noexcept
+{
+	auto pUserInfo = PacketManager::Get().pMyInfo;
+	m_moveSpeed = MoveSpeed + MoveSpeed * pUserInfo->StatDex * 0.15f;
+	m_jumpPower = JumpPower;
+
+	m_DelayEnemyPanel = 3.0f;
+	m_DelayRespawn = 8.0f * 5.0f / (5.0f + pUserInfo->StatLuk);
+	m_DelayThrow = 0.4f * 5.0f / (5.0f + pUserInfo->StatDex);
+	m_DelayDash = 1.5f * 5.0f / (5.0f + pUserInfo->StatDex);
+	m_DelayMelee = 1.0f * 5.0f / (5.0f + pUserInfo->StatDex);
+	pUIManager->m_pLeftIcon->SetValue(m_curDelayDash, m_DelayDash);
+	pUIManager->m_pRightIcon->SetValue(m_curDelayThrow, m_DelayThrow); 
+	m_RegenMP = 0.3f + pUserInfo->StatInt * 0.045f;
+	m_maxMP = 1.0f + pUserInfo->StatInt * 0.2f;
+	pUIManager->m_pMpBar->SetValue(m_curMP, m_maxMP);
+	pUIManager->m_pExpProgress->SetValue(m_disEXP, m_NeedEXP);
+	if (m_pParent != nullptr)
+	{
+		m_pParent->m_pPhysics->m_maxHP = 1.0f + pUserInfo->StatLuk * 0.2f;
+		pUIManager->m_pHpBar->SetValue(m_pParent->GetHP(), m_pParent->m_pPhysics->m_maxHP);
+		pUIManager->m_pInfoHP->SetString(to_wstring((int)(m_pParent->GetHP() * 100.0f)) + L" / " + to_wstring((int)(m_pParent->m_pPhysics->m_maxHP * 100.0f)));
+		//pUIManager->m_pInfoTitle->SetString(m_pParent->m_myName);
+	}
+	
+	pUIManager->m_pInfoMP->SetString(to_wstring((int)(m_curMP * 100.0f)) + L" / " + to_wstring((int)(m_maxMP * 100.0f)));
+	pUIManager->m_pInfoMP->SetString(to_wstring((int)(m_curMP * 100.0f)) + L" / " + to_wstring((int)(m_maxMP * 100.0f)));
+	pUIManager->m_pInfoEXP->SetString(to_wstring((int)(m_EXP * 100.0f)) + L" / " + to_wstring((int)(m_NeedEXP * 100.0f)));
+	//pUIManager->m_pInfoName->SetString(pUserInfo->UserID);
+	pUIManager->m_pInfoAttackSpeed->SetString(to_wstring(1.0f / (5.0f / (5.0f + pUserInfo->StatDex))).substr(0, 4));
+	pUIManager->m_pInfoMoveSpeed->SetString(to_wstring(1.0f + pUserInfo->StatDex * 0.15f).substr(0, 4));
+	pUIManager->m_pInfoLevel->SetString(to_wstring(pUserInfo->Level));
+	pUIManager->m_pInfoDamage->SetString(to_wstring(1.0f + pUserInfo->StatStr * 0.15f).substr(0, 4));
+	pUIManager->m_pInfoArmor->SetString(to_wstring(m_DelayRespawn).substr(0, 4));
+	pUIManager->m_pInfoSP->SetString(to_wstring(m_statPoint));
+	pUIManager->m_pInfoStr->SetString(to_wstring(pUserInfo->StatStr));
+	pUIManager->m_pInfoDex->SetString(to_wstring(pUserInfo->StatDex)); 
+	pUIManager->m_pInfoInt->SetString(to_wstring(pUserInfo->StatInt));
+	pUIManager->m_pInfoLuk->SetString(to_wstring(pUserInfo->StatLuk));
+}
+
+void PlayerController::Possess(GameObject* pObject) noexcept
+{
+	if (pObject == nullptr)
+		return;
+	SetParent(pObject);
+
+	static auto pEvent = [](void* pVoid, void* pVoid2) {
+		auto pPlayer = (PlayerController*)pVoid;
+		auto pObj = (GameObject*)pVoid2;
+		if (pObj->m_myName == L"Guard")
+		{
+			pPlayer->m_curCharacter = PlayerController::ECharacter::EGuard;
+			auto pCollider = pObj->GetCollider();
+			{
+				((Collider*)pCollider)->CollisionEvent = nullptr;
+				((Collider*)pCollider)->m_pivot = Vector3::Up * 40.0f * pObj->GetScale().x;
+			}
+		}
+		else if (pObj->m_myName == L"Zombie")
+			pPlayer->m_curCharacter = PlayerController::ECharacter::EZombie;
+		else
+			pPlayer->m_curCharacter = PlayerController::ECharacter::EDummy;
+
+		pPlayer->ResetOption();
+		pPlayer->UpdateStatus();
+		// 상태창
+		UIManager::Get().m_pInfoName->SetString(PacketManager::Get().pMyInfo->UserID);
+		UIManager::Get().m_pInfoTitle->SetString(pObj->m_myName);
+
+		SoundManager::Get().m_pListenerPos = &pObj->GetRoot()->GetPosition();
+		PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
+	};
+
+	ObjectManager::PostFrameEvent.emplace(pEvent, this, pObject);
+}
+
+void PlayerController::DeadEvent() noexcept
+{
+	PacketManager::Get().SendPlaySound("SE_dead.mp3", m_pParent->GetPosition(), SoundRange);
+	m_pParent->SetHP(0.0f);
+	SetPosition(m_pParent->GetPosition());
+	SetRotation(m_pParent->GetRotation());
+	CutParent(true, true);
+	m_curDelayRespawn = 0.0f;
+	pUIManager->m_pRespawn->m_bRender = true;
+	pUIManager->m_pRespawnBar->SetValue(m_curDelayRespawn, m_DelayRespawn);
+}
+
+void PlayerController::HitEvent(Collider* pTarget) noexcept
+{
+	m_curDelayEnemyPanel = m_DelayEnemyPanel;
+	pUIManager->m_pEnemyPanel->m_bRender = true;
+	
+	m_pTargetEnemy = pTarget->m_pParent;
+	pUIManager->m_pEnemyHP->SetValue(pTarget->m_pPhysics->m_disHP, pTarget->m_pPhysics->m_maxHP);
+	pUIManager->m_pEnemyName->SetString(pTarget->m_pParent->m_myName);
+}
+
+void PlayerController::OperEXP(const float& value) noexcept
+{
+	m_EXP += value /*+ PacketManager::Get().pMyInfo->StatLuk * 0.1f*/;
+	if (m_EXP >= m_NeedEXP && m_pParent != nullptr)
+	{
+		// LevelUp
+		m_EXP = min(m_EXP - m_NeedEXP, m_NeedEXP);
+		m_statPoint += 4;
+		++PacketManager::Get().pMyInfo->Level;
+		m_NeedEXP = 1.0f + PacketManager::Get().pMyInfo->Level * 0.3f;
+		PacketManager::Get().pMyInfo->KeyValue = m_pParent->m_keyValue;
+		PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendLevelUp);
+	}
+}
+
+
 void PlayerController::SendAnimTransform(const EAction& eAction, const ECharacter& eCharacter) noexcept
 {
 	static Packet_AnimTransform p_AnimTransform;
@@ -492,199 +691,6 @@ void PlayerController::SendGiantMode(const float& spf) noexcept
 	PacketManager::Get().SendPacket((char*)&p_SetScale, (USHORT)sizeof(Packet_Vector3), PACKET_SetScale);
 }
 
-void PlayerController::CameraInput(const float& spf) noexcept
-{
-	static const float MinCameraY = -PI * 0.2f;
-	static const float MaxCameraY = PI * 0.4f;
-
-	// 마우스 고정
-	static POINT prevPoint = { 0, 0 };
-	prevPoint = Input::GetCursor();
-	SetCursorPos((int)m_setMouseScreen.x, (int)m_setMouseScreen.y);
-
-	Input::OperMoveMousePos({ (float)(-m_setMouseClient.x + prevPoint.x), (float)(-m_setMouseClient.y + prevPoint.y) });
-
-	// 카메라 Arm 조절
-	if (!m_isChatting)
-	{
-		m_pCamera->m_armLength = std::clamp(m_pCamera->m_armLength - Input::GetWheelScroll() * m_mouseSense * spf, 0.0f, 80.0f);
-	}
-	// 회전
-	m_pCamera->SetRotationX(std::clamp(m_pCamera->GetRotation().x + Input::GetMouseMovePos().y * m_mouseSense * 0.004f, MinCameraY, MaxCameraY));
-	m_pParent->Rotate(0.0f, Input::GetMouseMovePos().x * m_mouseSense * 0.004f);
-	// 회전 동기화
-	if (abs(m_prevRotY - m_pParent->GetRotation().y) > 0.08f)
-	{
-		SendAnimTransform(m_curAnim, ECharacter::EDummy);
-	}
-
-	//static Packet_MouseRotate p_MouseRotate;
-	//if (Input::GetMouseMovePos().x > 0.0f &&
-	//	m_MouseDirection != EDirection::Right)
-	//{
-	//	m_MouseDirection = EDirection::Right;
-	//	m_prevMouseDir = p_MouseRotate.RotateSpeed = m_mouseSense * 0.1f;
-	//	p_MouseRotate.KeyValue = m_pParent->m_keyValue;
-	//	PacketManager::Get().SendPacket((char*)&p_MouseRotate, sizeof(Packet_MouseRotate), PACKET_MouseRotate);
-	//	
-	//	ErrorMessage("회전 : " + to_string(Input::GetMouseMovePos().x));
-	//}
-	//else if (Input::GetMouseMovePos().x < 0.0f &&
-	//		 m_MouseDirection != EDirection::Left)
-	//{
-	//	m_MouseDirection = EDirection::Left;
-	//	m_prevMouseDir = p_MouseRotate.RotateSpeed = -m_mouseSense * 0.1f;
-	//	p_MouseRotate.KeyValue = m_pParent->m_keyValue;
-	//	PacketManager::Get().SendPacket((char*)&p_MouseRotate, sizeof(Packet_MouseRotate), PACKET_MouseRotate);
-	//	ErrorMessage("회전 : " + to_string(Input::GetMouseMovePos().x));
-	//}
-	//else if (Input::GetMouseMovePos().x == 0.0f &&
-	//		 m_MouseDirection != EDirection::Middle)
-	//{
-	//	m_MouseDirection = EDirection::Middle;
-	//	m_prevMouseDir = p_MouseRotate.RotateSpeed = 0.0f;
-	//	p_MouseRotate.KeyValue = m_pParent->m_keyValue;
-	//	PacketManager::Get().SendPacket((char*)&p_MouseRotate, sizeof(Packet_MouseRotate), PACKET_MouseRotate);
-	//	ErrorMessage("회전 : " + to_string(Input::GetMouseMovePos().x));
-	//}
-}
-
-void PlayerController::ResetOption() noexcept
-{
-	Window::UpdateWindowRect();
-	m_setMouseScreen = { (LONG)Window::GetWinCenter().x, (LONG)Window::GetWinCenter().y };
-	m_setMouseClient = m_setMouseScreen;
-	ScreenToClient(Window::m_hWnd, &m_setMouseClient);
-	///
-	SetPosition(Vector3::Zero);
-	SetRotation(Quaternion::Base);
-	m_pCamera = ObjectManager::Cameras[ECamera::Main];
-	m_pCamera->SetRotation(Quaternion::Left * PI + Quaternion::Up * PI * 0.2f);
-	m_pCamera->m_lerpMoveSpeed = 6.0f;
-	m_pCamera->m_lerpRotateSpeed = 6.0f;
-	if (m_pParent == nullptr)
-		return;
-	m_pCamera->SetPosition(Vector3::Up * 100.0f * m_pParent->GetScale().x);
-	m_pCamera->m_armLength = 12.5f * m_pParent->GetScale().x;
-	Input::isDebug = false;
-}
-
-void PlayerController::UpdateStatus() noexcept
-{
-	auto pUserInfo = PacketManager::Get().pMyInfo;
-	m_moveSpeed = MoveSpeed + MoveSpeed * pUserInfo->StatDex * 0.15f;
-	m_jumpPower = JumpPower;
-
-	m_DelayEnemyPanel = 3.0f;
-	m_DelayRespawn = 8.0f * 5.0f / (5.0f + pUserInfo->StatLuk);
-	m_DelayThrow = 0.4f * 5.0f / (5.0f + pUserInfo->StatDex);
-	m_DelayDash = 1.5f * 5.0f / (5.0f + pUserInfo->StatDex);
-	m_DelayMelee = 1.0f * 5.0f / (5.0f + pUserInfo->StatDex);
-	pUIManager->m_pLeftIcon->SetValue(m_curDelayDash, m_DelayDash);
-	pUIManager->m_pRightIcon->SetValue(m_curDelayThrow, m_DelayThrow); 
-	m_RegenMP = 0.3f + pUserInfo->StatInt * 0.045f;
-	m_maxMP = 1.0f + pUserInfo->StatInt * 0.2f;
-	pUIManager->m_pMpBar->SetValue(m_curMP, m_maxMP);
-	pUIManager->m_pExpProgress->SetValue(m_EXP, m_NeedEXP);
-	if (m_pParent != nullptr)
-	{
-		m_pParent->m_pPhysics->m_maxHP = 1.0f + pUserInfo->StatLuk * 0.2f;
-		pUIManager->m_pHpBar->SetValue(m_pParent->GetHP(), m_pParent->m_pPhysics->m_maxHP);
-		pUIManager->m_pInfoHP->SetString(to_wstring((int)(m_pParent->GetHP() * 100.0f)) + L" / " + to_wstring((int)(m_pParent->m_pPhysics->m_maxHP * 100.0f)));
-		//pUIManager->m_pInfoTitle->SetString(m_pParent->m_myName);
-	}
-	
-	pUIManager->m_pInfoMP->SetString(to_wstring((int)(m_curMP * 100.0f)) + L" / " + to_wstring((int)(m_maxMP * 100.0f)));
-	pUIManager->m_pInfoMP->SetString(to_wstring((int)(m_curMP * 100.0f)) + L" / " + to_wstring((int)(m_maxMP * 100.0f)));
-	pUIManager->m_pInfoEXP->SetString(to_wstring((int)(m_EXP * 100.0f)) + L" / " + to_wstring((int)(m_NeedEXP * 100.0f)));
-	//pUIManager->m_pInfoName->SetString(pUserInfo->UserID);
-	pUIManager->m_pInfoAttackSpeed->SetString(to_wstring(1.0f / (5.0f / (5.0f + pUserInfo->StatDex))).substr(0, 4));
-	pUIManager->m_pInfoMoveSpeed->SetString(to_wstring(1.0f + pUserInfo->StatDex * 0.15f).substr(0, 4));
-	pUIManager->m_pInfoLevel->SetString(to_wstring(pUserInfo->Level));
-	pUIManager->m_pInfoDamage->SetString(to_wstring(1.0f + pUserInfo->StatStr * 0.15f).substr(0, 4));
-	pUIManager->m_pInfoArmor->SetString(to_wstring(m_DelayRespawn).substr(0, 4));
-	pUIManager->m_pInfoSP->SetString(to_wstring(m_statPoint));
-	pUIManager->m_pInfoStr->SetString(to_wstring(pUserInfo->StatStr));
-	pUIManager->m_pInfoDex->SetString(to_wstring(pUserInfo->StatDex)); 
-	pUIManager->m_pInfoInt->SetString(to_wstring(pUserInfo->StatInt));
-	pUIManager->m_pInfoLuk->SetString(to_wstring(pUserInfo->StatLuk));
-}
-
-void PlayerController::Possess(GameObject* pObject) noexcept
-{
-	if (pObject == nullptr)
-		return;
-	SetParent(pObject);
-
-	static auto pEvent = [](void* pVoid, void* pVoid2) {
-		auto pPlayer = (PlayerController*)pVoid;
-		auto pObj = (GameObject*)pVoid2;
-		if (pObj->m_myName == L"Guard")
-		{
-			pPlayer->m_curCharacter = PlayerController::ECharacter::EGuard;
-			auto pCollider = pObj->GetCollider();
-			{
-				((Collider*)pCollider)->CollisionEvent = nullptr;
-				((Collider*)pCollider)->m_pivot = Vector3::Up * 40.0f * pObj->GetScale().x;
-			}
-		}
-		else if (pObj->m_myName == L"Zombie")
-			pPlayer->m_curCharacter = PlayerController::ECharacter::EZombie;
-		else
-			pPlayer->m_curCharacter = PlayerController::ECharacter::EDummy;
-
-		pPlayer->ResetOption();
-		pPlayer->UpdateStatus();
-		// 상태창
-		UIManager::Get().m_pInfoName->SetString(PacketManager::Get().pMyInfo->UserID);
-		UIManager::Get().m_pInfoTitle->SetString(pObj->m_myName);
-
-		SoundManager::Get().m_pListenerPos = &pObj->GetRoot()->GetPosition();
-		PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
-	};
-
-	ObjectManager::PostFrameEvent.emplace(pEvent, this, pObject);
-}
-
-
-void PlayerController::DeadEvent() noexcept
-{
-	PacketManager::Get().SendPlaySound("SE_dead.mp3", m_pParent->GetPosition(), SoundRange);
-	m_pParent->SetHP(0.0f);
-	SetPosition(m_pParent->GetPosition());
-	SetRotation(m_pParent->GetRotation());
-	CutParent(true, true);
-	m_curDelayRespawn = 0.0f;
-	pUIManager->m_pRespawn->m_bRender = true;
-	pUIManager->m_pRespawnBar->SetValue(m_curDelayRespawn, m_DelayRespawn);
-}
-
-void PlayerController::HitEvent(Collider* pTarget) noexcept
-{
-	m_curDelayEnemyPanel = m_DelayEnemyPanel;
-	pUIManager->m_pEnemyPanel->m_bRender = true;
-	
-	m_pTargetEnemy = pTarget->m_pParent;
-	pUIManager->m_pEnemyHP->SetValue(pTarget->m_pPhysics->m_disHP, pTarget->m_pPhysics->m_maxHP);
-	pUIManager->m_pEnemyName->SetString(pTarget->m_pParent->m_myName);
-}
-
-void PlayerController::OperEXP(const float& value) noexcept
-{
-	m_EXP += value /*+ PacketManager::Get().pMyInfo->StatLuk * 0.1f*/;
-	if (m_EXP >= m_NeedEXP && m_pParent != nullptr)
-	{
-		// LevelUp
-		m_EXP = min(m_EXP - m_NeedEXP, m_NeedEXP);
-		m_statPoint += 4;
-		++PacketManager::Get().pMyInfo->Level;
-		m_NeedEXP = 1.0f + PacketManager::Get().pMyInfo->Level * 0.3f;
-		PacketManager::Get().pMyInfo->KeyValue = m_pParent->m_keyValue;
-		PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendLevelUp);
-	}
-}
-
-
 void PlayerController::StartGiantMode() noexcept
 {
 	PacketManager::Get().SendPlaySound("SE_jajan.mp3", m_pParent->GetPosition(), SoundRange);
@@ -705,7 +711,6 @@ void PlayerController::StartGiantMode() noexcept
 		SendGiantMode(0.032f);
 		frameCount += 0.12f;
 		this_thread::sleep_for(chrono::milliseconds(120));
-		ResetOption();
 	}
 	m_moveSpeed = MoveSpeed * 3.0f + MoveSpeed * PacketManager::Get().pMyInfo->StatDex * 0.15f;
 	m_jumpPower = JumpPower * 2.0f;
@@ -726,15 +731,4 @@ void PlayerController::StartVibration(float seconds, const float& shakePower) no
 		this_thread::sleep_for(chrono::milliseconds(30));
 	}
 	m_pCamera->SetPosition(prevPosition);
-}
-
-
-void PlayerController::isChatting(const bool& isChat) noexcept
-{
-	m_isChatting = isChat;
-}
-
-bool PlayerController::isChatting() const noexcept
-{
-	return m_isChatting;
 }

@@ -139,7 +139,9 @@ namespace MyEvent {
 			// ³»°¡ ¸Â¾ÒÀ»¶§
 			if (pB->m_pParent == PlayerController::Get().GetParent())
 			{
+				UIManager::Get().m_pHitEffect->SetEventTime(0.3f);
 				UIManager::Get().m_pHitEffect->EffectPlay();
+				UIManager::Get().m_pHitEffect->SetEventTime(1.0f);
 				if (pB->m_pParent->GetHP() <= 0.0f)
 				{
 					PacketManager::Get().SendDeadEvent(pB->m_pParent->m_keyValue, pB->m_pPhysics->UserSocket, pA->m_pPhysics->UserSocket);
@@ -280,4 +282,5 @@ namespace ActiveEvent {
 		// ÆøÅº
 		pPlayer->m_eAction = PlayerController::EAction::ThrowBomb;
 	}
+
 }

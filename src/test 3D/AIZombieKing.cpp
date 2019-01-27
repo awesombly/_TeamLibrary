@@ -122,7 +122,7 @@ bool AIZombieKing::Frame(const float& spf, const float& accTime)	noexcept
 				m_delay = 0.5f;
 				((AHeroObj*)m_pParent)->SetANIM_OneTime(Zombie_KING_JUMP_ATTACK);
 				// 카메라 진동
-				std::thread vibrator(&PlayerController::StartVibration, &PlayerController::Get(), 1.5f, 9.0f);
+				std::thread vibrator(&PlayerController::StartVibration, &PlayerController::Get(), 1.5f, 7.0f);
 				vibrator.detach();
 				return true;
 			}
