@@ -88,9 +88,6 @@ bool AIZombieKing::Frame(const float& spf, const float& accTime)	noexcept
 			 auto pEffect = ObjectManager::Get().TakeObject(L"ZStump");
 			 pEffect->SetPosition(m_pParent->GetPosition() + Vector3::Up * 5.0f);
 			 m_eDirState = EState::Move;
-			 // 카메라 진동
-			 std::thread vibrator(&PlayerController::StartVibration, &PlayerController::Get(), 2.5f, 6.0f);
-			 vibrator.detach();
 		 }	break;
 		}
 		return true;
@@ -124,6 +121,9 @@ bool AIZombieKing::Frame(const float& spf, const float& accTime)	noexcept
 				m_eDirState = EState::Action3;
 				m_delay = 0.5f;
 				((AHeroObj*)m_pParent)->SetANIM_OneTime(Zombie_KING_JUMP_ATTACK);
+				// 카메라 진동
+				std::thread vibrator(&PlayerController::StartVibration, &PlayerController::Get(), 1.5f, 9.0f);
+				vibrator.detach();
 				return true;
 			}
 		}

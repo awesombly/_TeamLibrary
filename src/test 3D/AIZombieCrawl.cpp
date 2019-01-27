@@ -84,7 +84,7 @@ bool AIZombieCrawl::Frame(const float& spf, const float& accTime)	noexcept
 	{
 		SoundManager::Get().PlayQueue("SE_zombie_hit01.mp3", m_pParent->GetPosition(), PlayerController::Get().SoundRange);
 		// АјАн
-		auto pCollider = new Collider(m_pParent->GetScale().x * 300.0f);
+		auto pCollider = new Collider(60.0f);
 		auto pEffect = ObjectManager::Get().TakeObject(L"ZBoom");
 		pEffect->AddComponent(pCollider);
 		pEffect->SetPosition(m_pParent->GetPosition());

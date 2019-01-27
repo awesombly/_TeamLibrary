@@ -55,25 +55,25 @@ bool GameScene::Init() noexcept
 	//}
 
 	//GameObject* pEffect = nullptr;
-	//m_pParser->CreateFromFile(&pEffect, L"Snow.eff", L"../../data/script");
+	//m_pParser->CreateFromFile(&pEffect, L"Snow.eff", urlEffect);
 	//pEffect->SetPosition(Vector3::Up * 400.0f);
 	//ObjectManager::Get().PushObject(pEffect);
 
-	//pEffect = new GameObject(L"Bigbang", m_pParser->CreateFromParticle(L"Bigbang.eff", L"../../data/script"), EObjType::Effect);
+	//pEffect = new GameObject(L"Bigbang", m_pParser->CreateFromParticle(L"Bigbang.eff", urlEffect), EObjType::Effect);
 	//pEffect->SetPosition(Vector3::Up * 400.0f + Vector3::Left * 700.0f);
 	//ObjectManager::Get().PushObject(pEffect);
 
-	//auto pParticle = m_pParser->CreateFromParticle(L"Shock.eff", L"../../data/script");
+	//auto pParticle = m_pParser->CreateFromParticle(L"Shock.eff", urlEffect);
 	//pParticle->isRepeat(true);
 	//pEffect = new GameObject(L"Shock", pParticle, EObjType::Effect);
 	//pEffect->SetPosition(Vector3::Up * 400.0f + Vector3::Right * 700.0f);
 	//ObjectManager::Get().PushObject(pEffect);
 
-	//pEffect = new GameObject(L"WheelWind", { m_pParser->CreateFromParticle(L"WheelWind.eff", L"../../data/script"), new CTransformer(Vector3::Zero, Quaternion::Left * 3.0f) }, EObjType::Effect);
+	//pEffect = new GameObject(L"WheelWind", { m_pParser->CreateFromParticle(L"WheelWind.eff", urlEffect), new CTransformer(Vector3::Zero, Quaternion::Left * 3.0f) }, EObjType::Effect);
 	//pEffect->SetPosition(Vector3::Up * 400.0f + Vector3::Forward * 500.0f);
 	//ObjectManager::Get().PushObject(pEffect);
 
-	//pEffect = new GameObject(L"Atom", { m_pParser->CreateFromParticle(L"Atom.eff", L"../../data/script"), new CTransformer(Vector3::Zero, {3.0f, 5.0f, 7.0f, 0.0f}) }, EObjType::Effect);
+	//pEffect = new GameObject(L"Atom", { m_pParser->CreateFromParticle(L"Atom.eff", urlEffect), new CTransformer(Vector3::Zero, {3.0f, 5.0f, 7.0f, 0.0f}) }, EObjType::Effect);
 	//pEffect->SetPosition(Vector3::Up * 400.0f + Vector3::Backward * 500.0f);
 	//ObjectManager::Get().PushObject(pEffect);
 
@@ -667,7 +667,15 @@ void GameScene::LoadUI() noexcept
 	UIManager::Get().m_pInfoLukBtn = (JTextCtrl*)pUIRoot->find_child(L"Info_LUK_btn");
 	UIManager::Get().m_pInfoLukBtn->EventClick.first = pStatUp;
 	UIManager::Get().m_pInfoLukBtn->EventClick.second = &PacketManager::Get().pMyInfo->StatLuk;
+	// ½½·Ô
+	UIManager::Get().m_pSlot1 = (JSlot*)pUIRoot->find_child(L"Slot1");
+	UIManager::Get().m_pSlot2 = (JSlot*)pUIRoot->find_child(L"Slot2");
+	UIManager::Get().m_pSlot3 = (JSlot*)pUIRoot->find_child(L"Slot3");
 
+	// UIManager::Get().m_pSlot3->m_pItem->m_pIndexList[0] = -1;
+	JItem::Get()->m_pItemList;
+	//UIManager::Get().m_pSlot1->AddItem(L"");
+	//UIManager::Get().m_pSlot1->m_bEmpty; // > AddItem(L"");
 
 	ObjectManager::Get().PushObject(pUIRoot);
 	UI::InGameEvent(pUIRoot);

@@ -104,7 +104,7 @@ struct Packet_SoundData
 struct Packet_PossessPlayer
 {
 	UINT KeyValue;
-	char ECharacter;
+	UCHAR ECharacter;
 };
 
 struct Packet_KeyValue
@@ -167,13 +167,13 @@ struct Packet_AnimTransform
 	D3DXVECTOR3 Force;
 	D3DXVECTOR3 Direction;
 	D3DXQUATERNION Rotation;
-	char EAnimState;
-	char ECharacter;
+	UCHAR EAnimState;
+	UCHAR ECharacter;
 };
 
 struct Packet_ReqAddPlayer
 {
-	char ECharacter;
+	UCHAR ECharacter;
 };
 
 

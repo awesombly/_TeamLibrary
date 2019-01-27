@@ -14,6 +14,52 @@ namespace MyEvent {
 		}
 	}
 
+	void PlayerAttack(Collider* pA, Collider* pB)
+	{
+		if (pB != nullptr &&
+			pB->m_eTag == ETag::Enemy)
+		{
+			pB->SetForce((Normalize(pB->GetCenter() - pA->GetCenter())) * 150.0f);
+			pB->m_pParent->OperHP(-pA->m_pPhysics->m_damage);
+			pA->AddIgnoreList(pB);
+			//// 내가 맞았을때
+			//if (pB->m_pParent == PlayerController::Get().GetParent())
+			//{
+			//	UIManager::Get().m_pHitEffect->EffectPlay();
+			//}
+			// 내가 때렸을때
+			if (PacketManager::Get().pMyInfo->UserSocket == pA->m_pPhysics->UserSocket)
+			{
+				PlayerController::Get().HitEvent(pB);
+				if (pB->m_pParent->GetHP() <= 0.0f)
+				{
+					PacketManager::Get().SendDeadEvent(pB->m_pParent->m_keyValue, pB->m_pPhysics->UserSocket, pA->m_pPhysics->UserSocket);
+				}
+				else
+				{
+					PacketManager::Get().pMyInfo->Score += (int)(pA->m_pPhysics->m_damage * 100.0f);
+					PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
+				}
+			}
+			auto pEffect = ObjectManager::Get().TakeObject(L"PSlash");
+			pEffect->SetPosition(pA->m_pParent->GetWorldPosition());
+			//SoundManager::Get().PlayQueue("SE_HIT.mp3", pA->m_pParent->GetWorldPosition(), SoundRange);
+		}
+	}
+
+	void PlayerBomb(Collider* pA, Collider* pB)
+	{
+		if (pB != nullptr &&
+			pB->m_eTag == ETag::Enemy)
+		{
+			auto pObject = ObjectManager::Get().TakeObject(L"PBoom");
+			pObject->SetPosition(pA->GetCenter());
+			pObject->m_pPhysics->m_damage = 1.0f;
+
+			ObjectManager::Get().DisableObject(pA->m_pParent);
+		}
+	}
+
 	void DaggerHit(Collider* pA, Collider* pB)
 	{
 		if (pB != nullptr)
@@ -38,7 +84,7 @@ namespace MyEvent {
 				}
 				else
 				{
-					PacketManager::Get().pMyInfo->Score += 50;
+					PacketManager::Get().pMyInfo->Score += (int)(pA->m_pPhysics->m_damage * 100.0f);
 					PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
 				}
 			}
@@ -72,7 +118,7 @@ namespace MyEvent {
 				}
 				else
 				{
-					PacketManager::Get().pMyInfo->Score += 200;
+					PacketManager::Get().pMyInfo->Score += (int)(pA->m_pPhysics->m_damage * 150.0f);
 					PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
 				}
 			}
@@ -218,4 +264,19 @@ namespace MyEvent {
 			pA->m_pParent->isEnable(false);
 		}
 	};
+}
+
+
+namespace ActiveEvent {
+	void ShockWave(PlayerController* pPlayer, void*)
+	{
+		// 충격파
+		pPlayer->m_eAction = PlayerController::EAction::ShockWave;
+	}
+
+	void ThrowBomb(PlayerController* pPlayer, void*)
+	{
+		// 폭탄
+		pPlayer->m_eAction = PlayerController::EAction::ThrowBomb;
+	}
 }

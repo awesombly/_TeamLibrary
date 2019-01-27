@@ -6,13 +6,17 @@
 class IntroScene : public MainClass
 {
 public:
-	JEditCtrl*  m_pID = nullptr;
-	JEditCtrl*  m_pPW = nullptr;
+	JEditCtrl*  m_pID			 = nullptr;
+	JEditCtrl*  m_pPW			 = nullptr;
+	JEditCtrl*  m_pSignUpID		 = nullptr;
+	JEditCtrl*  m_pSignUpPW		 = nullptr;
+	JEditCtrl*  m_pSignUpPWCheck = nullptr;
 	///
 	XMapImporter m_Importer;		// 세이브 데이터 로더
 public:
 	void LoadSound()			noexcept;
 	void LoadUI()				noexcept override;
+	void SetObjects()			noexcept;
 	bool FirstInit()			noexcept override;
 
 	virtual bool Init()			noexcept override;

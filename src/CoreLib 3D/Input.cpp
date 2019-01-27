@@ -50,6 +50,7 @@ bool Input::Frame() noexcept
 	KeyCheck('G');		KeyCheck('H');		KeyCheck('J');		KeyCheck('K');
 	KeyCheck('Z');		KeyCheck('X');		KeyCheck('C');		KeyCheck('V');
 	KeyCheck('B');		KeyCheck('N');		KeyCheck('M');
+	KeyCheck('O');		KeyCheck('P');		KeyCheck('L');
 
 
 	if (GetKeyState(VK_ESCAPE) == EKeyState::DOWN)

@@ -13,14 +13,15 @@ class UIManager;
 class PlayerController : public GameObject, public ISingleton<PlayerController>
 {
 public:
-	enum EAction : char {
+	enum EAction : UCHAR {
 		Idle = 0, 
 		Left = 1, Forward = 2, ForwardLeft = 3, 
 		Right = 4, ForwardRight = 6, 
 		Backward = 8, BackwardLeft = 9, BackwardRight = 12,
-		Jump = 100, Dance1, Dance2, Dance3, Throw, Run, Fly, FlyEnd, Dash, Melee
+		Jump = 100, Dance1, Dance2, Dance3, Throw, Run, Fly, FlyEnd, Dash, Melee,
+		ShockWave, ThrowBomb,
 	};
-	enum ECharacter : char {
+	enum ECharacter : UCHAR {
 		EDummy = 0, EGuard, EZombie,
 	};
 private:
@@ -45,7 +46,12 @@ private:
 	const float	MoveSpeed = 30.0f;
 	const float	JumpPower = 70.0f;
 	UIManager*  pUIManager = nullptr;
+	
+	void(*SlotEvent1)(PlayerController*, void*) = nullptr;
+	void(*SlotEvent2)(PlayerController*, void*) = nullptr;
+	void(*SlotEvent3)(PlayerController*, void*) = nullptr;
 public:
+	EAction		m_eAction;				// 눌린 애니메이션
 	ECharacter  m_curCharacter;			// 현재 캐릭터
 	//ECharacter  m_selectCharacter;		// 선택 캐릭터
 

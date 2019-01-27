@@ -9,10 +9,17 @@
 #include "AIZombie.h"
 #include "UIManager.h"
 
+#include "CTransformer.h"
+
 bool PlayerController::Init() noexcept
 {
 	GameObject::Init();
-	pUIManager = &UIManager::Get();
+	if (pUIManager == nullptr)
+	{
+		pUIManager = &UIManager::Get();
+		SlotEvent1 = ActiveEvent::ShockWave;
+		SlotEvent2 = ActiveEvent::ThrowBomb;
+	}
 	return true;
 }
 
@@ -99,208 +106,155 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 {
 	switch (eCharacter)
 	{
-	case ECharacter::EGuard:
-	{
-		switch (eAction)
-		{
-		case EAction::Idle:
-		{
+	 case ECharacter::EGuard:
+	 {
+	 	switch (eAction)
+	 	{
+	 	case EAction::Idle:
+	 	{
 			pObject->SetANIM_Loop(Guard_IDLE);
 		}	break;
-		case EAction::Jump:
-		{
-			SoundManager::Get().PlayQueue("SE_jump01.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
-		}	break;
-		case EAction::Left:
-		case EAction::BackwardLeft:
-		{
+	 	case EAction::Jump:
+	 	{
+	 		SoundManager::Get().PlayQueue("SE_jump01.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
+	 	}	break;
+	 	case EAction::Left:
+	 	case EAction::BackwardLeft:
+	 	{
 			pObject->SetANIM_Loop(Guard_LEFT);
 		}	break;
-		case EAction::Right:
-		case EAction::BackwardRight:
-		{
+	 	case EAction::Right:
+	 	case EAction::BackwardRight:
+	 	{
 			pObject->SetANIM_Loop(Guard_RIGHT);
 		}	break;
-		case EAction::Forward:
-		case EAction::ForwardLeft:
-		case EAction::ForwardRight:
-		{
+	 	case EAction::Forward:
+	 	case EAction::ForwardLeft:
+	 	case EAction::ForwardRight:
+	 	{
 			pObject->SetANIM_Loop(Guard_HAPPYWALK);
 		}	break;
-		case EAction::Backward:
-		{
+	 	case EAction::Backward:
+	 	{
 			pObject->SetANIM_Loop(Guard_BACKWARD);
 		}	break;
-		case EAction::Dance1:
-		{
+	 	case EAction::Dance1:
+	 	{
 			pObject->SetANIM_OneTime(Guard_DANCE1);
 			SoundManager::Get().Play("SE_Dance01.mp3");// , pObject->GetWorldPosition(), 1000.0f);
 		}	break;
-		case EAction::Dance2:
-		{
+	 	case EAction::Dance2:
+	 	{
 			pObject->SetANIM_OneTime(Guard_DANCE2);
 			SoundManager::Get().Play("SE_Dance02.mp3");//, pObject->GetWorldPosition(), 1000.0f);
 		}	break;
-		case EAction::Dance3:
+	 	case EAction::Dance3:
+	 	{
+	 		pObject->SetANIM_OneTime(Guard_DANCE3);
+	 		SoundManager::Get().Play("SE_Dance01.mp3");// , pObject->GetWorldPosition(), 1000.0f);
+	 		for (auto& iter : *ObjectManager::Get().GetObjectList(EObjType::Enemy))
+	 		{
+	 			if(auto pControllers = iter->GetComponentList(EComponent::Etc);
+	 				pControllers != nullptr)
+	 			{
+	 				((AIZombie*)pControllers->front())->m_Target = pObject->GetPosition();
+	 			}
+	 		}
+	 	}	break;
+	 	case EAction::Throw:
+	 	{
+	 		pObject->SetANIM_OneTime(Guard_THROW);
+	 		auto pItem = ObjectManager::Get().TakeObject(L"Dagger");
+			pItem->SetPosition(pObject->GetPosition() + pObject->GetForward() * 40.0f + pObject->GetUp() * 65.0f + pObject->GetRight() * 20.0f);
+			pItem->SetRotation(pObject->GetRotation());
+	 		//pItem->SetScale(pObject->GetScale().x * 3.0f * Vector3::One);
+			pItem->SetForce((forward + Vector3::Up * 0.15f) * 300.0f);
+			pItem->m_pPhysics->UserSocket = socket;
+			pItem->SetDamage(0.25f, PacketManager::Get().UserList[socket]->StatStr);
+			pItem->GetCollider()->AddIgnoreList(pObject->GetCollider());
+	 		SoundManager::Get().PlayQueue("SE_throw01.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
+	 	}	break;
+	 	case EAction::Melee:
+	 	{
+	 		pObject->SetANIM_OneTime(Guard_PUNCH);
+	 		auto pCollider = new Collider(pObject->GetScale().x * 55.0f);
+	 		auto pMelee = new GameObject(L"Melee", { pCollider, new CEventTimer(0.5f) });
+	 		pMelee->SetParent(pObject);
+	 		pMelee->SetPosition(pObject->GetForward() * 50.0f + pObject->GetUp() * 45.0f);
+	 		pMelee->SetRotation(pObject->GetRotation());
+	 		pMelee->UpdateMatrix();
+	 		pMelee->m_pPhysics->UserSocket = socket;
+	 		pMelee->SetHP(100.0f);
+	 		pMelee->SetDamage(0.5f, PacketManager::Get().UserList[socket]->StatStr);
+	 		pCollider->CollisionEvent = MyEvent::MeleeHit;
+	 		pCollider->AddIgnoreList(pObject->GetCollider());
+	 		pCollider->m_eTag = ETag::Dummy;
+	 		pCollider->SetGravityScale(0.0f);
+	 		pCollider->usePhysics(false);
+	 		SoundManager::Get().PlayQueue("SV_Guard_Punch.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
+	 	}	break;
+		// ================================== 템 사용 =========================================
+		case EAction::ShockWave:
 		{
-			pObject->SetANIM_OneTime(Guard_DANCE3);
-			SoundManager::Get().Play("SE_Dance01.mp3");// , pObject->GetWorldPosition(), 1000.0f);
-			for (auto& iter : *ObjectManager::Get().GetObjectList(EObjType::Enemy))
-			{
-				if(auto pControllers = iter->GetComponentList(EComponent::Etc);
-					pControllers != nullptr)
-				{
-					((AIZombie*)pControllers->front())->m_Target = pObject->GetPosition();
-				}
-			}
+			// 충격파
+			pObject->SetANIM_OneTime(Guard_PUNCH);
+	 		auto pItem = ObjectManager::Get().TakeObject(L"PShock");
+			pItem->SetPosition(pObject->GetPosition() + pObject->GetUp() * 40.0f);
+			pItem->m_pPhysics->UserSocket = socket;
+			pItem->SetDamage(0.5f, PacketManager::Get().UserList[socket]->StatLuk);
+	 		SoundManager::Get().PlayQueue("SE_throw01.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
 		}	break;
-		case EAction::Throw:
+		case EAction::ThrowBomb:
 		{
+			// 폭탄
 			pObject->SetANIM_OneTime(Guard_THROW);
-			auto pDagger = ObjectManager::Get().TakeObject(L"Dagger");
-			pDagger->SetPosition(pObject->GetPosition() + pObject->GetForward() * 40.0f + pObject->GetUp() * 65.0f + pObject->GetRight() * 20.0f);
-			pDagger->SetRotation(pObject->GetRotation());
-			//pDagger->SetScale(pObject->GetScale().x * 3.0f * Vector3::One);
-			pDagger->SetForce((forward + Vector3::Up * 0.15f) * 300.0f);
-			pDagger->m_pPhysics->UserSocket = socket;
-			pDagger->SetDamage(0.25f, PacketManager::Get().UserList[socket]->StatStr);
-			pDagger->GetCollider()->AddIgnoreList(pObject->GetCollider());
+			auto pItem = ObjectManager::Get().TakeObject(L"PBomb");
+			pItem->SetPosition(pObject->GetPosition() + pObject->GetForward() * 40.0f + pObject->GetUp() * 65.0f + pObject->GetRight() * 20.0f);
+			pItem->m_pPhysics->UserSocket = socket;
+			//pItem->SetDamage(1.0f, PacketManager::Get().UserList[socket]->StatLuk);
+			pItem->SetForce((forward + Vector3::Up) * 200.0f);
 			SoundManager::Get().PlayQueue("SE_throw01.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
 		}	break;
-		case EAction::Melee:
-		{
-			pObject->SetANIM_OneTime(Guard_PUNCH);
-			SoundManager::Get().PlayQueue("SV_Guard_Punch.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
-			
-			auto pCollider = new Collider(pObject->GetScale().x * 55.0f);
-			auto pMelee = new GameObject(L"Melee", { pCollider, new CEventTimer(0.5f) });
-			pMelee->SetParent(pObject);
-			pMelee->SetPosition(pObject->GetForward() * 50.0f + pObject->GetUp() * 45.0f);
-			pMelee->SetRotation(pObject->GetRotation());
-			pMelee->UpdateMatrix();
-			pMelee->m_pPhysics->UserSocket = socket;
-			pMelee->SetHP(100.0f);
-			pMelee->SetDamage(0.5f, PacketManager::Get().UserList[socket]->StatStr);
-			pCollider->CollisionEvent = MyEvent::MeleeHit;
-			pCollider->AddIgnoreList(pObject->GetCollider());
-			pCollider->m_eTag = ETag::Dummy;
-			pCollider->SetGravityScale(0.0f);
-			pCollider->usePhysics(false);
-		}	break;
-		}
-	}	break;
-	case ECharacter::EZombie:
-	{
-		switch (eAction)
-		{
-		 case EAction::Idle:
-		 {
-		 	pObject->SetANIM_Loop(Zombie_IDLE);
-		 }	break;
-		 case EAction::Jump:
-		 {
-		 	//pObject->SetANIM_OneTime(Zombie_FLY);
-		 }	break;
-		 case EAction::Left:
-		 case EAction::BackwardLeft:
-		 {
-		 	//pObject->SetANIM_Loop(Zombie_LEFT);
-		 }	break;
-		 case EAction::Right:
-		 case EAction::BackwardRight:
-		 {
-		 	//pObject->SetANIM_Loop(Zombie_RIGHT);
-		 }	break;
-		 case EAction::Forward:
-		 case EAction::ForwardLeft:
-		 case EAction::ForwardRight:
-		 {
-		 	//pObject->SetANIM_Loop(Zombie_RUN);
-		 }	break;
-		 case EAction::Backward:
-		 {
-		 	//pObject->SetANIM_Loop(Zombie_BACKWARD);
-		 }	break;
-		 case EAction::Dance1:
-		 {
-		 	//pObject->SetANIM_OneTime(Zombie_DANCE1);
-			SoundManager::Get().Play("SE_Dance01.mp3");// , pObject->GetWorldPosition(), 1000.0f);
-		 }	break;
-		 case EAction::Dance2:
-		 {
-		 	//pObject->SetANIM_OneTime(Zombie_DANCE2);
-			SoundManager::Get().Play("SE_Dance02.mp3");// pObject->GetWorldPosition(), 1000.0f);
-		 }	break;
-		 case EAction::Throw:
-		 {
-		 	//pObject->SetANIM_OneTime(Zombie_THROW);
-		 	auto pChicken = ObjectManager::Get().TakeObject(L"Chicken");
-		 	pChicken->SetPosition(pObject->GetPosition() + pObject->GetForward() * 40.0f + pObject->GetUp() * 65.0f + pObject->GetRight() * 20.0f);
-		 	pChicken->SetRotation(pObject->GetRotation());
-		 	pChicken->SetForce((forward + Vector3::Up * 0.15f) * 300.0f);
-			pChicken->m_pPhysics->UserSocket = socket;
-			pChicken->SetDamage(0.25f, PacketManager::Get().UserList[socket]->StatStr);
-		 	((Collider*)pChicken->GetComponentList(EComponent::Collider)->front())->AddIgnoreList((Collider*)pObject->GetComponentList(EComponent::Collider)->front());
-		 	SoundManager::Get().PlayQueue("SE_chicken.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
-		 }	break;
-		 case EAction::Melee:
-		 {
-		 	//pObject->SetANIM_OneTime(Zombie_PUNCH);
-		 	SoundManager::Get().PlayQueue("SE_zombie_hit01.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
-		 
-			auto pCollider = new Collider(pObject->GetScale().x * 40.0f);
-			auto pMelee = new GameObject(L"Melee", { pCollider, new CEventTimer(0.5f) });
-			pMelee->SetParent(pObject);
-			pMelee->SetPosition(pObject->GetForward() * 45.0f + pObject->GetUp() * 45.0f);
-			pMelee->SetRotation(pObject->GetRotation());
-			pMelee->UpdateMatrix();
-			pMelee->m_pPhysics->UserSocket = socket;
-			pMelee->SetHP(100.0f);
-			pMelee->SetDamage(0.5f, PacketManager::Get().UserList[socket]->StatStr);
-			pCollider->CollisionEvent = MyEvent::MeleeHit;
-		 	pCollider->AddIgnoreList((Collider*)pObject->GetComponentList(EComponent::Collider)->front());
-		 	pCollider->m_eTag = ETag::Dummy;
-		 	pCollider->SetGravityScale(0.0f);
-		 	pCollider->usePhysics(false);
-		 }	break;
-		}
-	}	break;
+	 	}
+	 }	break;
 	}
 }
 
 void PlayerController::PlayerInput(const float& spf) noexcept
 {
-	static EAction eAction;
-	eAction = EAction::Idle;
+	m_eAction = EAction::Idle;
 	//m_pCollider = (Collider*)m_pParent->GetComponentList(EComponent::Collider)->front();
 
 	if (Input::GetKeyState('W') == EKeyState::HOLD)
 	{
-		eAction = (EAction)(eAction + EAction::Forward);
+		m_eAction = (EAction)(m_eAction + EAction::Forward);
 	}
 	if (Input::GetKeyState('S') == EKeyState::HOLD)
 	{
-		eAction = (EAction)(eAction + EAction::Backward);
+		m_eAction = (EAction)(m_eAction + EAction::Backward);
 	}
 	if (Input::GetKeyState('A') == EKeyState::HOLD)
 	{
-		eAction = (EAction)(eAction + EAction::Left);
+		m_eAction = (EAction)(m_eAction + EAction::Left);
 	}
 	if (Input::GetKeyState('D') == EKeyState::HOLD)
 	{
-		eAction = (EAction)(eAction + EAction::Right);
+		m_eAction = (EAction)(m_eAction + EAction::Right);
 	}
 	if (Input::GetKeyState('1') == EKeyState::DOWN)
 	{
-		eAction = EAction::Dance1;
+		if(SlotEvent1 != nullptr)
+			SlotEvent1(this, nullptr);
 	}
 	if (Input::GetKeyState('2') == EKeyState::DOWN)
 	{
-		eAction = EAction::Dance2;
+		if (SlotEvent2 != nullptr)
+			SlotEvent2(this, nullptr);
 	}
 	if (Input::GetKeyState('3') == EKeyState::DOWN)
 	{
-		eAction = EAction::Dance3;
+		if (SlotEvent3 != nullptr)
+			SlotEvent3(this, nullptr);
 	}
 
 	static bool isFly = false;
@@ -308,13 +262,13 @@ void PlayerController::PlayerInput(const float& spf) noexcept
 	{
 		if (m_pParent->isGround())
 		{
-			eAction = EAction::Jump;
+			m_eAction = EAction::Jump;
 		}
 		else
 		{
 			// 날기
 			isFly = true;
-			eAction = EAction::Fly;
+			m_eAction = EAction::Fly;
 			m_pEffectFly = ObjectManager::Get().TakeObject(L"Fly");
 			m_pEffectFly->SetParent(m_pParent);
 		}
@@ -325,7 +279,7 @@ void PlayerController::PlayerInput(const float& spf) noexcept
 		if (m_curMP <= 0.0f)
 		{
 			isFly = false;
-			eAction = EAction::FlyEnd;
+			m_eAction = EAction::FlyEnd;
 			if (m_pEffectFly != nullptr)
 			{
 				ObjectManager::Get().DisableObject(m_pEffectFly);
@@ -336,7 +290,7 @@ void PlayerController::PlayerInput(const float& spf) noexcept
 	if (Input::GetKeyState(VK_SPACE) == EKeyState::UP)
 	{
 		isFly = false;
-		eAction = EAction::FlyEnd;
+		m_eAction = EAction::FlyEnd;
 		if (m_pEffectFly != nullptr)
 		{
 			ObjectManager::Get().DisableObject(m_pEffectFly);
@@ -355,14 +309,14 @@ void PlayerController::PlayerInput(const float& spf) noexcept
 	{
 		m_curMP -= 0.2f;
 		m_curDelayThrow = m_DelayThrow;
-		eAction = EAction::Throw;
+		m_eAction = EAction::Throw;
 	}
 	// 구르기
 	if (Input::GetKeyState(VK_SHIFT) == EKeyState::DOWN &&
 		m_curDelayDash <= 0.0f)
 	{
 		m_curDelayDash = m_DelayDash;
-		eAction = EAction::Dash;
+		m_eAction = EAction::Dash;
 		SoundManager::Get().Play("SE_jump02.mp3");
 	}
 	// 근접 공격
@@ -372,16 +326,16 @@ void PlayerController::PlayerInput(const float& spf) noexcept
 		m_curDelayMelee = m_DelayMelee;
 		m_curDelayThrow = m_DelayThrow;
 		//m_curDelayDash += 0.3f;
-		eAction = EAction::Melee;
+		m_eAction = EAction::Melee;
 	}
 
 
-	if (eAction != m_curAction)
+	if (m_eAction != m_curAction)
 	{
 		// 정보 전송
-		SendAnimTransform(eAction, m_curCharacter);
+		SendAnimTransform(m_eAction, m_curCharacter);
 	}
-	m_curAction = eAction;
+	m_curAction = m_eAction;
 
 	//// 동기화 요청
 	//if (Input::GetKeyState(VK_ADD) == EKeyState::DOWN &&
@@ -737,12 +691,12 @@ void PlayerController::StartVibration(float seconds, const float& shakePower) no
 	float randValue = shakePower * 2.0f;
 	while (seconds >= 0.0f)
 	{
-		SetPosition(RandomNormal() * randValue - shakePower, RandomNormal() * randValue - shakePower, RandomNormal() * randValue - shakePower);
+		m_pCamera->SetPosition(RandomNormal() * randValue - shakePower, RandomNormal() * randValue - shakePower, RandomNormal() * randValue - shakePower);
 
-		seconds -= 0.04f;
-		this_thread::sleep_for(chrono::milliseconds(40));
+		seconds -= 0.03f;
+		this_thread::sleep_for(chrono::milliseconds(30));
 	}
-	SetPosition(Vector3::Zero);
+	m_pCamera->SetPosition(Vector3::Zero);
 }
 
 
