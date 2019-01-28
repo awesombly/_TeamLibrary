@@ -297,9 +297,9 @@ void IntroScene::SetObjects() noexcept
 	// ======================================= Character =====================================================
 	// ±â»ç 
 	pHeroObj = new AHeroObj();
-	pHeroObj->SetPlayerCharacter(Guard);
+	pHeroObj->SetPlayerCharacter(Paladin);
 	pHeroObj->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-	pHeroObj->SetANIM_Loop(Guard_IDLE);
+	pHeroObj->SetANIM_Loop(Paladin_IDLE);
 	pHeroObj->m_myName = L"Guard";
 	pHeroObj->m_objType = EObjType::Character;
 	pCollider = new ColliderOBB({ -13.0f, 0.0f , -13.0f }, { 13.0f, 80.0f , 13.0f });

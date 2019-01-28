@@ -146,58 +146,58 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 	 	{
 	 	case EAction::Idle:
 	 	{
-			pObject->SetANIM_Loop(Guard_IDLE);
+			pObject->SetANIM_Loop(Paladin_IDLE);
 		}	break;
 	 	case EAction::Jump:
 	 	{
-	 		SoundManager::Get().PlayQueue("SE_jump01.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
+	 		//SoundManager::Get().PlayQueue("SE_jump01.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
 	 	}	break;
 	 	case EAction::Left:
 	 	case EAction::BackwardLeft:
 	 	{
-			pObject->SetANIM_Loop(Guard_LEFT);
+			pObject->SetANIM_Loop(Paladin_LEFT);
 		}	break;
 	 	case EAction::Right:
 	 	case EAction::BackwardRight:
 	 	{
-			pObject->SetANIM_Loop(Guard_RIGHT);
+			pObject->SetANIM_Loop(Paladin_RIGHT);
 		}	break;
 	 	case EAction::Forward:
 	 	case EAction::ForwardLeft:
 	 	case EAction::ForwardRight:
 	 	{
-			pObject->SetANIM_Loop(Guard_HAPPYWALK);
+			pObject->SetANIM_Loop(Paladin_WALK);
 		}	break;
 	 	case EAction::Backward:
 	 	{
-			pObject->SetANIM_Loop(Guard_BACKWARD);
+			pObject->SetANIM_Loop(Paladin_BACK);
 		}	break;
-	 	case EAction::Dance1:
-	 	{
-			pObject->SetANIM_OneTime(Guard_DANCE1);
-			SoundManager::Get().Play("SE_Dance01.mp3");// , pObject->GetWorldPosition(), 1000.0f);
-		}	break;
-	 	case EAction::Dance2:
-	 	{
-			pObject->SetANIM_OneTime(Guard_DANCE2);
-			SoundManager::Get().Play("SE_Dance02.mp3");//, pObject->GetWorldPosition(), 1000.0f);
-		}	break;
-	 	case EAction::Dance3:
-	 	{
-	 		pObject->SetANIM_OneTime(Guard_DANCE3);
-	 		SoundManager::Get().Play("SE_Dance01.mp3");// , pObject->GetWorldPosition(), 1000.0f);
-	 		for (auto& iter : *ObjectManager::Get().GetObjectList(EObjType::Enemy))
-	 		{
-	 			if(auto pControllers = iter->GetComponentList(EComponent::Etc);
-	 				pControllers != nullptr)
-	 			{
-	 				((AIZombie*)pControllers->front())->m_Target = pObject->GetPosition();
-	 			}
-	 		}
-	 	}	break;
+	 //	case EAction::Dance1:
+	 //	{
+		//	pObject->SetANIM_OneTime(Guard_DANCE1);
+		//	SoundManager::Get().Play("SE_Dance01.mp3");// , pObject->GetWorldPosition(), 1000.0f);
+		//}	break;
+	 //	case EAction::Dance2:
+	 //	{
+		//	pObject->SetANIM_OneTime(Guard_DANCE2);
+		//	SoundManager::Get().Play("SE_Dance02.mp3");//, pObject->GetWorldPosition(), 1000.0f);
+		//}	break;
+	 //	case EAction::Dance3:
+	 //	{
+	 //		pObject->SetANIM_OneTime(Guard_DANCE3);
+	 //		SoundManager::Get().Play("SE_Dance01.mp3");// , pObject->GetWorldPosition(), 1000.0f);
+	 //		for (auto& iter : *ObjectManager::Get().GetObjectList(EObjType::Enemy))
+	 //		{
+	 //			if(auto pControllers = iter->GetComponentList(EComponent::Etc);
+	 //				pControllers != nullptr)
+	 //			{
+	 //				((AIZombie*)pControllers->front())->m_Target = pObject->GetPosition();
+	 //			}
+	 //		}
+	 //	}	break;
 	 	case EAction::Throw:
 	 	{
-	 		pObject->SetANIM_OneTime(Guard_THROW);
+	 		pObject->SetANIM_OneTime(Paladin_THROW);
 	 		auto pItem = ObjectManager::Get().TakeObject(L"Dagger");
 			pItem->SetPosition(pObject->GetPosition() + pObject->GetForward() * 40.0f + pObject->GetUp() * 65.0f + pObject->GetRight() * 20.0f);
 			pItem->SetRotation(pObject->GetRotation());
@@ -206,11 +206,11 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 			pItem->m_pPhysics->UserSocket = socket;
 			pItem->SetDamage(0.25f, PacketManager::Get().UserList[socket]->StatStr);
 			pItem->GetCollider()->AddIgnoreList(pObject->GetCollider());
-	 		SoundManager::Get().PlayQueue("SE_throw01.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
+	 		//SoundManager::Get().PlayQueue("SE_throw01.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
 	 	}	break;
 	 	case EAction::Melee:
 	 	{
-	 		pObject->SetANIM_OneTime(Guard_PUNCH);
+	 		pObject->SetANIM_OneTime(Paladin_ATTACK);
 	 		auto pCollider = new Collider(pObject->GetScale().x * 55.0f);
 	 		auto pMelee = new GameObject(L"Melee", { pCollider, new CEventTimer(0.5f) });
 	 		pMelee->SetParent(pObject);
@@ -225,13 +225,13 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 	 		pCollider->m_eTag = ETag::Dummy;
 	 		pCollider->SetGravityScale(0.0f);
 	 		pCollider->usePhysics(false);
-	 		SoundManager::Get().PlayQueue("SV_Guard_Punch.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
+	 		//SoundManager::Get().PlayQueue("SV_Guard_Punch.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
 	 	}	break;
 		// ================================== ÅÛ »ç¿ë =========================================
 		case EAction::ShockWave:
 		{
 			// Ãæ°ÝÆÄ
-			pObject->SetANIM_OneTime(Guard_PUNCH);
+			pObject->SetANIM_OneTime(Paladin_THROW);
 	 		auto pItem = ObjectManager::Get().TakeObject(L"PShock");
 			pItem->SetPosition(pObject->GetPosition() + pObject->GetUp() * 100.0f);
 			pItem->SetScale(Vector3::One);
@@ -242,7 +242,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 		case EAction::ThrowBomb:
 		{
 			// ÆøÅº
-			pObject->SetANIM_OneTime(Guard_THROW);
+			pObject->SetANIM_OneTime(Paladin_THROW);
 			auto pItem = ObjectManager::Get().TakeObject(L"PBomb");
 			pItem->SetPosition(pObject->GetPosition() + pObject->GetForward() * 40.0f + pObject->GetUp() * 65.0f + pObject->GetRight() * 20.0f);
 			pItem->SetForce((forward + Vector3::Up) * 100.0f);

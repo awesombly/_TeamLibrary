@@ -205,7 +205,7 @@ void LobbyScene::StartToHost()
 {
 	MainClass::StartToHost();
 	if(PlayerController::Get().m_curCharacter == PlayerController::ECharacter::EGuard)
-		m_pBackHero->SetANIM_OneTime(Guard_DASHJUMP);
+	//	m_pBackHero->SetANIM_OneTime(Guard_DASHJUMP);
 	//else
 		//m_pBackHero->SetANIM_OneTime(Zombie_DASHJUMP);
 	m_pStartEffect->EffectPlay();
@@ -218,7 +218,7 @@ void LobbyScene::StartToGuest()
 {
 	MainClass::StartToGuest();
 	if (PlayerController::Get().m_curCharacter == PlayerController::ECharacter::EGuard)
-		m_pBackHero->SetANIM_OneTime(Guard_DASHJUMP);
+	//	m_pBackHero->SetANIM_OneTime(Guard_DASHJUMP);
 	//else
 		//m_pBackHero->SetANIM_OneTime(Zombie_DASHJUMP);
 	m_pStartEffect->EffectPlay();
