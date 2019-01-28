@@ -195,7 +195,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 	 //			}
 	 //		}
 	 //	}	break;
-	 	case EAction::Throw:
+	 	case EAction::LSkill:
 	 	{
 	 		pObject->SetANIM_OneTime(Paladin_THROW);
 	 		auto pItem = ObjectManager::Get().TakeObject(L"Dagger");
@@ -208,7 +208,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 			pItem->GetCollider()->AddIgnoreList(pObject->GetCollider());
 	 		//SoundManager::Get().PlayQueue("SE_throw01.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
 	 	}	break;
-	 	case EAction::Melee:
+	 	case RSkill:
 	 	{
 	 		pObject->SetANIM_OneTime(Paladin_ATTACK);
 	 		auto pCollider = new Collider(pObject->GetScale().x * 55.0f);
@@ -338,14 +338,14 @@ void PlayerController::PlayerInput(const float& spf) noexcept
 	m_curDelayThrow = max(m_curDelayThrow - spf, 0.0f);
 	m_curDelayDash = max(m_curDelayDash - spf, 0.0f);
 	m_curDelayMelee = max(m_curDelayMelee - spf, 0.0f);
-	// 던지기
+	// 왼클
 	if (Input::GetKeyState(EMouseButton::Left) == EKeyState::DOWN &&
 		m_curDelayThrow <= 0.0f &&
 		m_curMP >= 0.2f)
 	{
 		m_curMP -= 0.2f;
 		m_curDelayThrow = m_DelayThrow;
-		m_eAction = EAction::Throw;
+		m_eAction = EAction::LSkill;
 	}
 	// 구르기
 	if (Input::GetKeyState(VK_SHIFT) == EKeyState::DOWN &&
@@ -362,7 +362,7 @@ void PlayerController::PlayerInput(const float& spf) noexcept
 		m_curDelayMelee = m_DelayMelee;
 		m_curDelayThrow = m_DelayThrow;
 		//m_curDelayDash += 0.3f;
-		m_eAction = EAction::Melee;
+		m_eAction = RSkill;
 	}
 
 
@@ -471,7 +471,7 @@ void PlayerController::ResetOption() noexcept
 	m_pCamera->m_lerpRotateSpeed = 6.0f;
 	if (m_pParent == nullptr)
 		return;
-	m_pCamera->SetPosition(Vector3::Up * 100.0f * m_pParent->GetScale().x);
+	m_pCamera->SetPosition(Vector3::Up * 70.0f * m_pParent->GetScale().x);
 	m_pCamera->m_armLength = 12.5f * m_pParent->GetScale().x;
 	Input::isDebug = false;
 }
@@ -526,7 +526,7 @@ void PlayerController::Possess(GameObject* pObject) noexcept
 	static auto pEvent = [](void* pVoid, void* pVoid2) {
 		auto pPlayer = (PlayerController*)pVoid;
 		auto pObj = (GameObject*)pVoid2;
-		if (pObj->m_myName == L"Guard")
+		if (pObj->m_myName == Paladin)
 		{
 			pPlayer->m_curCharacter = PlayerController::ECharacter::EGuard;
 			auto pCollider = pObj->GetCollider();
@@ -657,8 +657,8 @@ void PlayerController::SendAnimTransform(const EAction& eAction, const ECharacte
 		p_AnimTransform.Direction = m_pParent->GetBackward() + m_pParent->GetRight();
 		p_AnimTransform.Direction = Normalize(p_AnimTransform.Direction) * m_moveSpeed;
 	}	break;
-	//case EAction::Melee:
-	//case EAction::Throw:
+	//case RSkill:
+	//case EAction::LSkill:
 	default:
 	{
 		p_AnimTransform.Force = m_pParent->GetForce();

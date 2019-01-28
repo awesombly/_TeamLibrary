@@ -202,7 +202,7 @@ bool GameScene::CheatMessage() noexcept
 		if (str._Equal(L"Respawn"))
 		{
 			auto cha = m_chatMessage.substr(finder + 1);
-			if (cha._Equal(L"Guard"))
+			if (cha._Equal(Paladin))
 			{
 				PlayerController::Get().SendReqRespawn(PlayerController::ECharacter::EGuard);
 				return false;

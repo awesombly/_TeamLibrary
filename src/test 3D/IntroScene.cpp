@@ -172,10 +172,13 @@ void IntroScene::SetObjects() noexcept
 	ObjectManager::Get().SetProtoObject(pObject);
 	// ÅÛ »óÀÚ
 	pCollider = new ColliderOBB(-Vector3::One, Vector3::One);
-	pObject = new GameObject(L"ItemBox", { pCollider, ObjectManager::Get().TakeComponent(L"Fire"), new RCube(L"Cube", L"None.png"), new CTransformer(Vector3::Zero, Quaternion::Left * 2.0f) }, EObjType::Object);
-	pCollider->m_pivot = Vector3::Down * 10.0f;
+	pObject = new GameObject(L"ItemBox", { pCollider, new CTransformer(Vector3::Zero, Quaternion::Left * 2.0f) }, EObjType::Object);
+	auto pChild = new GameObject(L"ItemDummy", { /*ObjectManager::Get().TakeComponent(L"Fire"), */new RCube(L"Cube", L"None.png") }, EObjType::Object);
+	pChild->SetParent(pObject);
+	pChild->SetPosition(Vector3::Up);
+	pCollider->m_pivot = Vector3::Up * 10.0f;
 	pObject->SetScale(Vector3::One * 10.0f);
-	pObject->m_pPhysics->m_repulsion = 1.0f;
+	pObject->m_pPhysics->m_repulsion = 1.3f;
 	pObject->SetHP(10000.0f);
 	pCollider->SetGravityScale(2.0f);
 	//pCollider->usePhysics(false);
@@ -300,7 +303,7 @@ void IntroScene::SetObjects() noexcept
 	pHeroObj->SetPlayerCharacter(Paladin);
 	pHeroObj->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
 	pHeroObj->SetANIM_Loop(Paladin_IDLE);
-	pHeroObj->m_myName = L"Guard";
+	pHeroObj->m_myName = Paladin;
 	pHeroObj->m_objType = EObjType::Character;
 	pCollider = new ColliderOBB({ -13.0f, 0.0f , -13.0f }, { 13.0f, 80.0f , 13.0f });
 	pHeroObj->AddComponent(pCollider);

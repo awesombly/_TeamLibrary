@@ -9,7 +9,7 @@ bool LobbyScene::Init() noexcept
 	// UI
 	LoadUI();
 
-	m_pBackGuard = (AHeroObj*)ObjectManager::Get().TakeObject(L"Guard", false);
+	m_pBackGuard = (AHeroObj*)ObjectManager::Get().TakeObject(Paladin, false);
 	m_pBackGuard->SetPosition(-40.0f, -31.0f, 35.0f);
 	m_pBackGuard->SetRotation(Quaternion::Left * PI * 0.8f);
 	m_pBackGuard->SetScale(Vector3::One * 0.5f);

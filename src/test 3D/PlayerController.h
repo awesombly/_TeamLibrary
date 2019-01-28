@@ -18,11 +18,11 @@ public:
 		Left = 1, Forward = 2, ForwardLeft = 3, 
 		Right = 4, ForwardRight = 6, 
 		Backward = 8, BackwardLeft = 9, BackwardRight = 12,
-		Jump = 100, Dance1, Dance2, Dance3, Throw, Run, Fly, FlyEnd, Dash, Melee,
+		Jump = 100, Dance1, Dance2, Dance3, LSkill, RSkill, Run, Fly, FlyEnd, Dash,
 		ShockWave, ThrowBomb,
 	};
 	enum ECharacter : UCHAR {
-		EDummy = 0, EGuard, EZombie,
+		EDummy = 0, EGuard, EZombie, EArcher, EMage,
 	};
 	enum EItem : UCHAR {
 		Shock = 0, Bomb, 
