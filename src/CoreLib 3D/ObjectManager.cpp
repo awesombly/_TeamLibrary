@@ -357,7 +357,8 @@ map<wstring, vector<Sprite> >& ObjectManager::GetSpriteList() noexcept
 GameObject* ObjectManager::TakeObject(const wstring_view& objName, const bool& pushObject) noexcept
 {
 	GameObject* pObject = nullptr;
-	if (m_DisabledPull[objName.data()].empty())
+	if (m_DisabledPull.find(objName.data()) == m_DisabledPull.end() ||
+		m_DisabledPull[objName.data()].empty())
 	{
 		//대기 풀이 비었다면 복사 생성
 		auto&& iter = m_ProtoPull.find(objName.data());
@@ -373,19 +374,30 @@ GameObject* ObjectManager::TakeObject(const wstring_view& objName, const bool& p
 		// 대기 풀이 있다면 꺼내옴
 		pObject = m_DisabledPull[objName.data()].top();
 		m_DisabledPull[objName.data()].pop();
-		auto pComp = pObject->GetComponentList(EComponent::Collider);
-		if (pComp != nullptr)
+		//auto pComp = pObject->GetComponentList(EComponent::Collider);
+		//if (pComp != nullptr)
+		//{
+		//	for (auto& iter : *pComp)
+		//	{
+		//		PushCollider((Collider*)iter);
+		//	}
+		//}
+		//pComp = pObject->GetComponentList(EComponent::Renderer);
+		//if (pComp != nullptr)
+		//{
+		//	for (auto& iter : *pComp)
+		//	{
+		//		iter->Update();
+		//	}
+		//}
+
+		auto pCompList = pObject->GetComponentList();
+		for (auto& [eType, pList] : pCompList)
 		{
-			for (auto& iter : *pComp)
+			for (auto& iter : pList)
 			{
-				PushCollider((Collider*)iter);
-			}
-		}
-		pComp = pObject->GetComponentList(EComponent::Renderer);
-		if (pComp != nullptr)
-		{
-			for (auto& iter : *pComp)
-			{
+				if(eType == EComponent::Collider)
+					PushCollider((Collider*)iter);
 				iter->Update();
 			}
 		}
@@ -531,7 +543,8 @@ Component* ObjectManager::TakeComponent(const wstring_view& compName) noexcept
 {
 	Component* pComponent = nullptr;
 
-	if (m_DisabledPullComp[compName.data()].empty())
+	if (m_DisabledPullComp.find(compName.data()) == m_DisabledPullComp.end() ||
+		m_DisabledPullComp[compName.data()].empty())
 	{
 		auto&& iter = m_ComponentPull.find(compName.data());
 		if (iter == m_ComponentPull.end())

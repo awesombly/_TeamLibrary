@@ -16,6 +16,9 @@ bool AIZombieCast::Init() noexcept
 	m_isEnable = true;
 	m_attackRange = m_pParent->GetScaleAverage() * 10000.0f;
 	m_moveSpeed = RandomNormal() * 10.0f + 20.0f;
+	m_delay = 0.0f;
+	m_eState = EState::Idle;
+	m_eDirState = EState::Idle;
 	return true;
 }
 
@@ -54,7 +57,6 @@ bool AIZombieCast::Frame(const float& spf, const float& accTime)	noexcept
 	{
 	case EState::Idle:
 	{
-		Init();
 		m_eDirState = EState::Move;
 	}	break;
 	case EState::Move:
@@ -112,6 +114,6 @@ bool AIZombieCast::Release()	noexcept
 Component* AIZombieCast::clone() noexcept
 {
 	auto pAI = new AIZombieCast(*this);
-	pAI->m_eState = EState::Idle;
+	pAI->Init();
 	return (Component*)pAI;
 }

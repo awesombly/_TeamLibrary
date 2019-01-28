@@ -42,10 +42,12 @@ public:
 	JButtonCtrl*	m_pInfoDexBtn		= nullptr;	
 	JButtonCtrl*	m_pInfoIntBtn		= nullptr;	
 	JButtonCtrl*	m_pInfoLukBtn		= nullptr;	
-	// 슬롯, 인벤토리
+	// 슬롯
 	JSlot*			m_pSlot1 = nullptr;
 	JSlot*			m_pSlot2 = nullptr;
 	JSlot*			m_pSlot3 = nullptr;
+	// 인벤토리
+	JInventory*		m_pInvenSlot = nullptr;
 	///
 private:
 	friend class ISingleton<UIManager>;

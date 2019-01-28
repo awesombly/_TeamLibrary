@@ -14,6 +14,7 @@ namespace MyEvent {
 	void ZombieThrow(Collider* pA, Collider* pB);
 	void OneShots(Collider* pA, Collider* pB);
 	void GiantItem(Collider* pA, Collider* pB);
+	void ItemBox(Collider* pA, Collider* pB);
 
 	// ·Îµù¿ë
 	void BulletHit(Collider* pA, Collider* pB);

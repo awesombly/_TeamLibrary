@@ -234,6 +234,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 			pObject->SetANIM_OneTime(Guard_PUNCH);
 	 		auto pItem = ObjectManager::Get().TakeObject(L"PShock");
 			pItem->SetPosition(pObject->GetPosition() + pObject->GetUp() * 100.0f);
+			pItem->SetScale(Vector3::One);
 			pItem->m_pPhysics->UserSocket = socket;
 			pItem->SetDamage(0.5f, PacketManager::Get().UserList[socket]->StatLuk);
 	 		SoundManager::Get().PlayQueue("SE_throw01.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
@@ -244,7 +245,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 			pObject->SetANIM_OneTime(Guard_THROW);
 			auto pItem = ObjectManager::Get().TakeObject(L"PBomb");
 			pItem->SetPosition(pObject->GetPosition() + pObject->GetForward() * 40.0f + pObject->GetUp() * 65.0f + pObject->GetRight() * 20.0f);
-			pItem->SetForce((forward + Vector3::Up) * 150.0f);
+			pItem->SetForce((forward + Vector3::Up) * 100.0f);
 			pItem->m_pPhysics->UserSocket = socket;
 			//pItem->SetDamage(1.0f, PacketManager::Get().UserList[socket]->StatLuk);
 			pItem->GetCollider()->AddIgnoreList(pObject->GetCollider());
@@ -304,7 +305,7 @@ void PlayerController::PlayerInput(const float& spf) noexcept
 			// ³¯±â
 			isFly = true;
 			m_eAction = EAction::Fly;
-			m_pEffectFly = ObjectManager::Get().TakeObject(L"Fly");
+			m_pEffectFly = ObjectManager::Get().TakeObject(L"EFly");
 			m_pEffectFly->SetParent(m_pParent);
 		}
 	}

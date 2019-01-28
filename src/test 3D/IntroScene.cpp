@@ -144,21 +144,22 @@ void IntroScene::SetObjects() noexcept
 
 	// ======================================= Effect =====================================================
 	const auto urlEffect = L"../../data/script";
-	auto pZBoom = m_pParser->CreateFromParticle(L"ZombieBoom.eff", urlEffect);
-	ObjectManager::Get().SetProtoObject(new GameObject(L"ZDead", m_pParser->CreateFromParticle(L"ZombieDead.eff", urlEffect), EObjType::Effect));
-	ObjectManager::Get().SetProtoObject(new GameObject(L"ZDead2", m_pParser->CreateFromParticle(L"ZombieDead2.eff", urlEffect), EObjType::Effect));
-	ObjectManager::Get().SetProtoObject(new GameObject(L"ZDead3", m_pParser->CreateFromParticle(L"ZombieDead3.eff", urlEffect), EObjType::Effect));
-	ObjectManager::Get().SetProtoObject(new GameObject(L"ZBoom", pZBoom, EObjType::Effect));
-	ObjectManager::Get().SetProtoObject(new GameObject(L"ZAttack", m_pParser->CreateFromParticle(L"ZombieAttack.eff", urlEffect), EObjType::Effect));
-	ObjectManager::Get().SetProtoObject(new GameObject(L"ZAttack2", m_pParser->CreateFromParticle(L"ZombieAttack2.eff", urlEffect), EObjType::Effect));
-	ObjectManager::Get().SetProtoObject(new GameObject(L"ZAttack3", m_pParser->CreateFromParticle(L"ZombieAttack3.eff", urlEffect), EObjType::Effect));
-	ObjectManager::Get().SetProtoObject(new GameObject(L"ZStump", m_pParser->CreateFromParticle(L"Stump.eff", urlEffect), EObjType::Effect));
-	ObjectManager::Get().SetProtoObject(new GameObject(L"ZBreath", m_pParser->CreateFromParticle(L"Breath.eff", urlEffect), EObjType::Effect));
-	ObjectManager::Get().SetProtoObject(new GameObject(L"PDead", m_pParser->CreateFromParticle(L"Boom3.eff", urlEffect), EObjType::Effect));
-	ObjectManager::Get().SetProtoObject(new GameObject(L"PAttack", m_pParser->CreateFromParticle(L"Boom2.eff", urlEffect), EObjType::Effect));
-	ObjectManager::Get().SetProtoObject(new GameObject(L"PSlash", m_pParser->CreateFromParticle(L"Slash.eff", urlEffect), EObjType::Effect));
-	ObjectManager::Get().SetProtoObject(new GameObject(L"PLevelUp", m_pParser->CreateFromParticle(L"LevelUp.eff", urlEffect), EObjType::Effect));
-	ObjectManager::Get().SetProtoObject(new GameObject(L"Fly", m_pParser->CreateFromParticle(L"Fire.eff", urlEffect), EObjType::Effect));
+	ObjectManager::Get().SetProtoObject(new GameObject(L"EZDead", m_pParser->CreateFromParticle(L"ZombieDead.eff", urlEffect), EObjType::Effect));
+	ObjectManager::Get().SetProtoObject(new GameObject(L"EZDead2", m_pParser->CreateFromParticle(L"ZombieDead2.eff", urlEffect), EObjType::Effect));
+	ObjectManager::Get().SetProtoObject(new GameObject(L"EZDead3", m_pParser->CreateFromParticle(L"ZombieDead3.eff", urlEffect), EObjType::Effect));
+	ObjectManager::Get().SetProtoObject(new GameObject(L"EZHit", m_pParser->CreateFromParticle(L"ZombieAttack.eff", urlEffect), EObjType::Effect));
+	ObjectManager::Get().SetProtoObject(new GameObject(L"EZStump", m_pParser->CreateFromParticle(L"Stump.eff", urlEffect), EObjType::Effect));
+	//ObjectManager::Get().SetProtoObject(new GameObject(L"ZBoom", pZBoom, EObjType::Effect));
+	//ObjectManager::Get().SetProtoObject(new GameObject(L"ZAttack2", m_pParser->CreateFromParticle(L"ZombieAttack2.eff", urlEffect), EObjType::Effect));
+	//ObjectManager::Get().SetProtoObject(new GameObject(L"ZAttack3", m_pParser->CreateFromParticle(L"ZombieAttack3.eff", urlEffect), EObjType::Effect));
+	//ObjectManager::Get().SetProtoObject(new GameObject(L"ZBreath", m_pParser->CreateFromParticle(L"Breath.eff", urlEffect), EObjType::Effect));
+	//ObjectManager::Get().SetProtoObject(new GameObject(L"PDead", m_pParser->CreateFromParticle(L"Boom3.eff", urlEffect), EObjType::Effect));
+	ObjectManager::Get().SetProtoObject(new GameObject(L"EPAttack", m_pParser->CreateFromParticle(L"Boom2.eff", urlEffect), EObjType::Effect));
+	ObjectManager::Get().SetProtoObject(new GameObject(L"EPSlash", m_pParser->CreateFromParticle(L"Slash.eff", urlEffect), EObjType::Effect));
+	auto pParticle = m_pParser->CreateFromParticle(L"LevelUp.eff", urlEffect);
+	pParticle->isFollow(true);
+	ObjectManager::Get().SetProtoObject(new GameObject(L"EPLevelUp", pParticle, EObjType::Effect));
+	ObjectManager::Get().SetProtoObject(new GameObject(L"EFly", m_pParser->CreateFromParticle(L"Fire.eff", urlEffect), EObjType::Effect));
 	ObjectManager::Get().SetProtoComponent(m_pParser->CreateFromParticle(L"Fire.eff", urlEffect));
 	// ====================================== Item =====================================================
 	// 거인템
@@ -169,10 +170,22 @@ void IntroScene::SetObjects() noexcept
 	pCollider->CollisionEvent = MyEvent::GiantItem;
 	pCollider->m_eTag = ETag::Dummy;
 	ObjectManager::Get().SetProtoObject(pObject);
+	// 템 상자
+	pCollider = new ColliderOBB(-Vector3::One, Vector3::One);
+	pObject = new GameObject(L"ItemBox", { pCollider, ObjectManager::Get().TakeComponent(L"Fire"), new RCube(L"Cube", L"None.png"), new CTransformer(Vector3::Zero, Quaternion::Left * 2.0f) }, EObjType::Object);
+	pCollider->m_pivot = -Vector3::One * 10.0f;
+	pObject->SetScale(Vector3::One * 10.0f);
+	pObject->m_pPhysics->m_repulsion = 1.0f;
+	pObject->SetHP(10000.0f);
+	pCollider->SetGravityScale(2.0f);
+	//pCollider->usePhysics(false);
+	pCollider->CollisionEvent = MyEvent::ItemBox;
+	pCollider->m_eTag = ETag::Enemy;
+	ObjectManager::Get().SetProtoObject(pObject);
 
 	// 충격파
 	pCollider = new Collider(1.0f);
-	pObject = new GameObject(L"PShock", { pCollider, m_pParser->CreateFromParticle(L"Emission.eff", urlEffect), new CTransformer(Vector3::Zero, Quaternion::Zero, Vector3::One * 45.0f) }, EObjType::Effect);
+	pObject = new GameObject(L"PShock", { pCollider, m_pParser->CreateFromParticle(L"Emission.eff", urlEffect), new CTransformer(Vector3::Zero, Quaternion::Zero, Vector3::One * 50.0f) }, EObjType::Effect);
 	pCollider->SetGravityScale(0.0f);
 	pCollider->usePhysics(false);
 	pCollider->CollisionEvent = MyEvent::PlayerAttack;
@@ -188,15 +201,71 @@ void IntroScene::SetObjects() noexcept
 	pCollider->m_eTag = ETag::Dummy;
 	ObjectManager::Get().SetProtoObject(pObject);
 
+	auto pZBoom = m_pParser->CreateFromParticle(L"ZombieBoom.eff", urlEffect);
 	// 폭탄 폭발
 	pCollider = new Collider(60.0f);
-	pObject = new GameObject(L"PBoom", { pCollider, pZBoom->clone() }, EObjType::Effect);
+	pObject = new GameObject(L"PBoom", { pCollider, pZBoom }, EObjType::Effect);
 	pCollider->SetGravityScale(0.0f);
 	pCollider->usePhysics(false);
-	pCollider->CollisionEvent = MyEvent::DaggerHit;
+	pCollider->CollisionEvent = MyEvent::MeleeHit;
 	pCollider->m_eTag = ETag::Dummy;
 	ObjectManager::Get().SetProtoObject(pObject);
 
+	// 플레이어 사망
+	pCollider = new Collider(80.0f);
+	pObject = new GameObject(L"PDead", { pCollider, m_pParser->CreateFromParticle(L"Boom3.eff", urlEffect) }, EObjType::Effect);
+	pCollider->CollisionEvent = MyEvent::ForceWave;
+	pCollider->m_eTag = ETag::Dummy;
+	pCollider->SetGravityScale(0.0f);
+	pCollider->usePhysics(false);
+	ObjectManager::Get().SetProtoObject(pObject);
+	
+	// 좀비 어택
+	pCollider = new Collider(40.0f);
+	pObject = new GameObject(L"ZAttack", { pCollider, m_pParser->CreateFromParticle(L"ZombieAttack.eff", urlEffect) }, EObjType::Effect);
+	pCollider->CollisionEvent = MyEvent::ZombieAttack;
+	pCollider->m_eTag = ETag::Dummy;
+	pCollider->SetGravityScale(0.0f);
+	pCollider->usePhysics(false);
+	ObjectManager::Get().SetProtoObject(pObject);
+
+	// 좀비 어택2
+	pCollider = new Collider(50.0f);
+	pObject = new GameObject(L"ZAttack2", { pCollider, m_pParser->CreateFromParticle(L"ZombieAttack2.eff", urlEffect) }, EObjType::Effect);
+	pCollider->CollisionEvent = MyEvent::ZombieAttack;
+	pCollider->m_eTag = ETag::Dummy;
+	pCollider->SetGravityScale(0.0f);
+	pCollider->usePhysics(false);
+	ObjectManager::Get().SetProtoObject(pObject);
+
+	// 좀비 어택3
+	pCollider = new Collider(55.0f);
+	pObject = new GameObject(L"ZAttack3", { pCollider, m_pParser->CreateFromParticle(L"ZombieAttack3.eff", urlEffect) }, EObjType::Effect);
+	pCollider->CollisionEvent = MyEvent::ZombieAttack;
+	pCollider->m_eTag = ETag::Dummy;
+	pCollider->SetGravityScale(0.0f);
+	pCollider->usePhysics(false);
+	ObjectManager::Get().SetProtoObject(pObject);
+
+	// 브레스
+	pCollider = new ColliderOBB({ -30.0f, -40.0f, -200.0f }, { 30.0f, 40.0f, 0.0f });
+	pObject = new GameObject(L"ZBreath", { pCollider, m_pParser->CreateFromParticle(L"Breath.eff", urlEffect) }, EObjType::Effect);
+	pCollider->CollisionEvent = MyEvent::ZombieAttack;
+	pCollider->m_eTag = ETag::Dummy;
+	pCollider->SetGravityScale(0.0f);
+	pCollider->usePhysics(false);
+	ObjectManager::Get().SetProtoObject(pObject);
+
+	// 좀비 붐
+	pCollider = new Collider(60.0f);
+	pObject = new GameObject(L"ZBoom", { pCollider, pZBoom->clone() }, EObjType::Effect);
+	pCollider->CollisionEvent = MyEvent::ZombieAttack;
+	pCollider->m_eTag = ETag::Dummy;
+	pCollider->SetGravityScale(0.0f);
+	pCollider->usePhysics(false);
+	ObjectManager::Get().SetProtoObject(pObject);
+
+	///
 	// 단검
 	auto pHeroObj = new AHeroObj();
 	pHeroObj->SetPlayerCharacter(ITEM_Dagger);

@@ -19,6 +19,9 @@ bool AIZombieEx::Init() noexcept
 	m_isEnable = true;
 	m_attackRange = m_pParent->GetScaleAverage() * 2600.0f;
 	m_moveSpeed = RandomNormal() * 5.0f + 35.0f;
+	m_delay = 0.0f;
+	m_eState = EState::Idle;
+	m_eDirState = EState::Idle;
 	return true;
 }
 
@@ -57,7 +60,6 @@ bool AIZombieEx::Frame(const float& spf, const float& accTime)	noexcept
 	{
 	case EState::Idle:
 	{
-		Init();
 		m_eDirState = EState::Move;
 	}	break;
 	case EState::Move:
@@ -87,15 +89,10 @@ bool AIZombieEx::Frame(const float& spf, const float& accTime)	noexcept
 		SoundManager::Get().PlayQueue("SE_zombie_hit01.mp3", m_pParent->GetPosition(), PlayerController::Get().SoundRange);
 
 		// АјАн
-		auto pCollider = new Collider(m_pParent->GetScale().x * 50.0f);
 		auto pEffect = ObjectManager::Get().TakeObject(L"ZAttack2");
-		pEffect->AddComponent(pCollider);
 		pEffect->SetPosition(m_pParent->GetPosition() + m_pParent->GetForward() * 60.0f + m_pParent->GetUp() * 45.0f);
 		pEffect->m_pPhysics->m_damage = 0.6f;
-		pCollider->CollisionEvent = MyEvent::ZombieAttack;
-		pCollider->m_eTag = ETag::Dummy;
-		pCollider->SetGravityScale(0.0f);
-		pCollider->usePhysics(false);
+		pEffect->SetScale(m_pParent->GetScale());
 		///
 		m_delay = 3.0f;
 		m_eDirState = EState::Move;
@@ -116,9 +113,24 @@ bool AIZombieEx::Release()	noexcept
 	return true;
 }
 
+void AIZombieEx::DeadEvent() noexcept
+{
+	if (RandomNormal() >= 0.5f)
+	{
+		auto pObject = ObjectManager::Get().TakeObject(L"ItemBox");
+		pObject->SetPosition(m_pParent->GetCollider()->GetCenter());
+		pObject->SetHP(10000.0f);
+	}
+	PlayerController::Get().OperEXP(0.2f);
+	auto pEffect = ObjectManager::Get().TakeObject(L"EZDead2");
+	pEffect->SetPosition(m_pParent->GetCollider()->GetCenter());
+}
+
+
+
 Component* AIZombieEx::clone() noexcept
 {
 	auto pAI = new AIZombieEx(*this);
-	pAI->m_eState = EState::Idle;
+	pAI->Init();
 	return (Component*)pAI;
 }

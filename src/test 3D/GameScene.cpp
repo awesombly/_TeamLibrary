@@ -12,13 +12,13 @@ bool GameScene::Init() noexcept
 	FirstInit();
 
 	ObjectManager::KeyCount = 1000;
-	auto pHero = (AHeroObj*)ObjectManager::Get().TakeObject(L"Guard");
+	//auto pHero = (AHeroObj*)ObjectManager::Get().TakeObject(L"Guard");
 	//pHero->GetLeftHandPos
-	m_pPlayer->Possess(pHero);
+	//m_pPlayer->Possess(pHero);
 
 	auto pCollider = new Collider(1.0f);
 	pCollider->m_eTag = ETag::Ally;
-	PlayerController::Get().m_pHome = new GameObject(L"Shelter", { pCollider , ObjectManager::Get().TakeComponent(L"RowSphere") }, EObjType::Dummy);
+	PlayerController::Get().m_pHome = new GameObject(L"Shelter", { pCollider , ObjectManager::Get().TakeComponent(L"RowSphere") });
 	PlayerController::Get().m_pHome->SetPosition(Vector3::Up * 20.0f);
 	PlayerController::Get().m_pHome->SetScale(Vector3::One * 25.0f);
 	PlayerController::Get().m_pHome->SetGravityScale(0.0f);
@@ -712,6 +712,7 @@ void GameScene::LoadUI() noexcept
 	};
 	pNameChange->EventClick.second = this;
 
+	UIManager::Get().m_pInvenSlot = (JInventory*)pUIRoot->find_child(L"Inventory_Slot");
 	//
 	ObjectManager::Get().PushObject(pUIRoot);
 	UI::InGameEvent(pUIRoot);

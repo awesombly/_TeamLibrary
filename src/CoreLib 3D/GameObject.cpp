@@ -305,6 +305,14 @@ map<EComponent, forward_list<Component*> >& GameObject::GetComponentList() noexc
 	return m_components;
 }
 
+Component* GameObject::GetComponent(const EComponent& eCompType) noexcept
+{
+	auto&& iter = m_components.find(eCompType);
+	if (iter == m_components.end() || (*iter).second.empty())
+		return nullptr;
+	return iter->second.front();
+}
+
 Collider* GameObject::GetCollider() noexcept
 {
 	auto&& iter = m_components.find(EComponent::Collider);

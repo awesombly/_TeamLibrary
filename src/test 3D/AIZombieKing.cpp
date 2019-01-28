@@ -18,9 +18,20 @@ AIZombieKing::AIZombieKing()
 
 bool AIZombieKing::Init() noexcept
 {
+	AIZombie::Init();
+	if (m_Breath != nullptr)
+	{
+		ObjectManager::Get().DisableObject(m_Breath);
+		m_Breath = nullptr;
+	}
 	m_isEnable = true;
 	m_attackRange = m_pParent->GetScaleAverage() * 3000.0f;
 	m_moveSpeed = RandomNormal() * 5.0f + 15.0f;
+	m_delayBreath = 0.0f;
+	m_delayStump = 0.0f;
+	m_delay = 0.0f;
+	m_eState = EState::Idle;
+	m_eDirState = EState::Idle;
 	return true;
 }
 
@@ -65,7 +76,7 @@ bool AIZombieKing::Frame(const float& spf, const float& accTime)	noexcept
 			 // 브레스
 		 	if (m_delayBreath >= 3.8f)
 		 	{
-		 		ObjectManager::Get().RemoveObject(m_Breath);
+		 		ObjectManager::Get().DisableObject(m_Breath);
 		 		m_Breath = nullptr;
 		 		m_delayBreath = 0.0f;
 		 		m_delay = 4.0f;
@@ -74,7 +85,7 @@ bool AIZombieKing::Frame(const float& spf, const float& accTime)	noexcept
 		 		return true;
 		 	}
 			m_eState = EState::Action1;
-		 	m_Breath->SetPosition(m_pParent->GetPosition() + m_pParent->GetForward() * 30.0f + m_pParent->GetUp() * 50.0f);
+		 	m_Breath->SetPosition(m_pParent->GetPosition() + m_pParent->GetForward() * 30.0f + m_pParent->GetUp() * 55.0f);
 		 	//if (sinf(m_delayBreath) >= 0.0f)
 		 	//	m_Breath->Rotate(Quaternion::Left * spf);
 		 	//else
@@ -85,7 +96,7 @@ bool AIZombieKing::Frame(const float& spf, const float& accTime)	noexcept
 			 // 점핑
 			 m_delay = 3.5f;
 			 m_pParent->SetForce(m_Target);
-			 auto pEffect = ObjectManager::Get().TakeObject(L"ZStump");
+			 auto pEffect = ObjectManager::Get().TakeObject(L"EZStump");
 			 pEffect->SetPosition(m_pParent->GetPosition() + Vector3::Up * 5.0f);
 			 m_eDirState = EState::Move;
 		 }	break;
@@ -97,7 +108,6 @@ bool AIZombieKing::Frame(const float& spf, const float& accTime)	noexcept
 	{
 	case EState::Idle:
 	{
-		Init();
 		m_eDirState = EState::Move;
 	}	break;
 	case EState::Move:
@@ -148,15 +158,10 @@ bool AIZombieKing::Frame(const float& spf, const float& accTime)	noexcept
 		SoundManager::Get().PlayQueue("SE_zombie_hit02.mp3", m_pParent->GetPosition(), PlayerController::Get().SoundRange);
 
 		// 공격
-		auto pCollider = new Collider(m_pParent->GetScale().x * 55.0f);
 		auto pEffect = ObjectManager::Get().TakeObject(L"ZAttack3");
-		pEffect->AddComponent(pCollider);
 		pEffect->SetPosition(m_pParent->GetPosition() + m_pParent->GetForward() * 60.0f + m_pParent->GetUp() * 35.0f);
 		pEffect->m_pPhysics->m_damage = 0.9f;
-		pCollider->CollisionEvent = MyEvent::ZombieAttack;
-		pCollider->m_eTag = ETag::Dummy;
-		pCollider->SetGravityScale(0.0f);
-		pCollider->usePhysics(false);
+		pEffect->SetScale(m_pParent->GetScale());
 		///
 		m_delay = 4.0f;
 		m_eDirState = EState::Move;
@@ -166,15 +171,10 @@ bool AIZombieKing::Frame(const float& spf, const float& accTime)	noexcept
 		//SoundManager::Get().PlayQueue("SE_zombie_hit02.mp3", m_pParent->GetPosition(), PlayerController::Get().SoundRange);
 
 		// 브레스
-		auto pCollider = new ColliderOBB({-30.0f, -40.0f, -200.0f}, { 30.0f, 40.0f, 0.0f });
 		m_Breath = ObjectManager::Get().TakeObject(L"ZBreath");
-		m_Breath->AddComponent(pCollider);
-		m_Breath->SetRotation(m_pParent->GetRotation());
+		m_Breath->SetParent(m_pParent);
+		//m_Breath->SetRotation(m_pParent->GetRotation());
 		m_Breath->m_pPhysics->m_damage = 1.0f;
-		pCollider->CollisionEvent = MyEvent::ZombieAttack;
-		pCollider->m_eTag = ETag::Dummy;
-		pCollider->SetGravityScale(0.0f);
-		pCollider->usePhysics(false);
 		///
 		m_delayBreath = 0.0f;
 		m_eDirState = EState::Action2;
@@ -195,9 +195,22 @@ bool AIZombieKing::Release()	noexcept
 	return true;
 }
 
+void AIZombieKing::DeadEvent() noexcept
+{
+	//if (RandomNormal() >= 0.2f)
+	{
+		auto pObject = ObjectManager::Get().TakeObject(L"ItemBox");
+		pObject->SetPosition(m_pParent->GetCollider()->GetCenter());
+		pObject->SetHP(10000.0f);
+	}
+	PlayerController::Get().OperEXP(1.0f);
+	auto pEffect = ObjectManager::Get().TakeObject(L"EZDead3");
+	pEffect->SetPosition(m_pParent->GetCollider()->GetCenter());
+}
+
 Component* AIZombieKing::clone() noexcept
 {
 	auto pAI = new AIZombieKing(*this);
-	pAI->m_eState = EState::Idle;
+	pAI->Init();
 	return (Component*)pAI;
 }

@@ -39,17 +39,18 @@ protected:
 
 	float m__;	// 안씀
 public:
-	virtual void UpdateMatrix()												noexcept;
 	UINT	 m_keyValue;							// 유일한 키값
 	wstring	 m_myName;								// 객체 이름
 	EObjType m_objType = EObjType::Dummy;			// 객체 타입
 public:
+	virtual void UpdateMatrix()												noexcept;
 	// 컴포넌트 추가, 삭제, 검색
 	void AddComponent(Component* pComponent)								noexcept;
 	void AddComponent(const initializer_list<Component*>& components)		noexcept;
 	void RemoveComponent(Component* pComponent)								noexcept;
 	forward_list<Component*>* GetComponentList(const EComponent& eCompType) noexcept;
 	map<EComponent, forward_list<Component*> >& GetComponentList()			noexcept;
+	Component* GetComponent(const EComponent& eCompType)					noexcept;
 	Collider* GetCollider()													noexcept;
 	// 부모 설정
 	virtual void SetParent(GameObject* pParent)						  	    noexcept;

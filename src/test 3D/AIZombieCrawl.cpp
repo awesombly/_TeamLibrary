@@ -19,6 +19,9 @@ bool AIZombieCrawl::Init() noexcept
 	m_isEnable = true;
 	m_attackRange = m_pParent->GetScaleAverage() * 2000.0f;
 	m_moveSpeed = RandomNormal() * 5.0f + 10.0f;
+	m_delay = 0.0f;
+	m_eState = EState::Idle;
+	m_eDirState = EState::Idle;
 	return true;
 }
 
@@ -57,7 +60,6 @@ bool AIZombieCrawl::Frame(const float& spf, const float& accTime)	noexcept
 	{
 	case EState::Idle:
 	{
-		Init();
 		m_eDirState = EState::Move;
 	}	break;
 	case EState::Move:
@@ -84,15 +86,9 @@ bool AIZombieCrawl::Frame(const float& spf, const float& accTime)	noexcept
 	{
 		SoundManager::Get().PlayQueue("SE_zombie_hit01.mp3", m_pParent->GetPosition(), PlayerController::Get().SoundRange);
 		// АјАн
-		auto pCollider = new Collider(60.0f);
 		auto pEffect = ObjectManager::Get().TakeObject(L"ZBoom");
-		pEffect->AddComponent(pCollider);
 		pEffect->SetPosition(m_pParent->GetPosition());
 		pEffect->m_pPhysics->m_damage = 0.8f;
-		pCollider->CollisionEvent = MyEvent::ZombieAttack;
-		pCollider->m_eTag = ETag::Dummy;
-		pCollider->SetGravityScale(0.0f);
-		pCollider->usePhysics(false);
 
 		ObjectManager::Get().DisableObject(m_pParent);
 		return false;
@@ -117,6 +113,6 @@ bool AIZombieCrawl::Release()	noexcept
 Component* AIZombieCrawl::clone() noexcept
 {
 	auto pAI = new AIZombieCrawl(*this);
-	pAI->m_eState = EState::Idle;
+	pAI->Init();
 	return (Component*)pAI;
 }

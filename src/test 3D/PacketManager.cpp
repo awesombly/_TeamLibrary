@@ -7,6 +7,7 @@
 #include "UIManager.h"
 
 #include "../network/PPRecvPacketPoolServer.h"					//클라이언트 클래스 정의.
+#include "AIZombie.h"
 
 
 void PacketManager::SendPacket(const char* data, const USHORT& size, const USHORT& packeyType) noexcept
@@ -254,9 +255,9 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 			auto iter = ObjectManager::KeyObjects.find(userIter->second->KeyValue);
 			if (iter != ObjectManager::KeyObjects.end())
 			{
-				auto pEffect = ObjectManager::Get().TakeObject(L"PLevelUp");
-				//pEffect->SetPosition(iter->second->GetCollider()->GetCenter());
-				pEffect->SetParent(iter->second);
+				auto pEffect = ObjectManager::Get().TakeObject(L"EPLevelUp");
+				pEffect->SetPosition(iter->second->GetPosition());
+				//pEffect->SetParent(iter->second);
 				iter->second->m_pPhysics->m_maxHP = 1.0f + pMyInfo->StatLuk * 0.2f;
 				iter->second->HealHP(iter->second->m_pPhysics->m_maxHP * 0.5f);
 			}
@@ -323,18 +324,12 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 		{
 		case EObjType::Character:
 		{
-			auto pCollider = new Collider(80.0f);
 			auto pEffect = ObjectManager::Get().TakeObject(L"PDead");
-			pEffect->AddComponent(pCollider);
-			pCollider->CollisionEvent = MyEvent::ForceWave;
-			pCollider->m_eTag = ETag::Dummy;
-			pCollider->SetGravityScale(0.0f);
-			pCollider->usePhysics(false);
 			pEffect->SetPosition(pObject->GetCollider()->GetCenter());
-			PlayerController::Get().OperEXP(0.03f);
 			// 죽인게 자신일시
 			if (pMyInfo->UserSocket == p_PlayerDead.KillUser)
 			{
+				PlayerController::Get().OperEXP(0.03f);
 				++pMyInfo->KillCount;
 				pMyInfo->Score += 500;
 				PacketManager::Get().SendPacket((char*)pMyInfo, (USHORT)(PS_UserInfo + pMyInfo->DataSize), PACKET_SendUserInfo);
@@ -342,53 +337,41 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 		}	break;
 		case EObjType::Enemy:
 		{
-			switch (pObject->m_pPhysics->UserSocket)
+			((AIZombie*)pObject->GetComponent(EComponent::Etc))->DeadEvent();
+
+			// 자기가 죽였을시
+			if (pMyInfo->UserSocket == p_PlayerDead.KillUser)
 			{
-			case EZombie:
-			case ECaster:
-			case ECrawler:
-			{
-				auto pEffect = ObjectManager::Get().TakeObject(L"ZDead");
-				pEffect->SetPosition(pObject->GetCollider()->GetCenter());
-				PlayerController::Get().OperEXP(0.15f);
-				// 죽인게 자신일시
-				if (pMyInfo->UserSocket == p_PlayerDead.KillUser)
+				switch (pObject->m_pPhysics->UserSocket)
 				{
+				case EZombie:
+				case ECaster:
+				case ECrawler:
+				{
+					PlayerController::Get().OperEXP(0.12f);
 					++pMyInfo->KillCount;
 					pMyInfo->Score += 300;
 					PacketManager::Get().SendPacket((char*)pMyInfo, (USHORT)(PS_UserInfo + pMyInfo->DataSize), PACKET_SendUserInfo);
-				}
-			}	break;
-			case EMutant:
-			{
-				auto pEffect = ObjectManager::Get().TakeObject(L"ZDead2");
-				pEffect->SetPosition(pObject->GetCollider()->GetCenter());
-				PlayerController::Get().OperEXP(1.0f);
-				// 죽인게 자신일시
-				if (pMyInfo->UserSocket == p_PlayerDead.KillUser)
+				}	break;
+				case EMutant:
 				{
+					PlayerController::Get().OperEXP(0.8f);
 					++pMyInfo->KillCount;
 					pMyInfo->Score += 1000;
 					PacketManager::Get().SendPacket((char*)pMyInfo, (USHORT)(PS_UserInfo + pMyInfo->DataSize), PACKET_SendUserInfo);
-				}
-			}	break;
-			case ETank:
-			{
-				auto pEffect = ObjectManager::Get().TakeObject(L"ZDead3");
-				pEffect->SetPosition(pObject->GetCollider()->GetCenter());
-				PlayerController::Get().OperEXP(3.0f);
-				// 죽인게 자신일시
-				if (pMyInfo->UserSocket == p_PlayerDead.KillUser)
+				}	break;
+				case ETank:
 				{
+					PlayerController::Get().OperEXP(2.0f);
 					++pMyInfo->KillCount;
 					pMyInfo->Score += 5000;
 					PacketManager::Get().SendPacket((char*)pMyInfo, (USHORT)(PS_UserInfo + pMyInfo->DataSize), PACKET_SendUserInfo);
+				}	break;
+				case EDummy:
+					break;
+				default:
+					break;
 				}
-			}	break;
-			case EDummy:
-				break;
-			default:
-				break;
 			}
 		}	break;
 		}
@@ -407,7 +390,7 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 			if (iter != UserList.end())
 			{
 				dead = iter->second->UserID;
-				
+
 				pChatList->push_string(L"[System] '" + dead + L"' 님이 사망 했습니다.");
 				*pChatList->m_fValue = 0.0f;
 			}
