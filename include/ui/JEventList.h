@@ -1,6 +1,7 @@
 #pragma once
 #include "JPanel.h"
 #include "Timer.h"
+#include "JItem.h"
 /*
 	Event 추가시 ==
 	:: Lib Panel(enum EVENT_LIST)
@@ -174,16 +175,16 @@ namespace UI
 	static void E_SETTING_SHOW(void* vp)
 	{
 		JPanel* pPanel = (JPanel*)vp;
-		JPanel* pRoot = pPanel->find_root();
-		JPanel* pMouse = pRoot->find_child(L"mouse_cursor");
 		if (Input::GetKeyState(pPanel->m_pKeyDown) == EKeyState::DOWN)
 		{
+			JPanel* pRoot = pPanel->find_root();
+			JPanel* pMouse = pRoot->find_child(L"mouse_cursor");
 			pPanel->m_bRender = !pPanel->m_bRender;
+			if (pPanel->m_bRender)
+				pMouse->m_bRender = true;
+			else
+				pMouse->m_bRender = false;
 		}
-		if (pPanel->m_bRender)
-			pMouse->m_bRender = true;
-		else
-			pMouse->m_bRender = false;
 	}
 	// ui effect
 	static void E_FADEOUT(void* vp)
@@ -193,9 +194,7 @@ namespace UI
 		if (pPanel->m_bRender)
 		{
 			if (pPanel->m_pShape->m_cbData.vColor.w >= 0.0f)
-				pPanel->m_pShape->m_cbData.vColor.w -= Timer::SPF / 1.0f; // 2초에 없어짐
-			//else
-			//	pPanel->m_bRender = false;
+				pPanel->m_pShape->m_cbData.vColor.w -= Timer::SPF / pPanel->m_fEventTime; // 2초에 없어짐
 		}
 		if (pPanel->m_bEffect)
 		{
@@ -600,5 +599,77 @@ namespace UI
 			if (ptxt3->m_pShape->m_cbData.vColor.w <= 1.0f)
 				ptxt3->m_pShape->m_cbData.vColor.w += Timer::SPF * 2.0f;
 		}
+	}
+	static void E_KEY_SHOW(void* vp)
+	{
+		JPanel* pPanel = (JPanel*)vp;
+
+		if (Input::GetKeyState(pPanel->m_pKeyDown) == EKeyState::DOWN)
+		{
+			pPanel->m_bRender = true;
+		}
+
+	}
+	static void E_KEY_NOTSHOW(void* vp)
+	{
+		JPanel* pPanel = (JPanel*)vp;
+
+		if (Input::GetKeyState(pPanel->m_pKeyDown) == EKeyState::DOWN)
+		{
+			pPanel->m_bRender = false;
+		}
+	}
+	static void E_KEY_REVERSESHOW(void* vp)
+	{
+		JPanel* pPanel = (JPanel*)vp;
+		if (Input::GetKeyState(pPanel->m_pKeyDown) == EKeyState::DOWN)
+		{
+			JPanel* pRoot = pPanel->find_root();
+			JPanel* pMouse = pRoot->find_child(L"mouse_cursor");
+			pPanel->m_bRender = !pPanel->m_bRender;
+			if (pPanel->m_bRender)
+			{
+				pMouse->m_bRender = true;
+				Input::isDebug = false;
+			}
+			else
+			{
+				pMouse->m_bRender = false;
+				Input::isDebug = true;
+			}
+		}
+	}
+	static void E_INVENTORY_SORT(void* vp)
+	{
+		JInventory* pInven = (JInventory*)vp;
+		
+		pInven->SortItem();
+	}
+	static void E_INVENTORY_ADD(void* vp)
+	{
+		JInventory* pInven = (JInventory*)vp;
+
+		auto& pItemList = JItem::Get()->m_pItemList;
+		int iRand = JDxHelper::iRand(0, (int)(pItemList.size() - 1));
+
+		wstring strItem;
+		int iCursor = 0;
+		for (auto& pItem : pItemList)
+		{
+			if (iCursor == iRand)
+			{
+				strItem = pItem.first;
+				break;
+			}
+			iCursor += 1;
+		}
+
+		pInven->AddItem(strItem);
+	}
+	static void E_INVENTORY_DEL(void* vp)
+	{
+		JInventory* pInven = (JInventory*)vp;
+
+		pInven->DelItem();
 	}
 }

@@ -2,9 +2,10 @@
 #include "ObjectManager.h"
 //#include "GameObject.h"
 #include "AHeroObj.h"
-#include "CEventTimer.h"
 #include "EventManager.h"
 #include "PlayerController.h"
+#include "SoundManager.h"
+
 
 AIZombie::AIZombie()
 {
@@ -18,7 +19,10 @@ bool AIZombie::Init() noexcept
 {
 	m_isEnable = true;
 	m_attackRange = m_pParent->GetScaleAverage() * 1500.0f;
-	m_moveSpeed   = RandomNormal() * 35.0f + 15.0f;
+	m_moveSpeed   = RandomNormal() * 25.0f + 25.0f;
+	m_delay = 0.0f;
+	m_eState = EState::Idle;
+	m_eDirState = EState::Idle;
 	return true;
 }
 
@@ -66,14 +70,14 @@ bool AIZombie::Frame(const float& spf, const float& accTime)	noexcept
 		 {
 			 if (VectorLengthSq(iter->GetPosition() - m_pParent->GetPosition()) <= m_attackRange)
 			 {
-				 m_pParent->SetRotationY(m_pParent->GetFocusY(m_Target = iter->GetPosition()) + PI * 0.25f);
+				 m_pParent->SetRotationY(m_pParent->GetFocusY(m_Target = iter->GetPosition()) - PI * 0.5f);
 				 m_eDirState = EState::Attack;
 				 return true;
 			 }
 		 }
 		 if (VectorLengthSq(m_Target - m_pParent->GetPosition()) <= m_attackRange + PlayerController::Get().HomeRadius)
 		 {
-			 m_pParent->SetFocus(m_Target = PlayerController::Get().m_pHome->GetPosition());
+			 m_pParent->SetFocus(m_Target);
 			 m_eDirState = EState::Attack;
 			 return true;
 		 }
@@ -86,23 +90,15 @@ bool AIZombie::Frame(const float& spf, const float& accTime)	noexcept
 	 }	break;
 	 case EState::Attack:
 	 {
-		 //SoundManager::Get().PlayQueue("SV_Guard_Punch.mp3", pObject->GetWorldPosition(), 1000.0f);
+		 SoundManager::Get().PlayQueue("SE_zombie_hit02.mp3", m_pParent->GetPosition(), PlayerController::Get().SoundRange);
 
-		 auto pCollider = new Collider(m_pParent->GetScale().x * 40.0f);
-		 auto pMelee = new GameObject(L"Melee", { pCollider, new CEventTimer(0.3f) });
-		 pMelee->SetParent(m_pParent);
-		 pMelee->SetPosition(m_pParent->GetForward() * 50.0f + m_pParent->GetUp() * 45.0f);
-		 pMelee->SetRotation(m_pParent->GetRotation());
-		 pMelee->UpdateMatrix();
-		 pMelee->m_pPhysics->UserSocket = (UINT)-1;
-		 pMelee->SetHP(100.0f);
-		 pMelee->m_pPhysics->m_damage = 0.15f;
-		 pCollider->CollisionEvent = MyEvent::ZombieAttack;
-		 pCollider->m_eTag = ETag::Dummy;
-		 pCollider->SetGravityScale(0.0f);
-		 pCollider->usePhysics(false);
+		 // АјАн
+		 auto pEffect = ObjectManager::Get().TakeObject(L"ZAttack");
+		 pEffect->SetPosition(m_pParent->GetPosition() + m_pParent->GetForward() * 50.0f + m_pParent->GetUp() * 45.0f);
+		 pEffect->m_pPhysics->m_damage = 0.2f;
+		 pEffect->SetScale(m_pParent->GetScale());
 		 ///
-		 m_delay = 3.0f;
+		 m_delay = 3.5f;
 		 m_eDirState = EState::Move;
 	 }	break;
 	}
@@ -121,9 +117,30 @@ bool AIZombie::Release()	noexcept
 	return true;
 }
 
+void AIZombie::Update()	noexcept
+{
+	Init();
+}
+
+
+void AIZombie::DeadEvent() noexcept
+{
+	if (RandomNormal() >= 0.9f)
+	{
+		auto pObject = ObjectManager::Get().TakeObject(L"ItemBox");
+		pObject->SetPosition(m_pParent->GetCollider()->GetCenter());
+		pObject->SetHP(10000.0f);
+	}
+	PlayerController::Get().OperEXP(0.03f);
+	auto pEffect = ObjectManager::Get().TakeObject(L"EZDead");
+	pEffect->SetPosition(m_pParent->GetCollider()->GetCenter());
+}
+
+
+
 Component* AIZombie::clone() noexcept
 {
 	auto pAI = new AIZombie(*this);
-	pAI->m_eState = EState::Idle;
+	pAI->Init();
 	return (Component*)pAI;
 }

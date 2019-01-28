@@ -119,6 +119,7 @@ namespace UI
 
 		// effect
 		JPanel* pEff1 = (JPanel*)pRoot->find_child(L"fadeout");
+		pEff1->SetEventTime(1.0f);
 		pEff1->PreEvent.first = E_FADEOUT;
 		pEff1->PreEvent.second = pEff1;
 
@@ -154,9 +155,34 @@ namespace UI
 		pChatEnter->PreEvent.first = E_CHATENTER;
 		pChatEnter->PreEvent.second = pChatEnter;
 
-		JPanel* pEndingEffect = (JPanel*)pRoot->find_child(L"Effect_Ending_Panel");
-		pEndingEffect->PreEvent.first = E_ENDING_EFFECT;
-		pEndingEffect->PreEvent.second = pEndingEffect;
+		//JPanel* pEndingEffect = (JPanel*)pRoot->find_child(L"Effect_Ending_Panel");
+		//pEndingEffect->PreEvent.first = E_ENDING_EFFECT;
+		//pEndingEffect->PreEvent.second = pEndingEffect;
+
+		JPanel* pInventoryPanel = (JPanel*)pRoot->find_child(L"Inventory_Panel");
+		pInventoryPanel->PreEvent.first = E_KEY_REVERSESHOW;
+		pInventoryPanel->PreEvent.second = pInventoryPanel;
+
+		JPanel* pInventoryExit = (JPanel*)pInventoryPanel->find_child(L"Inventory_Exit");
+		pInventoryExit->EventClick.first = E_NOTSHOW;
+		pInventoryExit->EventClick.second = pInventoryPanel;
+
+		JPanel* pInventorySort = (JPanel*)pInventoryPanel->find_child(L"Inventory_Sort");
+		JPanel* pInventorySlot = (JPanel*)pInventoryPanel->find_child(L"Inventory_Slot");
+		pInventorySort->EventClick.first = E_INVENTORY_SORT;
+		pInventorySort->EventClick.second = pInventorySlot;
+
+		JPanel* pInventoryAdd = (JPanel*)pInventoryPanel->find_child(L"Inventory_ItemAdd");
+		pInventoryAdd->EventClick.first = E_INVENTORY_ADD;
+		pInventoryAdd->EventClick.second = pInventorySlot;
+
+		JPanel* pInventoryDel = (JPanel*)pInventoryPanel->find_child(L"Inventory_Del");
+		pInventoryDel->EventClick.first = E_INVENTORY_DEL;
+		pInventoryDel->EventClick.second = pInventorySlot;
+
+		JPanel* pInfoPanel = (JPanel*)pRoot->find_child(L"Info_Panel");
+		pInfoPanel->PreEvent.first = E_KEY_REVERSESHOW;
+		pInfoPanel->PreEvent.second = pInfoPanel;
 	}
 }/*
 L"^frame_000_delay-0.03s.jpg

@@ -2,13 +2,13 @@
 #include "ObjectManager.h"
 //#include "GameObject.h"
 #include "AHeroObj.h"
-#include "CEventTimer.h"
 #include "EventManager.h"
 #include "PlayerController.h"
+#include "SoundManager.h"
 
 AIZombieEx::AIZombieEx()
 {
-	m_myName = L"AIEx";
+	m_myName = L"AI";
 	m_comptType = EComponent::Etc;
 	//Init();
 }
@@ -18,7 +18,10 @@ bool AIZombieEx::Init() noexcept
 {
 	m_isEnable = true;
 	m_attackRange = m_pParent->GetScaleAverage() * 2600.0f;
-	m_moveSpeed = RandomNormal() * 40.0f + 5.0f;
+	m_moveSpeed = RandomNormal() * 5.0f + 35.0f;
+	m_delay = 0.0f;
+	m_eState = EState::Idle;
+	m_eDirState = EState::Idle;
 	return true;
 }
 
@@ -46,7 +49,7 @@ bool AIZombieEx::Frame(const float& spf, const float& accTime)	noexcept
 		}	break;
 		case EState::Attack:
 		{
-			m_delay = 1.0f;
+			m_delay = 1.3f;
 			((AHeroObj*)m_pParent)->SetANIM_OneTime(ZombieEX_ATTACK);
 		}	break;
 		}
@@ -57,7 +60,6 @@ bool AIZombieEx::Frame(const float& spf, const float& accTime)	noexcept
 	{
 	case EState::Idle:
 	{
-		Init();
 		m_eDirState = EState::Move;
 	}	break;
 	case EState::Move:
@@ -66,14 +68,14 @@ bool AIZombieEx::Frame(const float& spf, const float& accTime)	noexcept
 		{
 			if (VectorLengthSq(iter->GetPosition() - m_pParent->GetPosition()) <= m_attackRange)
 			{
-				m_pParent->SetRotationY(m_pParent->GetFocusY(m_Target = iter->GetPosition()) + PI * 0.25f);
+				m_pParent->SetRotationY(m_pParent->GetFocusY(m_Target = iter->GetPosition()) - PI * 0.5f);
 				m_eDirState = EState::Attack;
 				return true;
 			}
 		}
 		if (VectorLengthSq(m_Target - m_pParent->GetPosition()) <= m_attackRange + PlayerController::Get().HomeRadius)
 		{
-			m_pParent->SetFocus(m_Target = PlayerController::Get().m_pHome->GetPosition());
+			m_pParent->SetFocus(m_Target);
 			m_eDirState = EState::Attack;
 			return true;
 		}
@@ -84,21 +86,13 @@ bool AIZombieEx::Frame(const float& spf, const float& accTime)	noexcept
 	}	break;
 	case EState::Attack:
 	{
-		//SoundManager::Get().PlayQueue("SV_Guard_Punch.mp3", pObject->GetWorldPosition(), 1000.0f);
+		SoundManager::Get().PlayQueue("SE_zombie_hit01.mp3", m_pParent->GetPosition(), PlayerController::Get().SoundRange);
 
-		auto pCollider = new Collider(m_pParent->GetScale().x * 50.0f);
-		auto pMelee = new GameObject(L"Melee", { pCollider, new CEventTimer(0.3f) });
-		pMelee->SetParent(m_pParent);
-		pMelee->SetPosition(m_pParent->GetForward() * 60.0f + m_pParent->GetUp() * 45.0f);
-		pMelee->SetRotation(m_pParent->GetRotation());
-		pMelee->UpdateMatrix();
-		pMelee->m_pPhysics->UserSocket = (UINT)-1;
-		pMelee->SetHP(100.0f);
-		pMelee->m_pPhysics->m_damage = 0.25f;
-		pCollider->CollisionEvent = MyEvent::ZombieAttack;
-		pCollider->m_eTag = ETag::Dummy;
-		pCollider->SetGravityScale(0.0f);
-		pCollider->usePhysics(false);
+		// АјАн
+		auto pEffect = ObjectManager::Get().TakeObject(L"ZAttack2");
+		pEffect->SetPosition(m_pParent->GetPosition() + m_pParent->GetForward() * 60.0f + m_pParent->GetUp() * 45.0f);
+		pEffect->m_pPhysics->m_damage = 0.6f;
+		pEffect->SetScale(m_pParent->GetScale());
 		///
 		m_delay = 3.0f;
 		m_eDirState = EState::Move;
@@ -119,9 +113,24 @@ bool AIZombieEx::Release()	noexcept
 	return true;
 }
 
+void AIZombieEx::DeadEvent() noexcept
+{
+	if (RandomNormal() >= 0.5f)
+	{
+		auto pObject = ObjectManager::Get().TakeObject(L"ItemBox");
+		pObject->SetPosition(m_pParent->GetCollider()->GetCenter());
+		pObject->SetHP(10000.0f);
+	}
+	PlayerController::Get().OperEXP(0.2f);
+	auto pEffect = ObjectManager::Get().TakeObject(L"EZDead2");
+	pEffect->SetPosition(m_pParent->GetCollider()->GetCenter());
+}
+
+
+
 Component* AIZombieEx::clone() noexcept
 {
 	auto pAI = new AIZombieEx(*this);
-	pAI->m_eState = EState::Idle;
+	pAI->Init();
 	return (Component*)pAI;
 }

@@ -6,23 +6,29 @@
 class Collider;
 class Camera;
 class AHeroObj;
+class UIManager;
+
+
 
 class PlayerController : public GameObject, public ISingleton<PlayerController>
 {
 public:
-	enum EAction : char {
+	enum EAction : UCHAR {
 		Idle = 0, 
 		Left = 1, Forward = 2, ForwardLeft = 3, 
 		Right = 4, ForwardRight = 6, 
 		Backward = 8, BackwardLeft = 9, BackwardRight = 12,
-		Jump = 100, Dance1, Dance2, Dance3, Throw, Run, Fly, FlyEnd, Dash, Melee
+		Jump = 100, Dance1, Dance2, Dance3, Throw, Run, Fly, FlyEnd, Dash, Melee,
+		ShockWave, ThrowBomb,
 	};
-	enum ECharacter : char {
+	enum ECharacter : UCHAR {
 		EDummy = 0, EGuard, EZombie,
 	};
+	enum EItem : UCHAR {
+		Shock = 0, Bomb, 
+	};
 private:
-	bool		m_isChatting = false;
-
+	UIManager*  pUIManager		= nullptr;
 	Camera*		m_pCamera		= nullptr;
 	EAction		m_curAction;			// 현재 눌린 액션
 	EAction		m_curAnim;				// 실제 애니메이션
@@ -33,16 +39,22 @@ private:
 	POINT		m_setMouseScreen;
 	POINT		m_setMouseClient;
 
-	GameObject*	m_pEffectFly = nullptr;
+	GameObject*	m_pEffectFly	= nullptr;
+	GameObject* m_pTargetEnemy	= nullptr;
 	///
-	float		m_EXP				= 0.0f;
-	UCHAR		m_statPoint			= 0;
+	float		m_EXP			= 0.0f;
+	float		m_disEXP		= 0.0f;
 	//
-	const float	MoveSpeed = 40.0f;
+	const float	MoveSpeed = 30.0f;
 	const float	JumpPower = 70.0f;
+	
+	map<int, void(*)(PlayerController*, void*)> m_ItemList;
 public:
+	EAction		m_eAction;				// 눌린 애니메이션
 	ECharacter  m_curCharacter;			// 현재 캐릭터
-	ECharacter  m_selectCharacter;		// 선택 캐릭터
+
+	float		m_NeedEXP			= 1.0f;
+	UCHAR		m_statPoint			= 0;
 	float		m_moveSpeed;
 	float		m_jumpPower;
 	///
@@ -59,22 +71,14 @@ public:
 	float		m_curDelayDash		 = 0.0f;
 	float		m_curDelayMelee		 = 0.0f;
 
+	float		m_maxMP				 = 1.0f;
+	float		m_curMP				 = 0.0f;
 	float		m_mouseSense		 = 0.5f;
-	float		m_MP				 = 1.0f;
+	// 들을 거리
+	const float SoundRange			 = 30000.0f;
 public:
 	GameObject* m_pHome			 = nullptr;
 	const float HomeRadius		 = 1600.0f;
-
-	void*       m_pOption		 = nullptr;
-	void*		m_pHpBar		 = nullptr;		// 체력바
-	void*		m_pRespawn		 = nullptr;
-	void*		m_pRespawnBar	 = nullptr;
-	void*		m_pRespawnEffect = nullptr;
-	void*		m_pHitEffect	 = nullptr;
-	void*		m_pEnemyPanel	 = nullptr;		// JPanel
-	void*		m_pEnemyHP		 = nullptr;		// JProgressBar
-	void*		m_pEnemyName	 = nullptr;		// JTextCtrl
-	void*		m_pEnemyHPText	 = nullptr;		// JTextCtrl
 private:
 	void SendGiantMode(const float& spf)											noexcept;
 public:
@@ -92,9 +96,7 @@ public:
 	void SendAnimTransform(const EAction& eAction, const ECharacter& eCharacter)	noexcept;
 	void SendReqRespawn(const ECharacter& eCharacter)								noexcept;
 	void StartGiantMode()															noexcept;
-
-	void isChatting(const bool& isChat)												noexcept;
-	bool isChatting()														  const noexcept;
+	void StartVibration(float seconds, const float& shakePower)						noexcept;
 
 	bool Init()																		noexcept override;
 	bool Frame(const float& spf, const float& accTime)								noexcept override;

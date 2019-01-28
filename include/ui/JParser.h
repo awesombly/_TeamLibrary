@@ -23,6 +23,8 @@ namespace UI
 		void ListRead(ID3D11Device* pDevice, JPanel& pRoot, wstring plusPath);
 		void EditRead(ID3D11Device* pDevice, JPanel& pRoot, wstring plusPath);
 		void ImageRead(ID3D11Device* pDevice, JPanel& pRoot, wstring plusPath);
+		void SlotRead(ID3D11Device* pDevice, JPanel& pRoot, wstring plusPath);
+		void InventoryRead(ID3D11Device* pDevice, JPanel& pRoot, wstring plusPath);
 	public:
 		JParser() {};
 		virtual ~JParser() {};

@@ -1,6 +1,7 @@
 #include "GameScene.h"
 #include "PacketManager.h"
 #include "JEventBind.h"
+#include "UIManager.h"
 
 
 bool GameScene::Init() noexcept
@@ -11,13 +12,13 @@ bool GameScene::Init() noexcept
 	FirstInit();
 
 	ObjectManager::KeyCount = 1000;
-	auto pHero = (AHeroObj*)ObjectManager::Get().TakeObject(L"Guard");
+	//auto pHero = (AHeroObj*)ObjectManager::Get().TakeObject(L"Guard");
 	//pHero->GetLeftHandPos
-	m_pPlayer->Possess(pHero);
+	//m_pPlayer->Possess(pHero);
 
 	auto pCollider = new Collider(1.0f);
 	pCollider->m_eTag = ETag::Ally;
-	PlayerController::Get().m_pHome = new GameObject(L"Shelter", { pCollider , ObjectManager::Get().TakeComponent(L"RowSphere") }, EObjType::Object);
+	PlayerController::Get().m_pHome = new GameObject(L"Shelter", { pCollider , ObjectManager::Get().TakeComponent(L"RowSphere") });
 	PlayerController::Get().m_pHome->SetPosition(Vector3::Up * 20.0f);
 	PlayerController::Get().m_pHome->SetScale(Vector3::One * 25.0f);
 	PlayerController::Get().m_pHome->SetGravityScale(0.0f);
@@ -54,25 +55,25 @@ bool GameScene::Init() noexcept
 	//}
 
 	//GameObject* pEffect = nullptr;
-	//m_pParser->CreateFromFile(&pEffect, L"Snow.eff", L"../../data/script");
+	//m_pParser->CreateFromFile(&pEffect, L"Snow.eff", urlEffect);
 	//pEffect->SetPosition(Vector3::Up * 400.0f);
 	//ObjectManager::Get().PushObject(pEffect);
 
-	//pEffect = new GameObject(L"Bigbang", m_pParser->CreateFromParticle(L"Bigbang.eff", L"../../data/script"), EObjType::Effect);
+	//pEffect = new GameObject(L"Bigbang", m_pParser->CreateFromParticle(L"Bigbang.eff", urlEffect), EObjType::Effect);
 	//pEffect->SetPosition(Vector3::Up * 400.0f + Vector3::Left * 700.0f);
 	//ObjectManager::Get().PushObject(pEffect);
 
-	//auto pParticle = m_pParser->CreateFromParticle(L"Shock.eff", L"../../data/script");
+	//auto pParticle = m_pParser->CreateFromParticle(L"Shock.eff", urlEffect);
 	//pParticle->isRepeat(true);
 	//pEffect = new GameObject(L"Shock", pParticle, EObjType::Effect);
 	//pEffect->SetPosition(Vector3::Up * 400.0f + Vector3::Right * 700.0f);
 	//ObjectManager::Get().PushObject(pEffect);
 
-	//pEffect = new GameObject(L"WheelWind", { m_pParser->CreateFromParticle(L"WheelWind.eff", L"../../data/script"), new CTransformer(Vector3::Zero, Quaternion::Left * 3.0f) }, EObjType::Effect);
+	//pEffect = new GameObject(L"WheelWind", { m_pParser->CreateFromParticle(L"WheelWind.eff", urlEffect), new CTransformer(Vector3::Zero, Quaternion::Left * 3.0f) }, EObjType::Effect);
 	//pEffect->SetPosition(Vector3::Up * 400.0f + Vector3::Forward * 500.0f);
 	//ObjectManager::Get().PushObject(pEffect);
 
-	//pEffect = new GameObject(L"Atom", { m_pParser->CreateFromParticle(L"Atom.eff", L"../../data/script"), new CTransformer(Vector3::Zero, {3.0f, 5.0f, 7.0f, 0.0f}) }, EObjType::Effect);
+	//pEffect = new GameObject(L"Atom", { m_pParser->CreateFromParticle(L"Atom.eff", urlEffect), new CTransformer(Vector3::Zero, {3.0f, 5.0f, 7.0f, 0.0f}) }, EObjType::Effect);
 	//pEffect->SetPosition(Vector3::Up * 400.0f + Vector3::Backward * 500.0f);
 	//ObjectManager::Get().PushObject(pEffect);
 
@@ -90,13 +91,13 @@ bool GameScene::Init() noexcept
 bool GameScene::Frame() noexcept
 {
 	// IME 채팅
-	if (PlayerController::Get().isChatting())
+	if (m_pChat->m_bRender)
 	{
 		m_chatMessage = m_pChat->GetString();
 	}
 	if (Input::GetKeyState(VK_RETURN) == EKeyState::DOWN)
 	{
-		if (PlayerController::Get().isChatting())
+		if (m_pChat->m_bRender)
 		{
 			if (!m_chatMessage.empty())
 			{
@@ -116,11 +117,9 @@ bool GameScene::Frame() noexcept
 			m_pChat->End();
 			m_pChat->Clear();
 			m_pChat->m_bRender = false;
-			PlayerController::Get().isChatting(false);
 		}
 		else
 		{
-			PlayerController::Get().isChatting(true);
 			m_pChat->Play();
 			m_pChat->m_bRender = true;
 		}
@@ -158,7 +157,7 @@ bool GameScene::Frame() noexcept
 	{
 		if (iter == nullptr || iter->m_pParent == nullptr)
 			continue;
-		iter->m_mapHeight = m_pMap->GetHeight(iter->m_pParent->GetWorldPosition().x, iter->m_pParent->GetWorldPosition().z);
+		iter->m_mapHeight = m_pMap->GetHeight(iter->m_pParent->GetPosition().x, iter->m_pParent->GetPosition().z);
 	}
 	return true;
 }
@@ -197,7 +196,7 @@ bool GameScene::Release() noexcept
 bool GameScene::CheatMessage() noexcept
 {
 	auto finder = m_chatMessage.find(L" ");
-	if (finder != wstring::npos) 
+	if (finder != wstring::npos)
 	{
 		auto str = m_chatMessage.substr(0, finder);
 		if (str._Equal(L"Respawn"))
@@ -216,96 +215,59 @@ bool GameScene::CheatMessage() noexcept
 		}
 		else if (str._Equal(L"Dance"))
 		{
+			if (PlayerController::Get().GetParent() == nullptr)
+				return false;
 			switch (atoi(WCharToChar(m_chatMessage.substr(finder + 1).c_str())))
 			{
-			 case 1:
-			 {
-			 	PlayerController::Get().SendAnimTransform(PlayerController::EAction::Dance1, PlayerController::Get().m_curCharacter);
-			 }	break;
-			 case 2:
-			 {
-			 	PlayerController::Get().SendAnimTransform(PlayerController::EAction::Dance2, PlayerController::Get().m_curCharacter);
-			 }	break;
-			 case 3:
-			 {
-			 	PlayerController::Get().SendAnimTransform(PlayerController::EAction::Dance3, PlayerController::Get().m_curCharacter);
-			 }	break;
+			case 1:
+			{
+				PlayerController::Get().SendAnimTransform(PlayerController::EAction::Dance1, PlayerController::Get().m_curCharacter);
+			}	break;
+			case 2:
+			{
+				PlayerController::Get().SendAnimTransform(PlayerController::EAction::Dance2, PlayerController::Get().m_curCharacter);
+			}	break;
+			case 3:
+			{
+				PlayerController::Get().SendAnimTransform(PlayerController::EAction::Dance3, PlayerController::Get().m_curCharacter);
+			}	break;
 			}
 			return false;
 		}
-		else if (str._Equal(L"Spawn"))
+		else if (str._Equal(L"Zombie"))
 		{
-			Packet_TakeObject p_TakeObject;
-			wstring objName = L"Zombie";
-			size_t  strSize = objName.size() * 2;
-			strSize = strSize > 100 ? 100 : strSize;
-
-			memcpy(p_TakeObject.ObjectName, objName.data(), strSize);
-			p_TakeObject.DataSize = (UCHAR)strSize;
-			p_TakeObject.Rotation = Quaternion::Base;
-			p_TakeObject.HP = 1.0f;
-			p_TakeObject.UserSocket = (UINT)-1;
-			for (int i = 0; i < atoi(WCharToChar(m_chatMessage.substr(finder + 1).c_str())); ++i)
-			{
-				p_TakeObject.KeyValue = ++PacketManager::Get().PlayerKeyCount;
-				p_TakeObject.Position = { RandomNormal() * 1000.0f - 500.0f, 60.0f, RandomNormal() * 1000.0f - 500.0f };
-				p_TakeObject.Scale = (RandomNormal() * 0.2f + 0.1f) * Vector3::One;
-				PacketManager::Get().SendPacket((char*)&p_TakeObject, (USHORT)(PS_TakeObject + strSize), PACKET_TakeObject);
-			}
+			PacketManager::Get().SendTakeObject(L"Zombie", ESocketType::EZombie, atoi(WCharToChar(m_chatMessage.substr(finder + 1).c_str())), 1.0f, 0.1f, 0.2f, { -500.0f, 60.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
 			return false;
 		}
-		else if (str._Equal(L"SpawnEx"))
+		else if (str._Equal(L"Caster"))
 		{
-			Packet_TakeObject p_TakeObject;
-			wstring objName = L"Mutant";
-			size_t  strSize = objName.size() * 2;
-			strSize = strSize > 100 ? 100 : strSize;
-
-			memcpy(p_TakeObject.ObjectName, objName.data(), strSize);
-			p_TakeObject.DataSize = (UCHAR)strSize;
-			p_TakeObject.Rotation = Quaternion::Base;
-			p_TakeObject.HP = 3.0f;
-			p_TakeObject.UserSocket = (UINT)-1;
-			for (int i = 0; i < atoi(WCharToChar(m_chatMessage.substr(finder + 1).c_str())); ++i)
-			{
-				p_TakeObject.KeyValue = ++PacketManager::Get().PlayerKeyCount;
-				p_TakeObject.Position = { RandomNormal() * 1000.0f - 500.0f, 60.0f, RandomNormal() * 1000.0f - 500.0f };
-				p_TakeObject.Scale = (RandomNormal() * 0.2f + 0.5f) * Vector3::One;
-				PacketManager::Get().SendPacket((char*)&p_TakeObject, (USHORT)(PS_TakeObject + strSize), PACKET_TakeObject);
-			}
+			PacketManager::Get().SendTakeObject(L"Caster", ESocketType::ECaster, atoi(WCharToChar(m_chatMessage.substr(finder + 1).c_str())), 0.8f, 0.1f, 0.2f, { -500.0f, 60.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
 			return false;
 		}
-		else if (str._Equal(L"SpawnKing"))
+		else if (str._Equal(L"Crawler"))
+		{			
+			PacketManager::Get().SendTakeObject(L"Crawler", ESocketType::ECrawler, atoi(WCharToChar(m_chatMessage.substr(finder + 1).c_str())), 0.6f, 0.15f, 0.1f, { -500.0f, 60.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
+			return false;
+		}
+		else if (str._Equal(L"Mutant"))
 		{
-			Packet_TakeObject p_TakeObject;
-			wstring objName = L"Tank";
-			size_t  strSize = objName.size() * 2;
-			strSize = strSize > 100 ? 100 : strSize;
-
-			memcpy(p_TakeObject.ObjectName, objName.data(), strSize);
-			p_TakeObject.DataSize = (UCHAR)strSize;
-			p_TakeObject.Rotation = Quaternion::Base;
-			p_TakeObject.HP = 10.0f;
-			p_TakeObject.UserSocket = (UINT)-1;
-			for (int i = 0; i < atoi(WCharToChar(m_chatMessage.substr(finder + 1).c_str())); ++i)
-			{
-				p_TakeObject.KeyValue = ++PacketManager::Get().PlayerKeyCount;
-				p_TakeObject.Position = { RandomNormal() * 1000.0f - 500.0f, 60.0f, RandomNormal() * 1000.0f - 500.0f };
-				p_TakeObject.Scale = (RandomNormal() * 0.2f + 1.0f) * Vector3::One;
-				PacketManager::Get().SendPacket((char*)&p_TakeObject, (USHORT)(PS_TakeObject + strSize), PACKET_TakeObject);
-			}
+			PacketManager::Get().SendTakeObject(L"Mutant", ESocketType::EMutant, atoi(WCharToChar(m_chatMessage.substr(finder + 1).c_str())), 5.0f, 0.5f, 0.1f, { -500.0f, 60.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
+			return false;
+		}
+		else if (str._Equal(L"Tank"))
+		{
+			PacketManager::Get().SendTakeObject(L"Tank", ESocketType::ETank, atoi(WCharToChar(m_chatMessage.substr(finder + 1).c_str())), 15.0f * PacketManager::Get().UserList.size(), 1.1f, 0.1f, { -500.0f, 60.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
 			return false;
 		}
 		else if (str._Equal(L"Dead"))
 		{
-			if (PlayerController::Get().GetParent() != nullptr)
-			{
-				Packet_PlayerDead p_PlayerDead;
-				p_PlayerDead.KeyValue = PlayerController::Get().GetParent()->m_keyValue;
-				p_PlayerDead.KillUser = (UINT)-1;
-				p_PlayerDead.DeadUser = PacketManager::Get().pMyInfo->UserSocket;
-				PacketManager::Get().SendPacket((char*)&p_PlayerDead, (USHORT)sizeof(Packet_PlayerDead), PACKET_PlayerDead);
-			}
+			if (PlayerController::Get().GetParent() == nullptr)
+				return false;
+			Packet_PlayerDead p_PlayerDead;
+			p_PlayerDead.KeyValue = PlayerController::Get().GetParent()->m_keyValue;
+			p_PlayerDead.KillUser = (UINT)-1;
+			p_PlayerDead.DeadUser = PacketManager::Get().pMyInfo->UserSocket;
+			PacketManager::Get().SendPacket((char*)&p_PlayerDead, (USHORT)sizeof(Packet_PlayerDead), PACKET_PlayerDead);
 			return false;
 		}
 		else if (str._Equal(L"MoveSpeed"))
@@ -318,8 +280,50 @@ bool GameScene::CheatMessage() noexcept
 			PlayerController::Get().m_jumpPower = (float)atof(WCharToChar(m_chatMessage.substr(finder + 1).c_str()));
 			return false;
 		}
+		else if (str._Equal(L"Level"))
+		{
+			PacketManager::Get().pMyInfo->Level = atoi(WCharToChar(m_chatMessage.substr(finder + 1).c_str()));
+			PlayerController::Get().m_NeedEXP = 1.0f + PacketManager::Get().pMyInfo->Level * 0.3f;
+			PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
+			return false;
+		}
+		else if (str._Equal(L"StatPoint"))
+		{
+			PlayerController::Get().m_statPoint += (UCHAR)atoi(WCharToChar(m_chatMessage.substr(finder + 1).c_str()));
+			return false;
+		}
+		else if (str._Equal(L"StatStr"))
+		{
+			PacketManager::Get().pMyInfo->StatStr = atoi(WCharToChar(m_chatMessage.substr(finder + 1).c_str()));
+			PlayerController::Get().UpdateStatus();
+			PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
+			return false;
+		}
+		else if (str._Equal(L"StatDex"))
+		{
+			PacketManager::Get().pMyInfo->StatDex = atoi(WCharToChar(m_chatMessage.substr(finder + 1).c_str()));
+			PlayerController::Get().UpdateStatus();
+			PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
+			return false;
+		}
+		else if (str._Equal(L"StatInt"))
+		{
+			PacketManager::Get().pMyInfo->StatInt = atoi(WCharToChar(m_chatMessage.substr(finder + 1).c_str()));
+			PlayerController::Get().UpdateStatus();
+			PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
+			return false;
+		}
+		else if (str._Equal(L"StatLuk"))
+		{
+			PacketManager::Get().pMyInfo->StatLuk = atoi(WCharToChar(m_chatMessage.substr(finder + 1).c_str()));
+			PlayerController::Get().UpdateStatus();
+			PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
+			return false;
+		}
 		else if (str._Equal(L"Scale"))
 		{
+			if (PlayerController::Get().GetParent() == nullptr)
+				return false;
 			auto scale = (float)atof(WCharToChar(m_chatMessage.substr(finder + 1).c_str()));
 			Packet_Vector3 p_SetScale;
 			p_SetScale.KeyValue = PlayerController::Get().GetParent()->m_keyValue;
@@ -329,10 +333,48 @@ bool GameScene::CheatMessage() noexcept
 		}
 		else if (str._Equal(L"HP"))
 		{
-			Packet_SetHP p_SetHP;
+			if (PlayerController::Get().GetParent() == nullptr)
+				return false;
+			Packet_Float p_SetHP;
 			p_SetHP.KeyValue = PlayerController::Get().GetParent()->m_keyValue;
-			p_SetHP.HP = (float)atof(WCharToChar(m_chatMessage.substr(finder + 1).c_str()));
-			PacketManager::Get().SendPacket((char*)&p_SetHP, (USHORT)sizeof(Packet_SetHP), PACKET_SetHP);
+			p_SetHP.Value = (float)atof(WCharToChar(m_chatMessage.substr(finder + 1).c_str()));
+			PacketManager::Get().SendPacket((char*)&p_SetHP, (USHORT)sizeof(Packet_Float), PACKET_SetHP);
+			return false;
+		}
+		else if (str._Equal(L"Heal"))
+		{
+			if (PlayerController::Get().GetParent() == nullptr)
+				return false;
+			Packet_Float p_HealHP;
+			p_HealHP.KeyValue = PlayerController::Get().GetParent()->m_keyValue;
+			p_HealHP.Value = (float)atof(WCharToChar(m_chatMessage.substr(finder + 1).c_str()));
+			PacketManager::Get().SendPacket((char*)&p_HealHP, (USHORT)sizeof(Packet_Float), PACKET_HealHP);
+			return false;
+		}
+		else if (str._Equal(L"Clear"))
+		{
+			for (auto& iter : ObjectManager::Get().GetColliderList())
+			{
+				if (iter->m_pParent->m_myName == L"Melee")
+				{
+					ObjectManager::Get().RemoveObject(iter->m_pParent);
+				}
+			}
+			return false;
+		}
+		else if (str._Equal(L"ClearAll"))
+		{
+			for (auto& iter : *ObjectManager::Get().GetObjectList(EObjType::Enemy))
+			{
+				ObjectManager::Get().DisableObject(iter);
+			}
+			for (auto& iter : ObjectManager::Get().GetColliderList())
+			{
+				if (iter->m_pParent->m_myName == L"Melee")
+				{
+					ObjectManager::Get().RemoveObject(iter->m_pParent);
+				}
+			}
 			return false;
 		}
 	}
@@ -353,6 +395,7 @@ void GameScene::DrawBoundingBox()	noexcept
 	}
 
 	DxManager::Get().SetRasterizerState(ERasterS::Wireframe);
+	DxManager::Get().SetDepthStencilState(EDepthS::D_Always_S_Off);
 	for (auto& iter : ObjectManager::Get().GetColliderList())
 	{
 		switch (iter->m_eCollider)
@@ -384,11 +427,11 @@ void GameScene::DrawBoundingBox()	noexcept
 		}
 	}
 	DxManager::Get().SetRasterizerState(ERasterS::Current);
+	DxManager::Get().SetDepthStencilState(EDepthS::Current);
 }
 
 void GameScene::HostFrame() noexcept
 {
-	static Packet_TakeObject p_TakeObject;
 	static float itemFrame = 0.0f;
 	static float enemyFrame = 0.0f;
 	itemFrame += Timer::SPF;
@@ -399,41 +442,19 @@ void GameScene::HostFrame() noexcept
 	{
 		itemFrame = 0.0f;
 
-		wstring objName = L"Atom";
-		size_t  strSize = objName.size() * 2;
-		strSize = strSize > 100 ? 100 : strSize;
-
-		p_TakeObject.KeyValue = ++PacketManager::Get().PlayerKeyCount;
-		memcpy(p_TakeObject.ObjectName, objName.data(), strSize);
-		p_TakeObject.DataSize = (UCHAR)strSize;
-		p_TakeObject.Position = Vector3::Up * 120.0f;
-		p_TakeObject.Rotation = Quaternion::Base;
-		p_TakeObject.Scale = Vector3::One;
-		p_TakeObject.HP = 100.0f;
-		p_TakeObject.UserSocket = (UINT)-1;
-		PacketManager::Get().SendPacket((char*)&p_TakeObject, (USHORT)(PS_TakeObject + strSize), PACKET_TakeObject);
+		PacketManager::Get().SendTakeObject(L"Atom", ESocketType::EDummy, 1, 1.0f, 1.0f, 0.0f, Vector3::Up * 120.0f, Vector3::Zero);
+		
+		PacketManager::Get().SendTakeObject(L"Tank", ESocketType::ETank, 1, 15.0f * PacketManager::Get().UserList.size(), 1.1f, 0.1f, { -500.0f, 60.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
 	}
 	// 적 생성
-	if (enemyFrame >= 4.0f)
+	if (enemyFrame >= 10.0f)
 	{
 		enemyFrame = 0.0f;
 
-		wstring objName = L"Zombie";
-		size_t  strSize = objName.size() * 2;
-		strSize = strSize > 100 ? 100 : strSize;
-
-		memcpy(p_TakeObject.ObjectName, objName.data(), strSize);
-		p_TakeObject.DataSize = (UCHAR)strSize;
-		p_TakeObject.Rotation = Quaternion::Base;
-		p_TakeObject.HP = 1.0f;
-		p_TakeObject.UserSocket = (UINT)-1;
-		for (int i = 0; i < PacketManager::Get().UserList.size(); ++i)
-		{
-			p_TakeObject.KeyValue = ++PacketManager::Get().PlayerKeyCount;
-			p_TakeObject.Position = { RandomNormal() * 1000.0f - 500.0f, 60.0f, RandomNormal() * 1000.0f - 500.0f };
-			p_TakeObject.Scale = (RandomNormal() * 0.2f + 0.1f) * Vector3::One;
-			PacketManager::Get().SendPacket((char*)&p_TakeObject, (USHORT)(PS_TakeObject + strSize), PACKET_TakeObject);
-		}
+		PacketManager::Get().SendTakeObject(L"Zombie", ESocketType::EZombie, (UCHAR)PacketManager::Get().UserList.size(), 1.0f, 0.1f, 0.2f, { -500.0f, 60.0f, -500.0f }, {1000.0f, 0.0f, 1000.0f});
+		PacketManager::Get().SendTakeObject(L"Caster", ESocketType::ECaster, (UCHAR)PacketManager::Get().UserList.size(), 0.8f, 0.1f, 0.2f, { -500.0f, 60.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
+		PacketManager::Get().SendTakeObject(L"Crawler", ESocketType::ECrawler, (UCHAR)PacketManager::Get().UserList.size(), 0.6f, 0.15f, 0.1f, { -500.0f, 60.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
+		PacketManager::Get().SendTakeObject(L"Mutant", ESocketType::EMutant, 1, 5.0f, 0.5f, 0.1f, { -500.0f, 60.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
 	}
 }
 
@@ -463,9 +484,8 @@ void GameScene::LoadUI() noexcept
 	JParser par;
 	par.FileLoad(DxManager::GetDevice(), L"../../data/ui/InGame", *pUIRoot);
 	// HP, MP
-	PlayerController::Get().m_pHpBar = (JProgressBar*)pUIRoot->find_child(L"HP_Progress");
-	auto pProj = (JProgressBar*)pUIRoot->find_child(L"MP_Progress");
-	pProj->SetValue(m_pPlayer->m_MP, 1.0f); // 값 bind
+	UIManager::Get().m_pHpBar = (JProgressBar*)pUIRoot->find_child(L"HP_Progress");
+	UIManager::Get().m_pMpBar = (JProgressBar*)pUIRoot->find_child(L"MP_Progress");
 
 	// 상황판
 	/* Name Kill Death Score */
@@ -476,11 +496,11 @@ void GameScene::LoadUI() noexcept
 			return;
 		auto iter = ((JPanel*)pVoid)->m_pChildList.begin();
 		auto pUser = PacketManager::Get().UserList.begin()->second;
-		((JTextCtrl*)(*iter))->m_Text			= pUser->UserID;
-		((JTextCtrl*)(*++iter))->m_Text			= to_wstring(pUser->KillCount);
-		((JTextCtrl*)(*++iter))->m_Text			= to_wstring(pUser->DeathCount);
-		((JTextCtrl*)(*++iter))->m_Text			= to_wstring(pUser->Score);
-		((JTextCtrl*)(*++++iter))->m_bRender	= pUser->isDead;
+		((JTextCtrl*)(*iter))->m_Text = pUser->UserID;
+		((JTextCtrl*)(*++iter))->m_Text = to_wstring(pUser->KillCount);
+		((JTextCtrl*)(*++iter))->m_Text = to_wstring(pUser->DeathCount);
+		((JTextCtrl*)(*++iter))->m_Text = to_wstring(pUser->Score);
+		((JTextCtrl*)(*++++iter))->m_bRender = pUser->isDead;
 	};
 	PacketManager::Get().pUserPanel[0]->PostEvent.second = PacketManager::Get().pUserPanel[0];
 
@@ -490,11 +510,11 @@ void GameScene::LoadUI() noexcept
 			return;
 		auto iter = ((JPanel*)pVoid)->m_pChildList.begin();
 		auto pUser = (++PacketManager::Get().UserList.begin())->second;
-		((JTextCtrl*)(*iter))->m_Text			= pUser->UserID;
-		((JTextCtrl*)(*++iter))->m_Text			= to_wstring(pUser->DeathCount);
-		((JTextCtrl*)(*++iter))->m_Text			= to_wstring(pUser->KillCount);
-		((JTextCtrl*)(*++iter))->m_Text			= to_wstring(pUser->Score);
-		((JTextCtrl*)(*++++iter))->m_bRender	= pUser->isDead;
+		((JTextCtrl*)(*iter))->m_Text = pUser->UserID;
+		((JTextCtrl*)(*++iter))->m_Text = to_wstring(pUser->DeathCount);
+		((JTextCtrl*)(*++iter))->m_Text = to_wstring(pUser->KillCount);
+		((JTextCtrl*)(*++iter))->m_Text = to_wstring(pUser->Score);
+		((JTextCtrl*)(*++++iter))->m_bRender = pUser->isDead;
 	};
 	PacketManager::Get().pUserPanel[1]->PostEvent.second = PacketManager::Get().pUserPanel[1];
 
@@ -504,11 +524,11 @@ void GameScene::LoadUI() noexcept
 			return;
 		auto iter = ((JPanel*)pVoid)->m_pChildList.begin();
 		auto pUser = (++++PacketManager::Get().UserList.begin())->second;
-		((JTextCtrl*)(*iter))->m_Text			= pUser->UserID;
-		((JTextCtrl*)(*++iter))->m_Text			= to_wstring(pUser->DeathCount);
-		((JTextCtrl*)(*++iter))->m_Text			= to_wstring(pUser->KillCount);
-		((JTextCtrl*)(*++iter))->m_Text			= to_wstring(pUser->Score);
-		((JTextCtrl*)(*++++iter))->m_bRender	= pUser->isDead;
+		((JTextCtrl*)(*iter))->m_Text = pUser->UserID;
+		((JTextCtrl*)(*++iter))->m_Text = to_wstring(pUser->DeathCount);
+		((JTextCtrl*)(*++iter))->m_Text = to_wstring(pUser->KillCount);
+		((JTextCtrl*)(*++iter))->m_Text = to_wstring(pUser->Score);
+		((JTextCtrl*)(*++++iter))->m_bRender = pUser->isDead;
 	};
 	PacketManager::Get().pUserPanel[2]->PostEvent.second = PacketManager::Get().pUserPanel[2];
 
@@ -518,23 +538,22 @@ void GameScene::LoadUI() noexcept
 			return;
 		auto iter = ((JPanel*)pVoid)->m_pChildList.begin();
 		auto pUser = (++++++PacketManager::Get().UserList.begin())->second;
-		((JTextCtrl*)(*iter))->m_Text			= pUser->UserID;
-		((JTextCtrl*)(*++iter))->m_Text			= to_wstring(pUser->DeathCount);
-		((JTextCtrl*)(*++iter))->m_Text			= to_wstring(pUser->KillCount);
-		((JTextCtrl*)(*++iter))->m_Text			= to_wstring(pUser->Score);
-		((JTextCtrl*)(*++++iter))->m_bRender	= pUser->isDead;
+		((JTextCtrl*)(*iter))->m_Text = pUser->UserID;
+		((JTextCtrl*)(*++iter))->m_Text = to_wstring(pUser->DeathCount);
+		((JTextCtrl*)(*++iter))->m_Text = to_wstring(pUser->KillCount);
+		((JTextCtrl*)(*++iter))->m_Text = to_wstring(pUser->Score);
+		((JTextCtrl*)(*++++iter))->m_bRender = pUser->isDead;
 	};
 	PacketManager::Get().pUserPanel[3]->PostEvent.second = PacketManager::Get().pUserPanel[3];
-	// 옵션, 전광판
-	PlayerController::Get().m_pOption = (JPanel*)pUIRoot->find_child(L"Set_Panel");
+	// 마우스, 옵션, 전광판
+	UIManager::Get().m_pMouseIcon = pUIRoot->find_child(L"mouse_cursor");
+	UIManager::Get().m_pMouseIcon->m_bRender = false;
+	//PlayerController::Get().m_pOption = (JPanel*)pUIRoot->find_child(L"Set_Panel");
 	PacketManager::Get().pKillDisplay = (JListCtrl*)pUIRoot->find_child(L"KilltoDeath");
 
 	// Skill Icon
-	auto pIcon = (JProgressBar*)pUIRoot->find_child(L"Skill_Right");
-	pIcon->SetValue(PlayerController::Get().m_curDelayThrow, PlayerController::Get().m_DelayThrow);
-	
-	pIcon = (JProgressBar*)pUIRoot->find_child(L"Skill_Left"); // dash , left skill icon
-	pIcon->SetValue(PlayerController::Get().m_curDelayDash, PlayerController::Get().m_DelayDash);
+	UIManager::Get().m_pLeftIcon = (JProgressBar*)pUIRoot->find_child(L"Skill_Left");
+	UIManager::Get().m_pRightIcon = (JProgressBar*)pUIRoot->find_child(L"Skill_Right");
 
 	// Option Slider
 	static auto pSetVolume = [](void* pSlider) {
@@ -556,7 +575,8 @@ void GameScene::LoadUI() noexcept
 	PlayerController::Get().m_mouseSense = *m_pMouseSense->GetValue();
 	// Exit
 	static auto pGameExit = [](void* pScene) {
-		exit(0); pScene;
+		Core::isPlaying = false;
+		pScene;
 		//PlayerController::Get().CutParent();
 		//PacketManager::Get().pSender->Release();
 		//((MainClass*)pScene)->SetScene(ESceneName::Lobby);
@@ -584,7 +604,6 @@ void GameScene::LoadUI() noexcept
 			else
 			{
 				*pList->m_fValue = max(*pList->m_fValue - pList->fDivisionValue, 0.0f);
-				//pList->AddValue(clamp(pList->m_fValue - pList->fDivisionValue, 0.0f, 1.0f) - pList->m_fValue);
 			}
 		}
 	};
@@ -595,23 +614,106 @@ void GameScene::LoadUI() noexcept
 	//m_pList->m_fValue = pSlider->GetValue();
 
 	// 리스폰창
-	PlayerController::Get().m_pRespawn	  = (JPanel*)pUIRoot->find_child(L"respawn_panel");		 // bRender용
-	((JPanel*)PlayerController::Get().m_pRespawn)->m_bRender = false;
-	PlayerController::Get().m_pRespawnBar = (JProgressBar*)pUIRoot->find_child(L"respawn_prog"); // value 넣엇ㅅㅅ
+	UIManager::Get().m_pRespawn = (JPanel*)pUIRoot->find_child(L"respawn_panel");		 // bRender용
+	UIManager::Get().m_pRespawn->m_bRender = false;
+	UIManager::Get().m_pRespawnBar = (JProgressBar*)pUIRoot->find_child(L"respawn_prog"); // value 넣엇ㅅㅅ
 	//JTextCtrl* respawntxt = (JTextCtrl*)pUIRoot->find_child(L"respawn_txt");	 // text
 
 	// 쳐맞 효과
-	PlayerController::Get().m_pHitEffect = (JPanel*)pUIRoot->find_child(L"fadeout"); 
-	PlayerController::Get().m_pRespawnEffect = (JPanel*)pUIRoot->find_child(L"fadeout_white"); 
+	UIManager::Get().m_pHitEffect = (JPanel*)pUIRoot->find_child(L"fadeout");
+	UIManager::Get().m_pRespawnEffect = (JPanel*)pUIRoot->find_child(L"fadeout_white");
 	//PlayerController::Get().m_pRespawnEffect = (JPanel*)pUIRoot->find_child(L"fadein"); //(L"JohnSprite");
 
-	m_pChat = (JEditCtrl*)pUIRoot->find_child(L"Chat_Edit");
+	UIManager::Get().m_pChat = m_pChat = (JEditCtrl*)pUIRoot->find_child(L"Chat_Edit");
 	// 적 체력바
-	PlayerController::Get().m_pEnemyPanel = (JPanel*)pUIRoot->find_child(L"Enemy_Panel"); //bRender true/false
-	PlayerController::Get().m_pEnemyHP = (JProgressBar*)pUIRoot->find_child(L"Enemy_HP");
-	PlayerController::Get().m_pEnemyName = (JTextCtrl*)pUIRoot->find_child(L"Enemy_Name");
-	PlayerController::Get().m_pEnemyHPText = (JTextCtrl*)pUIRoot->find_child(L"Enemy_HP_txt");
+	UIManager::Get().m_pEnemyPanel = (JPanel*)pUIRoot->find_child(L"Enemy_Panel"); //bRender true/false
+	UIManager::Get().m_pEnemyPanel->m_bRender = false;
+	UIManager::Get().m_pEnemyHP = (JProgressBar*)pUIRoot->find_child(L"Enemy_HP");
+	UIManager::Get().m_pEnemyName = (JTextCtrl*)pUIRoot->find_child(L"Enemy_Name");
+	UIManager::Get().m_pEnemyHPText = (JTextCtrl*)pUIRoot->find_child(L"Enemy_HP_txt");
 
+	// 인포창
+	UIManager::Get().m_pExpProgress = (JProgressBar*)pUIRoot->find_child(L"Exp_Progress");
+	UIManager::Get().m_pInfoTitle = (JTextCtrl*)pUIRoot->find_child(L"Info_Title");
+	UIManager::Get().m_pInfoHP = (JTextCtrl*)pUIRoot->find_child(L"Info_HP");
+	UIManager::Get().m_pInfoMP = (JTextCtrl*)pUIRoot->find_child(L"Info_MP");
+	UIManager::Get().m_pInfoEXP = (JTextCtrl*)pUIRoot->find_child(L"Info_EXP");
+	///////
+	UIManager::Get().m_pInfoAttackSpeed = (JTextCtrl*)pUIRoot->find_child(L"Info_AttackSpeed");
+	UIManager::Get().m_pInfoMoveSpeed = (JTextCtrl*)pUIRoot->find_child(L"Info_MoveSpeed");
+	UIManager::Get().m_pInfoLevel = (JTextCtrl*)pUIRoot->find_child(L"Info_Level");
+	UIManager::Get().m_pInfoDamage = (JTextCtrl*)pUIRoot->find_child(L"Info_Damage");
+	UIManager::Get().m_pInfoArmor = (JTextCtrl*)pUIRoot->find_child(L"Info_Armor");
+	//auto pArmor = (JTextCtrl*)pUIRoot->find_child(L"Info_Armor_txt");
+	//pArmor->SetString(L"리스폰");
+	UIManager::Get().m_pInfoSP = (JTextCtrl*)pUIRoot->find_child(L"Info_SP");
+	UIManager::Get().m_pInfoStr = (JTextCtrl*)pUIRoot->find_child(L"Info_STR");
+	UIManager::Get().m_pInfoDex = (JTextCtrl*)pUIRoot->find_child(L"Info_DEX");
+	UIManager::Get().m_pInfoInt = (JTextCtrl*)pUIRoot->find_child(L"Info_INT");
+	UIManager::Get().m_pInfoLuk = (JTextCtrl*)pUIRoot->find_child(L"Info_LUK");
+	auto pStatUp = [](void* pStat) {
+		SoundManager::Get().Play("SE_Click01.mp3");
+		if (PlayerController::Get().m_statPoint >= 1)
+		{
+			--PlayerController::Get().m_statPoint;
+			++(*(UCHAR*)pStat);
+			PlayerController::Get().UpdateStatus();
+			PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
+
+			// Luk 올렸을시
+			if (&PacketManager::Get().pMyInfo->StatLuk == pStat &&
+				PlayerController::Get().GetParent() != nullptr)
+			{
+				Packet_Vector3 p_Scailing;
+				p_Scailing.KeyValue = PlayerController::Get().GetParent()->m_keyValue;
+				p_Scailing.Vec3 = Vector3::One * 0.008f;
+				PacketManager::Get().SendPacket((char*)&p_Scailing, (USHORT)sizeof(Packet_Vector3), PACKET_Scaling);
+			}
+		}
+	};
+	UIManager::Get().m_pInfoStrBtn = (JTextCtrl*)pUIRoot->find_child(L"Info_STR_Btn");
+	UIManager::Get().m_pInfoStrBtn->EventClick.first = pStatUp;
+	UIManager::Get().m_pInfoStrBtn->EventClick.second = &PacketManager::Get().pMyInfo->StatStr;
+	UIManager::Get().m_pInfoDexBtn = (JTextCtrl*)pUIRoot->find_child(L"Info_DEX_btn");
+	UIManager::Get().m_pInfoDexBtn->EventClick.first = pStatUp;
+	UIManager::Get().m_pInfoDexBtn->EventClick.second = &PacketManager::Get().pMyInfo->StatDex;
+	UIManager::Get().m_pInfoIntBtn = (JTextCtrl*)pUIRoot->find_child(L"Info_INT_btn");
+	UIManager::Get().m_pInfoIntBtn->EventClick.first = pStatUp;
+	UIManager::Get().m_pInfoIntBtn->EventClick.second = &PacketManager::Get().pMyInfo->StatInt;
+	UIManager::Get().m_pInfoLukBtn = (JTextCtrl*)pUIRoot->find_child(L"Info_LUK_btn");
+	UIManager::Get().m_pInfoLukBtn->EventClick.first = pStatUp;
+	UIManager::Get().m_pInfoLukBtn->EventClick.second = &PacketManager::Get().pMyInfo->StatLuk;
+	// 슬롯
+	UIManager::Get().m_pSlot1 = (JSlot*)pUIRoot->find_child(L"Slot1");
+	UIManager::Get().m_pSlot2 = (JSlot*)pUIRoot->find_child(L"Slot2");
+	UIManager::Get().m_pSlot3 = (JSlot*)pUIRoot->find_child(L"Slot3");
+
+	 //UIManager::Get().m_pSlot3->m_pItem->m_pIndexList[0] = -1;
+	//UIManager::Get().m_pSlot1->AddItem(L"");
+	//UIManager::Get().m_pSlot1->m_bEmpty; // > AddItem(L"");
+
+	UIManager::Get().m_pInfoName = (JEditCtrl*)pUIRoot->find_child(L"Info_Name");
+	auto pNameChange = (JButtonCtrl*)pUIRoot->find_child(L"Info_Name_Change_Btn");
+	pNameChange->EventClick.first = [](void* pScene) {
+		// 아이디 변경
+		auto pUser = PacketManager::Get().pMyInfo;
+		const wstring preName = pUser->UserID;
+		ZeroMemory(pUser->UserID, 20);
+		pUser->DataSize = (UCHAR)UIManager::Get().m_pInfoName->GetString().size() * 2;
+		pUser->DataSize = pUser->DataSize > 12 ? 12 : pUser->DataSize;
+		memcpy(pUser->UserID, UIManager::Get().m_pInfoName->GetString().c_str(), pUser->DataSize);
+		PacketManager::Get().SendPacket((char*)pUser, (USHORT)(PS_UserInfo + pUser->DataSize), PACKET_SendNameUpdate);
+		///
+		UIManager::Get().m_pInfoName->SetString(pUser->UserID);
+		PacketManager::Get().pChatList->push_string(L"[System] '"s + preName + L"' 님의 아이디가" + pUser->UserID + L" 로 변경 되였습니다.");
+		// 디비 변경
+		if(m_loginCheck == 1)
+			((GameScene*)pScene)->RequestUpdateUsername(preName.c_str(), pUser->UserID);
+	};
+	pNameChange->EventClick.second = this;
+
+	UIManager::Get().m_pInvenSlot = (JInventory*)pUIRoot->find_child(L"Inventory_Slot");
+	//
 	ObjectManager::Get().PushObject(pUIRoot);
 	UI::InGameEvent(pUIRoot);
 }

@@ -20,6 +20,7 @@ namespace UI
 		bool Create(ID3D11Device* pDevice, float TextSize, const TCHAR* szNORMAL, 
 			 const char* PSName = "PS", const TCHAR* szShaderName = L"../../data/ui/shader/DefaultUI.hlsl");
 		wstring GetString();
+		void SetString(wstring strText);
 	public:
 		void Play();
 		void End();

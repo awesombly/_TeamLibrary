@@ -57,7 +57,6 @@ bool GameObject::Init() noexcept
 bool GameObject::Frame(const float& spf, const float& accTime) noexcept
 {
 	if (!m_isEnable || m_isStatic) return false;
-	//if (!m_isStatic)
 	UpdateMatrix();
 	if (m_pPhysics != nullptr && usePhysics())
 	{
@@ -71,7 +70,7 @@ bool GameObject::Frame(const float& spf, const float& accTime) noexcept
 		if (GetVelocitySq() > 20.0f)
 		{
 			//m_pParent->isMoved(true);
-			GetRoot()->Translate((GetTotalForce() + Vector3::Up * 5.0f) * spf);
+			GetRoot()->Translate((GetTotalForce() + Vector3::Up) * spf * m_pPhysics->m_mass);
 		}
 	}
 	for (auto& outIter : m_components)
@@ -212,6 +211,7 @@ GameObject* GameObject::GetRoot() noexcept
 	return pRoot;
 }
 
+
 void GameObject::CutParent(const bool& pushObject) noexcept
 {
 	if (m_pParent == nullptr)
@@ -222,18 +222,34 @@ void GameObject::CutParent(const bool& pushObject) noexcept
 		m_pParent->m_childList.remove(*iter);
 	}
 	m_pParent = nullptr;
-	if(pushObject)
+	if (pushObject)
 		ObjectManager::GetInstance().PushObject(this);
 }
 
-void GameObject::CutParentPost() noexcept
+void GameObject::CutParent(const bool& pushObject, const bool& isPostEvent) noexcept
 {
-	static auto pEvent = [](void* pVoid, void*) {
-		((GameObject*)pVoid)->CutParent();
-	};
+	if (isPostEvent)
+	{
+		static auto pEvent = [](void* pVoid, void*) {
+			((GameObject*)pVoid)->CutParent(true, false);
+		};
 
-	ObjectManager::PostFrameEvent.emplace(pEvent, this, nullptr);
+		ObjectManager::PostFrameEvent.emplace(pEvent, this, nullptr);
+		return;
+	}
+
+	if (m_pParent == nullptr)
+		return;
+	auto iter = find(m_pParent->m_childList.begin(), m_pParent->m_childList.end(), this);
+	if (iter != m_pParent->m_childList.end())
+	{
+		m_pParent->m_childList.remove(*iter);
+	}
+	m_pParent = nullptr;
+	if (pushObject)
+		ObjectManager::GetInstance().PushObject(this);
 }
+
 
 forward_list<GameObject*>* GameObject::GetChildList() noexcept
 {
@@ -287,6 +303,14 @@ forward_list<Component*>* GameObject::GetComponentList(const EComponent& eCompTy
 map<EComponent, forward_list<Component*> >& GameObject::GetComponentList() noexcept
 {
 	return m_components;
+}
+
+Component* GameObject::GetComponent(const EComponent& eCompType) noexcept
+{
+	auto&& iter = m_components.find(eCompType);
+	if (iter == m_components.end() || (*iter).second.empty())
+		return nullptr;
+	return iter->second.front();
 }
 
 Collider* GameObject::GetCollider() noexcept

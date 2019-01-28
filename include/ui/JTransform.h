@@ -22,6 +22,7 @@ namespace UI
 		virtual void Translate(const float&, const float&, const float&);
 		virtual void Rotate(const float&, const float&, const float&);
 		virtual void Scale(const float&, const float&, const float&);
+		JTransform GetUITransform();
 	public:
 		JTransform();
 		virtual ~JTransform();

@@ -3,6 +3,11 @@
 namespace UI
 {
 	class JInventory;
+	struct Item
+	{
+	public:
+		map<wstring, int> m_pItemList;
+	};
 	class JSlot : public JPanel
 	{
 	public:
@@ -13,10 +18,11 @@ namespace UI
 		JInventory* m_pInven = nullptr;
 	public:
 		bool Create(ID3D11Device* pDevice, const TCHAR* szBack, const TCHAR* szFront, const char* PSName = "PS", const TCHAR* szShaderName = L"../../data/ui/shader/DefaultUI.hlsl");
-		JPanel* FindSlot(JPanel* pPanel);
-		JPanel* FindSlot(JInventory* pPanel);
-		bool AddItem(const int iItem);
+		JPanel* FindSlot(list<JPanel*> pSlotList);
+		bool AddItem(wstring strItem);
+		bool AddItem(const int itxItem);
 		bool DelItem();
+		bool Empty();
 	public:
 		void Update();
 		bool Frame(const float& spf, const float& accTime) noexcept override;
@@ -25,7 +31,6 @@ namespace UI
 	public:
 		JSlot(wstring NodeName) : JPanel(NodeName)
 		{
-			m_pShape = new JPlane();
 			m_Type = SLOT;
 			m_pBack = new JImageCtrl(NodeName + L"_Back");
 			m_pItem = new JImageCtrl(NodeName + L"_Item");

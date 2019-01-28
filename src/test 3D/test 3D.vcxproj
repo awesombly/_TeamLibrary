@@ -217,6 +217,8 @@ copy "$(SolutionDir)lib\*.dll" "$(OutputPath)\"</Command>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AIZombie.cpp" />
+    <ClCompile Include="AIZombieCast.cpp" />
+    <ClCompile Include="AIZombieCrawl.cpp" />
     <ClCompile Include="AIZombieEx.cpp" />
     <ClCompile Include="AIZombieKing.cpp" />
     <ClCompile Include="EventManager.cpp" />
@@ -227,9 +229,12 @@ copy "$(SolutionDir)lib\*.dll" "$(OutputPath)\"</Command>
     <ClCompile Include="MainClass.cpp" />
     <ClCompile Include="PacketManager.cpp" />
     <ClCompile Include="PlayerController.cpp" />
+    <ClCompile Include="UIManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AIZombie.h" />
+    <ClInclude Include="AIZombieCast.h" />
+    <ClInclude Include="AIZombieCrawl.h" />
     <ClInclude Include="AIZombieEx.h" />
     <ClInclude Include="AIZombieKing.h" />
     <ClInclude Include="EventManager.h" />
@@ -241,9 +246,11 @@ copy "$(SolutionDir)lib\*.dll" "$(OutputPath)\"</Command>
     <ClInclude Include="MyProtocol.h" />
     <ClInclude Include="PacketManager.h" />
     <ClInclude Include="PlayerController.h" />
+    <ClInclude Include="UIManager.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\..\data\script\network.txt" />
+    <Text Include="..\..\data\ui\ItemList.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

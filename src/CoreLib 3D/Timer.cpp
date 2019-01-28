@@ -76,13 +76,11 @@ bool Timer::Frame() noexcept
 			std::this_thread::yield();
 		}
 	}
-	{
-		std::lock_guard<mutex> lock(m_mutex);
-		ErrorMessage(__FUNCTION__ + " -> Timer Exit!"s);
-	}
-	std::this_thread::sleep_for(chrono::microseconds(100));
+	//{
+		//std::lock_guard<mutex> lock(m_mutex);
+		//ErrorMessage(__FUNCTION__ + " -> Timer Exit!"s);
+	//}
 	m_FrameEvent.notify_all();
-	std::this_thread::yield();
 	return false;
 }
 

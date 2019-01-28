@@ -50,7 +50,7 @@ bool SoundManager::Frame() noexcept
 		}
 
 		position = position - *m_pListenerPos;
-		float distance = D3DXVec3Length(&position);
+		float distance = D3DXVec3LengthSq(&position);
 		if (distance <= range)
 		{
 			Play(soundName);

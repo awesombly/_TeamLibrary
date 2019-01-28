@@ -15,6 +15,7 @@ enum EPacketProtocol : USHORT {
 	PACKET_SetAnimTransform,
 	PACKET_PlayerDead,
 	PACKET_SetHP,
+	PACKET_HealHP,
 	// 클라 요청
 	PACKET_ReqSync			= 2000,
 	PACKET_ReqSyncSpawns,
@@ -26,6 +27,8 @@ enum EPacketProtocol : USHORT {
 	PACKET_TakeObject,
 	PACKET_PossessPlayer,
 	PACKET_SendUserInfo,
+	PACKET_SendLevelUp,
+	PACKET_SendNameUpdate,
 };
 
 // 패킷 배열 제외 사이즈
@@ -40,7 +43,7 @@ enum EPacketProtocol : USHORT {
 struct UserInfo
 {
 	UINT UserSocket = 0;
-	UINT IconNum	= 0;
+	UINT KeyValue	= 0;
 	UINT Score		= 0;
 	WORD KillCount	= 0;
 	WORD DeathCount	= 0;
@@ -49,7 +52,7 @@ struct UserInfo
 	UCHAR StatStr	= 0;
 	UCHAR StatDex	= 0;
 	UCHAR StatInt	= 0;
-	UCHAR StatCha	= 0;
+	UCHAR StatLuk	= 0;
 
 	UCHAR DataSize	= 0;
 	WCHAR UserID[11];
@@ -62,10 +65,10 @@ struct Packet_PlayerDead
 	UINT KillUser;
 };
 
-struct Packet_SetHP
+struct Packet_Float
 {
 	UINT KeyValue;
-	float HP;
+	float Value;
 };
 
 struct Packet_TakeObject
@@ -102,7 +105,7 @@ struct Packet_SoundData
 struct Packet_PossessPlayer
 {
 	UINT KeyValue;
-	char ECharacter;
+	UCHAR ECharacter;
 };
 
 struct Packet_KeyValue
@@ -165,13 +168,13 @@ struct Packet_AnimTransform
 	D3DXVECTOR3 Force;
 	D3DXVECTOR3 Direction;
 	D3DXQUATERNION Rotation;
-	char EAnimState;
-	char ECharacter;
+	UCHAR EAnimState;
+	UCHAR ECharacter;
 };
 
 struct Packet_ReqAddPlayer
 {
-	char ECharacter;
+	UCHAR ECharacter;
 };
 
 

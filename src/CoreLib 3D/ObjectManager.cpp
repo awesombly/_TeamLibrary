@@ -227,6 +227,17 @@ bool ObjectManager::Release() noexcept
 	return true;
 }
 
+void ObjectManager::ProcessPostEvent()	noexcept
+{
+	// 후처리 이벤트
+	while (!PostFrameEvent.empty())
+	{
+		auto&[postEvent, param1, param2] = PostFrameEvent.front();
+		postEvent(param1, param2);
+		PostFrameEvent.pop();
+	}
+}
+
 // 스트라이트 리스트
 bool ObjectManager::ReadSpriteScript() noexcept
 {
@@ -346,10 +357,11 @@ map<wstring, vector<Sprite> >& ObjectManager::GetSpriteList() noexcept
 GameObject* ObjectManager::TakeObject(const wstring_view& objName, const bool& pushObject) noexcept
 {
 	GameObject* pObject = nullptr;
-	if (m_DisabledPull[objName].empty())
+	if (m_DisabledPull.find(objName.data()) == m_DisabledPull.end() ||
+		m_DisabledPull[objName.data()].empty())
 	{
 		//대기 풀이 비었다면 복사 생성
-		auto&& iter = m_ProtoPull.find(objName);
+		auto&& iter = m_ProtoPull.find(objName.data());
 		if (iter == m_ProtoPull.end())
 		{
 			ErrorMessage(__FUNCTIONW__ + L" -> "s + objName.data() + L" : 미등록된 오브젝트!");
@@ -360,21 +372,32 @@ GameObject* ObjectManager::TakeObject(const wstring_view& objName, const bool& p
 	else
 	{
 		// 대기 풀이 있다면 꺼내옴
-		pObject = m_DisabledPull[objName].top();
-		m_DisabledPull[objName].pop();
-		auto pComp = pObject->GetComponentList(EComponent::Collider);
-		if (pComp != nullptr)
+		pObject = m_DisabledPull[objName.data()].top();
+		m_DisabledPull[objName.data()].pop();
+		//auto pComp = pObject->GetComponentList(EComponent::Collider);
+		//if (pComp != nullptr)
+		//{
+		//	for (auto& iter : *pComp)
+		//	{
+		//		PushCollider((Collider*)iter);
+		//	}
+		//}
+		//pComp = pObject->GetComponentList(EComponent::Renderer);
+		//if (pComp != nullptr)
+		//{
+		//	for (auto& iter : *pComp)
+		//	{
+		//		iter->Update();
+		//	}
+		//}
+
+		auto pCompList = pObject->GetComponentList();
+		for (auto& [eType, pList] : pCompList)
 		{
-			for (auto& iter : *pComp)
+			for (auto& iter : pList)
 			{
-				PushCollider((Collider*)iter);
-			}
-		}
-		pComp = pObject->GetComponentList(EComponent::Renderer);
-		if (pComp != nullptr)
-		{
-			for (auto& iter : *pComp)
-			{
+				if(eType == EComponent::Collider)
+					PushCollider((Collider*)iter);
 				iter->Update();
 			}
 		}
@@ -436,6 +459,15 @@ void ObjectManager::PopObject(GameObject* pObject) noexcept
 	{
 		//ErrorMessage(__FUNCTIONW__ + L" -> "s + pObject->m_myName + L", Not Found!" );
 		return;
+	}
+	// 충돌체 제거
+	auto pColliders = pObject->GetComponentList(EComponent::Collider);
+	if (pColliders != nullptr)
+	{
+		for (auto& pCol : *pColliders)
+		{
+			PopCollider((Collider*)pCol, false);
+		}
 	}
 	findList.remove(*iter);
 }
@@ -511,7 +543,8 @@ Component* ObjectManager::TakeComponent(const wstring_view& compName) noexcept
 {
 	Component* pComponent = nullptr;
 
-	if (m_DisabledPullComp[compName].empty())
+	if (m_DisabledPullComp.find(compName.data()) == m_DisabledPullComp.end() ||
+		m_DisabledPullComp[compName.data()].empty())
 	{
 		auto&& iter = m_ComponentPull.find(compName.data());
 		if (iter == m_ComponentPull.end())
@@ -524,8 +557,8 @@ Component* ObjectManager::TakeComponent(const wstring_view& compName) noexcept
 	else
 	{
 		// 대기 풀이 있다면 꺼내옴
-		pComponent = m_DisabledPullComp[compName].top();
-		m_DisabledPullComp[compName].pop();
+		pComponent = m_DisabledPullComp[compName.data()].top();
+		m_DisabledPullComp[compName.data()].pop();
 	}
 	//pComponent->Init();
 	pComponent->isEnable(true);
