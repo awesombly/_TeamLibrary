@@ -3,29 +3,20 @@
 #define MatrixPATH L"../../data/Model/MatrixViewer.hlsl"
 #define TablePATH  L"../../data/Model/CharacterTable.cit"
 
-//참고 0 : 캐릭터 이름
-//*CHARACTERNAME		guard
-//*CHARACTERNAME		zombie
-
-//참고 1 : 액션리스트
 //////////////////////////////////////////////////////////////////////////
-//Guard
-//ANIM_COUNT  11
-#define  Guard				L"guard"
-#define	 Guard_PUNCH		L"HERO_PUNCH.Mat"
-#define	 Guard_DASHJUMP		L"HERO_DASHJUMP.Mat"
-#define	 Guard_THROW		L"HERO_THROW.Mat"
-#define	 Guard_HAPPYWALK	L"HERO_HAPPYWALK.Mat"
-#define	 Guard_LEFT			L"HERO_LEFT.Mat"
-#define	 Guard_RIGHT		L"HERO_RIGHT.Mat"
-#define	 Guard_BACKWARD		L"HERO_MOVE_BACK.Mat"
-#define	 Guard_FORWARD		L"HERO_MOVE.Mat"
-#define	 Guard_IDLE			L"HERO_IDLE.Mat"
+#define  Paladin			L"paladin"
+//ANIM_COUNT  10
+#define	 Paladin_BLOCK		L"Paladin_Block.Mat"
+#define	 Paladin_ATTACK		L"Paladin_Atk.Mat"
+#define	 Paladin_THROW		L"Paladin_Throw.Mat"
+#define	 Paladin_LEFT		L"Paladin_Left.Mat"
+#define	 Paladin_RIGHT		L"Paladin_Right.Mat"
+#define	 Paladin_WALK		L"Paladin_Walk.Mat"
+#define	 Paladin_BACK		L"Paladin_Back.Mat"
+#define	 Paladin_RUN		L"Paladin_Run.Mat"
+#define	 Paladin_POWERUP	L"Paladin_POWERUP.Mat"
+#define	 Paladin_IDLE		L"Paladin_idle.Mat"
 
-
-#define	 Guard_DANCE1		L"HERO_DANCE.mat"
-#define	 Guard_DANCE2		L"HERO_DANCE2.mat"
-#define	 Guard_DANCE3		L"HERO_DANCE3.mat"
 
 //////////////////////////////////////////////////////////////////////////
 //ZombieKing
