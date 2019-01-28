@@ -173,7 +173,7 @@ void IntroScene::SetObjects() noexcept
 	// ÅÛ »óÀÚ
 	pCollider = new ColliderOBB(-Vector3::One, Vector3::One);
 	pObject = new GameObject(L"ItemBox", { pCollider, ObjectManager::Get().TakeComponent(L"Fire"), new RCube(L"Cube", L"None.png"), new CTransformer(Vector3::Zero, Quaternion::Left * 2.0f) }, EObjType::Object);
-	pCollider->m_pivot = -Vector3::One * 10.0f;
+	pCollider->m_pivot = Vector3::Down * 10.0f;
 	pObject->SetScale(Vector3::One * 10.0f);
 	pObject->m_pPhysics->m_repulsion = 1.0f;
 	pObject->SetHP(10000.0f);
