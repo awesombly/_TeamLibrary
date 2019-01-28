@@ -7,7 +7,7 @@
 
 enum PLAYER_SELECT
 {
-	GUARD,
+	PALADIN,
 	ZOMBIE,
 	ZOMBIE_EX,
 	ZOMBIE_KING,
@@ -25,7 +25,7 @@ struct CBConstBoneWorld
 class AHeroObj : public AModel
 {
 	PLAYER_SELECT			m_PlayerSelect;
-
+	const TCHAR*			m_IdleName;
 public:
 
 	int						m_iObjectIndex;
@@ -45,16 +45,11 @@ public:
 	int						m_iMatrixIndex;
 	bool					m_bBoneRender;
 
-
-
-	
 	AHeroObj* m_Parent;
 
 	GameObject* clone() noexcept override;
 
 
-	D3DXVECTOR3 GetRightHandPos();
-	D3DXVECTOR3 GetLeftHandPos();
 public:
 
 	
