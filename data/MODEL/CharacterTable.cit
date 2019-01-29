@@ -24,8 +24,27 @@
 *SKIN_LOWER_BODY	..\..\data\model\Paladin\rightSword.skm		null
 
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+*CHARACTERNAME	Archer
+*SHADERFILENMAE		..\..\data\model\Character.hlsl
 
-////////////////////////////////////////////////////////////////////////// 2
+*MATRIXMATRIXCOUNT  9
+*MATRIXFILENAME		..\..\data\model\archer\archer_Aim_Idle.mat
+*MATRIXFILENAME		..\..\data\model\archer\archer_Aim_Rdy.mat
+*MATRIXFILENAME		..\..\data\model\archer\archer_Aim_Shot.mat
+*MATRIXFILENAME		..\..\data\model\archer\archer_Dive.mat
+*MATRIXFILENAME		..\..\data\model\archer\archer_Walk.mat
+*MATRIXFILENAME		..\..\data\model\archer\archer_Left.mat
+*MATRIXFILENAME		..\..\data\model\archer\archer_Right.mat
+*MATRIXFILENAME		..\..\data\model\archer\archer_Back.mat
+*MATRIXFILENAME		..\..\data\model\archer\archer_Idle.mat
+
+
+*SKIN_UPPER_BODY_COUNT	1
+*SKIN_UPPER_BODY		..\..\data\model\archer\archer.skm	null
+*SKIN_LOWER_BODY_COUNT	0
+
+////////////////////////////////////////////////////////////////////////// 
 *CHARACTERNAME	zombie
 *SHADERFILENMAE		..\..\data\model\Character.hlsl
 
@@ -40,7 +59,7 @@
 *SKIN_UPPER_BODY	..\..\data\model\zombie\zombie.skm		null
 *SKIN_LOWER_BODY_COUNT	0
 
-////////////////////////////////////////////////////////////////////////// 3
+////////////////////////////////////////////////////////////////////////// 
 *CHARACTERNAME	zombieEX
 *SHADERFILENMAE		..\..\data\model\Character.hlsl
 
@@ -54,7 +73,7 @@
 *SKIN_LOWER_BODY_COUNT	0
 
 
-////////////////////////////////////////////////////////////////////////// 4
+////////////////////////////////////////////////////////////////////////// 
 *CHARACTERNAME	zombie_king
 *SHADERFILENMAE		..\..\data\model\Character.hlsl
 
@@ -69,17 +88,6 @@
 *SKIN_UPPER_BODY			..\..\data\model\zombieKing\ZOMBIE_KING.skm		null
 *SKIN_LOWER_BODY_COUNT	0
 *SKIN_LOWER_BODY	
-
-////////////////////////////////////////////////////////////////////////// 5
-*CHARACTERNAME	NPC_Chicken
-*SHADERFILENMAE		..\..\data\model\Character.hlsl
-
-*MATRIXMATRIXCOUNT  1
-*MATRIXFILENAME		..\..\data\model\NPC_Chicken\chicken.Mat
-
-*SKIN_UPPER_BODY_COUNT	1
-*SKIN_UPPER_BODY	..\..\data\model\NPC_Chicken\chicken.skm		null
-*SKIN_LOWER_BODY_COUNT	0
 
 
 ////////////////////////////////////////////////////////////////////////// 6

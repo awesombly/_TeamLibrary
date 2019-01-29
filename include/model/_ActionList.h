@@ -4,7 +4,7 @@
 #define TablePATH  L"../../data/Model/CharacterTable.cit"
 
 //////////////////////////////////////////////////////////////////////////
-#define  Paladin			L"paladin"
+#define  Paladin			L"Paladin"
 //ANIM_COUNT  10
 #define	 Paladin_BLOCK		L"Paladin_Block.Mat"
 #define	 Paladin_ATTACK		L"Paladin_Atk.Mat"
@@ -16,6 +16,20 @@
 #define	 Paladin_RUN		L"Paladin_Run.Mat"
 #define	 Paladin_POWERUP	L"Paladin_POWERUP.Mat"
 #define	 Paladin_IDLE		L"Paladin_idle.Mat"
+
+//////////////////////////////////////////////////////////////////////////
+#define  Archer			L"Archer"
+//ANIM_COUNT  9
+#define	 Archer_IDLE			L"archer_Idle.Mat"
+#define	 Archer_DIVE			L"archer_Dive.mat"
+#define	 Archer_WALK			L"archer_Walk.mat"
+#define	 Archer_LEFT			L"archer_Left.mat"
+#define	 Archer_RIGHT			L"archer_Right.mat"
+#define	 Archer_BACK			L"archer_Back.mat"
+#define	 Archer_AIM_IDLE		L"archer_aim_Idle.Mat"
+#define	 Archer_AIM_READY		L"archer_Aim_Rdy.mat"
+#define	 Archer_AIM_SHOT		L"archer_Aim_Shot.mat"
+
 
 
 //////////////////////////////////////////////////////////////////////////
