@@ -214,115 +214,6 @@
 ^pfEventClick 7274
 ^vpEventClick 
 
-^Type 777
-^NodeName Chat_Panel
-^ParentName Game_Panel
-^KeyState 135 135
-^bRender 1
-^Position 0.000000 0.000000 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 1.000000 1.000000 1.000000
-
-^Type 788
-^NodeName Chat_Log_Back
-^ParentName Chat_Panel
-^KeyState 135 135
-^bRender 1
-^Position 0.000000 -271.834656 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 229.833908 24.167107 1.000000
-^Color 0.000000 0.000000 0.000000 1.000000
-^tx_Normal White.png
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick 
-
-^Type 785
-^NodeName Chat_Log
-^ParentName Chat_Panel
-^KeyState 135 135
-^bRender 1
-^Position 0.000000 -271.834656 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 229.833908 24.167107 1.000000
-^Color 1.000000 1.000000 1.000000 0.500000
-^Align 1
-^TextSize 13.000000
-^RectColumn 4
-^tx_Normal White.png
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick 
-
-^Type 781
-
-^VHType 1446
-^NodeName Chat_Slider
-^ParentName Chat_Panel
-^KeyState 135 135
-^bRender 1
-^Position 226.000000 -268.760651 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 3.000000 20.000000 1.000000
-^Color 1.000000 1.000000 1.000000 1.000000
-^tx_Bar Alpha.png
-^tx_Handle PropertyButtonFavouriteFilled-f49031973d301466f8844bd153a56efc-1.png
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick 
-
-^Type 787
-^NodeName Chat_Edit
-^ParentName Chat_Panel
-^KeyState 135 135
-^bRender 0
-^bPrivate 0
-^Position -19.000000 -210.000000 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 200.000000 10.000000 1.000000
-^Color 1.000000 1.000000 1.000000 1.000000
-^Align 1
-^TextSize 20.000000
-^TextLength 0
-^tx_Normal ChatEdit.png
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick 
-
-^Type 783
-^NodeName Chat_Enter
-^ParentName Chat_Panel
-^KeyState 135 135
-^bRender 0
-^Position 200.000000 -210.000000 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 20.000000 11.000000 1.000000
-^Color 1.000000 1.000000 1.000000 1.000000
-^Align 0
-^strText È®ÀÎ
-^TextSize 13.000000
-^tx_Normal btn_177.png
-^tx_Hover btn_176.png
-^tx_Press btn_176.png
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick 
-
 ^Type 780
 ^VHType 1446
 ^NodeName Skill_Left
@@ -348,11 +239,11 @@
 ^ParentName Game_Panel
 ^KeyState 135 135
 ^bRender 1
-^Position 368.333008 -261.166260 0.000000
+^Position 368.666321 -261.166260 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 26.000000 26.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
-^tx_BackGround axe_mobile-d4d9e8a208f1f964783b426340fc8c29-1.png
+^tx_BackGround boots_mobile-5301437f3fd3acb46bc8924e850b75cf-1.png
 ^tx_FrontGround black.png
 ^pfEventHover 7274
 ^vpEventHover 
@@ -368,7 +259,7 @@
 ^bRender 1
 ^Position 0.000000 0.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 42.499886 42.499886 1.000000
+^Scale 34.359829 34.359829 1.000000
 ^Color 0.000000 0.000000 0.000000 1.000000
 ^tx_Normal CrossHair.png
 ^pfEventHover 7274
@@ -407,18 +298,52 @@
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 1.000000 1.000000 1.000000
 
+^Type 788
+^NodeName Enemy_HP_Back2
+^ParentName Enemy_Panel
+^KeyState 135 135
+^bRender 1
+^Position 0.000000 235.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 115.801628 8.354493 1.000000
+^Color 0.700000 0.700000 0.700000 1.000000
+^tx_Normal White.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
 ^Type 780
 ^VHType 1447
 ^NodeName Enemy_HP
 ^ParentName Enemy_Panel
 ^KeyState 135 135
 ^bRender 1
-^Position -1.000000 236.000000 0.000000
+^Position 0.000000 235.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 200.000000 10.000000 1.000000
+^Scale 115.801628 8.354493 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
-^tx_BackGround White.png
+^tx_BackGround Alpha.png
 ^tx_FrontGround red.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName Enemy_HP_Back
+^ParentName Enemy_Panel
+^KeyState 135 135
+^bRender 1
+^Position 0.000000 235.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 150.000000 15.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_Normal enemy_health_bar_foreground_003.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -431,13 +356,13 @@
 ^ParentName Enemy_Panel
 ^KeyState 135 135
 ^bRender 1
-^Position 0.000000 237.000000 0.000000
+^Position 0.000000 235.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 200.000000 10.000000 1.000000
+^Scale 200.000000 13.666728 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
 ^Align 0
 ^strText ÀûHP³ÖÀ¸·Á¸é³ÖÀ¸¼¼¿¬
-^TextSize 15.000000
+^TextSize 14.000000
 ^tx_Normal Alpha.png
 ^tx_Hover Alpha.png
 ^tx_Press Alpha.png
@@ -453,13 +378,13 @@
 ^ParentName Enemy_Panel
 ^KeyState 135 135
 ^bRender 1
-^Position 0.000000 260.000000 0.000000
+^Position 0.000000 212.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 200.000000 15.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 0.000000
-^Align 1
+^Align 0
 ^strText EnemyName
-^TextSize 30.000000
+^TextSize 25.000000
 ^tx_Normal NO_IMAGE.png
 ^tx_Hover NO_IMAGE.png
 ^tx_Press NO_IMAGE.png
@@ -630,309 +555,9 @@
 ^bRender 1
 ^Position 220.000000 34.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 120.000000 200.000000 1.000000
-^Color 0.000000 0.000000 0.000000 0.750000
-^tx_Normal White.png
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick 
-
-^Type 783
-^NodeName Inventory_Title
-^ParentName Inventory_Panel
-^KeyState 135 135
-^bRender 1
-^Position 220.000000 215.000000 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 50.000000 15.000000 1.000000
+^Scale 130.000000 200.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
-^Align 0
-^strText ÀÎº¥Åä¸®
-^TextSize 30.000000
-^tx_Normal White.png
-^tx_Hover White.png
-^tx_Press White.png
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick 
-
-^Type 790
-^NodeName Inventory_Slot
-^ParentName Inventory_Panel
-^KeyState 135 135
-^bRender 1
-^Position 220.000000 -27.179495 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 115.000000 85.000000 1.000000
-^RowCol 8 5 
-^Color 0.000000 0.000000 0.000000 0.500000
-^tx_Normal White.png
-^tx_Hover black_wdim10.png
-
-^Type 778
-^NodeName Inventory_Sort
-^ParentName Inventory_Panel
-^KeyState 135 135
-^bRender 1
-^Position 315.502258 -122.456612 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 20.000000 10.000000 1.000000
-^Color 1.000000 1.000000 1.000000 1.000000
-^tx_Normal White.png
-^tx_Hover black.png
-^tx_Press black.png
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick 
-
-^Type 778
-^NodeName Inventory_Exit
-^ParentName Inventory_Panel
-^KeyState 135 135
-^bRender 1
-^Position 220.000000 -145.000000 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 30.000000 15.000000 1.000000
-^Color 1.000000 1.000000 1.000000 1.000000
-^tx_Normal btn_177.png
-^tx_Hover btn_176.png
-^tx_Press btn_176.png
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick 
-
-^Type 778
-^NodeName Inventory_Equipment
-^ParentName Inventory_Panel
-^KeyState 135 135
-^bRender 1
-^Position 125.000000 67.940727 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 20.000000 10.000000 1.000000
-^Color 1.000000 1.000000 1.000000 1.000000
-^tx_Normal White.png
-^tx_Hover black.png
-^tx_Press black.png
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick 
-
-^Type 778
-^NodeName Inventory_Supplies
-^ParentName Inventory_Panel
-^KeyState 135 135
-^bRender 1
-^Position 164.833267 67.848236 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 20.000000 10.000000 1.000000
-^Color 1.000000 1.000000 1.000000 1.000000
-^tx_Normal White.png
-^tx_Hover black.png
-^tx_Press black.png
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick 
-
-^Type 778
-^NodeName Inventory_Material
-^ParentName Inventory_Panel
-^KeyState 135 135
-^bRender 1
-^Position 205.166763 68.002090 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 20.000000 10.000000 1.000000
-^Color 1.000000 1.000000 1.000000 1.000000
-^tx_Normal White.png
-^tx_Hover black.png
-^tx_Press black.png
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick 
-
-^Type 778
-^NodeName Inventory_ItemAdd
-^ParentName Inventory_Panel
-^KeyState 135 135
-^bRender 1
-^Position 124.833298 -122.499985 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 20.000000 10.000000 1.000000
-^Color 1.000000 1.000000 1.000000 1.000000
-^tx_Normal White.png
-^tx_Hover black.png
-^tx_Press black.png
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick 
-
-^Type 778
-^NodeName Inventory_Del
-^ParentName Inventory_Panel
-^KeyState 135 135
-^bRender 1
-^Position 168.666779 -122.499985 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 20.000000 10.000000 1.000000
-^Color 1.000000 1.000000 1.000000 1.000000
-^tx_Normal White.png
-^tx_Hover black.png
-^tx_Press black.png
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick 
-
-^Type 783
-^NodeName txt_jangbi
-^ParentName Inventory_Panel
-^KeyState 135 135
-^bRender 1
-^Position 125.000000 67.940727 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 20.000000 10.000000 1.000000
-^Color 1.000000 1.000000 1.000000 0.000000
-^Align 0
-^strText Àåºñ
-^TextSize 15.000000
-^tx_Normal NO_IMAGE.png
-^tx_Hover NO_IMAGE.png
-^tx_Press NO_IMAGE.png
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick 
-
-^Type 783
-^NodeName txt_somo
-^ParentName Inventory_Panel
-^KeyState 135 135
-^bRender 1
-^Position 164.833267 67.848236 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 20.000000 10.000000 1.000000
-^Color 1.000000 1.000000 1.000000 0.000000
-^Align 0
-^strText ¼Ò¸ðÇ°
-^TextSize 15.000000
-^tx_Normal NO_IMAGE.png
-^tx_Hover NO_IMAGE.png
-^tx_Press NO_IMAGE.png
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick 
-
-^Type 783
-^NodeName txt_jaryu
-^ParentName Inventory_Panel
-^KeyState 135 135
-^bRender 1
-^Position 205.166763 68.002090 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 20.000000 10.000000 1.000000
-^Color 1.000000 1.000000 1.000000 0.000000
-^Align 0
-^strText Àç·á
-^TextSize 15.000000
-^tx_Normal NO_IMAGE.png
-^tx_Hover NO_IMAGE.png
-^tx_Press NO_IMAGE.png
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick 
-
-^Type 783
-^NodeName txt_sort
-^ParentName Inventory_Panel
-^KeyState 135 135
-^bRender 1
-^Position 315.502258 -122.456612 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 20.000000 10.000000 1.000000
-^Color 1.000000 1.000000 1.000000 0.000000
-^Align 0
-^strText Á¤·Ä
-^TextSize 15.000000
-^tx_Normal NO_IMAGE.png
-^tx_Hover NO_IMAGE.png
-^tx_Press NO_IMAGE.png
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick 
-
-^Type 783
-^NodeName txt_add
-^ParentName Inventory_Panel
-^KeyState 135 135
-^bRender 1
-^Position 124.833298 -122.499985 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 20.000000 10.000000 1.000000
-^Color 1.000000 1.000000 1.000000 0.000000
-^Align 0
-^strText Ãß°¡
-^TextSize 15.000000
-^tx_Normal NO_IMAGE.png
-^tx_Hover NO_IMAGE.png
-^tx_Press NO_IMAGE.png
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick 
-
-^Type 783
-^NodeName txt_del
-^ParentName Inventory_Panel
-^KeyState 135 135
-^bRender 1
-^Position 168.666779 -122.499985 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 20.000000 10.000000 1.000000
-^Color 1.000000 1.000000 1.000000 0.000000
-^Align 0
-^strText Á¦°Å
-^TextSize 15.000000
-^tx_Normal NO_IMAGE.png
-^tx_Hover NO_IMAGE.png
-^tx_Press NO_IMAGE.png
+^tx_Normal Ronnan-login-box12.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -945,7 +570,7 @@
 ^ParentName Inventory_Panel
 ^KeyState 135 135
 ^bRender 1
-^Position 128.000000 181.000000 0.000000
+^Position 130.000000 180.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 15.000000 15.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
@@ -956,73 +581,205 @@
 ^ParentName Inventory_Panel
 ^KeyState 135 135
 ^bRender 1
-^Position 282.000000 181.838196 0.000000
+^Position 280.000000 180.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 15.000000 15.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
 ^tx_Normal black_wdim10.png
+
+^Type 783
+^NodeName Inventory_Sort
+^ParentName Inventory_Panel
+^KeyState 135 135
+^bRender 1
+^Position 315.000000 -120.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 20.000000 11.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^Align 0
+^strText Á¤·Ä
+^TextSize 15.000000
+^tx_Normal Btn3_Normal.png
+^tx_Hover Btn3_Hover.png
+^tx_Press Btn3_Press.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
 
 ^Type 789
 ^NodeName Inventory_Slot_Jacket
 ^ParentName Inventory_Panel
 ^KeyState 135 135
 ^bRender 1
-^Position 161.000000 181.000000 0.000000
+^Position 160.000000 180.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 15.000000 15.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
 ^tx_Normal black_wdim10.png
+
+^Type 783
+^NodeName Inventory_Del
+^ParentName Inventory_Panel
+^KeyState 135 135
+^bRender 1
+^Position 165.000000 -120.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 20.000000 11.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^Align 0
+^strText Á¦°Å
+^TextSize 15.000000
+^tx_Normal Btn3_Normal.png
+^tx_Hover Btn3_Hover.png
+^tx_Press Btn3_Press.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
 
 ^Type 789
 ^NodeName Inventory_Slot_Pants
 ^ParentName Inventory_Panel
 ^KeyState 135 135
 ^bRender 1
-^Position 128.000000 148.000000 0.000000
+^Position 130.000000 150.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 15.000000 15.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
 ^tx_Normal black_wdim10.png
+
+^Type 783
+^NodeName Inventory_ItemAdd
+^ParentName Inventory_Panel
+^KeyState 135 135
+^bRender 1
+^Position 124.630951 -120.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 20.000000 11.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^Align 0
+^strText Ãß°¡
+^TextSize 15.000000
+^tx_Normal Btn3_Normal.png
+^tx_Hover Btn3_Hover.png
+^tx_Press Btn3_Press.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
 
 ^Type 789
 ^NodeName Inventory_Slot_Shoes
 ^ParentName Inventory_Panel
 ^KeyState 135 135
 ^bRender 1
-^Position 128.166672 115.000000 0.000000
+^Position 130.000000 120.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 15.000000 15.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
 ^tx_Normal black_wdim10.png
+
+^Type 783
+^NodeName Inventory_Material
+^ParentName Inventory_Panel
+^KeyState 135 135
+^bRender 1
+^Position 204.666656 65.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 20.000000 11.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^Align 0
+^strText Àç·á
+^TextSize 15.000000
+^tx_Normal Btn3_Normal.png
+^tx_Hover Btn3_Hover.png
+^tx_Press Btn3_Press.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
 
 ^Type 789
 ^NodeName Inventory_Slot_Belt
 ^ParentName Inventory_Panel
 ^KeyState 135 135
 ^bRender 1
-^Position 161.000000 148.000000 0.000000
+^Position 160.000000 150.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 15.000000 15.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
 ^tx_Normal black_wdim10.png
+
+^Type 783
+^NodeName Inventory_Supplies
+^ParentName Inventory_Panel
+^KeyState 135 135
+^bRender 1
+^Position 164.666641 65.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 20.000000 11.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^Align 0
+^strText ¼Ò¸ðÇ°
+^TextSize 15.000000
+^tx_Normal Btn3_Normal.png
+^tx_Hover Btn3_Hover.png
+^tx_Press Btn3_Press.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
 
 ^Type 789
 ^NodeName Inventory_Slot_Ring
 ^ParentName Inventory_Panel
 ^KeyState 135 135
 ^bRender 1
-^Position 315.000000 150.006409 0.000000
+^Position 310.000000 150.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 15.000000 15.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
 ^tx_Normal black_wdim10.png
+
+^Type 783
+^NodeName Inventory_Equipment
+^ParentName Inventory_Panel
+^KeyState 135 135
+^bRender 1
+^Position 124.667702 65.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 20.000000 11.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^Align 0
+^strText Àåºñ
+^TextSize 15.000000
+^tx_Normal Btn3_Normal.png
+^tx_Hover Btn3_Hover.png
+^tx_Press Btn3_Press.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
 
 ^Type 789
 ^NodeName Inventory_Slot_Necklace
 ^ParentName Inventory_Panel
 ^KeyState 135 135
 ^bRender 1
-^Position 282.000000 150.000000 0.000000
+^Position 280.000000 150.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 15.000000 15.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
@@ -1033,7 +790,7 @@
 ^ParentName Inventory_Panel
 ^KeyState 135 135
 ^bRender 1
-^Position 314.666656 181.833298 0.000000
+^Position 310.000000 180.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 15.000000 15.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
@@ -1044,11 +801,46 @@
 ^ParentName Inventory_Panel
 ^KeyState 135 135
 ^bRender 1
-^Position 315.333313 118.000061 0.000000
+^Position 310.000000 120.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 15.000000 15.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
 ^tx_Normal black_wdim10.png
+
+^Type 790
+^NodeName Inventory_Slot
+^ParentName Inventory_Panel
+^KeyState 135 135
+^bRender 1
+^Position 220.000000 -27.179497 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 115.000000 85.000000 1.000000
+^RowCol 8 5 
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_Normal back345345.png
+^tx_Hover black_wdim10.png
+
+^Type 783
+^NodeName Inventory_Title
+^ParentName Inventory_Panel
+^KeyState 135 135
+^bRender 1
+^Position 220.000000 227.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 60.000000 25.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^Align 0
+^strText ÀÎº¥Åä¸®
+^TextSize 25.000000
+^tx_Normal window.png
+^tx_Hover window.png
+^tx_Press window.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
 
 ^Type 777
 ^NodeName Info_Panel
@@ -1066,26 +858,9 @@
 ^bRender 1
 ^Position -220.000000 34.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 120.000000 200.000000 1.000000
-^Color 0.000000 0.000000 0.000000 1.000000
-^tx_Normal NO_IMAGE.png
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick 
-
-^Type 788
-^NodeName Info_Back2
-^ParentName Info_Panel
-^KeyState 135 135
-^bRender 1
-^Position -220.000000 94.663635 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 115.000000 100.000000 1.000000
+^Scale 130.000000 200.000000 1.000000
 ^Color 0.500000 0.500000 0.500000 1.000000
-^tx_Normal White.png
+^tx_Normal Ronnan-login-box12.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -1100,26 +875,9 @@
 ^bRender 1
 ^Position -220.000000 -25.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 115.000000 10.000000 1.000000
-^Color 0.500000 0.500000 0.500000 1.000000
-^tx_Normal White.png
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick 
-
-^Type 788
-^NodeName Info_Back4
-^ParentName Info_Panel
-^KeyState 135 135
-^bRender 1
-^Position -220.000000 -95.000000 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 115.000000 50.000000 1.000000
-^Color 0.500000 0.500000 0.500000 1.000000
-^tx_Normal White.png
+^Scale 120.000000 10.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -1132,16 +890,16 @@
 ^ParentName Info_Panel
 ^KeyState 135 135
 ^bRender 1
-^Position -220.000000 215.000000 0.000000
+^Position -220.000000 227.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 70.000000 15.000000 1.000000
+^Scale 60.000000 25.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
 ^Align 0
 ^strText Ä³¸¯ÅÍÁ¤º¸
-^TextSize 30.000000
-^tx_Normal White.png
-^tx_Hover White.png
-^tx_Press White.png
+^TextSize 25.000000
+^tx_Normal window.png
+^tx_Hover window.png
+^tx_Press window.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -1157,13 +915,13 @@
 ^Position -190.000000 135.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 80.000000 7.000000 1.000000
-^Color 1.000000 1.000000 1.000000 1.000000
+^Color 0.700000 1.000000 1.000000 1.000000
 ^Align 0
 ^strText 646464/1000000
 ^TextSize 15.000000
-^tx_Normal White.png
-^tx_Hover White.png
-^tx_Press White.png
+^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -1176,16 +934,16 @@
 ^ParentName Info_Panel
 ^KeyState 135 135
 ^bRender 1
-^Position -300.000000 135.000000 0.000000
+^Position -290.000000 135.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 20.000000 10.000000 1.000000
-^Color 1.000000 1.000000 1.000000 0.000000
-^Align 1
+^Scale 30.000000 7.000000 1.000000
+^Color 1.000000 0.500000 1.000000 1.000000
+^Align 0
 ^strText HP
 ^TextSize 17.000000
-^tx_Normal White.png
-^tx_Hover NO_IMAGE.png
-^tx_Press NO_IMAGE.png
+^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -1201,13 +959,13 @@
 ^Position -190.000000 115.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 80.000000 7.000000 1.000000
-^Color 1.000000 1.000000 1.000000 1.000000
+^Color 0.700000 1.000000 1.000000 1.000000
 ^Align 0
 ^strText 969696/1000000
 ^TextSize 15.000000
-^tx_Normal White.png
-^tx_Hover White.png
-^tx_Press White.png
+^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -1220,16 +978,16 @@
 ^ParentName Info_Panel
 ^KeyState 135 135
 ^bRender 1
-^Position -300.000000 115.000000 0.000000
+^Position -290.000000 115.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 20.000000 10.000000 1.000000
-^Color 1.000000 1.000000 1.000000 0.000000
-^Align 1
+^Scale 30.000000 7.000000 1.000000
+^Color 1.000000 0.500000 1.000000 1.000000
+^Align 0
 ^strText MP
 ^TextSize 17.000000
-^tx_Normal NO_IMAGE.png
-^tx_Hover NO_IMAGE.png
-^tx_Press NO_IMAGE.png
+^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -1245,13 +1003,13 @@
 ^Position -190.000000 95.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 80.000000 7.000000 1.000000
-^Color 1.000000 1.000000 1.000000 1.000000
+^Color 0.700000 1.000000 1.000000 1.000000
 ^Align 0
 ^strText 123456/1000000
 ^TextSize 15.000000
-^tx_Normal White.png
-^tx_Hover White.png
-^tx_Press White.png
+^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -1264,16 +1022,16 @@
 ^ParentName Info_Panel
 ^KeyState 135 135
 ^bRender 1
-^Position -300.000000 95.000000 0.000000
+^Position -290.000000 95.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 20.000000 10.000000 1.000000
-^Color 1.000000 1.000000 1.000000 0.000000
-^Align 1
+^Scale 30.000000 7.000000 1.000000
+^Color 1.000000 0.500000 1.000000 1.000000
+^Align 0
 ^strText EXP
 ^TextSize 17.000000
-^tx_Normal NO_IMAGE.png
-^tx_Hover NO_IMAGE.png
-^tx_Press NO_IMAGE.png
+^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -1286,13 +1044,30 @@
 ^ParentName Info_Panel
 ^KeyState 135 135
 ^bRender 1
-^Position -125.000000 175.000000 0.000000
+^Position -120.642487 175.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 15.000000 10.000000 1.000000
+^Scale 10.000000 10.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
-^tx_Normal btn_177.png
-^tx_Hover btn_176.png
-^tx_Press btn_176.png
+^tx_Normal btn01a.png
+^tx_Hover btn01g.png
+^tx_Press btn01g.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName Info_Name_Change_Btn_Img
+^ParentName Info_Name_Change_Btn
+^KeyState 135 135
+^bRender 1
+^Position 0.000000 0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 5.000000 5.000000 1.000000
+^Color 0.000000 0.000000 0.000000 1.000000
+^tx_Normal Change.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -1306,14 +1081,14 @@
 ^KeyState 135 135
 ^bRender 1
 ^bPrivate 0
-^Position -210.000000 175.000000 0.000000
+^Position -199.457260 175.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 60.000000 7.000000 1.000000
-^Color 1.000000 1.000000 1.000000 1.000000
-^Align 1
+^Scale 65.000000 7.000000 1.000000
+^Color 0.700000 1.000000 1.000000 1.000000
+^Align 0
 ^TextSize 15.000000
 ^TextLength 6
-^tx_Normal White.png
+^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -1326,16 +1101,16 @@
 ^ParentName Info_Panel
 ^KeyState 135 135
 ^bRender 1
-^Position -300.000000 175.000000 0.000000
+^Position -290.000000 175.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 20.000000 10.000000 1.000000
-^Color 1.000000 1.000000 1.000000 0.000000
-^Align 1
+^Scale 30.000000 7.000000 1.000000
+^Color 1.000000 0.500000 1.000000 1.000000
+^Align 0
 ^strText ÀÌ¸§
 ^TextSize 17.000000
-^tx_Normal NO_IMAGE.png
-^tx_Hover NO_IMAGE.png
-^tx_Press NO_IMAGE.png
+^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -1351,13 +1126,13 @@
 ^Position -190.000000 75.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 80.000000 7.000000 1.000000
-^Color 1.000000 1.000000 1.000000 1.000000
+^Color 0.700000 1.000000 1.000000 1.000000
 ^Align 0
 ^strText 1.47
 ^TextSize 15.000000
-^tx_Normal White.png
-^tx_Hover White.png
-^tx_Press White.png
+^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -1370,16 +1145,16 @@
 ^ParentName Info_Panel
 ^KeyState 135 135
 ^bRender 1
-^Position -300.000000 75.000000 0.000000
+^Position -290.000000 75.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 20.000000 10.000000 1.000000
-^Color 1.000000 1.000000 1.000000 0.000000
-^Align 1
-^strText °ø¼Ó
+^Scale 30.000000 7.000000 1.000000
+^Color 1.000000 0.500000 1.000000 1.000000
+^Align 0
+^strText °ø°Ý¼Óµµ
 ^TextSize 17.000000
-^tx_Normal NO_IMAGE.png
-^tx_Hover NO_IMAGE.png
-^tx_Press NO_IMAGE.png
+^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -1395,13 +1170,13 @@
 ^Position -190.000000 55.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 80.000000 7.000000 1.000000
-^Color 1.000000 1.000000 1.000000 1.000000
+^Color 0.700000 1.000000 1.000000 1.000000
 ^Align 0
 ^strText 3.29
 ^TextSize 15.000000
-^tx_Normal White.png
-^tx_Hover White.png
-^tx_Press White.png
+^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -1414,16 +1189,16 @@
 ^ParentName Info_Panel
 ^KeyState 135 135
 ^bRender 1
-^Position -300.000000 55.000000 0.000000
+^Position -290.000000 55.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 20.000000 10.000000 1.000000
-^Color 1.000000 1.000000 1.000000 0.000000
-^Align 1
-^strText ÀÌ¼Ó
+^Scale 30.000000 7.000000 1.000000
+^Color 1.000000 0.500000 1.000000 1.000000
+^Align 0
+^strText ÀÌµ¿¼Óµµ
 ^TextSize 17.000000
-^tx_Normal NO_IMAGE.png
-^tx_Hover NO_IMAGE.png
-^tx_Press NO_IMAGE.png
+^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -1439,13 +1214,13 @@
 ^Position -190.000000 155.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 80.000000 7.000000 1.000000
-^Color 1.000000 1.000000 1.000000 1.000000
+^Color 0.700000 1.000000 1.000000 1.000000
 ^Align 0
 ^strText 1
-^TextSize 20.000000
-^tx_Normal White.png
-^tx_Hover White.png
-^tx_Press White.png
+^TextSize 15.000000
+^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -1458,16 +1233,16 @@
 ^ParentName Info_Panel
 ^KeyState 135 135
 ^bRender 1
-^Position -300.000000 155.000000 0.000000
+^Position -290.000000 155.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 20.000000 10.000000 1.000000
-^Color 1.000000 1.000000 1.000000 0.000000
-^Align 1
+^Scale 30.000000 7.000000 1.000000
+^Color 1.000000 0.500000 1.000000 1.000000
+^Align 0
 ^strText ·¹º§
 ^TextSize 17.000000
-^tx_Normal White.png
-^tx_Hover White.png
-^tx_Press White.png
+^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -1483,13 +1258,13 @@
 ^Position -190.000000 35.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 80.000000 7.000000 1.000000
-^Color 1.000000 1.000000 1.000000 1.000000
+^Color 0.700000 1.000000 1.000000 1.000000
 ^Align 0
 ^strText 21212~1212115
 ^TextSize 15.000000
-^tx_Normal White.png
-^tx_Hover White.png
-^tx_Press White.png
+^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -1504,14 +1279,14 @@
 ^bRender 1
 ^Position -290.000000 35.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 30.000000 10.000000 1.000000
-^Color 1.000000 1.000000 1.000000 0.000000
-^Align 1
+^Scale 30.000000 7.000000 1.000000
+^Color 1.000000 0.500000 1.000000 1.000000
+^Align 0
 ^strText °ø°Ý·Â
 ^TextSize 17.000000
-^tx_Normal NO_IMAGE.png
-^tx_Hover NO_IMAGE.png
-^tx_Press NO_IMAGE.png
+^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -1527,13 +1302,13 @@
 ^Position -190.000000 15.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 80.000000 7.000000 1.000000
-^Color 1.000000 1.000000 1.000000 1.000000
+^Color 0.700000 1.000000 1.000000 1.000000
 ^Align 0
 ^strText 3945748
 ^TextSize 15.000000
-^tx_Normal White.png
-^tx_Hover White.png
-^tx_Press White.png
+^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -1548,14 +1323,14 @@
 ^bRender 1
 ^Position -290.000000 15.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 30.000000 10.000000 1.000000
-^Color 1.000000 1.000000 1.000000 0.000000
-^Align 1
+^Scale 30.000000 7.000000 1.000000
+^Color 1.000000 0.500000 1.000000 1.000000
+^Align 0
 ^strText ¹æ¾î·Â
 ^TextSize 17.000000
-^tx_Normal NO_IMAGE.png
-^tx_Hover NO_IMAGE.png
-^tx_Press NO_IMAGE.png
+^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -1568,16 +1343,16 @@
 ^ParentName Info_Panel
 ^KeyState 135 135
 ^bRender 1
-^Position -140.000000 -25.000000 0.000000
+^Position -130.000000 -25.384857 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 30.000000 7.000000 1.000000
-^Color 1.000000 1.000000 1.000000 1.000000
+^Scale 20.000000 7.000000 1.000000
+^Color 1.000000 0.400000 0.000000 0.500000
 ^Align 0
 ^strText 111
 ^TextSize 15.000000
-^tx_Normal White.png
-^tx_Hover White.png
-^tx_Press White.png
+^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -1615,13 +1390,13 @@
 ^Position -200.000000 -59.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 65.000000 7.000000 1.000000
-^Color 1.000000 1.000000 1.000000 1.000000
+^Color 0.700000 1.000000 1.000000 1.000000
 ^Align 0
 ^strText 999999
 ^TextSize 15.000000
-^tx_Normal White.png
-^tx_Hover White.png
-^tx_Press White.png
+^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -1637,13 +1412,13 @@
 ^Position -200.000000 -83.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 65.000000 7.000000 1.000000
-^Color 1.000000 1.000000 1.000000 1.000000
+^Color 0.700000 1.000000 1.000000 1.000000
 ^Align 0
 ^strText 88888888
 ^TextSize 15.000000
-^tx_Normal White.png
-^tx_Hover White.png
-^tx_Press White.png
+^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -1659,13 +1434,13 @@
 ^Position -200.000000 -107.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 65.000000 7.000000 1.000000
-^Color 1.000000 1.000000 1.000000 1.000000
+^Color 0.700000 1.000000 1.000000 1.000000
 ^Align 0
 ^strText 77777
 ^TextSize 15.000000
-^tx_Normal White.png
-^tx_Hover White.png
-^tx_Press White.png
+^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -1678,16 +1453,16 @@
 ^ParentName Info_Panel
 ^KeyState 135 135
 ^bRender 1
-^Position -200.000000 -131.000000 0.000000
+^Position -200.000000 -130.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 65.000000 7.000000 1.000000
-^Color 1.000000 1.000000 1.000000 1.000000
+^Color 0.700000 1.000000 1.000000 1.000000
 ^Align 0
 ^strText 666666666
 ^TextSize 15.000000
-^tx_Normal White.png
-^tx_Hover White.png
-^tx_Press White.png
+^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -1700,13 +1475,13 @@
 ^ParentName Info_Panel
 ^KeyState 135 135
 ^bRender 1
-^Position -120.000000 -59.000000 0.000000
+^Position -115.000000 -59.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 10.000000 10.000000 1.000000
+^Scale 10.000000 -10.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
-^tx_Normal White.png
-^tx_Hover black.png
-^tx_Press black.png
+^tx_Normal Btn5_Normal.png
+^tx_Hover Btn5_Hover.png
+^tx_Press Btn5_Press.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -1719,13 +1494,13 @@
 ^ParentName Info_Panel
 ^KeyState 135 135
 ^bRender 1
-^Position -120.000000 -83.000000 0.000000
+^Position -115.000000 -83.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 10.000000 10.000000 1.000000
+^Scale 10.000000 -10.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
-^tx_Normal White.png
-^tx_Hover black.png
-^tx_Press black.png
+^tx_Normal Btn5_Normal.png
+^tx_Hover Btn5_Hover.png
+^tx_Press Btn5_Press.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -1738,13 +1513,13 @@
 ^ParentName Info_Panel
 ^KeyState 135 135
 ^bRender 1
-^Position -120.000000 -107.000000 0.000000
+^Position -115.000000 -107.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 10.000000 10.000000 1.000000
+^Scale 10.000000 -10.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
-^tx_Normal White.png
-^tx_Hover black.png
-^tx_Press black.png
+^tx_Normal Btn5_Normal.png
+^tx_Hover Btn5_Hover.png
+^tx_Press Btn5_Press.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -1757,13 +1532,13 @@
 ^ParentName Info_Panel
 ^KeyState 135 135
 ^bRender 1
-^Position -120.000000 -131.000000 0.000000
+^Position -115.000000 -131.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 10.000000 10.000000 1.000000
+^Scale 10.000000 -10.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
-^tx_Normal White.png
-^tx_Hover black.png
-^tx_Press black.png
+^tx_Normal Btn5_Normal.png
+^tx_Hover Btn5_Hover.png
+^tx_Press Btn5_Press.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -1776,16 +1551,16 @@
 ^ParentName Info_Panel
 ^KeyState 135 135
 ^bRender 1
-^Position -300.000000 -59.000000 0.000000
+^Position -290.000000 -59.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 20.000000 10.000000 1.000000
-^Color 1.000000 1.000000 1.000000 0.000000
+^Scale 30.000000 7.000000 1.000000
+^Color 0.000000 0.500000 1.000000 1.000000
 ^Align 0
 ^strText STR
 ^TextSize 17.000000
-^tx_Normal NO_IMAGE.png
-^tx_Hover NO_IMAGE.png
-^tx_Press NO_IMAGE.png
+^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -1798,16 +1573,16 @@
 ^ParentName Info_Panel
 ^KeyState 135 135
 ^bRender 1
-^Position -300.000000 -83.000000 0.000000
+^Position -290.000000 -83.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 20.000000 10.000000 1.000000
-^Color 1.000000 1.000000 1.000000 0.000000
+^Scale 30.000000 7.000000 1.000000
+^Color 0.000000 0.500000 1.000000 1.000000
 ^Align 0
 ^strText DEX
 ^TextSize 17.000000
-^tx_Normal NO_IMAGE.png
-^tx_Hover NO_IMAGE.png
-^tx_Press NO_IMAGE.png
+^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -1820,16 +1595,16 @@
 ^ParentName Info_Panel
 ^KeyState 135 135
 ^bRender 1
-^Position -300.000000 -107.000000 0.000000
+^Position -290.000000 -107.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 20.000000 10.000000 1.000000
-^Color 1.000000 1.000000 1.000000 0.000000
+^Scale 30.000000 7.000000 1.000000
+^Color 0.000000 0.500000 1.000000 1.000000
 ^Align 0
 ^strText INT
 ^TextSize 17.000000
-^tx_Normal NO_IMAGE.png
-^tx_Hover NO_IMAGE.png
-^tx_Press NO_IMAGE.png
+^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -1842,16 +1617,16 @@
 ^ParentName Info_Panel
 ^KeyState 135 135
 ^bRender 1
-^Position -300.000000 -131.000000 0.000000
+^Position -290.000000 -130.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 20.000000 10.000000 1.000000
-^Color 1.000000 1.000000 1.000000 0.000000
+^Scale 30.000000 7.000000 1.000000
+^Color 0.000000 0.500000 1.000000 1.000000
 ^Align 0
 ^strText LUK
 ^TextSize 17.000000
-^tx_Normal NO_IMAGE.png
-^tx_Hover NO_IMAGE.png
-^tx_Press NO_IMAGE.png
+^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -1875,9 +1650,31 @@
 ^bRender 1
 ^Position 0.000000 0.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 200.000000 200.000000 1.000000
+^Scale 150.000000 150.000000 1.000000
 ^Color 0.300000 0.300000 0.300000 1.000000
-^tx_Normal White.png
+^tx_Normal Ronnan-login-box12.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 783
+^NodeName Set_Title
+^ParentName Set_Panel
+^KeyState 135 135
+^bRender 1
+^Position 0.000000 150.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 60.000000 25.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^Align 0
+^strText ¼³Á¤
+^TextSize 25.000000
+^tx_Normal window.png
+^tx_Hover window.png
+^tx_Press window.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -1890,11 +1687,11 @@
 ^ParentName Set_Panel
 ^KeyState 135 135
 ^bRender 1
-^Position 0.000000 110.000000 0.000000
+^Position 0.000000 80.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 190.000000 30.000000 1.000000
+^Scale 140.000000 15.000000 1.000000
 ^Color 0.500000 0.500000 0.500000 1.000000
-^tx_Normal White.png
+^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -1909,9 +1706,9 @@
 ^bRender 1
 ^Position 0.000000 40.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 190.000000 30.000000 1.000000
+^Scale 140.000000 15.000000 1.000000
 ^Color 0.500000 0.500000 0.500000 1.000000
-^tx_Normal White.png
+^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -1926,11 +1723,11 @@
 ^ParentName Set_Panel
 ^KeyState 135 135
 ^bRender 1
-^Position 30.000000 110.000000 0.000000
+^Position 30.000000 80.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 140.000000 2.000000 1.000000
-^Color 1.000000 1.000000 1.000000 1.000000
-^tx_Bar White.png
+^Scale 100.000000 2.000000 1.000000
+^Color 1.000000 0.500000 0.500000 1.000000
+^tx_Bar µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^tx_Handle filled-circle_icon-icons.com_72757.png
 ^pfEventHover 7274
 ^vpEventHover 
@@ -1948,78 +1745,10 @@
 ^bRender 1
 ^Position 30.000000 40.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 140.000000 2.000000 1.000000
-^Color 1.000000 1.000000 1.000000 1.000000
-^tx_Bar White.png
+^Scale 100.000000 2.000000 1.000000
+^Color 1.000000 0.500000 0.500000 1.000000
+^tx_Bar µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^tx_Handle filled-circle_icon-icons.com_72757.png
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick 
-
-^Type 778
-^NodeName Set_Exit
-^ParentName Set_Panel
-^KeyState 135 135
-^bRender 1
-^Position 195.205933 191.878281 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 20.000000 20.000000 1.000000
-^Color 1.000000 1.000000 1.000000 1.000000
-^tx_Normal btn_175.png
-^tx_Hover btn_174.png
-^tx_Press btn_174.png
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7276
-^vpEventClick Set_Panel
-
-^Type 782
-
-^SpriteType 6429
-^NodeName temp_sprite1
-^ParentName Set_Panel
-^KeyState 135 135
-^bRender 1
-^bLoop 1
-^Position 80.000000 -170.000000 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 27.000000 27.000000 1.000000
-^Color 1.000000 1.000000 1.000000 1.000000
-^AnimTime 1.600000
-^AnimUV 0 0 
-^SPRITESTART 8 
-^icn_crime.png
-^icn_drug.png
-^icn_gamble.png
-^icn_horror.png
-^icn_ment.png
-^icn_sensation.png
-^icn_violence.png
-^icn_rate_18.png
-^SPRITEEND
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick 
-
-^Type 779
-^NodeName temp_Check0
-^ParentName Set_Panel
-^KeyState 135 135
-^bRender 1
-^Position 30.000000 -170.000000 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 25.000000 25.000000 1.000000
-^Color 1.000000 1.000000 1.000000 1.000000
-^tx_Disable common_btn_check_selected.png
-^tx_Enable common_btn_check_unselected.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -2032,13 +1761,13 @@
 ^ParentName Set_Panel
 ^KeyState 135 135
 ^bRender 1
-^Position 150.000000 -170.000000 0.000000
+^Position 95.000000 -118.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 40.000000 20.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
-^tx_Normal btn_177.png
-^tx_Hover btn_176.png
-^tx_Press btn_176.png
+^tx_Normal Btn1Press.png
+^tx_Hover Btn1Hover.png
+^tx_Press Btn1Normal.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -2051,45 +1780,11 @@
 ^ParentName Set_Panel
 ^KeyState 135 135
 ^bRender 1
-^Position 150.000000 -170.000000 0.000000
+^Position 95.000000 -118.500046 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 20.000000 10.000000 1.000000
-^Color 0.000000 0.000000 0.000000 1.000000
+^Scale 16.000000 8.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
 ^tx_Normal Á¾·á.png
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick 
-
-^Type 788
-^NodeName Set_Volum_Img_Back
-^ParentName Set_Panel
-^KeyState 135 135
-^bRender 1
-^Position -160.000000 110.000000 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 25.000000 25.000000 1.000000
-^Color 0.700000 0.700000 0.700000 1.000000
-^tx_Normal White.png
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick 
-
-^Type 788
-^NodeName Set_Mouse_Img_Back
-^ParentName Set_Panel
-^KeyState 135 135
-^bRender 1
-^Position -160.000000 40.000000 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 25.000000 25.000000 1.000000
-^Color 0.700000 0.700000 0.700000 1.000000
-^tx_Normal White.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -2102,11 +1797,28 @@
 ^ParentName Set_Panel
 ^KeyState 135 135
 ^bRender 1
-^Position -160.000000 40.000000 0.000000
+^Position -105.000000 40.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 20.000000 20.000000 1.000000
+^Scale 10.000000 10.000000 1.000000
 ^Color 0.000000 0.000000 0.000000 1.000000
 ^tx_Normal generic_mouse_3387.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName Set_Colision_Back
+^ParentName Set_Panel
+^KeyState 135 135
+^bRender 1
+^Position 0.000000 0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 140.000000 15.000000 1.000000
+^Color 0.500000 0.500000 0.500000 1.000000
+^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -2119,11 +1831,204 @@
 ^ParentName Set_Panel
 ^KeyState 135 135
 ^bRender 1
-^Position -160.000000 110.000000 0.000000
+^Position -105.000000 80.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 20.000000 20.000000 1.000000
+^Scale 10.000000 10.000000 1.000000
 ^Color 0.000000 0.000000 0.000000 1.000000
 ^tx_Normal loudvolume_87512.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 783
+^NodeName Set_Colision_txt
+^ParentName Set_Panel
+^KeyState 135 135
+^bRender 1
+^Position -60.000000 0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 60.000000 15.000000 1.000000
+^Color 1.000000 1.000000 1.000000 0.000000
+^Align 1
+^strText Ãæµ¹Ã¼È®ÀÎ
+^TextSize 25.000000
+^tx_Normal NO_IMAGE.png
+^tx_Hover NO_IMAGE.png
+^tx_Press NO_IMAGE.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 779
+^NodeName Set_Collision_Check
+^ParentName Set_Panel
+^KeyState 135 135
+^bRender 1
+^Position 120.000000 0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 12.000000 12.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_Disable grey_boxCheckmark.png
+^tx_Enable grey_box.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName Set_LowMode_Back
+^ParentName Set_Panel
+^KeyState 135 135
+^bRender 1
+^Position 0.000000 -40.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 140.000000 15.000000 1.000000
+^Color 0.500000 0.500000 0.500000 1.000000
+^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 779
+^NodeName Set_LowMode_Check
+^ParentName Set_Panel
+^KeyState 135 135
+^bRender 1
+^Position 120.000000 -40.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 12.000000 12.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_Disable grey_boxCheckmark.png
+^tx_Enable grey_box.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 783
+^NodeName Set_LowMode_txt
+^ParentName Set_Panel
+^KeyState 135 135
+^bRender 1
+^Position -60.000000 -40.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 60.000000 15.000000 1.000000
+^Color 1.000000 1.000000 1.000000 0.000000
+^Align 1
+^strText Àú»ç¾ç¸ðµå
+^TextSize 25.000000
+^tx_Normal NO_IMAGE.png
+^tx_Hover NO_IMAGE.png
+^tx_Press NO_IMAGE.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName Set_Coupon_Back
+^ParentName Set_Panel
+^KeyState 135 135
+^bRender 1
+^Position 0.000000 -80.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 140.000000 15.000000 1.000000
+^Color 0.500000 0.500000 0.500000 1.000000
+^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 783
+^NodeName Set_Coupon_txt
+^ParentName Set_Panel
+^KeyState 135 135
+^bRender 1
+^Position -60.000000 -80.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 60.000000 15.000000 1.000000
+^Color 1.000000 1.000000 1.000000 0.000000
+^Align 1
+^strText ÄíÆù
+^TextSize 25.000000
+^tx_Normal NO_IMAGE.png
+^tx_Hover NO_IMAGE.png
+^tx_Press NO_IMAGE.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName Set_Coupon_Back2
+^ParentName Set_Panel
+^KeyState 135 135
+^bRender 1
+^Position 30.000000 -80.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 72.000000 10.000000 1.000000
+^Color 0.000000 0.000000 0.000000 1.000000
+^tx_Normal White.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 787
+^NodeName Set_Coupon_Edit
+^ParentName Set_Panel
+^KeyState 135 135
+^bRender 1
+^bPrivate 0
+^Position 30.000000 -80.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 70.000000 8.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^Align 1
+^TextSize 15.000000
+^TextLength 10
+^tx_Normal White.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 778
+^NodeName Set_Coupon_Enter
+^ParentName Set_Panel
+^KeyState 135 135
+^bRender 1
+^Position 120.000000 -80.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 12.000000 12.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_Normal btn_356.png
+^tx_Hover btn_357.png
+^tx_Press btn_357.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -2206,6 +2111,57 @@
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 1.000000 1.000000 1.000000
 
+^Type 788
+^NodeName respawn_back
+^ParentName respawn_panel
+^KeyState 135 135
+^bRender 1
+^Position 0.000000 -72.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 154.000000 12.000000 1.000000
+^Color 0.000000 0.000000 0.000000 1.000000
+^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName respawn_txt_Back
+^ParentName respawn_panel
+^KeyState 135 135
+^bRender 1
+^Position 2.000000 -42.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 100.000000 20.000000 1.000000
+^Color 0.000000 0.000000 0.000000 1.000000
+^tx_Normal ¸®½ºÆù.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName respawn_Back2
+^ParentName respawn_panel
+^KeyState 135 135
+^bRender 1
+^Position 0.000000 -72.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 151.000000 8.500000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
 ^Type 780
 ^VHType 1447
 ^NodeName respawn_prog
@@ -2214,10 +2170,10 @@
 ^bRender 1
 ^Position 0.000000 -72.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 150.000000 10.000000 1.000000
-^Color 1.000000 1.000000 1.000000 1.000000
-^tx_BackGround black.png
-^tx_FrontGround White.png
+^Scale 151.000000 8.500000 1.000000
+^Color 1.000000 0.500000 1.000000 1.000000
+^tx_BackGround Alpha.png
+^tx_FrontGround µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -2233,7 +2189,7 @@
 ^Position 0.000000 -40.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 100.000000 20.000000 1.000000
-^Color 0.000000 0.000000 0.000000 1.000000
+^Color 1.000000 0.500000 1.000000 1.000000
 ^tx_Normal ¸®½ºÆù.png
 ^pfEventHover 7274
 ^vpEventHover 
@@ -2258,9 +2214,9 @@
 ^bRender 1
 ^Position 0.000000 0.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 250.000000 190.000000 1.000000
-^Color 0.500000 0.500000 0.500000 0.750000
-^tx_Normal White.png
+^Scale 260.000000 190.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_Normal bx_090.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -2278,31 +2234,14 @@
 ^Scale 1.000000 1.000000 1.000000
 
 ^Type 788
-^NodeName State_Back2
-^ParentName State_Default_Panel
-^KeyState 135 135
-^bRender 1
-^Position 0.000000 -65.000000 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 245.000000 120.000000 1.000000
-^Color 1.000000 1.000000 1.000000 0.500000
-^tx_Normal White.png
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick 
-
-^Type 788
 ^NodeName State_Bar1
 ^ParentName State_Default_Panel
 ^KeyState 135 135
 ^bRender 1
-^Position 0.000000 3.500000 0.000000
+^Position 0.000000 27.500000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 245.000000 2.000000 1.000000
-^Color 0.000000 0.000000 0.000000 0.520000
+^Scale 246.000000 2.000000 1.000000
+^Color 0.500000 0.400000 0.000000 1.000000
 ^tx_Normal White.png
 ^pfEventHover 7274
 ^vpEventHover 
@@ -2316,11 +2255,11 @@
 ^ParentName State_Default_Panel
 ^KeyState 135 135
 ^bRender 1
-^Position 0.000000 30.000000 0.000000
+^Position 0.000000 55.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 240.000000 20.000000 1.000000
-^Color 0.500000 0.500000 0.500000 0.500000
-^tx_Normal White.png
+^Scale 245.000000 20.000000 1.000000
+^Color 0.500000 0.400000 0.100000 1.000000
+^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -2333,9 +2272,9 @@
 ^ParentName State_Default_Panel
 ^KeyState 135 135
 ^bRender 1
-^Position -0.000000 120.000000 0.000000
+^Position 0.000000 127.175591 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 200.000000 25.000000 1.000000
+^Scale 150.000000 20.000000 1.000000
 ^Color 0.000000 0.000000 0.000000 1.000000
 ^tx_Normal µ¥½º¸ÅÄ¡.png
 ^pfEventHover 7274
@@ -2359,10 +2298,10 @@
 ^ParentName State_Info_Panel
 ^KeyState 135 135
 ^bRender 1
-^Position -210.000000 30.000000 0.000000
+^Position -210.000000 55.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 20.000000 10.000000 1.000000
-^Color 1.000000 1.000000 1.000000 1.000000
+^Color 0.000000 0.000000 0.000000 1.000000
 ^tx_Normal ¼ø¹ø.png
 ^pfEventHover 7274
 ^vpEventHover 
@@ -2376,10 +2315,10 @@
 ^ParentName State_Info_Panel
 ^KeyState 135 135
 ^bRender 1
-^Position -75.000000 30.000000 0.000000
+^Position -100.000000 55.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 30.000000 10.000000 1.000000
-^Color 1.000000 1.000000 1.000000 1.000000
+^Color 0.000000 0.000000 0.000000 1.000000
 ^tx_Normal ´Ð³×ÀÓ.png
 ^pfEventHover 7274
 ^vpEventHover 
@@ -2393,10 +2332,10 @@
 ^ParentName State_Info_Panel
 ^KeyState 135 135
 ^bRender 1
-^Position 75.000000 30.000000 0.000000
+^Position 35.000000 55.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 10.000000 10.000000 1.000000
-^Color 1.000000 1.000000 1.000000 1.000000
+^Color 0.000000 0.000000 0.000000 1.000000
 ^tx_Normal Å³.png
 ^pfEventHover 7274
 ^vpEventHover 
@@ -2410,10 +2349,10 @@
 ^ParentName State_Info_Panel
 ^KeyState 135 135
 ^bRender 1
-^Position 140.000000 30.000000 0.000000
+^Position 100.000000 55.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 20.000000 10.000000 1.000000
-^Color 1.000000 1.000000 1.000000 1.000000
+^Color 0.000000 0.000000 0.000000 1.000000
 ^tx_Normal µ¥½º.png
 ^pfEventHover 7274
 ^vpEventHover 
@@ -2427,10 +2366,10 @@
 ^ParentName State_Info_Panel
 ^KeyState 135 135
 ^bRender 1
-^Position 205.000000 30.000000 0.000000
+^Position 180.000000 55.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 20.000000 10.000000 1.000000
-^Color 1.000000 1.000000 1.000000 1.000000
+^Color 0.000000 0.000000 0.000000 1.000000
 ^tx_Normal Á¡¼ö.png
 ^pfEventHover 7274
 ^vpEventHover 
@@ -2444,11 +2383,11 @@
 ^ParentName State_Panel
 ^KeyState 135 135
 ^bRender 1
-^Position 0.000000 -25.000000 0.000000
+^Position 0.000000 0.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 240.000000 20.000000 1.000000
-^Color 0.000000 0.000000 0.000000 0.500000
-^tx_Normal White.png
+^Scale 245.000000 20.000000 1.000000
+^Color 0.500000 0.400000 0.000000 0.500000
+^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -2461,11 +2400,11 @@
 ^ParentName State_Panel
 ^KeyState 135 135
 ^bRender 1
-^Position 0.000000 -70.000000 0.000000
+^Position 0.000000 -45.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 240.000000 20.000000 1.000000
-^Color 0.000000 0.000000 0.000000 0.500000
-^tx_Normal White.png
+^Scale 245.000000 20.000000 1.000000
+^Color 0.500000 0.400000 0.000000 0.500000
+^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -2478,11 +2417,11 @@
 ^ParentName State_Panel
 ^KeyState 135 135
 ^bRender 1
-^Position 0.000000 -115.000000 0.000000
+^Position 0.000000 -90.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 240.000000 20.000000 1.000000
-^Color 0.000000 0.000000 0.000000 0.500000
-^tx_Normal White.png
+^Scale 245.000000 20.000000 1.000000
+^Color 0.500000 0.400000 0.000000 0.500000
+^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -2495,11 +2434,11 @@
 ^ParentName State_Panel
 ^KeyState 135 135
 ^bRender 1
-^Position 0.000000 -160.000000 0.000000
+^Position 0.000000 -135.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 240.000000 20.000000 1.000000
-^Color 0.000000 0.000000 0.000000 0.500000
-^tx_Normal White.png
+^Scale 245.000000 20.000000 1.000000
+^Color 0.500000 0.400000 0.000000 0.500000
+^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -2521,16 +2460,16 @@
 ^ParentName State_User1
 ^KeyState 135 135
 ^bRender 1
-^Position -75.000000 -25.000000 0.000000
+^Position -100.000000 0.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 100.000000 15.000000 1.000000
+^Scale 90.000000 15.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 0.500000
 ^Align 0
 ^strText ´Ð³Û
 ^TextSize 25.000000
-^tx_Normal White.png
-^tx_Hover White.png
-^tx_Press White.png
+^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -2543,16 +2482,16 @@
 ^ParentName State_User1
 ^KeyState 135 135
 ^bRender 1
-^Position 75.000000 -25.000000 0.000000
+^Position 35.000000 0.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 25.000000 15.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 0.500000
 ^Align 0
 ^strText 11
 ^TextSize 25.000000
-^tx_Normal White.png
-^tx_Hover White.png
-^tx_Press White.png
+^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -2565,16 +2504,16 @@
 ^ParentName State_User1
 ^KeyState 135 135
 ^bRender 1
-^Position 140.000000 -25.000000 0.000000
+^Position 100.000000 0.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 25.000000 15.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 0.500000
 ^Align 0
 ^strText Áê±Ý
 ^TextSize 25.000000
-^tx_Normal White.png
-^tx_Hover White.png
-^tx_Press White.png
+^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -2587,16 +2526,16 @@
 ^ParentName State_User1
 ^KeyState 135 135
 ^bRender 1
-^Position 205.000000 -25.000000 0.000000
+^Position 180.000000 0.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 30.000000 15.000000 1.000000
+^Scale 45.000000 15.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 0.500000
 ^Align 0
 ^strText 12345
 ^TextSize 25.000000
-^tx_Normal White.png
-^tx_Hover White.png
-^tx_Press White.png
+^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -2609,7 +2548,7 @@
 ^ParentName State_User1
 ^KeyState 135 135
 ^bRender 1
-^Position -210.000000 -25.000000 0.000000
+^Position -215.000000 0.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 20.000000 20.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
@@ -2626,11 +2565,11 @@
 ^ParentName State_User1
 ^KeyState 135 135
 ^bRender 0
-^Position 0.000000 -25.000000 0.000000
+^Position 0.000000 -0.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 240.000000 20.000000 1.000000
+^Scale 245.000000 20.000000 1.000000
 ^Color 1.000000 0.000000 0.000000 0.500000
-^tx_Normal White.png
+^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -2652,16 +2591,16 @@
 ^ParentName State_User2
 ^KeyState 135 135
 ^bRender 1
-^Position -75.000000 -70.000000 0.000000
+^Position -100.000000 -45.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 100.000000 15.000000 1.000000
+^Scale 90.000000 15.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 0.500000
 ^Align 0
 ^strText Sample
 ^TextSize 25.000000
-^tx_Normal White.png
-^tx_Hover White.png
-^tx_Press White.png
+^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -2674,16 +2613,16 @@
 ^ParentName State_User2
 ^KeyState 135 135
 ^bRender 1
-^Position 75.000000 -70.000000 0.000000
+^Position 35.000000 -45.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 25.000000 15.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 0.500000
 ^Align 0
 ^strText Sample
 ^TextSize 25.000000
-^tx_Normal White.png
-^tx_Hover White.png
-^tx_Press White.png
+^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -2696,16 +2635,16 @@
 ^ParentName State_User2
 ^KeyState 135 135
 ^bRender 1
-^Position 140.000000 -70.000000 0.000000
+^Position 100.000000 -45.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 25.000000 15.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 0.500000
 ^Align 0
 ^strText Sample
 ^TextSize 25.000000
-^tx_Normal White.png
-^tx_Hover White.png
-^tx_Press White.png
+^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -2718,16 +2657,16 @@
 ^ParentName State_User2
 ^KeyState 135 135
 ^bRender 1
-^Position 205.000000 -70.000000 0.000000
+^Position 180.000000 -45.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 30.000000 15.000000 1.000000
+^Scale 45.000000 15.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 0.500000
 ^Align 0
 ^strText Sample
 ^TextSize 25.000000
-^tx_Normal White.png
-^tx_Hover White.png
-^tx_Press White.png
+^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -2740,7 +2679,7 @@
 ^ParentName State_User2
 ^KeyState 135 135
 ^bRender 1
-^Position -210.000000 -70.000000 0.000000
+^Position -215.000000 -45.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 20.000000 20.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
@@ -2757,11 +2696,11 @@
 ^ParentName State_User2
 ^KeyState 135 135
 ^bRender 0
-^Position 0.000000 -70.000000 0.000000
+^Position 0.000000 -45.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 240.000000 20.000000 1.000000
+^Scale 245.000000 20.000000 1.000000
 ^Color 1.000000 0.000000 0.000000 0.500000
-^tx_Normal White.png
+^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -2783,16 +2722,16 @@
 ^ParentName State_User3
 ^KeyState 135 135
 ^bRender 1
-^Position -75.000000 -115.000000 0.000000
+^Position -100.000000 -90.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 100.000000 15.000000 1.000000
+^Scale 90.000000 15.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 0.500000
 ^Align 0
 ^strText Sample
 ^TextSize 25.000000
-^tx_Normal White.png
-^tx_Hover White.png
-^tx_Press White.png
+^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -2805,16 +2744,16 @@
 ^ParentName State_User3
 ^KeyState 135 135
 ^bRender 1
-^Position 75.000000 -115.000000 0.000000
+^Position 35.000000 -90.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 25.000000 15.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 0.500000
 ^Align 0
 ^strText Sample
 ^TextSize 25.000000
-^tx_Normal White.png
-^tx_Hover White.png
-^tx_Press White.png
+^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -2827,16 +2766,16 @@
 ^ParentName State_User3
 ^KeyState 135 135
 ^bRender 1
-^Position 140.000000 -115.000000 0.000000
+^Position 100.000000 -90.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 25.000000 15.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 0.500000
 ^Align 0
 ^strText Sample
 ^TextSize 25.000000
-^tx_Normal White.png
-^tx_Hover White.png
-^tx_Press White.png
+^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -2849,16 +2788,16 @@
 ^ParentName State_User3
 ^KeyState 135 135
 ^bRender 1
-^Position 205.000000 -115.000000 0.000000
+^Position 180.000000 -90.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 30.000000 15.000000 1.000000
+^Scale 45.000000 15.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 0.500000
 ^Align 0
 ^strText Sample
 ^TextSize 25.000000
-^tx_Normal White.png
-^tx_Hover White.png
-^tx_Press White.png
+^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -2871,7 +2810,7 @@
 ^ParentName State_User3
 ^KeyState 135 135
 ^bRender 1
-^Position -210.000000 -115.000000 0.000000
+^Position -215.000000 -90.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 20.000000 20.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
@@ -2888,11 +2827,11 @@
 ^ParentName State_User3
 ^KeyState 135 135
 ^bRender 0
-^Position 0.000000 -115.000000 0.000000
+^Position 0.000000 -90.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 240.000000 20.000000 1.000000
+^Scale 245.000000 20.000000 1.000000
 ^Color 1.000000 0.000000 0.000000 0.500000
-^tx_Normal White.png
+^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -2914,16 +2853,16 @@
 ^ParentName State_User4
 ^KeyState 135 135
 ^bRender 1
-^Position -75.000000 -160.000000 0.000000
+^Position -100.000000 -135.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 100.000000 15.000000 1.000000
+^Scale 90.000000 15.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 0.500000
 ^Align 0
 ^strText Sample
 ^TextSize 25.000000
-^tx_Normal White.png
-^tx_Hover White.png
-^tx_Press White.png
+^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -2936,16 +2875,16 @@
 ^ParentName State_User4
 ^KeyState 135 135
 ^bRender 1
-^Position 75.000000 -160.000000 0.000000
+^Position 35.000000 -135.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 25.000000 15.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 0.500000
 ^Align 0
 ^strText Sample
 ^TextSize 25.000000
-^tx_Normal White.png
-^tx_Hover White.png
-^tx_Press White.png
+^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -2958,16 +2897,16 @@
 ^ParentName State_User4
 ^KeyState 135 135
 ^bRender 1
-^Position 140.000000 -160.000000 0.000000
+^Position 100.000000 -135.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 25.000000 15.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 0.500000
 ^Align 0
 ^strText Sample
 ^TextSize 25.000000
-^tx_Normal White.png
-^tx_Hover White.png
-^tx_Press White.png
+^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -2980,16 +2919,16 @@
 ^ParentName State_User4
 ^KeyState 135 135
 ^bRender 1
-^Position 205.000000 -160.000000 0.000000
+^Position 180.000000 -135.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 30.000000 15.000000 1.000000
+^Scale 45.000000 15.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 0.500000
 ^Align 0
 ^strText Sample
 ^TextSize 25.000000
-^tx_Normal White.png
-^tx_Hover White.png
-^tx_Press White.png
+^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -3002,7 +2941,7 @@
 ^ParentName State_User4
 ^KeyState 135 135
 ^bRender 1
-^Position -210.000000 -160.000000 0.000000
+^Position -215.000000 -135.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 20.000000 20.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
@@ -3019,11 +2958,98 @@
 ^ParentName State_User4
 ^KeyState 135 135
 ^bRender 0
-^Position 0.000000 -160.000000 0.000000
+^Position 0.000000 -135.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 240.000000 20.000000 1.000000
+^Scale 245.000000 20.000000 1.000000
 ^Color 1.000000 0.000000 0.000000 0.500000
+^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 777
+^NodeName Chat_Panel
+^ParentName Root
+^KeyState 135 135
+^bRender 1
+^Position 0.000000 0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 1.000000 1.000000 1.000000
+
+^Type 788
+^NodeName Chat_Log_Back
+^ParentName Chat_Panel
+^KeyState 135 135
+^bRender 1
+^Position 0.000000 -271.834656 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 229.833908 24.167107 1.000000
+^Color 0.000000 0.000000 0.000000 1.000000
 ^tx_Normal White.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 785
+^NodeName Chat_Log
+^ParentName Chat_Panel
+^KeyState 135 135
+^bRender 1
+^Position 0.000000 -271.834656 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 231.804459 27.247435 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^Align 1
+^TextSize 13.000000
+^RectColumn 4
+^tx_Normal TopTitle.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 781
+
+^VHType 1446
+^NodeName Chat_Slider
+^ParentName Chat_Panel
+^KeyState 135 135
+^bRender 1
+^Position 226.000000 -268.760651 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 2.000000 20.000000 1.000000
+^Color 0.000000 0.000000 0.000000 1.000000
+^tx_Bar Alpha.png
+^tx_Handle circle.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 787
+^NodeName Chat_Edit
+^ParentName Chat_Panel
+^KeyState 135 135
+^bRender 0
+^bPrivate 0
+^Position 0.000000 -210.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 200.000000 10.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^Align 1
+^TextSize 20.000000
+^TextLength 30
+^tx_Normal ChatEdit.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -3039,14 +3065,14 @@
 ^KeyState 135 135
 ^bRender 1
 ^bLoop 1
-^Position 637.000000 -180.000000 0.000000
-^Rotate 0.000000 0.000000 -0.261799
-^Scale 15.000000 15.000000 1.000000
+^Position 635.000000 -229.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 10.000000 10.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
 ^AnimTime 0.250000
-^AnimUV 2 2 
+^AnimUV 1 1 
 ^SPRITESTART 1 
-^Ghost2-a8030e16d3339d54c9ade70d2dbc4b91-1.png
+^sel.png
 ^SPRITEEND
 ^pfEventHover 7274
 ^vpEventHover 

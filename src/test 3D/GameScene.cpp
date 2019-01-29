@@ -591,7 +591,7 @@ void GameScene::LoadUI() noexcept
 	pExit->EventClick.first = pGameExit;
 	pExit->EventClick.second = this;
 	// CheckBox
-	m_pCheckBox = (JCheckCtrl*)pUIRoot->find_child(L"temp_Check0");
+	m_pCheckBox = (JCheckCtrl*)pUIRoot->find_child(L"Set_Collision_Check");
 	// Timer
 	m_Rule.m_TimerText = (JTextCtrl*)pUIRoot->find_child(L"Timer_Text");
 	m_Rule.SetResultPanel((JPanel*)pUIRoot);

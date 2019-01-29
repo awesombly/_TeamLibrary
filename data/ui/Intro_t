@@ -6,77 +6,14 @@
 ^Scale 1.000000 1.000000 1.000000
 
 ^Type 788
-^NodeName background
+^NodeName back2
 ^ParentName Root
 ^KeyState 135 135
 ^bRender 1
 ^Position 0.000000 0.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 400.000000 300.000000 1.000000
-^Color 1.000000 1.000000 1.000000 1.000000
-^tx_Normal kgcalogo.png
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick 
-
-^Type 784
-
-^SpriteType 6429
-^NodeName click
-^ParentName Root
-^KeyState 135 135
-^bRender 0
-^bLoop 1
-^Position 0.000000 0.000000 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 50.000000 50.000000 1.000000
-^AnimTime 1.000000
-^AnimUV 0 0 
-^ParticleSize 8
-^ParticleScale 25.000000 50.000000
-^MinStartPos -350.000000 -250.000000 -1.000000
-^MaxStartPos 350.000000 250.000000 -1.000000
-^TurnDir 0 0 0
-^MinColor 0.000000 0.000000 0.000000 1.000000
-^MaxColor 1.000000 1.000000 1.000000 1.000000
-^LifeTime 1.000000 1.000000
-^MinDir -0.000000 -0.000000 0.000000
-^MaxDir 0.000000 0.000000 0.000000
-^MinDirAngle 0.000000 0.000000 -0.000000 1.000000
-^MaxDirAngle 0.000000 0.000000 0.000000 1.000000
-^MoveSpeed 0.000000 0.000000
-^RotSpeed 0.000000 0.000000
-^SPRITESTART 1
-^particleClick.png
-^SPRITEEND
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick 
-
-^Type 777
-^NodeName effect_panel
-^ParentName Root
-^KeyState 135 135
-^bRender 1
-^Position 0.000000 0.000000 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 1.000000 1.000000 1.000000
-
-^Type 788
-^NodeName fadein
-^ParentName effect_panel
-^KeyState 135 135
-^bRender 1
-^Position -0.000000 -0.000000 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 400.000000 300.000000 1.000000
-^Color 0.000000 0.000000 0.000000 0.000000
+^Color 0.000000 0.000000 0.000000 1.000000
 ^tx_Normal White.png
 ^pfEventHover 7274
 ^vpEventHover 
@@ -86,15 +23,15 @@
 ^vpEventClick 
 
 ^Type 788
-^NodeName title
-^ParentName effect_panel
+^NodeName background
+^ParentName Root
 ^KeyState 135 135
-^bRender 0
-^Position 0.000000 190.000000 0.000000
+^bRender 1
+^Position 0.000000 0.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 1000.000000 1000.000000 1.000000
+^Scale 400.000000 264.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
-^tx_Normal 타이틀로고.png
+^tx_Normal i13519838742.jpg
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -103,51 +40,15 @@
 ^vpEventClick 
 
 ^Type 788
-^NodeName teamname
-^ParentName effect_panel
+^NodeName Back_Title
+^ParentName Root
 ^KeyState 135 135
 ^bRender 1
-^Position 0.000000 150.000000 0.000000
+^Position 0.000000 220.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 100.000000 20.000000 1.000000
-^Color 1.000000 1.000000 1.000000 0.000000
-^tx_Normal logo.png
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick 
-
-^Type 788
-^NodeName team
-^ParentName effect_panel
-^KeyState 135 135
-^bRender 1
-^Position 0.000000 -30.000000 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 215.000000 100.000000 1.000000
-^Color 1.000000 1.000000 1.000000 0.000000
-^tx_Normal partname.png
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick 
-
-^Type 778
-^NodeName gamestart
-^ParentName effect_panel
-^KeyState 135 135
-^bRender 0
-^Position -0.000000 -220.000000 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 75.000000 25.000000 1.000000
-^Color 1.000000 1.000000 1.000000 0.000000
-^tx_Normal btn_238.png
-^tx_Hover btn_237.png
-^tx_Press btn_237.png
+^Scale 150.000000 30.000000 1.000000
+^Color 0.300000 0.200000 0.100000 1.000000
+^tx_Normal Intro_Title.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -157,7 +58,7 @@
 
 ^Type 777
 ^NodeName Login_Panel
-^ParentName effect_panel
+^ParentName Root
 ^KeyState 135 135
 ^bRender 0
 ^Position 0.000000 0.000000 0.000000
@@ -169,11 +70,11 @@
 ^ParentName Login_Panel
 ^KeyState 135 135
 ^bRender 1
-^Position 0.000000 0.000000 0.000000
+^Position 0.000000 -5.166565 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 150.000000 80.000000 1.000000
 ^Color 0.300000 0.300000 0.300000 1.000000
-^tx_Normal White.png
+^tx_Normal bx_000.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -187,9 +88,9 @@
 ^KeyState 135 135
 ^bRender 1
 ^bPrivate 0
-^Position 5.000000 30.000000 0.000000
+^Position 0.000000 30.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 70.000000 10.000000 1.000000
+^Scale 60.000000 10.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
 ^Align 1
 ^TextSize 15.000000
@@ -208,9 +109,9 @@
 ^KeyState 135 135
 ^bRender 1
 ^bPrivate 1
-^Position 5.000000 0.000000 0.000000
+^Position 0.000000 0.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 70.000000 10.000000 1.000000
+^Scale 60.000000 10.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
 ^Align 1
 ^TextSize 15.000000
@@ -228,13 +129,13 @@
 ^ParentName Login_Panel
 ^KeyState 135 135
 ^bRender 1
-^Position 115.000000 15.000000 0.000000
+^Position 100.000000 15.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 30.000000 20.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
-^tx_Normal btn_177.png
-^tx_Hover btn_176.png
-^tx_Press btn_176.png
+^tx_Normal Btn3_Normal.png
+^tx_Hover Btn3_Hover.png
+^tx_Press Btn3_Press.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -247,10 +148,10 @@
 ^ParentName Login_Panel
 ^KeyState 135 135
 ^bRender 1
-^Position -108.000000 30.000000 0.000000
+^Position -109.000000 30.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 30.000000 8.000000 1.000000
-^Color 0.000000 0.000000 0.000000 1.000000
+^Scale 23.000000 8.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
 ^tx_Normal 아이디.png
 ^pfEventHover 7274
 ^vpEventHover 
@@ -264,10 +165,10 @@
 ^ParentName Login_Panel
 ^KeyState 135 135
 ^bRender 1
-^Position -106.000000 0.000000 0.000000
+^Position -100.000000 0.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 35.000000 10.000000 1.000000
-^Color 0.000000 0.000000 0.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
 ^tx_Normal 비밀번호.png
 ^pfEventHover 7274
 ^vpEventHover 
@@ -281,7 +182,7 @@
 ^ParentName Login_Panel
 ^KeyState 135 135
 ^bRender 1
-^Position 115.000000 15.000000 0.000000
+^Position 100.000000 15.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 20.000000 10.000000 1.000000
 ^Color 0.000000 0.000000 0.000000 1.000000
@@ -297,8 +198,8 @@
 ^NodeName Login_Exit
 ^ParentName Login_Panel
 ^KeyState 135 135
-^bRender 1
-^Position 146.000000 77.000000 0.000000
+^bRender 0
+^Position 143.499924 58.832901 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 15.000000 15.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
@@ -313,55 +214,17 @@
 ^vpEventClick 
 
 ^Type 778
-^NodeName Login_IDSearch
-^ParentName Login_Panel
-^KeyState 135 135
-^bRender 1
-^Position -100.000000 -50.000000 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 40.000000 20.000000 1.000000
-^Color 1.000000 1.000000 1.000000 1.000000
-^tx_Normal btn_177.png
-^tx_Hover btn_176.png
-^tx_Press btn_176.png
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick 
-
-^Type 778
-^NodeName Login_PWSearch
+^NodeName Login_SignUp
 ^ParentName Login_Panel
 ^KeyState 135 135
 ^bRender 1
 ^Position 0.000000 -50.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 40.000000 20.000000 1.000000
+^Scale 40.000000 18.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
-^tx_Normal btn_177.png
-^tx_Hover btn_176.png
-^tx_Press btn_176.png
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick 
-
-^Type 778
-^NodeName Login_SignUp
-^ParentName Login_Panel
-^KeyState 135 135
-^bRender 1
-^Position 100.000000 -50.000000 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 40.000000 20.000000 1.000000
-^Color 1.000000 1.000000 1.000000 1.000000
-^tx_Normal btn_177.png
-^tx_Hover btn_176.png
-^tx_Press btn_176.png
+^tx_Normal Btn2_Normal.png
+^tx_Hover Btn2_Hover.png
+^tx_Press Btn2_Press.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -374,7 +237,7 @@
 ^ParentName Login_Panel
 ^KeyState 135 135
 ^bRender 1
-^Position 100.000000 -50.000000 0.000000
+^Position 0.000000 -50.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 25.000000 10.000000 1.000000
 ^Color 0.000000 0.000000 0.000000 1.000000
@@ -386,46 +249,12 @@
 ^pfEventClick 7274
 ^vpEventClick 
 
-^Type 788
-^NodeName Login_IDSearch_txt
-^ParentName Login_Panel
-^KeyState 135 135
-^bRender 1
-^Position -100.000000 -50.000000 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 30.000000 10.000000 1.000000
-^Color 0.000000 0.000000 0.000000 1.000000
-^tx_Normal 아이디찾기.png
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick 
-
-^Type 788
-^NodeName Login_PWSearch_txt
-^ParentName Login_Panel
-^KeyState 135 135
-^bRender 1
-^Position 0.000000 -50.000000 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 30.000000 10.000000 1.000000
-^Color 0.000000 0.000000 0.000000 1.000000
-^tx_Normal 비밀번호찾기.png
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick 
-
 ^Type 777
 ^NodeName SignUp_Panel
-^ParentName effect_panel
+^ParentName Login_Panel
 ^KeyState 135 135
 ^bRender 0
-^Position 0.000000 0.000000 0.000000
+^Position -20.000000 0.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 1.000000 1.000000 1.000000
 
@@ -438,7 +267,7 @@
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 100.000000 130.000000 1.000000
 ^Color 0.300000 0.300000 0.300000 1.000000
-^tx_Normal White.png
+^tx_Normal Ronnan-login-box12.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -451,9 +280,9 @@
 ^ParentName SignUp_Panel
 ^KeyState 135 135
 ^bRender 1
-^Position 237.500015 73.000000 0.000000
+^Position 229.333099 73.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 31.000000 8.000000 1.000000
+^Scale 23.000000 8.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
 ^tx_Normal 아이디.png
 ^pfEventHover 7274
@@ -569,9 +398,9 @@
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 50.000000 20.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
-^tx_Normal btn_177.png
-^tx_Hover btn_176.png
-^tx_Press btn_176.png
+^tx_Normal Btn2_Normal.png
+^tx_Hover Btn2_Hover.png
+^tx_Press Btn2_Press.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -593,47 +422,11 @@
 ^ParentName SignUp_Top_Panel
 ^KeyState 135 135
 ^bRender 1
-^Position 295.000000 113.000000 0.000000
+^Position 294.666626 117.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 95.000000 10.000000 1.000000
+^Scale 95.500000 10.000000 1.000000
 ^Color 0.500000 0.500000 0.500000 1.000000
-^tx_Normal White.png
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick 
-
-^Type 778
-^NodeName SignUp_Top_Exit
-^ParentName SignUp_Top_Panel
-^KeyState 135 135
-^bRender 1
-^Position 379.999878 113.000000 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 11.000000 11.000000 1.000000
-^Color 1.000000 1.000000 1.000000 1.000000
-^tx_Normal btn01a.png
-^tx_Hover btn01g.png
-^tx_Press btn01g.png
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick 
-
-^Type 788
-^NodeName SignUp_Top_ExitImg
-^ParentName SignUp_Top_Panel
-^KeyState 135 135
-^bRender 1
-^Position 380.000000 113.000000 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 7.000000 7.000000 1.000000
-^Color 1.000000 1.000000 1.000000 1.000000
-^tx_Normal btn_959.png
+^tx_Normal TopTitle.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -646,9 +439,9 @@
 ^ParentName SignUp_Top_Panel
 ^KeyState 135 135
 ^bRender 1
-^Position 233.500107 112.666656 0.000000
+^Position 231.333374 116.333313 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 30.000000 10.000000 1.000000
+^Scale 25.000000 8.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
 ^tx_Normal 회원가입.png
 ^pfEventHover 7274
@@ -675,36 +468,54 @@
 ^pfEventClick 7274
 ^vpEventClick 
 
-^Type 784
-
-^SpriteType 6429
-^NodeName snow_particle
-^ParentName effect_panel
+^Type 778
+^NodeName gamestart
+^ParentName Root
 ^KeyState 135 135
-^bRender 0
-^bLoop 1
+^bRender 1
+^Position 0.000000 -220.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 80.000000 30.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_Normal DC2_Sprite(1070).png
+^tx_Hover DC2_Sprite(1070).png
+^tx_Press DC2_Sprite(1070).png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 778
+^NodeName gamestart_effect
+^ParentName gamestart
+^KeyState 135 135
+^bRender 1
 ^Position 0.000000 0.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 50.000000 50.000000 1.000000
-^AnimTime 1.000000
-^AnimUV 0 0 
-^ParticleSize 128
-^ParticleScale 1.000000 3.000000
-^MinStartPos -400.000000 300.000000 -1.000000
-^MaxStartPos 400.000000 300.000000 -1.000000
-^TurnDir 1 0 0
-^MinColor 1.000000 1.000000 1.000000 0.300000
-^MaxColor 1.000000 1.000000 1.000000 0.900000
-^LifeTime 6.000000 6.000000
-^MinDir -1.000000 -1.000000 0.000000
-^MaxDir 1.000000 -1.000000 0.000000
-^MinDirAngle 0.000000 0.000000 -0.000000 1.000000
-^MaxDirAngle 0.000000 0.000000 -0.000000 1.000000
-^MoveSpeed 100.000000 150.000000
-^RotSpeed 5.000000 10.000000
-^SPRITESTART 1
-^circle.png
-^SPRITEEND
+^Scale 75.000000 25.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_Normal Alpha.png
+^tx_Hover DC2_Sprite(1071).png
+^tx_Press DC2_Sprite(1071).png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName gamestart_txt
+^ParentName gamestart
+^KeyState 135 135
+^bRender 1
+^Position 0.000000 1.666748 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 50.000000 10.000000 1.000000
+^Color 0.000000 0.800000 0.600000 1.000000
+^tx_Normal GameStart_Intro.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -715,19 +526,19 @@
 ^Type 782
 
 ^SpriteType 6430
-^NodeName cursor
-^ParentName effect_panel
+^NodeName mouse_cursor
+^ParentName Root
 ^KeyState 135 135
-^bRender 0
+^bRender 1
 ^bLoop 1
 ^Position 0.000000 0.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 15.000000 15.000000 1.000000
+^Scale 10.000000 10.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
 ^AnimTime 0.250000
-^AnimUV 2 2 
+^AnimUV 1 1 
 ^SPRITESTART 1 
-^Ghost2-a8030e16d3339d54c9ade70d2dbc4b91-1.png
+^sel.png
 ^SPRITEEND
 ^pfEventHover 7274
 ^vpEventHover 
@@ -741,16 +552,53 @@
 ^ParentName Root
 ^KeyState 135 135
 ^bRender 0
-^Position 0.000000 200.000000 0.000000
+^Position 0.000000 -160.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 200.000000 50.000000 1.000000
-^Color 1.000000 1.000000 1.000000 0.000000
+^Scale 200.000000 25.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
 ^Align 0
 ^strText 헤ㅔㅔㅔㅔㅔㅔ
-^TextSize 50.000000
-^tx_Normal NO_IMAGE.png
-^tx_Hover NO_IMAGE.png
-^tx_Press NO_IMAGE.png
+^TextSize 30.000000
+^tx_Normal TopTitle.png
+^tx_Hover TopTitle.png
+^tx_Press TopTitle.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 羲羲
+
+^Type 784
+
+^SpriteType 6429
+^NodeName snow_particle
+^ParentName Root
+^KeyState 135 135
+^bRender 1
+^bLoop 1
+^Position 0.000000 0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 1.000000 1.000000 1.000000
+^AnimTime 1.000000
+^AnimUV 0 0 
+^ParticleSize 64
+^ParticleScale 1.000000 2.500000
+^MinStartPos -400.000000 300.000000 -1.000000
+^MaxStartPos 400.000000 300.000000 -1.000000
+^TurnDir 1 0 0
+^MinColor 1.000000 1.000000 1.000000 0.300000
+^MaxColor 1.000000 1.000000 1.000000 0.750000
+^LifeTime 15.000000 15.000000
+^MinDir -1.000000 -1.000000 0.000000
+^MaxDir 1.000000 -1.000000 0.000000
+^MinDirAngle 0.000000 0.000000 -0.000000 1.000000
+^MaxDirAngle 0.000000 0.000000 -0.000000 1.000000
+^MoveSpeed 50.000000 80.000000
+^RotSpeed 5.000000 10.000000
+^SPRITESTART 1
+^circle.png
+^SPRITEEND
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274

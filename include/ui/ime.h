@@ -20,11 +20,13 @@ namespace UI
 		wstring m_CompWord; // 조합중 문자
 		HWND m_hWnd = NULL;
 		HIMC m_hIMC = NULL;
+		int m_iMaxLength = 0;
 		bool m_bPlay = false;
 	public:
 		void imeStart();
 		void imeEnd();	
 		wstring GetString();
+		void SetLength(const int iLength);
 		void SetString(wstring str);
 		bool Set(HWND hWnd);
 	public:
