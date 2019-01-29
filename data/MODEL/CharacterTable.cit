@@ -1,4 +1,4 @@
-*NUMCHARACTER		6
+*NUMCHARACTER		7
 
 ////////////////////////////////////////////////////////////////////////// 1
 *CHARACTERNAME	Paladin
@@ -44,6 +44,27 @@
 *SKIN_UPPER_BODY_COUNT	1
 *SKIN_UPPER_BODY		..\..\data\model\archer\archer.skm	null
 *SKIN_LOWER_BODY_COUNT	0
+
+////////////////////////////////////////////////////////////////////////// 
+*CHARACTERNAME	Mage
+*SHADERFILENMAE		..\..\data\model\Character.hlsl
+
+*MATRIXMATRIXCOUNT  10
+*MATRIXFILENAME		..\..\data\model\mage\mage_Atk_One.Mat
+*MATRIXFILENAME		..\..\data\model\mage\mage_Atk_DownUp.Mat
+*MATRIXFILENAME		..\..\data\model\mage\mage_Atk_UpDown.Mat
+*MATRIXFILENAME		..\..\data\model\mage\mage_buff.Mat
+*MATRIXFILENAME		..\..\data\model\mage\mage_back.Mat
+*MATRIXFILENAME		..\..\data\model\mage\mage_right.Mat
+*MATRIXFILENAME		..\..\data\model\mage\mage_left.Mat
+*MATRIXFILENAME		..\..\data\model\mage\mage_Throw.Mat
+*MATRIXFILENAME		..\..\data\model\mage\mage_walk.Mat
+*MATRIXFILENAME		..\..\data\model\mage\mage_idle.Mat
+
+*SKIN_UPPER_BODY_COUNT	1
+*SKIN_UPPER_BODY		..\..\data\model\mage\mage.skm		null
+*SKIN_LOWER_BODY_COUNT	0
+
 
 ////////////////////////////////////////////////////////////////////////// 
 *CHARACTERNAME	zombie

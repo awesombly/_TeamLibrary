@@ -19,7 +19,7 @@
 
 //////////////////////////////////////////////////////////////////////////
 #define  Archer			L"Archer"
-//ANIM_COUNT  9
+//ANIM_COUNT  10
 #define	 Archer_IDLE			L"archer_Idle.Mat"
 #define	 Archer_DIVE			L"archer_Dive.mat"
 #define	 Archer_WALK			L"archer_Walk.mat"
@@ -31,6 +31,20 @@
 #define	 Archer_AIM_READY		L"archer_Aim_Rdy.mat"
 #define	 Archer_AIM_SHOT		L"archer_Aim_Shot.mat"
 
+
+//////////////////////////////////////////////////////////////////////////
+#define  Mage					L"Mage"
+//ANIM_COUNT  10
+#define	 Mage_IDLE			L"mage_idle.Mat"
+#define	 Mage_THROW			L"mage_Throw.Mat"
+#define	 Mage_WALK			L"mage_walk.Mat"
+#define	 Mage_LEFT			L"mage_left.Mat"
+#define	 Mage_RIGHT			L"mage_right.Mat"
+#define	 Mage_BACK			L"mage_back.Mat"
+#define	 Mage_BUFF			L"mage_buff.Mat"
+#define	 Mage_ATK			L"mage_Atk_One.Mat"
+#define	 Mage_ATK_DU		L"mage_Atk_DownUp.Mat"
+#define	 Mage_ATK_UD		L"mage_Atk_UpDown.Mat"
 
 
 //////////////////////////////////////////////////////////////////////////
