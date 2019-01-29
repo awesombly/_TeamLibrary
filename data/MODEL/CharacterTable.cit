@@ -28,7 +28,8 @@
 *CHARACTERNAME	Archer
 *SHADERFILENMAE		..\..\data\model\Character.hlsl
 
-*MATRIXMATRIXCOUNT  9
+*MATRIXMATRIXCOUNT  10
+*MATRIXFILENAME		..\..\data\model\archer\archer_Throw.mat
 *MATRIXFILENAME		..\..\data\model\archer\archer_Aim_Idle.mat
 *MATRIXFILENAME		..\..\data\model\archer\archer_Aim_Rdy.mat
 *MATRIXFILENAME		..\..\data\model\archer\archer_Aim_Shot.mat
@@ -91,14 +92,14 @@
 
 
 ////////////////////////////////////////////////////////////////////////// 6
-*CHARACTERNAME	ITEM_Dagger
+*CHARACTERNAME	ITEM_ARROW
 *SHADERFILENMAE		..\..\data\model\Character.hlsl
 
 *MATRIXMATRIXCOUNT  1
-*MATRIXFILENAME		..\..\data\model\dagger\dagger.Mat
+*MATRIXFILENAME		..\..\data\model\Arrow\Arrow.Mat
 
 *SKIN_UPPER_BODY_COUNT	1
-*SKIN_UPPER_BODY	..\..\data\model\dagger\dagger.skm		null
+*SKIN_UPPER_BODY		..\..\data\model\Arrow\Arrow.skm		null
 *SKIN_LOWER_BODY_COUNT	0
 
 
