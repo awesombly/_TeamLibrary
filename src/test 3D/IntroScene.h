@@ -13,7 +13,7 @@ public:
 	JEditCtrl*  m_pSignUpPWCheck = nullptr;
 	JTextCtrl*  m_pHelpText		 = nullptr;
 	///
-	XMapImporter m_Importer;		// 세이브 데이터 로더
+
 public:
 	void LoadSound()			noexcept;
 	void LoadUI()				noexcept override;

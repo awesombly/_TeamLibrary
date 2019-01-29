@@ -1,7 +1,7 @@
 #pragma once
 #include "GameObject.h"
 #include "ISingleton.h"
-//#include "uiheader.h"
+#include "PlayerState.h"
 
 class Collider;
 class Camera;
@@ -18,19 +18,23 @@ public:
 		Left = 1, Forward = 2, ForwardLeft = 3, 
 		Right = 4, ForwardRight = 6, 
 		Backward = 8, BackwardLeft = 9, BackwardRight = 12,
-		Jump = 100, Dance1, Dance2, Dance3, LSkill, RSkill, Run, Fly, FlyEnd, Dash,
+		Jump = 100, Dance1, Dance2, Dance3, LSkill, RSkill, Fly, FlyEnd, Dash,
+		Run, RunLeft, RunRight, Special, Attack, ChargeAttack, ChargeAttack2, LCharging, LCharge1, LCharge2,
 		ShockWave, ThrowBomb,
 	};
 	enum ECharacter : UCHAR {
-		EDummy = 0, EGuard, EZombie, EArcher, EMage,
+		EDummy = 0, EGuard, EArcher, EMage
 	};
 	enum EItem : UCHAR {
 		Shock = 0, Bomb, 
 	};
 private:
-	UIManager*  pUIManager		= nullptr;
+	map<EPlayerState, PlayerState*>  m_stateList;			// 상태별 행동
+	PlayerState*					 m_curState = nullptr;	// 현재 상태
+	PlayerState*					 m_preState;			// 이전 상태
+	///
 	Camera*		m_pCamera		= nullptr;
-	EAction		m_curAction;			// 현재 눌린 액션
+	EAction		m_preAction;			// 현재 눌린 액션
 	EAction		m_curAnim;				// 실제 애니메이션
 
 	float		m_prevRotY		= 0.0f;
@@ -45,32 +49,36 @@ private:
 	float		m_EXP			= 0.0f;
 	float		m_disEXP		= 0.0f;
 	//
-	const float	MoveSpeed = 30.0f;
+	const float	MoveSpeed = 35.0f;
 	const float	JumpPower = 70.0f;
 	
 	map<int, void(*)(PlayerController*, void*)> m_ItemList;
 public:
+	UIManager*  pUIManager		= nullptr;
 	EAction		m_eAction;				// 눌린 애니메이션
-	ECharacter  m_curCharacter;			// 현재 캐릭터
+	ECharacter  m_curCharacter = ECharacter::EDummy;	// 현재 캐릭터
 
 	float		m_NeedEXP			= 1.0f;
 	UCHAR		m_statPoint			= 0;
 	float		m_moveSpeed;
 	float		m_jumpPower;
 	///
+	float		m_DelayFrame = 0.0f;
 	float		m_DelayRespawn;
 	float		m_DelayEnemyPanel;
-	float		m_DelayThrow;
+	float		m_DelayLSkill;
+	float		m_DelayRSkill;
 	float		m_DelayDash;
-	float		m_DelayMelee;
 	float		m_RegenMP;
 										 
 	float		m_curDelayRespawn	 = 0.0f;
 	float		m_curDelayEnemyPanel = 0.0f;
-	float		m_curDelayThrow		 = 0.0f;
+	float		m_curDelayLSkill	 = 0.0f;
 	float		m_curDelayDash		 = 0.0f;
-	float		m_curDelayMelee		 = 0.0f;
+	float		m_curDelayRSkill	 = 0.0f;
 
+	UCHAR		m_defencePoint		 = 0;
+	float		m_chargeCount		 = 0.0f;
 	float		m_maxMP				 = 1.0f;
 	float		m_curMP				 = 0.0f;
 	float		m_mouseSense		 = 0.5f;
@@ -84,10 +92,11 @@ private:
 public:
 	static void SetAnim(AHeroObj* pObject, const UINT& socket, const ECharacter& eCharacter, const EAction& eAction, const D3DXVECTOR3& forward = Vector3::Zero) noexcept;
 
+	void SetState(const EPlayerState& eState)										noexcept;
 	void PlayerInput(const float& spf)												noexcept;
 	void CameraInput(const float& spf)												noexcept;
 	void ResetOption()																noexcept;
-	void UpdateStatus()																noexcept;
+	void UpdateStatus(const bool& infoUpdate = true)								noexcept;
 	void Possess(GameObject* pObject)												noexcept;
 	void DeadEvent()																noexcept;
 	void HitEvent(Collider* pTarget)												noexcept;
@@ -97,14 +106,32 @@ public:
 	void SendReqRespawn(const ECharacter& eCharacter)								noexcept;
 	void StartGiantMode()															noexcept;
 	void StartVibration(float seconds, const float& shakePower)						noexcept;
+	void SendPhysicsInfo()															noexcept;
+	//static void StartTaunt(GameObject* pTarget, float seconds)						noexcept;
 
 	bool Init()																		noexcept override;
 	bool Frame(const float& spf, const float& accTime)								noexcept override;
 	bool Render(ID3D11DeviceContext* pDContext)										noexcept override;
 	bool Release()																	noexcept override;
 private:
-	friend class ISingleton<PlayerController>;
 	using GameObject::GameObject;
 public:
 	virtual ~PlayerController() = default;
+
+	friend class ISingleton<PlayerController>;
+	friend class PlayerState;
+	friend class PlayerStateBasic;
+	friend class PlayerStateLSkill;
+	friend class PlayerStateRSkill;
+	friend class PlayerStateRun;
+
+	friend class ArcherStateBasic;
+	friend class ArcherStateLSkill;
+	friend class ArcherStateRSkill;
+	friend class ArcherStateDash;
+
+	friend class MageStateBasic;
+	friend class MageStateLSkill;
+	friend class MageStateRSkill;
+	friend class MageStateDash;
 };

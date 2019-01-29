@@ -88,7 +88,7 @@ void Physics::SetDamage(const float& value, const UCHAR& stat)	noexcept
 
 void Physics::OperHP(const float& value) noexcept
 {
-	m_pPhysics->m_curHP = max(m_pPhysics->m_curHP + value, 0.0f);
+	m_pPhysics->m_curHP = max(m_pPhysics->m_curHP + value * m_pPhysics->m_armor, 0.0f);
 }
 
 void Physics::HealHP(const float& value) noexcept
@@ -105,8 +105,17 @@ void Physics::SetHP(const float& value) noexcept
 	}
 }
 
-
 const float& Physics::GetHP() const noexcept
 {
 	return m_pPhysics->m_curHP;
+}
+
+void Physics::SetArmor(const UCHAR& stat)	noexcept
+{
+	m_pPhysics->m_armor = 5.0f / (5.0f + stat);
+}
+
+const float& Physics::GetArmor() const noexcept
+{
+	return m_pPhysics->m_armor;
 }

@@ -38,7 +38,7 @@ struct PhysicsInfo
 	float m_curHP		 = 1.0f;
 	float m_disHP		 = 1.0f;
 	float m_damage		 = 0.0f;
-	//float m_armor		 = 1.0f;
+	float m_armor		 = 1.0f;
 
 	D3DXVECTOR3 m_force		= Vector3::Zero;	// Àû¿ëÁßÀÎ Èû
 	D3DXVECTOR3 m_direction = Vector3::Zero;	// ÀÌµ¿ Èû
@@ -79,6 +79,8 @@ public:
 	void HealHP(const float& value)							noexcept;
 	void SetHP(const float& value)							noexcept;
 	const float& GetHP()							  const noexcept;
+	void SetArmor(const UCHAR& stat)						noexcept;
+	const float& GetArmor()							  const noexcept;
 	///
 	void usePhysics(const bool& usePhysics)					noexcept;
 	bool usePhysics()										noexcept;

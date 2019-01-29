@@ -6,9 +6,9 @@
 
 bool GameScene::Init() noexcept
 {
-	m_pPlayer->Init();
 	// UI
 	LoadUI();
+	m_pPlayer->Init();
 	FirstInit();
 
 	ObjectManager::KeyCount = 1000;
@@ -202,14 +202,19 @@ bool GameScene::CheatMessage() noexcept
 		if (str._Equal(L"Respawn"))
 		{
 			auto cha = m_chatMessage.substr(finder + 1);
-			if (cha._Equal(Paladin))
+			if (cha._Equal(L"Paladin"))
 			{
 				PlayerController::Get().SendReqRespawn(PlayerController::ECharacter::EGuard);
 				return false;
 			}
-			else if (cha._Equal(L"Zombie"))
+			else if (cha._Equal(L"Archer"))
 			{
-				PlayerController::Get().SendReqRespawn(PlayerController::ECharacter::EZombie);
+				PlayerController::Get().SendReqRespawn(PlayerController::ECharacter::EArcher);
+				return false;
+			}
+			else if (cha._Equal(L"Mage"))
+			{
+				PlayerController::Get().SendReqRespawn(PlayerController::ECharacter::EMage);
 				return false;
 			}
 		}
@@ -295,28 +300,28 @@ bool GameScene::CheatMessage() noexcept
 		else if (str._Equal(L"StatStr"))
 		{
 			PacketManager::Get().pMyInfo->StatStr = atoi(WCharToChar(m_chatMessage.substr(finder + 1).c_str()));
-			PlayerController::Get().UpdateStatus();
+			PlayerController::Get().UpdateStatus(false);
 			PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
 			return false;
 		}
 		else if (str._Equal(L"StatDex"))
 		{
 			PacketManager::Get().pMyInfo->StatDex = atoi(WCharToChar(m_chatMessage.substr(finder + 1).c_str()));
-			PlayerController::Get().UpdateStatus();
+			PlayerController::Get().UpdateStatus(false);
 			PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
 			return false;
 		}
 		else if (str._Equal(L"StatInt"))
 		{
 			PacketManager::Get().pMyInfo->StatInt = atoi(WCharToChar(m_chatMessage.substr(finder + 1).c_str()));
-			PlayerController::Get().UpdateStatus();
+			PlayerController::Get().UpdateStatus(false);
 			PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
 			return false;
 		}
 		else if (str._Equal(L"StatLuk"))
 		{
 			PacketManager::Get().pMyInfo->StatLuk = atoi(WCharToChar(m_chatMessage.substr(finder + 1).c_str()));
-			PlayerController::Get().UpdateStatus();
+			PlayerController::Get().UpdateStatus(false);
 			PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
 			return false;
 		}
@@ -438,16 +443,16 @@ void GameScene::HostFrame() noexcept
 	enemyFrame += Timer::SPF;
 
 	// 템 생성
-	if (itemFrame >= 60.0f)
+	if (itemFrame >= 120.0f)
 	{
 		itemFrame = 0.0f;
 
-		PacketManager::Get().SendTakeObject(L"Atom", ESocketType::EDummy, 1, 1.0f, 1.0f, 0.0f, Vector3::Up * 120.0f, Vector3::Zero);
+		//PacketManager::Get().SendTakeObject(L"Atom", ESocketType::EDummy, 1, 1.0f, 1.0f, 0.0f, Vector3::Up * 120.0f, Vector3::Zero);
 		
 		PacketManager::Get().SendTakeObject(L"Tank", ESocketType::ETank, 1, 15.0f * PacketManager::Get().UserList.size(), 1.1f, 0.1f, { -500.0f, 60.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
 	}
 	// 적 생성
-	if (enemyFrame >= 10.0f)
+	if (enemyFrame >= 20.0f)
 	{
 		enemyFrame = 0.0f;
 
@@ -483,6 +488,7 @@ void GameScene::LoadUI() noexcept
 	pUIRoot->m_objType = EObjType::UI;
 	JParser par;
 	par.FileLoad(DxManager::GetDevice(), L"../../data/ui/InGame", *pUIRoot);
+	PlayerController::Get().pUIManager = &UIManager::Get();			// 매니저 등록
 	// HP, MP
 	UIManager::Get().m_pHpBar = (JProgressBar*)pUIRoot->find_child(L"HP_Progress");
 	UIManager::Get().m_pMpBar = (JProgressBar*)pUIRoot->find_child(L"MP_Progress");
@@ -660,15 +666,15 @@ void GameScene::LoadUI() noexcept
 			PlayerController::Get().UpdateStatus();
 			PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
 
-			// Luk 올렸을시
-			if (&PacketManager::Get().pMyInfo->StatLuk == pStat &&
-				PlayerController::Get().GetParent() != nullptr)
-			{
-				Packet_Vector3 p_Scailing;
-				p_Scailing.KeyValue = PlayerController::Get().GetParent()->m_keyValue;
-				p_Scailing.Vec3 = Vector3::One * 0.008f;
-				PacketManager::Get().SendPacket((char*)&p_Scailing, (USHORT)sizeof(Packet_Vector3), PACKET_Scaling);
-			}
+			//// Luk 올렸을시
+			//if (&PacketManager::Get().pMyInfo->StatLuk == pStat &&
+			//	PlayerController::Get().GetParent() != nullptr)
+			//{
+			//	Packet_Vector3 p_Scailing;
+			//	p_Scailing.KeyValue = PlayerController::Get().GetParent()->m_keyValue;
+			//	p_Scailing.Vec3 = Vector3::One * 0.005f;
+			//	PacketManager::Get().SendPacket((char*)&p_Scailing, (USHORT)sizeof(Packet_Vector3), PACKET_Scaling);
+			//}
 		}
 	};
 	UIManager::Get().m_pInfoStrBtn = (JTextCtrl*)pUIRoot->find_child(L"Info_STR_Btn");

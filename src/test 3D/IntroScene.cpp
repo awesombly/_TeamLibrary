@@ -102,6 +102,7 @@ bool IntroScene::FirstInit() noexcept
 		SetObjects();
 		// =============================== 맵 생성 =================================
 		ErrorMessage(__FUNCTION__ + " -> Map Loading."s);
+		XMapImporter m_Importer;		// 세이브 데이터 로더
 		m_Importer.Import();
 		m_pMap = new XMap();
 		m_pMap->Create(DxManager::Get().GetDevice(), DxManager::Get().GetDContext(), &m_Importer, _T("../../Data/Map/Shader/MapShader_Specular.hlsl"), _T("../../Data/Map/Shader/MapShader_Color_Specular.hlsl"), "VS", "PS");
@@ -269,46 +270,72 @@ void IntroScene::SetObjects() noexcept
 	ObjectManager::Get().SetProtoObject(pObject);
 
 	///
-	// 단검
-	auto pHeroObj = new AHeroObj();
-	pHeroObj->SetPlayerCharacter(ITEM_Dagger);
-	pHeroObj->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-	pHeroObj->m_myName = L"Dagger";
-	pHeroObj->m_objType = EObjType::Dummy;
-	pHeroObj->SetScale(Vector3::One * 0.6f);
+	// 화살
+	//auto pHeroObj = new AHeroObj();
+	//pHeroObj->SetPlayerCharacter(ITEM_ARROW);
+	//pHeroObj->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+	//pHeroObj->m_myName = L"Arrow";
+	//pHeroObj->m_objType = EObjType::Dummy;
 	pCollider = new Collider(15.0f);
-	pHeroObj->AddComponent({ pCollider, ObjectManager::Get().TakeComponent(L"Fire") });
+	pObject = new GameObject(L"Arrow", { new RCube(L"Cube", L"None.png") }, EObjType::Object);
+	pObject->SetScale(Vector3::One);
+	pObject->AddComponent({ pCollider, ObjectManager::Get().TakeComponent(L"Fire") });
 	pCollider->m_pivot = Vector3::Up * 6.0f + Vector3::Forward * 2.5f;
 	pCollider->CollisionEvent = MyEvent::DaggerHit;
 	pCollider->m_eTag = ETag::Dummy;
-	ObjectManager::Get().SetProtoObject(pHeroObj);
+	ObjectManager::Get().SetProtoObject(pObject);
 
 	// 닭
-	pHeroObj = new AHeroObj();
-	pHeroObj->SetPlayerCharacter(NPC_Chicken);
-	pHeroObj->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-	pHeroObj->m_myName = L"Chicken";
-	pHeroObj->m_objType = EObjType::Dummy;
-	pHeroObj->SetScale(Vector3::One * 0.4f);
-	pCollider = new Collider(15.0f);
-	pHeroObj->AddComponent({ pCollider, ObjectManager::Get().TakeComponent(L"Fire") });
-	pCollider->m_pivot = Vector3::Up * 4.0f + Vector3::Forward * 2.5f;
-	pCollider->CollisionEvent = MyEvent::ZombieThrow;
-	pCollider->m_eTag = ETag::Dummy;
-	ObjectManager::Get().SetProtoObject(pHeroObj);
+	//pHeroObj = new AHeroObj();
+	//pHeroObj->SetPlayerCharacter(ITEM_ARROW);
+	//pHeroObj->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+	//pHeroObj->m_myName = L"Chicken";
+	//pHeroObj->m_objType = EObjType::Dummy;
+	//pHeroObj->SetScale(Vector3::One * 0.4f);
+	//pCollider = new Collider(15.0f);
+	//pHeroObj->AddComponent({ pCollider, ObjectManager::Get().TakeComponent(L"Fire") });
+	//pCollider->m_pivot = Vector3::Up * 4.0f + Vector3::Forward * 2.5f;
+	//pCollider->CollisionEvent = MyEvent::ZombieThrow;
+	//pCollider->m_eTag = ETag::Dummy;
+	//ObjectManager::Get().SetProtoObject(pHeroObj);
 
 	// ======================================= Character =====================================================
 	// 기사 
-	pHeroObj = new AHeroObj();
+	auto pHeroObj = new AHeroObj();
 	pHeroObj->SetPlayerCharacter(Paladin);
 	pHeroObj->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
 	pHeroObj->SetANIM_Loop(Paladin_IDLE);
-	pHeroObj->m_myName = Paladin;
+	pHeroObj->m_myName = L"Paladin";
 	pHeroObj->m_objType = EObjType::Character;
 	pCollider = new ColliderOBB({ -13.0f, 0.0f , -13.0f }, { 13.0f, 80.0f , 13.0f });
 	pHeroObj->AddComponent(pCollider);
 	pCollider->m_eTag = ETag::Ally;
 	ObjectManager::Get().SetProtoObject(pHeroObj);
+
+	// 궁수 
+	pHeroObj = new AHeroObj();
+	pHeroObj->SetPlayerCharacter(Archer);
+	pHeroObj->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+	pHeroObj->SetANIM_Loop(Archer_IDLE);
+	pHeroObj->m_myName = L"Archer";
+	pHeroObj->m_objType = EObjType::Character;
+	pCollider = new ColliderOBB({ -13.0f, 0.0f , -13.0f }, { 13.0f, 80.0f , 13.0f });
+	pHeroObj->AddComponent(pCollider);
+	pCollider->m_eTag = ETag::Ally;
+	ObjectManager::Get().SetProtoObject(pHeroObj);
+
+	// 법사 
+	pHeroObj = new AHeroObj();
+	pHeroObj->SetPlayerCharacter(Mage);
+	pHeroObj->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+	pHeroObj->SetANIM_Loop(Mage_IDLE);
+	pHeroObj->m_myName = L"Mage";
+	pHeroObj->m_objType = EObjType::Character;
+	pCollider = new ColliderOBB({ -13.0f, 0.0f , -13.0f }, { 13.0f, 80.0f , 13.0f });
+	pHeroObj->AddComponent(pCollider);
+	pCollider->m_eTag = ETag::Ally;
+	ObjectManager::Get().SetProtoObject(pHeroObj);
+
 	// 좀비
 	pHeroObj = new AHeroObj();
 	pHeroObj->SetPlayerCharacter(Zombie);

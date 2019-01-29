@@ -106,9 +106,6 @@
     <ClCompile Include="PlaneUI.cpp">
       <Filter>Component\Renderer\Child</Filter>
     </ClCompile>
-    <ClCompile Include="q3Mat3.cpp">
-      <Filter>Component\Collider</Filter>
-    </ClCompile>
     <ClCompile Include="Physics.cpp">
       <Filter>Component\Collider</Filter>
     </ClCompile>
@@ -242,9 +239,6 @@
     </ClInclude>
     <ClInclude Include="PlaneUI.h">
       <Filter>Component\Renderer\Child</Filter>
-    </ClInclude>
-    <ClInclude Include="q3Mat3.h">
-      <Filter>Component\Collider</Filter>
     </ClInclude>
     <ClInclude Include="Physics.h">
       <Filter>Component\Collider</Filter>

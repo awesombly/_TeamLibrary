@@ -74,6 +74,7 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 	static Packet_SyncObjects	p_SyncObjects;
 	static Packet_PlayerDead	p_PlayerDead;
 	static Packet_Float			p_Float;
+	static Packet_Physics  p_ColliderInfo;
 
 	memcpy(&p_KeyValue, data, sizeof(Packet_KeyValue));
 	if (sendMode < 2000 &&
@@ -197,6 +198,9 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 			case PlayerController::EAction::BackwardRight:
 			case PlayerController::EAction::Left:
 			case PlayerController::EAction::Right:
+			case PlayerController::EAction::Run:
+			case PlayerController::EAction::RunLeft:
+			case PlayerController::EAction::RunRight:
 			{
 				ObjectManager::KeyObjects[p_AnimTransform.KeyValue]->SetDirectionForce(p_AnimTransform.Direction);
 			}	break;
@@ -462,6 +466,20 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 	{
 		memcpy(&p_Float, data, sizeof(Packet_Float));
 		ObjectManager::KeyObjects[p_Float.KeyValue]->HealHP(p_Float.Value);
+	}	break;
+	case PACKET_SetPhysicsInfo:
+	{
+		memcpy(&p_ColliderInfo, data, sizeof(Packet_Physics));
+		auto pPhysics = ObjectManager::KeyObjects[p_ColliderInfo.KeyValue]->m_pPhysics;
+		if (pPhysics != nullptr)
+		{
+			pPhysics->m_mass		 = p_ColliderInfo.Mass;
+			pPhysics->m_damping		 = p_ColliderInfo.Damping;
+			pPhysics->m_repulsion	 = p_ColliderInfo.Repulsion;
+			pPhysics->m_maxHP		 = p_ColliderInfo.MaxHP;
+			pPhysics->m_armor		 = p_ColliderInfo.Armor;
+			pPhysics->m_GravityScale = p_ColliderInfo.GravityScale;
+		}
 	}	break;
 	default:
 	{

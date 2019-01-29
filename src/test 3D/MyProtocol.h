@@ -16,6 +16,7 @@ enum EPacketProtocol : USHORT {
 	PACKET_PlayerDead,
 	PACKET_SetHP,
 	PACKET_HealHP,
+	PACKET_SetPhysicsInfo,
 	// 클라 요청
 	PACKET_ReqSync			= 2000,
 	PACKET_ReqSyncSpawns,
@@ -56,6 +57,17 @@ struct UserInfo
 
 	UCHAR DataSize	= 0;
 	WCHAR UserID[11];
+};
+
+struct Packet_Physics
+{
+	UINT KeyValue;
+	float Mass;
+	float Damping;
+	float Repulsion;
+	float MaxHP;
+	float Armor;
+	float GravityScale;
 };
 
 struct Packet_PlayerDead
