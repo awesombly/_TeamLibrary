@@ -8,6 +8,7 @@
 #include "AIZombieCast.h"
 #include "AIZombieEx.h"
 #include "AIZombieKing.h"
+#include "CEventTimer.h"
 
 bool IntroScene::Init() noexcept
 {
@@ -145,57 +146,6 @@ void IntroScene::SetObjects() noexcept
 	ObjectManager::Get().SetProtoObject(new GameObject(L"EFly", m_pParser->CreateFromParticle(L"Fire.eff", urlEffect), EObjType::Effect));
 	ObjectManager::Get().SetProtoComponent(m_pParser->CreateFromParticle(L"Fire.eff", urlEffect));
 	// ====================================== Item =====================================================
-	// °ÅÀÎÅÛ
-	pCollider = new Collider(80.0f);
-	pObject = new GameObject(L"Atom", { pCollider, m_pParser->CreateFromParticle(L"Bigbang.eff", urlEffect), new CTransformer(Vector3::Zero, {3.0f, 5.0f, 7.0f, 0.0f}) }, EObjType::Effect);
-	pCollider->SetGravityScale(0.0f);
-	pCollider->usePhysics(false);
-	pCollider->CollisionEvent = MyEvent::GiantItem;
-	pCollider->m_eTag = ETag::Dummy;
-	ObjectManager::Get().SetProtoObject(pObject);
-	// ÅÛ »óÀÚ
-	pCollider = new ColliderOBB(-Vector3::One, Vector3::One);
-	pObject = new GameObject(L"ItemBox", { pCollider, new CTransformer(Vector3::Zero, Quaternion::Left * 2.0f) }, EObjType::Object);
-	auto pChild = new GameObject(L"ItemDummy", { /*ObjectManager::Get().TakeComponent(L"Fire"), */new RCube(L"Cube", L"None.png") }, EObjType::Object);
-	pChild->SetParent(pObject);
-	pChild->SetPosition(Vector3::Up);
-	pCollider->m_pivot = Vector3::Up * 10.0f;
-	pObject->SetScale(Vector3::One * 10.0f);
-	pObject->m_pPhysics->m_repulsion = 1.3f;
-	pObject->SetHP(10000.0f);
-	pCollider->SetGravityScale(2.0f);
-	//pCollider->usePhysics(false);
-	pCollider->CollisionEvent = MyEvent::ItemBox;
-	pCollider->m_eTag = ETag::Enemy;
-	ObjectManager::Get().SetProtoObject(pObject);
-
-	// Ãæ°ÝÆÄ
-	pCollider = new Collider(1.0f);
-	pObject = new GameObject(L"PShock", { pCollider, m_pParser->CreateFromParticle(L"Emission.eff", urlEffect), new CTransformer(Vector3::Zero, Quaternion::Zero, Vector3::One * 50.0f) }, EObjType::Effect);
-	pCollider->SetGravityScale(0.0f);
-	pCollider->usePhysics(false);
-	pCollider->CollisionEvent = MyEvent::PlayerAttack;
-	pCollider->m_eTag = ETag::Dummy;
-	ObjectManager::Get().SetProtoObject(pObject);
-
-	// ÆøÅº
-	pCollider = new Collider(1.0f);
-	pObject = new GameObject(L"PBomb", { pCollider, ObjectManager::Get().TakeComponent(L"Fire"), ObjectManager::GetInstance().TakeComponent(L"RowSphere") });
-	//pObject->m_pPhysics->m_damage = 0.5f;
-	pObject->SetScale(Vector3::One * 10.0f);
-	pCollider->CollisionEvent = MyEvent::PlayerBomb;
-	pCollider->m_eTag = ETag::Dummy;
-	ObjectManager::Get().SetProtoObject(pObject);
-
-	auto pZBoom = m_pParser->CreateFromParticle(L"ZombieBoom.eff", urlEffect);
-	// ÆøÅº Æø¹ß
-	pCollider = new Collider(60.0f);
-	pObject = new GameObject(L"PBoom", { pCollider, pZBoom }, EObjType::Effect);
-	pCollider->SetGravityScale(0.0f);
-	pCollider->usePhysics(false);
-	pCollider->CollisionEvent = MyEvent::MeleeHit;
-	pCollider->m_eTag = ETag::Dummy;
-	ObjectManager::Get().SetProtoObject(pObject);
 
 	// ÇÃ·¹ÀÌ¾î »ç¸Á
 	pCollider = new Collider(80.0f);
@@ -205,7 +155,7 @@ void IntroScene::SetObjects() noexcept
 	pCollider->SetGravityScale(0.0f);
 	pCollider->usePhysics(false);
 	ObjectManager::Get().SetProtoObject(pObject);
-	
+
 	// Á»ºñ ¾îÅÃ
 	pCollider = new Collider(40.0f);
 	pObject = new GameObject(L"ZAttack", { pCollider, m_pParser->CreateFromParticle(L"ZombieAttack.eff", urlEffect) }, EObjType::Effect);
@@ -242,48 +192,120 @@ void IntroScene::SetObjects() noexcept
 	pCollider->usePhysics(false);
 	ObjectManager::Get().SetProtoObject(pObject);
 
+	auto pZBoom = m_pParser->CreateFromParticle(L"ZombieBoom.eff", urlEffect);
 	// Á»ºñ ºÕ
 	pCollider = new Collider(60.0f);
-	pObject = new GameObject(L"ZBoom", { pCollider, pZBoom->clone() }, EObjType::Effect);
+	pObject = new GameObject(L"ZBoom", { pCollider, pZBoom }, EObjType::Effect);
 	pCollider->CollisionEvent = MyEvent::ZombieAttack;
 	pCollider->m_eTag = ETag::Dummy;
 	pCollider->SetGravityScale(0.0f);
 	pCollider->usePhysics(false);
 	ObjectManager::Get().SetProtoObject(pObject);
 
-	///
-	// È­»ì
-	//auto pHeroObj = new AHeroObj();
-	//pHeroObj->SetPlayerCharacter(ITEM_ARROW);
-	//pHeroObj->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-	//pHeroObj->m_myName = L"Arrow";
-	//pHeroObj->m_objType = EObjType::Dummy;
-	pCollider = new Collider(15.0f);
-	pObject = new GameObject(L"Arrow", { new RCube(L"Cube", L"None.png") }, EObjType::Object);
-	pObject->SetScale(Vector3::One);
-	pObject->AddComponent({ pCollider, ObjectManager::Get().TakeComponent(L"Fire") });
-	pCollider->m_pivot = Vector3::Up * 6.0f + Vector3::Forward * 2.5f;
-	pCollider->CollisionEvent = MyEvent::DaggerHit;
+	// °ÅÀÎÅÛ
+	pCollider = new Collider(80.0f);
+	pObject = new GameObject(L"Atom", { pCollider, m_pParser->CreateFromParticle(L"Bigbang.eff", urlEffect), new CTransformer(Vector3::Zero, {3.0f, 5.0f, 7.0f, 0.0f}) }, EObjType::Effect);
+	pCollider->SetGravityScale(0.0f);
+	pCollider->usePhysics(false);
+	pCollider->CollisionEvent = MyEvent::GiantItem;
 	pCollider->m_eTag = ETag::Dummy;
 	ObjectManager::Get().SetProtoObject(pObject);
 
+	// ÅÛ »óÀÚ
+	auto pHeroObj = new AHeroObj();
+	pHeroObj->SetPlayerCharacter(ITEM_Box);
+	pHeroObj->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+	pHeroObj->m_myName = L"ItemBox";
+	pHeroObj->m_objType = EObjType::Dummy;
+	pHeroObj->SetScale(Vector3::One * 0.3f);
+	pCollider = new Collider(13.0f);
+	//pCollider = new ColliderOBB(-Vector3::One, Vector3::One);
+	pHeroObj->AddComponent({ pCollider, new CTransformer(Vector3::Zero, Quaternion::Left * 3.0f) });
+	pHeroObj->SetHP(10000.0f);
+	pHeroObj->m_pPhysics->m_repulsion = 1.3f;
+	pHeroObj->SetGravityScale(2.0f);
+	pCollider->CollisionEvent = MyEvent::ItemBox;
+	pCollider->m_eTag = ETag::Enemy;
+	ObjectManager::Get().SetProtoObject(pHeroObj);
+	
+	// Ãæ°ÝÆÄ
+	pCollider = new Collider(1.0f);
+	pObject = new GameObject(L"PShock", { pCollider, m_pParser->CreateFromParticle(L"Emission.eff", urlEffect), new CTransformer(Vector3::Zero, Quaternion::Zero, Vector3::One * 50.0f) }, EObjType::Effect);
+	pCollider->SetGravityScale(0.0f);
+	pCollider->usePhysics(false);
+	pCollider->CollisionEvent = MyEvent::PlayerAttack;
+	pCollider->m_eTag = ETag::Dummy;
+	ObjectManager::Get().SetProtoObject(pObject);
+
+	// ÆøÅº
+	pHeroObj = new AHeroObj();
+	pHeroObj->SetPlayerCharacter(ITEM_Bomb);
+	pHeroObj->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+	pHeroObj->m_myName = L"PBomb";
+	pHeroObj->m_objType = EObjType::Dummy;
+	pHeroObj->SetScale(Vector3::One * 0.6f);
+	pCollider = new Collider(15.0f);
+	pHeroObj->AddComponent({ pCollider, ObjectManager::Get().TakeComponent(L"Fire") });
+	pCollider->m_pivot = Vector3::Up * 4.0f + Vector3::Forward * 2.5f;
+	pCollider->CollisionEvent = MyEvent::PlayerBomb;
+	pCollider->m_eTag = ETag::Dummy;
+	ObjectManager::Get().SetProtoObject(pHeroObj);
+
+	// ÆøÅº Æø¹ß
+	pCollider = new Collider(60.0f);
+	pObject = new GameObject(L"PBoom", { pCollider, pZBoom->clone() }, EObjType::Effect);
+	pCollider->SetGravityScale(0.0f);
+	pCollider->usePhysics(false);
+	pCollider->CollisionEvent = MyEvent::MeleeHit;
+	pCollider->m_eTag = ETag::Dummy;
+	ObjectManager::Get().SetProtoObject(pObject);
+
+	///
+	// È­»ì
+	pHeroObj = new AHeroObj();
+	pHeroObj->SetPlayerCharacter(ITEM_ARROW);
+	pHeroObj->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+	pHeroObj->m_myName = L"Arrow";
+	pHeroObj->m_objType = EObjType::Dummy;
+	pCollider = new Collider(6.0f);
+	pHeroObj->SetScale(Vector3::One);
+	pHeroObj->AddComponent({ pCollider, ObjectManager::Get().TakeComponent(L"Fire") });
+	//pCollider->m_pivot = Vector3::Up * 6.0f + Vector3::Forward * 2.5f;
+	pCollider->CollisionEvent = MyEvent::DaggerHit;
+	pCollider->m_eTag = ETag::Dummy;
+	ObjectManager::Get().SetProtoObject(pHeroObj);
+
+	// È­»ìºñ
+	pHeroObj = new AHeroObj();
+	pHeroObj->SetPlayerCharacter(ITEM_Bomb);
+	pHeroObj->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+	pHeroObj->m_myName = L"ArrowR";
+	pHeroObj->m_objType = EObjType::Dummy;
+	pCollider = new Collider(1.0f);
+	pHeroObj->SetScale(Vector3::One);
+	auto pTimer = new CEventTimer(1.5f);
+	pTimer->TimerEvent = { TimeEvent::ArrowRain, nullptr };
+	pHeroObj->AddComponent({ pCollider, pTimer });
+	pCollider->m_eTag = ETag::Dummy;
+	ObjectManager::Get().SetProtoObject(pHeroObj);
+
 	// ´ß
-	//pHeroObj = new AHeroObj();
-	//pHeroObj->SetPlayerCharacter(ITEM_ARROW);
-	//pHeroObj->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-	//pHeroObj->m_myName = L"Chicken";
-	//pHeroObj->m_objType = EObjType::Dummy;
-	//pHeroObj->SetScale(Vector3::One * 0.4f);
-	//pCollider = new Collider(15.0f);
-	//pHeroObj->AddComponent({ pCollider, ObjectManager::Get().TakeComponent(L"Fire") });
-	//pCollider->m_pivot = Vector3::Up * 4.0f + Vector3::Forward * 2.5f;
-	//pCollider->CollisionEvent = MyEvent::ZombieThrow;
-	//pCollider->m_eTag = ETag::Dummy;
-	//ObjectManager::Get().SetProtoObject(pHeroObj);
+	pHeroObj = new AHeroObj();
+	pHeroObj->SetPlayerCharacter(ITEM_Chicken);
+	pHeroObj->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+	pHeroObj->m_myName = L"Chicken";
+	pHeroObj->m_objType = EObjType::Dummy;
+	pHeroObj->SetScale(Vector3::One * 0.4f);
+	pCollider = new Collider(15.0f);
+	pHeroObj->AddComponent({ pCollider, ObjectManager::Get().TakeComponent(L"Fire") });
+	pCollider->m_pivot = Vector3::Up * 4.0f + Vector3::Forward * 2.5f;
+	pCollider->CollisionEvent = MyEvent::ZombieThrow;
+	pCollider->m_eTag = ETag::Dummy;
+	ObjectManager::Get().SetProtoObject(pHeroObj);
 
 	// ======================================= Character =====================================================
 	// ±â»ç 
-	auto pHeroObj = new AHeroObj();
+	pHeroObj = new AHeroObj();
 	pHeroObj->SetPlayerCharacter(Paladin);
 	pHeroObj->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
 	pHeroObj->SetANIM_Loop(Paladin_IDLE);
@@ -320,9 +342,9 @@ void IntroScene::SetObjects() noexcept
 
 	// Á»ºñ
 	pHeroObj = new AHeroObj();
-	pHeroObj->SetPlayerCharacter(Zombie);
+	pHeroObj->SetPlayerCharacter(ZombieR);
 	pHeroObj->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-	pHeroObj->SetANIM_Loop(Zombie_IDLE);
+	pHeroObj->SetANIM_Loop(ZombieR_IDLE);
 	pHeroObj->m_myName = L"Zombie";
 	pHeroObj->m_objType = EObjType::Enemy;
 	pCollider = new ColliderOBB({ -13.0f, 0.0f , -13.0f }, { 13.0f, 80.0f , 13.0f });
@@ -334,9 +356,9 @@ void IntroScene::SetObjects() noexcept
 	ObjectManager::Get().SetProtoObject(pHeroObj);
 	// Á»ºñ Cast
 	pHeroObj = new AHeroObj();
-	pHeroObj->SetPlayerCharacter(Zombie);
+	pHeroObj->SetPlayerCharacter(ZombieR);
 	pHeroObj->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-	pHeroObj->SetANIM_Loop(Zombie_IDLE);
+	pHeroObj->SetANIM_Loop(ZombieR_IDLE);
 	pHeroObj->m_myName = L"Caster";
 	pHeroObj->m_objType = EObjType::Enemy;
 	pCollider = new ColliderOBB({ -13.0f, 0.0f , -13.0f }, { 13.0f, 80.0f , 13.0f });
@@ -348,9 +370,9 @@ void IntroScene::SetObjects() noexcept
 	ObjectManager::Get().SetProtoObject(pHeroObj);
 	// Á»ºñ Crawl
 	pHeroObj = new AHeroObj();
-	pHeroObj->SetPlayerCharacter(Zombie);
+	pHeroObj->SetPlayerCharacter(ZombieR);
 	pHeroObj->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-	pHeroObj->SetANIM_Loop(Zombie_CRAWL);
+	pHeroObj->SetANIM_Loop(ZombieR_CRAWL);
 	pHeroObj->m_myName = L"Crawler";
 	pHeroObj->m_objType = EObjType::Enemy;
 	pCollider = new ColliderOBB({ -13.0f, 0.0f , -40.0f }, { 13.0f, 25.0f , 40.0f });

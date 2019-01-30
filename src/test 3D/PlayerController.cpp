@@ -335,27 +335,21 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 	 	 //	}	break;
 	 	 case EAction::LSkill:
 	 	 {
-	 	 	pObject->SetANIM_OneTime(Archer_AIM_IDLE);
+	 	 	pObject->SetANIM_OneTime(Archer_AIM_READY);
 	 	 }	break;
 	 	 case EAction::LCharging:
 	 	 {
-	 	 	pObject->SetANIM_OneTime(Archer_AIM_READY);
+	 	 	pObject->SetANIM_OneTime(Archer_AIM_IDLE);
 	 	 }	break;
 		 case EAction::LCharge1:
 		 {
-			 auto pItem = ObjectManager::Get().TakeObject(L"PShock");
-			 pItem->SetPosition(pObject->GetPosition() + pObject->GetUp() * 100.0f);
-			 pItem->SetScale(Vector3::One);
-			 pItem->m_pPhysics->UserSocket = socket;
-			 pItem->SetDamage(0.0f, 0);
+			 auto pItem = ObjectManager::Get().TakeObject(L"EPSlash");
+			 pItem->SetPosition(pObject->GetPosition() + pObject->GetUp() * 60.0f);
 		 }	break;
 		 case EAction::LCharge2:
 		 {
-			 auto pItem = ObjectManager::Get().TakeObject(L"PShock");
-			 pItem->SetPosition(pObject->GetPosition() + pObject->GetUp() * 100.0f);
-			 pItem->SetScale(Vector3::One);
-			 pItem->m_pPhysics->UserSocket = socket;
-			 pItem->SetDamage(0.0f, 0);
+			 auto pItem = ObjectManager::Get().TakeObject(L"EPAttack");
+			 pItem->SetPosition(pObject->GetPosition() + pObject->GetUp() * 60.0f);
 		 }	break;
 	 	 case EAction::Attack:
 	 	 {
@@ -379,9 +373,9 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 	 	 	pItem->SetPosition(pObject->GetPosition() + pObject->GetForward() * 40.0f + pObject->GetUp() * 65.0f + pObject->GetRight() * 20.0f);
 	 	 	pItem->SetRotation(pObject->GetRotation());
 			pItem->SetScale(Vector3::One * 2.0f);
-	 	 	pItem->SetForce(forward * 350.0f);
+	 	 	pItem->SetForce(forward * 400.0f);
 	 	 	pItem->m_pPhysics->UserSocket = socket;
-	 	 	pItem->SetDamage(0.7f, PacketManager::Get().UserList[socket]->StatStr);
+	 	 	pItem->SetDamage(0.8f, PacketManager::Get().UserList[socket]->StatStr);
 	 	 	pItem->GetCollider()->AddIgnoreList(pObject->GetCollider());
 	 	 	SoundManager::Get().PlayQueue("SE_throw01.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
 	 	 }	break;
@@ -393,19 +387,33 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 	 	 	pItem->SetPosition(pObject->GetPosition() + pObject->GetForward() * 40.0f + pObject->GetUp() * 65.0f + pObject->GetRight() * 20.0f);
 	 	 	pItem->SetRotation(pObject->GetRotation());
 			pItem->SetScale(Vector3::One * 3.0f);
-	 	 	pItem->SetForce(forward * 500.0f);
+	 	 	pItem->SetForce(forward * 600.0f);
 	 	 	pItem->m_pPhysics->UserSocket = socket;
-	 	 	pItem->SetDamage(1.2f, PacketManager::Get().UserList[socket]->StatStr);
+	 	 	pItem->SetDamage(1.6f, PacketManager::Get().UserList[socket]->StatStr);
 	 	 	pItem->GetCollider()->AddIgnoreList(pObject->GetCollider());
 	 	 	SoundManager::Get().PlayQueue("SE_throw01.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
 	 	 }	break;
+		 case EAction::RSkill:
+		 {
+			 pObject->SetANIM_OneTime(Archer_THROW);
+		 }	break;
+		 case EAction::Special:
+		 {
+			 auto pItem = ObjectManager::Get().TakeObject(L"ArrowR");
+			 pItem->SetPosition(pObject->GetPosition() + pObject->GetForward() * 40.0f + pObject->GetUp() * 50.0f);
+			 pItem->SetRotation(pObject->GetRotation());
+			 pItem->SetScale(Vector3::One);
+			 pItem->SetForce((forward * 0.4f + Vector3::Up) * 180.0f);
+			 pItem->m_pPhysics->UserSocket = socket;
+			 //pItem->SetDamage(0.3f, PacketManager::Get().UserList[socket]->StatStr);
+			 pItem->GetCollider()->AddIgnoreList(pObject->GetCollider());
+		 }	break;
 		 case Dash:
+		 case DashLeft:
+		 case DashRight:
 		 {
 			 pObject->SetANIM_OneTime(Archer_DIVE);
 		 }	break;
-	 	 case RSkill:
-	 	 {
-	 	 }	break;
 	 	 // ================================== 템 사용 =========================================
 	 	 case EAction::ShockWave:
 	 	 {
@@ -642,16 +650,16 @@ void PlayerController::ResetOption() noexcept
 void PlayerController::UpdateStatus(const bool& infoUpdate) noexcept
 {
 	auto pUserInfo = PacketManager::Get().pMyInfo;
-	m_moveSpeed = MoveSpeed + MoveSpeed * pUserInfo->StatDex * 0.15f;
+	m_moveSpeed = MoveSpeed + MoveSpeed * pUserInfo->StatDex * 0.1f;
 	m_jumpPower = JumpPower;
 
 	m_DelayEnemyPanel = 3.0f;
 	m_DelayRespawn = 8.0f * 5.0f / (5.0f + pUserInfo->StatLuk);
 	m_DelayLSkill = 0.7f * 5.0f / (5.0f + pUserInfo->StatDex);
-	m_DelayDash = 1.5f * 5.0f / (5.0f + pUserInfo->StatDex);
+	m_DelayDash = 2.5f * 5.0f / (5.0f + pUserInfo->StatDex);
 	m_DelayRSkill = 4.0f * 5.0f / (5.0f + pUserInfo->StatDex);
 	pUIManager->m_pLeftIcon->SetValue(m_curDelayDash, m_DelayDash);
-	pUIManager->m_pRightIcon->SetValue(m_curDelayLSkill, m_DelayLSkill);
+	pUIManager->m_pRightIcon->SetValue(m_curDelayRSkill, m_DelayRSkill);
 	m_RegenMP = 0.3f + pUserInfo->StatInt * 0.045f;
 	m_maxMP = 1.0f + pUserInfo->StatInt * 0.2f;
 	pUIManager->m_pMpBar->SetValue(m_curMP, m_maxMP);
@@ -784,13 +792,6 @@ void PlayerController::SendAnimTransform(const EAction& eAction, const ECharacte
 	// 이동 처리
 	switch (eAction)
 	{
-	case EAction::Dash:
-	{
-		if (m_pParent->isMoving())
-			p_AnimTransform.Force = (m_pParent->m_pPhysics->m_direction * 2.0f + Vector3::Up * 35.0f);
-		else
-			p_AnimTransform.Force = (Normalize(m_pParent->GetForward()) * m_moveSpeed * 2.0f + Vector3::Up * 35.0f);
-	}	break;
 	case EAction::Jump:
 	{
 		p_AnimTransform.Force = Vector3::Up * m_jumpPower;
@@ -860,6 +861,21 @@ void PlayerController::SendAnimTransform(const EAction& eAction, const ECharacte
 		p_AnimTransform.Force = m_pParent->GetForce();
 		p_AnimTransform.Direction = m_pParent->GetForward() + m_pParent->GetRight() * 0.5f;
 		p_AnimTransform.Direction = Normalize(p_AnimTransform.Direction) * m_moveSpeed * 2.0f;
+	}	break;
+	case EAction::Dash:
+	{
+		p_AnimTransform.Force = (Normalize(m_pParent->GetForward()) * m_moveSpeed * 2.2f + Vector3::Up * 30.0f);
+		p_AnimTransform.Direction = Vector3::Zero;
+	}	break;
+	case EAction::DashLeft:
+	{
+		p_AnimTransform.Force = (Normalize(m_pParent->GetForward() + m_pParent->GetLeft() * 0.5f) * m_moveSpeed * 2.2f + Vector3::Up * 30.0f);
+		p_AnimTransform.Direction = Vector3::Zero;
+	}	break;
+	case EAction::DashRight:
+	{
+		p_AnimTransform.Force = (Normalize(m_pParent->GetForward() + m_pParent->GetRight() * 0.5f) * m_moveSpeed * 2.2f + Vector3::Up * 30.0f);
+		p_AnimTransform.Direction = Vector3::Zero;
 	}	break;
 	//case EAction::LSkill:
 	default:

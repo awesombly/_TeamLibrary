@@ -79,7 +79,7 @@ public:
 	void HealHP(const float& value)							noexcept;
 	void SetHP(const float& value)							noexcept;
 	const float& GetHP()							  const noexcept;
-	void SetArmor(const UCHAR& stat)						noexcept;
+	void SetArmor(const char& stat)							noexcept;
 	const float& GetArmor()							  const noexcept;
 	///
 	void usePhysics(const bool& usePhysics)					noexcept;

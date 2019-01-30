@@ -45,13 +45,13 @@ bool AIZombie::Frame(const float& spf, const float& accTime)	noexcept
 		}	break;
 		case EState::Move:
 		{
-			((AHeroObj*)m_pParent)->SetANIM_Loop(Zombie_WALK);
+			((AHeroObj*)m_pParent)->SetANIM_Loop(ZombieR_WALK);
 			m_pParent->SetFocus(m_Target = PlayerController::Get().m_pHome->GetPosition());
 		}	break;
 		case EState::Attack:
 		{
 			m_delay = 1.1f;
-			((AHeroObj*)m_pParent)->SetANIM_OneTime(Zombie_ATTACK);
+			((AHeroObj*)m_pParent)->SetANIM_OneTime(ZombieR_ATTACK);
 		}	break;
 		}
 		return true;

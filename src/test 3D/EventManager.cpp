@@ -303,5 +303,29 @@ namespace ActiveEvent {
 		// ÆøÅº
 		pPlayer->m_eAction = PlayerController::EAction::ThrowBomb;
 	}
+}
 
+namespace TimeEvent {
+	void ArrowRain(GameObject* pParent, void* pVoid2)
+	{
+		D3DXMATRIX matRotation;
+		D3DXVECTOR3 vecRot;
+		for (int i = 0; i < 30; ++i)
+		{
+			auto pItem = ObjectManager::Get().TakeObject(L"Arrow");
+			pItem->SetPosition(pParent->GetPosition());
+			vecRot = { -RandomNormal() * PI * 0.4f - PI * 0.3f, RandomNormal() * PI, 0.0f };
+			pItem->SetRotation(vecRot);
+			pItem->SetScale(0.5f, 0.5f, 0.5f);
+			//pItem->SetForce({ RandomNormal() * 100.0f + -50.0f, RandomNormal() * 150.0f - 200.0f, RandomNormal() * 100.0f + -50.0f });
+			D3DXMatrixRotationYawPitchRoll(&matRotation, -vecRot.y, vecRot.x, vecRot.z);
+			vecRot = { matRotation._31, matRotation._32, matRotation._33 };
+			pItem->SetForce(vecRot * (RandomNormal() * 60.0f + 60.0f));
+			pItem->m_pPhysics->UserSocket = pParent->m_pPhysics->UserSocket;
+			pItem->SetDamage(0.2f, PacketManager::Get().UserList[pParent->m_pPhysics->UserSocket]->StatStr);
+			//pItem->GetCollider()->AddIgnoreList(pObject->GetCollider());
+		}
+		//SoundManager::Get().PlayQueue("SE_throw01.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
+		ObjectManager::Get().DisableObject(pParent);
+	}
 }

@@ -41,13 +41,13 @@ bool AIZombieCast::Frame(const float& spf, const float& accTime)	noexcept
 		}	break;
 		case EState::Move:
 		{
-			((AHeroObj*)m_pParent)->SetANIM_Loop(Zombie_RUN);
+			((AHeroObj*)m_pParent)->SetANIM_Loop(ZombieR_RUN);
 			m_pParent->SetFocus(m_Target = PlayerController::Get().m_pHome->GetPosition());
 		}	break;
 		case EState::Attack:
 		{
 			m_delay = 1.1f;
-			((AHeroObj*)m_pParent)->SetANIM_OneTime(Zombie_ATTACK);
+			((AHeroObj*)m_pParent)->SetANIM_OneTime(ZombieR_SHOT);
 		}	break;
 		}
 		return true;
@@ -85,7 +85,7 @@ bool AIZombieCast::Frame(const float& spf, const float& accTime)	noexcept
 	{
 		SoundManager::Get().PlayQueue("SE_chicken.mp3", m_pParent->GetPosition(), PlayerController::Get().SoundRange);
 
-		auto pChicken = ObjectManager::Get().TakeObject(L"Arrow");
+		auto pChicken = ObjectManager::Get().TakeObject(L"Chicken");
 		pChicken->SetPosition(m_pParent->GetPosition() + m_pParent->GetForward() * 40.0f + m_pParent->GetUp() * 65.0f + m_pParent->GetRight() * 20.0f);
 		pChicken->SetRotation(m_pParent->GetRotation());
 		pChicken->SetScale(m_pParent->GetScale().x * 2.0f * Vector3::One);
