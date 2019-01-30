@@ -186,6 +186,9 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 			{
 				ObjectManager::KeyObjects[p_AnimTransform.KeyValue]->SetGravityScale(1.0f);
 			} break;
+			case PlayerController::EAction::Dash:
+			case PlayerController::EAction::DashLeft:
+			case PlayerController::EAction::DashRight:
 			case PlayerController::EAction::Idle:
 			{
 				ObjectManager::KeyObjects[p_AnimTransform.KeyValue]->isMoving(false);

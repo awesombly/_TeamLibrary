@@ -1,7 +1,7 @@
 #pragma once
 class Collider;
 class PlayerController;
-
+class GameObject;
 
 namespace MyEvent {
 	void ForceWave(Collider* pA, Collider* pB);
@@ -24,4 +24,8 @@ namespace MyEvent {
 namespace ActiveEvent {
 	void ShockWave(PlayerController* pPlayer, void*);
 	void ThrowBomb(PlayerController* pPlayer, void*);
+}
+
+namespace TimeEvent {
+	void ArrowRain(GameObject* pParent, void* pVoid2);
 }

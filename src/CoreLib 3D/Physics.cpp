@@ -110,7 +110,7 @@ const float& Physics::GetHP() const noexcept
 	return m_pPhysics->m_curHP;
 }
 
-void Physics::SetArmor(const UCHAR& stat)	noexcept
+void Physics::SetArmor(const char& stat)	noexcept
 {
 	m_pPhysics->m_armor = 5.0f / (5.0f + stat);
 }

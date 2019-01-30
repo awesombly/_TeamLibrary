@@ -44,7 +44,7 @@ bool AIZombieCrawl::Frame(const float& spf, const float& accTime)	noexcept
 		}	break;
 		case EState::Move:
 		{
-			((AHeroObj*)m_pParent)->SetANIM_Loop(Zombie_CRAWL);
+			((AHeroObj*)m_pParent)->SetANIM_Loop(ZombieR_CRAWL);
 			m_pParent->SetFocus(m_Target = PlayerController::Get().m_pHome->GetPosition());
 		}	break;
 		case EState::Attack:

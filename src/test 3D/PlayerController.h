@@ -18,8 +18,10 @@ public:
 		Left = 1, Forward = 2, ForwardLeft = 3, 
 		Right = 4, ForwardRight = 6, 
 		Backward = 8, BackwardLeft = 9, BackwardRight = 12,
-		Jump = 100, Dance1, Dance2, Dance3, LSkill, RSkill, Fly, FlyEnd, Dash,
-		Run, RunLeft, RunRight, Special, Attack, ChargeAttack, ChargeAttack2, LCharging, LCharge1, LCharge2,
+		Jump = 100, Dance1, Dance2, Dance3, LSkill, RSkill, Fly, FlyEnd, 
+		Dash, DashLeft, DashRight, Run, RunLeft, RunRight, 
+		Special, Attack, 
+		ChargeAttack, ChargeAttack2, LCharging, LCharge1, LCharge2,
 		ShockWave, ThrowBomb,
 	};
 	enum ECharacter : UCHAR {
@@ -77,7 +79,7 @@ public:
 	float		m_curDelayDash		 = 0.0f;
 	float		m_curDelayRSkill	 = 0.0f;
 
-	UCHAR		m_defencePoint		 = 0;
+	char		m_defencePoint		 = 0;
 	float		m_chargeCount		 = 0.0f;
 	float		m_maxMP				 = 1.0f;
 	float		m_curMP				 = 0.0f;
