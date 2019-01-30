@@ -89,3 +89,5 @@
 #define	 ITEM_Dagger			L"ITEM_Dagger"
 
 #define	 ITEM_Bird				L"ITEM_Bird"
+
+#define	 ITEM_Bomb				L"ITEM_Bomb"

@@ -1,4 +1,4 @@
-*NUMCHARACTER		10
+*NUMCHARACTER		11
 
 ////////////////////////////////////////////////////////////////////////// 1
 *CHARACTERNAME	Paladin
@@ -161,6 +161,19 @@
 *SKIN_UPPER_BODY_COUNT	1
 *SKIN_UPPER_BODY		..\..\data\model\NPC_bird\NPC_bird.skm		null
 *SKIN_LOWER_BODY_COUNT	0
+
+
+//////////////////////////////////////////////////////////////////////////11
+*CHARACTERNAME	 
+*SHADERFILENMAE		..\..\data\model\Character.hlsl
+
+*MATRIXMATRIXCOUNT  1
+*MATRIXFILENAME		..\..\data\model\bomb\bomb.Mat
+
+*SKIN_UPPER_BODY_COUNT	1
+*SKIN_UPPER_BODY		..\..\data\model\bomb\bomb.skm		null
+*SKIN_LOWER_BODY_COUNT	0
+
 
 
 //////////////////////////////////////////////////////////////////////////
