@@ -384,7 +384,7 @@ bool ArcherStateBasic::Process(const float& spf) noexcept
 
 		m_pOwner->m_DelayFrame = 1.0f;
 		m_pOwner->m_curDelayDash = m_pOwner->m_DelayDash;
-		SoundManager::Get().Play("SE_jump02.mp3");
+		//SoundManager::Get().Play("SE_jump02.mp3");
 	}
 
 	// È­»ìºñ
@@ -633,7 +633,7 @@ bool MageStateBasic::Process(const float& spf) noexcept
 			m_pOwner->m_DelayFrame = m_pOwner->m_DelayDash * 0.4f;
 			m_pOwner->m_curDelayDash = m_pOwner->m_DelayDash;
 			m_pOwner->m_eAction = PlayerController::EAction::Dash;
-			SoundManager::Get().Play("SE_jump02.mp3");
+			//SoundManager::Get().Play("SE_jump02.mp3");
 		}
 	}
 
