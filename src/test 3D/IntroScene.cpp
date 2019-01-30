@@ -158,6 +158,8 @@ void IntroScene::SetObjects() noexcept
 	//ObjectManager::Get().SetProtoObject(new GameObject(L"PDead", m_pParser->CreateFromParticle(L"Boom3.eff", urlEffect), EObjType::Effect));
 	ObjectManager::Get().SetProtoObject(new GameObject(L"EPAttack", m_pParser->CreateFromParticle(L"Boom2.eff", urlEffect), EObjType::Effect));
 	ObjectManager::Get().SetProtoObject(new GameObject(L"EPSlash", m_pParser->CreateFromParticle(L"Slash.eff", urlEffect), EObjType::Effect));
+	ObjectManager::Get().SetProtoObject(new GameObject(L"EPDust", m_pParser->CreateFromParticle(L"Dust.eff", urlEffect), EObjType::Effect));
+	ObjectManager::Get().SetProtoObject(new GameObject(L"EPDustStay", m_pParser->CreateFromParticle(L"DustStay.eff", urlEffect), EObjType::Effect));
 	auto pParticle = m_pParser->CreateFromParticle(L"LevelUp.eff", urlEffect);
 	pParticle->isFollow(true);
 	ObjectManager::Get().SetProtoObject(new GameObject(L"EPLevelUp", pParticle, EObjType::Effect));
@@ -172,6 +174,13 @@ void IntroScene::SetObjects() noexcept
 	pCollider->m_eTag = ETag::Dummy;
 	pCollider->SetGravityScale(0.0f);
 	pCollider->usePhysics(false);
+	ObjectManager::Get().SetProtoObject(pObject);
+
+	// 좀비 던짐
+	pCollider = new Collider(40.0f);
+	pObject = new GameObject(L"ZThrow", { pCollider, m_pParser->CreateFromParticle(L"ZombieAttack.eff", urlEffect) }, EObjType::Effect);
+	pCollider->CollisionEvent = MyEvent::ZombieAttack;
+	pCollider->m_eTag = ETag::Dummy;
 	ObjectManager::Get().SetProtoObject(pObject);
 
 	// 좀비 어택

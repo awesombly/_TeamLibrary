@@ -155,6 +155,10 @@ void PlayerStateLSkill::StateInit(PlayerController* pOwner) noexcept
 	m_pOwner->m_eAction = PlayerController::EAction::LSkill;
 	m_pOwner->m_DelayFrame = 0.5f;
 	m_pOwner->m_moveSpeed *= 0.4f;
+	if(m_pOwner->m_pEffectFly != nullptr)
+		ObjectManager::Get().DisableObject(m_pOwner->m_pEffectFly);
+	m_pOwner->m_pEffectFly = ObjectManager::Get().TakeObject(L"EPDustStay");
+	m_pOwner->m_pEffectFly->SetParent(pOwner);
 }
 bool PlayerStateLSkill::Process(const float& spf) noexcept
 {
@@ -164,6 +168,9 @@ bool PlayerStateLSkill::Process(const float& spf) noexcept
 		m_pOwner->SetState(EPlayerState::Basic);
 		m_pOwner->m_eAction = PlayerController::EAction::Attack;
 		m_pOwner->m_DelayFrame = 0.5f;
+		if (m_pOwner->m_pEffectFly != nullptr)
+			ObjectManager::Get().DisableObject(m_pOwner->m_pEffectFly);
+		m_pOwner->m_pEffectFly = nullptr;
 		return true;
 	}
 

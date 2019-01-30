@@ -322,7 +322,7 @@ namespace TimeEvent {
 			vecRot = { matRotation._31, matRotation._32, matRotation._33 };
 			pItem->SetForce(vecRot * (RandomNormal() * 60.0f + 60.0f));
 			pItem->m_pPhysics->UserSocket = pParent->m_pPhysics->UserSocket;
-			pItem->SetDamage(0.2f, PacketManager::Get().UserList[pParent->m_pPhysics->UserSocket]->StatStr);
+			pItem->SetDamage(0.25f, PacketManager::Get().UserList[pParent->m_pPhysics->UserSocket]->StatStr);
 			//pItem->GetCollider()->AddIgnoreList(pObject->GetCollider());
 		}
 		//SoundManager::Get().PlayQueue("SE_throw01.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);

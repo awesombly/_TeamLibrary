@@ -85,7 +85,7 @@ bool AIZombieCast::Frame(const float& spf, const float& accTime)	noexcept
 	{
 		SoundManager::Get().PlayQueue("SE_chicken.mp3", m_pParent->GetPosition(), PlayerController::Get().SoundRange);
 
-		auto pChicken = ObjectManager::Get().TakeObject(L"Chicken");
+		auto pChicken = ObjectManager::Get().TakeObject(L"ZThrow");
 		pChicken->SetPosition(m_pParent->GetPosition() + m_pParent->GetForward() * 40.0f + m_pParent->GetUp() * 65.0f + m_pParent->GetRight() * 20.0f);
 		pChicken->SetRotation(m_pParent->GetRotation());
 		pChicken->SetScale(m_pParent->GetScale().x * 2.0f * Vector3::One);

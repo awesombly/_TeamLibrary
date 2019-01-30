@@ -413,6 +413,8 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 		 case DashRight:
 		 {
 			 pObject->SetANIM_OneTime(Archer_DIVE);
+			 auto pEffect = ObjectManager::Get().TakeObject(L"EPDustStay");
+			 pEffect->SetPosition(pObject->GetPosition());
 		 }	break;
 	 	 // ================================== еш ╩Г©К =========================================
 	 	 case EAction::ShockWave:
@@ -732,6 +734,8 @@ void PlayerController::Possess(GameObject* pObject) noexcept
 		}
 		pPlayer->GetParent()->SetArmor(pPlayer->m_defencePoint -= 10);
 		pPlayer->SendPhysicsInfo();
+		if (pPlayer->m_pEffectFly != nullptr)
+			ObjectManager::Get().DisableObject(pPlayer->m_pEffectFly);
 
 		pPlayer->ResetOption();
 		pPlayer->UpdateStatus();

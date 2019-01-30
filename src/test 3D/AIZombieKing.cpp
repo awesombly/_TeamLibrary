@@ -173,7 +173,7 @@ bool AIZombieKing::Frame(const float& spf, const float& accTime)	noexcept
 		// ºê·¹½º
 		m_Breath = ObjectManager::Get().TakeObject(L"ZBreath");
 		m_Breath->SetParent(m_pParent);
-		//m_Breath->SetRotation(m_pParent->GetRotation());
+		m_Breath->SetRotation(-m_pParent->GetRotation());
 		m_Breath->m_pPhysics->m_damage = 1.0f;
 		///
 		m_delayBreath = 0.0f;
