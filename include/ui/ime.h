@@ -23,6 +23,7 @@ namespace UI
 		int m_iMaxLength = 0;
 		bool m_bPlay = false;
 	public:
+		bool GetPlay();
 		void imeStart();
 		void imeEnd();	
 		wstring GetString();

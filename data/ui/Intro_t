@@ -523,6 +523,40 @@
 ^pfEventClick 7274
 ^vpEventClick 
 
+^Type 788
+^NodeName SkeletonBack
+^ParentName Root
+^KeyState 135 135
+^bRender 1
+^Position -342.000000 242.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 45.000000 50.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_Normal creeperNom.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName SkeletonFront
+^ParentName SkeletonBack
+^KeyState 135 135
+^bRender 1
+^Position 0.000000 -0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 45.000000 50.000000 1.000000
+^Color 1.000000 1.000000 1.000000 0.769536
+^tx_Normal creeperEyeBlue.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick ýýýý
+
 ^Type 782
 
 ^SpriteType 6430
@@ -531,7 +565,7 @@
 ^KeyState 135 135
 ^bRender 1
 ^bLoop 1
-^Position 0.000000 0.000000 0.000000
+^Position 869.000000 -17.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 10.000000 10.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000

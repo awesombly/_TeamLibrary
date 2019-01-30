@@ -233,8 +233,8 @@
 ^strText IP:___.___.___.___
 ^TextSize 15.000000
 ^tx_Normal TopTitle.png
-^tx_Hover ChatEdit.png
-^tx_Press ChatEdit.png
+^tx_Hover TopTitle.png
+^tx_Press TopTitle.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -292,7 +292,7 @@
 ^ParentName Help_Panel
 ^KeyState 135 135
 ^bRender 0
-^Position -245.000000 85.000000 0.000000
+^Position -217.000000 90.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 70.000000 50.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
@@ -753,7 +753,7 @@
 ^ParentName Drag_Panel
 ^KeyState 135 135
 ^bRender 1
-^Position 868.000000 -1.000000 0.000000
+^Position 603.000000 -237.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 0.000000 0.000000 1.000000
 ^Color 0.000000 0.000000 0.000000 0.650000
@@ -855,7 +855,7 @@
 ^KeyState 135 135
 ^bRender 1
 ^bLoop 1
-^Position 878.000000 -11.000000 0.000000
+^Position 613.000000 -247.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 10.000000 10.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000

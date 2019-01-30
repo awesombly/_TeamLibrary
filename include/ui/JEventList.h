@@ -2,6 +2,7 @@
 #include "JPanel.h"
 #include "Timer.h"
 #include "JItem.h"
+#include "ime.h"
 /*
 	Event Ãß°¡½Ã ==
 	:: Lib Panel(enum EVENT_LIST)
@@ -12,6 +13,8 @@
 */
 namespace UI
 {
+	static JPanel* pMouse = nullptr;
+
 	static void E_SHOW(void* vp)
 	{
 		JPanel* pPanel = (JPanel*)vp;
@@ -162,6 +165,7 @@ namespace UI
 	// InGame State_Panel
 	static void E_STATE_SHOW(void* vp)
 	{
+		if (ime::Get()->GetPlay()) return;
 		JPanel* pPanel = (JPanel*)vp;
 		if (Input::GetKeyState(pPanel->m_pKeyHold) == EKeyState::HOLD)
 		{
@@ -178,7 +182,7 @@ namespace UI
 		if (Input::GetKeyState(pPanel->m_pKeyDown) == EKeyState::DOWN)
 		{
 			JPanel* pRoot = pPanel->find_root();
-			JPanel* pMouse = pRoot->find_child(L"mouse_cursor");
+			pMouse = pRoot->find_child(L"mouse_cursor");
 			pPanel->m_bRender = !pPanel->m_bRender;
 			if (pPanel->m_bRender)
 				pMouse->m_bRender = true;
@@ -621,11 +625,16 @@ namespace UI
 	}
 	static void E_KEY_REVERSESHOW(void* vp)
 	{
+		if (ime::Get()->GetPlay()) return;
+
 		JPanel* pPanel = (JPanel*)vp;
-		if (Input::GetKeyState(pPanel->m_pKeyDown) == EKeyState::DOWN)
+		if (pMouse == nullptr)
 		{
 			JPanel* pRoot = pPanel->find_root();
-			JPanel* pMouse = pRoot->find_child(L"mouse_cursor");
+			pMouse = pRoot->find_child(L"mouse_cursor");
+		}
+		if (Input::GetKeyState(pPanel->m_pKeyDown) == EKeyState::DOWN)
+		{
 			pPanel->m_bRender = !pPanel->m_bRender;
 			if (pPanel->m_bRender)
 			{

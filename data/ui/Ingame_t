@@ -128,6 +128,7 @@
 ^Position 320.000000 -240.000000 0.000000
 ^Rotate 0.000000 0.000000 1.570796
 ^Scale 50.000000 50.000000 1.000000
+^SubScale 50.000000 50.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
 ^tx_BackGround black.png
 ^tx_FrontGround blue.png
@@ -147,6 +148,7 @@
 ^Position -320.000000 -240.000000 0.000000
 ^Rotate 0.000000 0.000000 1.570796
 ^Scale 50.000000 50.000000 1.000000
+^SubScale 50.000000 50.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
 ^tx_BackGround black.png
 ^tx_FrontGround red.png
@@ -166,6 +168,7 @@
 ^Position 0.000000 -239.985489 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 221.000000 2.000000 1.000000
+^SubScale 221.000000 2.000000 1.000000
 ^Color 0.000000 1.000000 0.000000 1.000000
 ^tx_BackGround black.png
 ^tx_FrontGround White.png
@@ -223,6 +226,7 @@
 ^Position -368.668457 -260.988007 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 26.000000 26.000000 1.000000
+^SubScale 26.000000 26.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
 ^tx_BackGround boots_mobile-5301437f3fd3acb46bc8924e850b75cf-1.png
 ^tx_FrontGround black.png
@@ -242,8 +246,9 @@
 ^Position 368.666321 -261.166260 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 26.000000 26.000000 1.000000
+^SubScale 26.000000 26.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
-^tx_BackGround boots_mobile-5301437f3fd3acb46bc8924e850b75cf-1.png
+^tx_BackGround axe_mobile-d4d9e8a208f1f964783b426340fc8c29-1.png
 ^tx_FrontGround black.png
 ^pfEventHover 7274
 ^vpEventHover 
@@ -259,7 +264,7 @@
 ^bRender 1
 ^Position 0.000000 0.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 34.359829 34.359829 1.000000
+^Scale 29.999664 29.999664 1.000000
 ^Color 0.000000 0.000000 0.000000 1.000000
 ^tx_Normal CrossHair.png
 ^pfEventHover 7274
@@ -324,6 +329,7 @@
 ^Position 0.000000 235.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 115.801628 8.354493 1.000000
+^SubScale 115.801628 8.354493 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
 ^tx_BackGround Alpha.png
 ^tx_FrontGround red.png
@@ -1726,6 +1732,7 @@
 ^Position 30.000000 80.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 100.000000 2.000000 1.000000
+^SubScale 7.000000 7.000000 1.000000
 ^Color 1.000000 0.500000 0.500000 1.000000
 ^tx_Bar µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^tx_Handle filled-circle_icon-icons.com_72757.png
@@ -1746,6 +1753,7 @@
 ^Position 30.000000 40.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 100.000000 2.000000 1.000000
+^SubScale 7.000000 7.000000 1.000000
 ^Color 1.000000 0.500000 0.500000 1.000000
 ^tx_Bar µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^tx_Handle filled-circle_icon-icons.com_72757.png
@@ -1767,7 +1775,7 @@
 ^Color 1.000000 1.000000 1.000000 1.000000
 ^tx_Normal Btn1Press.png
 ^tx_Hover Btn1Hover.png
-^tx_Press Btn1Normal.png
+^tx_Press btn1Normal.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -2171,6 +2179,7 @@
 ^Position 0.000000 -72.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 151.000000 8.500000 1.000000
+^SubScale 1.000000 1.000000 1.000000
 ^Color 1.000000 0.500000 1.000000 1.000000
 ^tx_BackGround Alpha.png
 ^tx_FrontGround µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
@@ -2272,11 +2281,11 @@
 ^ParentName State_Default_Panel
 ^KeyState 135 135
 ^bRender 1
-^Position 0.000000 127.175591 0.000000
+^Position 0.000000 126.508904 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 150.000000 20.000000 1.000000
-^Color 0.000000 0.000000 0.000000 1.000000
-^tx_Normal µ¥½º¸ÅÄ¡.png
+^Color 1.000000 1.000000 0.600000 1.000000
+^tx_Normal ½ºÄÚ¾îº¸µå.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -3026,6 +3035,7 @@
 ^Position 226.000000 -268.760651 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 2.000000 20.000000 1.000000
+^SubScale 1.000000 1.000000 1.000000
 ^Color 0.000000 0.000000 0.000000 1.000000
 ^tx_Bar Alpha.png
 ^tx_Handle circle.png
@@ -3063,9 +3073,9 @@
 ^NodeName mouse_cursor
 ^ParentName Root
 ^KeyState 135 135
-^bRender 1
+^bRender 0
 ^bLoop 1
-^Position 635.000000 -229.000000 0.000000
+^Position 885.000000 -23.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 10.000000 10.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000

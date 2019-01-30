@@ -34,6 +34,27 @@ namespace UI
 		};
 		pHelpText->PreEvent.first = E_HelpText;
 		pHelpText->PreEvent.second = pHelpText;
+
+		JPanel* pSkeleton = (JPanel*)pRoot->find_child(L"SkeletonFront");
+		static auto E_REVERSE_ALPHA = [](void* vp)
+		{
+			JPanel* pPanel = (JPanel*)vp;
+			static bool bAlpha = false;
+			if (!bAlpha)
+			{
+				pPanel->m_pShape->m_cbData.vColor.w -= Timer::SPF;
+				if (pPanel->m_pShape->m_cbData.vColor.w <= 0.0f)
+					bAlpha = true;
+			}
+			else
+			{
+				pPanel->m_pShape->m_cbData.vColor.w += Timer::SPF;
+				if (pPanel->m_pShape->m_cbData.vColor.w >= 1.0f)
+					bAlpha = false;
+			}
+		};
+		pSkeleton->PreEvent.first = E_REVERSE_ALPHA;
+		pSkeleton->PreEvent.second = pSkeleton;
 	}
 	static void LobbyEvent(JPanel* pRoot)
 	{
@@ -82,7 +103,7 @@ namespace UI
 		pStatePanel->PreEvent.second = pStatePanel;
 
 		JPanel* pSetting = (JPanel*)pRoot->find_child(L"Set_Panel");
-		pSetting->PreEvent.first = E_SETTING_SHOW;
+		pSetting->PreEvent.first = E_KEY_REVERSESHOW;
 		pSetting->PreEvent.second = pSetting;
 
 		JSliderCtrl* pChatSlider = (JSliderCtrl*)pRoot->find_child(L"Chat_Slider");

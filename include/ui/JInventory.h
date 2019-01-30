@@ -6,7 +6,6 @@ namespace UI
 	{
 	public:
 		bool m_bUpdate = true;
-		bool m_bSort = true;
 		int	m_iRows;
 		int m_iCols;
 		int m_iMaxItem;
