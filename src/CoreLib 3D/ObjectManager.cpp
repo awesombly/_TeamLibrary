@@ -469,10 +469,10 @@ void ObjectManager::PopObject(GameObject* pObject) noexcept
 			PopCollider((Collider*)pCol, false);
 		}
 	}
-	if (pObject->GetParent() != nullptr)
-	{
-		pObject->CutParent(false);
-	}
+	//if (pObject->GetParent() != nullptr)
+	//{
+	//	pObject->CutParent(false);
+	//}
 	findList.remove(*iter);
 }
 

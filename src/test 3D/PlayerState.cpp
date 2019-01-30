@@ -111,6 +111,7 @@ bool PlayerStateBasic::Process(const float& spf) noexcept
 		m_pOwner->m_curDelayLSkill = m_pOwner->m_DelayLSkill;
 		m_pOwner->SetState(EPlayerState::LSkill);
 	}
+
 	//// R 클릭
 	//if (Input::GetKeyState(VK_RBUTTON) == EKeyState::DOWN &&
 	//	m_pOwner->m_curDelayRSkill <= 0.0f)
@@ -120,6 +121,7 @@ bool PlayerStateBasic::Process(const float& spf) noexcept
 	//	//m_curDelayDash += 0.3f;
 	//	m_pOwner->m_eAction = PlayerController::EAction::RSkill;
 	//}
+
 	// 스페이스
 	if (Input::GetKeyState(VK_SPACE) == EKeyState::DOWN &&
 		m_pOwner->m_curDelayDash <= 0.0f)
@@ -127,6 +129,7 @@ bool PlayerStateBasic::Process(const float& spf) noexcept
 		m_pOwner->m_curDelayDash = m_pOwner->m_DelayDash;
 		m_pOwner->SetState(EPlayerState::Special);
 	}
+
 	//// 구르기
 	//if (Input::GetKeyState(VK_SPACE) == EKeyState::DOWN &&
 	//	m_pOwner->m_curDelayDash <= 0.0f)
@@ -155,10 +158,6 @@ void PlayerStateLSkill::StateInit(PlayerController* pOwner) noexcept
 	m_pOwner->m_eAction = PlayerController::EAction::LSkill;
 	m_pOwner->m_DelayFrame = 0.5f;
 	m_pOwner->m_moveSpeed *= 0.4f;
-	if(m_pOwner->m_pEffectFly != nullptr)
-		ObjectManager::Get().DisableObject(m_pOwner->m_pEffectFly);
-	m_pOwner->m_pEffectFly = ObjectManager::Get().TakeObject(L"EPDustStay");
-	m_pOwner->m_pEffectFly->SetParent(pOwner);
 }
 bool PlayerStateLSkill::Process(const float& spf) noexcept
 {
@@ -167,29 +166,27 @@ bool PlayerStateLSkill::Process(const float& spf) noexcept
 	{
 		m_pOwner->SetState(EPlayerState::Basic);
 		m_pOwner->m_eAction = PlayerController::EAction::Attack;
-		m_pOwner->m_DelayFrame = 0.5f;
-		if (m_pOwner->m_pEffectFly != nullptr)
-			ObjectManager::Get().DisableObject(m_pOwner->m_pEffectFly);
-		m_pOwner->m_pEffectFly = nullptr;
+		m_pOwner->m_DelayFrame = 0.4f;
+		m_pOwner->m_curDelayLSkill = m_pOwner->m_DelayLSkill;
 		return true;
 	}
 
-	m_pOwner->m_eAction = PlayerController::EAction::Idle;
+	m_pOwner->m_eAction = PlayerController::EAction::NIdle;
 	if (Input::GetKeyState('W') == EKeyState::HOLD)
 	{
-		m_pOwner->m_eAction = (PlayerController::EAction)(m_pOwner->m_eAction + PlayerController::EAction::Forward);
+		m_pOwner->m_eAction = (PlayerController::EAction)(m_pOwner->m_eAction + PlayerController::EAction::NForward);
 	}
 	if (Input::GetKeyState('S') == EKeyState::HOLD)
 	{
-		m_pOwner->m_eAction = (PlayerController::EAction)(m_pOwner->m_eAction + PlayerController::EAction::Backward);
+		m_pOwner->m_eAction = (PlayerController::EAction)(m_pOwner->m_eAction + PlayerController::EAction::NBackward);
 	}
 	if (Input::GetKeyState('A') == EKeyState::HOLD)
 	{
-		m_pOwner->m_eAction = (PlayerController::EAction)(m_pOwner->m_eAction + PlayerController::EAction::Left);
+		m_pOwner->m_eAction = (PlayerController::EAction)(m_pOwner->m_eAction + PlayerController::EAction::NLeft);
 	}
 	if (Input::GetKeyState('D') == EKeyState::HOLD)
 	{
-		m_pOwner->m_eAction = (PlayerController::EAction)(m_pOwner->m_eAction + PlayerController::EAction::Right);
+		m_pOwner->m_eAction = (PlayerController::EAction)(m_pOwner->m_eAction + PlayerController::EAction::NRight);
 	}
 	return true;
 }
@@ -202,8 +199,6 @@ void PlayerStateRSkill::StateInit(PlayerController* pOwner) noexcept
 }
 bool PlayerStateRSkill::Process(const float& spf) noexcept
 {
-
-
 	return true;
 }
 
@@ -219,6 +214,9 @@ void PlayerStateGuard::StateInit(PlayerController* pOwner) noexcept
 	m_pOwner->GetParent()->m_pPhysics->m_damping = 2.0f;
 	m_pOwner->GetParent()->SetArmor(m_pOwner->m_defencePoint += 30);
 	m_pOwner->SendPhysicsInfo();
+	// 이펙
+	auto pItem = ObjectManager::Get().TakeObject(L"EHit");
+	pItem->SetPosition(pOwner->GetPosition() + pOwner->GetUp() * 45.0f);
 }
 bool PlayerStateGuard::Process(const float& spf) noexcept
 {
@@ -267,6 +265,11 @@ void PlayerStateRun::StateInit(PlayerController* pOwner) noexcept
 {
 	m_pOwner = pOwner;
 	m_pOwner->m_eAction = PlayerController::EAction::Run;
+	if (m_pOwner->m_pEffectFly != nullptr)
+		ObjectManager::Get().DisableObject(m_pOwner->m_pEffectFly);
+	m_pOwner->m_pEffectFly = ObjectManager::Get().TakeObject(L"EPDustStay", false);
+	m_pOwner->m_pEffectFly->SetParent(pOwner);
+	m_pOwner->m_pEffectFly->SetPosition(Vector3::Up * 15.0f);
 }
 bool PlayerStateRun::Process(const float& spf) noexcept
 {
@@ -293,6 +296,9 @@ bool PlayerStateRun::Process(const float& spf) noexcept
 	if (Input::GetKeyState(VK_SHIFT) == EKeyState::UP)
 	{
 		m_pOwner->SetState(EPlayerState::Basic);
+		if (m_pOwner->m_pEffectFly != nullptr)
+			ObjectManager::Get().DisableObject(m_pOwner->m_pEffectFly);
+		m_pOwner->m_pEffectFly = nullptr;
 	}
 
 	return true;
@@ -305,16 +311,7 @@ bool PlayerStateRun::Process(const float& spf) noexcept
 void ArcherStateBasic::StateInit(PlayerController* pOwner) noexcept
 {
 	m_pOwner = pOwner;
-
-	if (m_pOwner->GetParent() != nullptr)
-	{
-		m_pOwner->UpdateStatus(false);
-		m_pOwner->GetParent()->m_pPhysics->m_mass = 1.0f;
-		m_pOwner->GetParent()->m_pPhysics->m_damage = 0.3f;
-		m_pOwner->GetParent()->m_pPhysics->m_armor = 1.0f;
-		m_pOwner->GetParent()->GetCollider()->CollisionEvent = nullptr;
-		m_pOwner->SendPhysicsInfo();
-	}
+	m_pOwner->UpdateStatus(false);
 }
 bool ArcherStateBasic::Process(const float& spf) noexcept
 {
@@ -481,22 +478,22 @@ bool ArcherStateLSkill::Process(const float& spf) noexcept
 	}
 
 
-	m_pOwner->m_eAction = PlayerController::EAction::Idle;
+	m_pOwner->m_eAction = PlayerController::EAction::NIdle;
 	if (Input::GetKeyState('W') == EKeyState::HOLD)
 	{
-		m_pOwner->m_eAction = (PlayerController::EAction)(m_pOwner->m_eAction + PlayerController::EAction::Forward);
+		m_pOwner->m_eAction = (PlayerController::EAction)(m_pOwner->m_eAction + PlayerController::EAction::NForward);
 	}
 	if (Input::GetKeyState('S') == EKeyState::HOLD)
 	{
-		m_pOwner->m_eAction = (PlayerController::EAction)(m_pOwner->m_eAction + PlayerController::EAction::Backward);
+		m_pOwner->m_eAction = (PlayerController::EAction)(m_pOwner->m_eAction + PlayerController::EAction::NBackward);
 	}
 	if (Input::GetKeyState('A') == EKeyState::HOLD)
 	{
-		m_pOwner->m_eAction = (PlayerController::EAction)(m_pOwner->m_eAction + PlayerController::EAction::Left);
+		m_pOwner->m_eAction = (PlayerController::EAction)(m_pOwner->m_eAction + PlayerController::EAction::NLeft);
 	}
 	if (Input::GetKeyState('D') == EKeyState::HOLD)
 	{
-		m_pOwner->m_eAction = (PlayerController::EAction)(m_pOwner->m_eAction + PlayerController::EAction::Right);
+		m_pOwner->m_eAction = (PlayerController::EAction)(m_pOwner->m_eAction + PlayerController::EAction::NRight);
 	}
 	return true;
 }
@@ -520,22 +517,22 @@ bool ArcherStateRSkill::Process(const float& spf) noexcept
 		return true;
 	}
 
-	m_pOwner->m_eAction = PlayerController::EAction::Idle;
+	m_pOwner->m_eAction = PlayerController::EAction::NIdle;
 	if (Input::GetKeyState('W') == EKeyState::HOLD)
 	{
-		m_pOwner->m_eAction = (PlayerController::EAction)(m_pOwner->m_eAction + PlayerController::EAction::Forward);
+		m_pOwner->m_eAction = (PlayerController::EAction)(m_pOwner->m_eAction + PlayerController::EAction::NForward);
 	}
 	if (Input::GetKeyState('S') == EKeyState::HOLD)
 	{
-		m_pOwner->m_eAction = (PlayerController::EAction)(m_pOwner->m_eAction + PlayerController::EAction::Backward);
+		m_pOwner->m_eAction = (PlayerController::EAction)(m_pOwner->m_eAction + PlayerController::EAction::NBackward);
 	}
 	if (Input::GetKeyState('A') == EKeyState::HOLD)
 	{
-		m_pOwner->m_eAction = (PlayerController::EAction)(m_pOwner->m_eAction + PlayerController::EAction::Left);
+		m_pOwner->m_eAction = (PlayerController::EAction)(m_pOwner->m_eAction + PlayerController::EAction::NLeft);
 	}
 	if (Input::GetKeyState('D') == EKeyState::HOLD)
 	{
-		m_pOwner->m_eAction = (PlayerController::EAction)(m_pOwner->m_eAction + PlayerController::EAction::Right);
+		m_pOwner->m_eAction = (PlayerController::EAction)(m_pOwner->m_eAction + PlayerController::EAction::NRight);
 	}
 	return true;
 }
@@ -559,16 +556,7 @@ bool ArcherStateDash::Process(const float& spf) noexcept
 void MageStateBasic::StateInit(PlayerController* pOwner) noexcept
 {
 	m_pOwner = pOwner;
-
-	if (m_pOwner->GetParent() != nullptr)
-	{
-		m_pOwner->UpdateStatus(false);
-		m_pOwner->GetParent()->m_pPhysics->m_mass = 1.0f;
-		m_pOwner->GetParent()->m_pPhysics->m_damage = 0.3f;
-		m_pOwner->GetParent()->m_pPhysics->m_armor = 1.0f;
-		m_pOwner->GetParent()->GetCollider()->CollisionEvent = nullptr;
-		m_pOwner->SendPhysicsInfo();
-	}
+	m_pOwner->UpdateStatus(false);
 }
 bool MageStateBasic::Process(const float& spf) noexcept
 {
@@ -611,37 +599,14 @@ bool MageStateBasic::Process(const float& spf) noexcept
 			m_pOwner->m_ItemList[UIManager::Get().m_pSlot3->m_pItem->m_pIndexList[0]](m_pOwner, nullptr);
 	}
 
-
 	// L 클릭
 	if (Input::GetKeyState(EMouseButton::Left) == EKeyState::DOWN &&
-		m_pOwner->m_curDelayLSkill <= 0.0f)
+		m_pOwner->m_curDelayLSkill <= 0.0f &&
+		m_pOwner->m_curMP >= 0.4f)
 	{
-		//m_pOwner->m_curMP -= 0.4f;
-		//m_pOwner->m_curDelayLSkill = m_pOwner->m_DelayLSkill;
+		m_pOwner->m_curMP -= 0.4f;
+		m_pOwner->m_curDelayLSkill = m_pOwner->m_DelayLSkill;
 		m_pOwner->SetState(EPlayerState::LSkill);
-	}
-
-	//// R 클릭
-	//if (Input::GetKeyState(VK_RBUTTON) == EKeyState::DOWN &&
-	//	m_pOwner->m_curDelayRSkill <= 0.0f)
-	//{
-	//	m_pOwner->m_curDelayRSkill = m_pOwner->m_DelayRSkill;
-	//	m_pOwner->m_curDelayLSkill = m_pOwner->m_DelayLSkill;
-	//	//m_curDelayDash += 0.3f;
-	//	m_pOwner->m_eAction = PlayerController::EAction::RSkill;
-	//}
-
-	// 구르기
-	if (Input::GetKeyState(VK_SPACE) == EKeyState::DOWN &&
-		m_pOwner->m_curDelayDash <= 0.0f)
-	{
-		if (m_pOwner->m_pParent->isGround())
-		{
-			m_pOwner->m_DelayFrame = m_pOwner->m_DelayDash * 0.4f;
-			m_pOwner->m_curDelayDash = m_pOwner->m_DelayDash;
-			m_pOwner->m_eAction = PlayerController::EAction::Dash;
-			//SoundManager::Get().Play("SE_jump02.mp3");
-		}
 	}
 
 	return true;
@@ -654,44 +619,35 @@ void MageStateLSkill::StateInit(PlayerController* pOwner) noexcept
 	m_pOwner = pOwner;
 	m_pOwner->m_eAction = PlayerController::EAction::LSkill;
 	m_pOwner->m_DelayFrame = 0.6f;
-	m_pOwner->m_moveSpeed *= 0.4f;
-	m_pOwner->m_chargeCount = 0.0f;
+	m_pOwner->m_moveSpeed *= 0.6f;
 }
 bool MageStateLSkill::Process(const float& spf) noexcept
 {
 	m_pOwner->m_DelayFrame -= spf;
 
-	if (Input::GetKeyState(VK_LBUTTON) == EKeyState::FREE)
+	if (m_pOwner->m_DelayFrame <= 0.0f)
 	{
 		m_pOwner->m_eAction = PlayerController::EAction::Attack;
 		m_pOwner->SetState(EPlayerState::Basic);
 		return true;
 	}
 
-	if (Input::GetKeyState(VK_RBUTTON) == EKeyState::DOWN)
-	{
-		m_pOwner->m_eAction = PlayerController::EAction::LSkill;
-		m_pOwner->SetState(EPlayerState::Basic);
-		return true;
-	}
-
-
-	m_pOwner->m_eAction = PlayerController::EAction::Idle;
+	m_pOwner->m_eAction = PlayerController::EAction::NIdle;
 	if (Input::GetKeyState('W') == EKeyState::HOLD)
 	{
-		m_pOwner->m_eAction = (PlayerController::EAction)(m_pOwner->m_eAction + PlayerController::EAction::Forward);
+		m_pOwner->m_eAction = (PlayerController::EAction)(m_pOwner->m_eAction + PlayerController::EAction::NForward);
 	}
 	if (Input::GetKeyState('S') == EKeyState::HOLD)
 	{
-		m_pOwner->m_eAction = (PlayerController::EAction)(m_pOwner->m_eAction + PlayerController::EAction::Backward);
+		m_pOwner->m_eAction = (PlayerController::EAction)(m_pOwner->m_eAction + PlayerController::EAction::NBackward);
 	}
 	if (Input::GetKeyState('A') == EKeyState::HOLD)
 	{
-		m_pOwner->m_eAction = (PlayerController::EAction)(m_pOwner->m_eAction + PlayerController::EAction::Left);
+		m_pOwner->m_eAction = (PlayerController::EAction)(m_pOwner->m_eAction + PlayerController::EAction::NLeft);
 	}
 	if (Input::GetKeyState('D') == EKeyState::HOLD)
 	{
-		m_pOwner->m_eAction = (PlayerController::EAction)(m_pOwner->m_eAction + PlayerController::EAction::Right);
+		m_pOwner->m_eAction = (PlayerController::EAction)(m_pOwner->m_eAction + PlayerController::EAction::NRight);
 	}
 	return true;
 }

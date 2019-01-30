@@ -85,7 +85,10 @@ bool AIZombieKing::Frame(const float& spf, const float& accTime)	noexcept
 		 		return true;
 		 	}
 			m_eState = EState::Action1;
-		 	m_Breath->SetPosition(m_pParent->GetPosition() + m_pParent->GetForward() * 30.0f + m_pParent->GetUp() * 55.0f);
+			if (m_Breath != nullptr)
+			{
+				m_Breath->SetPosition(m_pParent->GetPosition() + m_pParent->GetForward() * 30.0f + m_pParent->GetUp() * 55.0f);
+			}
 		 	//if (sinf(m_delayBreath) >= 0.0f)
 		 	//	m_Breath->Rotate(Quaternion::Left * spf);
 		 	//else
@@ -155,7 +158,7 @@ bool AIZombieKing::Frame(const float& spf, const float& accTime)	noexcept
 	}	break;
 	case EState::Attack:
 	{
-		SoundManager::Get().PlayQueue("SE_zombie_hit02.mp3", m_pParent->GetPosition(), PlayerController::Get().SoundRange);
+		//SoundManager::Get().PlayQueue("SE_zombie_hit02.mp3", m_pParent->GetPosition(), PlayerController::Get().SoundRange);
 
 		// 공격
 		auto pEffect = ObjectManager::Get().TakeObject(L"ZAttack3");
@@ -172,8 +175,8 @@ bool AIZombieKing::Frame(const float& spf, const float& accTime)	noexcept
 
 		// 브레스
 		m_Breath = ObjectManager::Get().TakeObject(L"ZBreath");
-		m_Breath->SetParent(m_pParent);
-		m_Breath->SetRotation(-m_pParent->GetRotation());
+		//m_Breath->SetParent(m_pParent);
+		m_Breath->SetRotation(m_pParent->GetRotation());
 		m_Breath->m_pPhysics->m_damage = 1.0f;
 		///
 		m_delayBreath = 0.0f;
@@ -197,6 +200,11 @@ bool AIZombieKing::Release()	noexcept
 
 void AIZombieKing::DeadEvent() noexcept
 {
+	if (m_Breath != nullptr)
+	{
+		ObjectManager::Get().DisableObject(m_Breath);
+		m_Breath = nullptr;
+	}
 	//if (RandomNormal() >= 0.2f)
 	{
 		auto pObject = ObjectManager::Get().TakeObject(L"ItemBox");

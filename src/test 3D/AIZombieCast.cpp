@@ -89,7 +89,7 @@ bool AIZombieCast::Frame(const float& spf, const float& accTime)	noexcept
 		pChicken->SetPosition(m_pParent->GetPosition() + m_pParent->GetForward() * 40.0f + m_pParent->GetUp() * 65.0f + m_pParent->GetRight() * 20.0f);
 		pChicken->SetRotation(m_pParent->GetRotation());
 		pChicken->SetScale(m_pParent->GetScale().x * 2.0f * Vector3::One);
-		pChicken->SetForce((m_pParent->GetForward() + Vector3::Up * 0.2f) * 250.0f);
+		pChicken->SetForce((m_pParent->GetForward() + Vector3::Up * 0.3f) * 250.0f);
 		pChicken->m_pPhysics->m_damage = 0.35f;
 		///
 		m_delay = 5.0f;

@@ -190,20 +190,29 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 			case PlayerController::EAction::DashLeft:
 			case PlayerController::EAction::DashRight:
 			case PlayerController::EAction::Idle:
+			case PlayerController::EAction::NIdle:
 			{
 				ObjectManager::KeyObjects[p_AnimTransform.KeyValue]->isMoving(false);
 			}	break;
+			case PlayerController::EAction::Left:
+			case PlayerController::EAction::Right:
+			case PlayerController::EAction::Run:
 			case PlayerController::EAction::Forward:
 			case PlayerController::EAction::ForwardLeft:
 			case PlayerController::EAction::ForwardRight:
 			case PlayerController::EAction::Backward:
 			case PlayerController::EAction::BackwardLeft:
 			case PlayerController::EAction::BackwardRight:
-			case PlayerController::EAction::Left:
-			case PlayerController::EAction::Right:
-			case PlayerController::EAction::Run:
 			case PlayerController::EAction::RunLeft:
 			case PlayerController::EAction::RunRight:
+			case PlayerController::EAction::NForward:
+			case PlayerController::EAction::NForwardLeft:
+			case PlayerController::EAction::NForwardRight:
+			case PlayerController::EAction::NBackward:
+			case PlayerController::EAction::NBackwardLeft:
+			case PlayerController::EAction::NBackwardRight:
+			case PlayerController::EAction::NLeft:
+			case PlayerController::EAction::NRight:
 			{
 				ObjectManager::KeyObjects[p_AnimTransform.KeyValue]->SetDirectionForce(p_AnimTransform.Direction);
 			}	break;

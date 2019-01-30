@@ -14,15 +14,17 @@ class PlayerController : public GameObject, public ISingleton<PlayerController>
 {
 public:
 	enum EAction : UCHAR {
-		Idle = 0, 
-		Left = 1, Forward = 2, ForwardLeft = 3, 
-		Right = 4, ForwardRight = 6, 
-		Backward = 8, BackwardLeft = 9, BackwardRight = 12,
-		Jump = 100, Dance1, Dance2, Dance3, LSkill, RSkill, Fly, FlyEnd, 
+		Idle		= 0,	Left = 1,	Forward = 2,	ForwardLeft = 3, 
+		Right		= 4,	ForwardRight = 6, 
+		Backward	= 8,	BackwardLeft = 9, BackwardRight = 12,
+		NIdle		= 20,	NLeft = 21,	NForward = 22, NForwardLeft = 43,
+		NRight		= 24,	NForwardRight = 46,
+		NBackward	= 28,	NBackwardLeft = 49, NBackwardRight = 52,
+		Jump		= 100,	Dance1, Dance2, Dance3, LSkill, RSkill, Fly, FlyEnd, 
 		Dash, DashLeft, DashRight, Run, RunLeft, RunRight, 
-		Special, Attack, 
-		ChargeAttack, ChargeAttack2, LCharging, LCharge1, LCharge2,
-		ShockWave, ThrowBomb,
+		Special,		Attack, 
+		ChargeAttack,	ChargeAttack2, LCharging, LCharge1, LCharge2,
+		ShockWave,		ThrowBomb,
 	};
 	enum ECharacter : UCHAR {
 		EDummy = 0, EGuard, EArcher, EMage

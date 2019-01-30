@@ -84,7 +84,7 @@ bool AIZombieCrawl::Frame(const float& spf, const float& accTime)	noexcept
 	}	break;
 	case EState::Attack:
 	{
-		SoundManager::Get().PlayQueue("SE_zombie_hit01.mp3", m_pParent->GetPosition(), PlayerController::Get().SoundRange);
+		//SoundManager::Get().PlayQueue("SE_zombie_hit01.mp3", m_pParent->GetPosition(), PlayerController::Get().SoundRange);
 		// АјАн
 		auto pEffect = ObjectManager::Get().TakeObject(L"ZBoom");
 		pEffect->SetPosition(m_pParent->GetPosition());
