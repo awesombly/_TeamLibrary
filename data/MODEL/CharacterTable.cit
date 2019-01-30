@@ -174,7 +174,16 @@
 *SKIN_UPPER_BODY		..\..\data\model\bomb\bomb.skm		null
 *SKIN_LOWER_BODY_COUNT	0
 
+//////////////////////////////////////////////////////////////////////////12
+*CHARACTERNAME	 ITEM_Box
+*SHADERFILENMAE		..\..\data\model\Character.hlsl
 
+*MATRIXMATRIXCOUNT  1
+*MATRIXFILENAME		..\..\data\model\itembox\itembox.Mat
+
+*SKIN_UPPER_BODY_COUNT	1
+*SKIN_UPPER_BODY		..\..\data\model\itembox\itembox.skm		null
+*SKIN_LOWER_BODY_COUNT	0
 
 //////////////////////////////////////////////////////////////////////////
 // 캐릭터이름   

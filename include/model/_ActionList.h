@@ -80,8 +80,7 @@
 
 //////////////////////////////////////////////////////////////////////////
 
-//ITEM_Dagger
-//ANIM_COUNT  1
+
 #define	 ITEM_ARROW				L"ITEM_ARROW"
 
 #define	 ITEM_Chicken			L"ITEM_Chicken"
@@ -91,3 +90,5 @@
 #define	 ITEM_Bird				L"ITEM_Bird"
 
 #define	 ITEM_Bomb				L"ITEM_Bomb"
+
+#define	 ITEM_Box				L"ITEM_Box"
