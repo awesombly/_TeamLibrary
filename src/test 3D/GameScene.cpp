@@ -51,7 +51,7 @@ bool GameScene::Init() noexcept
 	//}
 
 	///
-	SoundManager::Get().SetBGM("bgm_ingame01.mp3");
+	SoundManager::Get().SetBGM("bgm_InGame_Theme.mp3");
 	Timer::AccumulateTime = 0.0f;
 	m_isLoading = false;
 	m_Rule.SetReadyTime(7.0f);

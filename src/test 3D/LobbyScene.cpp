@@ -29,7 +29,7 @@ bool LobbyScene::Init() noexcept
 
 	SelectCharacter(true);
 	///
-	//SoundManager::Get().SetBGM("bgm_Title01.mp3");
+	SoundManager::Get().SetBGM("bgm_Lobby_Theme.mp3");
 	m_isLoading = false;
 	return true;
 }

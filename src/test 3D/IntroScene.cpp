@@ -49,13 +49,63 @@ bool IntroScene::Release() noexcept
 
 void IntroScene::LoadSound() noexcept
 {
-	//SoundManager::Get().Load("bgm_ingame01.mp3", false, FMOD_LOOP_NORMAL);
-	//SoundManager::Get().Load("bgm_ingame02.mp3", false, FMOD_LOOP_NORMAL);
-	//SoundManager::Get().Load("bgm_Title01.mp3", false, FMOD_LOOP_NORMAL);
-	//SoundManager::Get().Load("bgm_Title02.mp3", false, FMOD_LOOP_NORMAL);
+	SoundManager::Get().Load("bgm_Intro_Theme.mp3", false, FMOD_LOOP_NORMAL);
+	SoundManager::Get().Load("bgm_Lobby_Theme.mp3", false, FMOD_LOOP_NORMAL);
+	SoundManager::Get().Load("bgm_InGame_Theme.mp3", false, FMOD_LOOP_NORMAL);
+	//////////////////////////////////////////////PLAYER_SV
+	SoundManager::Get().Load("SV_paladin_atk1.mp3");
+	SoundManager::Get().Load("SV_paladin_atk2.mp3");
+	SoundManager::Get().Load("SV_paladin_atk3.mp3");
+	SoundManager::Get().Load("SV_paladin_atk4.mp3");
+	SoundManager::Get().Load("SV_paladin_lowHP.mp3");
+	SoundManager::Get().Load("SV_paladin_dead.mp3");
+
+	SoundManager::Get().Load("SV_archer_atk1.mp3");
+	SoundManager::Get().Load("SV_archer_atk2.mp3");
+	SoundManager::Get().Load("SV_archer_atk3.mp3");
+	SoundManager::Get().Load("SV_archer_atk4.mp3");
+	SoundManager::Get().Load("SV_archer_lowHP.mp3");
+	SoundManager::Get().Load("SV_archer_dead.mp3");
+
+	SoundManager::Get().Load("SV_mage_atk1.mp3");
+	SoundManager::Get().Load("SV_mage_atk2.mp3");
+	SoundManager::Get().Load("SV_mage_atk3.mp3");
+	SoundManager::Get().Load("SV_mage_atk4.mp3");
+	SoundManager::Get().Load("SV_mage_lowHP.mp3");
+	SoundManager::Get().Load("SV_mage_dead.mp3");
+
+	//////////////////////////////////////////////MOB_SV
+	SoundManager::Get().Load("SV_zombieR_idle1.mp3");
+	SoundManager::Get().Load("SV_zombieR_idle2.mp3");
+	SoundManager::Get().Load("SV_zombieR_atk1.mp3");
+	SoundManager::Get().Load("SV_zombieR_shot.mp3");
+
+	SoundManager::Get().Load("SV_zombieEX_idle.mp3");
+	SoundManager::Get().Load("SV_zombieEX_atk1.mp3");
+	SoundManager::Get().Load("SV_zombieEX_atk2.mp3");
+
+	SoundManager::Get().Load("SV_zombie_king_idle.mp3");
+	SoundManager::Get().Load("SV_zombie_king_attack1.mp3");
+	SoundManager::Get().Load("SV_zombie_king_attack2.mp3");
+	SoundManager::Get().Load("SV_zombie_king_shout.mp3");
+
+	///////////////////////////////////////////////SE
 	SoundManager::Get().Load("SE_chicken.mp3");
 	SoundManager::Get().Load("SE_Click01.mp3");
 	SoundManager::Get().Load("SE_dead.mp3");
+	SoundManager::Get().Load("SE_bomb.mp3");
+
+	SoundManager::Get().Load("SE_bow_ready.mp3");
+	SoundManager::Get().Load("SE_bow_shot.mp3");
+
+	SoundManager::Get().Load("SE_fire1.mp3");
+	SoundManager::Get().Load("SE_flare_shot.mp3");
+
+	SoundManager::Get().Load("SE_hit_impact_01.mp3");
+	SoundManager::Get().Load("SE_hit_impact_02.mp3");
+
+	SoundManager::Get().Load("SE_Sword_slash1.mp3");
+	SoundManager::Get().Load("SE_Sword_slash2.mp3");
 
 }
 
@@ -580,7 +630,7 @@ void IntroScene::LoadUI() noexcept
 	// ¾Ë¸²Ã¢
 	m_pHelpText = (JTextCtrl*)pUIRoot->find_child(L"Help_txt");
 
-	//SoundManager::Get().SetBGM("SE_Rudy.mp3");
+	SoundManager::Get().SetBGM("bgm_Intro_Theme.mp3");
 	UI::IntroEvent(pUIRoot);
 }
 
