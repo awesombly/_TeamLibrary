@@ -29,7 +29,7 @@ bool GameRule::Frame()	noexcept
 	{
 		if (m_bPlayStart != true) {
 			m_bPlayStart = true;
-			SoundManager::Get().Play("SE_game_time_start.mp3");
+			//SoundManager::Get().Play("SE_game_time_start.mp3");
 		}
 	}
 
@@ -40,7 +40,7 @@ bool GameRule::Frame()	noexcept
 
 		if (m_bPlayEnd != true) {
 			m_bPlayEnd = true;
-			SoundManager::Get().Play("SE_game_time_end.mp3");
+			//SoundManager::Get().Play("SE_game_time_end.mp3");
 			m_pStatePanel->m_bRender = true;
 			m_pStatePanel->PreEvent.first = nullptr;
 		}

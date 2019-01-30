@@ -48,35 +48,17 @@ bool IntroScene::Release() noexcept
 
 void IntroScene::LoadSound() noexcept
 {
-	SoundManager::Get().Load("bgm_ingame01.mp3", false, FMOD_LOOP_NORMAL);
-	SoundManager::Get().Load("bgm_ingame02.mp3", false, FMOD_LOOP_NORMAL);
-	SoundManager::Get().Load("bgm_Title01.mp3", false, FMOD_LOOP_NORMAL);
-	SoundManager::Get().Load("bgm_Title02.mp3", false, FMOD_LOOP_NORMAL);
-	SoundManager::Get().Load("SE_bird_01.mp3");
+	//SoundManager::Get().Load("bgm_ingame01.mp3", false, FMOD_LOOP_NORMAL);
+	//SoundManager::Get().Load("bgm_ingame02.mp3", false, FMOD_LOOP_NORMAL);
+	//SoundManager::Get().Load("bgm_Title01.mp3", false, FMOD_LOOP_NORMAL);
+	//SoundManager::Get().Load("bgm_Title02.mp3", false, FMOD_LOOP_NORMAL);
 	SoundManager::Get().Load("SE_chicken.mp3");
 	SoundManager::Get().Load("SE_Click01.mp3");
 	SoundManager::Get().Load("SE_Click02.mp3");
-	SoundManager::Get().Load("SE_Dance01.mp3");
-	SoundManager::Get().Load("SE_Dance02.mp3");
-	SoundManager::Get().Load("SE_footstep.mp3");
-	SoundManager::Get().Load("SE_game_time_start.mp3");
-	SoundManager::Get().Load("SE_game_time_end.mp3");
-	SoundManager::Get().Load("SE_jajan.mp3");
-	SoundManager::Get().Load("SE_jump01.mp3");
-	SoundManager::Get().Load("SE_jump02.mp3");
 	SoundManager::Get().Load("SE_throw01.mp3");
 	SoundManager::Get().Load("SE_throw02.mp3");
 	SoundManager::Get().Load("SE_throw03.mp3");
-	SoundManager::Get().Load("SE_zombie_fly.mp3");
-	SoundManager::Get().Load("SE_zombie_hit01.mp3");
-	SoundManager::Get().Load("SE_zombie_hit02.mp3");
-	SoundManager::Get().Load("SV_Guard_Shout.mp3");
-	SoundManager::Get().Load("SV_Guard_Punch.mp3");
-	SoundManager::Get().Load("SV_gogogo.mp3");
-	SoundManager::Get().Load("SV_jocena.mp3");
 	SoundManager::Get().Load("SE_dead.mp3");
-	SoundManager::Get().Load("SE_HIT.mp3");
-	SoundManager::Get().Load("SE_Rudy.mp3");
 }
 
 bool IntroScene::FirstInit() noexcept
