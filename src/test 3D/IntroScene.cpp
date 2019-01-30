@@ -94,7 +94,9 @@ void IntroScene::LoadSound() noexcept
 	SoundManager::Get().Load("SE_Click01.mp3");
 	SoundManager::Get().Load("SE_dead.mp3");
 	SoundManager::Get().Load("SE_bomb.mp3");
-
+	SoundManager::Get().Load("SE_dash.mp3");
+	SoundManager::Get().Load("SE_pickup.mp3");
+	
 	SoundManager::Get().Load("SE_bow_ready.mp3");
 	SoundManager::Get().Load("SE_bow_shot.mp3");
 
@@ -104,8 +106,18 @@ void IntroScene::LoadSound() noexcept
 	SoundManager::Get().Load("SE_hit_impact_01.mp3");
 	SoundManager::Get().Load("SE_hit_impact_02.mp3");
 
+	//paladin
+	SoundManager::Get().Load("SE_shildup.mp3");
 	SoundManager::Get().Load("SE_Sword_slash1.mp3");
 	SoundManager::Get().Load("SE_Sword_slash2.mp3");
+
+	//mage
+	SoundManager::Get().Load("SE_astro.mp3");
+	SoundManager::Get().Load("SE_light.mp3");
+	SoundManager::Get().Load("SE_dark.mp3");
+	SoundManager::Get().Load("SE_flame.mp3");
+	SoundManager::Get().Load("SE_freeze.mp3");
+	SoundManager::Get().Load("SE_healing.mp3");
 
 }
 
