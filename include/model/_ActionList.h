@@ -46,18 +46,6 @@
 #define	 Mage_ATK_DU		L"mage_Atk_DownUp.Mat"
 #define	 Mage_ATK_UD		L"mage_Atk_UpDown.Mat"
 
-
-//////////////////////////////////////////////////////////////////////////
-//ZombieKing
-#define  Zombie_KING				L"zombie_king"
-//ANIM_COUNT  5
-#define	 Zombie_KING_ROAR			L"ZOMBIE_KING_ROAR.Mat"
-#define	 Zombie_KING_JUMP_ATTACK	L"ZOMBIE_KING_JUMP_ATTACK.Mat"
-#define	 Zombie_KING_ATTACK			L"ZOMBIE_KING_ATTACK.Mat"
-#define	 Zombie_KING_WALK			L"ZOMBIE_KING_WALK.Mat"
-#define	 Zombie_KING_IDLE			L"ZOMBIE_KING_IDLE.Mat"
-
-
 //////////////////////////////////////////////////////////////////////////
 //Zombie
 #define  Zombie				L"zombie"
@@ -69,14 +57,32 @@
 #define	 Zombie_IDLE		L"zombie_idle.Mat"
 
 //////////////////////////////////////////////////////////////////////////
+#define  ZombieR			L"zombieR"
+//ANIM_COUNT  6
+#define	 ZombieR_SHOT		L"zombieR_shot.Mat"
+#define	 ZombieR_RUN		L"zombieR_run.Mat"
+#define	 ZombieR_CRAWL		L"zombieR_crawl.Mat"
+#define	 ZombieR_ATTACK		L"zombieR_atk.Mat"
+#define	 ZombieR_WALK		L"zombieR_walk.Mat"
+#define	 ZombieR_IDLE		L"zombieR_idle.Mat"
+
+//////////////////////////////////////////////////////////////////////////
 //Zombie
 #define  ZombieEX				L"zombieEX"
-//ANIM_COUNT  5
+//ANIM_COUNT  53
 #define	 ZombieEX_RUN			L"zombieEX_run.Mat"
 #define	 ZombieEX_ATTACK		L"zombieEX_attack.Mat"
 #define	 ZombieEX_IDLE			L"zombieEX_idle.Mat"
 
-
+//////////////////////////////////////////////////////////////////////////
+//ZombieKing
+#define  Zombie_KING				L"zombie_king"
+//ANIM_COUNT  5
+#define	 Zombie_KING_ROAR			L"ZOMBIE_KING_ROAR.Mat"
+#define	 Zombie_KING_JUMP_ATTACK	L"ZOMBIE_KING_JUMP_ATTACK.Mat"
+#define	 Zombie_KING_ATTACK			L"ZOMBIE_KING_ATTACK.Mat"
+#define	 Zombie_KING_WALK			L"ZOMBIE_KING_WALK.Mat"
+#define	 Zombie_KING_IDLE			L"ZOMBIE_KING_IDLE.Mat"
 
 //////////////////////////////////////////////////////////////////////////
 

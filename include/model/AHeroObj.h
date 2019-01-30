@@ -5,17 +5,20 @@
 
 #define MAX_BONE_MATRICES 255
 
-enum PLAYER_SELECT
+namespace KKB
 {
-	PALADIN,
-	ARCHER,
-	MAGE,
-	ZOMBIE,
-	ZOMBIE_EX,
-	ZOMBIE_KING,
-	DEFAULT
-};
-
+	enum PLAYER_SELECT
+	{
+		PALADIN,
+		ARCHER,
+		MAGE,
+		ZOMBIE,
+		ZOMBIER,
+		ZOMBIE_EX,
+		ZOMBIE_KING,
+		DEFAULT
+	};
+}
 
 struct CBConstBoneWorld
 {
@@ -26,7 +29,7 @@ struct CBConstBoneWorld
 
 class AHeroObj : public AModel
 {
-	PLAYER_SELECT			m_PlayerSelect;
+	KKB::PLAYER_SELECT		m_PlayerSelect;
 	const TCHAR*			m_IdleName;
 public:
 
