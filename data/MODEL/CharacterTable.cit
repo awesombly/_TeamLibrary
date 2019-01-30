@@ -1,4 +1,4 @@
-*NUMCHARACTER		11
+*NUMCHARACTER		12
 
 ////////////////////////////////////////////////////////////////////////// 1
 *CHARACTERNAME	Paladin
@@ -164,7 +164,7 @@
 
 
 //////////////////////////////////////////////////////////////////////////11
-*CHARACTERNAME	 
+*CHARACTERNAME	 ITEM_Bomb
 *SHADERFILENMAE		..\..\data\model\Character.hlsl
 
 *MATRIXMATRIXCOUNT  1
