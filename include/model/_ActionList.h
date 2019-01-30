@@ -87,3 +87,5 @@
 #define	 ITEM_Chicken			L"ITEM_Chicken"
 
 #define	 ITEM_Dagger			L"ITEM_Dagger"
+
+#define	 ITEM_Bird				L"ITEM_Bird"

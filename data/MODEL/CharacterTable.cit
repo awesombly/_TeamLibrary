@@ -1,4 +1,4 @@
-*NUMCHARACTER		9
+*NUMCHARACTER		10
 
 ////////////////////////////////////////////////////////////////////////// 1
 *CHARACTERNAME	Paladin
@@ -151,6 +151,16 @@
 
 
 
+//////////////////////////////////////////////////////////////////////////10
+*CHARACTERNAME	ITEM_Bird
+*SHADERFILENMAE		..\..\data\model\Character.hlsl
+
+*MATRIXMATRIXCOUNT  1
+*MATRIXFILENAME		..\..\data\model\NPC_bird\NPC_bird.Mat
+
+*SKIN_UPPER_BODY_COUNT	1
+*SKIN_UPPER_BODY		..\..\data\model\NPC_bird\NPC_bird.skm		null
+*SKIN_LOWER_BODY_COUNT	0
 
 
 //////////////////////////////////////////////////////////////////////////
