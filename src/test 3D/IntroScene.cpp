@@ -55,11 +55,8 @@ void IntroScene::LoadSound() noexcept
 	//SoundManager::Get().Load("bgm_Title02.mp3", false, FMOD_LOOP_NORMAL);
 	SoundManager::Get().Load("SE_chicken.mp3");
 	SoundManager::Get().Load("SE_Click01.mp3");
-	SoundManager::Get().Load("SE_Click02.mp3");
-	SoundManager::Get().Load("SE_throw01.mp3");
-	SoundManager::Get().Load("SE_throw02.mp3");
-	SoundManager::Get().Load("SE_throw03.mp3");
 	SoundManager::Get().Load("SE_dead.mp3");
+
 }
 
 bool IntroScene::FirstInit() noexcept
