@@ -84,4 +84,6 @@
 //ANIM_COUNT  1
 #define	 ITEM_ARROW				L"ITEM_ARROW"
 
+#define	 ITEM_Chicken			L"ITEM_Chicken"
 
+#define	 ITEM_Dagger			L"ITEM_Dagger"
