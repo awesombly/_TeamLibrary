@@ -186,6 +186,7 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 			{
 				ObjectManager::KeyObjects[p_AnimTransform.KeyValue]->SetGravityScale(1.0f);
 			} break;
+			case PlayerController::EAction::Special:
 			case PlayerController::EAction::Dash:
 			case PlayerController::EAction::DashLeft:
 			case PlayerController::EAction::DashRight:
@@ -197,22 +198,22 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 			case PlayerController::EAction::Left:
 			case PlayerController::EAction::Right:
 			case PlayerController::EAction::Run:
+			case PlayerController::EAction::RunLeft:
+			case PlayerController::EAction::RunRight:
 			case PlayerController::EAction::Forward:
 			case PlayerController::EAction::ForwardLeft:
 			case PlayerController::EAction::ForwardRight:
 			case PlayerController::EAction::Backward:
 			case PlayerController::EAction::BackwardLeft:
 			case PlayerController::EAction::BackwardRight:
-			case PlayerController::EAction::RunLeft:
-			case PlayerController::EAction::RunRight:
-			case PlayerController::EAction::NForward:
+			case PlayerController::EAction::RForward:
 			case PlayerController::EAction::NForwardLeft:
 			case PlayerController::EAction::NForwardRight:
-			case PlayerController::EAction::NBackward:
+			case PlayerController::EAction::RBackward:
 			case PlayerController::EAction::NBackwardLeft:
 			case PlayerController::EAction::NBackwardRight:
-			case PlayerController::EAction::NLeft:
-			case PlayerController::EAction::NRight:
+			case PlayerController::EAction::RLeft:
+			case PlayerController::EAction::RRight:
 			{
 				ObjectManager::KeyObjects[p_AnimTransform.KeyValue]->SetDirectionForce(p_AnimTransform.Direction);
 			}	break;

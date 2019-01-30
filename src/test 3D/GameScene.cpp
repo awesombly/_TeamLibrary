@@ -685,9 +685,9 @@ void GameScene::LoadUI() noexcept
 		///
 		UIManager::Get().m_pInfoName->SetString(pUser->UserID);
 		PacketManager::Get().pChatList->push_string(L"[System] '"s + preName + L"' 님의 아이디가" + pUser->UserID + L" 로 변경 되였습니다.");
-		// 디비 변경
-		if(m_loginCheck == 1)
-			((GameScene*)pScene)->RequestUpdateUsername(preName.c_str(), pUser->UserID);
+		//// 디비 변경
+		//if(m_loginCheck == 1)
+		//	((GameScene*)pScene)->RequestUpdateUsername(preName.c_str(), pUser->UserID);
 	};
 	pNameChange->EventClick.second = this;
 

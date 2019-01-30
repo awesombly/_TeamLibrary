@@ -207,16 +207,16 @@ void PlayerStateGuard::StateInit(PlayerController* pOwner) noexcept
 {
 	m_pOwner = pOwner;
 	m_pOwner->m_eAction = PlayerController::EAction::Special;
-	m_pOwner->m_DelayFrame = 0.5f;
-	m_pOwner->m_moveSpeed *= 0.7f;
-	/// 패킷으로 보내야 함
+	m_pOwner->m_DelayFrame = 0.7f;
+	m_pOwner->m_moveSpeed *= 0.8f;
+	// 변수 설정
 	m_pOwner->GetParent()->SetGravityScale(3.0f);
 	m_pOwner->GetParent()->m_pPhysics->m_damping = 2.0f;
 	m_pOwner->GetParent()->SetArmor(m_pOwner->m_defencePoint += 30);
 	m_pOwner->SendPhysicsInfo();
 	// 이펙
 	auto pItem = ObjectManager::Get().TakeObject(L"EHit");
-	pItem->SetPosition(pOwner->GetPosition() + pOwner->GetUp() * 45.0f);
+	pItem->SetPosition(pOwner->GetParent()->GetPosition() + pOwner->GetParent()->GetUp() * 30.0f);
 }
 bool PlayerStateGuard::Process(const float& spf) noexcept
 {
@@ -226,7 +226,7 @@ bool PlayerStateGuard::Process(const float& spf) noexcept
 		return true;
 	}
 
-	m_pOwner->m_eAction = PlayerController::EAction::Idle;
+	m_pOwner->m_eAction = PlayerController::EAction::NIdle;
 	//if (Input::GetKeyState('W') == EKeyState::HOLD)
 	//{
 	//	m_pOwner->m_eAction = (PlayerController::EAction)(m_pOwner->m_eAction + PlayerController::EAction::Forward);
@@ -237,11 +237,11 @@ bool PlayerStateGuard::Process(const float& spf) noexcept
 	//}
 	if (Input::GetKeyState('A') == EKeyState::HOLD)
 	{
-		m_pOwner->m_eAction = (PlayerController::EAction)(m_pOwner->m_eAction + PlayerController::EAction::Left);
+		m_pOwner->m_eAction = (PlayerController::EAction)(m_pOwner->m_eAction + PlayerController::EAction::NLeft);
 	}
 	if (Input::GetKeyState('D') == EKeyState::HOLD)
 	{
-		m_pOwner->m_eAction = (PlayerController::EAction)(m_pOwner->m_eAction + PlayerController::EAction::Right);
+		m_pOwner->m_eAction = (PlayerController::EAction)(m_pOwner->m_eAction + PlayerController::EAction::NRight);
 	}
 
 	// 기본으로
@@ -460,17 +460,17 @@ bool ArcherStateLSkill::Process(const float& spf) noexcept
 			if (m_pOwner->m_chargeCount <= 1.1f)
 			{
 				m_pOwner->m_eAction = PlayerController::EAction::Attack;
-				m_pOwner->m_DelayFrame = 0.3f;
+				m_pOwner->m_DelayFrame = 0.5f;
 			}
 			else if (m_pOwner->m_chargeCount <= 2.1f)
 			{
 				m_pOwner->m_eAction = PlayerController::EAction::ChargeAttack;
-				m_pOwner->m_DelayFrame = 0.3f;
+				m_pOwner->m_DelayFrame = 0.5f;
 			}
 			else
 			{
 				m_pOwner->m_eAction = PlayerController::EAction::ChargeAttack2;
-				m_pOwner->m_DelayFrame = 0.4f;
+				m_pOwner->m_DelayFrame = 0.5f;
 			}
 			m_pOwner->SetState(EPlayerState::Basic);
 			return true;
@@ -513,7 +513,7 @@ bool ArcherStateRSkill::Process(const float& spf) noexcept
 	{
 		m_pOwner->SetState(EPlayerState::Basic);
 		m_pOwner->m_eAction = PlayerController::EAction::Special;
-		m_pOwner->m_DelayFrame = 0.4f;
+		m_pOwner->m_DelayFrame = 0.5f;
 		return true;
 	}
 

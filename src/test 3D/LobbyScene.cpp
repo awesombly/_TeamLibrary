@@ -115,8 +115,8 @@ bool LobbyScene::Frame() noexcept
 	{
 		static float frameCount = 0.0f;
 		frameCount += Timer::SPF;
-		m_pBackHero->Scaling(-Vector3::One * 0.21f * Timer::SPF);
-		m_pBackHero->Translate(Vector3::One * 2.0f * Timer::SPF);
+		m_pBackHero->Scaling(-Vector3::One * 0.22f * Timer::SPF);
+		m_pBackHero->Translate(Vector3::One * 2.1f * Timer::SPF);
 		if (frameCount > 2.0f)
 		{
 			// ½ÃÀÛ
@@ -216,13 +216,15 @@ void LobbyScene::StartToHost()
 	{
 	case PlayerController::ECharacter::EGuard:
 	{
-		//	m_pBackHero->SetANIM_OneTime(Guard_DASHJUMP);
+		m_pBackHero->SetANIM_OneTime(Archer_THROW);
 	}	break;
 	case PlayerController::ECharacter::EArcher:
 	{
+		m_pBackHero->SetANIM_OneTime(Paladin_RUN);
 	}	break;
 	case PlayerController::ECharacter::EMage:
 	{
+		m_pBackHero->SetANIM_OneTime(Mage_ATK_UD);
 	}	break;
 	}
 	m_pStartEffect->EffectPlay();

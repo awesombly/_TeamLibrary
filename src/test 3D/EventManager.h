@@ -5,6 +5,8 @@ class GameObject;
 
 namespace MyEvent {
 	void ForceWave(Collider* pA, Collider* pB);
+	void BuffWave(Collider* pA, Collider* pB);
+	void EnergyBall(Collider* pA, Collider* pB);
 	void PlayerAttack(Collider* pA, Collider* pB);
 	void PlayerBomb(Collider* pA, Collider* pB);
 	void DaggerHit(Collider* pA, Collider* pB);
