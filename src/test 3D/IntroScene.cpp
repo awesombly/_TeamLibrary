@@ -57,6 +57,7 @@ void IntroScene::LoadSound() noexcept
 	SoundManager::Get().Load("SV_paladin_atk2.mp3");
 	SoundManager::Get().Load("SV_paladin_atk3.mp3");
 	SoundManager::Get().Load("SV_paladin_atk4.mp3");
+	SoundManager::Get().Load("SV_paladin_shout.mp3");
 	SoundManager::Get().Load("SV_paladin_lowHP.mp3");
 	SoundManager::Get().Load("SV_paladin_dead.mp3");
 
@@ -95,6 +96,8 @@ void IntroScene::LoadSound() noexcept
 	SoundManager::Get().Load("SE_dead.mp3");
 	SoundManager::Get().Load("SE_bomb.mp3");
 	SoundManager::Get().Load("SE_dash.mp3");
+	SoundManager::Get().Load("SE_dash2.mp3");
+
 	SoundManager::Get().Load("SE_pickup.mp3");
 	
 
