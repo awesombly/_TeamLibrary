@@ -127,13 +127,13 @@ namespace UI
 		pCrossHair->PreEvent.first = E_CROSSHAIR;
 		pCrossHair->PreEvent.second = pCrossHair;
 
-		JPanel* pFight = (JPanel*)pRoot->find_child(L"fight_panel");
-		pFight->PreEvent.first = E_FIGHT;
-		pFight->PreEvent.second = pFight;
+		//JPanel* pFight = (JPanel*)pRoot->find_child(L"fight_panel");
+		//pFight->PreEvent.first = E_FIGHT;
+		//pFight->PreEvent.second = pFight;
 
-		JPanel* pTimeOver = (JPanel*)pRoot->find_child(L"TimeOver");
-		pTimeOver->PreEvent.first = E_FADEINOUT;
-		pTimeOver->PreEvent.second = pTimeOver;
+		//JPanel* pTimeOver = (JPanel*)pRoot->find_child(L"TimeOver");
+		//pTimeOver->PreEvent.first = E_FADEINOUT;
+		//pTimeOver->PreEvent.second = pTimeOver;
 
 		JListCtrl* pKillToDeath = (JListCtrl*)pRoot->find_child(L"KilltoDeath");
 		pKillToDeath->PreEvent.first = E_KILLTODEATH;
