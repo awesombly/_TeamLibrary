@@ -23,7 +23,7 @@ public:
 		NBackwardLeft = 69, NBackwardRight = 72,
 		Jump		= 100,	Dance1, Dance2, Dance3, LSkill, RSkill, Fly, FlyEnd, 
 		Dash, DashLeft, DashRight, Run, RunLeft, RunRight, 
-		Special,		Attack, 
+		Special,		Special2, Special3, Attack,
 		ChargeAttack,	ChargeAttack2, LCharging, LCharge1, LCharge2,
 		ShockWave,		ThrowBomb,
 	};

@@ -39,6 +39,7 @@ bool AIZombieKing::Frame(const float& spf, const float& accTime)	noexcept
 {
 	if (!m_isEnable) return false;
 
+	m_dealyAttack -= spf;
 	if (m_delay >= 0.0f)
 	{
 		m_delay -= spf;
@@ -73,13 +74,14 @@ bool AIZombieKing::Frame(const float& spf, const float& accTime)	noexcept
 		 }	break;
 		 case EState::Action2:
 		 {
-			 // 브레스
+			 // 브레스 끝
 		 	if (m_delayBreath >= 3.8f)
 		 	{
 		 		ObjectManager::Get().DisableObject(m_Breath);
 		 		m_Breath = nullptr;
 		 		m_delayBreath = 0.0f;
-		 		m_delay = 4.0f;
+		 		m_delay = 1.0f;
+				m_dealyAttack = 4.0f;
 		 		m_eDirState = EState::Move;
 		 		((AHeroObj*)m_pParent)->SetANIM_Loop(Zombie_KING_IDLE);
 		 		return true;
@@ -115,47 +117,54 @@ bool AIZombieKing::Frame(const float& spf, const float& accTime)	noexcept
 	}	break;
 	case EState::Move:
 	{
-		for (auto& iter : *ObjectManager::Get().GetObjectList(EObjType::Character))
+		if (m_dealyAttack <= 0.0f)
 		{
-			if (VectorLengthSq(iter->GetPosition() - m_pParent->GetPosition()) <= m_attackRange)
+			for (auto& iter : *ObjectManager::Get().GetObjectList(EObjType::Character))
 			{
-				m_pParent->SetRotationY(m_pParent->GetFocusY(m_Target = iter->GetPosition()) - PI * 0.5f);
+				if (VectorLengthSq(iter->GetPosition() - m_pParent->GetPosition()) <= m_attackRange)
+				{
+					m_pParent->SetRotationY(m_pParent->GetFocusY(m_Target = iter->GetPosition()) - PI * 0.5f);
+					m_eDirState = EState::Attack;
+					return true;
+				}
+				else if (m_delayStump >= 6.0f)
+				{
+					// 점프 어택
+					m_delayStump = 0.0f;
+					m_pParent->m_pPhysics->m_mass = 1.0f;
+					m_pParent->m_pPhysics->m_damping = 0.25f;
+					m_pParent->SetFocus(iter->GetPosition());
+					m_Target = (iter->GetPosition() - m_pParent->GetPosition()) * 1.6f + Vector3::Up * 200.0f;
+					m_eDirState = EState::Action3;
+					m_delay = 0.5f;
+					((AHeroObj*)m_pParent)->SetANIM_OneTime(Zombie_KING_JUMP_ATTACK);
+					// 카메라 진동
+					std::thread vibrator(&PlayerController::StartVibration, &PlayerController::Get(), 1.5f, 7.0f);
+					vibrator.detach();
+					return true;
+				}
+			}
+			if (VectorLengthSq(m_Target - m_pParent->GetPosition()) <= m_attackRange + PlayerController::Get().HomeRadius)
+			{
 				m_eDirState = EState::Attack;
 				return true;
 			}
-			else if (m_delayStump >= 6.0f)
+			// 브레스
+			else if (m_delayBreath >= 8.0f)
 			{
-				// 점프 어택
-				m_delayStump = 0.0f;
-				m_pParent->m_pPhysics->m_mass = 1.0f;
-				m_pParent->m_pPhysics->m_damping = 0.25f;
-				m_pParent->SetFocus(iter->GetPosition());
-				m_Target = (iter->GetPosition() - m_pParent->GetPosition()) * 1.6f + Vector3::Up * 200.0f;
-				m_eDirState = EState::Action3;
-				m_delay = 0.5f;
-				((AHeroObj*)m_pParent)->SetANIM_OneTime(Zombie_KING_JUMP_ATTACK);
-				//SoundManager::Get().PlayQueue("SV_zombie_king_shout.mp3", m_pParent->GetPosition(), PlayerController::Get().SoundRange);
-				// 카메라 진동
-				std::thread vibrator(&PlayerController::StartVibration, &PlayerController::Get(), 1.5f, 7.0f);
-				vibrator.detach();
+				m_delayBreath = 0.0f;
+				m_pParent->SetFocus(m_Target = PlayerController::Get().m_pHome->GetPosition());
+				m_eDirState = EState::Action1;
 				return true;
 			}
-		}
-		if (VectorLengthSq(m_Target - m_pParent->GetPosition()) <= m_attackRange + PlayerController::Get().HomeRadius)
-		{
-			m_eDirState = EState::Attack;
-			return true;
-		}
-		// 브레스
-		else if(m_delayBreath >= 8.0f)
-		{
-			m_delayBreath = 0.0f;
-			m_pParent->SetFocus(m_Target = PlayerController::Get().m_pHome->GetPosition());
-			m_eDirState = EState::Action1;
+			m_pParent->Translate(Normalize(m_Target - m_pParent->GetPosition()) * m_moveSpeed * spf);
 			return true;
 		}
 		// 이동
-		m_pParent->Translate(Normalize(m_Target = PlayerController::Get().m_pHome->GetPosition() - m_pParent->GetPosition()) * m_moveSpeed * spf);
+		if (VectorLengthSq(m_Target - m_pParent->GetPosition()) >= m_attackRange + PlayerController::Get().HomeRadius)
+		{
+			m_pParent->Translate(Normalize(m_Target = PlayerController::Get().m_pHome->GetPosition() - m_pParent->GetPosition()) * m_moveSpeed * spf);
+		}
 	}	break;
 	case EState::Attack:
 	{
@@ -166,8 +175,9 @@ bool AIZombieKing::Frame(const float& spf, const float& accTime)	noexcept
 		pEffect->SetPosition(m_pParent->GetPosition() + m_pParent->GetForward() * 60.0f + m_pParent->GetUp() * 35.0f);
 		pEffect->m_pPhysics->m_damage = 0.9f;
 		pEffect->SetScale(m_pParent->GetScale());
+		m_dealyAttack = 4.0f;
 		///
-		m_delay = 4.0f;
+		m_delay = 0.8f;
 		m_eDirState = EState::Move;
 	}	break;
 	case EState::Action1:

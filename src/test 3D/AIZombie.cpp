@@ -30,6 +30,7 @@ bool AIZombie::Frame(const float& spf, const float& accTime)	noexcept
 {
 	if (!m_isEnable) return false;
 	
+	m_dealyAttack -= spf;
 	if (m_delay >= 0.0f)
 	{
 		m_delay -= spf;
@@ -66,22 +67,28 @@ bool AIZombie::Frame(const float& spf, const float& accTime)	noexcept
 	 }	break;
 	 case EState::Move:
 	 {
-		 for (auto& iter : *ObjectManager::Get().GetObjectList(EObjType::Character))
+		 if (m_dealyAttack <= 0.0f)
 		 {
-			 if (VectorLengthSq(iter->GetPosition() - m_pParent->GetPosition()) <= m_attackRange)
+			 for (auto& iter : *ObjectManager::Get().GetObjectList(EObjType::Character))
 			 {
-				 m_pParent->SetRotationY(m_pParent->GetFocusY(m_Target = iter->GetPosition()) - PI * 0.5f);
+				 if (VectorLengthSq(iter->GetPosition() - m_pParent->GetPosition()) <= m_attackRange)
+				 {
+					 m_pParent->SetRotationY(m_pParent->GetFocusY(m_Target = iter->GetPosition()) - PI * 0.5f);
+					 m_eDirState = EState::Attack;
+					 return true;
+				 }
+			 }
+			 if (VectorLengthSq(m_Target - m_pParent->GetPosition()) <= m_attackRange + PlayerController::Get().HomeRadius)
+			 {
+				 m_pParent->SetFocus(m_Target);
 				 m_eDirState = EState::Attack;
 				 return true;
 			 }
-		 }
-		 if (VectorLengthSq(m_Target - m_pParent->GetPosition()) <= m_attackRange + PlayerController::Get().HomeRadius)
-		 {
-			 m_pParent->SetFocus(m_Target);
-			 m_eDirState = EState::Attack;
+			 m_pParent->Translate(Normalize(m_Target - m_pParent->GetPosition()) * m_moveSpeed * spf);
 			 return true;
 		 }
-		 else	// 이동
+		 // 이동
+		 if (VectorLengthSq(m_Target - m_pParent->GetPosition()) >= m_attackRange + PlayerController::Get().HomeRadius)
 		 {
 			 m_pParent->Translate(Normalize(m_Target - m_pParent->GetPosition()) * m_moveSpeed * spf);
 		 }
@@ -96,8 +103,9 @@ bool AIZombie::Frame(const float& spf, const float& accTime)	noexcept
 		 pEffect->SetPosition(m_pParent->GetPosition() + m_pParent->GetForward() * 50.0f + m_pParent->GetUp() * 45.0f);
 		 pEffect->m_pPhysics->m_damage = 0.2f;
 		 pEffect->SetScale(m_pParent->GetScale());
+		 m_dealyAttack = 3.0f;
 		 ///
-		 m_delay = 3.5f;
+		 m_delay = 1.5f;
 		 m_eDirState = EState::Move;
 	 }	break;
 	}

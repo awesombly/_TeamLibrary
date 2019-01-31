@@ -209,10 +209,13 @@ void IntroScene::SetObjects() noexcept
 	ObjectManager::Get().SetProtoObject(new GameObject(L"EPDustStay", m_pParser->CreateFromParticle(L"DustStay.eff", urlEffect), EObjType::Effect));
 	ObjectManager::Get().SetProtoObject(new GameObject(L"EHit", m_pParser->CreateFromParticle(L"Hit.eff", urlEffect), EObjType::Effect));
 	ObjectManager::Get().SetProtoObject(new GameObject(L"EHit2", m_pParser->CreateFromParticle(L"Hit2.eff", urlEffect), EObjType::Effect));
+	ObjectManager::Get().SetProtoObject(new GameObject(L"EHit3", m_pParser->CreateFromParticle(L"Hit3.eff", urlEffect), EObjType::Effect));
+	ObjectManager::Get().SetProtoObject(new GameObject(L"EHitLight", m_pParser->CreateFromParticle(L"HitLight.eff", urlEffect), EObjType::Effect));
 	ObjectManager::Get().SetProtoObject(new GameObject(L"ELight", m_pParser->CreateFromParticle(L"Lightning.eff", urlEffect), EObjType::Effect));
 	//ObjectManager::Get().SetProtoObject(new GameObject(L"EEmission2", m_pParser->CreateFromParticle(L"Emission2.eff", urlEffect), EObjType::Effect));
 	ObjectManager::Get().SetProtoObject(new GameObject(L"EPLevelUp", m_pParser->CreateFromParticle(L"LevelUp.eff", urlEffect), EObjType::Effect));
 	ObjectManager::Get().SetProtoObject(new GameObject(L"EFly", m_pParser->CreateFromParticle(L"Fire.eff", urlEffect), EObjType::Effect));
+	ObjectManager::Get().SetProtoObject(new GameObject(L"ETeleport", m_pParser->CreateFromParticle(L"Teleport.eff", urlEffect), EObjType::Effect));
 	ObjectManager::Get().SetProtoComponent(m_pParser->CreateFromParticle(L"Fire.eff", urlEffect));
 	// ====================================== Item =====================================================
 
@@ -368,7 +371,9 @@ void IntroScene::SetObjects() noexcept
 
 	// ÈúÆø
 	pCollider = new Collider(8.0f);
-	pObject = new GameObject(L"Magic", { pCollider, m_pParser->CreateFromParticle(L"DustStay.eff", urlEffect) }, EObjType::Effect);
+	auto pParticle = m_pParser->CreateFromParticle(L"Flash.eff", urlEffect);
+	pParticle->isFollow(true);
+	pObject = new GameObject(L"Magic", { pCollider, pParticle }, EObjType::Effect);
 	pCollider->CollisionEvent = MyEvent::EnergyBall;
 	pCollider->m_eTag = ETag::Dummy;
 	//pCollider->SetGravityScale(0.5f);
