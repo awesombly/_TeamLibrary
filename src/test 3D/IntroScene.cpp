@@ -316,6 +316,17 @@ void IntroScene::SetObjects() noexcept
 	pCollider->m_eTag = ETag::Dummy;
 	ObjectManager::Get().SetProtoObject(pObject);
 
+	// ¹Ð¸® ¾îÅÃ
+	pCollider = new Collider(15.0f);
+	pObject = ObjectManager::Get().TakeObject(L"EHit2", false);
+	pObject->m_myName = L"Melee";
+	pObject->AddComponent(pCollider);
+	//pObject = new GameObject(L"Melee", { pCollider, new CEventTimer(0.5f) });
+	pCollider->CollisionEvent = MyEvent::MeleeHit;
+	pCollider->m_eTag = ETag::Dummy;
+	pCollider->SetGravityScale(0.0f);
+	pCollider->usePhysics(false);
+
 	// ÆøÅº
 	pHeroObj = new AHeroObj();
 	pHeroObj->SetPlayerCharacter(ITEM_Chicken);

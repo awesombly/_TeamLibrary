@@ -179,20 +179,17 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 		}	break;
 	 	 case EAction::Attack:
 	 	 {
-	 	 	auto pCollider = new Collider(pObject->GetScale().x * 55.0f);
-	 	 	auto pMelee = new GameObject(L"Melee", { pCollider, new CEventTimer(0.5f) });
-	 	 	pMelee->SetParent(pObject);
-	 	 	pMelee->SetPosition(pObject->GetForward() * 50.0f + pObject->GetUp() * 45.0f);
-	 	 	pMelee->SetRotation(pObject->GetRotation());
-	 	 	pMelee->UpdateMatrix();
-	 	 	pMelee->m_pPhysics->UserSocket = socket;
-	 	 	pMelee->SetHP(100.0f);
-	 	 	pMelee->SetDamage(0.5f, PacketManager::Get().UserList[socket]->StatStr);
-	 	 	pCollider->CollisionEvent = MyEvent::MeleeHit;
-	 	 	pCollider->AddIgnoreList(pObject->GetCollider());
-	 	 	pCollider->m_eTag = ETag::Dummy;
-	 	 	pCollider->SetGravityScale(0.0f);
-	 	 	pCollider->usePhysics(false);
+			 auto pItem = ObjectManager::Get().TakeObject(L"Melee");
+			 ///
+	 	 	//auto pCollider = new Collider(pObject->GetScale().x * 55.0f);
+	 	 	//auto pMelee = new GameObject(L"Melee", { pCollider, new CEventTimer(0.5f) });
+	 	 	pItem->SetParent(pObject);
+	 	 	pItem->SetPosition(pObject->GetForward() * 50.0f + pObject->GetUp() * 45.0f);
+	 	 	//pItem->UpdateMatrix();
+	 	 	pItem->m_pPhysics->UserSocket = socket;
+	 	 	pItem->SetDamage(0.5f, PacketManager::Get().UserList[socket]->StatStr);
+			pItem->GetCollider()->AddIgnoreList(pObject->GetCollider());
+			
 			SoundManager::Get().Play("SV_paladin_atk1.mp3");
 			SoundManager::Get().PlayQueue("SE_Sword_slash1.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
 	 	 }	break;
@@ -444,7 +441,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 		 case EAction::ChargeAttack:
 		 {
 			 auto pItem = ObjectManager::Get().TakeObject(L"BuffWave");
-			 pItem->SetPosition(pObject->GetPosition() + pObject->GetUp() * 65.0f);
+			 pItem->SetPosition(pObject->GetPosition() + pObject->GetUp() * 75.0f);
 			 pItem->SetRotation(pObject->GetRotation());
 			 pItem->SetScale(Vector3::One);
 			 //pItem->SetForce((forward + Vector3::Up * 0.8f) * 80.0f);

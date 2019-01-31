@@ -12,13 +12,15 @@ protected:
 
 	//bool  m_bSPlay, m_bSPlayOver;
 public:
+	int m_WaveCount = 0;
+
 	JTextCtrl*	 m_TimerText;
 
 	JPanel*		 m_pEndingUI;
 	JPanel*		 m_ZWinPanel;
 	JPanel*		 m_GWinPanel;
 
-	//JPanel*		 m_FightPanel;
+	JPanel*		 m_FightPanel;
 	//JPanel*		 m_TimeOverPanel;
 
 	JPanel*		 m_pStatePanel = nullptr;
