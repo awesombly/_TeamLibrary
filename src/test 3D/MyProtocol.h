@@ -31,7 +31,9 @@ enum EPacketProtocol : USHORT {
 	PACKET_SendLevelUp,
 	PACKET_SendNameUpdate,
 	PACKET_StartGame,
+	PACKET_EndGame,
 	PACKET_WaveStart,
+	PACKET_WaveCount,
 };
 
 // 패킷 배열 제외 사이즈

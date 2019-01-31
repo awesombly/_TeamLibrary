@@ -214,7 +214,12 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 	 	 }	break;
 	 	 case RSkill:
 	 	 {
+			 pObject->SetANIM_Loop(Paladin_POWERUP);
 		}	break;
+		 case ChargeAttack:
+		 {
+			 pObject->SetANIM_Loop(Paladin_POWERUP);
+		 }	break;
 	 	 case Special:
 	 	 {
 	 	 	pObject->SetANIM_Loop(Paladin_BLOCK);
@@ -309,7 +314,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 		 }	break;
 	 	 case EAction::Attack:
 	 	 {
-	 	 	pObject->SetANIM_OneTime(Archer_AIM_SHOT);
+	 	 	pObject->SetANIM_Loop(Archer_AIM_SHOT);
 	 	 
 	 	 	auto pItem = ObjectManager::Get().TakeObject(L"Arrow");
 	 	 	pItem->SetPosition(pObject->GetPosition() + pObject->GetForward() * 40.0f + pObject->GetUp() * 65.0f + pObject->GetRight() * 20.0f);
@@ -324,7 +329,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 	 	 }	break;
 	 	 case EAction::ChargeAttack:
 	 	 {
-	 	 	pObject->SetANIM_OneTime(Archer_AIM_SHOT);
+	 	 	pObject->SetANIM_Loop(Archer_AIM_SHOT);
 	 	 
 	 	 	auto pItem = ObjectManager::Get().TakeObject(L"Arrow");
 	 	 	pItem->SetPosition(pObject->GetPosition() + pObject->GetForward() * 40.0f + pObject->GetUp() * 65.0f + pObject->GetRight() * 20.0f);
@@ -339,7 +344,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 	 	 }	break;
 	 	 case EAction::ChargeAttack2:
 	 	 {
-	 	 	pObject->SetANIM_OneTime(Archer_AIM_SHOT);
+	 	 	pObject->SetANIM_Loop(Archer_AIM_SHOT);
 	 	 
 	 	 	auto pItem = ObjectManager::Get().TakeObject(L"Arrow");
 	 	 	pItem->SetPosition(pObject->GetPosition() + pObject->GetForward() * 40.0f + pObject->GetUp() * 65.0f + pObject->GetRight() * 20.0f);

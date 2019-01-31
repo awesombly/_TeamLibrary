@@ -93,10 +93,10 @@ bool AIZombieCast::Frame(const float& spf, const float& accTime)	noexcept
 		SoundManager::Get().PlayQueue("SV_zombieR_shot.mp3", m_pParent->GetPosition(), PlayerController::Get().SoundRange);
 
 		auto pChicken = ObjectManager::Get().TakeObject(L"ZThrow");
-		pChicken->SetPosition(m_pParent->GetPosition() + m_pParent->GetForward() * 40.0f + m_pParent->GetUp() * 65.0f + m_pParent->GetRight() * 20.0f);
+		pChicken->SetPosition(m_pParent->GetPosition() + m_pParent->GetForward() * 40.0f + m_pParent->GetUp() * 65.0f);
 		pChicken->SetRotation(m_pParent->GetRotation());
 		pChicken->SetScale(m_pParent->GetScale().x * 2.0f * Vector3::One);
-		pChicken->SetForce((m_pParent->GetForward() + Vector3::Up * 0.3f) * 250.0f);
+		pChicken->SetForce((m_pParent->GetForward() + Vector3::Up * 0.4f) * 260.0f);
 		pChicken->m_pPhysics->m_damage = 0.35f;
 		m_dealyAttack = 4.5f;
 		///

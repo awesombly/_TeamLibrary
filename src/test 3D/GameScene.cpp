@@ -17,7 +17,7 @@ bool GameScene::Init() noexcept
 	auto pCollider = new Collider(1.0f);
 	pCollider->m_eTag = ETag::Ally;
 	PlayerController::Get().m_pHome = new GameObject(L"Shelter", { pCollider /*, ObjectManager::Get().TakeComponent(L"RowSphere")*/ });
-	PlayerController::Get().m_pHome->SetPosition(-16.0f, 18.0f, 35.0f);
+	PlayerController::Get().m_pHome->SetPosition(-15.8f, 18.0f, 41.5f);
 	PlayerController::Get().m_pHome->SetScale(Vector3::One * 20.0f);
 	PlayerController::Get().m_pHome->SetGravityScale(0.0f);
 	PlayerController::Get().m_pHome->usePhysics(false);
@@ -58,7 +58,8 @@ bool GameScene::Init() noexcept
 	m_isLoading = false;
 	//m_Rule.SetReadyTime(7.0f);
 	//m_Rule.SetPlayTime(180.0f);
-	m_frameCount = 3.0f;
+	m_pFrameCount = &PlayerController::Get().m_FrameCount;
+	*m_pFrameCount = 3.0f;
 	return true;
 }
 
@@ -66,6 +67,9 @@ bool GameScene::Init() noexcept
 // 프레임
 bool GameScene::Frame() noexcept
 {
+	if(PlayerController::Get().GetParent() != nullptr)
+		ErrorMessage(to_string(PlayerController::Get().GetParent()->GetPosition().x) + ", " + to_string(PlayerController::Get().GetParent()->GetPosition().z));
+
 	// IME 채팅
 	if (m_pChat->m_bRender)
 	{
@@ -103,6 +107,9 @@ bool GameScene::Frame() noexcept
 
 	// 시간 출력, 호스트
 	//m_Rule.Frame();
+	UIManager::Get().m_TimerText->m_Text = to_wstring(*m_pFrameCount).substr(0, 5);
+
+	*m_pFrameCount -= Timer::SPF;
 	if (PacketManager::Get().isHost)
 	{
 		HostFrame();
@@ -413,52 +420,53 @@ void GameScene::DrawBoundingBox()	noexcept
 
 void GameScene::HostFrame() noexcept
 {
-	static float itemFrame = 0.0f;
-	static float enemyFrame = 0.0f;
-	itemFrame += Timer::SPF;
-	enemyFrame += Timer::SPF;
-
-	// 템 생성
-	if (itemFrame >= 120.0f)
-	{
-		itemFrame = 0.0f;
-
-		//PacketManager::Get().SendTakeObject(L"Atom", ESocketType::EDummy, 1, 1.0f, 1.0f, 0.0f, Vector3::Up * 120.0f, Vector3::Zero);
-		
-		//PacketManager::Get().SendTakeObject(L"Tank", ESocketType::ETank, 1, 15.0f * PacketManager::Get().UserList.size(), 1.1f, 0.1f, { -500.0f, 60.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
-	}
-	// 적 생성
-	if (enemyFrame >= 20.0f)
-	{
-		enemyFrame = 0.0f;
-
-		//PacketManager::Get().SendTakeObject(L"Zombie", ESocketType::EZombie, (UCHAR)PacketManager::Get().UserList.size(), 1.0f, 0.2f, 0.1f, { -500.0f, 60.0f, -500.0f }, {1000.0f, 0.0f, 1000.0f});
-		//PacketManager::Get().SendTakeObject(L"Caster", ESocketType::ECaster, (UCHAR)PacketManager::Get().UserList.size(), 0.8f, 0.2f, 0.1f, { -500.0f, 60.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
-		//PacketManager::Get().SendTakeObject(L"Crawler", ESocketType::ECrawler, (UCHAR)PacketManager::Get().UserList.size(), 0.6f, 0.15f, 0.1f, { -500.0f, 60.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
-		//PacketManager::Get().SendTakeObject(L"Mutant", ESocketType::EMutant, 1, 5.0f, 0.5f, 0.1f, { -500.0f, 60.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
-	}
+	//static float itemFrame = 0.0f;
+	//static float enemyFrame = 0.0f;
+	//itemFrame += Timer::SPF;
+	//enemyFrame += Timer::SPF;
+	//
+	//// 템 생성
+	//if (itemFrame >= 120.0f)
+	//{
+	//	itemFrame = 0.0f;
+	//
+	//	//PacketManager::Get().SendTakeObject(L"Atom", ESocketType::EDummy, 1, 1.0f, 1.0f, 0.0f, Vector3::Up * 120.0f, Vector3::Zero);
+	//	
+	//	//PacketManager::Get().SendTakeObject(L"Tank", ESocketType::ETank, 1, 15.0f * PacketManager::Get().UserList.size(), 1.1f, 0.1f, { -500.0f, 60.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
+	//}
+	//// 적 생성
+	//if (enemyFrame >= 20.0f)
+	//{
+	//	enemyFrame = 0.0f;
+	//
+	//	//PacketManager::Get().SendTakeObject(L"Zombie", ESocketType::EZombie, (UCHAR)PacketManager::Get().UserList.size(), 1.0f, 0.2f, 0.1f, { -500.0f, 60.0f, -500.0f }, {1000.0f, 0.0f, 1000.0f});
+	//	//PacketManager::Get().SendTakeObject(L"Caster", ESocketType::ECaster, (UCHAR)PacketManager::Get().UserList.size(), 0.8f, 0.2f, 0.1f, { -500.0f, 60.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
+	//	//PacketManager::Get().SendTakeObject(L"Crawler", ESocketType::ECrawler, (UCHAR)PacketManager::Get().UserList.size(), 0.6f, 0.15f, 0.1f, { -500.0f, 60.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
+	//	//PacketManager::Get().SendTakeObject(L"Mutant", ESocketType::EMutant, 1, 5.0f, 0.5f, 0.1f, { -500.0f, 60.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
+	//}
 
 	
 	
-	m_frameCount -= Timer::SPF;
-	if (m_frameCount <= 0.0f)
+	if (*m_pFrameCount <= 0.0f)
 	{
 		switch (m_eState)
 		{
 		case EGameState::Wait:
 		{
 			m_eState = EGameState::GameStart;
-			// 패킷 처리?, 시간도
 			UIManager::Get().m_FightPanel->m_bRender = true;
-			m_frameCount = 3.0f;
+			*m_pFrameCount = 3.0f;
 			m_waveCount = 0;
+
+			Packet_Float p_WaveStart;
+			p_WaveStart.KeyValue = 0;
+			p_WaveStart.Value = *m_pFrameCount;
+			PacketManager::Get().SendPacket((char*)&p_WaveStart, sizeof(Packet_KeyValue), PACKET_WaveCount);
 		}	break;
 		case EGameState::GameStart:
 		{
-			PacketManager::Get().SendPacket((char*)&PI, sizeof(PI), PACKET_StartGame);
-			//PlayerController::Get().SendReqRespawn(PlayerController::Get().m_selectCharacter);
-			m_frameCount = 3.0f;
 			m_eState = EGameState::WaveInit;
+			PacketManager::Get().SendPacket((char*)&PI, sizeof(PI), PACKET_StartGame);
 		}
 		case EGameState::WaveInit:
 		{
@@ -471,9 +479,10 @@ void GameScene::HostFrame() noexcept
 			++m_waveCount;
 			m_spawnCount = 4;
 
-			Packet_KeyValue p_KeyValue;
-			p_KeyValue.KeyValue = m_waveCount;
-			PacketManager::Get().SendPacket((char*)&p_KeyValue, sizeof(Packet_KeyValue), PACKET_WaveStart);
+			Packet_Float p_WaveStart;
+			p_WaveStart.KeyValue = m_waveCount;
+			p_WaveStart.Value = *m_pFrameCount;
+			PacketManager::Get().SendPacket((char*)&p_WaveStart, sizeof(Packet_KeyValue), PACKET_WaveStart);
 		}	break;
 		case EGameState::Spawn:
 		{
@@ -481,46 +490,54 @@ void GameScene::HostFrame() noexcept
 			{
 			case 1:
 			{
-				PacketManager::Get().SendTakeObject(L"Zombie", ESocketType::EZombie, (UCHAR)PacketManager::Get().UserList.size(), 1.0f, 0.2f, 0.1f, { -500.0f, 60.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
-				PacketManager::Get().SendTakeObject(L"Caster", ESocketType::ECaster, (UCHAR)PacketManager::Get().UserList.size(), 0.8f, 0.2f, 0.1f, { -500.0f, 60.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
-				PacketManager::Get().SendTakeObject(L"Crawler", ESocketType::ECrawler, (UCHAR)PacketManager::Get().UserList.size(), 0.6f, 0.15f, 0.1f, { -500.0f, 60.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
+				PacketManager::Get().SendTakeObject(L"Zombie", ESocketType::EZombie, (UCHAR)PacketManager::Get().UserList.size(), 1.0f, 0.2f, 0.1f, { -500.0f, 10.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
+				PacketManager::Get().SendTakeObject(L"Caster", ESocketType::ECaster, (UCHAR)PacketManager::Get().UserList.size(), 0.8f, 0.2f, 0.1f, { -500.0f, 10.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
+				PacketManager::Get().SendTakeObject(L"Crawler", ESocketType::ECrawler, (UCHAR)PacketManager::Get().UserList.size(), 0.6f, 0.15f, 0.1f, { -500.0f, 10.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
 			}	break;
 			case 2:
 			{
-				PacketManager::Get().SendTakeObject(L"Zombie", ESocketType::EZombie, (UCHAR)PacketManager::Get().UserList.size(), 1.0f, 0.2f, 0.1f, { -500.0f, 60.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
-				PacketManager::Get().SendTakeObject(L"Caster", ESocketType::ECaster, (UCHAR)PacketManager::Get().UserList.size(), 0.8f, 0.2f, 0.1f, { -500.0f, 60.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
-				PacketManager::Get().SendTakeObject(L"Crawler", ESocketType::ECrawler, (UCHAR)PacketManager::Get().UserList.size(), 0.6f, 0.15f, 0.1f, { -500.0f, 60.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
-				PacketManager::Get().SendTakeObject(L"Mutant", ESocketType::EMutant, 1, 5.0f, 0.5f, 0.1f, { -500.0f, 60.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
+				PacketManager::Get().SendTakeObject(L"Zombie", ESocketType::EZombie, (UCHAR)PacketManager::Get().UserList.size(), 1.0f, 0.2f, 0.1f, { -500.0f, 10.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
+				PacketManager::Get().SendTakeObject(L"Caster", ESocketType::ECaster, (UCHAR)PacketManager::Get().UserList.size(), 0.8f, 0.2f, 0.1f, { -500.0f, 10.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
+				PacketManager::Get().SendTakeObject(L"Crawler", ESocketType::ECrawler, (UCHAR)PacketManager::Get().UserList.size(), 0.6f, 0.15f, 0.1f, { -500.0f, 10.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
+				PacketManager::Get().SendTakeObject(L"Mutant", ESocketType::EMutant, 1, 5.0f, 0.5f, 0.1f, { -500.0f, 10.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
 			}	break;
 			case 3:
 			{
 				if(m_spawnCount == 2)
-					PacketManager::Get().SendTakeObject(L"Tank", ESocketType::ETank, 1, 15.0f * PacketManager::Get().UserList.size(), 1.1f, 0.1f, { -500.0f, 60.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
-				PacketManager::Get().SendTakeObject(L"Zombie", ESocketType::EZombie, (UCHAR)PacketManager::Get().UserList.size(), 1.0f, 0.2f, 0.1f, { -500.0f, 60.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
-				PacketManager::Get().SendTakeObject(L"Caster", ESocketType::ECaster, (UCHAR)PacketManager::Get().UserList.size(), 0.8f, 0.2f, 0.1f, { -500.0f, 60.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
-				PacketManager::Get().SendTakeObject(L"Crawler", ESocketType::ECrawler, (UCHAR)PacketManager::Get().UserList.size(), 0.6f, 0.15f, 0.1f, { -500.0f, 60.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
+					PacketManager::Get().SendTakeObject(L"Tank", ESocketType::ETank, 1, 15.0f * PacketManager::Get().UserList.size(), 1.1f, 0.1f, { -500.0f, 10.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
+				PacketManager::Get().SendTakeObject(L"Zombie", ESocketType::EZombie, (UCHAR)PacketManager::Get().UserList.size(), 1.0f, 0.2f, 0.1f, { -500.0f, 10.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
+				PacketManager::Get().SendTakeObject(L"Caster", ESocketType::ECaster, (UCHAR)PacketManager::Get().UserList.size(), 0.8f, 0.2f, 0.1f, { -500.0f, 10.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
+				PacketManager::Get().SendTakeObject(L"Crawler", ESocketType::ECrawler, (UCHAR)PacketManager::Get().UserList.size(), 0.6f, 0.15f, 0.1f, { -500.0f, 10.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
 			}	break;
 			case 4:
 			{
 				if (m_spawnCount == 2)
-					PacketManager::Get().SendTakeObject(L"Tank", ESocketType::ETank, 1, 15.0f * PacketManager::Get().UserList.size(), 1.1f, 0.1f, { -500.0f, 60.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
-				PacketManager::Get().SendTakeObject(L"Mutant", ESocketType::EMutant, (UCHAR)PacketManager::Get().UserList.size(), 5.0f, 0.5f, 0.1f, { -500.0f, 60.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
-				PacketManager::Get().SendTakeObject(L"Crawler", ESocketType::ECrawler, (UCHAR)PacketManager::Get().UserList.size(), 0.6f, 0.15f, 0.1f, { -500.0f, 60.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
+					PacketManager::Get().SendTakeObject(L"Tank", ESocketType::ETank, 1, 15.0f * PacketManager::Get().UserList.size(), 1.1f, 0.1f, { -500.0f, 10.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
+				PacketManager::Get().SendTakeObject(L"Mutant", ESocketType::EMutant, (UCHAR)PacketManager::Get().UserList.size(), 5.0f, 0.5f, 0.1f, { -500.0f, 10.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
+				PacketManager::Get().SendTakeObject(L"Crawler", ESocketType::ECrawler, (UCHAR)PacketManager::Get().UserList.size(), 0.6f, 0.15f, 0.1f, { -500.0f, 10.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
 			}	break;
 			case 5:
 			{
 				if (m_spawnCount == 4)
-					PacketManager::Get().SendTakeObject(L"Mutant", ESocketType::EMutant, 3, 5.0f, 0.5f, 0.1f, { -500.0f, 60.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
+					PacketManager::Get().SendTakeObject(L"Tank", ESocketType::ETank, 1, 15.0f * PacketManager::Get().UserList.size(), 1.1f, 0.1f, { -500.0f, 10.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
+			}	break;
+			case 6:
+			{
+				PacketManager::Get().SendPacket((char*)&PI, sizeof(Packet_KeyValue), PACKET_EndGame);
 			}	break;
 			}
 
-			m_frameCount = 15.0f;
+			*m_pFrameCount = 15.0f;
 			--m_spawnCount;
 			if (m_spawnCount <= 0)
 			{
 				m_eState = EGameState::WaveInit;
-				m_frameCount = 30.0f;
+				*m_pFrameCount = 30.0f;
 			}
+			Packet_Float p_WaveStart;
+			p_WaveStart.KeyValue = m_spawnCount;
+			p_WaveStart.Value = *m_pFrameCount;
+			PacketManager::Get().SendPacket((char*)&p_WaveStart, sizeof(Packet_KeyValue), PACKET_WaveCount);
 		}	break;
 		}
 	}
@@ -657,7 +674,6 @@ void GameScene::LoadUI() noexcept
 	m_pCheckBox = (JCheckCtrl*)pUIRoot->find_child(L"Set_Collision_Check");
 	// Timer
 	UIManager::Get().m_TimerText = (JTextCtrl*)pUIRoot->find_child(L"Timer_Text");
-	UIManager::Get().m_TimerText->m_Text = to_wstring(m_frameCount).substr(0, 5);
 	//m_Rule.m_TimerText = (JTextCtrl*)pUIRoot->find_child(L"Timer_Text");
 	//m_Rule.SetResultPanel((JPanel*)pUIRoot);
 

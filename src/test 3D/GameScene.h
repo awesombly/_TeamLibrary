@@ -15,7 +15,7 @@ public:
 	};
 	EGameState m_eState = EGameState::Wait;
 	PlayerController* m_pPlayer = &PlayerController::Get();		// 컨트롤러
-	float m_frameCount = 0.0f;
+	float* m_pFrameCount = nullptr;
 	UINT  m_waveCount = 0;
 	int   m_spawnCount = 0;
 	// UI
