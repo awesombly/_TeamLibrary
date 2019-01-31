@@ -417,33 +417,8 @@ void GameScene::DrawBoundingBox()	noexcept
 
 void GameScene::HostFrame() noexcept
 {
-	//static float itemFrame = 0.0f;
-	//static float enemyFrame = 0.0f;
-	//itemFrame += Timer::SPF;
-	//enemyFrame += Timer::SPF;
-	//
-	//// 템 생성
-	//if (itemFrame >= 120.0f)
-	//{
-	//	itemFrame = 0.0f;
-	//
-	//	//PacketManager::Get().SendTakeObject(L"Atom", ESocketType::EDummy, 1, 1.0f, 1.0f, 0.0f, Vector3::Up * 120.0f, Vector3::Zero);
-	//	
-	//	//PacketManager::Get().SendTakeObject(L"Tank", ESocketType::ETank, 1, 15.0f * PacketManager::Get().UserList.size(), 1.1f, 0.1f, { -500.0f, 60.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
-	//}
-	//// 적 생성
-	//if (enemyFrame >= 20.0f)
-	//{
-	//	enemyFrame = 0.0f;
-	//
-	//	//PacketManager::Get().SendTakeObject(L"Zombie", ESocketType::EZombie, (UCHAR)PacketManager::Get().UserList.size(), 1.0f, 0.2f, 0.1f, { -500.0f, 60.0f, -500.0f }, {1000.0f, 0.0f, 1000.0f});
-	//	//PacketManager::Get().SendTakeObject(L"Caster", ESocketType::ECaster, (UCHAR)PacketManager::Get().UserList.size(), 0.8f, 0.2f, 0.1f, { -500.0f, 60.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
-	//	//PacketManager::Get().SendTakeObject(L"Crawler", ESocketType::ECrawler, (UCHAR)PacketManager::Get().UserList.size(), 0.6f, 0.15f, 0.1f, { -500.0f, 60.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
-	//	//PacketManager::Get().SendTakeObject(L"Mutant", ESocketType::EMutant, 1, 5.0f, 0.5f, 0.1f, { -500.0f, 60.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
-	//}
+	// 피격 효과 시간 되나 확인,
 
-	
-	
 	if (*m_pFrameCount <= 0.0f)
 	{
 		switch (m_eState)

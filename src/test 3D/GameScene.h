@@ -13,7 +13,7 @@ public:
 	enum class EGameState {
 		PreWait, Wait, GameStart, WaveInit, Spawn
 	};
-	EGameState m_eState = EGameState::Wait;
+	EGameState m_eState = EGameState::PreWait;
 	PlayerController* m_pPlayer = &PlayerController::Get();		// 컨트롤러
 	float* m_pFrameCount = nullptr;
 	UINT  m_waveCount = 0;
