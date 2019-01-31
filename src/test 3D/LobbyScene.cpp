@@ -216,11 +216,11 @@ void LobbyScene::StartToHost()
 	{
 	case PlayerController::ECharacter::EGuard:
 	{
-		m_pBackHero->SetANIM_OneTime(Archer_THROW);
+		m_pBackHero->SetANIM_OneTime(Paladin_RUN);
 	}	break;
 	case PlayerController::ECharacter::EArcher:
 	{
-		m_pBackHero->SetANIM_OneTime(Paladin_RUN);
+		m_pBackHero->SetANIM_OneTime(Archer_DIVE);
 	}	break;
 	case PlayerController::ECharacter::EMage:
 	{

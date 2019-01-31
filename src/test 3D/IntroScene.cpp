@@ -97,8 +97,6 @@ void IntroScene::LoadSound() noexcept
 	SoundManager::Get().Load("SE_dash.mp3");
 	SoundManager::Get().Load("SE_pickup.mp3");
 	
-	SoundManager::Get().Load("SE_bow_ready.mp3");
-	SoundManager::Get().Load("SE_bow_shot.mp3");
 
 	SoundManager::Get().Load("SE_fire1.mp3");
 	SoundManager::Get().Load("SE_flare_shot.mp3");
@@ -110,6 +108,10 @@ void IntroScene::LoadSound() noexcept
 	SoundManager::Get().Load("SE_shildup.mp3");
 	SoundManager::Get().Load("SE_Sword_slash1.mp3");
 	SoundManager::Get().Load("SE_Sword_slash2.mp3");
+
+	//archer
+	SoundManager::Get().Load("SE_bow_ready.mp3");
+	SoundManager::Get().Load("SE_bow_shot.mp3");
 
 	//mage
 	SoundManager::Get().Load("SE_astro.mp3");
