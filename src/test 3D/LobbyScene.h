@@ -12,7 +12,6 @@ public:
 	AHeroObj* m_pBackArcher = nullptr;
 	AHeroObj* m_pBackMage   = nullptr;
 
-	PlayerController::ECharacter m_selectCharacter = PlayerController::ECharacter::EDummy;
 	///
 	JTextCtrl*	m_toGuestIP		= nullptr;
 	JPanel*		m_toGuestPanel	= nullptr;

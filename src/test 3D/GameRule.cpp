@@ -11,31 +11,21 @@ bool GameRule::Init() noexcept
 
 bool GameRule::Frame()	noexcept
 {
-	if (m_bPlayStart == false)
-	{
-		m_TimerText->m_Text = to_wstring(GetReadyTime() - Timer::AccumulateTime).substr(0, 5);
-		m_FightPanel->m_bRender = true;
-	}
-	else
-	{
-		m_TimerText->m_Text = to_wstring(GetPlayTime() - Timer::AccumulateTime).substr(0, 5);
-	}
-
-
-
+	m_TimerText->m_Text = to_wstring(GetReadyTime() - Timer::AccumulateTime).substr(0, 5);
+	
 
 	//시작시 스타트 사운드 재생
-	if (GetReadyTime() - Timer::AccumulateTime <=0)
-	{
-		if (m_bPlayStart != true) {
-			m_bPlayStart = true;
-			//SoundManager::Get().Play("SE_game_time_start.mp3");
-		}
-	}
+	//if (GetReadyTime() - Timer::AccumulateTime <=0)
+	//{
+	//	if (m_bPlayStart != true) {
+	//		m_bPlayStart = true;
+	//		//SoundManager::Get().Play("SE_game_time_start.mp3");
+	//	}
+	//}
 
 	//게임종료시 사운드 재생
-	if (GetPlayTime() - Timer::AccumulateTime <= 0)
-	{
+	//if (GetPlayTime() - Timer::AccumulateTime <= 0)
+	//{
 		//++m_WaveCount;
 		//Timer::AccumulateTime = 0;
 
@@ -52,7 +42,7 @@ bool GameRule::Frame()	noexcept
 		//	//m_pEndingUI->m_bRender = true;
 		//}
 		//m_TimerText->m_Text = '0';
-	}
+	//}
 
 	return true;
 }
@@ -66,8 +56,8 @@ bool GameRule::Render()	noexcept
 bool GameRule::Release()	noexcept
 {
 	m_TimerText->Release();
-	delete m_GWinPanel;
-	delete m_ZWinPanel;
+	//delete m_GWinPanel;
+	//delete m_ZWinPanel;
 	delete m_FightPanel;
 	//delete m_TimeOverPanel;
 	return true;
@@ -77,8 +67,8 @@ bool GameRule::Release()	noexcept
 void GameRule::SetResultPanel(JPanel* pUIRoot)
 {
 	m_pEndingUI = (JPanel*)pUIRoot->find_child(L"Effect_Ending_Panel");
-	m_GWinPanel = (JPanel*)pUIRoot->find_child(L"GuardWin");
-	m_ZWinPanel = (JPanel*)pUIRoot->find_child(L"ZombieWin");
+	//m_GWinPanel = (JPanel*)pUIRoot->find_child(L"GuardWin");
+	//m_ZWinPanel = (JPanel*)pUIRoot->find_child(L"ZombieWin");
 	m_pStatePanel = (JPanel*)pUIRoot->find_child(L"State_Panel");
 	m_FightPanel = (JPanel*)pUIRoot->find_child(L"fight_panel");
 	//m_TimeOverPanel = (JPanel*)pUIRoot->find_child(L"TimeOver");

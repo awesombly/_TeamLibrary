@@ -326,6 +326,7 @@ void IntroScene::SetObjects() noexcept
 	pCollider->m_eTag = ETag::Dummy;
 	pCollider->SetGravityScale(0.0f);
 	pCollider->usePhysics(false);
+	ObjectManager::Get().SetProtoObject(pObject);
 
 	// ÆøÅº
 	pHeroObj = new AHeroObj();

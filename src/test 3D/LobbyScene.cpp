@@ -126,9 +126,9 @@ bool LobbyScene::Frame() noexcept
 				SetScene(ESceneName::Main);
 				StartupServer();
 
-				this_thread::sleep_for(chrono::seconds(2));
+				//this_thread::sleep_for(chrono::seconds(2));
 				PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
-				PlayerController::Get().SendReqRespawn(m_selectCharacter);
+				//PlayerController::Get().SendReqRespawn(m_selectCharacter);
 			}
 			else
 			{
@@ -137,9 +137,9 @@ bool LobbyScene::Frame() noexcept
 				StartupClient();
 				while (PacketManager::Get().pMyInfo->UserSocket == 0);	// 소켓 받을때까지 대기
 
-				this_thread::sleep_for(chrono::seconds(2));
+				//this_thread::sleep_for(chrono::seconds(2));
 				PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
-				PlayerController::Get().SendReqRespawn(m_selectCharacter);
+				//PlayerController::Get().SendReqRespawn(m_selectCharacter);
 			}
 			return true;
 		}
@@ -173,18 +173,18 @@ void LobbyScene::SelectCharacter(const bool& toRight) noexcept
 {
 	if (toRight)
 	{
-		m_selectCharacter = (PlayerController::ECharacter)(m_selectCharacter + 1);
-		if (m_selectCharacter > 3)
-			m_selectCharacter = PlayerController::ECharacter::EGuard;
+		PlayerController::Get().m_selectCharacter = (PlayerController::ECharacter)(PlayerController::Get().m_selectCharacter + 1);
+		if (PlayerController::Get().m_selectCharacter > 3)
+			PlayerController::Get().m_selectCharacter = PlayerController::ECharacter::EGuard;
 	}
 	else
 	{
-		m_selectCharacter = (PlayerController::ECharacter)(m_selectCharacter - 1);
-		if (m_selectCharacter <= 0)
-			m_selectCharacter = PlayerController::ECharacter::EMage;
+		PlayerController::Get().m_selectCharacter = (PlayerController::ECharacter)(PlayerController::Get().m_selectCharacter - 1);
+		if (PlayerController::Get().m_selectCharacter <= 0)
+			PlayerController::Get().m_selectCharacter = PlayerController::ECharacter::EMage;
 	}
 
-	switch (m_selectCharacter)
+	switch (PlayerController::Get().m_selectCharacter)
 	{
 	case PlayerController::EGuard:
 		m_pBackHero = m_pBackGuard;
@@ -214,7 +214,7 @@ bool LobbyScene::FirstInit() noexcept
 void LobbyScene::StartToHost()
 {
 	MainClass::StartToHost();
-	switch (m_selectCharacter)
+	switch (PlayerController::Get().m_selectCharacter)
 	{
 	case PlayerController::ECharacter::EGuard:
 	{
@@ -237,7 +237,7 @@ void LobbyScene::StartToHost()
 void LobbyScene::StartToGuest()
 {
 	MainClass::StartToGuest();
-	switch (m_selectCharacter)
+	switch (PlayerController::Get().m_selectCharacter)
 	{
 	case PlayerController::ECharacter::EGuard:
 	{

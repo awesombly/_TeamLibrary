@@ -62,6 +62,7 @@ public:
 	UIManager*  pUIManager		= nullptr;
 	EAction		m_eAction;				// 눌린 애니메이션
 	ECharacter  m_curCharacter = ECharacter::EDummy;	// 현재 캐릭터
+	ECharacter  m_selectCharacter = ECharacter::EDummy;
 
 	float		m_NeedEXP			= 1.0f;
 	UCHAR		m_statPoint			= 0;

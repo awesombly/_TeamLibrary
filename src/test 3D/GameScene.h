@@ -10,8 +10,14 @@
 class GameScene : public MainClass
 {
 public:
+	enum class EGameState {
+		Wait, GameStart, WaveInit, Spawn
+	};
+	EGameState m_eState = EGameState::Wait;
 	PlayerController* m_pPlayer = &PlayerController::Get();		// 컨트롤러
-	bool		 m_hitRay = false;
+	float m_frameCount = 0.0f;
+	UINT  m_waveCount = 0;
+	int   m_spawnCount = 0;
 	// UI
 	JEditCtrl*	 m_pChat = nullptr;
 	JTextCtrl*	 m_TimerText	= nullptr;

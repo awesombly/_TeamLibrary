@@ -30,6 +30,8 @@ enum EPacketProtocol : USHORT {
 	PACKET_SendUserInfo,
 	PACKET_SendLevelUp,
 	PACKET_SendNameUpdate,
+	PACKET_StartGame,
+	PACKET_WaveStart,
 };
 
 // 패킷 배열 제외 사이즈

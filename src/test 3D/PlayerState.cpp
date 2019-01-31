@@ -269,7 +269,7 @@ void PlayerStateRun::StateInit(PlayerController* pOwner) noexcept
 		ObjectManager::Get().DisableObject(m_pOwner->m_pEffectFly);
 	m_pOwner->m_pEffectFly = ObjectManager::Get().TakeObject(L"EPDustStay", false);
 	m_pOwner->m_pEffectFly->SetParent(pOwner);
-	m_pOwner->m_pEffectFly->SetPosition(Vector3::Up * 15.0f);
+	m_pOwner->m_pEffectFly->SetPosition(Vector3::Up * 5.0f);
 }
 bool PlayerStateRun::Process(const float& spf) noexcept
 {
@@ -552,7 +552,7 @@ bool ArcherStateDash::Process(const float& spf) noexcept
 		return true;
 	}
 
-	//m_pOwner->m_eAction = PlayerController::EAction::NIdle;
+	m_pOwner->m_eAction = PlayerController::EAction::NIdle;
 	//if (Input::GetKeyState('W') == EKeyState::HOLD)
 	//{
 	//	m_pOwner->m_eAction = (PlayerController::EAction)(m_pOwner->m_eAction + PlayerController::EAction::NForward);
@@ -569,7 +569,7 @@ bool ArcherStateDash::Process(const float& spf) noexcept
 	//{
 	//	m_pOwner->m_eAction = (PlayerController::EAction)(m_pOwner->m_eAction + PlayerController::EAction::NRight);
 	//}
-	//return true;
+	return true;
 }
 
 
@@ -698,7 +698,7 @@ void MageStateRSkill::StateInit(PlayerController* pOwner) noexcept
 {
 	m_pOwner = pOwner;
 	m_pOwner->m_eAction = PlayerController::EAction::RSkill;
-	m_pOwner->m_DelayFrame = 0.6f;
+	m_pOwner->m_DelayFrame = 0.2f;
 	m_pOwner->m_moveSpeed *= 0.6f;
 }
 bool MageStateRSkill::Process(const float& spf) noexcept
@@ -710,7 +710,7 @@ bool MageStateRSkill::Process(const float& spf) noexcept
 		m_pOwner->m_eAction = PlayerController::EAction::ChargeAttack;
 		m_pOwner->SetState(EPlayerState::Basic);
 		m_pOwner->m_curDelayRSkill = m_pOwner->m_DelayRSkill;
-		m_pOwner->m_DelayFrame = 0.6f;
+		m_pOwner->m_DelayFrame = 1.0f;
 		return true;
 	}
 
@@ -759,7 +759,7 @@ bool MageStateDash::Process(const float& spf) noexcept
 		m_pOwner->SetState(EPlayerState::Basic);
 		m_pOwner->m_eAction = PlayerController::EAction::Special3;
 		m_pOwner->m_curDelayDash = m_pOwner->m_DelayDash;
-		m_pOwner->m_DelayFrame = 0.55f;
+		m_pOwner->m_DelayFrame = 1.0f;
 		return true;
 	}
 

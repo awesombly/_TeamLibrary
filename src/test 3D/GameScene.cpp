@@ -8,15 +8,17 @@ bool GameScene::Init() noexcept
 {
 	// UI
 	LoadUI();
-	m_pPlayer->Init();
+	m_pPlayer = &PlayerController::Get();
+	PlayerController::Get().Init();
+	m_pPlayer->SetPosition(Vector3::Up * 100.0f + Vector3::Backward * 50.0f);
 	FirstInit();
 	ObjectManager::KeyCount = 1000;
 
 	auto pCollider = new Collider(1.0f);
 	pCollider->m_eTag = ETag::Ally;
 	PlayerController::Get().m_pHome = new GameObject(L"Shelter", { pCollider /*, ObjectManager::Get().TakeComponent(L"RowSphere")*/ });
-	PlayerController::Get().m_pHome->SetPosition(-16.0f, 20.0f, 42.0f);
-	PlayerController::Get().m_pHome->SetScale(Vector3::One * 25.0f);
+	PlayerController::Get().m_pHome->SetPosition(-16.0f, 18.0f, 35.0f);
+	PlayerController::Get().m_pHome->SetScale(Vector3::One * 20.0f);
 	PlayerController::Get().m_pHome->SetGravityScale(0.0f);
 	PlayerController::Get().m_pHome->usePhysics(false);
 	PlayerController::Get().m_pHome->SetHP(100.0f);
@@ -54,8 +56,9 @@ bool GameScene::Init() noexcept
 	SoundManager::Get().SetBGM("bgm_InGame_Theme.mp3");
 	Timer::AccumulateTime = 0.0f;
 	m_isLoading = false;
-	m_Rule.SetReadyTime(7.0f);
-	m_Rule.SetPlayTime(180.0f);
+	//m_Rule.SetReadyTime(7.0f);
+	//m_Rule.SetPlayTime(180.0f);
+	m_frameCount = 3.0f;
 	return true;
 }
 
@@ -99,7 +102,7 @@ bool GameScene::Frame() noexcept
 	}
 
 	// 시간 출력, 호스트
-	m_Rule.Frame();
+	//m_Rule.Frame();
 	if (PacketManager::Get().isHost)
 	{
 		HostFrame();
@@ -162,7 +165,7 @@ bool GameScene::Release() noexcept
 	ObjectManager::Cameras[ECamera::Main]->CutParent();
 	ObjectManager::Get().PopObject(ObjectManager::Cameras[ECamera::Main]);
 	ObjectManager::Get().Release();
-	m_Rule.Release();
+	//m_Rule.Release();
 	return true;
 }
 
@@ -434,6 +437,93 @@ void GameScene::HostFrame() noexcept
 		//PacketManager::Get().SendTakeObject(L"Crawler", ESocketType::ECrawler, (UCHAR)PacketManager::Get().UserList.size(), 0.6f, 0.15f, 0.1f, { -500.0f, 60.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
 		//PacketManager::Get().SendTakeObject(L"Mutant", ESocketType::EMutant, 1, 5.0f, 0.5f, 0.1f, { -500.0f, 60.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
 	}
+
+	
+	
+	m_frameCount -= Timer::SPF;
+	if (m_frameCount <= 0.0f)
+	{
+		switch (m_eState)
+		{
+		case EGameState::Wait:
+		{
+			m_eState = EGameState::GameStart;
+			// 패킷 처리?, 시간도
+			UIManager::Get().m_FightPanel->m_bRender = true;
+			m_frameCount = 3.0f;
+			m_waveCount = 0;
+		}	break;
+		case EGameState::GameStart:
+		{
+			PacketManager::Get().SendPacket((char*)&PI, sizeof(PI), PACKET_StartGame);
+			//PlayerController::Get().SendReqRespawn(PlayerController::Get().m_selectCharacter);
+			m_frameCount = 3.0f;
+			m_eState = EGameState::WaveInit;
+		}
+		case EGameState::WaveInit:
+		{
+			if (m_waveCount == 5)
+			{
+				ErrorMessage(L"게임 종료");
+				return;
+			}
+			m_eState = EGameState::Spawn;
+			++m_waveCount;
+			m_spawnCount = 4;
+
+			Packet_KeyValue p_KeyValue;
+			p_KeyValue.KeyValue = m_waveCount;
+			PacketManager::Get().SendPacket((char*)&p_KeyValue, sizeof(Packet_KeyValue), PACKET_WaveStart);
+		}	break;
+		case EGameState::Spawn:
+		{
+			switch (m_waveCount)
+			{
+			case 1:
+			{
+				PacketManager::Get().SendTakeObject(L"Zombie", ESocketType::EZombie, (UCHAR)PacketManager::Get().UserList.size(), 1.0f, 0.2f, 0.1f, { -500.0f, 60.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
+				PacketManager::Get().SendTakeObject(L"Caster", ESocketType::ECaster, (UCHAR)PacketManager::Get().UserList.size(), 0.8f, 0.2f, 0.1f, { -500.0f, 60.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
+				PacketManager::Get().SendTakeObject(L"Crawler", ESocketType::ECrawler, (UCHAR)PacketManager::Get().UserList.size(), 0.6f, 0.15f, 0.1f, { -500.0f, 60.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
+			}	break;
+			case 2:
+			{
+				PacketManager::Get().SendTakeObject(L"Zombie", ESocketType::EZombie, (UCHAR)PacketManager::Get().UserList.size(), 1.0f, 0.2f, 0.1f, { -500.0f, 60.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
+				PacketManager::Get().SendTakeObject(L"Caster", ESocketType::ECaster, (UCHAR)PacketManager::Get().UserList.size(), 0.8f, 0.2f, 0.1f, { -500.0f, 60.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
+				PacketManager::Get().SendTakeObject(L"Crawler", ESocketType::ECrawler, (UCHAR)PacketManager::Get().UserList.size(), 0.6f, 0.15f, 0.1f, { -500.0f, 60.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
+				PacketManager::Get().SendTakeObject(L"Mutant", ESocketType::EMutant, 1, 5.0f, 0.5f, 0.1f, { -500.0f, 60.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
+			}	break;
+			case 3:
+			{
+				if(m_spawnCount == 2)
+					PacketManager::Get().SendTakeObject(L"Tank", ESocketType::ETank, 1, 15.0f * PacketManager::Get().UserList.size(), 1.1f, 0.1f, { -500.0f, 60.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
+				PacketManager::Get().SendTakeObject(L"Zombie", ESocketType::EZombie, (UCHAR)PacketManager::Get().UserList.size(), 1.0f, 0.2f, 0.1f, { -500.0f, 60.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
+				PacketManager::Get().SendTakeObject(L"Caster", ESocketType::ECaster, (UCHAR)PacketManager::Get().UserList.size(), 0.8f, 0.2f, 0.1f, { -500.0f, 60.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
+				PacketManager::Get().SendTakeObject(L"Crawler", ESocketType::ECrawler, (UCHAR)PacketManager::Get().UserList.size(), 0.6f, 0.15f, 0.1f, { -500.0f, 60.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
+			}	break;
+			case 4:
+			{
+				if (m_spawnCount == 2)
+					PacketManager::Get().SendTakeObject(L"Tank", ESocketType::ETank, 1, 15.0f * PacketManager::Get().UserList.size(), 1.1f, 0.1f, { -500.0f, 60.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
+				PacketManager::Get().SendTakeObject(L"Mutant", ESocketType::EMutant, (UCHAR)PacketManager::Get().UserList.size(), 5.0f, 0.5f, 0.1f, { -500.0f, 60.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
+				PacketManager::Get().SendTakeObject(L"Crawler", ESocketType::ECrawler, (UCHAR)PacketManager::Get().UserList.size(), 0.6f, 0.15f, 0.1f, { -500.0f, 60.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
+			}	break;
+			case 5:
+			{
+				if (m_spawnCount == 4)
+					PacketManager::Get().SendTakeObject(L"Mutant", ESocketType::EMutant, 3, 5.0f, 0.5f, 0.1f, { -500.0f, 60.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
+			}	break;
+			}
+
+			m_frameCount = 15.0f;
+			--m_spawnCount;
+			if (m_spawnCount <= 0)
+			{
+				m_eState = EGameState::WaveInit;
+				m_frameCount = 30.0f;
+			}
+		}	break;
+		}
+	}
 }
 
 
@@ -465,7 +555,7 @@ void GameScene::LoadUI() noexcept
 	// HP, MP
 	UIManager::Get().m_pHpBar = (JProgressBar*)pUIRoot->find_child(L"HP_Progress");
 	UIManager::Get().m_pMpBar = (JProgressBar*)pUIRoot->find_child(L"MP_Progress");
-
+	UIManager::Get().m_FightPanel = (JPanel*)pUIRoot->find_child(L"fight_panel");
 	// 상황판
 	/* Name Kill Death Score */
 	//m_pUser1->PreEvent.first; // bRender 상관없이 돌아감
@@ -566,8 +656,10 @@ void GameScene::LoadUI() noexcept
 	// CheckBox
 	m_pCheckBox = (JCheckCtrl*)pUIRoot->find_child(L"Set_Collision_Check");
 	// Timer
-	m_Rule.m_TimerText = (JTextCtrl*)pUIRoot->find_child(L"Timer_Text");
-	m_Rule.SetResultPanel((JPanel*)pUIRoot);
+	UIManager::Get().m_TimerText = (JTextCtrl*)pUIRoot->find_child(L"Timer_Text");
+	UIManager::Get().m_TimerText->m_Text = to_wstring(m_frameCount).substr(0, 5);
+	//m_Rule.m_TimerText = (JTextCtrl*)pUIRoot->find_child(L"Timer_Text");
+	//m_Rule.SetResultPanel((JPanel*)pUIRoot);
 
 	// Chatting
 	static auto pChatWheel = [](void* pVoid) {

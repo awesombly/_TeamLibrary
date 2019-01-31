@@ -7,6 +7,8 @@ class UIManager : public ISingleton<UIManager>
 {
 public:
 	// UI
+	JTextCtrl*		m_TimerText			= nullptr;
+	JPanel*			m_FightPanel		= nullptr;
 	JEditCtrl*		m_pChat				= nullptr;
 	JPanel*			m_pMouseIcon		= nullptr;
 	JProgressBar*	m_pHpBar			= nullptr;	

@@ -508,6 +508,16 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 			pPhysics->m_GravityScale = p_ColliderInfo.GravityScale;
 		}
 	}	break;
+	case PACKET_StartGame:
+	{
+		pChatList->push_string(L"===== 게임 시작 ===== ");
+		UIManager::Get().m_FightPanel->m_bRender = true;
+		PlayerController::Get().SendReqRespawn(PlayerController::Get().m_selectCharacter);
+	}	break;
+	case PACKET_WaveStart:
+	{
+		pChatList->push_string(L"=== Wave " + to_wstring(p_KeyValue.KeyValue) + L" Start! === ");
+	}	break;
 	default:
 	{
 		ErrorMessage("처리되지 않은 패킷 : "s + to_string(sendMode));

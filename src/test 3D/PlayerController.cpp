@@ -118,6 +118,25 @@ bool PlayerController::Frame(const float& spf, const float& accTime)	noexcept
 		m_disEXP = min<float>(m_disEXP + spf * 0.4f, m_EXP);
 	//}
 
+	/// 犁积己
+	if (Input::GetKeyState('Z') == EKeyState::DOWN)
+	{
+		if (m_pParent != nullptr)
+			m_pParent->m_pPhysics->UserSocket = (UINT)-1;
+		SendReqRespawn(ECharacter::EGuard);
+	}
+	if (Input::GetKeyState('X') == EKeyState::DOWN)
+	{
+		if (m_pParent != nullptr)
+			m_pParent->m_pPhysics->UserSocket = (UINT)-1;
+		SendReqRespawn(ECharacter::EArcher);
+	}
+	if (Input::GetKeyState('C') == EKeyState::DOWN)
+	{
+		if (m_pParent != nullptr)
+			m_pParent->m_pPhysics->UserSocket = (UINT)-1;
+		SendReqRespawn(ECharacter::EMage);
+	}
 	return true;
 }
 
@@ -517,26 +536,6 @@ void PlayerController::PlayerInput(const float& spf) noexcept
 		SendAnimTransform(m_eAction, m_curCharacter);
 	}
 	m_preAction = m_eAction;
-
-	/// 犁积己
-	if (Input::GetKeyState('Z') == EKeyState::DOWN)
-	{
-		if (m_pParent != nullptr)
-			m_pParent->m_pPhysics->UserSocket = (UINT)-1;
-		SendReqRespawn(ECharacter::EGuard);
-	}
-	if (Input::GetKeyState('X') == EKeyState::DOWN)
-	{
-		if (m_pParent != nullptr)
-			m_pParent->m_pPhysics->UserSocket = (UINT)-1;
-		SendReqRespawn(ECharacter::EArcher);
-	}
-	if (Input::GetKeyState('C') == EKeyState::DOWN)
-	{
-		if (m_pParent != nullptr)
-			m_pParent->m_pPhysics->UserSocket = (UINT)-1;
-		SendReqRespawn(ECharacter::EMage);
-	}
 }
 
 void PlayerController::SetState(const EPlayerState& eState) noexcept

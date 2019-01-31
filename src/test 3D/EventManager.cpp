@@ -73,7 +73,7 @@ namespace MyEvent {
 			}	break;
 			}
 			auto pEffect = ObjectManager::Get().TakeObject(L"EHitLight");
-			pEffect->SetPosition(pB->m_pParent->GetPosition());
+			pEffect->SetPosition(pB->GetCenter());
 		}
 		//ObjectManager::Get().DisableObject(pA->m_pParent);
 		//SoundManager::Get().Play("SE_HIT.mp3");//, pObject->GetWorldPosition(), SoundRange);
