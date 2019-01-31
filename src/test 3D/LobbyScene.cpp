@@ -123,19 +123,21 @@ bool LobbyScene::Frame() noexcept
 			if (PacketManager::Get().isHost)
 			{
 				m_isStart = false;
-				StartupServer();
 				SetScene(ESceneName::Main);
+				StartupServer();
 
+				this_thread::sleep_for(chrono::seconds(2));
 				PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
 				PlayerController::Get().SendReqRespawn(m_selectCharacter);
 			}
 			else
 			{
 				m_isStart = false;
-				StartupClient();
 				SetScene(ESceneName::Main);
+				StartupClient();
 				while (PacketManager::Get().pMyInfo->UserSocket == 0);	// 소켓 받을때까지 대기
 
+				this_thread::sleep_for(chrono::seconds(2));
 				PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
 				PlayerController::Get().SendReqRespawn(m_selectCharacter);
 			}

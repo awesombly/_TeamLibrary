@@ -3147,3 +3147,80 @@
 ^vpEventPress 
 ^pfEventClick 7274
 ^vpEventClick 
+
+^Type 777
+^NodeName fight_panel
+^ParentName Root
+^KeyState 135 135
+^bRender 0
+^Position 0.000000 0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 1.000000 1.000000 1.000000
+
+^Type 788
+^NodeName fight_1
+^ParentName fight_panel
+^KeyState 135 135
+^bRender 0
+^Position -0.000000 170.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 1000.000000 1000.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_Normal fight_1.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName fight_2
+^ParentName fight_panel
+^KeyState 135 135
+^bRender 0
+^Position 0.000000 170.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 1000.000000 1000.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_Normal fight_2.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName fight_3
+^ParentName fight_panel
+^KeyState 135 135
+^bRender 0
+^Position 0.000000 170.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 1000.000000 1000.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_Normal fight_3.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName Fight
+^ParentName fight_panel
+^KeyState 135 135
+^bRender 0
+^Position 0.000000 170.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 200.000000 40.000000 1.000000
+^Color 1.000000 1.000000 1.000000 0.000000
+^tx_Normal Fight.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick ýýýý

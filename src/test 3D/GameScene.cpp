@@ -14,8 +14,8 @@ bool GameScene::Init() noexcept
 
 	auto pCollider = new Collider(1.0f);
 	pCollider->m_eTag = ETag::Ally;
-	PlayerController::Get().m_pHome = new GameObject(L"Shelter", { pCollider , ObjectManager::Get().TakeComponent(L"RowSphere") });
-	PlayerController::Get().m_pHome->SetPosition(Vector3::Up * 20.0f);
+	PlayerController::Get().m_pHome = new GameObject(L"Shelter", { pCollider /*, ObjectManager::Get().TakeComponent(L"RowSphere")*/ });
+	PlayerController::Get().m_pHome->SetPosition(-16.0f, 20.0f, 42.0f);
 	PlayerController::Get().m_pHome->SetScale(Vector3::One * 25.0f);
 	PlayerController::Get().m_pHome->SetGravityScale(0.0f);
 	PlayerController::Get().m_pHome->usePhysics(false);
