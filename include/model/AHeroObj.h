@@ -50,13 +50,15 @@ public:
 	int						m_iMatrixIndex;
 	bool					m_bBoneRender;
 
+
+	bool					m_bHeroRender;
 	AHeroObj* m_Parent;
 
 	GameObject* clone() noexcept override;
 
 
 public:
-
+	void		SetHeroRender(bool i);
 	
 	void		SetBoneMatrices(vector<D3DXMATRIX>* pList);
 	bool		Frame(const float& spf, const float& accTime) noexcept override;

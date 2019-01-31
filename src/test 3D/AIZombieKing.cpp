@@ -163,7 +163,7 @@ bool AIZombieKing::Frame(const float& spf, const float& accTime)	noexcept
 	}	break;
 	case EState::Attack:
 	{
-		//SoundManager::Get().PlayQueue("SE_zombie_hit02.mp3", m_pParent->GetPosition(), PlayerController::Get().SoundRange);
+		SoundManager::Get().PlayQueue("SV_zombie_king_attack1.mp3", m_pParent->GetPosition(), PlayerController::Get().SoundRange);
 
 		// 공격
 		auto pEffect = ObjectManager::Get().TakeObject(L"ZAttack3");
@@ -177,7 +177,7 @@ bool AIZombieKing::Frame(const float& spf, const float& accTime)	noexcept
 	}	break;
 	case EState::Action1:
 	{
-		//SoundManager::Get().PlayQueue("SE_zombie_hit02.mp3", m_pParent->GetPosition(), PlayerController::Get().SoundRange);
+		SoundManager::Get().PlayQueue("SV_zombie_king_shout.mp3", m_pParent->GetPosition(), PlayerController::Get().SoundRange);
 
 		// 브레스
 		m_Breath = ObjectManager::Get().TakeObject(L"ZBreath");
