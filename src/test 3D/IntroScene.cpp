@@ -49,8 +49,8 @@ bool IntroScene::Release() noexcept
 
 void IntroScene::LoadSound() noexcept
 {
-	SoundManager::Get().Load("bgm_Intro_Theme.mp3", false, FMOD_LOOP_NORMAL);
-	SoundManager::Get().Load("bgm_Lobby_Theme.mp3", false, FMOD_LOOP_NORMAL);
+	SoundManager::Get().Load("bgm_Intro_Theme.mp3");
+	SoundManager::Get().Load("bgm_Lobby_Theme.mp3");
 	SoundManager::Get().Load("bgm_InGame_Theme.mp3", false, FMOD_LOOP_NORMAL);
 	//////////////////////////////////////////////PLAYER_SV
 	SoundManager::Get().Load("SV_paladin_atk1.mp3");
@@ -682,7 +682,7 @@ void IntroScene::LoadUI() noexcept
 	// ¾Ë¸²Ã¢
 	m_pHelpText = (JTextCtrl*)pUIRoot->find_child(L"Help_txt");
 
-	SoundManager::Get().SetBGM("bgm_Intro_Theme.mp3");
+	SoundManager::Get().Play("bgm_Intro_Theme.mp3");
 	UI::IntroEvent(pUIRoot);
 }
 
