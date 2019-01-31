@@ -628,8 +628,16 @@ bool MageStateBasic::Process(const float& spf) noexcept
 		m_pOwner->m_curMP >= 0.4f)
 	{
 		m_pOwner->m_curMP -= 0.4f;
-		m_pOwner->m_curDelayLSkill = m_pOwner->m_DelayLSkill;
 		m_pOwner->SetState(EPlayerState::LSkill);
+	}
+
+	// R 클릭
+	if (Input::GetKeyState(EMouseButton::Right) == EKeyState::DOWN &&
+		m_pOwner->m_curDelayRSkill <= 0.0f &&
+		m_pOwner->m_curMP >= 0.8f)
+	{
+		m_pOwner->m_curMP -= 0.4f;
+		m_pOwner->SetState(EPlayerState::RSkill);
 	}
 
 	// 텔포
@@ -637,7 +645,6 @@ bool MageStateBasic::Process(const float& spf) noexcept
 		m_pOwner->m_curDelayDash <= 0.0f)
 	{
 		//m_pOwner->m_curMP -= 0.4f;
-		m_pOwner->m_curDelayDash = m_pOwner->m_DelayDash;
 		m_pOwner->SetState(EPlayerState::Dash);
 	}
 
@@ -690,15 +697,44 @@ bool MageStateLSkill::Process(const float& spf) noexcept
 void MageStateRSkill::StateInit(PlayerController* pOwner) noexcept
 {
 	m_pOwner = pOwner;
-
+	m_pOwner->m_eAction = PlayerController::EAction::RSkill;
+	m_pOwner->m_DelayFrame = 0.6f;
+	m_pOwner->m_moveSpeed *= 0.6f;
 }
 bool MageStateRSkill::Process(const float& spf) noexcept
 {
+	m_pOwner->m_DelayFrame -= spf;
 
+	if (m_pOwner->m_DelayFrame <= 0.0f)
+	{
+		m_pOwner->m_eAction = PlayerController::EAction::ChargeAttack;
+		m_pOwner->SetState(EPlayerState::Basic);
+		m_pOwner->m_curDelayRSkill = m_pOwner->m_DelayRSkill;
+		m_pOwner->m_DelayFrame = 0.6f;
+		return true;
+	}
+
+	m_pOwner->m_eAction = PlayerController::EAction::NIdle;
+	if (Input::GetKeyState('W') == EKeyState::HOLD)
+	{
+		m_pOwner->m_eAction = (PlayerController::EAction)(m_pOwner->m_eAction + PlayerController::EAction::NForward);
+	}
+	if (Input::GetKeyState('S') == EKeyState::HOLD)
+	{
+		m_pOwner->m_eAction = (PlayerController::EAction)(m_pOwner->m_eAction + PlayerController::EAction::NBackward);
+	}
+	if (Input::GetKeyState('A') == EKeyState::HOLD)
+	{
+		m_pOwner->m_eAction = (PlayerController::EAction)(m_pOwner->m_eAction + PlayerController::EAction::NLeft);
+	}
+	if (Input::GetKeyState('D') == EKeyState::HOLD)
+	{
+		m_pOwner->m_eAction = (PlayerController::EAction)(m_pOwner->m_eAction + PlayerController::EAction::NRight);
+	}
 	return true;
 }
 
-// Dash
+// 텔포
 void MageStateDash::StateInit(PlayerController* pOwner) noexcept
 {
 	m_pOwner = pOwner;
@@ -722,6 +758,7 @@ bool MageStateDash::Process(const float& spf) noexcept
 		// 이동
 		m_pOwner->SetState(EPlayerState::Basic);
 		m_pOwner->m_eAction = PlayerController::EAction::Special3;
+		m_pOwner->m_curDelayDash = m_pOwner->m_DelayDash;
 		m_pOwner->m_DelayFrame = 0.55f;
 		return true;
 	}

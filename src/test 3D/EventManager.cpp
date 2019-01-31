@@ -25,7 +25,7 @@ namespace MyEvent {
 			case ETag::Ally:
 			{
 				pB->SetForce((Normalize(pA->GetTotalForce())) * 30.0f);
-				pB->m_pParent->HealHP(pA->m_pPhysics->m_damage * 1.5f);
+				pB->m_pParent->HealHP(pA->m_pPhysics->m_damage);
 				//// 내가 맞았을때
 				//if (pB->m_pParent == PlayerController::Get().GetParent())
 				//{

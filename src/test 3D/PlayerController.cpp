@@ -437,6 +437,24 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 			 SoundManager::Get().Play("SV_mage_atk2.mp3");
 			 SoundManager::Get().PlayQueue("SE_flare_shot.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
 		 }	break;
+		 case EAction::RSkill:
+		 {
+			 pObject->SetANIM_Loop(Mage_BUFF);
+		 }	break;
+		 case EAction::ChargeAttack:
+		 {
+			 auto pItem = ObjectManager::Get().TakeObject(L"BuffWave");
+			 pItem->SetPosition(pObject->GetPosition() + pObject->GetUp() * 65.0f);
+			 pItem->SetRotation(pObject->GetRotation());
+			 pItem->SetScale(Vector3::One);
+			 //pItem->SetForce((forward + Vector3::Up * 0.8f) * 80.0f);
+			 pItem->m_pPhysics->UserSocket = socket;
+			 pItem->SetDamage(0.5f, PacketManager::Get().UserList[socket]->StatStr);
+			 pItem->GetCollider()->AddIgnoreList(pObject->GetCollider());
+
+			 //SoundManager::Get().Play("SV_mage_atk2.mp3");
+			 //SoundManager::Get().PlayQueue("SE_flare_shot.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
+		 }	break;
 		 case EAction::Special:
 		 {
 			 pObject->SetANIM_Loop(Mage_ATK_DU);
@@ -457,9 +475,6 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 			 auto pEffect = ObjectManager::Get().TakeObject(L"EHit2");
 			 pEffect->SetPosition(pObject->GetPosition() + Vector3::Up * 5.0f);
 			 pObject->SetANIM_Loop(Mage_ATK_DU);
-		 }	break;
-		 case EAction::RSkill:
-		 {
 		 }	break;
 		 // ================================== еш ╩Г©К =========================================
 		 case EAction::ShockWave:
