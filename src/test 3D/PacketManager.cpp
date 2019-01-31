@@ -301,7 +301,6 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 		int i = 0;
 		for (auto& iter : UserList)
 		{
-			++i;
 			if (iter.first == p_KeyValue.KeyValue)
 			{
 				pUserPanel[i]->m_bRender = true;
@@ -310,6 +309,7 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 				memcpy(((char*)pUserInfo + PS_UserInfo), ((char*)data + PS_UserInfo), pUserInfo->DataSize);
 				return;
 			}
+			++i;
 		}
 
 		// 유저 목록에 없는데 자신이면 추가
