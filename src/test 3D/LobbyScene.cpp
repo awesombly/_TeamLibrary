@@ -228,7 +228,6 @@ void LobbyScene::StartToHost()
 	}	break;
 	}
 	m_pStartEffect->EffectPlay();
-	//SoundManager::Get().Play("SV_gogogo.mp3");
 	PacketManager::Get().isHost = true;
 	m_isStart = true;
 }
@@ -253,7 +252,6 @@ void LobbyScene::StartToGuest()
 	}
 
 	m_pStartEffect->EffectPlay();
-	SoundManager::Get().Play("SV_gogogo.mp3");
 	PacketManager::Get().isHost = false;
 	m_isStart = true;
 }
