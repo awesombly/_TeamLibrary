@@ -83,7 +83,7 @@ bool AIZombieCast::Frame(const float& spf, const float& accTime)	noexcept
 	}	break;
 	case EState::Attack:
 	{
-		SoundManager::Get().PlayQueue("SE_chicken.mp3", m_pParent->GetPosition(), PlayerController::Get().SoundRange);
+		SoundManager::Get().PlayQueue("SV_zombieR_shot.mp3", m_pParent->GetPosition(), PlayerController::Get().SoundRange);
 
 		auto pChicken = ObjectManager::Get().TakeObject(L"ZThrow");
 		pChicken->SetPosition(m_pParent->GetPosition() + m_pParent->GetForward() * 40.0f + m_pParent->GetUp() * 65.0f + m_pParent->GetRight() * 20.0f);

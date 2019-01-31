@@ -134,6 +134,7 @@ bool AIZombieKing::Frame(const float& spf, const float& accTime)	noexcept
 				m_eDirState = EState::Action3;
 				m_delay = 0.5f;
 				((AHeroObj*)m_pParent)->SetANIM_OneTime(Zombie_KING_JUMP_ATTACK);
+				SoundManager::Get().PlayQueue("SV_zombie_king_shout.mp3", m_pParent->GetPosition(), PlayerController::Get().SoundRange);
 				// 카메라 진동
 				std::thread vibrator(&PlayerController::StartVibration, &PlayerController::Get(), 1.5f, 7.0f);
 				vibrator.detach();
@@ -158,7 +159,7 @@ bool AIZombieKing::Frame(const float& spf, const float& accTime)	noexcept
 	}	break;
 	case EState::Attack:
 	{
-		//SoundManager::Get().PlayQueue("SE_zombie_hit02.mp3", m_pParent->GetPosition(), PlayerController::Get().SoundRange);
+		SoundManager::Get().PlayQueue("SV_zombie_king_attack1.mp3", m_pParent->GetPosition(), PlayerController::Get().SoundRange);
 
 		// 공격
 		auto pEffect = ObjectManager::Get().TakeObject(L"ZAttack3");
@@ -171,7 +172,7 @@ bool AIZombieKing::Frame(const float& spf, const float& accTime)	noexcept
 	}	break;
 	case EState::Action1:
 	{
-		//SoundManager::Get().PlayQueue("SE_zombie_hit02.mp3", m_pParent->GetPosition(), PlayerController::Get().SoundRange);
+		SoundManager::Get().PlayQueue("SV_zombie_king_shout.mp3", m_pParent->GetPosition(), PlayerController::Get().SoundRange);
 
 		// 브레스
 		m_Breath = ObjectManager::Get().TakeObject(L"ZBreath");

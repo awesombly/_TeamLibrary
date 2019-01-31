@@ -177,7 +177,6 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 	 	 case EAction::Run:
 		 {
 			 SoundManager::Get().Play("SE_dash.mp3");
-			 SoundManager::Get().Play("SV_paladin_atk4.mp3");
 			 pObject->SetANIM_Loop(Paladin_RUN);
 		 }	break;
 	 	 //	case EAction::Dance1:
@@ -309,14 +308,14 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 		 case EAction::LCharge1:
 		 {
 			 auto pItem = ObjectManager::Get().TakeObject(L"EPSlash");
-
+			 SoundManager::Get().Play("SE_bow_ready.mp3");
 			///SoundManager::Get().PlayQueue("SE_throw01.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
 			 pItem->SetPosition(pObject->GetPosition() + pObject->GetUp() * 55.0f);
 		 }	break;
 		 case EAction::LCharge2:
 		 {
 			 auto pItem = ObjectManager::Get().TakeObject(L"EPAttack");
-
+			 SoundManager::Get().Play("SE_bow_ready.mp3");
 			 //SoundManager::Get().PlayQueue("SE_throw01.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
 			 pItem->SetPosition(pObject->GetPosition() + pObject->GetUp() * 55.0f);
 		 }	break;
@@ -332,7 +331,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 	 	 	pItem->m_pPhysics->UserSocket = socket;
 	 	 	pItem->SetDamage(0.3f, PacketManager::Get().UserList[socket]->StatStr);
 	 	 	pItem->GetCollider()->AddIgnoreList(pObject->GetCollider());
-			SoundManager::Get().Play("SV_archer_atk2.mp3");
+			//SoundManager::Get().Play("SV_archer_atk2.mp3");
 	 	 	SoundManager::Get().PlayQueue("SE_bow_shot.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
 	 	 }	break;
 	 	 case EAction::ChargeAttack:
@@ -347,6 +346,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 	 	 	pItem->m_pPhysics->UserSocket = socket;
 	 	 	pItem->SetDamage(0.8f, PacketManager::Get().UserList[socket]->StatStr);
 	 	 	pItem->GetCollider()->AddIgnoreList(pObject->GetCollider());
+			SoundManager::Get().PlayQueue("SE_bow_shot.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
 	 	 	//SoundManager::Get().PlayQueue("SE_throw01.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
 	 	 }	break;
 	 	 case EAction::ChargeAttack2:
@@ -361,10 +361,12 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 	 	 	pItem->m_pPhysics->UserSocket = socket;
 	 	 	pItem->SetDamage(1.6f, PacketManager::Get().UserList[socket]->StatStr);
 	 	 	pItem->GetCollider()->AddIgnoreList(pObject->GetCollider());
+			SoundManager::Get().PlayQueue("SE_bow_shot.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
 	 	 	//SoundManager::Get().PlayQueue("SE_throw01.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
 	 	 }	break;
 		 case EAction::RSkill:
 		 {
+			 SoundManager::Get().Play("SV_archer_atk1.mp3");
 			 pObject->SetANIM_OneTime(Archer_THROW);
 		 }	break;
 		 case EAction::Special:
@@ -382,7 +384,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 		 case DashLeft:
 		 case DashRight:
 		 {
-			 SoundManager::Get().Play("SV_archer_atk1.mp3");
+
 			 SoundManager::Get().Play("SE_dash.mp3");
 			 pObject->SetANIM_OneTime(Archer_DIVE);
 			 auto pEffect = ObjectManager::Get().TakeObject(L"EPDust");
