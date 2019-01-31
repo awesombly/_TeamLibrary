@@ -97,7 +97,7 @@ void IntroScene::LoadSound() noexcept
 	SoundManager::Get().Load("SE_bomb.mp3");
 	SoundManager::Get().Load("SE_dash.mp3");
 	SoundManager::Get().Load("SE_dash2.mp3");
-
+	SoundManager::Get().Load("SE_wave.mp3");
 	SoundManager::Get().Load("SE_pickup.mp3");
 	
 
