@@ -452,8 +452,8 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 			 pItem->SetDamage(0.5f, PacketManager::Get().UserList[socket]->StatStr);
 			 pItem->GetCollider()->AddIgnoreList(pObject->GetCollider());
 
-			 //SoundManager::Get().Play("SV_mage_atk2.mp3");
-			 //SoundManager::Get().PlayQueue("SE_flare_shot.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
+			SoundManager::Get().Play("SV_mage_atk4.mp3");
+			 SoundManager::Get().PlayQueue("SE_fire1.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
 		 }	break;
 		 case EAction::Special:
 		 {
@@ -465,6 +465,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 			 pEffect->SetPosition(pObject->GetPosition());
 			 pObject->SetHeroRender(false);
 			 pObject->GetCollider()->m_eTag = ETag::Dummy;
+			 SoundManager::Get().PlayQueue("SE_healing.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange); 
 		 }	break;
 		 case EAction::Special3:
 		 {
