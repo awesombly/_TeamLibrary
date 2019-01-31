@@ -512,7 +512,7 @@ void IntroScene::SetObjects() noexcept
 
 void GotoLobby2(void* pScene)
 {
-	auto pIntro = (IntroScene*)pScene;
+	IntroScene* pIntro = (IntroScene*)pScene;
 
 	if (!pIntro->m_pPW->GetString().empty())
 	{
