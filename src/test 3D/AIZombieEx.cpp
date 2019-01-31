@@ -50,7 +50,7 @@ bool AIZombieEx::Frame(const float& spf, const float& accTime)	noexcept
 		case EState::Attack:
 		{
 			m_delay = 1.3f;
-			((AHeroObj*)m_pParent)->SetANIM_OneTime(ZombieEX_ATTACK);
+			((AHeroObj*)m_pParent)->SetANIM_Loop(ZombieEX_ATTACK);
 		}	break;
 		}
 		return true;

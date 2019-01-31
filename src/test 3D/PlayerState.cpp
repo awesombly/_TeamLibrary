@@ -226,7 +226,7 @@ bool PlayerStateGuard::Process(const float& spf) noexcept
 		return true;
 	}
 
-	m_pOwner->m_eAction = PlayerController::EAction::NIdle;
+	m_pOwner->m_eAction = PlayerController::EAction::Idle;
 	//if (Input::GetKeyState('W') == EKeyState::HOLD)
 	//{
 	//	m_pOwner->m_eAction = (PlayerController::EAction)(m_pOwner->m_eAction + PlayerController::EAction::Forward);
@@ -237,11 +237,11 @@ bool PlayerStateGuard::Process(const float& spf) noexcept
 	//}
 	if (Input::GetKeyState('A') == EKeyState::HOLD)
 	{
-		m_pOwner->m_eAction = (PlayerController::EAction)(m_pOwner->m_eAction + PlayerController::EAction::NLeft);
+		m_pOwner->m_eAction = (PlayerController::EAction)(m_pOwner->m_eAction + PlayerController::EAction::Left);
 	}
 	if (Input::GetKeyState('D') == EKeyState::HOLD)
 	{
-		m_pOwner->m_eAction = (PlayerController::EAction)(m_pOwner->m_eAction + PlayerController::EAction::NRight);
+		m_pOwner->m_eAction = (PlayerController::EAction)(m_pOwner->m_eAction + PlayerController::EAction::Right);
 	}
 
 	// 기본으로

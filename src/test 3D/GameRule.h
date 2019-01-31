@@ -18,8 +18,8 @@ public:
 	JPanel*		 m_ZWinPanel;
 	JPanel*		 m_GWinPanel;
 
-	JPanel*		 m_FightPanel;
-	JPanel*		 m_TimeOverPanel;
+	//JPanel*		 m_FightPanel;
+	//JPanel*		 m_TimeOverPanel;
 
 	JPanel*		 m_pStatePanel = nullptr;
 public:

@@ -14,7 +14,7 @@ bool GameRule::Frame()	noexcept
 	if (m_bPlayStart == false)
 	{
 		m_TimerText->m_Text = to_wstring(GetReadyTime() - Timer::AccumulateTime).substr(0, 5);
-		m_FightPanel->m_bRender=true;
+		//m_FightPanel->m_bRender=true;
 	}
 	else
 	{
@@ -36,7 +36,7 @@ bool GameRule::Frame()	noexcept
 	//게임종료시 사운드 재생
 	if (GetPlayTime() - Timer::AccumulateTime <= 0)
 	{
-		m_TimeOverPanel->m_bRender = true;
+		//m_TimeOverPanel->m_bRender = true;
 
 		if (m_bPlayEnd != true) {
 			m_bPlayEnd = true;
@@ -66,8 +66,8 @@ bool GameRule::Release()	noexcept
 	m_TimerText->Release();
 	delete m_GWinPanel;
 	delete m_ZWinPanel;
-	delete m_FightPanel;
-	delete m_TimeOverPanel;
+	//delete m_FightPanel;
+	//delete m_TimeOverPanel;
 	return true;
 }
 
@@ -78,8 +78,8 @@ void GameRule::SetResultPanel(JPanel* pUIRoot)
 	m_GWinPanel = (JPanel*)pUIRoot->find_child(L"GuardWin");
 	m_ZWinPanel = (JPanel*)pUIRoot->find_child(L"ZombieWin");
 	m_pStatePanel = (JPanel*)pUIRoot->find_child(L"State_Panel");
-	m_FightPanel = (JPanel*)pUIRoot->find_child(L"fight_panel");
-	m_TimeOverPanel = (JPanel*)pUIRoot->find_child(L"TimeOver");
+	//m_FightPanel = (JPanel*)pUIRoot->find_child(L"fight_panel");
+	//m_TimeOverPanel = (JPanel*)pUIRoot->find_child(L"TimeOver");
 }
 
 

@@ -139,6 +139,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 {
 	switch (eCharacter)
 	{
+		ErrorMessage("ÆÈ¶óµò to ·±");
 	/// ==================================== ÆÈ¶óµò =======================================
 	 case ECharacter::EGuard:
 	 {
@@ -146,6 +147,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 	 	 {
 	 	 case EAction::Idle:
 	 	 {
+			 ErrorMessage("ÆÈ¶óµò to ¾ÆÀÌµé");
 			pObject->SetANIM_Loop(Paladin_IDLE);
 		}	break;
 	 	 case EAction::Jump:
@@ -174,9 +176,9 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 		 }	break;
 	 	 case EAction::Run:
 		 {
-			 SoundManager::Get().Load("SE_dash.mp3");
-			 SoundManager::Get().Load("SV_paladin_atk4.mp3");
-			pObject->SetANIM_Loop(Paladin_RUN);
+			 SoundManager::Get().Play("SE_dash.mp3");
+			 SoundManager::Get().Play("SV_paladin_atk4.mp3");
+			 pObject->SetANIM_Loop(Paladin_RUN);
 		 }	break;
 	 	 //	case EAction::Dance1:
 		//	{

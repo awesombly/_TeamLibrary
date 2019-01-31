@@ -64,12 +64,12 @@ bool AIZombieKing::Frame(const float& spf, const float& accTime)	noexcept
 		 case EState::Attack:
 		 {
 		 	m_delay = 0.45f;
-		 	((AHeroObj*)m_pParent)->SetANIM_OneTime(Zombie_KING_ATTACK);
+		 	((AHeroObj*)m_pParent)->SetANIM_Loop(Zombie_KING_ATTACK);
 		 }	break;
 		 case EState::Action1:
 		 {
 		 	m_delay = 0.9f;
-		 	((AHeroObj*)m_pParent)->SetANIM_OneTime(Zombie_KING_ROAR);
+		 	((AHeroObj*)m_pParent)->SetANIM_Loop(Zombie_KING_ROAR);
 		 }	break;
 		 case EState::Action2:
 		 {
@@ -81,7 +81,7 @@ bool AIZombieKing::Frame(const float& spf, const float& accTime)	noexcept
 		 		m_delayBreath = 0.0f;
 		 		m_delay = 4.0f;
 		 		m_eDirState = EState::Move;
-		 		((AHeroObj*)m_pParent)->SetANIM_OneTime(Zombie_KING_IDLE);
+		 		((AHeroObj*)m_pParent)->SetANIM_Loop(Zombie_KING_IDLE);
 		 		return true;
 		 	}
 			m_eState = EState::Action1;
