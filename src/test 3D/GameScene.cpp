@@ -422,7 +422,7 @@ void GameScene::HostFrame() noexcept
 
 		//PacketManager::Get().SendTakeObject(L"Atom", ESocketType::EDummy, 1, 1.0f, 1.0f, 0.0f, Vector3::Up * 120.0f, Vector3::Zero);
 		
-		PacketManager::Get().SendTakeObject(L"Tank", ESocketType::ETank, 1, 15.0f * PacketManager::Get().UserList.size(), 1.1f, 0.1f, { -500.0f, 60.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
+		//PacketManager::Get().SendTakeObject(L"Tank", ESocketType::ETank, 1, 15.0f * PacketManager::Get().UserList.size(), 1.1f, 0.1f, { -500.0f, 60.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
 	}
 	// Àû »ý¼º
 	if (enemyFrame >= 20.0f)
