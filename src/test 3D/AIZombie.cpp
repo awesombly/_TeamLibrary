@@ -84,8 +84,14 @@ bool AIZombie::Frame(const float& spf, const float& accTime)	noexcept
 				 m_eDirState = EState::Attack;
 				 return true;
 			 }
+			 m_pParent->Translate(Normalize(m_Target - m_pParent->GetPosition()) * m_moveSpeed * spf);
+			 return true;
 		 }
-		 m_pParent->Translate(Normalize(m_Target - m_pParent->GetPosition()) * m_moveSpeed * spf);
+		 // ÀÌµ¿
+		 if (VectorLengthSq(m_Target - m_pParent->GetPosition()) >= m_attackRange + PlayerController::Get().HomeRadius)
+		 {
+			 m_pParent->Translate(Normalize(m_Target - m_pParent->GetPosition()) * m_moveSpeed * spf);
+		 }
 	 	//m_dirRotY = m_pParent->GetFocusY(m_Target);
 	 	//m_pParent->SetRotationY(Lerp(m_dirRotY, m_pParent->GetRotation().y, spf * 5.0f));
 	 }	break;

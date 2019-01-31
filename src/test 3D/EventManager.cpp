@@ -16,7 +16,66 @@ namespace MyEvent {
 
 	void BuffWave(Collider* pA, Collider* pB)
 	{
-		///
+		if (pB != nullptr)
+		{
+			switch (pB->m_eTag)
+			{
+			case ETag::Dummy:
+				return;
+			case ETag::Ally:
+			{
+				pB->SetForce((Normalize(pA->GetTotalForce())) * 30.0f);
+				pB->m_pParent->HealHP(pA->m_pPhysics->m_damage * 1.5f);
+				//// 내가 맞았을때
+				//if (pB->m_pParent == PlayerController::Get().GetParent())
+				//{
+				//	((JPanel*)UIManager::Get().m_pHitEffect)->EffectPlay();
+				//}
+				// 내가 때렸을때
+				if (PacketManager::Get().pMyInfo->UserSocket == pA->m_pPhysics->UserSocket)
+				{
+					PlayerController::Get().HitEvent(pB);
+					//if (pB->m_pParent->GetHP() <= 0.0f)
+					//{
+					//	PacketManager::Get().SendDeadEvent(pB->m_pParent->m_keyValue, pB->m_pPhysics->UserSocket, pA->m_pPhysics->UserSocket);
+					//}
+					//else
+					//{
+					//	PacketManager::Get().pMyInfo->Score += (int)(pA->m_pPhysics->m_damage * 100.0f);
+					//	PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
+					//}
+				}
+			}	break;
+			case ETag::Enemy:
+			{
+				pB->SetForce((Normalize(-pA->GetTotalForce()) + Vector3::Up) * 70.0f);
+				pB->m_pParent->OperHP(-pA->m_pPhysics->m_damage);
+				// 내가 맞았을때
+				if (pB->m_pParent == PlayerController::Get().GetParent())
+				{
+					((JPanel*)UIManager::Get().m_pHitEffect)->EffectPlay();
+				}
+				// 내가 때렸을때
+				else if (PacketManager::Get().pMyInfo->UserSocket == pA->m_pPhysics->UserSocket)
+				{
+					PlayerController::Get().HitEvent(pB);
+					if (pB->m_pParent->GetHP() <= 0.0f)
+					{
+						PacketManager::Get().SendDeadEvent(pB->m_pParent->m_keyValue, pB->m_pPhysics->UserSocket, pA->m_pPhysics->UserSocket);
+					}
+					else
+					{
+						PacketManager::Get().pMyInfo->Score += (int)(pA->m_pPhysics->m_damage * 100.0f);
+						PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
+					}
+				}
+			}	break;
+			}
+		}
+		auto pEffect = ObjectManager::Get().TakeObject(L"EHitLight");
+		pEffect->SetPosition(pA->m_pParent->GetPosition());
+		ObjectManager::Get().DisableObject(pA->m_pParent);
+		//SoundManager::Get().Play("SE_HIT.mp3");//, pObject->GetWorldPosition(), SoundRange);
 	}
 
 	void EnergyBall(Collider* pA, Collider* pB)
@@ -29,7 +88,7 @@ namespace MyEvent {
 			 	return;
 			 case ETag::Ally:
 			 {
-			 	//pB->SetForce((Normalize(-pA->GetTotalForce()) + Vector3::Up) * 70.0f);
+			 	pB->SetForce((Normalize(pA->GetTotalForce()) + Vector3::Up) * 15.0f);
 			 	pB->m_pParent->HealHP(pA->m_pPhysics->m_damage * 1.5f);
 			 	//// 내가 맞았을때
 			 	//if (pB->m_pParent == PlayerController::Get().GetParent())

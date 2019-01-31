@@ -80,7 +80,10 @@ bool AIZombieCrawl::Frame(const float& spf, const float& accTime)	noexcept
 			return true;
 		}
 		// ÀÌµ¿
-		m_pParent->Translate(Normalize(m_Target - m_pParent->GetPosition()) * m_moveSpeed * spf);
+		if (VectorLengthSq(m_Target - m_pParent->GetPosition()) >= m_attackRange + PlayerController::Get().HomeRadius)
+		{
+			m_pParent->Translate(Normalize(m_Target - m_pParent->GetPosition()) * m_moveSpeed * spf);
+		}
 	}	break;
 	case EState::Attack:
 	{

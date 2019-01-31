@@ -157,9 +157,14 @@ bool AIZombieKing::Frame(const float& spf, const float& accTime)	noexcept
 				m_eDirState = EState::Action1;
 				return true;
 			}
+			m_pParent->Translate(Normalize(m_Target - m_pParent->GetPosition()) * m_moveSpeed * spf);
+			return true;
 		}
 		// ÀÌµ¿
-		m_pParent->Translate(Normalize(m_Target = PlayerController::Get().m_pHome->GetPosition() - m_pParent->GetPosition()) * m_moveSpeed * spf);
+		if (VectorLengthSq(m_Target - m_pParent->GetPosition()) >= m_attackRange + PlayerController::Get().HomeRadius)
+		{
+			m_pParent->Translate(Normalize(m_Target = PlayerController::Get().m_pHome->GetPosition() - m_pParent->GetPosition()) * m_moveSpeed * spf);
+		}
 	}	break;
 	case EState::Attack:
 	{
@@ -172,7 +177,7 @@ bool AIZombieKing::Frame(const float& spf, const float& accTime)	noexcept
 		pEffect->SetScale(m_pParent->GetScale());
 		m_dealyAttack = 4.0f;
 		///
-		m_delay = 2.0f;
+		m_delay = 0.8f;
 		m_eDirState = EState::Move;
 	}	break;
 	case EState::Action1:

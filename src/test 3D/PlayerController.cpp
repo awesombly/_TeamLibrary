@@ -139,7 +139,6 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 {
 	switch (eCharacter)
 	{
-		ErrorMessage("ÆÈ¶óµò to ·±");
 	/// ==================================== ÆÈ¶óµò =======================================
 	 case ECharacter::EGuard:
 	 {
@@ -239,7 +238,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 		}	break;
 	 	 }
 	 }	break;
-	 /// ==================================== ¾ÆÃ³ =======================================
+	 // ==================================== ¾ÆÃ³ =======================================
 	 case ECharacter::EArcher:
 	 {
 	 	switch (eAction)
@@ -356,9 +355,8 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 		 case DashLeft:
 		 case DashRight:
 		 {
-
 			 SoundManager::Get().Play("SE_dash.mp3");
-			 pObject->SetANIM_OneTime(Archer_DIVE);
+			 pObject->SetANIM_Loop(Archer_DIVE);
 			 auto pEffect = ObjectManager::Get().TakeObject(L"EPDust");
 			 pEffect->SetPosition(pObject->GetPosition() + Vector3::Up * 10.0f);
 		 }	break;
@@ -388,7 +386,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 	 	 }	break;
 	 	}
 	 }	break;
-	 /// ==================================== ¹ý»ç =======================================
+	 // ==================================== ¹ý»ç =======================================
 	 case ECharacter::EMage:
 	 {
 		 switch (eAction)
@@ -430,26 +428,34 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 			 pItem->SetPosition(pObject->GetPosition() + pObject->GetForward() * 40.0f + pObject->GetUp() * 65.0f + pObject->GetRight() * 20.0f);
 			 pItem->SetRotation(pObject->GetRotation());
 			 //pItem->SetScale(Vector3::One);
-			 pItem->SetForce((forward + Vector3::Up * 0.5f) * 120.0f);
+			 pItem->SetForce((forward + Vector3::Up * 0.8f) * 80.0f);
 			 pItem->m_pPhysics->UserSocket = socket;
 			 pItem->SetDamage(0.25f, PacketManager::Get().UserList[socket]->StatStr);
 			 pItem->GetCollider()->AddIgnoreList(pObject->GetCollider());
 			// SoundManager::Get().PlayQueue("SE_throw01.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
 		 }	break;
-		 case Special:
+		 case EAction::Special:
 		 {
+			 pObject->SetANIM_Loop(Mage_ATK_DU);
+		 }	break;
+		 case EAction::Special2:
+		 {
+			 auto pEffect = ObjectManager::Get().TakeObject(L"ETeleport");
+			 pEffect->SetPosition(pObject->GetPosition());
+			 pObject->SetHeroRender(false);
+			 pObject->GetCollider()->m_eTag = ETag::Dummy;
+		 }	break;
+		 case EAction::Special3:
+		 {
+			 pObject->SetHeroRender(true);
+			 pObject->GetCollider()->m_eTag = ETag::Ally;
+
+			 pObject->SetPosition(pObject->GetPosition() + forward * 120.0f);
 			 auto pEffect = ObjectManager::Get().TakeObject(L"EHit2");
-			 pEffect->SetPosition(pObject->GetPosition() + Vector3::Up * 20.0f);
-			 pObject->SetR
+			 pEffect->SetPosition(pObject->GetPosition() + Vector3::Up * 5.0f);
+			 pObject->SetANIM_Loop(Mage_ATK_DU);
 		 }	break;
-		 case Dash:
-		 {
-			 pObject->Translate(forward * 200.0f);
-			 auto pEffect = ObjectManager::Get().TakeObject(L"EHit3");
-			 pEffect->SetPosition(pObject->GetPosition() + Vector3::Up * 20.0f);
-			 pObject->SetANIM_Loop(Mage_ATK_UD);
-		 }	break;
-		 case RSkill:
+		 case EAction::RSkill:
 		 {
 		 }	break;
 		 // ================================== ÅÛ »ç¿ë =========================================

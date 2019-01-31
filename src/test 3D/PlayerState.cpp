@@ -166,7 +166,7 @@ bool PlayerStateLSkill::Process(const float& spf) noexcept
 	{
 		m_pOwner->SetState(EPlayerState::Basic);
 		m_pOwner->m_eAction = PlayerController::EAction::Attack;
-		m_pOwner->m_DelayFrame = 0.4f;
+		m_pOwner->m_DelayFrame = 0.5f;
 		m_pOwner->m_curDelayLSkill = m_pOwner->m_DelayLSkill;
 		return true;
 	}
@@ -380,15 +380,14 @@ bool ArcherStateBasic::Process(const float& spf) noexcept
 		m_pOwner->m_pParent->isGround() &&
 		m_pOwner->m_curDelayDash <= 0.0f)
 	{
+		m_pOwner->m_curDelayDash = m_pOwner->m_DelayDash;
+
 		m_pOwner->m_eAction = PlayerController::EAction::Dash;
 		if (Input::GetKeyState('A') == EKeyState::HOLD)
 			m_pOwner->m_eAction = PlayerController::EAction::DashLeft;
 		if (Input::GetKeyState('D') == EKeyState::HOLD)
 			m_pOwner->m_eAction = PlayerController::EAction::DashRight;
-
-		m_pOwner->m_DelayFrame = 1.0f;
-		m_pOwner->m_curDelayDash = m_pOwner->m_DelayDash;
-		//SoundManager::Get().Play("SE_jump02.mp3");
+		m_pOwner->SetState(EPlayerState::Dash);
 	}
 
 	// 화살비
@@ -541,12 +540,36 @@ bool ArcherStateRSkill::Process(const float& spf) noexcept
 void ArcherStateDash::StateInit(PlayerController* pOwner) noexcept
 {
 	m_pOwner = pOwner;
-
+	m_pOwner->m_DelayFrame = 1.25f;
+	//m_pOwner->m_moveSpeed *= 0.15f;
 }
 bool ArcherStateDash::Process(const float& spf) noexcept
 {
+	m_pOwner->m_DelayFrame -= spf;
+	if (m_pOwner->m_DelayFrame <= 0.0f)
+	{
+		m_pOwner->SetState(EPlayerState::Basic);
+		return true;
+	}
 
-	return true;
+	//m_pOwner->m_eAction = PlayerController::EAction::NIdle;
+	//if (Input::GetKeyState('W') == EKeyState::HOLD)
+	//{
+	//	m_pOwner->m_eAction = (PlayerController::EAction)(m_pOwner->m_eAction + PlayerController::EAction::NForward);
+	//}
+	//if (Input::GetKeyState('S') == EKeyState::HOLD)
+	//{
+	//	m_pOwner->m_eAction = (PlayerController::EAction)(m_pOwner->m_eAction + PlayerController::EAction::NBackward);
+	//}
+	//if (Input::GetKeyState('A') == EKeyState::HOLD)
+	//{
+	//	m_pOwner->m_eAction = (PlayerController::EAction)(m_pOwner->m_eAction + PlayerController::EAction::NLeft);
+	//}
+	//if (Input::GetKeyState('D') == EKeyState::HOLD)
+	//{
+	//	m_pOwner->m_eAction = (PlayerController::EAction)(m_pOwner->m_eAction + PlayerController::EAction::NRight);
+	//}
+	//return true;
 }
 
 
@@ -638,7 +661,8 @@ bool MageStateLSkill::Process(const float& spf) noexcept
 	{
 		m_pOwner->m_eAction = PlayerController::EAction::Attack;
 		m_pOwner->SetState(EPlayerState::Basic);
-		m_pOwner->m_DelayFrame = 0.5f;
+		m_pOwner->m_curDelayLSkill = m_pOwner->m_DelayLSkill;
+		m_pOwner->m_DelayFrame = 0.6f;
 		return true;
 	}
 
@@ -679,7 +703,7 @@ void MageStateDash::StateInit(PlayerController* pOwner) noexcept
 {
 	m_pOwner = pOwner;
 	m_pOwner->m_eAction = PlayerController::EAction::Special;
-	m_pOwner->m_DelayFrame = 1.2f;
+	m_pOwner->m_DelayFrame = 0.7f;
 	m_pOwner->m_moveSpeed *= 0.2f;
 }
 bool MageStateDash::Process(const float& spf) noexcept
@@ -687,9 +711,18 @@ bool MageStateDash::Process(const float& spf) noexcept
 	m_pOwner->m_DelayFrame -= spf;
 	if (m_pOwner->m_DelayFrame <= 0.0f)
 	{
+		// 준비
+		m_pOwner->m_eAction = PlayerController::EAction::Special2;
+		m_pOwner->m_DelayFrame = 10.0f;
+		return true;
+	}
+	if (m_pOwner->m_DelayFrame <= 8.4f &&
+		m_pOwner->m_DelayFrame > 5.0f)
+	{
+		// 이동
 		m_pOwner->SetState(EPlayerState::Basic);
-		m_pOwner->m_eAction = PlayerController::EAction::Dash;
-		m_pOwner->m_DelayFrame = 0.5f;
+		m_pOwner->m_eAction = PlayerController::EAction::Special3;
+		m_pOwner->m_DelayFrame = 0.55f;
 		return true;
 	}
 
