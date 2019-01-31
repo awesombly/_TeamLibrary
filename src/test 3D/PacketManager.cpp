@@ -289,27 +289,40 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 	case PACKET_SendUserInfo:
 	{
 		memcpy(&p_KeyValue, data, sizeof(Packet_KeyValue));
-		// 유저 목록에 있으면 갱신
-		auto userIter = UserList.find(p_KeyValue.KeyValue);
-		if (userIter != UserList.end())
+		//// 유저 목록에 있으면 갱신
+		//auto userIter = UserList.find(p_KeyValue.KeyValue);
+		//if (userIter != UserList.end())
+		//{
+		//	auto pUserInfo = UserList[p_KeyValue.KeyValue];
+		//	memcpy((char*)pUserInfo, data, PS_UserInfo);
+		//	memcpy(((char*)pUserInfo + PS_UserInfo), ((char*)data + PS_UserInfo), pUserInfo->DataSize);
+		//	return;
+		//}
+		int i = 0;
+		for (auto& iter : UserList)
 		{
-			auto pUserInfo = UserList[p_KeyValue.KeyValue];
-			memcpy((char*)pUserInfo, data, PS_UserInfo);
-			memcpy(((char*)pUserInfo + PS_UserInfo), ((char*)data + PS_UserInfo), pUserInfo->DataSize);
-			return;
+			++i;
+			if (iter.first == p_KeyValue.KeyValue)
+			{
+				pUserPanel[i]->m_bRender = true;
+				auto pUserInfo = UserList[p_KeyValue.KeyValue];
+				memcpy((char*)pUserInfo, data, PS_UserInfo);
+				memcpy(((char*)pUserInfo + PS_UserInfo), ((char*)data + PS_UserInfo), pUserInfo->DataSize);
+				return;
+			}
 		}
 
 		// 유저 목록에 없는데 자신이면 추가
 		if (pMyInfo->UserSocket == p_KeyValue.KeyValue)
 		{
-			pUserPanel[UserList.size()]->m_bRender = true;
+			//pUserPanel[UserList.size()]->m_bRender = true;
 			memcpy((char*)pMyInfo, data, PS_UserInfo);
 			memcpy(((char*)pMyInfo + PS_UserInfo), ((char*)data + PS_UserInfo), pMyInfo->DataSize);
 			UserList[pMyInfo->UserSocket] = pMyInfo;
 			return;
 		}
 		// 새 유저면 생성
-		pUserPanel[UserList.size()]->m_bRender = true;
+		//pUserPanel[UserList.size()]->m_bRender = true;
 		auto pUser = new UserInfo();
 		memcpy((char*)pUser, data, PS_UserInfo);
 		memcpy(((char*)pUser + PS_UserInfo), ((char*)data + PS_UserInfo), pUser->DataSize);
