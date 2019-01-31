@@ -216,15 +216,15 @@ void LobbyScene::StartToHost()
 	{
 	case PlayerController::ECharacter::EGuard:
 	{
-		m_pBackHero->SetANIM_OneTime(Paladin_RUN);
+		m_pBackHero->SetANIM_Loop(Paladin_RUN);
 	}	break;
 	case PlayerController::ECharacter::EArcher:
 	{
-		m_pBackHero->SetANIM_OneTime(Archer_DIVE);
+		m_pBackHero->SetANIM_Loop(Archer_DIVE);
 	}	break;
 	case PlayerController::ECharacter::EMage:
 	{
-		m_pBackHero->SetANIM_OneTime(Mage_ATK_UD);
+		m_pBackHero->SetANIM_Loop(Mage_ATK_UD);
 	}	break;
 	}
 	m_pStartEffect->EffectPlay();
@@ -240,15 +240,15 @@ void LobbyScene::StartToGuest()
 	{
 	case PlayerController::ECharacter::EGuard:
 	{
-		m_pBackHero->SetANIM_OneTime(Paladin_RUN);
+		m_pBackHero->SetANIM_Loop(Paladin_RUN);
 	}	break;
 	case PlayerController::ECharacter::EArcher:
 	{
-		m_pBackHero->SetANIM_OneTime(Archer_DIVE);
+		m_pBackHero->SetANIM_Loop(Archer_DIVE);
 	}	break;
 	case PlayerController::ECharacter::EMage:
 	{
-		m_pBackHero->SetANIM_OneTime(Mage_ATK_UD);
+		m_pBackHero->SetANIM_Loop(Mage_ATK_UD);
 	}	break;
 	}
 

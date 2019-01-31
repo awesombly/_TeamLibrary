@@ -14,6 +14,7 @@ public:
 	D3DXVECTOR3 m_Target;
 	//float		m_dirRotY;
 
+	float		m_dealyAttack = 0.0f;
 	float		m_attackRange;
 	float		m_moveSpeed;
 	float		m_delay = 0.0f;

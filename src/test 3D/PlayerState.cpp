@@ -212,7 +212,7 @@ void PlayerStateGuard::StateInit(PlayerController* pOwner) noexcept
 	// 변수 설정
 	m_pOwner->GetParent()->SetGravityScale(3.0f);
 	m_pOwner->GetParent()->m_pPhysics->m_damping = 2.0f;
-	m_pOwner->GetParent()->SetArmor(m_pOwner->m_defencePoint += 30);
+	m_pOwner->GetParent()->SetArmor(m_pOwner->m_defencePoint += 35);
 	m_pOwner->SendPhysicsInfo();
 	// 이펙
 	auto pItem = ObjectManager::Get().TakeObject(L"EHit");
@@ -251,7 +251,7 @@ bool PlayerStateGuard::Process(const float& spf) noexcept
 		{
 			m_pOwner->GetParent()->SetGravityScale(3.0f);
 			m_pOwner->GetParent()->m_pPhysics->m_damping = 0.3f;
-			m_pOwner->GetParent()->SetArmor(max(m_pOwner->m_defencePoint -= 30, 2));
+			m_pOwner->GetParent()->SetArmor(max(m_pOwner->m_defencePoint -= 35, 2));
 			m_pOwner->SendPhysicsInfo();
 		}
 		m_pOwner->SetState(EPlayerState::Basic);
@@ -376,7 +376,7 @@ bool ArcherStateBasic::Process(const float& spf) noexcept
 	//}
 
 	// 구르기
-	if (Input::GetKeyState(VK_SPACE) == EKeyState::DOWN &&
+	if (Input::GetKeyState(VK_SHIFT) == EKeyState::DOWN &&
 		m_pOwner->m_pParent->isGround() &&
 		m_pOwner->m_curDelayDash <= 0.0f)
 	{
@@ -609,6 +609,15 @@ bool MageStateBasic::Process(const float& spf) noexcept
 		m_pOwner->SetState(EPlayerState::LSkill);
 	}
 
+	// 텔포
+	if (Input::GetKeyState(VK_SHIFT) == EKeyState::DOWN &&
+		m_pOwner->m_curDelayDash <= 0.0f)
+	{
+		//m_pOwner->m_curMP -= 0.4f;
+		m_pOwner->m_curDelayDash = m_pOwner->m_DelayDash;
+		m_pOwner->SetState(EPlayerState::Dash);
+	}
+
 	return true;
 }
 
@@ -629,6 +638,7 @@ bool MageStateLSkill::Process(const float& spf) noexcept
 	{
 		m_pOwner->m_eAction = PlayerController::EAction::Attack;
 		m_pOwner->SetState(EPlayerState::Basic);
+		m_pOwner->m_DelayFrame = 0.5f;
 		return true;
 	}
 
@@ -668,10 +678,37 @@ bool MageStateRSkill::Process(const float& spf) noexcept
 void MageStateDash::StateInit(PlayerController* pOwner) noexcept
 {
 	m_pOwner = pOwner;
-
+	m_pOwner->m_eAction = PlayerController::EAction::Special;
+	m_pOwner->m_DelayFrame = 1.2f;
+	m_pOwner->m_moveSpeed *= 0.2f;
 }
 bool MageStateDash::Process(const float& spf) noexcept
 {
+	m_pOwner->m_DelayFrame -= spf;
+	if (m_pOwner->m_DelayFrame <= 0.0f)
+	{
+		m_pOwner->SetState(EPlayerState::Basic);
+		m_pOwner->m_eAction = PlayerController::EAction::Dash;
+		m_pOwner->m_DelayFrame = 0.5f;
+		return true;
+	}
 
+	m_pOwner->m_eAction = PlayerController::EAction::NIdle;
+	if (Input::GetKeyState('W') == EKeyState::HOLD)
+	{
+		m_pOwner->m_eAction = (PlayerController::EAction)(m_pOwner->m_eAction + PlayerController::EAction::NForward);
+	}
+	if (Input::GetKeyState('S') == EKeyState::HOLD)
+	{
+		m_pOwner->m_eAction = (PlayerController::EAction)(m_pOwner->m_eAction + PlayerController::EAction::NBackward);
+	}
+	if (Input::GetKeyState('A') == EKeyState::HOLD)
+	{
+		m_pOwner->m_eAction = (PlayerController::EAction)(m_pOwner->m_eAction + PlayerController::EAction::NLeft);
+	}
+	if (Input::GetKeyState('D') == EKeyState::HOLD)
+	{
+		m_pOwner->m_eAction = (PlayerController::EAction)(m_pOwner->m_eAction + PlayerController::EAction::NRight);
+	}
 	return true;
 }

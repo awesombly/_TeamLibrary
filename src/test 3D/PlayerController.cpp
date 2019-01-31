@@ -147,12 +147,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 	 	 {
 	 	 case EAction::Idle:
 	 	 {
-			 ErrorMessage("ÆÈ¶óµò to ¾ÆÀÌµé");
 			pObject->SetANIM_Loop(Paladin_IDLE);
-		}	break;
-	 	 case EAction::Jump:
-	 	 {
-			//SoundManager::Get().PlayQueue("SE_jump01.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
 		}	break;
 	 	 case EAction::Left:
 	 	 case EAction::BackwardLeft:
@@ -180,29 +175,6 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 			 SoundManager::Get().Play("SV_paladin_atk4.mp3");
 			 pObject->SetANIM_Loop(Paladin_RUN);
 		 }	break;
-	 	 //	case EAction::Dance1:
-		//	{
-		   //	pObject->SetANIM_OneTime(Guard_DANCE1);
-		   //	SoundManager::Get().Play("SE_Dance01.mp3");// , pObject->GetWorldPosition(), 1000.0f);
-		   //}	break;
-		//	case EAction::Dance2:
-		//	{
-		   //	pObject->SetANIM_OneTime(Guard_DANCE2);
-		   //	SoundManager::Get().Play("SE_Dance02.mp3");//, pObject->GetWorldPosition(), 1000.0f);
-		   //}	break;
-		//	case EAction::Dance3:
-		//	{
-		//		pObject->SetANIM_OneTime(Guard_DANCE3);
-		//		SoundManager::Get().Play("SE_Dance01.mp3");// , pObject->GetWorldPosition(), 1000.0f);
-		//		for (auto& iter : *ObjectManager::Get().GetObjectList(EObjType::Enemy))
-		//		{
-		//			if(auto pControllers = iter->GetComponentList(EComponent::Etc);
-		//				pControllers != nullptr)
-		//			{
-		//				((AIZombie*)pControllers->front())->m_Target = pObject->GetPosition();
-		//			}
-		//		}
-		//	}	break;
 	 	 case EAction::LSkill:
 	 	 {
 			pObject->SetANIM_Loop(Paladin_ATTACK);
@@ -448,7 +420,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 		 }	break;
 		 case EAction::LSkill:
 		 {
-			 pObject->SetANIM_OneTime(Mage_ATK);
+			 pObject->SetANIM_Loop(Mage_ATK);
 		 }	break;
 		 case EAction::Attack:
 		 {
@@ -462,9 +434,18 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 			 pItem->GetCollider()->AddIgnoreList(pObject->GetCollider());
 			// SoundManager::Get().PlayQueue("SE_throw01.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
 		 }	break;
+		 case Special:
+		 {
+			 auto pEffect = ObjectManager::Get().TakeObject(L"EHit2");
+			 pEffect->SetPosition(pObject->GetPosition() + Vector3::Up * 20.0f);
+			 pObject->SetR
+		 }	break;
 		 case Dash:
 		 {
-			 pObject->SetANIM_OneTime(Mage_ATK_UD);
+			 pObject->Translate(forward * 200.0f);
+			 auto pEffect = ObjectManager::Get().TakeObject(L"EHit3");
+			 pEffect->SetPosition(pObject->GetPosition() + Vector3::Up * 20.0f);
+			 pObject->SetANIM_Loop(Mage_ATK_UD);
 		 }	break;
 		 case RSkill:
 		 {
