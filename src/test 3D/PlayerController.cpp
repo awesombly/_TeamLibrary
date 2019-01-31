@@ -251,6 +251,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 			pItem->SetScale(Vector3::One);
 			pItem->m_pPhysics->UserSocket = socket;
 			pItem->SetDamage(0.5f, PacketManager::Get().UserList[socket]->StatLuk);
+			SoundManager::Get().PlayQueue("SV_paladin_shout.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
 			//SoundManager::Get().PlayQueue("SE_throw01.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
 		}	break;
 	 	 case EAction::ThrowBomb:
@@ -384,7 +385,6 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 		 case DashLeft:
 		 case DashRight:
 		 {
-
 			 SoundManager::Get().Play("SE_dash.mp3");
 			 pObject->SetANIM_OneTime(Archer_DIVE);
 			 auto pEffect = ObjectManager::Get().TakeObject(L"EPDust");
@@ -462,7 +462,9 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 			 pItem->m_pPhysics->UserSocket = socket;
 			 pItem->SetDamage(0.25f, PacketManager::Get().UserList[socket]->StatStr);
 			 pItem->GetCollider()->AddIgnoreList(pObject->GetCollider());
-			// SoundManager::Get().PlayQueue("SE_throw01.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
+			 
+			 SoundManager::Get().Play("SV_mage_atk2.mp3");
+			 SoundManager::Get().PlayQueue("SE_flare_shot.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
 		 }	break;
 		 case Dash:
 		 {
