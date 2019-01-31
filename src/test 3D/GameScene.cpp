@@ -451,6 +451,11 @@ void GameScene::HostFrame() noexcept
 	{
 		switch (m_eState)
 		{
+		case EGameState::PreWait:
+		{
+			m_eState = EGameState::Wait;
+			*m_pFrameCount = 3.0f;
+		}	break;
 		case EGameState::Wait:
 		{
 			m_eState = EGameState::GameStart;
