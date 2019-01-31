@@ -93,7 +93,7 @@ bool AIZombieEx::Frame(const float& spf, const float& accTime)	noexcept
 	}	break;
 	case EState::Attack:
 	{
-		SoundManager::Get().PlayQueue("SV_zombieEX_atk1.mp3", m_pParent->GetPosition(), PlayerController::Get().SoundRange);
+		SoundManager::Get().PlayQueue("SV_zombieEX_atk2.mp3", m_pParent->GetPosition(), PlayerController::Get().SoundRange);
 
 		// АјАн
 		auto pEffect = ObjectManager::Get().TakeObject(L"ZAttack2");
