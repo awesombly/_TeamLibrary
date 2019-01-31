@@ -67,9 +67,6 @@ bool GameScene::Init() noexcept
 // 프레임
 bool GameScene::Frame() noexcept
 {
-	if(PlayerController::Get().GetParent() != nullptr)
-		ErrorMessage(to_string(PlayerController::Get().GetParent()->GetPosition().x) + ", " + to_string(PlayerController::Get().GetParent()->GetPosition().z));
-
 	// IME 채팅
 	if (m_pChat->m_bRender)
 	{
@@ -341,13 +338,13 @@ bool GameScene::CheatMessage() noexcept
 		}
 		else if (str._Equal(L"Clear"))
 		{
-			for (auto& iter : ObjectManager::Get().GetColliderList())
+			/*for (auto& iter : ObjectManager::Get().GetColliderList())
 			{
 				if (iter->m_pParent->m_myName == L"Melee")
 				{
 					ObjectManager::Get().RemoveObject(iter->m_pParent);
 				}
-			}
+			}*/
 			return false;
 		}
 		else if (str._Equal(L"ClearAll"))
@@ -356,13 +353,13 @@ bool GameScene::CheatMessage() noexcept
 			{
 				ObjectManager::Get().DisableObject(iter);
 			}
-			for (auto& iter : ObjectManager::Get().GetColliderList())
+			/*for (auto& iter : ObjectManager::Get().GetColliderList())
 			{
 				if (iter->m_pParent->m_myName == L"Melee")
 				{
 					ObjectManager::Get().RemoveObject(iter->m_pParent);
 				}
-			}
+			}*/
 			return false;
 		}
 	}

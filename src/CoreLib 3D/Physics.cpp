@@ -112,6 +112,11 @@ const float& Physics::GetHP() const noexcept
 
 void Physics::SetArmor(const char& stat)	noexcept
 {
+	if (stat < 0)
+	{
+		m_pPhysics->m_armor = 1.0f;
+		return;
+	}
 	m_pPhysics->m_armor = 5.0f / (5.0f + stat);
 }
 

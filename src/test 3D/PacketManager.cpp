@@ -510,20 +510,20 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 	}	break;
 	case PACKET_StartGame:
 	{
-		pChatList->push_string(L"==================== 게임 시작 ==================== ");
+		pChatList->push_string(L"====================== 게임 시작 =======================");
 		UIManager::Get().m_FightPanel->m_bRender = true;
 		PlayerController::Get().SendReqRespawn(PlayerController::Get().m_selectCharacter);
 		PlayerController::Get().m_FrameCount = 3.0f;
 	}	break;
 	case PACKET_EndGame:
 	{
-		pChatList->push_string(L"==================== 게임 승리? ==================== ");
+		pChatList->push_string(L"======================= 게임 승리? ======================= ");
 		//PlayerController::Get().m_FrameCount = 3.0f;
 	}	break;
 	case PACKET_WaveStart:
 	{
 		memcpy(&p_Float, data, sizeof(Packet_Float));
-		pChatList->push_string(L"================= Wave " + to_wstring(p_Float.KeyValue) + L" Start! =================");
+		pChatList->push_string(L"========================= Wave " + to_wstring(p_Float.KeyValue) + L" Start! =========================");
 		PlayerController::Get().m_FrameCount = p_Float.Value;
 	}	break;
 	case PACKET_WaveCount:

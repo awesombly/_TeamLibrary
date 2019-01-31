@@ -199,11 +199,9 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 	 	 case EAction::Attack:
 	 	 {
 			 auto pItem = ObjectManager::Get().TakeObject(L"Melee");
-			 ///
-	 	 	//auto pCollider = new Collider(pObject->GetScale().x * 55.0f);
-	 	 	//auto pMelee = new GameObject(L"Melee", { pCollider, new CEventTimer(0.5f) });
-	 	 	pItem->SetParent(pObject);
-	 	 	pItem->SetPosition(pObject->GetForward() * 50.0f + pObject->GetUp() * 45.0f);
+	 	 	//pItem->SetParent(pObject);
+			//pItem->SetPosition(pObject->GetForward() * 50.0f + pObject->GetUp() * 45.0f);
+	 	 	pItem->SetPosition(pObject->GetPosition() + pObject->GetForward() * 50.0f + pObject->GetUp() * 45.0f);
 	 	 	//pItem->UpdateMatrix();
 	 	 	pItem->m_pPhysics->UserSocket = socket;
 	 	 	pItem->SetDamage(0.5f, PacketManager::Get().UserList[socket]->StatStr);
@@ -212,18 +210,38 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 			SoundManager::Get().Play("SV_paladin_atk1.mp3");
 			SoundManager::Get().PlayQueue("SE_Sword_slash1.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
 	 	 }	break;
-	 	 case RSkill:
+		 case EAction::RSkill:
 	 	 {
 			 pObject->SetANIM_Loop(Paladin_POWERUP);
 		}	break;
-		 case ChargeAttack:
+		 case EAction::ChargeAttack:
 		 {
-			 pObject->SetANIM_Loop(Paladin_POWERUP);
+			 // 광화
+			 auto pItem = ObjectManager::Get().TakeObject(L"EBerserk");
+			 pItem->SetPosition(pObject->GetPosition() + pObject->GetUp() * 60.0f);
+
+			 pObject->SetDamage(0.35f, PacketManager::Get().UserList[socket]->StatStr);
+			 pObject->GetCollider()->CollisionEvent = MyEvent::BerserkMode;
+			 
+			 pItem = ObjectManager::Get().TakeObject(L"EFire");
+			 pItem->SetParent(pObject);
+			 //
+		 }	break;
+		 case EAction::ChargeAttack2:
+		 {
+			 // 광화 종료
+			 pObject->SetDamage(0.0f, 0);
+			 pObject->GetCollider()->CollisionEvent = nullptr;
 		 }	break;
 	 	 case Special:
 	 	 {
 	 	 	pObject->SetANIM_Loop(Paladin_BLOCK);
 			SoundManager::Get().PlayQueue("SE_shildup.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
+
+			// 이펙
+			auto pItem = ObjectManager::Get().TakeObject(L"EHit");
+			pItem->SetPosition(pObject->GetPosition() + pObject->GetUp() * 30.0f);
+
 	 	 	for (auto& iter : *ObjectManager::Get().GetObjectList(EObjType::Enemy))
 	 	 	{
 	 	 		if (auto pController = iter->GetComponent(EComponent::Etc);
@@ -291,18 +309,18 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 	 	 }	break;
 	 	 case EAction::LSkill:
 	 	 {
-	 	 	pObject->SetANIM_OneTime(Archer_AIM_READY);
+	 	 	pObject->SetANIM_Loop(Archer_AIM_READY);
 	 	 }	break;
 	 	 case EAction::LCharging:
 	 	 {
 			SoundManager::Get().Play("SE_bow_ready.mp3");
-	 	 	pObject->SetANIM_OneTime(Archer_AIM_IDLE);
+	 	 	pObject->SetANIM_Loop(Archer_AIM_IDLE);
 	 	 }	break;
 		 case EAction::LCharge1:
 		 {
-			 auto pItem = ObjectManager::Get().TakeObject(L"EPSlash");
 			 SoundManager::Get().Play("SE_bow_ready.mp3");
 			///SoundManager::Get().PlayQueue("SE_throw01.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
+			 auto pItem = ObjectManager::Get().TakeObject(L"EPSlash");
 			 pItem->SetPosition(pObject->GetPosition() + pObject->GetUp() * 55.0f);
 		 }	break;
 		 case EAction::LCharge2:
@@ -452,7 +470,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 			 //pItem->SetScale(Vector3::One);
 			 pItem->SetForce((forward + Vector3::Up * 0.8f) * 80.0f);
 			 pItem->m_pPhysics->UserSocket = socket;
-			 pItem->SetDamage(0.25f, PacketManager::Get().UserList[socket]->StatStr);
+			 pItem->SetDamage(0.25f, PacketManager::Get().UserList[socket]->StatInt);
 			 pItem->GetCollider()->AddIgnoreList(pObject->GetCollider());
 			 
 			 SoundManager::Get().Play("SV_mage_atk2.mp3");
@@ -464,13 +482,14 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 		 }	break;
 		 case EAction::ChargeAttack:
 		 {
+			 // 버프 웨이브
 			 auto pItem = ObjectManager::Get().TakeObject(L"BuffWave");
 			 pItem->SetPosition(pObject->GetPosition() + pObject->GetUp() * 75.0f);
 			 pItem->SetRotation(pObject->GetRotation());
 			 pItem->SetScale(Vector3::One);
 			 //pItem->SetForce((forward + Vector3::Up * 0.8f) * 80.0f);
 			 pItem->m_pPhysics->UserSocket = socket;
-			 pItem->SetDamage(0.5f, PacketManager::Get().UserList[socket]->StatStr);
+			 pItem->SetDamage(0.5f, PacketManager::Get().UserList[socket]->StatInt);
 			 pItem->GetCollider()->AddIgnoreList(pObject->GetCollider());
 
 			SoundManager::Get().Play("SV_mage_atk4.mp3");
@@ -495,7 +514,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 
 			 pObject->SetPosition(pObject->GetPosition() + forward * 120.0f);
 			 auto pEffect = ObjectManager::Get().TakeObject(L"EHit2");
-			 pEffect->SetPosition(pObject->GetPosition() + Vector3::Up * 10.0f);
+			 pEffect->SetPosition(pObject->GetPosition() + Vector3::Up * 8.5f);
 			 pObject->SetANIM_Loop(Mage_ATK_DU);
 		 }	break;
 		 // ================================== 템 사용 =========================================
@@ -719,6 +738,12 @@ void PlayerController::Possess(GameObject* pObject) noexcept
 		pPlayer->ResetOption();
 		pPlayer->UpdateStatus();
 		pPlayer->SetState(EPlayerState::Basic);
+		pPlayer->m_curDelayDash = 0.0f;
+		pPlayer->m_curDelayLSkill = 0.0f;
+		pPlayer->m_curDelayRSkill = 0.0f;
+		pPlayer->m_chargeCount = 0.0f;
+		pPlayer->m_FrameCount = 0.0f;
+		pPlayer->m_berserkFrame = 0.0f;
 		// 상태창
 		UIManager::Get().m_pInfoName->SetString(PacketManager::Get().pMyInfo->UserID);
 		UIManager::Get().m_pInfoTitle->SetString(pObj->m_myName);
@@ -919,7 +944,7 @@ void PlayerController::SendReqRespawn(const ECharacter& eCharacter) noexcept
 			m_stateList.try_emplace(EPlayerState::LSkill, new ArcherStateLSkill());
 			m_stateList.try_emplace(EPlayerState::RSkill, new ArcherStateRSkill());
 			m_stateList.try_emplace(EPlayerState::Dash, new ArcherStateDash());
-			//m_stateList.try_emplace(EPlayerState::Dead, new PlayerStateDead());
+			m_stateList.try_emplace(EPlayerState::Wait, new ArcherStateWait());
 			break;
 		case PlayerController::EMage:
 			m_stateList.try_emplace(EPlayerState::Basic,  new MageStateBasic());

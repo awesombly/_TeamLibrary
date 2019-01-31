@@ -27,24 +27,10 @@ namespace MyEvent {
 			{
 				pB->SetForce((Normalize(pA->GetTotalForce())) * 30.0f);
 				pB->m_pParent->HealHP(pA->m_pPhysics->m_damage);
-				//// 내가 맞았을때
-				//if (pB->m_pParent == PlayerController::Get().GetParent())
-				//{
-				//	((JPanel*)UIManager::Get().m_pHitEffect)->EffectPlay();
-				//}
 				// 내가 때렸을때
 				if (PacketManager::Get().pMyInfo->UserSocket == pA->m_pPhysics->UserSocket)
 				{
 					PlayerController::Get().HitEvent(pB);
-					//if (pB->m_pParent->GetHP() <= 0.0f)
-					//{
-					//	PacketManager::Get().SendDeadEvent(pB->m_pParent->m_keyValue, pB->m_pPhysics->UserSocket, pA->m_pPhysics->UserSocket);
-					//}
-					//else
-					//{
-					//	PacketManager::Get().pMyInfo->Score += (int)(pA->m_pPhysics->m_damage * 100.0f);
-					//	PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
-					//}
 				}
 			}	break;
 			case ETag::Enemy:
@@ -141,6 +127,33 @@ namespace MyEvent {
 		pEffect->SetPosition(pA->m_pParent->GetPosition());
 		ObjectManager::Get().DisableObject(pA->m_pParent);
 		//SoundManager::Get().Play("SE_HIT.mp3");//, pObject->GetWorldPosition(), SoundRange);
+	}
+
+	void BerserkMode(Collider* pA, Collider* pB)
+	{
+		if (pB != nullptr &&
+			pB->m_eTag == ETag::Enemy)
+		{
+			pB->SetForce((Normalize(pB->GetCenter() - pA->GetCenter())) * 170.0f);
+			pB->m_pParent->OperHP(-pA->m_pPhysics->m_damage);
+			// 내가 때렸을때
+			if (PacketManager::Get().pMyInfo->UserSocket == pA->m_pPhysics->UserSocket)
+			{
+				PlayerController::Get().HitEvent(pB);
+				if (pB->m_pParent->GetHP() <= 0.0f)
+				{
+					PacketManager::Get().SendDeadEvent(pB->m_pParent->m_keyValue, pB->m_pPhysics->UserSocket, pA->m_pPhysics->UserSocket);
+				}
+				else
+				{
+					PacketManager::Get().pMyInfo->Score += (int)(pA->m_pPhysics->m_damage * 100.0f);
+					PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
+				}
+			}
+			auto pEffect = ObjectManager::Get().TakeObject(L"EHit");
+			pEffect->SetPosition(pA->m_pParent->GetWorldPosition());
+			//SoundManager::Get().PlayQueue("SE_HIT.mp3", pA->m_pParent->GetWorldPosition(), SoundRange);
+		}
 	}
 
 	void PlayerAttack(Collider* pA, Collider* pB)
@@ -261,7 +274,8 @@ namespace MyEvent {
 	void ZombieHit(Collider* pA, Collider* pB)
 	{
 		if (pB != nullptr &&
-			pB->m_pParent->m_objType == EObjType::Character)
+			pB->m_pParent->m_objType == EObjType::Character &&
+			pB->m_eTag == ETag::Ally)
 		{
 			pB->SetForce((Normalize(pB->GetCenter() - pA->GetCenter())) * 40.0f);
 			pB->m_pParent->OperHP(-pA->m_pPhysics->m_damage);

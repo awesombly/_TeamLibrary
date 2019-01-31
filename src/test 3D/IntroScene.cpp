@@ -216,6 +216,8 @@ void IntroScene::SetObjects() noexcept
 	ObjectManager::Get().SetProtoObject(new GameObject(L"EPLevelUp", m_pParser->CreateFromParticle(L"LevelUp.eff", urlEffect), EObjType::Effect));
 	ObjectManager::Get().SetProtoObject(new GameObject(L"EFly", m_pParser->CreateFromParticle(L"Fire.eff", urlEffect), EObjType::Effect));
 	ObjectManager::Get().SetProtoObject(new GameObject(L"ETeleport", m_pParser->CreateFromParticle(L"Teleport.eff", urlEffect), EObjType::Effect));
+	ObjectManager::Get().SetProtoObject(new GameObject(L"EFire", m_pParser->CreateFromParticle(L"CampFire.eff", urlEffect), EObjType::Effect));
+	ObjectManager::Get().SetProtoObject(new GameObject(L"EBerserk", m_pParser->CreateFromParticle(L"Berserk.eff", urlEffect), EObjType::Effect));
 	ObjectManager::Get().SetProtoComponent(m_pParser->CreateFromParticle(L"Fire.eff", urlEffect));
 	// ====================================== Item =====================================================
 
@@ -318,10 +320,7 @@ void IntroScene::SetObjects() noexcept
 
 	// 밀리 어택
 	pCollider = new Collider(15.0f);
-	pObject = ObjectManager::Get().TakeObject(L"EHit2", false);
-	pObject->m_myName = L"Melee";
-	pObject->AddComponent(pCollider);
-	//pObject = new GameObject(L"Melee", { pCollider, new CEventTimer(0.5f) });
+	pObject = new GameObject(L"Melee", { pCollider, m_pParser->CreateFromParticle(L"Hit4.eff", urlEffect) }, EObjType::Effect);
 	pCollider->CollisionEvent = MyEvent::MeleeHit;
 	pCollider->m_eTag = ETag::Dummy;
 	pCollider->SetGravityScale(0.0f);

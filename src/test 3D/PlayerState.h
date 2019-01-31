@@ -9,6 +9,7 @@ enum class EPlayerState :char {
 	Dash,
 	Run,
 	Special,
+	Wait,
 };
 
 class PlayerController;
@@ -124,6 +125,17 @@ class ArcherStateDash : public PlayerState
 public:
 	ArcherStateDash() : PlayerState(EPlayerState::Dash) {};
 	virtual ~ArcherStateDash() = default;
+public:
+	virtual bool Process(const float& spf)				noexcept override;
+	virtual void StateInit(PlayerController* pOwner)	noexcept override;
+};
+
+// ´ë±â
+class ArcherStateWait : public PlayerState
+{
+public:
+	ArcherStateWait() : PlayerState(EPlayerState::Dash) {};
+	virtual ~ArcherStateWait() = default;
 public:
 	virtual bool Process(const float& spf)				noexcept override;
 	virtual void StateInit(PlayerController* pOwner)	noexcept override;

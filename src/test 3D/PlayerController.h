@@ -48,8 +48,8 @@ private:
 	POINT		m_setMouseScreen;
 	POINT		m_setMouseClient;
 
-	GameObject*	m_pEffectFly	= nullptr;
 	GameObject* m_pTargetEnemy	= nullptr;
+	GameObject*	m_pEffectFly	= nullptr;
 	///
 	float		m_EXP			= 0.0f;
 	float		m_disEXP		= 0.0f;
@@ -85,6 +85,7 @@ public:
 
 	char		m_defencePoint		 = 0;
 	float		m_chargeCount		 = 0.0f;
+	float		m_berserkFrame		 = 0.0f;
 	float		m_maxMP				 = 1.0f;
 	float		m_curMP				 = 0.0f;
 	float		m_mouseSense		 = 0.5f;
@@ -136,6 +137,7 @@ public:
 	friend class ArcherStateLSkill;
 	friend class ArcherStateRSkill;
 	friend class ArcherStateDash;
+	friend class ArcherStateWait;
 
 	friend class MageStateBasic;
 	friend class MageStateLSkill;
