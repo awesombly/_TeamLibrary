@@ -234,7 +234,8 @@ bool GameScene::CheatMessage() noexcept
 		}
 		else if (str._Equal(L"Tank"))
 		{
-			PacketManager::Get().SendTakeObject(L"Tank", ESocketType::ETank, atoi(WCharToChar(m_chatMessage.substr(finder + 1).c_str())), 15.0f * PacketManager::Get().UserList.size(), 1.1f, 0.1f, { -500.0f, 0.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
+			PacketManager::Get().SendTakeObject(L"Tank", ESocketType::ETank, atoi(WCharToChar(m_chatMessage.substr(finder + 1).c_str())), 15.0f * PacketManager::Get().UserList.size(), 1.1f, 0.1f, { -500.0f, 
+				Ca0.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
 			return false;
 		}
 		else if (str._Equal(L"Dead"))
