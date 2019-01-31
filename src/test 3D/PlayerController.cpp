@@ -139,7 +139,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 {
 	switch (eCharacter)
 	{
-		ErrorMessage("ÆÈ¶óµò to ·±");
+		//ErrorMessage("ÆÈ¶óµò to ·±");
 	/// ==================================== ÆÈ¶óµò =======================================
 	 case ECharacter::EGuard:
 	 {
@@ -147,7 +147,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 	 	 {
 	 	 case EAction::Idle:
 	 	 {
-			 ErrorMessage("ÆÈ¶óµò to ¾ÆÀÌµé");
+			// ErrorMessage("ÆÈ¶óµò to ¾ÆÀÌµé");
 			pObject->SetANIM_Loop(Paladin_IDLE);
 		}	break;
 	 	 case EAction::Jump:
@@ -264,8 +264,8 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 			pItem->m_pPhysics->UserSocket = socket;
 			//pItem->SetDamage(1.0f, PacketManager::Get().UserList[socket]->StatLuk);
 			pItem->GetCollider()->AddIgnoreList(pObject->GetCollider());
-			//SoundManager::Get().PlayQueue("SE_throw01.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
 		}	break;
+
 	 	 }
 	 }	break;
 	 /// ==================================== ¾ÆÃ³ =======================================
