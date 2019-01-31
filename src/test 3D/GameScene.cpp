@@ -214,27 +214,27 @@ bool GameScene::CheatMessage() noexcept
 		}
 		else if (str._Equal(L"Zombie"))
 		{
-			PacketManager::Get().SendTakeObject(L"Zombie", ESocketType::EZombie, atoi(WCharToChar(m_chatMessage.substr(finder + 1).c_str())), 1.0f, 0.1f, 0.2f, { -500.0f, 60.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
+			PacketManager::Get().SendTakeObject(L"Zombie", ESocketType::EZombie, atoi(WCharToChar(m_chatMessage.substr(finder + 1).c_str())), 1.0f, 0.1f, 0.2f, { -500.0f, 0.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
 			return false;
 		}
 		else if (str._Equal(L"Caster"))
 		{
-			PacketManager::Get().SendTakeObject(L"Caster", ESocketType::ECaster, atoi(WCharToChar(m_chatMessage.substr(finder + 1).c_str())), 0.8f, 0.1f, 0.2f, { -500.0f, 60.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
+			PacketManager::Get().SendTakeObject(L"Caster", ESocketType::ECaster, atoi(WCharToChar(m_chatMessage.substr(finder + 1).c_str())), 0.8f, 0.1f, 0.2f, { -500.0f, 0.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
 			return false;
 		}
 		else if (str._Equal(L"Crawler"))
 		{			
-			PacketManager::Get().SendTakeObject(L"Crawler", ESocketType::ECrawler, atoi(WCharToChar(m_chatMessage.substr(finder + 1).c_str())), 0.6f, 0.15f, 0.1f, { -500.0f, 60.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
+			PacketManager::Get().SendTakeObject(L"Crawler", ESocketType::ECrawler, atoi(WCharToChar(m_chatMessage.substr(finder + 1).c_str())), 0.6f, 0.15f, 0.1f, { -500.0f, 0.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
 			return false;
 		}
 		else if (str._Equal(L"Mutant"))
 		{
-			PacketManager::Get().SendTakeObject(L"Mutant", ESocketType::EMutant, atoi(WCharToChar(m_chatMessage.substr(finder + 1).c_str())), 5.0f, 0.5f, 0.1f, { -500.0f, 60.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
+			PacketManager::Get().SendTakeObject(L"Mutant", ESocketType::EMutant, atoi(WCharToChar(m_chatMessage.substr(finder + 1).c_str())), 5.0f, 0.5f, 0.1f, { -500.0f, 0.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
 			return false;
 		}
 		else if (str._Equal(L"Tank"))
 		{
-			PacketManager::Get().SendTakeObject(L"Tank", ESocketType::ETank, atoi(WCharToChar(m_chatMessage.substr(finder + 1).c_str())), 15.0f * PacketManager::Get().UserList.size(), 1.1f, 0.1f, { -500.0f, 60.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
+			PacketManager::Get().SendTakeObject(L"Tank", ESocketType::ETank, atoi(WCharToChar(m_chatMessage.substr(finder + 1).c_str())), 15.0f * PacketManager::Get().UserList.size(), 1.1f, 0.1f, { -500.0f, 0.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
 			return false;
 		}
 		else if (str._Equal(L"Dead"))
@@ -429,10 +429,10 @@ void GameScene::HostFrame() noexcept
 	{
 		enemyFrame = 0.0f;
 
-		PacketManager::Get().SendTakeObject(L"Zombie", ESocketType::EZombie, (UCHAR)PacketManager::Get().UserList.size(), 1.0f, 0.2f, 0.1f, { -500.0f, 60.0f, -500.0f }, {1000.0f, 0.0f, 1000.0f});
-		PacketManager::Get().SendTakeObject(L"Caster", ESocketType::ECaster, (UCHAR)PacketManager::Get().UserList.size(), 0.8f, 0.2f, 0.1f, { -500.0f, 60.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
-		PacketManager::Get().SendTakeObject(L"Crawler", ESocketType::ECrawler, (UCHAR)PacketManager::Get().UserList.size(), 0.6f, 0.15f, 0.1f, { -500.0f, 60.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
-		PacketManager::Get().SendTakeObject(L"Mutant", ESocketType::EMutant, 1, 5.0f, 0.5f, 0.1f, { -500.0f, 60.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
+		//PacketManager::Get().SendTakeObject(L"Zombie", ESocketType::EZombie, (UCHAR)PacketManager::Get().UserList.size(), 1.0f, 0.2f, 0.1f, { -500.0f, 60.0f, -500.0f }, {1000.0f, 0.0f, 1000.0f});
+		//PacketManager::Get().SendTakeObject(L"Caster", ESocketType::ECaster, (UCHAR)PacketManager::Get().UserList.size(), 0.8f, 0.2f, 0.1f, { -500.0f, 60.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
+		//PacketManager::Get().SendTakeObject(L"Crawler", ESocketType::ECrawler, (UCHAR)PacketManager::Get().UserList.size(), 0.6f, 0.15f, 0.1f, { -500.0f, 60.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
+		//PacketManager::Get().SendTakeObject(L"Mutant", ESocketType::EMutant, 1, 5.0f, 0.5f, 0.1f, { -500.0f, 60.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
 	}
 }
 
