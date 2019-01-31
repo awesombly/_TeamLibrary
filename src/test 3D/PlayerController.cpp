@@ -139,7 +139,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 {
 	switch (eCharacter)
 	{
-	/// ==================================== ÆÈ¶óµò =======================================
+	// ==================================== ÆÈ¶óµò =======================================
 	 case ECharacter::EGuard:
 	 {
 	 	switch (eAction)
@@ -473,7 +473,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 
 			 pObject->SetPosition(pObject->GetPosition() + forward * 120.0f);
 			 auto pEffect = ObjectManager::Get().TakeObject(L"EHit2");
-			 pEffect->SetPosition(pObject->GetPosition() + Vector3::Up * 5.0f);
+			 pEffect->SetPosition(pObject->GetPosition() + Vector3::Up * 10.0f);
 			 pObject->SetANIM_Loop(Mage_ATK_DU);
 		 }	break;
 		 // ================================== ÅÛ »ç¿ë =========================================

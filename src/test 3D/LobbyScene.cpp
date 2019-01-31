@@ -126,6 +126,7 @@ bool LobbyScene::Frame() noexcept
 				SetScene(ESceneName::Main);
 				StartupServer();
 
+				this_thread::sleep_for(chrono::seconds(2));
 				PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
 				PlayerController::Get().SendReqRespawn(m_selectCharacter);
 			}
@@ -136,6 +137,7 @@ bool LobbyScene::Frame() noexcept
 				StartupClient();
 				while (PacketManager::Get().pMyInfo->UserSocket == 0);	// 소켓 받을때까지 대기
 
+				this_thread::sleep_for(chrono::seconds(2));
 				PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
 				PlayerController::Get().SendReqRespawn(m_selectCharacter);
 			}
