@@ -525,7 +525,7 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 	case PACKET_WaveStart:
 	{
 		memcpy(&p_Float, data, sizeof(Packet_Float));
-		pChatList->push_string(L"========================= Wave " + to_wstring(p_Float.KeyValue) + L" Start! =========================");
+		pChatList->push_string(L"========================== Wave " + to_wstring(p_Float.KeyValue) + L" Start! ==========================");
 		PlayerController::Get().m_GameFrameCount = p_Float.Value;
 	}	break;
 	case PACKET_WaveCount:

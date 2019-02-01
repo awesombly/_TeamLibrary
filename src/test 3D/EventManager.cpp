@@ -14,6 +14,80 @@ namespace MyEvent {
 		}
 	}
 
+	void ShockBoom(Collider* pA, Collider* pB)
+	{
+		if (pB != nullptr &&
+			pB->m_eTag == ETag::Dummy)
+		{
+			if (pA->GetHP() <= 9.5f)
+			{
+				auto position = pA->GetCenter() + Vector3::Up * 3.0f;
+				pA->m_pParent->SetPosition(Vector3::Up * 10000.0f);
+				for (int i = 0; i < 20; ++i)
+				{
+					auto pItem = ObjectManager::Get().TakeObject(L"Dagger");
+					pItem->SetPosition(position);
+					pItem->SetForce({RandomNormal() * 100.0f - 50.0f, 70.0f, RandomNormal() * 100.0f - 50.0f });
+					pItem->m_pPhysics->UserSocket = pA->m_pPhysics->UserSocket;
+					pItem->SetDamage(0.25f, PacketManager::Get().UserList[pA->m_pPhysics->UserSocket]->StatLuk);
+				}
+				ObjectManager::Get().DisableObject(pA->m_pParent);
+			}
+		}
+	}
+
+	void MineBoom(Collider* pA, Collider* pB)
+	{
+		if (pB != nullptr &&
+			pB->m_eTag == ETag::Enemy)
+		{
+			auto pItem = ObjectManager::Get().TakeObject(L"PBoom");
+			pItem->SetPosition(pA->m_pParent->GetPosition());
+			pItem->m_pPhysics->UserSocket = pA->m_pPhysics->UserSocket;
+			pItem->SetDamage(1.0f, PacketManager::Get().UserList[pA->m_pPhysics->UserSocket]->StatLuk);
+
+			ObjectManager::Get().DisableObject(pA->m_pParent);
+		}
+	}
+
+	void MissileCollision(Collider* pA, Collider* pB)
+	{
+		if (pB != nullptr &&
+			pB->m_eTag != ETag::Dummy)
+		{
+			if (pA->GetHP() <= 0.0f)
+			{
+				pB->SetForce((Normalize(pB->GetCenter() - pA->GetCenter())) * 80.0f);
+				pB->m_pParent->OperHP(-pA->m_pPhysics->m_damage);
+				// ³»°¡ ¶§·ÈÀ»¶§
+				if (PacketManager::Get().pMyInfo->UserSocket == pA->m_pPhysics->UserSocket)
+				{
+					PlayerController::Get().HitEvent(pB);
+					if (pB->m_pParent->GetHP() <= 0.0f)
+					{
+						PacketManager::Get().SendDeadEvent(pB->m_pParent->m_keyValue, pB->m_pPhysics->UserSocket, pA->m_pPhysics->UserSocket);
+					}
+					else
+					{
+						PacketManager::Get().pMyInfo->Score += (int)(pA->m_pPhysics->m_damage * 100.0f);
+						PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
+					}
+				}
+				//auto pItem = ObjectManager::Get().TakeObject(L"PBoom");
+				//pItem->SetPosition(pA->m_pParent->GetPosition());
+				//pItem->m_pPhysics->UserSocket = pA->m_pPhysics->UserSocket;
+				//pItem->SetDamage(1.0f, PacketManager::Get().UserList[pA->m_pPhysics->UserSocket]->StatLuk);
+
+				auto pEffect = ObjectManager::Get().TakeObject(L"EHit");
+				pEffect->SetPosition(pA->m_pParent->GetPosition());
+				//SoundManager::Get().PlayQueue("SE_HIT.mp3", pA->m_pParent->GetWorldPosition(), SoundRange);
+
+		
+				ObjectManager::Get().DisableObject(pA->m_pParent);
+			}
+		}
+	}
+
 	void BuffWave(Collider* pA, Collider* pB)
 	{
 		if (pB != nullptr)
@@ -195,12 +269,12 @@ namespace MyEvent {
 		}
 		auto pObject = ObjectManager::Get().TakeObject(L"PBoom");
 		pObject->SetPosition(pA->m_pParent->GetPosition());
-		pObject->SetDamage(0.8f, PacketManager::Get().UserList[pA->m_pPhysics->UserSocket]->StatLuk);
+		pObject->SetDamage(0.5f, PacketManager::Get().UserList[pA->m_pPhysics->UserSocket]->StatLuk);
 		pObject->m_pPhysics->UserSocket = pA->m_pPhysics->UserSocket;
 		ObjectManager::Get().DisableObject(pA->m_pParent);
 	}
 
-	void DaggerHit(Collider* pA, Collider* pB)
+	void OneTimeHit(Collider* pA, Collider* pB)
 	{
 		if (pB != nullptr)
 		{
@@ -208,6 +282,40 @@ namespace MyEvent {
 				return;
 
 			pB->SetForce((Normalize(-pA->GetTotalForce()) + Vector3::Up) * 70.0f);
+			pB->m_pParent->OperHP(-pA->m_pPhysics->m_damage);
+			// ³»°¡ ¸Â¾ÒÀ»¶§
+			if (pB->m_pParent == PlayerController::Get().GetParent())
+			{
+				UIManager::Get().m_pHitEffect->SetEventTime(1.0f);
+				((JPanel*)UIManager::Get().m_pHitEffect)->EffectPlay();
+			}
+			// ³»°¡ ¶§·ÈÀ»¶§
+			else if (PacketManager::Get().pMyInfo->UserSocket == pA->m_pPhysics->UserSocket)
+			{
+				PlayerController::Get().HitEvent(pB);
+				if (pB->m_pParent->GetHP() <= 0.0f)
+				{
+					PacketManager::Get().SendDeadEvent(pB->m_pParent->m_keyValue, pB->m_pPhysics->UserSocket, pA->m_pPhysics->UserSocket);
+				}
+				else
+				{
+					PacketManager::Get().pMyInfo->Score += (int)(pA->m_pPhysics->m_damage * 100.0f);
+					PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
+				}
+			}
+		}
+		auto pEffect = ObjectManager::Get().TakeObject(L"EPAttack");
+		pEffect->SetPosition(pA->m_pParent->GetPosition());
+		ObjectManager::Get().DisableObject(pA->m_pParent);
+		//SoundManager::Get().Play("SE_HIT.mp3");//, pObject->GetWorldPosition(), SoundRange);
+	}
+
+	void DaggerHit(Collider* pA, Collider* pB)
+	{
+		if (pB != nullptr && 
+			pB->m_eTag == ETag::Enemy)
+		{
+			pB->SetForce((Normalize(-pA->GetTotalForce())) * 70.0f);
 			pB->m_pParent->OperHP(-pA->m_pPhysics->m_damage);
 			// ³»°¡ ¸Â¾ÒÀ»¶§
 			if (pB->m_pParent == PlayerController::Get().GetParent())
@@ -437,16 +545,40 @@ namespace MyEvent {
 
 
 namespace ActiveEvent {
+	// Ãæ°ÝÆÄ
 	void ShockWave(PlayerController* pPlayer, void*)
 	{
-		// Ãæ°ÝÆÄ
 		pPlayer->m_eAction = PlayerController::EAction::ShockWave;
 	}
 
+	// ÆøÅº
 	void ThrowBomb(PlayerController* pPlayer, void*)
 	{
-		// ÆøÅº
 		pPlayer->m_eAction = PlayerController::EAction::ThrowBomb;
+	}
+
+	// ½ÃÇÑ ÆøÅº
+	void ThrowTimeBomb(PlayerController* pPlayer, void*)
+	{
+		pPlayer->m_eAction = PlayerController::EAction::ITimeBomb;
+	}
+
+	// Ãæ°Ý ÆøÅº
+	void ThrowShockBoom(PlayerController* pPlayer, void*)
+	{
+		pPlayer->m_eAction = PlayerController::EAction::IShockBomb;
+	}
+
+	// ¹Ì»çÀÏ
+	void ThrowMissile(PlayerController* pPlayer, void*)
+	{
+		pPlayer->m_eAction = PlayerController::EAction::IMissile;
+	}
+
+	// Áö·Ú
+	void ThrowMine(PlayerController* pPlayer, void*)
+	{
+		pPlayer->m_eAction = PlayerController::EAction::IMine;
 	}
 }
 
@@ -467,10 +599,26 @@ namespace TimeEvent {
 			vecRot = { matRotation._31, matRotation._32, matRotation._33 };
 			pItem->SetForce(vecRot * (RandomNormal() * 60.0f + 60.0f));
 			pItem->m_pPhysics->UserSocket = pParent->m_pPhysics->UserSocket;
-			pItem->SetDamage(0.25f, PacketManager::Get().UserList[pParent->m_pPhysics->UserSocket]->StatStr);
+			pItem->SetDamage(0.4f, PacketManager::Get().UserList[pParent->m_pPhysics->UserSocket]->StatStr);
 			//pItem->GetCollider()->AddIgnoreList(pObject->GetCollider());
 		}
 		//SoundManager::Get().PlayQueue("SE_throw01.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
 		ObjectManager::Get().DisableObject(pParent);
+	}
+
+	void TimeBomb(GameObject* pParent, void* pVoid2)
+	{
+		auto pItem = ObjectManager::Get().TakeObject(L"PBoom");
+		pItem->SetPosition(pParent->GetPosition());
+		pItem->m_pPhysics->UserSocket = pParent->m_pPhysics->UserSocket;
+		pItem->SetDamage(0.8f, PacketManager::Get().UserList[pParent->m_pPhysics->UserSocket]->StatLuk);
+		
+		ObjectManager::Get().DisableObject(pParent);
+	}
+
+	void MissileShot(GameObject* pParent, void* pVoid2)
+	{
+		auto pTarget = (D3DXVECTOR3*)pVoid2;
+		pParent->SetForce((*pTarget - pParent->GetPosition()) * 150.0f + Vector3::Up * 20.0f);
 	}
 }

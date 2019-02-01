@@ -426,8 +426,10 @@ void GameScene::DrawBoundingBox()	noexcept
 
 void GameScene::HostFrame() noexcept
 {
-	if (PlayerController::Get().m_pHome->GetHP() <= 0.0f)
+	if (!PlayerController::Get().m_pHome->isEnable() &&
+		m_eState != EGameState::End)
 	{
+		m_eState = EGameState::End;
 		PacketManager::Get().SendPacket((char*)&PI, sizeof(Packet_KeyValue), PACKET_EndGame);
 	}
 
