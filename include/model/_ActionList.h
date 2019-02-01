@@ -102,3 +102,5 @@
 #define	 ITEM_Mine				L"ITEM_Mine"
 
 #define	 ITEM_Missile			L"ITEM_Missile"
+
+#define	 ITEM_Grenade			L"ITEM_Grenade"
