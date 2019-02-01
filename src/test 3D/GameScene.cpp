@@ -16,7 +16,7 @@ bool GameScene::Init() noexcept
 
 	auto pCollider = new Collider(1.0f);
 	pCollider->m_eTag = ETag::Ally;
-	PlayerController::Get().m_pHome = new GameObject(L"Shelter", { pCollider /*, ObjectManager::Get().TakeComponent(L"RowSphere")*/ });
+	PlayerController::Get().m_pHome = new GameObject(L"Shelter", { pCollider /*, ObjectManager::Get().TakeComponent(L"RowSphere")*/ }, EObjType::Object);
 	PlayerController::Get().m_pHome->SetPosition(-15.8f, 18.0f, 41.5f);
 	PlayerController::Get().m_pHome->SetScale(Vector3::One * 20.0f);
 	PlayerController::Get().m_pHome->SetGravityScale(0.0f);
@@ -163,7 +163,7 @@ bool GameScene::Render() noexcept
 	SoundManager::Get().Render();
 
 	// 바운딩 박스 표시
-	if (m_pCheckBox->m_bCheck)
+	if (!m_pCheckBox->m_bCheck)
 	{
 		DrawBoundingBox();
 	}
@@ -362,13 +362,18 @@ bool GameScene::CheatMessage() noexcept
 			{
 				ObjectManager::Get().DisableObject(iter);
 			}
-			/*for (auto& iter : ObjectManager::Get().GetColliderList())
+			for (auto& iter : *ObjectManager::Get().GetObjectList(EObjType::Dummy))
 			{
-				if (iter->m_pParent->m_myName == L"Melee")
-				{
-					ObjectManager::Get().RemoveObject(iter->m_pParent);
-				}
-			}*/
+				ObjectManager::Get().DisableObject(iter);
+			}
+
+			//for (auto& iter : ObjectManager::Get().GetColliderList())
+			//{
+			//	if (iter->m_pParent->m_myName == L"Melee")
+			//	{
+			//		ObjectManager::Get().RemoveObject(iter->m_pParent);
+			//	}
+			//}
 			return false;
 		}
 	}
@@ -667,6 +672,7 @@ void GameScene::LoadUI() noexcept
 	pExit->EventClick.second = this;
 	// CheckBox
 	m_pCheckBox = (JCheckCtrl*)pUIRoot->find_child(L"Set_Collision_Check");
+	m_pCheckBox->SetCheck(true);
 	// Timer
 	UIManager::Get().m_TimerText = (JTextCtrl*)pUIRoot->find_child(L"Timer_Text");
 	//m_Rule.m_TimerText = (JTextCtrl*)pUIRoot->find_child(L"Timer_Text");

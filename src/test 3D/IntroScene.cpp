@@ -335,9 +335,9 @@ void IntroScene::SetObjects() noexcept
 	pHeroObj->m_myName = L"PBomb";
 	pHeroObj->m_objType = EObjType::Dummy;
 	pHeroObj->SetScale(Vector3::One * 0.6f);
-	pCollider = new Collider(15.0f);
+	pCollider = new Collider(17.0f);
 	pHeroObj->AddComponent({ pCollider, ObjectManager::Get().TakeComponent(L"Fire") });
-	pCollider->m_pivot = Vector3::Up * 4.0f + Vector3::Forward * 2.5f;
+	pCollider->m_pivot = Vector3::Up * 6.0f;
 	pCollider->CollisionEvent = MyEvent::PlayerBomb;
 	pCollider->m_eTag = ETag::Dummy;
 	ObjectManager::Get().SetProtoObject(pHeroObj);
@@ -371,8 +371,8 @@ void IntroScene::SetObjects() noexcept
 	pHeroObj->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
 	pHeroObj->m_myName = L"ShockBomb";
 	pHeroObj->m_objType = EObjType::Dummy;
-	pCollider = new Collider(20.0f);
-	pHeroObj->SetScale(Vector3::One * 0.6f);
+	pCollider = new Collider(28.0f);
+	pHeroObj->SetScale(Vector3::One * 0.4f);
 	pHeroObj->AddComponent({ pCollider });
 	pCollider->m_eTag = ETag::Enemy;
 	pCollider->CollisionEvent = MyEvent::ShockBoom;
@@ -401,9 +401,43 @@ void IntroScene::SetObjects() noexcept
 	pTimer = new CEventTimer(1.2f);
 	pTimer->TimerEvent = { TimeEvent::MissileShot, (void*)&Vector3::Zero };
 	pHeroObj->AddComponent({pCollider, pTimer});
+	pCollider->m_pivot = Vector3::Up * 8.0f;
 	pCollider->SetGravityScale(0.1f);
 	pCollider->m_eTag = ETag::Dummy;
 	pCollider->CollisionEvent = MyEvent::MissileCollision;
+	ObjectManager::Get().SetProtoObject(pHeroObj);
+
+	// ÇÙ ÅõÇÏ
+	pHeroObj = new AHeroObj();
+	pHeroObj->SetPlayerCharacter(ITEM_Bird);
+	pHeroObj->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+	pHeroObj->m_myName = L"SkyShip";
+	pHeroObj->m_objType = EObjType::Dummy;
+	pHeroObj->SetScale(Vector3::One * 70.0f);
+	pCollider = new Collider(0.0001f);
+	pTimer = new CEventTimer(1.5f);
+	pTimer->TimerEvent = { TimeEvent::NuclearLaunch, nullptr };
+	pHeroObj->AddComponent({ pCollider, pTimer, new CEventTimer(6.0f) });
+	//pCollider->m_pivot = Vector3::Up * 8.0f;
+	pCollider->SetGravityScale(0.0f);
+	pCollider->m_eTag = ETag::Dummy;
+	//pCollider->CollisionEvent = MyEvent::MissileCollision;
+	ObjectManager::Get().SetProtoObject(pHeroObj);
+
+	// ÇÙ
+	pHeroObj = new AHeroObj();
+	pHeroObj->SetPlayerCharacter(ITEM_Missile);
+	pHeroObj->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+	pHeroObj->m_myName = L"Nuclear";
+	pHeroObj->m_objType = EObjType::Dummy;
+	pHeroObj->SetScale(Vector3::One * 3.0f);
+	pHeroObj->SetRotation(Quaternion::Down * PI);
+	pCollider = new Collider(10.0f);
+	pHeroObj->AddComponent({ pCollider});
+	pCollider->m_pivot = Vector3::Down * 20.0f;
+	//pCollider->SetGravityScale(0.0f);
+	pCollider->m_eTag = ETag::Dummy;
+	pCollider->CollisionEvent = MyEvent::NuclearBoom;
 	ObjectManager::Get().SetProtoObject(pHeroObj);
 
 	// ´ë°Å
@@ -413,8 +447,9 @@ void IntroScene::SetObjects() noexcept
 	pHeroObj->m_myName = L"Dagger";
 	pHeroObj->m_objType = EObjType::Dummy;
 	pCollider = new Collider(6.0f);
-	pHeroObj->SetScale(Vector3::One * 0.6f);
+	pHeroObj->SetScale(Vector3::One * 0.25f);
 	pHeroObj->AddComponent({ pCollider });
+	pHeroObj->SetHP(100.0f);
 	pCollider->m_pivot = Vector3::Up * 6.0f + Vector3::Forward * 2.5f;
 	//pCollider->SetGravityScale(0.5f);
 	pCollider->CollisionEvent = MyEvent::DaggerHit;

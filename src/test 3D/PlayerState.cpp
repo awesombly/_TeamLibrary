@@ -271,7 +271,7 @@ void PlayerStateGuard::StateInit(PlayerController* pOwner) noexcept
 	// 변수 설정
 	m_pOwner->GetParent()->SetGravityScale(3.0f);
 	m_pOwner->GetParent()->m_pPhysics->m_damping = 2.0f;
-	m_pOwner->GetParent()->SetArmor(m_pOwner->m_defencePoint += 35);
+	m_pOwner->GetParent()->SetArmor(m_pOwner->m_defencePoint += 45);
 	m_pOwner->SendPhysicsInfo();
 	
 }
@@ -308,7 +308,7 @@ bool PlayerStateGuard::Process(const float& spf) noexcept
 		{
 			m_pOwner->GetParent()->SetGravityScale(3.0f);
 			m_pOwner->GetParent()->m_pPhysics->m_damping = 0.3f;
-			m_pOwner->GetParent()->SetArmor(max(m_pOwner->m_defencePoint -= 35, 2));
+			m_pOwner->GetParent()->SetArmor(max(m_pOwner->m_defencePoint -= 45, 2));
 			m_pOwner->SendPhysicsInfo();
 		}
 		m_pOwner->SetState(EPlayerState::Basic);
