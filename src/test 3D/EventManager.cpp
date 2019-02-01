@@ -73,9 +73,10 @@ namespace MyEvent {
 
 	void MissileCollision(Collider* pA, Collider* pB)
 	{
-		if (pB != nullptr &&
-			pB->m_eTag == ETag::Enemy)
+		if (pB != nullptr)
 		{
+			if (pB->m_eTag != ETag::Enemy)
+				return;
 			if (pA->GetHP() <= 0.0f)
 			{
 				pB->SetForce((Normalize(pB->GetCenter() - pA->GetCenter())) * 80.0f);

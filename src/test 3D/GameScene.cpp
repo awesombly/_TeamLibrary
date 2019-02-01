@@ -148,6 +148,26 @@ bool GameScene::Frame() noexcept
 			continue;
 		iter->m_mapHeight = m_pMap->GetHeight(iter->m_pParent->GetPosition().x, iter->m_pParent->GetPosition().z);
 	}
+
+	/// Àç»ý¼º
+	if (Input::GetKeyState('Z') == EKeyState::DOWN)
+	{
+		if (PlayerController::Get().GetParent() != nullptr)
+			PlayerController::Get().GetParent()->m_pPhysics->UserSocket = (UINT)-1;
+		PlayerController::Get().SendReqRespawn(PlayerController::ECharacter::EGuard);
+	}
+	if (Input::GetKeyState('X') == EKeyState::DOWN)
+	{
+		if (PlayerController::Get().GetParent() != nullptr)
+			PlayerController::Get().GetParent()->m_pPhysics->UserSocket = (UINT)-1;
+		PlayerController::Get().SendReqRespawn(PlayerController::ECharacter::EArcher);
+	}
+	if (Input::GetKeyState('C') == EKeyState::DOWN)
+	{
+		if (PlayerController::Get().GetParent() != nullptr)
+			PlayerController::Get().GetParent()->m_pPhysics->UserSocket = (UINT)-1;
+		PlayerController::Get().SendReqRespawn(PlayerController::ECharacter::EMage);
+	}
 	return true;
 }
 

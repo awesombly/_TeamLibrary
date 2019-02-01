@@ -118,26 +118,6 @@ bool PlayerController::Frame(const float& spf, const float& accTime)	noexcept
 	//{
 	m_disEXP = min<float>(m_disEXP + spf * 0.4f, m_EXP);
 	//}
-
-	/// 재생성
-	if (Input::GetKeyState('Z') == EKeyState::DOWN)
-	{
-		if (m_pParent != nullptr)
-			m_pParent->m_pPhysics->UserSocket = (UINT)-1;
-		SendReqRespawn(ECharacter::EGuard);
-	}
-	if (Input::GetKeyState('X') == EKeyState::DOWN)
-	{
-		if (m_pParent != nullptr)
-			m_pParent->m_pPhysics->UserSocket = (UINT)-1;
-		SendReqRespawn(ECharacter::EArcher);
-	}
-	if (Input::GetKeyState('C') == EKeyState::DOWN)
-	{
-		if (m_pParent != nullptr)
-			m_pParent->m_pPhysics->UserSocket = (UINT)-1;
-		SendReqRespawn(ECharacter::EMage);
-	}
 	return true;
 }
 
@@ -1234,7 +1214,7 @@ void PlayerController::SendGameStart() noexcept
 {
 	UIManager::Get().m_FightPanel->m_bRender = true;
 	PlayerController::Get().m_GameFrameCount = 3.0f;
-	this_thread::sleep_for(chrono::seconds(3));
+	this_thread::sleep_for(chrono::seconds(4));
 
 	PlayerController::Get().SendReqRespawn(PlayerController::Get().m_selectCharacter);
 	PacketManager::Get().pChatList->push_string(L"========================== 게임 시작 ============================");
