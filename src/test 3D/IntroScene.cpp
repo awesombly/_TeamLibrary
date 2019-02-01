@@ -351,6 +351,20 @@ void IntroScene::SetObjects() noexcept
 	pCollider->m_eTag = ETag::Dummy;
 	ObjectManager::Get().SetProtoObject(pObject);
 
+	///// Æø
+	///pHeroObj = new AHeroObj();
+	///pHeroObj->SetPlayerCharacter(ITEM_Bomb);
+	///pHeroObj->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+	///pHeroObj->m_myName = L"ArrowR";
+	///pHeroObj->m_objType = EObjType::Dummy;
+	///pCollider = new Collider(1.0f);
+	///pHeroObj->SetScale(Vector3::One);
+	///auto pTimer = new CEventTimer(1.5f);
+	///pTimer->TimerEvent = { TimeEvent::ArrowRain, nullptr };
+	///pHeroObj->AddComponent({ pCollider, pTimer });
+	///pCollider->m_eTag = ETag::Dummy;
+	///ObjectManager::Get().SetProtoObject(pHeroObj);
+
 	///
 	// È­»ì
 	pHeroObj = new AHeroObj();

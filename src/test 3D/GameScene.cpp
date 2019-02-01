@@ -113,7 +113,6 @@ bool GameScene::Frame() noexcept
 		SoundManager::Get().Play("bgm_InGame_Theme.mp3");
 	}
 	// 시간 출력
-	//m_Rule.Frame();
 	UIManager::Get().m_TimerText->m_Text = to_wstring(*m_pFrameCount).substr(0, 5);
 	// 호스트
 	*m_pFrameCount -= Timer::SPF;
@@ -511,7 +510,7 @@ void GameScene::HostFrame() noexcept
 			}	break;
 			case 5:
 			{
-				if (m_spawnCount == 4)
+				if (m_spawnCount >= 2)
 					PacketManager::Get().SendTakeObject(L"Tank", ESocketType::ETank, 1, 15.0f * PacketManager::Get().UserList.size(), 1.1f, 0.1f, { -500.0f, 10.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
 			}	break;
 			case 6:

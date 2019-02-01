@@ -177,7 +177,7 @@ bool AIZombieKing::Frame(const float& spf, const float& accTime)	noexcept
 		pEffect->SetScale(m_pParent->GetScale());
 		m_dealyAttack = 4.0f;
 		///
-		m_delay = 0.8f;
+		m_delay = 3.0f;
 		m_eDirState = EState::Move;
 	}	break;
 	case EState::Action1:
