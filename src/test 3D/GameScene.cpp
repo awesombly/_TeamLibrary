@@ -21,7 +21,7 @@ bool GameScene::Init() noexcept
 	PlayerController::Get().m_pHome->SetScale(Vector3::One * 20.0f);
 	PlayerController::Get().m_pHome->SetGravityScale(0.0f);
 	PlayerController::Get().m_pHome->usePhysics(false);
-	PlayerController::Get().m_pHome->SetHP(100.0f);
+	PlayerController::Get().m_pHome->SetHP(200.0f);
 	//pCollider->CollisionEvent = 
 	ObjectManager::Get().PushObject(PlayerController::Get().m_pHome);
 

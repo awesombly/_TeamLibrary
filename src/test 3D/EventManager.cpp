@@ -31,7 +31,7 @@ namespace MyEvent {
 					pItem->SetRotation(RandomNormal() * Quaternion::One * PI);
 					pItem->SetForce({RandomNormal() * 100.0f - 50.0f, 70.0f, RandomNormal() * 100.0f - 50.0f });
 					pItem->m_pPhysics->UserSocket = pA->m_pPhysics->UserSocket;
-					pItem->SetDamage(0.25f, PacketManager::Get().UserList[pA->m_pPhysics->UserSocket]->StatLuk);
+					pItem->m_pPhysics->m_damage = 0.28f;
 				}
 				ObjectManager::Get().DisableObject(pA->m_pParent);
 				SoundManager::Get().PlayQueue("SE_fire1.mp3", pA->m_pParent->GetPosition(), PlayerController::Get().SoundRange);
@@ -47,7 +47,7 @@ namespace MyEvent {
 			auto pItem = ObjectManager::Get().TakeObject(L"PBoom");
 			pItem->SetPosition(pA->m_pParent->GetPosition());
 			pItem->m_pPhysics->UserSocket = pA->m_pPhysics->UserSocket;
-			pItem->SetDamage(1.0f, PacketManager::Get().UserList[pA->m_pPhysics->UserSocket]->StatLuk);
+			pItem->m_pPhysics->m_damage = 0.8f;
 
 			ObjectManager::Get().DisableObject(pA->m_pParent);
 			SoundManager::Get().PlayQueue("SE_bomb.mp3", pA->m_pParent->GetPosition(), PlayerController::Get().SoundRange);
@@ -63,9 +63,9 @@ namespace MyEvent {
 		}
 		auto pItem = ObjectManager::Get().TakeObject(L"PBoom");
 		pItem->SetPosition(pA->m_pParent->GetPosition());
-		pItem->SetScale(Vector3::One * 2.5f);
+		pItem->SetScale(Vector3::One);
 		pItem->m_pPhysics->UserSocket = pA->m_pPhysics->UserSocket;
-		pItem->SetDamage(5.0f, PacketManager::Get().UserList[pA->m_pPhysics->UserSocket]->StatLuk);
+		pItem->m_pPhysics->m_damage = 0.7f;
 
 		ObjectManager::Get().DisableObject(pA->m_pParent);
 		SoundManager::Get().PlayQueue("SE_bomb.mp3", pA->m_pParent->GetPosition(), PlayerController::Get().SoundRange);
@@ -290,7 +290,7 @@ namespace MyEvent {
 		}
 		auto pObject = ObjectManager::Get().TakeObject(L"PBoom");
 		pObject->SetPosition(pA->m_pParent->GetPosition());
-		pObject->SetDamage(0.5f, PacketManager::Get().UserList[pA->m_pPhysics->UserSocket]->StatLuk);
+		pObject->m_pPhysics->m_damage = 0.5f;
 		pObject->m_pPhysics->UserSocket = pA->m_pPhysics->UserSocket;
 		ObjectManager::Get().DisableObject(pA->m_pParent);
 		SoundManager::Get().PlayQueue("SE_bomb.mp3", pA->m_pParent->GetPosition(), PlayerController::Get().SoundRange);
@@ -641,7 +641,7 @@ namespace TimeEvent {
 		auto pItem = ObjectManager::Get().TakeObject(L"PBoom");
 		pItem->SetPosition(pParent->GetPosition());
 		pItem->m_pPhysics->UserSocket = pParent->m_pPhysics->UserSocket;
-		pItem->SetDamage(0.8f, PacketManager::Get().UserList[pParent->m_pPhysics->UserSocket]->StatLuk);
+		pItem->m_pPhysics->m_damage = 0.7f;
 		
 		ObjectManager::Get().DisableObject(pParent);
 	}
@@ -657,7 +657,6 @@ namespace TimeEvent {
 		auto pItem = ObjectManager::Get().TakeObject(L"Nuclear");
 		pItem->SetPosition(pParent->GetPosition() + Vector3::Down * 10.0f);
 		pItem->m_pPhysics->UserSocket = pParent->m_pPhysics->UserSocket;
-		pItem->SetDamage(1.0f, PacketManager::Get().UserList[pParent->m_pPhysics->UserSocket]->StatLuk);
 
 		SoundManager::Get().PlayQueue("SE_fire1.mp3", pParent->GetPosition(), PlayerController::Get().SoundRange);
 	}
