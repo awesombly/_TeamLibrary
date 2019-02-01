@@ -1,4 +1,4 @@
-*NUMCHARACTER		14
+*NUMCHARACTER		15
 
 ////////////////////////////////////////////////////////////////////////// 1
 *CHARACTERNAME	Paladin
@@ -212,6 +212,16 @@
 *SKIN_UPPER_BODY		..\..\data\model\missile\missile.skm		null
 *SKIN_LOWER_BODY_COUNT	0
 
+//////////////////////////////////////////////////////////////////////////15
+*CHARACTERNAME	 ITEM_Grenade
+*SHADERFILENMAE		..\..\data\model\Character.hlsl
+
+*MATRIXMATRIXCOUNT  1
+*MATRIXFILENAME		..\..\data\model\grenade\grenade.Mat
+
+*SKIN_UPPER_BODY_COUNT	1
+*SKIN_UPPER_BODY		..\..\data\model\grenade\grenade.skm		null
+*SKIN_LOWER_BODY_COUNT	0
 
 
 //////////////////////////////////////////////////////////////////////////
