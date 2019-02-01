@@ -25,7 +25,7 @@ public:
 		Dash, DashLeft, DashRight, Run, RunLeft, RunRight, 
 		Special,		Special2, Special3, Attack,
 		ChargeAttack,	ChargeAttack2, LCharging, LCharge1, LCharge2,
-		ShockWave,		ThrowBomb,
+		ShockWave,		ThrowBomb,	ITimeBomb, IShockBomb, IMine, IMissile,
 	};
 	enum ECharacter : UCHAR {
 		EDummy = 0, EGuard, EArcher, EMage

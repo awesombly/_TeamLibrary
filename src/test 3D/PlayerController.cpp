@@ -20,36 +20,36 @@ bool PlayerController::Init() noexcept
 	}
 	auto& ItemIndex = JItem::Get()->m_pItemList;
 	// ÅÛ ¼³Á¤
-	m_ItemList[ItemIndex[L"Berry_0"]] = ActiveEvent::ShockWave;
-	m_ItemList[ItemIndex[L"Berry_1"]] = ActiveEvent::ShockWave;
-	m_ItemList[ItemIndex[L"Book_0"]] = ActiveEvent::ShockWave;
-	m_ItemList[ItemIndex[L"Book_1"]] = ActiveEvent::ShockWave;
-	m_ItemList[ItemIndex[L"Cloak_0"]] = ActiveEvent::ShockWave;
-	m_ItemList[ItemIndex[L"Cloak_1"]] = ActiveEvent::ShockWave;
-	m_ItemList[ItemIndex[L"Coin_0"]] = ActiveEvent::ShockWave;
-	m_ItemList[ItemIndex[L"Ball_0"]] = ActiveEvent::ShockWave;
-	m_ItemList[ItemIndex[L"Ball_1"]] = ActiveEvent::ShockWave;
-	m_ItemList[ItemIndex[L"Essence_0"]] = ActiveEvent::ShockWave;
-	m_ItemList[ItemIndex[L"Flower_0"]] = ActiveEvent::ShockWave;
-	m_ItemList[ItemIndex[L"Gems_0"]] = ActiveEvent::ShockWave;
-	m_ItemList[ItemIndex[L"Gems_1"]] = ActiveEvent::ShockWave;
-	m_ItemList[ItemIndex[L"MetalCase_0"]] = ActiveEvent::ShockWave;
-	m_ItemList[ItemIndex[L"MetalCase_1"]] = ActiveEvent::ShockWave;
-	m_ItemList[ItemIndex[L"Plate_0"]] = ActiveEvent::ShockWave;
-	m_ItemList[ItemIndex[L"Sword_0"]] = ActiveEvent::ShockWave;
-	m_ItemList[ItemIndex[L"Necklace_0"]] = ActiveEvent::ShockWave;
-	m_ItemList[ItemIndex[L"Necklace_1"]] = ActiveEvent::ShockWave;
-	m_ItemList[ItemIndex[L"Ornament_0"]] = ActiveEvent::ThrowBomb;
-	m_ItemList[ItemIndex[L"Ornament_1"]] = ActiveEvent::ThrowBomb;
-	m_ItemList[ItemIndex[L"Parchment_0"]] = ActiveEvent::ThrowBomb;
-	m_ItemList[ItemIndex[L"Stone_0"]] = ActiveEvent::ThrowBomb;
-	m_ItemList[ItemIndex[L"Stone_1"]] = ActiveEvent::ThrowBomb;
-	m_ItemList[ItemIndex[L"Shirt_0"]] = ActiveEvent::ThrowBomb;
-	m_ItemList[ItemIndex[L"Shirt_1"]] = ActiveEvent::ThrowBomb;
-	m_ItemList[ItemIndex[L"Potion_0"]] = ActiveEvent::ThrowBomb;
-	m_ItemList[ItemIndex[L"Potion_1"]] = ActiveEvent::ThrowBomb;
-	m_ItemList[ItemIndex[L"Wood_0"]] = ActiveEvent::ThrowBomb;
-	m_ItemList[ItemIndex[L"Wood_1"]] = ActiveEvent::ThrowBomb;
+	m_ItemList[ItemIndex[L"Berry_0"]]		= ActiveEvent::ShockWave;
+	m_ItemList[ItemIndex[L"Berry_1"]]		= ActiveEvent::ShockWave;
+	m_ItemList[ItemIndex[L"Book_0"]]		= ActiveEvent::ShockWave;
+	m_ItemList[ItemIndex[L"Book_1"]]		= ActiveEvent::ShockWave;
+	m_ItemList[ItemIndex[L"Cloak_0"]]		= ActiveEvent::ShockWave;
+	m_ItemList[ItemIndex[L"Cloak_1"]]		= ActiveEvent::ThrowTimeBomb;
+	m_ItemList[ItemIndex[L"Coin_0"]]		= ActiveEvent::ThrowTimeBomb;
+	m_ItemList[ItemIndex[L"Ball_0"]]		= ActiveEvent::ThrowTimeBomb;
+	m_ItemList[ItemIndex[L"Ball_1"]]		= ActiveEvent::ThrowTimeBomb;
+	m_ItemList[ItemIndex[L"Essence_0"]]		= ActiveEvent::ThrowTimeBomb;
+	m_ItemList[ItemIndex[L"Flower_0"]]		= ActiveEvent::ThrowMissile;
+	m_ItemList[ItemIndex[L"Gems_0"]]		= ActiveEvent::ThrowMissile;
+	m_ItemList[ItemIndex[L"Gems_1"]]		= ActiveEvent::ThrowMissile;
+	m_ItemList[ItemIndex[L"MetalCase_0"]]	= ActiveEvent::ThrowMissile;
+	m_ItemList[ItemIndex[L"MetalCase_1"]]	= ActiveEvent::ThrowMissile;
+	m_ItemList[ItemIndex[L"Plate_0"]]		= ActiveEvent::ThrowShockBoom;
+	m_ItemList[ItemIndex[L"Sword_0"]]		= ActiveEvent::ThrowShockBoom;
+	m_ItemList[ItemIndex[L"Necklace_0"]]	= ActiveEvent::ThrowShockBoom;
+	m_ItemList[ItemIndex[L"Necklace_1"]]	= ActiveEvent::ThrowShockBoom;
+	m_ItemList[ItemIndex[L"Ornament_0"]]	= ActiveEvent::ThrowShockBoom;
+	m_ItemList[ItemIndex[L"Ornament_1"]]	= ActiveEvent::ThrowMine;
+	m_ItemList[ItemIndex[L"Parchment_0"]]	= ActiveEvent::ThrowMine;
+	m_ItemList[ItemIndex[L"Stone_0"]]		= ActiveEvent::ThrowMine;
+	m_ItemList[ItemIndex[L"Stone_1"]]		= ActiveEvent::ThrowMine;
+	m_ItemList[ItemIndex[L"Shirt_0"]]		= ActiveEvent::ThrowMine;
+	m_ItemList[ItemIndex[L"Shirt_1"]]		= ActiveEvent::ThrowBomb;
+	m_ItemList[ItemIndex[L"Potion_0"]]		= ActiveEvent::ThrowBomb;
+	m_ItemList[ItemIndex[L"Potion_1"]]		= ActiveEvent::ThrowBomb;
+	m_ItemList[ItemIndex[L"Wood_0"]]		= ActiveEvent::ThrowBomb;
+	m_ItemList[ItemIndex[L"Wood_1"]]		= ActiveEvent::ThrowBomb;
 	return true;
 }
 
@@ -61,13 +61,14 @@ bool PlayerController::Frame(const float& spf, const float& accTime)	noexcept
 	if (!pUIManager->m_pChat->m_bRender &&
 		m_pParent != nullptr)
 	{
+		PlayerInput(spf);
+
 		if (pUIManager->m_pMouseIcon->m_bRender)
 		{
 			UpdateStatus();
 		}
 		else
 		{
-			PlayerInput(spf);
 			CameraInput(spf);
 
 			// ÃÊ±âÈ­
@@ -156,6 +157,7 @@ bool PlayerController::Release() noexcept
 
 void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECharacter& eCharacter, const EAction& eAction, const D3DXVECTOR3& forward) noexcept
 {
+	static D3DXVECTOR3 missileTarget;
 	switch (eCharacter)
 	{
 	// ==================================== ÆÈ¶óµò =======================================
@@ -225,6 +227,8 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 			 
 			 pItem = ObjectManager::Get().TakeObject(L"EFire");
 			 pItem->SetParent(pObject);
+
+			 SoundManager::Get().PlayQueue("SV_paladin_shout.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
 			 //
 		 }	break;
 		 case EAction::ChargeAttack2:
@@ -276,6 +280,61 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 			pItem->GetCollider()->AddIgnoreList(pObject->GetCollider());
 			//SoundManager::Get().PlayQueue("SE_throw01.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
 		}	break;
+		 case EAction::ITimeBomb:
+		 {
+			 // ½ÃÇÑÆøÅº
+			 pObject->SetANIM_OneTime(Paladin_THROW);
+			 auto pItem = ObjectManager::Get().TakeObject(L"TimeBomb");
+			 pItem->SetPosition(pObject->GetPosition() + pObject->GetForward() * 40.0f + pObject->GetUp() * 50.0f + pObject->GetRight() * 20.0f);
+			 pItem->SetForce(forward * 30.0f);
+			 pItem->m_pPhysics->UserSocket = socket;
+			 //pItem->SetDamage(1.0f, PacketManager::Get().UserList[socket]->StatLuk);
+			 //pItem->GetCollider()->AddIgnoreList(pObject->GetCollider());
+			 //SoundManager::Get().PlayQueue("SE_throw01.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
+		 }	break;
+		 case EAction::IShockBomb:
+		 {
+			 // Ãæ°ÝÆøÅº
+			 pObject->SetANIM_OneTime(Paladin_THROW);
+			 auto pItem = ObjectManager::Get().TakeObject(L"ShockBomb");
+			 pItem->SetPosition(pObject->GetPosition() + pObject->GetForward() * 40.0f + pObject->GetUp() * 50.0f + pObject->GetRight() * 20.0f);
+			 pItem->SetForce(forward * 100.0f);
+			 pItem->m_pPhysics->UserSocket = socket;
+			 pItem->SetHP(10.0f);
+			 //pItem->SetDamage(1.0f, PacketManager::Get().UserList[socket]->StatLuk);
+			 //pItem->GetCollider()->AddIgnoreList(pObject->GetCollider());
+			 //SoundManager::Get().PlayQueue("SE_throw01.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
+		 }	break;
+		 case EAction::IMine:
+		 {
+			 // Áö·Ú
+			 pObject->SetANIM_OneTime(Paladin_THROW);
+			 auto pItem = ObjectManager::Get().TakeObject(L"Mine");
+			 pItem->SetPosition(pObject->GetPosition() + pObject->GetForward() * 45.0f + pObject->GetUp() * 50.0f);
+			 pItem->SetForce(forward * 10.0f);
+			 pItem->m_pPhysics->UserSocket = socket;
+			 //pItem->SetDamage(1.0f, PacketManager::Get().UserList[socket]->StatLuk);
+			 //pItem->GetCollider()->AddIgnoreList(pObject->GetCollider());
+			 //SoundManager::Get().PlayQueue("SE_throw01.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
+		 }	break;
+		 case EAction::IMissile:
+		 {
+			 // Ãæ°ÝÆøÅº
+			 pObject->SetANIM_OneTime(Paladin_POWERUP);
+			 missileTarget = forward * 200.0f;
+			 for (int i = 0; i < 10; ++i)
+			 {
+				 auto pItem = ObjectManager::Get().TakeObject(L"Missile");
+				 pItem->SetPosition(pObject->GetPosition() + pObject->GetBackward() * 50.0f + pObject->GetUp() * 50.0f);
+				 pItem->SetRotation(pObject->GetRotation());
+				 pItem->SetForce({ RandomNormal() * 30.0f - 15.0f, RandomNormal() * 30.0f - 15.0f, pObject->GetBackward().z * 30.0f });
+				 pItem->m_pPhysics->UserSocket = socket;
+				 pItem->SetDamage(0.3f, PacketManager::Get().UserList[socket]->StatLuk);
+				((CEventTimer*)pItem->GetComponent(EComponent::Timer))->TimerEvent = { TimeEvent::MissileShot, (void*)&missileTarget };
+			 }
+			 //pItem->GetCollider()->AddIgnoreList(pObject->GetCollider());
+			 //SoundManager::Get().PlayQueue("SE_throw01.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
+		 }	break;
 	 	 }
 	 }	break;
 	 // ==================================== ¾ÆÃ³ =======================================

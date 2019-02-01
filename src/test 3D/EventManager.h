@@ -5,11 +5,15 @@ class GameObject;
 
 namespace MyEvent {
 	void ForceWave(Collider* pA, Collider* pB);
+	void MissileCollision(Collider* pA, Collider* pB);
+	void ShockBoom(Collider* pA, Collider* pB);
+	void MineBoom(Collider* pA, Collider* pB);
 	void BuffWave(Collider* pA, Collider* pB);
 	void EnergyBall(Collider* pA, Collider* pB);
 	void BerserkMode(Collider* pA, Collider* pB);
 	void PlayerAttack(Collider* pA, Collider* pB);
 	void PlayerBomb(Collider* pA, Collider* pB);
+	void OneTimeHit(Collider* pA, Collider* pB);
 	void DaggerHit(Collider* pA, Collider* pB);
 	void MeleeHit(Collider* pA, Collider* pB);
 	void ZombieHit(Collider* pA, Collider* pB);
@@ -27,8 +31,14 @@ namespace MyEvent {
 namespace ActiveEvent {
 	void ShockWave(PlayerController* pPlayer, void*);
 	void ThrowBomb(PlayerController* pPlayer, void*);
+	void ThrowTimeBomb(PlayerController* pPlayer, void*);
+	void ThrowShockBoom(PlayerController* pPlayer, void*);
+	void ThrowMissile(PlayerController* pPlayer, void*);
+	void ThrowMine(PlayerController* pPlayer, void*);
 }
 
 namespace TimeEvent {
 	void ArrowRain(GameObject* pParent, void* pVoid2);
+	void TimeBomb(GameObject* pParent, void* pVoid2);
+	void MissileShot(GameObject* pParent, void* pVoid2);
 }
