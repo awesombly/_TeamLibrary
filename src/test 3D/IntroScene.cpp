@@ -430,11 +430,11 @@ void IntroScene::SetObjects() noexcept
 	pHeroObj->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
 	pHeroObj->m_myName = L"Nuclear";
 	pHeroObj->m_objType = EObjType::Dummy;
-	pHeroObj->SetScale(Vector3::One * 3.0f);
+	pHeroObj->SetScale(Vector3::One * 1.0f);
 	pHeroObj->SetRotation(Quaternion::Down * PI);
 	pCollider = new Collider(10.0f);
 	pHeroObj->AddComponent({ pCollider});
-	pCollider->m_pivot = Vector3::Down * 20.0f;
+	pCollider->m_pivot = Vector3::Down * 80.0f;
 	//pCollider->SetGravityScale(0.0f);
 	pCollider->m_eTag = ETag::Dummy;
 	pCollider->CollisionEvent = MyEvent::NuclearBoom;
@@ -655,7 +655,7 @@ void GotoLobby2(void* pScene)
 			pIntro->RequestSignIn(pIntro->m_pID->GetString().c_str(), pIntro->m_pPW->GetString().c_str());
 			while (pIntro->m_loginCheck == 0)
 			{
-				ErrorMessage(__FUNCTION__ + " -> 로그인 루프"s);
+				//ErrorMessage(__FUNCTION__ + " -> 로그인 루프"s);
 				if (pIntro->m_loginCheck == 1)
 				{
 					ErrorMessage(__FUNCTION__ + " -> 로그인 성공"s);

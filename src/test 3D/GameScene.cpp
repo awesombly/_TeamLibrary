@@ -476,7 +476,7 @@ void GameScene::HostFrame() noexcept
 			Packet_Float p_WaveStart;
 			p_WaveStart.KeyValue = 0;
 			p_WaveStart.Value = *m_pFrameCount;
-			PacketManager::Get().SendPacket((char*)&p_WaveStart, sizeof(Packet_KeyValue), PACKET_WaveCount);
+			PacketManager::Get().SendPacket((char*)&p_WaveStart, sizeof(Packet_Float), PACKET_WaveCount);
 		}	break;
 		//case EGameState::GameStart:
 		//{
@@ -501,7 +501,7 @@ void GameScene::HostFrame() noexcept
 			Packet_Float p_WaveStart;
 			p_WaveStart.KeyValue = m_waveCount;
 			p_WaveStart.Value = *m_pFrameCount;
-			PacketManager::Get().SendPacket((char*)&p_WaveStart, sizeof(Packet_KeyValue), PACKET_WaveStart);
+			PacketManager::Get().SendPacket((char*)&p_WaveStart, sizeof(Packet_Float), PACKET_WaveStart);
 		}	break;
 		case EGameState::Spawn:
 		{
@@ -556,7 +556,7 @@ void GameScene::HostFrame() noexcept
 			Packet_Float p_WaveStart;
 			p_WaveStart.KeyValue = m_spawnCount;
 			p_WaveStart.Value = *m_pFrameCount;
-			PacketManager::Get().SendPacket((char*)&p_WaveStart, sizeof(Packet_KeyValue), PACKET_WaveCount);
+			PacketManager::Get().SendPacket((char*)&p_WaveStart, sizeof(Packet_Float), PACKET_WaveCount);
 		}	break;
 		}
 	}

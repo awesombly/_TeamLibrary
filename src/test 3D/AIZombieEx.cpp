@@ -123,7 +123,7 @@ bool AIZombieEx::Release()	noexcept
 
 void AIZombieEx::DeadEvent() noexcept
 {
-	if (RandomNormal() >= 0.5f)
+	if (RandomNormal() >= 0.4f)
 	{
 		auto pObject = ObjectManager::Get().TakeObject(L"ItemBox");
 		pObject->SetPosition(m_pParent->GetCollider()->GetCenter());

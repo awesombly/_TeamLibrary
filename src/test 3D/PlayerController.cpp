@@ -295,7 +295,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 		}	break;
 		case EAction::IMissile:
 		{
-			// 面拜气藕
+			// 固荤老
 			pObject->SetANIM_OneTime(Paladin_POWERUP);
 			missileTarget = forward * 200.0f;
 			for (int i = 0; i < 13; ++i)
@@ -303,7 +303,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 				auto pItem = ObjectManager::Get().TakeObject(L"Missile");
 				pItem->SetPosition(pObject->GetPosition() + pObject->GetBackward() * 60.0f + pObject->GetUp() * 55.0f);
 				pItem->SetRotation(pObject->GetRotation() + Quaternion::Down * 1.57f);
-				pItem->SetForce({ RandomNormal() * 60.0f - 30.0f, RandomNormal() * 60.0f - 10.0f, (RandomNormal() * 45.0f + 25.0f) * pObject->GetBackward().z });
+				pItem->SetForce({ RandomNormal() * 80.0f - 40.0f, RandomNormal() * 70.0f - 10.0f, (RandomNormal() * 65.0f + 20.0f) * pObject->GetBackward().z });
 				pItem->m_pPhysics->UserSocket = socket;
 				pItem->SetDamage(0.3f, PacketManager::Get().UserList[socket]->StatLuk);
 				((CEventTimer*)pItem->GetComponent(EComponent::Timer))->TimerEvent = { TimeEvent::MissileShot, (void*)&missileTarget };
@@ -506,7 +506,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 		}	break;
 		case EAction::IMissile:
 		{
-			// 面拜气藕
+			// 固荤老
 			pObject->SetANIM_OneTime(Archer_THROW);
 			missileTarget = forward * 200.0f;
 			for (int i = 0; i < 13; ++i)
@@ -514,7 +514,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 				auto pItem = ObjectManager::Get().TakeObject(L"Missile");
 				pItem->SetPosition(pObject->GetPosition() + pObject->GetBackward() * 60.0f + pObject->GetUp() * 55.0f);
 				pItem->SetRotation(pObject->GetRotation() + Quaternion::Down * 1.57f);
-				pItem->SetForce({ RandomNormal() * 60.0f - 30.0f, RandomNormal() * 60.0f - 10.0f, (RandomNormal() * 45.0f + 25.0f) * pObject->GetBackward().z });
+				pItem->SetForce({ RandomNormal() * 80.0f - 40.0f, RandomNormal() * 70.0f - 10.0f, (RandomNormal() * 65.0f + 20.0f) * pObject->GetBackward().z });
 				pItem->m_pPhysics->UserSocket = socket;
 				pItem->SetDamage(0.3f, PacketManager::Get().UserList[socket]->StatLuk);
 				((CEventTimer*)pItem->GetComponent(EComponent::Timer))->TimerEvent = { TimeEvent::MissileShot, (void*)&missileTarget };
@@ -686,7 +686,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 		}	break;
 		case EAction::IMissile:
 		{
-			// 面拜气藕
+			// 固荤老
 			pObject->SetANIM_OneTime(Mage_ATK_UD);
 			missileTarget = forward * 200.0f;
 			for (int i = 0; i < 13; ++i)
@@ -694,7 +694,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 				auto pItem = ObjectManager::Get().TakeObject(L"Missile");
 				pItem->SetPosition(pObject->GetPosition() + pObject->GetBackward() * 60.0f + pObject->GetUp() * 55.0f);
 				pItem->SetRotation(pObject->GetRotation() + Quaternion::Down * 1.57f);
-				pItem->SetForce({ RandomNormal() * 60.0f - 30.0f, RandomNormal() * 60.0f - 10.0f, (RandomNormal() * 45.0f + 25.0f) * pObject->GetBackward().z });
+				pItem->SetForce({ RandomNormal() * 80.0f - 40.0f, RandomNormal() * 70.0f - 10.0f, (RandomNormal() * 65.0f + 20.0f) * pObject->GetBackward().z });
 				pItem->m_pPhysics->UserSocket = socket;
 				pItem->SetDamage(0.3f, PacketManager::Get().UserList[socket]->StatLuk);
 				((CEventTimer*)pItem->GetComponent(EComponent::Timer))->TimerEvent = { TimeEvent::MissileShot, (void*)&missileTarget };
@@ -928,7 +928,7 @@ void PlayerController::Possess(GameObject* pObject) noexcept
 
 void PlayerController::DeadEvent() noexcept
 {
-	if (m_pParent != nullptr)
+	if (m_pParent == nullptr)
 		return;
 	PacketManager::Get().SendPlaySound("SE_dead.mp3", m_pParent->GetPosition(), SoundRange);
 	m_pParent->SetHP(0.0f);
