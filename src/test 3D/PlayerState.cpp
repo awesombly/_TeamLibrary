@@ -62,17 +62,26 @@ bool PlayerStateBasic::Process(const float& spf) noexcept
 	if (Input::GetKeyState('1') == EKeyState::DOWN)
 	{
 		if (!UIManager::Get().m_pSlot1->m_bEmpty)
+		{
 			m_pOwner->m_ItemList[UIManager::Get().m_pSlot1->m_pItem->m_pIndexList[0]](m_pOwner, nullptr);
+			UIManager::Get().m_pSlot1->DelItem();
+		}
 	}
 	if (Input::GetKeyState('2') == EKeyState::DOWN)
 	{
 		if (!UIManager::Get().m_pSlot2->m_bEmpty)
+		{
 			m_pOwner->m_ItemList[UIManager::Get().m_pSlot2->m_pItem->m_pIndexList[0]](m_pOwner, nullptr);
+			UIManager::Get().m_pSlot2->DelItem();
+		}
 	}
 	if (Input::GetKeyState('3') == EKeyState::DOWN)
 	{
 		if (!UIManager::Get().m_pSlot3->m_bEmpty)
+		{
 			m_pOwner->m_ItemList[UIManager::Get().m_pSlot3->m_pItem->m_pIndexList[0]](m_pOwner, nullptr);
+			UIManager::Get().m_pSlot3->DelItem();
+		}
 	}
 
 	//static bool isFly = false;
@@ -413,17 +422,26 @@ bool ArcherStateBasic::Process(const float& spf) noexcept
 	if (Input::GetKeyState('1') == EKeyState::DOWN)
 	{
 		if (!UIManager::Get().m_pSlot1->m_bEmpty)
+		{
 			m_pOwner->m_ItemList[UIManager::Get().m_pSlot1->m_pItem->m_pIndexList[0]](m_pOwner, nullptr);
+			UIManager::Get().m_pSlot1->DelItem();
+		}
 	}
 	if (Input::GetKeyState('2') == EKeyState::DOWN)
 	{
 		if (!UIManager::Get().m_pSlot2->m_bEmpty)
+		{
 			m_pOwner->m_ItemList[UIManager::Get().m_pSlot2->m_pItem->m_pIndexList[0]](m_pOwner, nullptr);
+			UIManager::Get().m_pSlot2->DelItem();
+		}
 	}
 	if (Input::GetKeyState('3') == EKeyState::DOWN)
 	{
 		if (!UIManager::Get().m_pSlot3->m_bEmpty)
+		{
 			m_pOwner->m_ItemList[UIManager::Get().m_pSlot3->m_pItem->m_pIndexList[0]](m_pOwner, nullptr);
+			UIManager::Get().m_pSlot3->DelItem();
+		}
 	}
 
 
@@ -707,17 +725,26 @@ bool MageStateBasic::Process(const float& spf) noexcept
 	if (Input::GetKeyState('1') == EKeyState::DOWN)
 	{
 		if (!UIManager::Get().m_pSlot1->m_bEmpty)
+		{
 			m_pOwner->m_ItemList[UIManager::Get().m_pSlot1->m_pItem->m_pIndexList[0]](m_pOwner, nullptr);
+			UIManager::Get().m_pSlot1->DelItem();
+		}
 	}
 	if (Input::GetKeyState('2') == EKeyState::DOWN)
 	{
 		if (!UIManager::Get().m_pSlot2->m_bEmpty)
+		{
 			m_pOwner->m_ItemList[UIManager::Get().m_pSlot2->m_pItem->m_pIndexList[0]](m_pOwner, nullptr);
+			UIManager::Get().m_pSlot2->DelItem();
+		}
 	}
 	if (Input::GetKeyState('3') == EKeyState::DOWN)
 	{
 		if (!UIManager::Get().m_pSlot3->m_bEmpty)
+		{
 			m_pOwner->m_ItemList[UIManager::Get().m_pSlot3->m_pItem->m_pIndexList[0]](m_pOwner, nullptr);
+			UIManager::Get().m_pSlot3->DelItem();
+		}
 	}
 
 	// L Å¬¸¯

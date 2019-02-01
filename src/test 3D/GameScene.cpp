@@ -113,7 +113,7 @@ bool GameScene::Frame() noexcept
 		SoundManager::Get().Play("bgm_InGame_Theme.mp3");
 	}
 	// 시간 출력
-	UIManager::Get().m_TimerText->m_Text = to_wstring(*m_pFrameCount).substr(0, 5);
+	UIManager::Get().m_TimerText->m_Text = to_wstring((int)(*m_pFrameCount));
 	// 호스트
 	*m_pFrameCount -= Timer::SPF;
 	if (PacketManager::Get().isHost)
