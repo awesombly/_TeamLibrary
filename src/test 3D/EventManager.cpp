@@ -40,6 +40,7 @@ namespace MyEvent {
 				// 내가 맞았을때
 				if (pB->m_pParent == PlayerController::Get().GetParent())
 				{
+					UIManager::Get().m_pHitEffect->SetEventTime(1.0f);
 					((JPanel*)UIManager::Get().m_pHitEffect)->EffectPlay();
 				}
 				// 내가 때렸을때
@@ -104,6 +105,7 @@ namespace MyEvent {
 			 	// 내가 맞았을때
 			 	if (pB->m_pParent == PlayerController::Get().GetParent())
 			 	{
+					UIManager::Get().m_pHitEffect->SetEventTime(1.0f);
 			 		((JPanel*)UIManager::Get().m_pHitEffect)->EffectPlay();
 			 	}
 			 	// 내가 때렸을때
@@ -164,11 +166,6 @@ namespace MyEvent {
 			pB->SetForce((Normalize(pB->GetCenter() - pA->GetCenter())) * 150.0f);
 			pB->m_pParent->OperHP(-pA->m_pPhysics->m_damage);
 			pA->AddIgnoreList(pB);
-			//// 내가 맞았을때
-			//if (pB->m_pParent == PlayerController::Get().GetParent())
-			//{
-			//	UIManager::Get().m_pHitEffect->EffectPlay();
-			//}
 			// 내가 때렸을때
 			if (PacketManager::Get().pMyInfo->UserSocket == pA->m_pPhysics->UserSocket)
 			{
@@ -215,6 +212,7 @@ namespace MyEvent {
 			// 내가 맞았을때
 			if (pB->m_pParent == PlayerController::Get().GetParent())
 			{
+				UIManager::Get().m_pHitEffect->SetEventTime(1.0f);
 				((JPanel*)UIManager::Get().m_pHitEffect)->EffectPlay();
 			}
 			// 내가 때렸을때
@@ -249,6 +247,7 @@ namespace MyEvent {
 			// 내가 맞았을때
 			if (pB->m_pParent == PlayerController::Get().GetParent())
 			{
+				UIManager::Get().m_pHitEffect->SetEventTime(1.0f);
 				UIManager::Get().m_pHitEffect->EffectPlay();
 			}
 			// 내가 때렸을때
@@ -282,9 +281,9 @@ namespace MyEvent {
 			// 내가 맞았을때
 			if (pB->m_pParent == PlayerController::Get().GetParent())
 			{
-				UIManager::Get().m_pHitEffect->SetEventTime(0.01f);
+				UIManager::Get().m_pHitEffect->SetEventTime(0.25f);
 				UIManager::Get().m_pHitEffect->EffectPlay();
-				UIManager::Get().m_pHitEffect->SetEventTime(1.0f);
+				
 				if (pB->m_pParent->GetHP() <= 0.0f)
 				{
 					PacketManager::Get().SendDeadEvent(pB->m_pParent->m_keyValue, pB->m_pPhysics->UserSocket, pA->m_pPhysics->UserSocket);
@@ -307,6 +306,7 @@ namespace MyEvent {
 			// 내가 맞았을때
 			if (pB->m_pParent == PlayerController::Get().GetParent())
 			{
+				UIManager::Get().m_pHitEffect->SetEventTime(1.0f);
 				UIManager::Get().m_pHitEffect->EffectPlay();
 				if (pB->m_pParent->GetHP() <= 0.0f)
 				{
@@ -331,6 +331,7 @@ namespace MyEvent {
 			// 내가 맞았을때
 			if (pB->m_pParent == PlayerController::Get().GetParent())
 			{
+				UIManager::Get().m_pHitEffect->SetEventTime(1.0f);
 				UIManager::Get().m_pHitEffect->EffectPlay();
 				if (pB->m_pParent->GetHP() <= 0.0f)
 				{
@@ -354,6 +355,7 @@ namespace MyEvent {
 			// 내가 맞았을때
 			if (pB->m_pParent == PlayerController::Get().GetParent())
 			{
+				UIManager::Get().m_pHitEffect->SetEventTime(1.0f);
 				UIManager::Get().m_pHitEffect->EffectPlay();
 			}
 			// 내가 때렸을때

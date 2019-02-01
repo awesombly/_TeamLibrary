@@ -57,7 +57,7 @@ bool GameScene::Init() noexcept
 	Timer::AccumulateTime = 0.0f;
 	//m_Rule.SetReadyTime(7.0f);
 	//m_Rule.SetPlayTime(180.0f);
-	m_pFrameCount = &PlayerController::Get().m_FrameCount;
+	m_pFrameCount = &PlayerController::Get().m_GameFrameCount;
 	*m_pFrameCount = 3.0f;
 	// 리스폰 요청
 	std::thread sendStart(&PlayerController::SendGameStart, &PlayerController::Get());
@@ -427,6 +427,10 @@ void GameScene::DrawBoundingBox()	noexcept
 
 void GameScene::HostFrame() noexcept
 {
+	if (PlayerController::Get().m_pHome->GetHP() <= 0.0f)
+	{
+		PacketManager::Get().SendPacket((char*)&PI, sizeof(Packet_KeyValue), PACKET_EndGame);
+	}
 
 	if (*m_pFrameCount <= 0.0f)
 	{
@@ -440,7 +444,6 @@ void GameScene::HostFrame() noexcept
 		case EGameState::Wait:
 		{
 			m_eState = EGameState::WaveInit;
-			//UIManager::Get().m_FightPanel->m_bRender = true;
 			*m_pFrameCount = 3.0f;
 			m_waveCount = 0;
 
@@ -458,7 +461,11 @@ void GameScene::HostFrame() noexcept
 		{
 			if (m_waveCount == 5)
 			{
-				ErrorMessage(L"게임 종료");
+				if (ObjectManager::Get().GetObjectList(EObjType::Enemy)->empty())
+				{
+					m_eState = EGameState::End;
+					PacketManager::Get().SendPacket((char*)&PI, sizeof(Packet_KeyValue), PACKET_EndGame);
+				}
 				return;
 			}
 			m_eState = EGameState::Spawn;
@@ -509,7 +516,7 @@ void GameScene::HostFrame() noexcept
 			}	break;
 			case 6:
 			{
-				PacketManager::Get().SendPacket((char*)&PI, sizeof(Packet_KeyValue), PACKET_EndGame);
+				//PacketManager::Get().SendPacket((char*)&PI, sizeof(Packet_KeyValue), PACKET_EndGame);
 			}	break;
 			}
 

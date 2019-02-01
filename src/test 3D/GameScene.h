@@ -5,13 +5,13 @@
 #include "XObjectManager.h"
 #include "uiheader.h"
 
-#include "GameRule.h"
+//#include "GameRule.h"
 
 class GameScene : public MainClass
 {
 public:
 	enum class EGameState {
-		PreWait, Wait, WaveInit, Spawn
+		PreWait, Wait, WaveInit, Spawn, End,
 	};
 	EGameState m_eState = EGameState::PreWait;
 	PlayerController* m_pPlayer = &PlayerController::Get();		// 컨트롤러
@@ -26,7 +26,7 @@ public:
 	JSliderCtrl* m_pMouseSense  = nullptr;
 	wstring		 m_chatMessage;
 	///
-	GameRule	m_Rule;
+	//GameRule	m_Rule;
 public:
 	void DrawBoundingBox()		noexcept;
 	bool CheatMessage()			noexcept;

@@ -742,7 +742,6 @@ void PlayerController::Possess(GameObject* pObject) noexcept
 		pPlayer->m_curDelayLSkill = 0.0f;
 		pPlayer->m_curDelayRSkill = 0.0f;
 		pPlayer->m_chargeCount = 0.0f;
-		pPlayer->m_FrameCount = 0.0f;
 		pPlayer->m_berserkFrame = 0.0f;
 		// »óÅÂÃ¢
 		UIManager::Get().m_pInfoName->SetString(PacketManager::Get().pMyInfo->UserID);
@@ -1040,7 +1039,7 @@ void PlayerController::SendPhysicsInfo() noexcept
 void PlayerController::SendGameStart() noexcept
 {
 	UIManager::Get().m_FightPanel->m_bRender = true;
-	PlayerController::Get().m_FrameCount = 3.0f;
+	PlayerController::Get().m_GameFrameCount = 3.0f;
 	this_thread::sleep_for(chrono::seconds(3));
 
 	PlayerController::Get().SendReqRespawn(PlayerController::Get().m_selectCharacter);

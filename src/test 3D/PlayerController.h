@@ -89,7 +89,7 @@ public:
 	float		m_maxMP				 = 1.0f;
 	float		m_curMP				 = 0.0f;
 	float		m_mouseSense		 = 0.5f;
-	float		m_FrameCount		 = 0.0f;
+	float		m_GameFrameCount		 = 0.0f;
 	// 들을 거리
 	const float SoundRange			 = 30000.0f;
 public:

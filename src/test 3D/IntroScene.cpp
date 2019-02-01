@@ -51,7 +51,7 @@ void IntroScene::LoadSound() noexcept
 {
 	SoundManager::Get().Load("bgm_Intro_Theme.mp3");
 	SoundManager::Get().Load("bgm_Lobby_Theme.mp3");
-	SoundManager::Get().Load("bgm_InGame_Theme.mp3", false, FMOD_LOOP_NORMAL);
+	SoundManager::Get().Load("bgm_InGame_Theme.mp3");
 	//////////////////////////////////////////////PLAYER_SV
 	SoundManager::Get().Load("SV_paladin_atk1.mp3");
 	SoundManager::Get().Load("SV_paladin_atk2.mp3");
