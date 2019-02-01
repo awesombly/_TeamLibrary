@@ -115,6 +115,7 @@ void IntroScene::LoadSound() noexcept
 	//archer
 	SoundManager::Get().Load("SE_bow_ready.mp3");
 	SoundManager::Get().Load("SE_bow_shot.mp3");
+	SoundManager::Get().Load("SE_dive.mp3");
 
 	//mage
 	SoundManager::Get().Load("SE_astro.mp3");

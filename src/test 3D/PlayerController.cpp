@@ -189,7 +189,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 		 }	break;
 	 	 case EAction::Run:
 		 {
-			 SoundManager::Get().Play("SE_dash.mp3");
+			 SoundManager::Get().Play("SE_dash2.mp3");
 			 pObject->SetANIM_Loop(Paladin_RUN);
 		 }	break;
 	 	 case EAction::LSkill:
@@ -395,7 +395,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 		 case DashLeft:
 		 case DashRight:
 		 {
-			 SoundManager::Get().Play("SE_dash.mp3");
+			 SoundManager::Get().Play("SE_dive.mp3");
 			 pObject->SetANIM_Loop(Archer_DIVE);
 			 auto pEffect = ObjectManager::Get().TakeObject(L"EPDust");
 			 pEffect->SetPosition(pObject->GetPosition() + Vector3::Up * 10.0f);
