@@ -517,8 +517,9 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 	//}	break;
 	case PACKET_EndGame:
 	{
-		pChatList->push_string(L"========================== 게임 종료 ===========================");
+		pChatList->push_string(L"========================== 게임 종료 ============================");
 		UIManager::Get().m_pStatePanel->m_bRender = true;
+		UIManager::Get().m_pStatePanel->PreEvent.first = nullptr;
 		//PlayerController::Get().m_GameFrameCount = 3.0f;
 	}	break;
 	case PACKET_WaveStart:

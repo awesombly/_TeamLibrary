@@ -404,7 +404,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 	 	 case EAction::ShockWave:
 	 	 {
 	 	 	// 충격파
-	 	 	pObject->SetANIM_OneTime(Archer_AIM_IDLE);
+	 	 	pObject->SetANIM_OneTime(Archer_THROW);
 	 	 	auto pItem = ObjectManager::Get().TakeObject(L"PShock");
 	 	 	pItem->SetPosition(pObject->GetPosition() + pObject->GetUp() * 100.0f);
 	 	 	pItem->SetScale(Vector3::One);
@@ -1043,5 +1043,5 @@ void PlayerController::SendGameStart() noexcept
 	this_thread::sleep_for(chrono::seconds(3));
 
 	PlayerController::Get().SendReqRespawn(PlayerController::Get().m_selectCharacter);
-	PacketManager::Get().pChatList->push_string(L"========================== 게임 시작 ===========================");
+	PacketManager::Get().pChatList->push_string(L"========================== 게임 시작 ============================");
 }

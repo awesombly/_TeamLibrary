@@ -100,7 +100,7 @@ bool AIZombieCast::Frame(const float& spf, const float& accTime)	noexcept
 		pChicken->m_pPhysics->m_damage = 0.35f;
 		m_dealyAttack = 4.5f;
 		///
-		m_delay = 1.0f;
+		m_delay = 3.0f;
 		m_eDirState = EState::Move;
 	}	break;
 	}
