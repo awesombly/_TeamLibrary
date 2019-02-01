@@ -115,6 +115,7 @@ public:
 	void StartGiantMode()															noexcept;
 	void StartVibration(float seconds, const float& shakePower)						noexcept;
 	void SendPhysicsInfo()															noexcept;
+	void SendGameStart()															noexcept;
 	//static void StartTaunt(GameObject* pTarget, float seconds)						noexcept;
 
 	bool Init()																		noexcept override;

@@ -53,13 +53,16 @@ bool GameScene::Init() noexcept
 	//}
 
 	SoundManager::Get().Stop("bgm_Lobby_Theme.mp3");
-	SoundManager::Get().SetBGM("bgm_InGame_Theme.mp3");
+	//SoundManager::Get().SetBGM("bgm_InGame_Theme.mp3");
 	Timer::AccumulateTime = 0.0f;
-	m_isLoading = false;
 	//m_Rule.SetReadyTime(7.0f);
 	//m_Rule.SetPlayTime(180.0f);
 	m_pFrameCount = &PlayerController::Get().m_FrameCount;
 	*m_pFrameCount = 3.0f;
+	// 리스폰 요청
+	std::thread sendStart(&PlayerController::SendGameStart, &PlayerController::Get());
+	sendStart.detach();
+	m_isLoading = false;
 	return true;
 }
 
@@ -101,11 +104,18 @@ bool GameScene::Frame() noexcept
 			m_pChat->m_bRender = true;
 		}
 	}
-
-	// 시간 출력, 호스트
+	
+	static float frameBGM = 0.0f;
+	frameBGM -= Timer::SPF;
+	if (frameBGM <= 0.0f)
+	{
+		frameBGM = 180.0f;
+		SoundManager::Get().Play("bgm_InGame_Theme.mp3");
+	}
+	// 시간 출력
 	//m_Rule.Frame();
 	UIManager::Get().m_TimerText->m_Text = to_wstring(*m_pFrameCount).substr(0, 5);
-
+	// 호스트
 	*m_pFrameCount -= Timer::SPF;
 	if (PacketManager::Get().isHost)
 	{
@@ -417,7 +427,6 @@ void GameScene::DrawBoundingBox()	noexcept
 
 void GameScene::HostFrame() noexcept
 {
-	// 피격 효과 시간 되나 확인,
 
 	if (*m_pFrameCount <= 0.0f)
 	{
@@ -426,12 +435,12 @@ void GameScene::HostFrame() noexcept
 		case EGameState::PreWait:
 		{
 			m_eState = EGameState::Wait;
-			*m_pFrameCount = 3.0f;
+			*m_pFrameCount = 1.0f;
 		}	break;
 		case EGameState::Wait:
 		{
-			m_eState = EGameState::GameStart;
-			UIManager::Get().m_FightPanel->m_bRender = true;
+			m_eState = EGameState::WaveInit;
+			//UIManager::Get().m_FightPanel->m_bRender = true;
 			*m_pFrameCount = 3.0f;
 			m_waveCount = 0;
 
@@ -440,11 +449,11 @@ void GameScene::HostFrame() noexcept
 			p_WaveStart.Value = *m_pFrameCount;
 			PacketManager::Get().SendPacket((char*)&p_WaveStart, sizeof(Packet_KeyValue), PACKET_WaveCount);
 		}	break;
-		case EGameState::GameStart:
-		{
-			m_eState = EGameState::WaveInit;
-			PacketManager::Get().SendPacket((char*)&PI, sizeof(PI), PACKET_StartGame);
-		}
+		//case EGameState::GameStart:
+		//{
+		//	//m_eState = EGameState::WaveInit;
+		//	//PacketManager::Get().SendPacket((char*)&PI, sizeof(PI), PACKET_StartGame);
+		//}	break;
 		case EGameState::WaveInit:
 		{
 			if (m_waveCount == 5)
@@ -550,6 +559,7 @@ void GameScene::LoadUI() noexcept
 	UIManager::Get().m_pHpBar = (JProgressBar*)pUIRoot->find_child(L"HP_Progress");
 	UIManager::Get().m_pMpBar = (JProgressBar*)pUIRoot->find_child(L"MP_Progress");
 	UIManager::Get().m_FightPanel = (JPanel*)pUIRoot->find_child(L"fight_panel");
+	UIManager::Get().m_pStatePanel = (JPanel*)pUIRoot->find_child(L"State_Panel");
 	// 상황판
 	/* Name Kill Death Score */
 	//m_pUser1->PreEvent.first; // bRender 상관없이 돌아감

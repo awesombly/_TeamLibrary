@@ -510,14 +510,15 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 	}	break;
 	case PACKET_StartGame:
 	{
-		pChatList->push_string(L"====================== 게임 시작 =======================");
-		UIManager::Get().m_FightPanel->m_bRender = true;
-		PlayerController::Get().SendReqRespawn(PlayerController::Get().m_selectCharacter);
-		PlayerController::Get().m_FrameCount = 3.0f;
+		//pChatList->push_string(L"====================== 게임 시작 =======================");
+		//UIManager::Get().m_FightPanel->m_bRender = true;
+		//PlayerController::Get().SendReqRespawn(PlayerController::Get().m_selectCharacter);
+		//PlayerController::Get().m_FrameCount = 3.0f;
 	}	break;
 	case PACKET_EndGame:
 	{
 		pChatList->push_string(L"======================= 게임 승리? ======================= ");
+		UIManager::Get().m_pStatePanel.m_bRender = true;
 		//PlayerController::Get().m_FrameCount = 3.0f;
 	}	break;
 	case PACKET_WaveStart:

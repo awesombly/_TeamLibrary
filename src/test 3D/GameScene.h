@@ -11,7 +11,7 @@ class GameScene : public MainClass
 {
 public:
 	enum class EGameState {
-		PreWait, Wait, GameStart, WaveInit, Spawn
+		PreWait, Wait, WaveInit, Spawn
 	};
 	EGameState m_eState = EGameState::PreWait;
 	PlayerController* m_pPlayer = &PlayerController::Get();		// 컨트롤러

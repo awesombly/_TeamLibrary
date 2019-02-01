@@ -1036,3 +1036,13 @@ void PlayerController::SendPhysicsInfo() noexcept
 	p_Physics.GravityScale = m_pParent->m_pPhysics->m_GravityScale;
 	PacketManager::Get().SendPacket((char*)&p_Physics, sizeof(Packet_Physics), PACKET_SetPhysicsInfo);
 }
+
+void PlayerController::SendGameStart() noexcept
+{
+	UIManager::Get().m_FightPanel->m_bRender = true;
+	PlayerController::Get().m_FrameCount = 3.0f;
+	this_thread::sleep_for(chrono::seconds(3));
+
+	PlayerController::Get().SendReqRespawn(PlayerController::Get().m_selectCharacter);
+	PacketManager::Get().pChatList->push_string(L"========================== 게임 시작 ===========================");
+}
