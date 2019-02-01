@@ -655,7 +655,7 @@ void GotoLobby2(void* pScene)
 			pIntro->RequestSignIn(pIntro->m_pID->GetString().c_str(), pIntro->m_pPW->GetString().c_str());
 			while (pIntro->m_loginCheck == 0)
 			{
-				//ErrorMessage(__FUNCTION__ + " -> 로그인 루프"s);
+				ErrorMessage(__FUNCTION__ + " -> 로그인 루프"s);
 				if (pIntro->m_loginCheck == 1)
 				{
 					ErrorMessage(__FUNCTION__ + " -> 로그인 성공"s);
