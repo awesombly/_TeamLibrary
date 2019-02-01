@@ -413,7 +413,7 @@ namespace MyEvent {
 			// 내가 맞았을때
 			if (pB->m_pParent == PlayerController::Get().GetParent())
 			{
-				UIManager::Get().m_pHitEffect->SetEventTime(0.25f);
+				UIManager::Get().m_pHitEffect->SetEventTime(0.2f);
 				UIManager::Get().m_pHitEffect->EffectPlay();
 				
 				if (pB->m_pParent->GetHP() <= 0.0f)
