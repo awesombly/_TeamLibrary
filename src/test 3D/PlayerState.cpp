@@ -64,7 +64,7 @@ bool PlayerStateBasic::Process(const float& spf) noexcept
 		if (!UIManager::Get().m_pSlot1->m_bEmpty)
 		{
 			m_pOwner->m_ItemList[UIManager::Get().m_pSlot1->m_pItem->m_pIndexList[0]](m_pOwner, nullptr);
-			//UIManager::Get().m_pSlot1->DelItem();
+			UIManager::Get().m_pSlot1->DelItem();
 		}
 	}
 	if (Input::GetKeyState('2') == EKeyState::DOWN)
@@ -72,7 +72,7 @@ bool PlayerStateBasic::Process(const float& spf) noexcept
 		if (!UIManager::Get().m_pSlot2->m_bEmpty)
 		{
 			m_pOwner->m_ItemList[UIManager::Get().m_pSlot2->m_pItem->m_pIndexList[0]](m_pOwner, nullptr);
-			//UIManager::Get().m_pSlot2->DelItem();
+			UIManager::Get().m_pSlot2->DelItem();
 		}
 	}
 	if (Input::GetKeyState('3') == EKeyState::DOWN)
@@ -80,7 +80,7 @@ bool PlayerStateBasic::Process(const float& spf) noexcept
 		if (!UIManager::Get().m_pSlot3->m_bEmpty)
 		{
 			m_pOwner->m_ItemList[UIManager::Get().m_pSlot3->m_pItem->m_pIndexList[0]](m_pOwner, nullptr);
-			//UIManager::Get().m_pSlot3->DelItem();
+			UIManager::Get().m_pSlot3->DelItem();
 		}
 	}
 
@@ -424,7 +424,7 @@ bool ArcherStateBasic::Process(const float& spf) noexcept
 		if (!UIManager::Get().m_pSlot1->m_bEmpty)
 		{
 			m_pOwner->m_ItemList[UIManager::Get().m_pSlot1->m_pItem->m_pIndexList[0]](m_pOwner, nullptr);
-			//UIManager::Get().m_pSlot1->DelItem();
+			UIManager::Get().m_pSlot1->DelItem();
 		}
 	}
 	if (Input::GetKeyState('2') == EKeyState::DOWN)
@@ -432,7 +432,7 @@ bool ArcherStateBasic::Process(const float& spf) noexcept
 		if (!UIManager::Get().m_pSlot2->m_bEmpty)
 		{
 			m_pOwner->m_ItemList[UIManager::Get().m_pSlot2->m_pItem->m_pIndexList[0]](m_pOwner, nullptr);
-			//UIManager::Get().m_pSlot2->DelItem();
+			UIManager::Get().m_pSlot2->DelItem();
 		}
 	}
 	if (Input::GetKeyState('3') == EKeyState::DOWN)
@@ -440,7 +440,7 @@ bool ArcherStateBasic::Process(const float& spf) noexcept
 		if (!UIManager::Get().m_pSlot3->m_bEmpty)
 		{
 			m_pOwner->m_ItemList[UIManager::Get().m_pSlot3->m_pItem->m_pIndexList[0]](m_pOwner, nullptr);
-			//UIManager::Get().m_pSlot3->DelItem();
+			UIManager::Get().m_pSlot3->DelItem();
 		}
 	}
 
@@ -727,7 +727,7 @@ bool MageStateBasic::Process(const float& spf) noexcept
 		if (!UIManager::Get().m_pSlot1->m_bEmpty)
 		{
 			m_pOwner->m_ItemList[UIManager::Get().m_pSlot1->m_pItem->m_pIndexList[0]](m_pOwner, nullptr);
-			//UIManager::Get().m_pSlot1->DelItem();
+			UIManager::Get().m_pSlot1->DelItem();
 		}
 	}
 	if (Input::GetKeyState('2') == EKeyState::DOWN)
@@ -735,7 +735,7 @@ bool MageStateBasic::Process(const float& spf) noexcept
 		if (!UIManager::Get().m_pSlot2->m_bEmpty)
 		{
 			m_pOwner->m_ItemList[UIManager::Get().m_pSlot2->m_pItem->m_pIndexList[0]](m_pOwner, nullptr);
-			//UIManager::Get().m_pSlot2->DelItem();
+			UIManager::Get().m_pSlot2->DelItem();
 		}
 	}
 	if (Input::GetKeyState('3') == EKeyState::DOWN)
@@ -743,7 +743,7 @@ bool MageStateBasic::Process(const float& spf) noexcept
 		if (!UIManager::Get().m_pSlot3->m_bEmpty)
 		{
 			m_pOwner->m_ItemList[UIManager::Get().m_pSlot3->m_pItem->m_pIndexList[0]](m_pOwner, nullptr);
-			//UIManager::Get().m_pSlot3->DelItem();
+			UIManager::Get().m_pSlot3->DelItem();
 		}
 	}
 
