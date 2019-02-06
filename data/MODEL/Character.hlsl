@@ -3,6 +3,8 @@
 //--------------------------------------------------------------------------------------
 // Constant Buffer Variables
 //--------------------------------------------------------------------------------------
+static const float NEAR = 0.1f;
+static const float FAR = 2000.0f;
 
 Texture2D g_txDiffuse: register (t0);
 Texture2D	g_txNormalMap : register(t1);
@@ -59,8 +61,6 @@ cbuffer cbCubeViewMatrix : register(b4)
 	matrix g_matCubeView[6] : packoffset(c0);
 }
 
-static const float NEAR = 0.1f;
-static const float FAR = 2000.0f;
 // 렌더 타겟
 struct PBUFFER_OUTPUT
 {
@@ -120,10 +120,10 @@ struct VS_OUTPUT_Mix
 	float4 nor		 : NORMAL;
 	float4 col		 : COLOR0;
 	float2 tex		 : TEXCOORD0;
-	// 노말
-	float3 vEye		 : TEXCOORD1;
-	float3 vHalf	 : TEXCOORD2;
-	float3 vLightDir : TEXCOORD3;
+	//// 노말
+	//float3 vEye		 : TEXCOORD1;
+	//float3 vHalf	 : TEXCOORD2;
+	//float3 vLightDir : TEXCOORD3;
 	// 환경
 	float3 ref		 : TEXCOORD4;
 	float3 fre		 : TEXCOORD5;
@@ -179,46 +179,27 @@ VS_OUTPUT_Mix VS(PNCT5_VS_INPUT input)//,uniform bool bHalfVector )
 		}
 	}
 
-	float4 WorldPos = mul(float4(output.pos.xyz, 1.0f), g_matWorld);
-	output.pos = mul(WorldPos, g_matView);
+	float4 WorldPos = output.pos = mul(output.pos, g_matWorld);
+	float3 vLightDir = normalize(cb_LightVector.xyz - output.pos.xyz);
+	output.pos = mul(output.pos, g_matView);
 	output.pos = mul(output.pos, g_matProj);
 
-	float3 vNormal = normalize(mul(output.nor.xyz, (float3x3)g_matWorld));
-	output.nor = float4(vNormal, (output.pos.w - NEAR) / (FAR - NEAR));// g_matWorldInvTrans));
+	//float3 vNormal = normalize(mul(output.nor.xyz, (float3x3)g_matWorld));
+	output.nor = float4(normalize(mul(output.nor.xyz, (float3x3)g_matWorld)), output.pos.w / FAR);// g_matWorldInvTrans));
 	output.tex = input.tex;
 
-	///
-	float3 vLightDir = normalize(cb_LightVector.xyz - WorldPos.xyz);
-
-	//// 노말
-	//if (cb_useNormalMap)
-	//{
-	//	//float3 vNormal = input.nor;
-	//	output.vEye = normalize(cb_EyePos.xyz - WorldPos.xyz);
-	//
-	//	float3 tangent = normalize(mul(input.tan, (float3x3)g_matNormal));
-	//	float3 biNormal = normalize(cross(vNormal, tangent));
-	//
-	//	float3x3 matTangent = { tangent.x, biNormal.x, vNormal.x,
-	//		tangent.y, biNormal.y, vNormal.y,
-	//		tangent.z, biNormal.z, vNormal.z };
-	//
-	//	output.vHalf = normalize(mul(normalize(vLightDir + output.vEye), matTangent));
-	//	output.vLightDir = normalize(mul(vLightDir, matTangent));
-	//	output.vEye = normalize(mul(output.vEye, matTangent));
-	//	output.col = input.col;
-	//}
-	//else
-	{
-		float fDot = lerp(dot(vLightDir, output.nor.xyz), 1.0f, 0.2f) + 0.3f;
-		output.col = float4(fDot, fDot, fDot, 1.0f) * input.col;
-	}
+	// 조명 연산시 좀비 깨짐?
+	//float fDot = max(0.2f, lerp(dot(vLightDir, output.nor.xyz), 1.0f, 0.2f) + 0.2f);
+	//float fDot = max(0.2f, dot(vLightDir, output.nor.xyz) + 0.3f);
+	//output.col = /*float4(fDot, fDot, fDot, 1.0f) **/ /*input.col **/ fDot;
+	output.col = max(0.2f, dot(vLightDir, output.nor.xyz) + 0.2f);
+	//output.col = input.col;
 
 	//// 환경
 	//if (cb_useEnviMap)
 	//{
 	//	// camera/eye -> V?
-	//	float3 incident = output.eye = normalize(WorldPos.xyz - cb_EyePos.xyz);
+	//	float3 incident = output.eye = normalize(WorldPos - cb_EyePos.xyz);
 	//	// R = I - 2 * N * (I.N)	?
 	//	//output.ref = normalize(incident - 2.0f * output.nor * dot(incident, output.nor));
 	//	output.ref = normalize(reflect(incident, output.nor.xyz));
@@ -228,7 +209,7 @@ VS_OUTPUT_Mix VS(PNCT5_VS_INPUT input)//,uniform bool bHalfVector )
 	// 쉐도우 텍스처 좌표
 	if (cb_useShadow)
 	{
-		output.TexShadow = mul(float4(input.pos, 1.0f), g_matShadow);
+		output.TexShadow = mul(Pos, g_matShadow);
 	}
 	return output;
 }
@@ -241,9 +222,6 @@ PBUFFER_OUTPUT PS(VS_OUTPUT_Mix input) : SV_Target
 	PBUFFER_OUTPUT output = (PBUFFER_OUTPUT)0;
 	output.color1	= input.nor;
 	output.color0	= g_txDiffuse.Sample(samLinear, input.tex) * input.col;
-	//output.color1.w		= vIn.col.w;
-	//output.color0.w		= 1.0f;
-
 
 	//// 환경
 	//if (cb_useEnviMap)
@@ -284,38 +262,14 @@ PBUFFER_OUTPUT PS(VS_OUTPUT_Mix input) : SV_Target
 	//	} break;
 	//	}
 	//}
-	//// 노말
-	//if (cb_useNormalMap)
-	//{
-	//	// 디퓨즈 조명(노말맵)
-	//	float4 normal = g_txNormalMap.Sample(samLinear, input.tex);
-	//	normal = normalize((normal - 0.5f) * 2.0f);
-	//
-	//	// saturate == clamp
-	//	float fDot = saturate(dot(normal.xyz, input.vLightDir));// +0.15f;
-	//	float3 LightColor = cb_DiffuseLightColor.rgb * fDot;
-	//
-	//	// 스펙큘러 조명
-	//	float3 R = reflect(-input.vLightDir, normal.xyz);
-	//	float3 SpecularColor = cb_SpecularLightColor.rgb * pow(saturate(dot(R, input.vEye)), cb_SpecularPower);
-	//	//float3 SpecularColor	= cb_SpecularLightColor.rgb * pow(saturate(dot(input.vHalf, normal.xyz )), cb_SpecularPower);
-	//
-	//	// 최종 컬러 조합
-	//	//return vDiffuseColor * float4(LightColor + SpecularColor, 1.0f) * input.col;
-	//	output.color0 *= float4(LightColor + SpecularColor + 0.2f, 1.0f)/* * input.col*/;
-	//}
-	// 음영
-	//if (cb_useLight)
-	//{
-	//	output.color0 *= input.col * cb_useLight;
-	//}
+	
 	// 쉐도우
 	if (cb_useShadow)
 	{
 		static const float	iNumKernel = 3;
 		float fLightAmount = 0.0f;
 		float3 ShadowTexColor = input.TexShadow.xyz / input.TexShadow.w;
-
+	
 		const float fdelta = 1.0f / SMapSize;
 		int iHalf = (iNumKernel - 1) / 2;
 		for (int v = -iHalf; v <= iHalf; v++)
@@ -330,9 +284,9 @@ PBUFFER_OUTPUT PS(VS_OUTPUT_Mix input) : SV_Target
 		fLightAmount /= iNumKernel * iNumKernel;
 		///float fColor = float4(fLightAmount, fLightAmount, fLightAmount, 1.0f);
 		//output.color0 *= max(0.5f, fLightAmount);
-
+	
 		output.color0 *= max(cb_useShadow, fLightAmount);
-
+	
 		//output.color0 = cb_useShadow > fLightAmount ? output.color0 * cb_useShadow : output.color0;
 	}
 

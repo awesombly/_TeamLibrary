@@ -176,7 +176,7 @@ void IntroScene::SetObjects() noexcept
 	//ObjectManager::Get().SetProtoComponent(new RSphere(20, L"Sphere", L"None.png"));
 	ObjectManager::Get().SetProtoComponent(new RSphere(10, L"RowSphere", L"None.png"));
 	// ¶óÀÌÆ®
-	auto pTrans = new CTransformer(Vector3::Up * 400.0f, Quaternion::Up * PI * 0.35f, Vector3::One);
+	auto pTrans = new CTransformer(Vector3::Up * 250.0f, Quaternion::Up * PI * 0.35f, Vector3::One);
 	pTrans->TransEvent = [](Transform* pParent, Transform* pTrans, const float& spf, const float& accTime) {
 		pParent->SetTransform(*pTrans);
 		pParent->Translate({ cosf(0.5f * accTime) * 200.0f, 0.0f, sinf(0.5f * accTime) * 200.0f });
@@ -542,7 +542,7 @@ void IntroScene::SetObjects() noexcept
 	pHeroObj->m_myName = L"Archer";
 	pHeroObj->m_objType = EObjType::Character;
 	pCollider = new ColliderOBB({ -13.0f, 0.0f , -13.0f }, { 13.0f, 80.0f , 13.0f });
-	pHeroObj->AddComponent({ pCollider, pRenderer });
+	pHeroObj->AddComponent({ pCollider, pRenderer->clone() });
 	pCollider->m_eTag = ETag::Ally;
 	ObjectManager::Get().SetProtoObject(pHeroObj);
 
@@ -554,7 +554,7 @@ void IntroScene::SetObjects() noexcept
 	pHeroObj->m_myName = L"Mage";
 	pHeroObj->m_objType = EObjType::Character;
 	pCollider = new ColliderOBB({ -13.0f, 0.0f , -13.0f }, { 13.0f, 80.0f , 13.0f });
-	pHeroObj->AddComponent({ pCollider, pRenderer });
+	pHeroObj->AddComponent({ pCollider, pRenderer->clone() });
 	pCollider->m_eTag = ETag::Ally;
 	ObjectManager::Get().SetProtoObject(pHeroObj);
 
@@ -566,7 +566,7 @@ void IntroScene::SetObjects() noexcept
 	pHeroObj->m_myName = L"Zombie";
 	pHeroObj->m_objType = EObjType::Enemy;
 	pCollider = new ColliderOBB({ -13.0f, 0.0f , -13.0f }, { 13.0f, 80.0f , 13.0f });
-	pHeroObj->AddComponent({ pCollider, pRenderer, new AIZombie() });
+	pHeroObj->AddComponent({ pCollider, pRenderer->clone(), new AIZombie() });
 	pCollider->CollisionEvent = MyEvent::ZombieHit;
 	pCollider->m_eTag = ETag::Enemy;
 	pHeroObj->m_pPhysics->UserSocket = ESocketType::EZombie;
@@ -580,7 +580,7 @@ void IntroScene::SetObjects() noexcept
 	pHeroObj->m_myName = L"Caster";
 	pHeroObj->m_objType = EObjType::Enemy;
 	pCollider = new ColliderOBB({ -13.0f, 0.0f , -13.0f }, { 13.0f, 80.0f , 13.0f });
-	pHeroObj->AddComponent({ pCollider, pRenderer, new AIZombieCast() });
+	pHeroObj->AddComponent({ pCollider, pRenderer->clone(), new AIZombieCast() });
 	pCollider->CollisionEvent = MyEvent::ZombieHit;
 	pCollider->m_eTag = ETag::Enemy;
 	pHeroObj->m_pPhysics->UserSocket = ESocketType::ECaster;
@@ -594,7 +594,7 @@ void IntroScene::SetObjects() noexcept
 	pHeroObj->m_myName = L"Crawler";
 	pHeroObj->m_objType = EObjType::Enemy;
 	pCollider = new ColliderOBB({ -13.0f, 0.0f , -40.0f }, { 13.0f, 25.0f , 40.0f });
-	pHeroObj->AddComponent({ pCollider, pRenderer, new AIZombieCrawl() });
+	pHeroObj->AddComponent({ pCollider, pRenderer->clone(), new AIZombieCrawl() });
 	pCollider->CollisionEvent = MyEvent::ZombieHit;
 	pCollider->m_pPhysics->m_mass = 0.15f;
 	pCollider->m_pPhysics->m_damping = 1.5f;
@@ -610,7 +610,7 @@ void IntroScene::SetObjects() noexcept
 	pHeroObj->m_myName = L"Mutant";
 	pHeroObj->m_objType = EObjType::Enemy;
 	pCollider = new ColliderOBB({ -13.0f, 0.0f , -13.0f }, { 13.0f, 80.0f , 13.0f });
-	pHeroObj->AddComponent({ pCollider, pRenderer, new AIZombieEx() });
+	pHeroObj->AddComponent({ pCollider, pRenderer->clone(), new AIZombieEx() });
 	pCollider->CollisionEvent = MyEvent::ZombieHit;
 	pCollider->m_pPhysics->m_mass = 0.15f;
 	pCollider->m_pPhysics->m_damping = 1.5f;
@@ -626,7 +626,7 @@ void IntroScene::SetObjects() noexcept
 	pHeroObj->m_myName = L"Tank";
 	pHeroObj->m_objType = EObjType::Enemy;
 	pCollider = new ColliderOBB({ -13.0f, 0.0f , -13.0f }, { 13.0f, 80.0f , 13.0f });
-	pHeroObj->AddComponent({ pCollider, pRenderer, new AIZombieKing() });
+	pHeroObj->AddComponent({ pCollider, pRenderer->clone(), new AIZombieKing() });
 	pCollider->CollisionEvent = MyEvent::ZombieHit;
 	pCollider->m_pPhysics->m_mass = 0.05f;
 	pCollider->m_pPhysics->m_damping = 3.0f;

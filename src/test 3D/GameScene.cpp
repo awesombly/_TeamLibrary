@@ -25,6 +25,11 @@ bool GameScene::Init() noexcept
 	//pCollider->CollisionEvent = 
 	ObjectManager::Get().PushObject(PlayerController::Get().m_pHome);
 
+	auto pHeight = new GameObject(L"map", new RCube(L"Cube", L"none.png"),EObjType::Map);
+	pHeight->SetScale(Vector3::One * 200.0f);
+	pHeight->Translate(Vector3::Down * 195.0f);
+	ObjectManager::Get().PushObject(pHeight);
+
 
 	//I_Object.ViewColliderSwitch();
 	//for (auto& [name, matrixList] : I_Object.m_ObjectMatrix)
