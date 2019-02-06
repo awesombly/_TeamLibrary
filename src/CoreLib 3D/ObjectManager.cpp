@@ -101,6 +101,38 @@ bool ObjectManager::Render(ID3D11DeviceContext* pDContext) noexcept
 
 #pragma region DepthMap Render
 	// ±Ì¿Ã∏  ∑£¥ı
+	for (auto& iter : m_ObjectList[EObjType::Character])
+	{
+		auto RendererLIst = (forward_list<Renderer*>*)iter->GetComponentList(EComponent::Renderer);
+		if (RendererLIst == nullptr)
+			continue;
+		for (auto& pRenderer : *RendererLIst)
+		{
+			if (pRenderer != nullptr)
+			{
+				pRenderer->PrevRender(pDContext);
+				pDContext->VSSetShader(DxManager::GetInstance().m_VShaderList["VS_DepthMap"], nullptr, 0);
+				pDContext->PSSetShader(nullptr, nullptr, 0);
+				pRenderer->PostRender(pDContext);
+			}
+		}
+	}
+	for (auto& iter : m_ObjectList[EObjType::Enemy])
+	{
+		auto RendererLIst = (forward_list<Renderer*>*)iter->GetComponentList(EComponent::Renderer);
+		if (RendererLIst == nullptr)
+			continue;
+		for (auto& pRenderer : *RendererLIst)
+		{
+			if (pRenderer != nullptr)
+			{
+				pRenderer->PrevRender(pDContext);
+				pDContext->VSSetShader(DxManager::GetInstance().m_VShaderList["VS_DepthMap"], nullptr, 0);
+				pDContext->PSSetShader(nullptr, nullptr, 0);
+				pRenderer->PostRender(pDContext);
+			}
+		}
+	}
 	for (auto& iter : m_ObjectList[EObjType::Object])
 	{
 		auto RendererLIst = (forward_list<Renderer*>*)iter->GetComponentList(EComponent::Renderer);
@@ -146,6 +178,8 @@ bool ObjectManager::Render(ID3D11DeviceContext* pDContext) noexcept
 	{
 		switch (type)
 		{
+		 case EObjType::Character:
+		 case EObjType::Enemy:
 		 case EObjType::Object:
 		 case EObjType::Map:
 		 {

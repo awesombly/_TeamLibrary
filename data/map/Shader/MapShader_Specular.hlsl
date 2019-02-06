@@ -1,11 +1,23 @@
+//#include "../../shader/Basis.hlsl"
 #define NORMAL_VECTOR
 
-SamplerState sample0		: register (s0);
+SamplerState samLinear : register (s0);
+SamplerState samShadowMap : register(s1);
+SamplerComparisonState samComShadowMap : register (s2);
+
 Texture2D AlphaMap		: register (t0);
 Texture2D AlphaTexture1 : register (t2);
 Texture2D AlphaTexture2 : register (t3);
 Texture2D AlphaTexture3 : register (t4);
 Texture2D AlphaTexture4 : register (t5);
+Texture2D	g_txNormalMap : register(t6);
+TextureCube g_txEnviMap   : register(t7);
+Texture2D	g_txDepthMap : register(t8);
+
+static const int SMapSize = 1024;
+static const float EPSILON = 0.005f;
+static const float refAtNormal_Incidence = 1.33f;
+
 cbuffer cbMatrix: register(b0)
 {
 	matrix	g_matWorld		: packoffset(c0);
@@ -27,6 +39,7 @@ cbuffer cbLight: register(b1)
 	float3 g_vSightDirection	: packoffset(c11);
 	float  g_fIntensity			: packoffset(c11.w);	// 시선벡터 세기
 };
+
 
 struct VS_IN
 {
@@ -84,13 +97,13 @@ VS_OUT VS(VS_IN input)
 float4 PS(VS_OUT input) : SV_TARGET
 {
 	// rgba에 알파값이 들어있는 텍스처
-	float4 vAlphaMap = AlphaMap.Sample(sample0,input.t);
+	float4 vAlphaMap = AlphaMap.Sample(samLinear,input.t);
 	// 나머지 텍스처들을 섞어준다.
 	float4 vMultiTexture;
-	vMultiTexture = AlphaTexture1.Sample(sample0, input.t*10.0f) * vAlphaMap.x;
-	vMultiTexture += AlphaTexture2.Sample(sample0, input.t*10.0f) * vAlphaMap.y;
-	vMultiTexture += AlphaTexture3.Sample(sample0, input.t*10.0f) * vAlphaMap.z;
-	vMultiTexture += AlphaTexture4.Sample(sample0, input.t*10.0f) * vAlphaMap.w;
+	vMultiTexture = AlphaTexture1.Sample(samLinear, input.t*10.0f) * vAlphaMap.x;
+	vMultiTexture += AlphaTexture2.Sample(samLinear, input.t*10.0f) * vAlphaMap.y;
+	vMultiTexture += AlphaTexture3.Sample(samLinear, input.t*10.0f) * vAlphaMap.z;
+	vMultiTexture += AlphaTexture4.Sample(samLinear, input.t*10.0f) * vAlphaMap.w;
 	
 	float4 vDiffuse = Diffuse(input.n);
 	float4 vSpecular = Specular(input.n);
@@ -101,7 +114,7 @@ float4 PS(VS_OUT input) : SV_TARGET
 
 float4 AlphaMap_PS(VS_OUT input) : SV_TARGET
 {
-	float4 vAlpha = AlphaMap.Sample(sample0,input.t);
+	float4 vAlpha = AlphaMap.Sample(samLinear,input.t);
 	vAlpha.w = 1.0f;
 	
 	return vAlpha;

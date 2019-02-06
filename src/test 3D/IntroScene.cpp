@@ -184,12 +184,12 @@ void IntroScene::SetObjects() noexcept
 	};
 	ObjectManager::Get().Lights.front()->AddComponent({ pTrans });
 	// 라이트 랜더러
-	//auto pShpere = (Renderer*)ObjectManager::GetInstance().TakeComponent(L"RowSphere");
-	//pShpere->SetShaderLayout("VS_Basic", "PS_Basic");
-	//pObject = new GameObject(L"Sun", pShpere);
-	//pObject->isGlobal(true);
-	//pObject->SetScale(Vector3::One * 7);
-	//pObject->SetParent(ObjectManager::Get().Lights.front());
+	auto pShpere = (Renderer*)ObjectManager::GetInstance().TakeComponent(L"RowSphere");
+	pShpere->SetShaderLayout("VS_Basic", "PS_Basic");
+	pObject = new GameObject(L"Sun", pShpere);
+	pObject->isGlobal(true);
+	pObject->SetScale(Vector3::One * 7);
+	pObject->SetParent(ObjectManager::Get().Lights.front());
 
 	// ======================================= Effect =====================================================
 	const auto urlEffect = L"../../data/script";
@@ -221,6 +221,9 @@ void IntroScene::SetObjects() noexcept
 	ObjectManager::Get().SetProtoObject(new GameObject(L"EBerserk", m_pParser->CreateFromParticle(L"Berserk.eff", urlEffect), EObjType::Effect));
 	ObjectManager::Get().SetProtoComponent(m_pParser->CreateFromParticle(L"Fire.eff", urlEffect));
 	// ====================================== Item =====================================================
+
+	Renderer* pRenderer = new Renderer(L"Render");
+	pRenderer->SetEnviromentMap(((Renderer*)m_pSkyBox->GetComponent(EComponent::Renderer))->m_srcName, EEnviType::Refraction);
 
 	// 플레이어 사망
 	pCollider = new Collider(80.0f);
@@ -527,7 +530,7 @@ void IntroScene::SetObjects() noexcept
 	pHeroObj->m_myName = L"Paladin";
 	pHeroObj->m_objType = EObjType::Character;
 	pCollider = new ColliderOBB({ -13.0f, 0.0f , -13.0f }, { 13.0f, 80.0f , 13.0f });
-	pHeroObj->AddComponent(pCollider);
+	pHeroObj->AddComponent({ pCollider, pRenderer });
 	pCollider->m_eTag = ETag::Ally;
 	ObjectManager::Get().SetProtoObject(pHeroObj);
 
@@ -539,7 +542,7 @@ void IntroScene::SetObjects() noexcept
 	pHeroObj->m_myName = L"Archer";
 	pHeroObj->m_objType = EObjType::Character;
 	pCollider = new ColliderOBB({ -13.0f, 0.0f , -13.0f }, { 13.0f, 80.0f , 13.0f });
-	pHeroObj->AddComponent(pCollider);
+	pHeroObj->AddComponent({ pCollider, pRenderer });
 	pCollider->m_eTag = ETag::Ally;
 	ObjectManager::Get().SetProtoObject(pHeroObj);
 
@@ -551,7 +554,7 @@ void IntroScene::SetObjects() noexcept
 	pHeroObj->m_myName = L"Mage";
 	pHeroObj->m_objType = EObjType::Character;
 	pCollider = new ColliderOBB({ -13.0f, 0.0f , -13.0f }, { 13.0f, 80.0f , 13.0f });
-	pHeroObj->AddComponent(pCollider);
+	pHeroObj->AddComponent({ pCollider, pRenderer });
 	pCollider->m_eTag = ETag::Ally;
 	ObjectManager::Get().SetProtoObject(pHeroObj);
 
@@ -563,7 +566,7 @@ void IntroScene::SetObjects() noexcept
 	pHeroObj->m_myName = L"Zombie";
 	pHeroObj->m_objType = EObjType::Enemy;
 	pCollider = new ColliderOBB({ -13.0f, 0.0f , -13.0f }, { 13.0f, 80.0f , 13.0f });
-	pHeroObj->AddComponent({ pCollider, new AIZombie() });
+	pHeroObj->AddComponent({ pCollider, pRenderer, new AIZombie() });
 	pCollider->CollisionEvent = MyEvent::ZombieHit;
 	pCollider->m_eTag = ETag::Enemy;
 	pHeroObj->m_pPhysics->UserSocket = ESocketType::EZombie;
@@ -577,7 +580,7 @@ void IntroScene::SetObjects() noexcept
 	pHeroObj->m_myName = L"Caster";
 	pHeroObj->m_objType = EObjType::Enemy;
 	pCollider = new ColliderOBB({ -13.0f, 0.0f , -13.0f }, { 13.0f, 80.0f , 13.0f });
-	pHeroObj->AddComponent({ pCollider, new AIZombieCast() });
+	pHeroObj->AddComponent({ pCollider, pRenderer, new AIZombieCast() });
 	pCollider->CollisionEvent = MyEvent::ZombieHit;
 	pCollider->m_eTag = ETag::Enemy;
 	pHeroObj->m_pPhysics->UserSocket = ESocketType::ECaster;
@@ -591,7 +594,7 @@ void IntroScene::SetObjects() noexcept
 	pHeroObj->m_myName = L"Crawler";
 	pHeroObj->m_objType = EObjType::Enemy;
 	pCollider = new ColliderOBB({ -13.0f, 0.0f , -40.0f }, { 13.0f, 25.0f , 40.0f });
-	pHeroObj->AddComponent({ pCollider, new AIZombieCrawl() });
+	pHeroObj->AddComponent({ pCollider, pRenderer, new AIZombieCrawl() });
 	pCollider->CollisionEvent = MyEvent::ZombieHit;
 	pCollider->m_pPhysics->m_mass = 0.15f;
 	pCollider->m_pPhysics->m_damping = 1.5f;
@@ -607,7 +610,7 @@ void IntroScene::SetObjects() noexcept
 	pHeroObj->m_myName = L"Mutant";
 	pHeroObj->m_objType = EObjType::Enemy;
 	pCollider = new ColliderOBB({ -13.0f, 0.0f , -13.0f }, { 13.0f, 80.0f , 13.0f });
-	pHeroObj->AddComponent({ pCollider, new AIZombieEx() });
+	pHeroObj->AddComponent({ pCollider, pRenderer, new AIZombieEx() });
 	pCollider->CollisionEvent = MyEvent::ZombieHit;
 	pCollider->m_pPhysics->m_mass = 0.15f;
 	pCollider->m_pPhysics->m_damping = 1.5f;
@@ -623,7 +626,7 @@ void IntroScene::SetObjects() noexcept
 	pHeroObj->m_myName = L"Tank";
 	pHeroObj->m_objType = EObjType::Enemy;
 	pCollider = new ColliderOBB({ -13.0f, 0.0f , -13.0f }, { 13.0f, 80.0f , 13.0f });
-	pHeroObj->AddComponent({ pCollider, new AIZombieKing() });
+	pHeroObj->AddComponent({ pCollider, pRenderer, new AIZombieKing() });
 	pCollider->CollisionEvent = MyEvent::ZombieHit;
 	pCollider->m_pPhysics->m_mass = 0.05f;
 	pCollider->m_pPhysics->m_damping = 3.0f;

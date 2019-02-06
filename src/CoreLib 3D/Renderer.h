@@ -140,5 +140,6 @@ protected:
 	Renderer& operator = (const Renderer&) = default;
 	Renderer& operator = (Renderer&&) = default;
 public:
+	Renderer(const wstring_view& myName, const string_view& vertexShaderName = "VS_Final", const string_view& pixelShaderName = "PS_Final") noexcept;
 	~Renderer() noexcept = default;
 };

@@ -83,7 +83,6 @@ class MainClass : public Core
 private:
 	static MainClass* m_curScene;
 	static map<ESceneName, MainClass*> m_SceneList;
-	static GameObject* m_pSkyBox;
 	// ·Îµù
 	static GameObject* m_LoadingImage;
 	static GameObject* m_Icon;
@@ -98,6 +97,8 @@ private:
 
 	bool					m_isMatching = false;
 public:
+	static GameObject* m_pSkyBox;
+
 	bool					m_isFirstInit = true;
 	static bool				m_isLoading;
 	static char				m_loginCheck;

@@ -528,7 +528,7 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 		memcpy(&p_Float, data, sizeof(Packet_Float));
 		pChatList->push_string(L"========================= Wave " + to_wstring(p_Float.KeyValue) + L" Start! ===========================");
 		PlayerController::Get().m_GameFrameCount = p_Float.Value;
-		SoundManager::Get().Play("SE_wave.mp3");
+		//SoundManager::Get().Play("SE_wave.mp3");
 	}	break;
 	case PACKET_WaveCount:
 	{

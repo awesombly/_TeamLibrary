@@ -114,4 +114,9 @@
     <Text Include="..\..\data\script\network.txt" />
     <Text Include="..\..\data\ui\ItemList.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="..\..\data\map\Shader\Ase.hlsl" />
+    <FxCompile Include="..\..\data\map\Shader\MapShader_Specular.hlsl" />
+    <FxCompile Include="..\..\data\MODEL\Character.hlsl" />
+  </ItemGroup>
 </Project>
