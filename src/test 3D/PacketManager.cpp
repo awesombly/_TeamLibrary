@@ -522,6 +522,7 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 		UIManager::Get().m_pStatePanel->PreEvent.first = nullptr;
 		//PlayerController::Get().m_GameFrameCount = 3.0f;
 		UIManager::Get().m_TimerText->m_bRender = false;
+		SoundManager::Get().Play("SE_chicken.mp3");
 	}	break;
 	case PACKET_WaveStart:
 	{

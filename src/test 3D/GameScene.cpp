@@ -25,10 +25,10 @@ bool GameScene::Init() noexcept
 	//pCollider->CollisionEvent = 
 	ObjectManager::Get().PushObject(PlayerController::Get().m_pHome);
 
-	auto pHeight = new GameObject(L"map", new RCube(L"Cube", L"none.png"),EObjType::Map);
+	/*auto pHeight = new GameObject(L"map", new RCube(L"Cube", L"none.png"),EObjType::Map);
 	pHeight->SetScale(Vector3::One * 200.0f);
-	pHeight->Translate(Vector3::Down * 195.0f);
-	ObjectManager::Get().PushObject(pHeight);
+	pHeight->Translate(Vector3::Down * 185.0f);
+	ObjectManager::Get().PushObject(pHeight);*/
 
 
 	//I_Object.ViewColliderSwitch();
@@ -490,15 +490,6 @@ void GameScene::HostFrame() noexcept
 		//}	break;
 		case EGameState::WaveInit:
 		{
-			if (m_waveCount == 5)
-			{
-				if (ObjectManager::Get().GetObjectList(EObjType::Enemy)->empty())
-				{
-					m_eState = EGameState::End;
-					PacketManager::Get().SendPacket((char*)&PI, sizeof(Packet_KeyValue), PACKET_EndGame);
-				}
-				return;
-			}
 			m_eState = EGameState::Spawn;
 			++m_waveCount;
 			m_spawnCount = 4;
@@ -543,12 +534,27 @@ void GameScene::HostFrame() noexcept
 			case 5:
 			{
 				if (m_spawnCount >= 2)
+				{
 					PacketManager::Get().SendTakeObject(L"Tank", ESocketType::ETank, 1, 15.0f * PacketManager::Get().UserList.size(), 1.1f, 0.1f, { -500.0f, 10.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
+					UIManager::Get().m_TimerText->m_bRender = false;
+				}
 			}	break;
 			case 6:
 			{
 				//PacketManager::Get().SendPacket((char*)&PI, sizeof(Packet_KeyValue), PACKET_EndGame);
 			}	break;
+			}
+
+			// 클리어 조건
+			if (m_waveCount >= 5 && m_spawnCount <= 2)
+			{
+				if (ObjectManager::Get().GetObjectList(EObjType::Enemy)->empty())
+				{
+					m_eState = EGameState::End;
+					PacketManager::Get().SendPacket((char*)&PI, sizeof(Packet_KeyValue), PACKET_EndGame);
+				}
+				*m_pFrameCount = 2.0f;
+				return;
 			}
 
 			*m_pFrameCount = 15.0f;

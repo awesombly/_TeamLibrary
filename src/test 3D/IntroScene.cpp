@@ -364,7 +364,7 @@ void IntroScene::SetObjects() noexcept
 	pHeroObj->SetScale(Vector3::One);
 	auto pTimer = new CEventTimer(3.0f);
 	pTimer->TimerEvent = { TimeEvent::TimeBomb, nullptr };
-	pHeroObj->AddComponent({ pCollider, pTimer });
+	pHeroObj->AddComponent({ pCollider, pTimer, ObjectManager::Get().TakeComponent(L"Fire") });
 	pCollider->m_eTag = ETag::Dummy;
 	ObjectManager::Get().SetProtoObject(pHeroObj);
 
@@ -437,7 +437,7 @@ void IntroScene::SetObjects() noexcept
 	pHeroObj->SetRotation(Quaternion::Down * PI);
 	pCollider = new Collider(10.0f);
 	pHeroObj->AddComponent({ pCollider});
-	pCollider->m_pivot = Vector3::Down * 80.0f;
+	pCollider->m_pivot = Vector3::Down * 50.0f;
 	//pCollider->SetGravityScale(0.0f);
 	pCollider->m_eTag = ETag::Dummy;
 	pCollider->CollisionEvent = MyEvent::NuclearBoom;

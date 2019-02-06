@@ -2,6 +2,7 @@
 #include "ColliderAABB.h"
 #include "ColliderOBB.h"
 #include <fstream>
+#include "../../include/model/AHeroObj.h"
 
 map<UINT, GameObject*> ObjectManager::KeyObjects;
 UINT				   ObjectManager::KeyCount = 0;
@@ -94,45 +95,27 @@ bool ObjectManager::Render(ID3D11DeviceContext* pDContext) noexcept
 	CurCamera = Lights.front();
 
 	// ================================== ±Ì¿Ã∏  ª˝º∫ ======================================
-	DxManager::GetInstance().m_RTDSViewShadow.ClearView(pDContext);
-	DxManager::GetInstance().SetViewPort(EViewPort::Main);
-	DxManager::GetInstance().SetDepthStencilState(EDepthS::Basic);
-	DxManager::GetInstance().SetRasterizerState(ERasterS::DepthBias);
+	DxManager::Get().m_RTDSViewShadow.ClearView(pDContext);
+	DxManager::Get().SetViewPort(EViewPort::Main);
+	DxManager::Get().SetDepthStencilState(EDepthS::Basic);
+	DxManager::Get().SetRasterizerState(ERasterS::DepthBias);
 
 #pragma region DepthMap Render
+	for (auto& iter : *ObjectManager::Get().GetObjectList(EObjType::Character))
+	{
+		((AHeroObj*)iter)->PreRender(DxManager::GetDContext());
+		DxManager::GetDContext()->VSSetShader(DxManager::Get().m_VShaderList["VS_DepthMapPNCT"], nullptr, 0);
+		DxManager::GetDContext()->PSSetShader(nullptr, nullptr, 0);
+		((AHeroObj*)iter)->PostRender(DxManager::GetDContext());
+	}
+	for (auto& iter : *ObjectManager::Get().GetObjectList(EObjType::Enemy))
+	{
+		((AHeroObj*)iter)->PreRender(DxManager::GetDContext());
+		DxManager::GetDContext()->VSSetShader(DxManager::Get().m_VShaderList["VS_DepthMapPNCT"], nullptr, 0);
+		DxManager::GetDContext()->PSSetShader(nullptr, nullptr, 0);
+		((AHeroObj*)iter)->PostRender(DxManager::GetDContext());
+	}
 	// ±Ì¿Ã∏  ∑£¥ı
-	for (auto& iter : m_ObjectList[EObjType::Character])
-	{
-		auto RendererLIst = (forward_list<Renderer*>*)iter->GetComponentList(EComponent::Renderer);
-		if (RendererLIst == nullptr)
-			continue;
-		for (auto& pRenderer : *RendererLIst)
-		{
-			if (pRenderer != nullptr)
-			{
-				pRenderer->PrevRender(pDContext);
-				pDContext->VSSetShader(DxManager::GetInstance().m_VShaderList["VS_DepthMap"], nullptr, 0);
-				pDContext->PSSetShader(nullptr, nullptr, 0);
-				pRenderer->PostRender(pDContext);
-			}
-		}
-	}
-	for (auto& iter : m_ObjectList[EObjType::Enemy])
-	{
-		auto RendererLIst = (forward_list<Renderer*>*)iter->GetComponentList(EComponent::Renderer);
-		if (RendererLIst == nullptr)
-			continue;
-		for (auto& pRenderer : *RendererLIst)
-		{
-			if (pRenderer != nullptr)
-			{
-				pRenderer->PrevRender(pDContext);
-				pDContext->VSSetShader(DxManager::GetInstance().m_VShaderList["VS_DepthMap"], nullptr, 0);
-				pDContext->PSSetShader(nullptr, nullptr, 0);
-				pRenderer->PostRender(pDContext);
-			}
-		}
-	}
 	for (auto& iter : m_ObjectList[EObjType::Object])
 	{
 		auto RendererLIst = (forward_list<Renderer*>*)iter->GetComponentList(EComponent::Renderer);
@@ -143,7 +126,7 @@ bool ObjectManager::Render(ID3D11DeviceContext* pDContext) noexcept
 			if (pRenderer != nullptr)
 			{
 				pRenderer->PrevRender(pDContext);
-				pDContext->VSSetShader(DxManager::GetInstance().m_VShaderList["VS_DepthMap"], nullptr, 0);
+				pDContext->VSSetShader(DxManager::Get().m_VShaderList["VS_DepthMap"], nullptr, 0);
 				pDContext->PSSetShader(nullptr, nullptr, 0);
 				pRenderer->PostRender(pDContext);
 			}
@@ -159,17 +142,17 @@ bool ObjectManager::Render(ID3D11DeviceContext* pDContext) noexcept
 			if (pRenderer != nullptr)
 			{
 				pRenderer->PrevRender(pDContext);
-				pDContext->VSSetShader(DxManager::GetInstance().m_VShaderList["VS_DepthMap"], nullptr, 0);
+				pDContext->VSSetShader(DxManager::Get().m_VShaderList["VS_DepthMap"], nullptr, 0);
 				pDContext->PSSetShader(nullptr, nullptr, 0);
 				//pDContext->PSSetShader(DxManager::GetInstance().m_PShaderList["PS_DepthMap"], nullptr, 0);
 				pRenderer->PostRender(pDContext);
 			}
 		}
 	}
-	DxManager::GetInstance().SetDepthStencilState(EDepthS::Current);
-	DxManager::GetInstance().SetRasterizerState(ERasterS::Current);
-	DxManager::GetInstance().SetViewPort(EViewPort::Main);
-	DxManager::GetInstance().m_RTDSView.Setting(pDContext);
+	DxManager::Get().SetDepthStencilState(EDepthS::Current);
+	DxManager::Get().SetRasterizerState(ERasterS::Current);
+	DxManager::Get().SetViewPort(EViewPort::Main);
+	DxManager::Get().m_RTDSView.Setting(pDContext);
 	CurCamera = Cameras[ECamera::Main];
 #pragma endregion
 
@@ -184,20 +167,20 @@ bool ObjectManager::Render(ID3D11DeviceContext* pDContext) noexcept
 		 case EObjType::Map:
 		 {
 			 // ================================================ Ω¶µµøÏ(+) ∑£¥ı ============================================================
-			 DxManager::GetInstance().SetSamplerState(1, ESamTextureS::Clamp, ESamFilterS::Linear);
-			 DxManager::GetInstance().SetSamplerState(2, ESamTextureS::Border, ESamFilterS::CompLinearPoint, 0, D3D11_COMPARISON_LESS);
+			 DxManager::Get().SetSamplerState(1, ESamTextureS::Clamp, ESamFilterS::Linear);
+			 DxManager::Get().SetSamplerState(2, ESamTextureS::Border, ESamFilterS::CompLinearPoint, 0, D3D11_COMPARISON_LESS);
 			 //DxManager::GetInstance().SetRasterizerState(ERasterS::CullBack);
 
 			 // ±Ì¿Ã∏  Ω¶µµøÏ
 			 for (auto& initer : outiter)
 			 {
-				pDContext->PSSetShaderResources(4, 1, &DxManager::GetInstance().m_RTDSViewShadow.m_pTexSRViews[0]);
+				pDContext->PSSetShaderResources(4, 1, &DxManager::Get().m_RTDSViewShadow.m_pTexSRViews[0]);
 				initer->Render(pDContext);
 			 }
 			 //DxManager::GetInstance().SetDepthStencilState(EDepthS::Current);
 			 //DxManager::GetInstance().SetRasterizerState(ERasterS::Current);
-			 DxManager::GetInstance().SetSamplerState(1, ESamTextureS::Current, ESamFilterS::Current);
-			 DxManager::GetInstance().SetSamplerState(2, ESamTextureS::Current, ESamFilterS::Current);
+			 DxManager::Get().SetSamplerState(1, ESamTextureS::Current, ESamFilterS::Current);
+			 DxManager::Get().SetSamplerState(2, ESamTextureS::Current, ESamFilterS::Current);
 		 }	break;
 		 default:
 		 {
@@ -218,8 +201,8 @@ bool ObjectManager::Render(ID3D11DeviceContext* pDContext) noexcept
 	// ========================== πÃ¥œ∏  =============================
 	////if (Input::isDebug)
 	//{
-	//	DxManager::GetInstance().ClearDepthStencilView();
-	//	DxManager::GetInstance().SetViewPort(EViewPort::MiniMap);
+	//	DxManager::Get().ClearDepthStencilView();
+	//	DxManager::Get().SetViewPort(EViewPort::MiniMap);
 	//	CurCamera = Cameras[ECamera::MiniMap];
 	//	for (auto& iter : Lights)
 	//	{
@@ -239,7 +222,7 @@ bool ObjectManager::Render(ID3D11DeviceContext* pDContext) noexcept
 	//		iter->Render(pDContext);
 	//	}
 	//	CurCamera = Cameras[ECamera::Main];
-	//	DxManager::GetInstance().SetViewPort(EViewPort::Main);
+	//	DxManager::Get().SetViewPort(EViewPort::Main);
 	//}
 	return true;
 }

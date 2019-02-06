@@ -67,6 +67,13 @@ struct VS_INPUT_PNCTT
 	float2 tex : TEXCOORD0;
 	float3 tan : TANGENT;
 };
+struct VS_INPUT_PNCT
+{
+	float3 pos : POSITION;
+	float3 nor : NORMAL;
+	float4 col : COLOR0;
+	float2 tex : TEXCOORD0;
+};
 // 정점 출력(노말+깊이)
 struct VS_OUTPUT_PNCT
 {

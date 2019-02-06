@@ -118,6 +118,17 @@ VS_OUTPUT_DepthMap VS_DepthMap(VS_INPUT_PNCTT input)
 	//output.dep.y = (output.pos.w - NEAR) / (FAR - NEAR);
 	return output;
 }
+
+VS_OUTPUT_DepthMap VS_DepthMapPNCT(VS_INPUT_PNCT input)
+{
+	VS_OUTPUT_DepthMap output = (VS_OUTPUT_DepthMap)0;
+	output.pos = mul(float4(input.pos, 1.0f), g_matWorld);
+	output.pos = mul(output.pos, g_matView);
+	output.pos = mul(output.pos, g_matProj);
+	output.dep = output.pos.zw;
+	//output.dep.y = (output.pos.w - NEAR) / (FAR - NEAR);
+	return output;
+}
 //--------------------------------------------------------------------------------------
 // Pixel Shader
 //--------------------------------------------------------------------------------------

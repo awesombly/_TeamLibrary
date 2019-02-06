@@ -57,6 +57,7 @@ void DxManager::InitLoadShader() noexcept
 	// ±Ì¿Ã∏  Ω¶µµøÏ
 	LoadVertexShader(L"../../data/shader/ShadowMap.hlsl", "VS_Shadow");
 	LoadVertexShader(L"../../data/shader/ShadowMap.hlsl", "VS_DepthMap");
+	LoadVertexShader(L"../../data/shader/ShadowMap.hlsl", "VS_DepthMapPNCT");
 	LoadPixelShader(L"../../data/shader/ShadowMap.hlsl", "PS_Shadow");
 	LoadPixelShader(L"../../data/shader/ShadowMap.hlsl", "PS_DepthMap");
 	LoadPixelShader(L"../../data/shader/ShadowMap.hlsl", "PS_NO_CMP");
