@@ -103,17 +103,21 @@ bool ObjectManager::Render(ID3D11DeviceContext* pDContext) noexcept
 #pragma region DepthMap Render
 	for (auto& iter : *ObjectManager::Get().GetObjectList(EObjType::Character))
 	{
-		((AHeroObj*)iter)->PreRender(DxManager::GetDContext());
-		DxManager::GetDContext()->VSSetShader(DxManager::Get().m_VShaderList["VS_DepthMapPNCT"], nullptr, 0);
-		DxManager::GetDContext()->PSSetShader(nullptr, nullptr, 0);
-		((AHeroObj*)iter)->PostRender(DxManager::GetDContext());
+		//((AHeroObj*)iter)->PreRender(DxManager::GetDContext());
+		//DxManager::GetDContext()->VSSetShader(DxManager::Get().m_VShaderList["VS_DepthMapPNCT"], nullptr, 0);
+		//DxManager::GetDContext()->PSSetShader(nullptr, nullptr, 0);
+
+		((AHeroObj*)iter)->SetVSShader(DxManager::Get().m_VShaderList["VS_DepthMapPNCT"]);
+		((AHeroObj*)iter)->SetPSShader(nullptr);
+		iter->Render(DxManager::GetDContext());
+		((AHeroObj*)iter)->ReturnPSShader();
 	}
 	for (auto& iter : *ObjectManager::Get().GetObjectList(EObjType::Enemy))
 	{
-		((AHeroObj*)iter)->PreRender(DxManager::GetDContext());
-		DxManager::GetDContext()->VSSetShader(DxManager::Get().m_VShaderList["VS_DepthMapPNCT"], nullptr, 0);
-		DxManager::GetDContext()->PSSetShader(nullptr, nullptr, 0);
-		((AHeroObj*)iter)->PostRender(DxManager::GetDContext());
+		((AHeroObj*)iter)->SetVSShader(DxManager::Get().m_VShaderList["VS_DepthMapPNCT"]);
+		((AHeroObj*)iter)->SetPSShader(nullptr);
+		iter->Render(DxManager::GetDContext());
+		((AHeroObj*)iter)->ReturnPSShader();
 	}
 	// ±Ì¿Ã∏  ∑£¥ı
 	for (auto& iter : m_ObjectList[EObjType::Object])

@@ -74,6 +74,7 @@ bool AIZombie::Frame(const float& spf, const float& accTime)	noexcept
 				 if (VectorLengthSq(iter->GetPosition() - m_pParent->GetPosition()) <= m_attackRange)
 				 {
 					 m_pParent->SetRotationY(m_pParent->GetFocusY(m_Target = iter->GetPosition()) - PI * 0.5f);
+					 m_pParent->Rotate(0.0f, m_pParent->GetFocusY(m_Target = iter->GetPosition()) - PI * 0.5f, 0.0f);
 					 m_eDirState = EState::Attack;
 					 return true;
 				 }
@@ -81,6 +82,7 @@ bool AIZombie::Frame(const float& spf, const float& accTime)	noexcept
 			 if (VectorLengthSq(m_Target - m_pParent->GetPosition()) <= m_attackRange + PlayerController::Get().HomeRadius)
 			 {
 				 m_pParent->SetFocus(m_Target);
+				 m_pParent->SetRotation(m_pParent->GetRotation());
 				 m_eDirState = EState::Attack;
 				 return true;
 			 }

@@ -35,14 +35,7 @@ cbuffer cbObjectData : register(b1)
 	float4 cb_EyePos;
 	float4 cb_EyeDir;
 }
-// 조명? 데이터
-cbuffer cbLightMaterial : register(b2)
-{
-	float4 cb_AmbientLightColor : packoffset(c0);
-	float4 cb_DiffuseLightColor : packoffset(c1);
-	float3 cb_SpecularLightColor: packoffset(c2);
-	float  cb_SpecularPower : packoffset(c2.w);
-};
+
 // 메테리얼, 쉐도우 데이터
 cbuffer cbMaterial : register (b3)
 {
@@ -55,11 +48,7 @@ cbuffer cbMaterial : register (b3)
 	float			g_iNumKernel : packoffset(c5.y);
 	//float			g_iDummy	 : packoffset(c4.zw);
 }
-// 큐브맵 행렬
-cbuffer cbCubeViewMatrix : register(b4)
-{
-	matrix g_matCubeView[6] : packoffset(c0);
-}
+
 
 // 렌더 타겟
 struct PBUFFER_OUTPUT
@@ -114,7 +103,7 @@ struct PNCT5_VS_INPUT
 //	float2 tex : TEXCOORD0;
 //};
 
-struct VS_OUTPUT_Mix
+struct VS_OUTPUT
 {
 	float4 pos		 : SV_POSITION;
 	float4 nor		 : NORMAL;
@@ -125,11 +114,11 @@ struct VS_OUTPUT_Mix
 	//float3 vHalf	 : TEXCOORD2;
 	//float3 vLightDir : TEXCOORD3;
 	// 환경
-	float3 ref		 : TEXCOORD4;
-	float3 fre		 : TEXCOORD5;
-	float3 eye		 : TEXCOORD6;
+	float3 ref		 : TEXCOORD1;
+	//float3 fre		 : TEXCOORD2;
+	//float3 eye		 : TEXCOORD3;
 	// 쉐도우
-	float4 TexShadow : TEXCOORD7;
+	float4 TexShadow : TEXCOORD2;
 };
 
 // 프레넬 계산
@@ -147,16 +136,15 @@ float ComputeFresnel(float3 reflect, float3 normal, float f0)
 //--------------------------------------------------------------------------------------
 // Vertex Shader
 //--------------------------------------------------------------------------------------
-VS_OUTPUT_Mix VS(PNCT5_VS_INPUT input)//,uniform bool bHalfVector )
+VS_OUTPUT VS(PNCT5_VS_INPUT input)//,uniform bool bHalfVector )
 {
-	VS_OUTPUT_Mix output = (VS_OUTPUT_Mix)0;
+	VS_OUTPUT output = (VS_OUTPUT)0;
 
 	float4 Pos = float4(input.pos, 1.0f);
 	float3 Norm = input.nor;
 
 	float4x4 matMatrix;
-
-	float4 vLocal;
+		float4 vLocal;
 	for (int iBiped = 0; iBiped < input.w1.w; iBiped++)
 	{
 		uint iBoneIndex = (uint)input.i0[iBiped];
@@ -180,31 +168,30 @@ VS_OUTPUT_Mix VS(PNCT5_VS_INPUT input)//,uniform bool bHalfVector )
 	}
 
 	float4 WorldPos = output.pos = mul(output.pos, g_matWorld);
-	float3 vLightDir = normalize(cb_LightVector.xyz - output.pos.xyz);
 	output.pos = mul(output.pos, g_matView);
 	output.pos = mul(output.pos, g_matProj);
 
-	//float3 vNormal = normalize(mul(output.nor.xyz, (float3x3)g_matWorld));
 	output.nor = float4(normalize(mul(output.nor.xyz, (float3x3)g_matWorld)), output.pos.w / FAR);// g_matWorldInvTrans));
+	//output.nor = float4(normalize(mul(output.nor.xyz, ), output.pos.w / FAR);// g_matWorldInvTrans));
+	float3 vNormal = output.nor.xyz;
 	output.tex = input.tex;
 
-	// 조명 연산시 좀비 깨짐?
+	float3 vLightDir = normalize(cb_LightVector.xyz - WorldPos.xyz);
 	//float fDot = max(0.2f, lerp(dot(vLightDir, output.nor.xyz), 1.0f, 0.2f) + 0.2f);
-	//float fDot = max(0.2f, dot(vLightDir, output.nor.xyz) + 0.3f);
 	//output.col = /*float4(fDot, fDot, fDot, 1.0f) **/ /*input.col **/ fDot;
-	output.col = max(0.2f, dot(vLightDir, output.nor.xyz) + 0.2f);
+	output.col = max(0.3f, dot(vLightDir, vNormal) + 0.4f);
 	//output.col = input.col;
 
-	//// 환경
-	//if (cb_useEnviMap)
-	//{
-	//	// camera/eye -> V?
-	//	float3 incident = output.eye = normalize(WorldPos - cb_EyePos.xyz);
-	//	// R = I - 2 * N * (I.N)	?
-	//	//output.ref = normalize(incident - 2.0f * output.nor * dot(incident, output.nor));
-	//	output.ref = normalize(reflect(incident, output.nor.xyz));
-	//	output.fre = normalize(refract(incident, output.nor.xyz, 1.0f / refAtNormal_Incidence));
-	//}
+	// 환경
+	if (cb_useEnviMap)
+	{
+		// camera/eye -> V?
+		float3 incident /*= output.eye*/ = normalize(cb_EyePos.xyz - WorldPos);
+		// R = I - 2 * N * (I.N)	?
+		//output.ref = normalize(incident - 2.0f * output.nor * dot(incident, output.nor));
+		output.ref = normalize(reflect(incident, vNormal));
+		//output.fre = normalize(refract(incident, vNormal, 1.0f / refAtNormal_Incidence));
+	}
 
 	// 쉐도우 텍스처 좌표
 	if (cb_useShadow)
@@ -217,51 +204,49 @@ VS_OUTPUT_Mix VS(PNCT5_VS_INPUT input)//,uniform bool bHalfVector )
 //--------------------------------------------------------------------------------------
 // Pixel Shader
 //--------------------------------------------------------------------------------------
-PBUFFER_OUTPUT PS(VS_OUTPUT_Mix input) : SV_Target
+PBUFFER_OUTPUT PS(VS_OUTPUT input) : SV_Target
 {
 	PBUFFER_OUTPUT output = (PBUFFER_OUTPUT)0;
 	output.color1	= input.nor;
-	output.color0	= g_txDiffuse.Sample(samLinear, input.tex) * input.col;
+	output.color0	= g_txDiffuse.Sample(samLinear, input.tex);
 
-	//// 환경
-	//if (cb_useEnviMap)
-	//{
-	//	uint type = cb_useEnviMap;
-	//	switch (type)
-	//	{
-	//	case 1:
-	//	{
-	//		float4 diffuseColor = g_txDiffuse.Sample(samLinear, input.tex);
-	//		float4 reflectColor = g_txEnviMap.Sample(samLinear, input.ref);
-	//
-	//		output.color0 = lerp(output.color0, reflectColor, 0.5f);
-	//	} break;
-	//	case 2:
-	//	{
-	//		float4 diffuseColor = g_txDiffuse.Sample(samLinear, input.tex);
-	//		float4 reflectColor = g_txEnviMap.Sample(samLinear, input.ref);		// 반사 컬러
-	//
-	//		float r0 = pow(1.0f - refAtNormal_Incidence, 2.0f) / pow(1.0f + refAtNormal_Incidence, 2.0f);
-	//		float fresnel = ComputeFresnel(input.ref, input.nor.xyz, r0);
-	//
-	//		// 디퓨즈맵과 반사맵 보간
-	//		output.color0 = lerp(output.color0, reflectColor, fresnel + 0.3f);
-	//	} break;
-	//	case 3:
-	//	{
-	//		float4 reflectColor = g_txEnviMap.Sample(samLinear, input.ref);		// 반사 컬러
-	//		float4 refractColor = g_txEnviMap.Sample(samLinear, input.fre);		// 굴절 컬러
-	//
-	//		float r0 = pow(1.0f - refAtNormal_Incidence, 2.0f) / pow(1.0f + refAtNormal_Incidence, 2.0f);
-	//		float fresnel = ComputeFresnel(input.ref, input.nor.xyz, r0);
-	//
-	//		// 굴절, 반사 보간
-	//		output.color0 *= lerp(refractColor, reflectColor, fresnel * 7.0f)/* * input.col*/ * 1.15f;
-	//		//color = lerp(refractColor, color, fresnel * 0.1f);
-	//		//color.a = 1.0f;
-	//	} break;
-	//	}
-	//}
+	// 환경
+	if (cb_useEnviMap)
+	{
+		//uint type = cb_useEnviMap;
+		//switch (type)
+		//{
+		//case 1:
+		//{
+		//	float4 reflectColor = g_txEnviMap.Sample(samLinear, input.ref);
+		//
+		//	output.color0 = lerp(output.color0, reflectColor, 0.5f);
+		//} break;
+		//case 2:
+		//{
+			float4 reflectColor = g_txEnviMap.Sample(samLinear, input.ref);		// 반사 컬러
+	
+			float r0 = pow(1.0f - refAtNormal_Incidence, 2.0f) / pow(1.0f + refAtNormal_Incidence, 2.0f);
+			float fresnel = ComputeFresnel(input.ref, input.nor.xyz, r0);
+	
+			// 디퓨즈맵과 반사맵 보간
+			output.color0 = lerp(output.color0, reflectColor, fresnel * 0.15f/* + 0.3f*/);
+		//} break;
+		//case 3:
+		//{
+		//	float4 reflectColor = g_txEnviMap.Sample(samLinear, input.ref);		// 반사 컬러
+		//	float4 refractColor = g_txEnviMap.Sample(samLinear, input.fre);		// 굴절 컬러
+		//
+		//	float r0 = pow(1.0f - refAtNormal_Incidence, 2.0f) / pow(1.0f + refAtNormal_Incidence, 2.0f);
+		//	float fresnel = ComputeFresnel(input.ref, input.nor.xyz, r0);
+		//
+		//	// 굴절, 반사 보간
+		//	output.color0 *= lerp(refractColor, reflectColor, fresnel * 7.0f)/* * input.col*/ * 1.15f;
+		//	//color = lerp(refractColor, color, fresnel * 0.1f);
+		//	//color.a = 1.0f;
+		//} break;
+		//}
+	}
 	
 	// 쉐도우
 	if (cb_useShadow)
@@ -290,6 +275,7 @@ PBUFFER_OUTPUT PS(VS_OUTPUT_Mix input) : SV_Target
 		//output.color0 = cb_useShadow > fLightAmount ? output.color0 * cb_useShadow : output.color0;
 	}
 
+	output.color0 *= input.col;
 	output.color0.w = 1.0f;
 	return output;
 }

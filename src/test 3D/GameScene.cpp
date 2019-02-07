@@ -25,10 +25,10 @@ bool GameScene::Init() noexcept
 	//pCollider->CollisionEvent = 
 	ObjectManager::Get().PushObject(PlayerController::Get().m_pHome);
 
-	/*auto pHeight = new GameObject(L"map", new RCube(L"Cube", L"none.png"),EObjType::Map);
+	auto pHeight = new GameObject(L"map", new RCube(L"Cube", L"none.png"),EObjType::Map);
 	pHeight->SetScale(Vector3::One * 200.0f);
 	pHeight->Translate(Vector3::Down * 185.0f);
-	ObjectManager::Get().PushObject(pHeight);*/
+	ObjectManager::Get().PushObject(pHeight);
 
 
 	//I_Object.ViewColliderSwitch();
@@ -505,24 +505,24 @@ void GameScene::HostFrame() noexcept
 			{
 			case 1:
 			{
-				PacketManager::Get().SendTakeObject(L"Zombie", ESocketType::EZombie, (UCHAR)PacketManager::Get().UserList.size(), 1.0f, 0.2f, 0.1f, { -500.0f, 10.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
-				PacketManager::Get().SendTakeObject(L"Caster", ESocketType::ECaster, (UCHAR)PacketManager::Get().UserList.size(), 0.8f, 0.2f, 0.1f, { -500.0f, 10.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
-				PacketManager::Get().SendTakeObject(L"Crawler", ESocketType::ECrawler, (UCHAR)PacketManager::Get().UserList.size(), 0.6f, 0.15f, 0.1f, { -500.0f, 10.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
+				PacketManager::Get().SendTakeObject(L"Zombie", ESocketType::EZombie, (UCHAR)PacketManager::Get().UserList.size(), 1.0f, 0.25f, 0.05f, { -500.0f, 10.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
+				PacketManager::Get().SendTakeObject(L"Caster", ESocketType::ECaster, (UCHAR)PacketManager::Get().UserList.size(), 0.8f, 0.22f, 0.05f, { -500.0f, 10.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
+				PacketManager::Get().SendTakeObject(L"Crawler", ESocketType::ECrawler, (UCHAR)PacketManager::Get().UserList.size(), 0.6f, 0.2f, 0.05f, { -500.0f, 10.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
 			}	break;
 			case 2:
 			{
-				PacketManager::Get().SendTakeObject(L"Zombie", ESocketType::EZombie, (UCHAR)PacketManager::Get().UserList.size(), 1.0f, 0.2f, 0.1f, { -500.0f, 10.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
-				PacketManager::Get().SendTakeObject(L"Caster", ESocketType::ECaster, (UCHAR)PacketManager::Get().UserList.size(), 0.8f, 0.2f, 0.1f, { -500.0f, 10.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
-				PacketManager::Get().SendTakeObject(L"Crawler", ESocketType::ECrawler, (UCHAR)PacketManager::Get().UserList.size(), 0.6f, 0.15f, 0.1f, { -500.0f, 10.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
+				PacketManager::Get().SendTakeObject(L"Zombie", ESocketType::EZombie, (UCHAR)PacketManager::Get().UserList.size(), 1.0f, 0.25f, 0.05f, { -500.0f, 10.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
+				PacketManager::Get().SendTakeObject(L"Caster", ESocketType::ECaster, (UCHAR)PacketManager::Get().UserList.size(), 0.8f, 0.22f, 0.05f, { -500.0f, 10.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
+				PacketManager::Get().SendTakeObject(L"Crawler", ESocketType::ECrawler, (UCHAR)PacketManager::Get().UserList.size(), 0.6f, 0.2f, 0.05f, { -500.0f, 10.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
 				PacketManager::Get().SendTakeObject(L"Mutant", ESocketType::EMutant, 1, 5.0f, 0.5f, 0.1f, { -500.0f, 10.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
 			}	break;
 			case 3:
 			{
 				if(m_spawnCount == 2)
 					PacketManager::Get().SendTakeObject(L"Tank", ESocketType::ETank, 1, 15.0f * PacketManager::Get().UserList.size(), 1.1f, 0.1f, { -500.0f, 10.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
-				PacketManager::Get().SendTakeObject(L"Zombie", ESocketType::EZombie, (UCHAR)PacketManager::Get().UserList.size(), 1.0f, 0.2f, 0.1f, { -500.0f, 10.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
-				PacketManager::Get().SendTakeObject(L"Caster", ESocketType::ECaster, (UCHAR)PacketManager::Get().UserList.size(), 0.8f, 0.2f, 0.1f, { -500.0f, 10.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
-				PacketManager::Get().SendTakeObject(L"Crawler", ESocketType::ECrawler, (UCHAR)PacketManager::Get().UserList.size(), 0.6f, 0.15f, 0.1f, { -500.0f, 10.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
+				PacketManager::Get().SendTakeObject(L"Zombie", ESocketType::EZombie, (UCHAR)PacketManager::Get().UserList.size(), 1.0f, 0.25f, 0.05f, { -500.0f, 10.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
+				PacketManager::Get().SendTakeObject(L"Caster", ESocketType::ECaster, (UCHAR)PacketManager::Get().UserList.size(), 0.8f, 0.22f, 0.05f, { -500.0f, 10.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
+				PacketManager::Get().SendTakeObject(L"Crawler", ESocketType::ECrawler, (UCHAR)PacketManager::Get().UserList.size(), 0.6f, 0.2f, 0.05f, { -500.0f, 10.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
 			}	break;
 			case 4:
 			{
