@@ -149,17 +149,17 @@ bool IntroScene::FirstInit() noexcept
 		ErrorMessage(__FUNCTION__ + " -> Object Setting."s);
 		SetObjects();
 		// =============================== 맵 생성 =================================
-		ErrorMessage(__FUNCTION__ + " -> Map Loading."s);
-		XMapImporter m_Importer;		// 세이브 데이터 로더
-		m_Importer.Import();
-		m_pMap = new XMap();
-		m_pMap->Create(DxManager::Get().GetDevice(), DxManager::Get().GetDContext(), &m_Importer, _T("../../Data/Map/Shader/MapShader_Specular.hlsl"), _T("../../Data/Map/Shader/MapShader_Color_Specular.hlsl"), "VS", "PS");
-		m_pMapTree = new XQuadTreeIndex();
-		m_pMapTree->Build(m_pMap);
-		m_pMap->m_objType = EObjType::Map;
-		m_pMap->isGlobal(true);
-		m_pMap->isStatic(true);
-		//ObjectManager::Get().PushObject(m_pMap);
+		//ErrorMessage(__FUNCTION__ + " -> Map Loading."s);
+		//XMapImporter m_Importer;		// 세이브 데이터 로더
+		//m_Importer.Import();
+		//m_pMap = new XMap();
+		//m_pMap->Create(DxManager::Get().GetDevice(), DxManager::Get().GetDContext(), &m_Importer, _T("../../Data/Map/Shader/MapShader_Specular.hlsl"), _T("../../Data/Map/Shader/MapShader_Color_Specular.hlsl"), "VS", "PS");
+		//m_pMapTree = new XQuadTreeIndex();
+		//m_pMapTree->Build(m_pMap);
+		//m_pMap->m_objType = EObjType::Map;
+		//m_pMap->isGlobal(true);
+		//m_pMap->isStatic(true);
+		////ObjectManager::Get().PushObject(m_pMap);
 		return true;
 	}
 	return false;
@@ -176,10 +176,10 @@ void IntroScene::SetObjects() noexcept
 	//ObjectManager::Get().SetProtoComponent(new RSphere(20, L"Sphere", L"None.png"));
 	ObjectManager::Get().SetProtoComponent(new RSphere(10, L"RowSphere", L"None.png"));
 	// 라이트
-	auto pTrans = new CTransformer(Vector3::Up * 150.0f, Quaternion::Up * PI * 0.35f, Vector3::One);
+	auto pTrans = new CTransformer(Vector3::Up * 100.0f, Quaternion::Up * PI * 0.35f, Vector3::One);
 	pTrans->TransEvent = [](Transform* pParent, Transform* pTrans, const float& spf, const float& accTime) {
 		pParent->SetTransform(*pTrans);
-		pParent->Translate({ cosf(0.5f * accTime) * 200.0f, 0.0f, sinf(0.1f * accTime) * 200.0f });
+		pParent->Translate({ cosf(0.1f * accTime) * 200.0f, 0.0f, sinf(0.1f * accTime) * 200.0f });
 		return; spf; accTime; pTrans;
 	};
 	ObjectManager::Get().Lights.front()->AddComponent({ pTrans });

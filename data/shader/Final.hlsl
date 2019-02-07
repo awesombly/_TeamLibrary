@@ -8,7 +8,7 @@ SamplerState samLinear : register (s0);
 SamplerState samShadowMap : register(s1);
 SamplerComparisonState samComShadowMap : register (s2);
 
-static const int SMapSize = 1024;
+static const float SMapSize = 4096.0f;
 static const float EPSILON = 0.005f;
 // 노말값에 대한 반사율?
 static const float refAtNormal_Incidence = 1.33f;

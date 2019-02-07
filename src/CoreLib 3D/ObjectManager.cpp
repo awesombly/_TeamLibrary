@@ -93,7 +93,6 @@ bool ObjectManager::Render(ID3D11DeviceContext* pDContext) noexcept
 		iter->Render(pDContext);
 	}
 	CurCamera = Lights.front();
-
 	// ================================== 表捞甘 积己 ======================================
 	DxManager::Get().m_RTDSViewShadow.ClearView(pDContext);
 	DxManager::Get().SetViewPort(EViewPort::Main);
@@ -101,6 +100,7 @@ bool ObjectManager::Render(ID3D11DeviceContext* pDContext) noexcept
 	DxManager::Get().SetRasterizerState(ERasterS::DepthBias);
 
 #pragma region DepthMap Render
+	auto pMainCamera = Cameras[ECamera::Main];
 	for (auto& iter : *ObjectManager::Get().GetObjectList(EObjType::Character))
 	{
 		((AHeroObj*)iter)->SetMatrix(nullptr, &CurCamera->m_matView, &CurCamera->m_matProj);
@@ -109,7 +109,7 @@ bool ObjectManager::Render(ID3D11DeviceContext* pDContext) noexcept
 		iter->Render(DxManager::GetDContext());
 		((AHeroObj*)iter)->ReturnVSShader();
 		((AHeroObj*)iter)->ReturnPSShader();
-		((AHeroObj*)iter)->SetMatrix(nullptr, &Cameras[ECamera::Main]->m_matView, &Cameras[ECamera::Main]->m_matProj);
+		((AHeroObj*)iter)->SetMatrix(nullptr, &pMainCamera->m_matView, &pMainCamera->m_matProj);
 	}
 	for (auto& iter : *ObjectManager::Get().GetObjectList(EObjType::Enemy))
 	{
@@ -119,7 +119,7 @@ bool ObjectManager::Render(ID3D11DeviceContext* pDContext) noexcept
 		iter->Render(DxManager::GetDContext());
 		((AHeroObj*)iter)->ReturnVSShader();
 		((AHeroObj*)iter)->ReturnPSShader();
-		((AHeroObj*)iter)->SetMatrix(nullptr, &Cameras[ECamera::Main]->m_matView, &Cameras[ECamera::Main]->m_matProj);
+		((AHeroObj*)iter)->SetMatrix(nullptr, &pMainCamera->m_matView, &pMainCamera->m_matProj);
 	}
 	for (auto& iter : *ObjectManager::Get().GetObjectList(EObjType::AObject))
 	{
@@ -129,7 +129,7 @@ bool ObjectManager::Render(ID3D11DeviceContext* pDContext) noexcept
 		iter->Render(DxManager::GetDContext());
 		((AHeroObj*)iter)->ReturnVSShader();
 		((AHeroObj*)iter)->ReturnPSShader();
-		((AHeroObj*)iter)->SetMatrix(nullptr, &Cameras[ECamera::Main]->m_matView, &Cameras[ECamera::Main]->m_matProj);
+		((AHeroObj*)iter)->SetMatrix(nullptr, &pMainCamera->m_matView, &pMainCamera->m_matProj);
 	}
 	// 表捞甘 罚歹
 	for (auto& iter : m_ObjectList[EObjType::Object])
