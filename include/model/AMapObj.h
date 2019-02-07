@@ -5,8 +5,6 @@
 
 class AMapObj : public AModel
 {
-	AMapObj*	m_pMapObj;
-
 public:
 
 	int									m_iMaxWeight;
