@@ -2,12 +2,12 @@
 
 ////////////////////////////////////////////////////////////////////////// 
 *OBJNAME		test
-*SHADERFILENMAE		..\..\data\MAPOBJ\Character.hlsl
+*SHADERFILENMAE		..\..\data\model\Character.hlsl
 *OBJFILENMAE		..\..\data\MAPOBJ\HOUSE\houseTown.skm
 
 
 
 ////////////////////////////////////////////////////////////////////////// 
 *OBJNAME		test2
-*SHADERFILENMAE		..\..\data\MAPOBJ\Character.hlsl
+*SHADERFILENMAE		..\..\data\model\Character.hlsl
 *OBJFILENMAE		..\..\data\MAPOBJ\HOUSE\houseWood.skm

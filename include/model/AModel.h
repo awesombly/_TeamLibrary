@@ -31,7 +31,8 @@ struct VS_CONSTANT_BUFFER
 class AModel : public GameObject 
 {
 protected:
-	
+	ID3D11VertexShader*		m_HeroVS;
+	ID3D11PixelShader*		m_HeroPS;
 	vector<PT_VERTEX>			 m_PTList;
 	vector<PCT_VERTEX>			 m_PCTList;
 	vector<PNCT_VERTEX>			 m_PNCTList;
@@ -121,6 +122,16 @@ public:
 	virtual void		UpdateMatrix() noexcept override;
 
 	//virtual GameObject* clone() noexcept override;
+
+
+	bool					SetVSShader(ID3D11VertexShader* pVs);
+	bool					SetPSShader(ID3D11PixelShader* pPs);
+
+	ID3D11VertexShader*		GetVSShader();
+	ID3D11PixelShader*		GetPSShader();
+
+	bool					ReturnVSShader();
+	bool					ReturnPSShader();
 
 public:
 	AModel() ;

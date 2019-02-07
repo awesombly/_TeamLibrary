@@ -103,9 +103,9 @@ bool ObjectManager::Render(ID3D11DeviceContext* pDContext) noexcept
 	auto pMainCamera = Cameras[ECamera::Main];
 	for (auto& iter : *ObjectManager::Get().GetObjectList(EObjType::Character))
 	{
-		((AHeroObj*)iter)->SetMatrix(nullptr, &CurCamera->m_matView, &CurCamera->m_matProj);
-		((AHeroObj*)iter)->SetVSShader(DxManager::Get().m_VShaderList["VS_DepthMapPNCT"]);
-		((AHeroObj*)iter)->SetPSShader(nullptr);
+		((AModel*)iter)->SetMatrix(nullptr, &CurCamera->m_matView, &CurCamera->m_matProj);
+		((AModel*)iter)->SetVSShader(DxManager::Get().m_VShaderList["VS_DepthMapPNCT"]);
+		((AModel*)iter)->SetPSShader(nullptr);
 		iter->Render(DxManager::GetDContext());
 		((AHeroObj*)iter)->ReturnVSShader();
 		((AHeroObj*)iter)->ReturnPSShader();
@@ -113,9 +113,9 @@ bool ObjectManager::Render(ID3D11DeviceContext* pDContext) noexcept
 	}
 	for (auto& iter : *ObjectManager::Get().GetObjectList(EObjType::Enemy))
 	{
-		((AHeroObj*)iter)->SetMatrix(nullptr, &CurCamera->m_matView, &CurCamera->m_matProj);
-		((AHeroObj*)iter)->SetVSShader(DxManager::Get().m_VShaderList["VS_DepthMapPNCT"]);
-		((AHeroObj*)iter)->SetPSShader(nullptr);
+		((AModel*)iter)->SetMatrix(nullptr, &CurCamera->m_matView, &CurCamera->m_matProj);
+		((AModel*)iter)->SetVSShader(DxManager::Get().m_VShaderList["VS_DepthMapPNCT"]);
+		((AModel*)iter)->SetPSShader(nullptr);
 		iter->Render(DxManager::GetDContext());
 		((AHeroObj*)iter)->ReturnVSShader();
 		((AHeroObj*)iter)->ReturnPSShader();
@@ -123,9 +123,9 @@ bool ObjectManager::Render(ID3D11DeviceContext* pDContext) noexcept
 	}
 	for (auto& iter : *ObjectManager::Get().GetObjectList(EObjType::AObject))
 	{
-		((AHeroObj*)iter)->SetMatrix(nullptr, &CurCamera->m_matView, &CurCamera->m_matProj);
-		((AHeroObj*)iter)->SetVSShader(DxManager::Get().m_VShaderList["VS_DepthMapPNCT"]);
-		((AHeroObj*)iter)->SetPSShader(nullptr);
+		((AModel*)iter)->SetMatrix(nullptr, &CurCamera->m_matView, &CurCamera->m_matProj);
+		((AModel*)iter)->SetVSShader(DxManager::Get().m_VShaderList["VS_DepthMapPNCT"]);
+		((AModel*)iter)->SetPSShader(nullptr);
 		iter->Render(DxManager::GetDContext());
 		((AHeroObj*)iter)->ReturnVSShader();
 		((AHeroObj*)iter)->ReturnPSShader();
