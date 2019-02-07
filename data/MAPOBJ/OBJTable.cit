@@ -1,0 +1,13 @@
+*NUMMAPOBJ	2
+
+////////////////////////////////////////////////////////////////////////// 
+*OBJNAME		test
+*SHADERFILENMAE		..\..\data\MAPOBJ\Character.hlsl
+*OBJFILENMAE		..\..\data\MAPOBJ\HOUSE\houseTown.skm
+
+
+
+////////////////////////////////////////////////////////////////////////// 
+*OBJNAME		test2
+*SHADERFILENMAE		..\..\data\MAPOBJ\Character.hlsl
+*OBJFILENMAE		..\..\data\MAPOBJ\HOUSE\houseWood.skm
