@@ -523,6 +523,20 @@ void IntroScene::SetObjects() noexcept
 	ObjectManager::Get().SetProtoObject(pHeroObj);
 
 	// ======================================= Character =====================================================
+	//I_MAPMGR.Init();
+	//I_MAPMGR.Load(DxManager::GetDevice(), DxManager::GetDContext(), L"../../Data/MAPOBJ/OBJTable.cit");
+	//I_MAPMGR.GetPtr(L"test")->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+	//ObjectManager::Get().PushObject(I_MAPMGR.GetPtr(L"test"));
+	//AMapObj* test = (AMapObj*)I_MAPMGR.GetPtr(L"test")->clone();
+	//test->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+	//test->m_myName = L"MObj";
+	//test->m_objType = EObjType::Character;
+	//test->SetPositionY(150.0f);
+	//test->SetScale(1.0f, 1.0f, 1.0f);
+	//test->AddComponent( pRenderer->clone());
+	////ObjectManager::Get().PushObject(test);
+	//ObjectManager::Get().SetProtoObject(test);
+
 	// ±â»ç 
 	pHeroObj = new AHeroObj();
 	pHeroObj->SetPlayerCharacter(Paladin);

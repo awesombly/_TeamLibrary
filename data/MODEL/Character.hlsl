@@ -253,7 +253,7 @@ PBUFFER_OUTPUT PS(VS_OUTPUT input) : SV_Target
 	// ½¦µµ¿ì
 	//if (cb_useShadow)
 	//{
-		static const float	iNumKernel = 2.5f;
+		static const float	iNumKernel = 3.0f;
 		float fLightAmount = 0.0f;
 		float3 ShadowTexColor = input.TexShadow.xyz / input.TexShadow.w;
 	

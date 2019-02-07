@@ -41,7 +41,33 @@ bool GameScene::Init() noexcept
 	//test->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
 	//test->m_objType = EObjType::AObject;
 	//test->SetPositionY(150.0f);
+	//test->SetScale(100.0f, 100.0f, 100.0f);
 	//ObjectManager::Get().PushObject(test);
+	Renderer* pRenderer = new Renderer(L"Render");
+	pRenderer->SetEnviromentMap(((Renderer*)m_pSkyBox->GetComponent(EComponent::Renderer))->m_srcName, EEnviType::Refraction);
+		I_MAPMGR.Init();
+	I_MAPMGR.Load(DxManager::GetDevice(), DxManager::GetDContext(), L"../../Data/MAPOBJ/OBJTable.cit");
+	m_pTest = I_MAPMGR.GetPtr(L"test");
+	m_pTest->m_objType = EObjType::AObject;
+	m_pTest->SetScale(10.0f, 10.0f, 10.0f);
+	m_pTest->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+	m_pTest->AddComponent(pRenderer);
+	ObjectManager::Get().PushObject(m_pTest);
+	//AMapObj* test = (AMapObj*)I_MAPMGR.GetPtr(L"test")->clone();
+	//test->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+	//test->m_myName = L"MObj";
+	//test->m_objType = EObjType::Character;
+	//test->SetPositionY(150.0f);
+	//test->SetScale(1.0f, 1.0f, 1.0f);
+	//test->AddComponent( pRenderer->clone());
+	//ObjectManager::Get().PushObject(test);
+	//ObjectManager::Get().SetProtoObject(test);
+
+	//ObjectManager::Get().TakeObject(L"MObj")->SetPosition(0.0f, 100.0f, 0.0f);
+	//ObjectManager::Get().TakeObject(L"MObj")->SetPosition(100.0f, 200.0f, 0.0f);
+	//ObjectManager::Get().TakeObject(L"MObj")->SetPosition(-100.0f, 300.0f, 0.0f);
+	//ObjectManager::Get().TakeObject(L"MObj")->SetPosition(0.0f, 400.0f, 100.0f);
+	//ObjectManager::Get().TakeObject(L"MObj")->SetPosition(0.0f, 500.0f, -100.0f);
 
 	// 높이 맵
 	m_pHeightMap = new HeightMap(L"HeightMap", EComponent::Renderer, L"mounds.jpg");
@@ -147,6 +173,7 @@ bool GameScene::Frame() noexcept
 	//m_pMapTree->Frame();
 	DxManager::Get().Frame();
 	ObjectManager::Get().Frame(Timer::SPF, Timer::AccumulateTime);
+	//m_pTest->Frame(Timer::SPF, Timer::AccumulateTime);
 	SoundManager::Get().Frame();
 
 	// 경계 막기
@@ -203,7 +230,9 @@ bool GameScene::Render() noexcept
 	//I_Object.Render(DxManager::Get().GetDContext());
 	///
 	DxManager::Get().Render();
-	ObjectManager::Get().Render(DxManager::Get().GetDContext());
+	ObjectManager::Get().Render(DxManager::GetDContext());
+	//DxManager::Get().ClearDepthStencilView();
+	//m_pTest->Render(DxManager::GetDContext());
 	SoundManager::Get().Render();
 
 	// 바운딩 박스 표시
@@ -564,7 +593,7 @@ void GameScene::HostFrame() noexcept
 			}
 
 			// 클리어 조건
-			if (m_waveCount >= 5 && m_spawnCount <= 2)
+			if (m_waveCount >= 5 && m_spawnCount <= 1)
 			{
 				if (ObjectManager::Get().GetObjectList(EObjType::Enemy)->empty())
 				{

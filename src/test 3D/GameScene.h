@@ -25,6 +25,7 @@ public:
 	JSliderCtrl* m_pMouseSense  = nullptr;
 	wstring		 m_chatMessage;
 	///
+	AMapObj* m_pTest;
 	HeightMap*	 m_pHeightMap = nullptr;
 public:
 	void DrawBoundingBox()		noexcept;
