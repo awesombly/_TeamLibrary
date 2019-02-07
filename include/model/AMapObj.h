@@ -28,7 +28,7 @@ public:
 	bool		Draw(ID3D11DeviceContext*    pContext, AModel* pParent);
 	bool		LoadTexture(ID3D11Device* device, const TCHAR* fileName);
 
-
+	//bool SetMapObject(const TCHAR* fileName, float x, float y, float z);
 	GameObject* clone() noexcept override;
 public:
 	AMapObj();
