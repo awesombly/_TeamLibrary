@@ -31,6 +31,9 @@ class AHeroObj : public AModel
 {
 	KKB::PLAYER_SELECT		m_PlayerSelect;
 	const TCHAR*			m_IdleName;
+	ID3D11VertexShader*		m_HeroVS;
+	ID3D11PixelShader*		m_HeroPS;
+
 public:
 
 	int						m_iObjectIndex;
@@ -75,6 +78,19 @@ public:
 	
 	bool		SetANIM_Loop(const TCHAR* szName);
 	bool		SetANIM_OneTime(const TCHAR* szName);
+
+
+	bool					SetVSShader(ID3D11VertexShader* pVs);
+	bool					SetPSShader(ID3D11PixelShader* pPs);
+
+	ID3D11VertexShader*		GetVSShader();
+	ID3D11PixelShader*		GetPSShader();
+
+	bool					ReturnVSShader();
+	bool					ReturnPSShader();
+
+
+
 	//D3DXVECTOR3 GetPlayerPos();
 	//INT GetPlayerPosX();
 	//INT GetPlayerPosY();

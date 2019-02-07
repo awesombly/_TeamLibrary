@@ -11,7 +11,7 @@ public:
 
 	int								m_iCurIndex;
 
-	map<int, ACharacter*>	m_MgrList;
+	map<int, ACharacter*>		m_MgrList;
 
 public:
 	bool		Init();// noexcept override;;
