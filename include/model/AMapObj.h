@@ -5,7 +5,10 @@
 
 class AMapObj : public AModel
 {
+	AMapObj*	m_pMapObj;
+
 public:
+
 	int									m_iMaxWeight;
 	vector<SkinMesh*>					m_pSkinMeshList;
 	vector<D3DXMATRIX>					m_matBipedList;
@@ -15,6 +18,8 @@ public:
 		return &m_matBipedList;
 	};
 public:
+
+	bool		Frame(const float& spf, const float& accTime)  noexcept override;
 	bool		Render(ID3D11DeviceContext*    pContext) noexcept override;
 	bool		Release()noexcept override;
 	bool		Load(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, const TCHAR* szLoadName, const TCHAR* pLoadShaderFile, bool bThread = false);
