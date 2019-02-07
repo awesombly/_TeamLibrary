@@ -43,16 +43,16 @@ bool GameScene::Init() noexcept
 	//test->SetPositionY(150.0f);
 	//test->SetScale(100.0f, 100.0f, 100.0f);
 	//ObjectManager::Get().PushObject(test);
-	Renderer* pRenderer = new Renderer(L"Render");
-	pRenderer->SetEnviromentMap(((Renderer*)m_pSkyBox->GetComponent(EComponent::Renderer))->m_srcName, EEnviType::Refraction);
-		I_MAPMGR.Init();
-	I_MAPMGR.Load(DxManager::GetDevice(), DxManager::GetDContext(), L"../../Data/MAPOBJ/OBJTable.cit");
-	m_pTest = I_MAPMGR.GetPtr(L"test");
-	m_pTest->m_objType = EObjType::AObject;
-	m_pTest->SetScale(10.0f, 10.0f, 10.0f);
-	m_pTest->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-	m_pTest->AddComponent(pRenderer);
-	ObjectManager::Get().PushObject(m_pTest);
+	//Renderer* pRenderer = new Renderer(L"Render");
+	//pRenderer->SetEnviromentMap(((Renderer*)m_pSkyBox->GetComponent(EComponent::Renderer))->m_srcName, EEnviType::Refraction);
+	//	I_MAPMGR.Init();
+	//I_MAPMGR.Load(DxManager::GetDevice(), DxManager::GetDContext(), L"../../Data/MAPOBJ/OBJTable.cit");
+	//m_pTest = I_MAPMGR.GetPtr(L"test");
+	//m_pTest->m_objType = EObjType::AObject;
+	//m_pTest->SetScale(10.0f, 10.0f, 10.0f);
+	//m_pTest->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+	//m_pTest->AddComponent(pRenderer);
+	//ObjectManager::Get().PushObject(m_pTest);
 	//AMapObj* test = (AMapObj*)I_MAPMGR.GetPtr(L"test")->clone();
 	//test->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
 	//test->m_myName = L"MObj";
@@ -69,13 +69,13 @@ bool GameScene::Init() noexcept
 	//ObjectManager::Get().TakeObject(L"MObj")->SetPosition(0.0f, 400.0f, 100.0f);
 	//ObjectManager::Get().TakeObject(L"MObj")->SetPosition(0.0f, 500.0f, -100.0f);
 
-	// ³ôÀÌ ¸Ê
-	m_pHeightMap = new HeightMap(L"HeightMap", EComponent::Renderer, L"mounds.jpg");
-	auto pObject = new GameObject(L"HeightMap", m_pHeightMap, EObjType::Map);
-	m_pHeightMap->CreateHeightMap(DxManager::GetDContext(), L"HeightMap/Islands, Leafy.bmp", 8, 1.0f);
-	//mapMap->SetEnviromentMap(((Renderer*)m_pSkyBox->GetComponent(EComponent::Renderer))->m_srcName, EEnviType::Fresnel);
-	pObject->Translate(Vector3::Down * 100.0f);
-	ObjectManager::Get().PushObject(pObject);
+	//// ³ôÀÌ ¸Ê
+	//m_pHeightMap = new HeightMap(L"HeightMap", EComponent::Renderer, L"mounds.jpg");
+	//auto pObject = new GameObject(L"HeightMap", m_pHeightMap, EObjType::Map);
+	//m_pHeightMap->CreateHeightMap(DxManager::GetDContext(), L"HeightMap/Islands, Leafy.bmp", 8, 1.0f);
+	////mapMap->SetEnviromentMap(((Renderer*)m_pSkyBox->GetComponent(EComponent::Renderer))->m_srcName, EEnviType::Fresnel);
+	//pObject->Translate(Vector3::Down * 100.0f);
+	//ObjectManager::Get().PushObject(pObject);
 
 	//I_Object.ViewColliderSwitch();
 	//for (auto& [name, matrixList] : I_Object.m_ObjectMatrix)
@@ -170,7 +170,7 @@ bool GameScene::Frame() noexcept
 		HostFrame();
 	}
 	///
-	//m_pMapTree->Frame();
+	m_pMapTree->Frame();
 	DxManager::Get().Frame();
 	ObjectManager::Get().Frame(Timer::SPF, Timer::AccumulateTime);
 	//m_pTest->Frame(Timer::SPF, Timer::AccumulateTime);
@@ -196,8 +196,8 @@ bool GameScene::Frame() noexcept
 	{
 		if (iter == nullptr || iter->m_pParent == nullptr)
 			continue;
-		iter->m_mapHeight = m_pHeightMap->GetMapHeight(iter->m_pParent->GetPosition());
-		//iter->m_mapHeight = m_pMap->GetHeight(iter->m_pParent->GetPosition().x, iter->m_pParent->GetPosition().z);
+		//iter->m_mapHeight = m_pHeightMap->GetMapHeight(iter->m_pParent->GetPosition());
+		iter->m_mapHeight = m_pMap->GetHeight(iter->m_pParent->GetPosition().x, iter->m_pParent->GetPosition().z);
 	}
 
 	/// Àç»ý¼º
@@ -225,9 +225,9 @@ bool GameScene::Frame() noexcept
 // ·£´õ
 bool GameScene::Render() noexcept
 {
-	//m_pMap->SetMatrix(NULL, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-	//I_Object.SetMatrix(&ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-	//I_Object.Render(DxManager::Get().GetDContext());
+	m_pMap->SetMatrix(NULL, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+	I_Object.SetMatrix(&ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+	I_Object.Render(DxManager::Get().GetDContext());
 	///
 	DxManager::Get().Render();
 	ObjectManager::Get().Render(DxManager::GetDContext());
@@ -246,7 +246,7 @@ bool GameScene::Render() noexcept
 // ¸±¸®Áî
 bool GameScene::Release() noexcept
 {
-	//if (m_pMapTree) m_pMapTree->Release();
+	if (m_pMapTree) m_pMapTree->Release();
 
 	ObjectManager::Cameras[ECamera::Main]->CutParent();
 	ObjectManager::Get().PopObject(ObjectManager::Cameras[ECamera::Main]);
@@ -627,7 +627,7 @@ bool GameScene::FirstInit() noexcept
 	{
 		m_isFirstInit = false;
 		// ¸Ê Çª½¬
-		//ObjectManager::Get().PushObject(m_pMap);
+		ObjectManager::Get().PushObject(m_pMap);
 		//
 		m_pPlayer->m_myName = L"Player";
 		m_pPlayer->m_objType = EObjType::Object;

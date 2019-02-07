@@ -149,16 +149,16 @@ bool IntroScene::FirstInit() noexcept
 		ErrorMessage(__FUNCTION__ + " -> Object Setting."s);
 		SetObjects();
 		// =============================== 맵 생성 =================================
-		//ErrorMessage(__FUNCTION__ + " -> Map Loading."s);
-		//XMapImporter m_Importer;		// 세이브 데이터 로더
-		//m_Importer.Import();
-		//m_pMap = new XMap();
-		//m_pMap->Create(DxManager::Get().GetDevice(), DxManager::Get().GetDContext(), &m_Importer, _T("../../Data/Map/Shader/MapShader_Specular.hlsl"), _T("../../Data/Map/Shader/MapShader_Color_Specular.hlsl"), "VS", "PS");
-		//m_pMapTree = new XQuadTreeIndex();
-		//m_pMapTree->Build(m_pMap);
-		//m_pMap->m_objType = EObjType::Map;
-		//m_pMap->isGlobal(true);
-		//m_pMap->isStatic(true);
+		ErrorMessage(__FUNCTION__ + " -> Map Loading."s);
+		XMapImporter m_Importer;		// 세이브 데이터 로더
+		m_Importer.Import();
+		m_pMap = new XMap();
+		m_pMap->Create(DxManager::Get().GetDevice(), DxManager::Get().GetDContext(), &m_Importer, _T("../../Data/Map/Shader/MapShader_Specular.hlsl"), _T("../../Data/Map/Shader/MapShader_Color_Specular.hlsl"), "VS", "PS");
+		m_pMapTree = new XQuadTreeIndex();
+		m_pMapTree->Build(m_pMap);
+		m_pMap->m_objType = EObjType::Map;
+		m_pMap->isGlobal(true);
+		m_pMap->isStatic(true);
 		////ObjectManager::Get().PushObject(m_pMap);
 		return true;
 	}
