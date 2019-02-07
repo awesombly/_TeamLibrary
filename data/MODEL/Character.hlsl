@@ -168,18 +168,22 @@ VS_OUTPUT VS(PNCT5_VS_INPUT input)//,uniform bool bHalfVector )
 	}
 
 	float4 WorldPos = output.pos = mul(output.pos, g_matWorld);
+	float3 vLightDir = normalize(cb_LightVector.xyz - output.pos.xyz);
 	output.pos = mul(output.pos, g_matView);
 	output.pos = mul(output.pos, g_matProj);
 
+	Norm = output.nor.xyz;
+	output.nor.z = Norm.x;
+	output.nor.x = Norm.y;
+	output.nor.y = Norm.z;
 	output.nor = float4(normalize(mul(output.nor.xyz, (float3x3)g_matWorld)), output.pos.w / FAR);// g_matWorldInvTrans));
 	//output.nor = float4(normalize(mul(output.nor.xyz, ), output.pos.w / FAR);// g_matWorldInvTrans));
 	float3 vNormal = output.nor.xyz;
 	output.tex = input.tex;
 
-	float3 vLightDir = normalize(cb_LightVector.xyz - WorldPos.xyz);
 	//float fDot = max(0.2f, lerp(dot(vLightDir, output.nor.xyz), 1.0f, 0.2f) + 0.2f);
 	//output.col = /*float4(fDot, fDot, fDot, 1.0f) **/ /*input.col **/ fDot;
-	output.col = max(0.3f, dot(vLightDir, vNormal) + 0.4f);
+	output.col = max(0.3f, dot(vLightDir, vNormal) + 0.7f);
 	//output.col = input.col;
 
 	// È¯°æ

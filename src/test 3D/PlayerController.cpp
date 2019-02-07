@@ -189,7 +189,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 			pItem->SetDamage(0.5f, PacketManager::Get().UserList[socket]->StatStr);
 			pItem->GetCollider()->AddIgnoreList(pObject->GetCollider());
 
-			SoundManager::Get().PlayVariation("SV_paladin_atk.mp3", false, 4);
+			SoundManager::Get().PlayVariation("SV_paladin_atk", false, 4);
 			SoundManager::Get().PlayQueue("SE_Sword_slash1.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
 		}	break;
 		case EAction::RSkill:

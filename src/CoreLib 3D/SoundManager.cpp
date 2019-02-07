@@ -122,7 +122,7 @@ void SoundManager::Play(const string_view& soundName, const bool& isPlay) noexce
 
 void SoundManager::PlayVariation(string&& soundName, const bool& isPlay, const int& vCount) noexcept
 {
-	soundName = soundName + (char)('1' + (rand() % vCount));
+	soundName = soundName + (char)('1' + (rand() % vCount)) + ".mp3";
 	Play(soundName, isPlay);
 }
 

@@ -255,17 +255,17 @@ bool GameScene::CheatMessage() noexcept
 		}
 		else if (str._Equal(L"Zombie"))
 		{
-			PacketManager::Get().SendTakeObject(L"Zombie", ESocketType::EZombie, atoi(WCharToChar(m_chatMessage.substr(finder + 1).c_str())), 1.0f, 0.1f, 0.2f, { -500.0f, 0.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
+			PacketManager::Get().SendTakeObject(L"Zombie", ESocketType::EZombie, atoi(WCharToChar(m_chatMessage.substr(finder + 1).c_str())), 1.0f, 0.25f, 0.05f, { -500.0f, 0.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
 			return false;
 		}
 		else if (str._Equal(L"Caster"))
 		{
-			PacketManager::Get().SendTakeObject(L"Caster", ESocketType::ECaster, atoi(WCharToChar(m_chatMessage.substr(finder + 1).c_str())), 0.8f, 0.1f, 0.2f, { -500.0f, 0.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
+			PacketManager::Get().SendTakeObject(L"Caster", ESocketType::ECaster, atoi(WCharToChar(m_chatMessage.substr(finder + 1).c_str())), 0.8f, 0.22f, 0.05f, { -500.0f, 0.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
 			return false;
 		}
 		else if (str._Equal(L"Crawler"))
 		{			
-			PacketManager::Get().SendTakeObject(L"Crawler", ESocketType::ECrawler, atoi(WCharToChar(m_chatMessage.substr(finder + 1).c_str())), 0.6f, 0.15f, 0.1f, { -500.0f, 0.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
+			PacketManager::Get().SendTakeObject(L"Crawler", ESocketType::ECrawler, atoi(WCharToChar(m_chatMessage.substr(finder + 1).c_str())), 0.6f, 0.2f, 0.05f, { -500.0f, 0.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
 			return false;
 		}
 		else if (str._Equal(L"Mutant"))
