@@ -118,6 +118,9 @@
     <ClCompile Include="CEventTimer.cpp">
       <Filter>Component\Basic</Filter>
     </ClCompile>
+    <ClCompile Include="HeightMap.cpp">
+      <Filter>Component</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CoreDX.h">
@@ -251,6 +254,9 @@
     </ClInclude>
     <ClInclude Include="CEventTimer.h">
       <Filter>Component\Basic</Filter>
+    </ClInclude>
+    <ClInclude Include="HeightMap.h">
+      <Filter>Component</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

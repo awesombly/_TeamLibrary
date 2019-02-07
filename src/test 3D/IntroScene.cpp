@@ -176,10 +176,10 @@ void IntroScene::SetObjects() noexcept
 	//ObjectManager::Get().SetProtoComponent(new RSphere(20, L"Sphere", L"None.png"));
 	ObjectManager::Get().SetProtoComponent(new RSphere(10, L"RowSphere", L"None.png"));
 	// ¶óÀÌÆ®
-	auto pTrans = new CTransformer(Vector3::Up * 250.0f, Quaternion::Up * PI * 0.35f, Vector3::One);
+	auto pTrans = new CTransformer(Vector3::Up * 150.0f, Quaternion::Up * PI * 0.35f, Vector3::One);
 	pTrans->TransEvent = [](Transform* pParent, Transform* pTrans, const float& spf, const float& accTime) {
 		pParent->SetTransform(*pTrans);
-		pParent->Translate({ cosf(0.5f * accTime) * 200.0f, 0.0f, sinf(0.5f * accTime) * 200.0f });
+		pParent->Translate({ cosf(0.5f * accTime) * 200.0f, 0.0f, sinf(0.1f * accTime) * 200.0f });
 		return; spf; accTime; pTrans;
 	};
 	ObjectManager::Get().Lights.front()->AddComponent({ pTrans });
@@ -191,7 +191,7 @@ void IntroScene::SetObjects() noexcept
 	pObject->SetScale(Vector3::One * 7);
 	pObject->SetParent(ObjectManager::Get().Lights.front());
 
-	// ======================================= Effect =====================================================
+	// ======================================= Load =====================================================
 	const auto urlEffect = L"../../data/script";
 	ObjectManager::Get().SetProtoObject(new GameObject(L"EZDead", m_pParser->CreateFromParticle(L"ZombieDead.eff", urlEffect), EObjType::Effect));
 	ObjectManager::Get().SetProtoObject(new GameObject(L"EZDead2", m_pParser->CreateFromParticle(L"ZombieDead2.eff", urlEffect), EObjType::Effect));
@@ -220,11 +220,11 @@ void IntroScene::SetObjects() noexcept
 	ObjectManager::Get().SetProtoObject(new GameObject(L"EFire", m_pParser->CreateFromParticle(L"CampFire.eff", urlEffect), EObjType::Effect));
 	ObjectManager::Get().SetProtoObject(new GameObject(L"EBerserk", m_pParser->CreateFromParticle(L"Berserk.eff", urlEffect), EObjType::Effect));
 	ObjectManager::Get().SetProtoComponent(m_pParser->CreateFromParticle(L"Fire.eff", urlEffect));
-	// ====================================== Item =====================================================
 
 	Renderer* pRenderer = new Renderer(L"Render");
 	pRenderer->SetEnviromentMap(((Renderer*)m_pSkyBox->GetComponent(EComponent::Renderer))->m_srcName, EEnviType::Refraction);
 
+	// ======================================== Effect =====================================================
 	// ÇÃ·¹ÀÌ¾î »ç¸Á
 	pCollider = new Collider(80.0f);
 	pObject = new GameObject(L"PDead", { pCollider, m_pParser->CreateFromParticle(L"Boom3.eff", urlEffect) }, EObjType::Effect);
@@ -287,31 +287,15 @@ void IntroScene::SetObjects() noexcept
 	pCollider->usePhysics(false);
 	ObjectManager::Get().SetProtoObject(pObject);
 
-	// °ÅÀÎÅÛ
-	pCollider = new Collider(80.0f);
-	pObject = new GameObject(L"Atom", { pCollider, m_pParser->CreateFromParticle(L"Bigbang.eff", urlEffect), new CTransformer(Vector3::Zero, {3.0f, 5.0f, 7.0f, 0.0f}) }, EObjType::Effect);
-	pCollider->SetGravityScale(0.0f);
-	pCollider->usePhysics(false);
-	pCollider->CollisionEvent = MyEvent::GiantItem;
-	pCollider->m_eTag = ETag::Dummy;
-	ObjectManager::Get().SetProtoObject(pObject);
+	//// °ÅÀÎÅÛ
+	//pCollider = new Collider(80.0f);
+	//pObject = new GameObject(L"Atom", { pCollider, m_pParser->CreateFromParticle(L"Bigbang.eff", urlEffect), new CTransformer(Vector3::Zero, {3.0f, 5.0f, 7.0f, 0.0f}) }, EObjType::Effect);
+	//pCollider->SetGravityScale(0.0f);
+	//pCollider->usePhysics(false);
+	//pCollider->CollisionEvent = MyEvent::GiantItem;
+	//pCollider->m_eTag = ETag::Dummy;
+	//ObjectManager::Get().SetProtoObject(pObject);
 
-	// ÅÛ »óÀÚ
-	auto pHeroObj = new AHeroObj();
-	pHeroObj->SetPlayerCharacter(ITEM_Box);
-	pHeroObj->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-	pHeroObj->m_myName = L"ItemBox";
-	pHeroObj->m_objType = EObjType::Dummy;
-	pHeroObj->SetScale(Vector3::One * 0.3f);
-	pCollider = new Collider(13.0f);
-	//pCollider = new ColliderOBB(-Vector3::One, Vector3::One);
-	pHeroObj->AddComponent({ pCollider, new CTransformer(Vector3::Zero, Quaternion::Left * 3.0f) });
-	pHeroObj->SetHP(10000.0f);
-	pHeroObj->m_pPhysics->m_repulsion = 1.3f;
-	pHeroObj->SetGravityScale(2.0f);
-	pCollider->CollisionEvent = MyEvent::ItemBox;
-	pCollider->m_eTag = ETag::Enemy;
-	ObjectManager::Get().SetProtoObject(pHeroObj);
 
 	// Ãæ°ÝÆÄ
 	pCollider = new Collider(1.0f);
@@ -330,163 +314,6 @@ void IntroScene::SetObjects() noexcept
 	pCollider->SetGravityScale(0.0f);
 	pCollider->usePhysics(false);
 	ObjectManager::Get().SetProtoObject(pObject);
-
-	// ÆøÅº
-	pHeroObj = new AHeroObj();
-	pHeroObj->SetPlayerCharacter(ITEM_Chicken);
-	pHeroObj->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-	pHeroObj->m_myName = L"PBomb";
-	pHeroObj->m_objType = EObjType::Dummy;
-	pHeroObj->SetScale(Vector3::One * 0.6f);
-	pCollider = new Collider(17.0f);
-	pHeroObj->AddComponent({ pCollider, ObjectManager::Get().TakeComponent(L"Fire") });
-	pCollider->m_pivot = Vector3::Up * 6.0f;
-	pCollider->CollisionEvent = MyEvent::PlayerBomb;
-	pCollider->m_eTag = ETag::Dummy;
-	ObjectManager::Get().SetProtoObject(pHeroObj);
-
-	// ÆøÅº Æø¹ß
-	pCollider = new Collider(60.0f);
-	pObject = new GameObject(L"PBoom", { pCollider, pZBoom->clone() }, EObjType::Effect);
-	pCollider->SetGravityScale(0.0f);
-	pCollider->usePhysics(false);
-	pCollider->CollisionEvent = MyEvent::MeleeHit;
-	pCollider->m_eTag = ETag::Dummy;
-	ObjectManager::Get().SetProtoObject(pObject);
-
-	// ½ÃÇÑÆøÅº
-	pHeroObj = new AHeroObj();
-	pHeroObj->SetPlayerCharacter(ITEM_Bomb);
-	pHeroObj->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-	pHeroObj->m_myName = L"TimeBomb";
-	pHeroObj->m_objType = EObjType::Dummy;
-	pCollider = new Collider(5.0f);
-	pHeroObj->SetScale(Vector3::One);
-	auto pTimer = new CEventTimer(3.0f);
-	pTimer->TimerEvent = { TimeEvent::TimeBomb, nullptr };
-	pHeroObj->AddComponent({ pCollider, pTimer, ObjectManager::Get().TakeComponent(L"Fire") });
-	pCollider->m_eTag = ETag::Dummy;
-	ObjectManager::Get().SetProtoObject(pHeroObj);
-
-	// Ãæ°Ý ÆøÅº
-	pHeroObj = new AHeroObj();
-	pHeroObj->SetPlayerCharacter(ITEM_Chicken);
-	pHeroObj->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-	pHeroObj->m_myName = L"ShockBomb";
-	pHeroObj->m_objType = EObjType::Dummy;
-	pCollider = new Collider(28.0f);
-	pHeroObj->SetScale(Vector3::One * 0.4f);
-	pHeroObj->AddComponent({ pCollider });
-	pCollider->m_eTag = ETag::Enemy;
-	pCollider->CollisionEvent = MyEvent::ShockBoom;
-	ObjectManager::Get().SetProtoObject(pHeroObj);
-
-	// Áö·Ú
-	pHeroObj = new AHeroObj();
-	pHeroObj->SetPlayerCharacter(ITEM_Mine);
-	pHeroObj->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-	pHeroObj->m_myName = L"Mine";
-	pHeroObj->m_objType = EObjType::Dummy;
-	pCollider = new Collider(15.0f);
-	pHeroObj->AddComponent({ pCollider });
-	pCollider->m_eTag = ETag::Dummy;
-	pCollider->CollisionEvent = MyEvent::MineBoom;
-	ObjectManager::Get().SetProtoObject(pHeroObj);
-
-	// ¹Ì»çÀÏ
-	pHeroObj = new AHeroObj();
-	pHeroObj->SetPlayerCharacter(ITEM_Missile);
-	pHeroObj->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-	pHeroObj->m_myName = L"Missile";
-	pHeroObj->m_objType = EObjType::Dummy;
-	pHeroObj->SetScale(Vector3::One * 0.1f);
-	pCollider = new Collider(15.0f);
-	pTimer = new CEventTimer(1.2f);
-	pTimer->TimerEvent = { TimeEvent::MissileShot, (void*)&Vector3::Zero };
-	pHeroObj->AddComponent({pCollider, pTimer});
-	pCollider->m_pivot = Vector3::Up * 8.0f;
-	pCollider->SetGravityScale(0.1f);
-	pCollider->m_eTag = ETag::Dummy;
-	pCollider->CollisionEvent = MyEvent::MissileCollision;
-	ObjectManager::Get().SetProtoObject(pHeroObj);
-
-	// ÇÙ ÅõÇÏ
-	pHeroObj = new AHeroObj();
-	pHeroObj->SetPlayerCharacter(ITEM_Bird);
-	pHeroObj->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-	pHeroObj->m_myName = L"SkyShip";
-	pHeroObj->m_objType = EObjType::Dummy;
-	pHeroObj->SetScale(Vector3::One * 70.0f);
-	pCollider = new Collider(0.0001f);
-	pTimer = new CEventTimer(1.5f);
-	pTimer->TimerEvent = { TimeEvent::NuclearLaunch, nullptr };
-	pHeroObj->AddComponent({ pCollider, pTimer, new CEventTimer(6.0f) });
-	//pCollider->m_pivot = Vector3::Up * 8.0f;
-	pCollider->SetGravityScale(0.0f);
-	pCollider->m_eTag = ETag::Dummy;
-	//pCollider->CollisionEvent = MyEvent::MissileCollision;
-	ObjectManager::Get().SetProtoObject(pHeroObj);
-
-	// ÇÙ
-	pHeroObj = new AHeroObj();
-	pHeroObj->SetPlayerCharacter(ITEM_Missile);
-	pHeroObj->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-	pHeroObj->m_myName = L"Nuclear";
-	pHeroObj->m_objType = EObjType::Dummy;
-	pHeroObj->SetScale(Vector3::One * 1.0f);
-	pHeroObj->SetRotation(Quaternion::Down * PI);
-	pCollider = new Collider(10.0f);
-	pHeroObj->AddComponent({ pCollider});
-	pCollider->m_pivot = Vector3::Down * 50.0f;
-	//pCollider->SetGravityScale(0.0f);
-	pCollider->m_eTag = ETag::Dummy;
-	pCollider->CollisionEvent = MyEvent::NuclearBoom;
-	ObjectManager::Get().SetProtoObject(pHeroObj);
-
-	// ´ë°Å
-	pHeroObj = new AHeroObj();
-	pHeroObj->SetPlayerCharacter(ITEM_Dagger);
-	pHeroObj->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-	pHeroObj->m_myName = L"Dagger";
-	pHeroObj->m_objType = EObjType::Dummy;
-	pCollider = new Collider(6.0f);
-	pHeroObj->SetScale(Vector3::One * 0.25f);
-	pHeroObj->AddComponent({ pCollider });
-	pHeroObj->SetHP(100.0f);
-	pCollider->m_pivot = Vector3::Up * 6.0f + Vector3::Forward * 2.5f;
-	//pCollider->SetGravityScale(0.5f);
-	pCollider->CollisionEvent = MyEvent::DaggerHit;
-	pCollider->m_eTag = ETag::Dummy;
-	ObjectManager::Get().SetProtoObject(pHeroObj);
-
-	///
-	// È­»ì
-	pHeroObj = new AHeroObj();
-	pHeroObj->SetPlayerCharacter(ITEM_ARROW);
-	pHeroObj->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-	pHeroObj->m_myName = L"Arrow";
-	pHeroObj->m_objType = EObjType::Dummy;
-	pCollider = new Collider(6.0f);
-	pHeroObj->AddComponent({ pCollider, ObjectManager::Get().TakeComponent(L"Fire") });
-	//pCollider->m_pivot = Vector3::Up * 6.0f + Vector3::Forward * 2.5f;
-	pCollider->SetGravityScale(0.5f);
-	pCollider->CollisionEvent = MyEvent::OneTimeHit;
-	pCollider->m_eTag = ETag::Dummy;
-	ObjectManager::Get().SetProtoObject(pHeroObj);
-
-	// È­»ìºñ
-	pHeroObj = new AHeroObj();
-	pHeroObj->SetPlayerCharacter(ITEM_Bomb);
-	pHeroObj->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-	pHeroObj->m_myName = L"ArrowR";
-	pHeroObj->m_objType = EObjType::Dummy;
-	pCollider = new Collider(1.0f);
-	pHeroObj->SetScale(Vector3::One);
-	pTimer = new CEventTimer(1.5f);
-	pTimer->TimerEvent = { TimeEvent::ArrowRain, nullptr };
-	pHeroObj->AddComponent({ pCollider, pTimer });
-	pCollider->m_eTag = ETag::Dummy;
-	ObjectManager::Get().SetProtoObject(pHeroObj);
 
 	// ÈúÆø
 	pCollider = new Collider(8.0f);
@@ -507,15 +334,189 @@ void IntroScene::SetObjects() noexcept
 	pCollider->m_eTag = ETag::Dummy;
 	ObjectManager::Get().SetProtoObject(pObject);
 
+	// ÆøÅº Æø¹ß
+	pCollider = new Collider(60.0f);
+	pObject = new GameObject(L"PBoom", { pCollider, pZBoom->clone() }, EObjType::Effect);
+	pCollider->SetGravityScale(0.0f);
+	pCollider->usePhysics(false);
+	pCollider->CollisionEvent = MyEvent::MeleeHit;
+	pCollider->m_eTag = ETag::Dummy;
+	ObjectManager::Get().SetProtoObject(pObject);
+	// ========================================== ¿ÀºêÁ§Æ® ==================================================================
+	// ÅÛ »óÀÚ
+	auto pHeroObj = new AHeroObj();
+	pHeroObj->SetPlayerCharacter(ITEM_Box);
+	pHeroObj->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+	pHeroObj->m_myName = L"ItemBox";
+	pHeroObj->m_objType = EObjType::AObject;
+	pHeroObj->SetScale(Vector3::One * 0.3f);
+	pCollider = new Collider(13.0f);
+	//pCollider = new ColliderOBB(-Vector3::One, Vector3::One);
+	pHeroObj->AddComponent({ pCollider, pRenderer->clone(), new CTransformer(Vector3::Zero, Quaternion::Left * 3.0f) });
+	pHeroObj->SetHP(10000.0f);
+	pHeroObj->m_pPhysics->m_repulsion = 1.3f;
+	pHeroObj->SetGravityScale(2.0f);
+	pCollider->CollisionEvent = MyEvent::ItemBox;
+	pCollider->m_eTag = ETag::Enemy;
+	ObjectManager::Get().SetProtoObject(pHeroObj);
+
+	// ÆøÅº
+	pHeroObj = new AHeroObj();
+	pHeroObj->SetPlayerCharacter(ITEM_Chicken);
+	pHeroObj->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+	pHeroObj->m_myName = L"PBomb";
+	pHeroObj->m_objType = EObjType::AObject;
+	pHeroObj->SetScale(Vector3::One * 0.6f);
+	pCollider = new Collider(17.0f);
+	pHeroObj->AddComponent({ pCollider, pRenderer->clone(), ObjectManager::Get().TakeComponent(L"Fire") });
+	pCollider->m_pivot = Vector3::Up * 6.0f;
+	pCollider->CollisionEvent = MyEvent::PlayerBomb;
+	pCollider->m_eTag = ETag::Dummy;
+	ObjectManager::Get().SetProtoObject(pHeroObj);
+
+	// ½ÃÇÑÆøÅº
+	pHeroObj = new AHeroObj();
+	pHeroObj->SetPlayerCharacter(ITEM_Bomb);
+	pHeroObj->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+	pHeroObj->m_myName = L"TimeBomb";
+	pHeroObj->m_objType = EObjType::AObject;
+	pCollider = new Collider(5.0f);
+	pHeroObj->SetScale(Vector3::One);
+	auto pTimer = new CEventTimer(3.0f);
+	pTimer->TimerEvent = { TimeEvent::TimeBomb, nullptr };
+	pHeroObj->AddComponent({ pCollider, pRenderer->clone(), pTimer, ObjectManager::Get().TakeComponent(L"Fire") });
+	pCollider->m_eTag = ETag::Dummy;
+	ObjectManager::Get().SetProtoObject(pHeroObj);
+
+	// Ãæ°Ý ÆøÅº
+	pHeroObj = new AHeroObj();
+	pHeroObj->SetPlayerCharacter(ITEM_Chicken);
+	pHeroObj->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+	pHeroObj->m_myName = L"ShockBomb";
+	pHeroObj->m_objType = EObjType::AObject;
+	pCollider = new Collider(28.0f);
+	pHeroObj->SetScale(Vector3::One * 0.4f);
+	pHeroObj->AddComponent({ pCollider, pRenderer->clone() });
+	pCollider->m_eTag = ETag::Enemy;
+	pCollider->CollisionEvent = MyEvent::ShockBoom;
+	ObjectManager::Get().SetProtoObject(pHeroObj);
+
+	// Áö·Ú
+	pHeroObj = new AHeroObj();
+	pHeroObj->SetPlayerCharacter(ITEM_Mine);
+	pHeroObj->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+	pHeroObj->m_myName = L"Mine";
+	pHeroObj->m_objType = EObjType::AObject;
+	pCollider = new Collider(15.0f);
+	pHeroObj->AddComponent({ pCollider, pRenderer->clone() });
+	pCollider->m_eTag = ETag::Dummy;
+	pCollider->CollisionEvent = MyEvent::MineBoom;
+	ObjectManager::Get().SetProtoObject(pHeroObj);
+
+	// ¹Ì»çÀÏ
+	pHeroObj = new AHeroObj();
+	pHeroObj->SetPlayerCharacter(ITEM_Missile);
+	pHeroObj->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+	pHeroObj->m_myName = L"Missile";
+	pHeroObj->m_objType = EObjType::AObject;
+	pHeroObj->SetScale(Vector3::One * 0.1f);
+	pCollider = new Collider(15.0f);
+	pTimer = new CEventTimer(1.2f);
+	pTimer->TimerEvent = { TimeEvent::MissileShot, (void*)&Vector3::Zero };
+	pHeroObj->AddComponent({pCollider, pRenderer->clone(), pTimer});
+	pCollider->m_pivot = Vector3::Up * 8.0f;
+	pCollider->SetGravityScale(0.1f);
+	pCollider->m_eTag = ETag::Dummy;
+	pCollider->CollisionEvent = MyEvent::MissileCollision;
+	ObjectManager::Get().SetProtoObject(pHeroObj);
+
+	// ÇÙ ÅõÇÏ
+	pHeroObj = new AHeroObj();
+	pHeroObj->SetPlayerCharacter(ITEM_Bird);
+	pHeroObj->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+	pHeroObj->m_myName = L"SkyShip";
+	pHeroObj->m_objType = EObjType::AObject;
+	pHeroObj->SetScale(Vector3::One * 70.0f);
+	pCollider = new Collider(0.0001f);
+	pTimer = new CEventTimer(1.5f);
+	pTimer->TimerEvent = { TimeEvent::NuclearLaunch, nullptr };
+	pHeroObj->AddComponent({ pCollider, pRenderer->clone(), pTimer, new CEventTimer(6.0f) });
+	//pCollider->m_pivot = Vector3::Up * 8.0f;
+	pCollider->SetGravityScale(0.0f);
+	pCollider->m_eTag = ETag::Dummy;
+	//pCollider->CollisionEvent = MyEvent::MissileCollision;
+	ObjectManager::Get().SetProtoObject(pHeroObj);
+
+	// ÇÙ
+	pHeroObj = new AHeroObj();
+	pHeroObj->SetPlayerCharacter(ITEM_Missile);
+	pHeroObj->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+	pHeroObj->m_myName = L"Nuclear";
+	pHeroObj->m_objType = EObjType::AObject;
+	pHeroObj->SetScale(Vector3::One * 1.0f);
+	pHeroObj->SetRotation(Quaternion::Down * PI);
+	pCollider = new Collider(10.0f);
+	pHeroObj->AddComponent({ pCollider, pRenderer->clone() });
+	pCollider->m_pivot = Vector3::Down * 50.0f;
+	//pCollider->SetGravityScale(0.0f);
+	pCollider->m_eTag = ETag::Dummy;
+	pCollider->CollisionEvent = MyEvent::NuclearBoom;
+	ObjectManager::Get().SetProtoObject(pHeroObj);
+
+	// ´ë°Å
+	pHeroObj = new AHeroObj();
+	pHeroObj->SetPlayerCharacter(ITEM_Dagger);
+	pHeroObj->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+	pHeroObj->m_myName = L"Dagger";
+	pHeroObj->m_objType = EObjType::AObject;
+	pCollider = new Collider(6.0f);
+	pHeroObj->SetScale(Vector3::One * 0.25f);
+	pHeroObj->AddComponent({ pCollider, pRenderer->clone() });
+	pHeroObj->SetHP(100.0f);
+	pCollider->m_pivot = Vector3::Up * 6.0f + Vector3::Forward * 2.5f;
+	//pCollider->SetGravityScale(0.5f);
+	pCollider->CollisionEvent = MyEvent::DaggerHit;
+	pCollider->m_eTag = ETag::Dummy;
+	ObjectManager::Get().SetProtoObject(pHeroObj);
+
+	///
+	// È­»ì
+	pHeroObj = new AHeroObj();
+	pHeroObj->SetPlayerCharacter(ITEM_ARROW);
+	pHeroObj->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+	pHeroObj->m_myName = L"Arrow";
+	pHeroObj->m_objType = EObjType::AObject;
+	pCollider = new Collider(6.0f);
+	pHeroObj->AddComponent({ pCollider, pRenderer->clone(), ObjectManager::Get().TakeComponent(L"Fire") });
+	//pCollider->m_pivot = Vector3::Up * 6.0f + Vector3::Forward * 2.5f;
+	pCollider->SetGravityScale(0.5f);
+	pCollider->CollisionEvent = MyEvent::OneTimeHit;
+	pCollider->m_eTag = ETag::Dummy;
+	ObjectManager::Get().SetProtoObject(pHeroObj);
+
+	// È­»ìºñ
+	pHeroObj = new AHeroObj();
+	pHeroObj->SetPlayerCharacter(ITEM_Bomb);
+	pHeroObj->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+	pHeroObj->m_myName = L"ArrowR";
+	pHeroObj->m_objType = EObjType::AObject;
+	pCollider = new Collider(1.0f);
+	pHeroObj->SetScale(Vector3::One);
+	pTimer = new CEventTimer(1.5f);
+	pTimer->TimerEvent = { TimeEvent::ArrowRain, nullptr };
+	pHeroObj->AddComponent({ pCollider, pRenderer->clone(), pTimer });
+	pCollider->m_eTag = ETag::Dummy;
+	ObjectManager::Get().SetProtoObject(pHeroObj);
+
 	// ´ß
 	pHeroObj = new AHeroObj();
 	pHeroObj->SetPlayerCharacter(ITEM_Chicken);
 	pHeroObj->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
 	pHeroObj->m_myName = L"Chicken";
-	pHeroObj->m_objType = EObjType::Dummy;
+	pHeroObj->m_objType = EObjType::AObject;
 	pHeroObj->SetScale(Vector3::One * 0.4f);
 	pCollider = new Collider(15.0f);
-	pHeroObj->AddComponent({ pCollider, ObjectManager::Get().TakeComponent(L"Fire") });
+	pHeroObj->AddComponent({ pCollider, pRenderer->clone(), ObjectManager::Get().TakeComponent(L"Fire") });
 	pCollider->m_pivot = Vector3::Up * 4.0f + Vector3::Forward * 2.5f;
 	pCollider->CollisionEvent = MyEvent::ZombieThrow;
 	pCollider->m_eTag = ETag::Dummy;
@@ -804,4 +805,3 @@ void IntroScene::LoadUI() noexcept
 	SoundManager::Get().Play("bgm_Intro_Theme.mp3");
 	UI::IntroEvent(pUIRoot);
 }
-

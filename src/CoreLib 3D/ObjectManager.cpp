@@ -103,21 +103,33 @@ bool ObjectManager::Render(ID3D11DeviceContext* pDContext) noexcept
 #pragma region DepthMap Render
 	for (auto& iter : *ObjectManager::Get().GetObjectList(EObjType::Character))
 	{
-		//((AHeroObj*)iter)->PreRender(DxManager::GetDContext());
-		//DxManager::GetDContext()->VSSetShader(DxManager::Get().m_VShaderList["VS_DepthMapPNCT"], nullptr, 0);
-		//DxManager::GetDContext()->PSSetShader(nullptr, nullptr, 0);
-
+		((AHeroObj*)iter)->SetMatrix(nullptr, &CurCamera->m_matView, &CurCamera->m_matProj);
 		((AHeroObj*)iter)->SetVSShader(DxManager::Get().m_VShaderList["VS_DepthMapPNCT"]);
 		((AHeroObj*)iter)->SetPSShader(nullptr);
 		iter->Render(DxManager::GetDContext());
+		((AHeroObj*)iter)->ReturnVSShader();
 		((AHeroObj*)iter)->ReturnPSShader();
+		((AHeroObj*)iter)->SetMatrix(nullptr, &Cameras[ECamera::Main]->m_matView, &Cameras[ECamera::Main]->m_matProj);
 	}
 	for (auto& iter : *ObjectManager::Get().GetObjectList(EObjType::Enemy))
 	{
+		((AHeroObj*)iter)->SetMatrix(nullptr, &CurCamera->m_matView, &CurCamera->m_matProj);
 		((AHeroObj*)iter)->SetVSShader(DxManager::Get().m_VShaderList["VS_DepthMapPNCT"]);
 		((AHeroObj*)iter)->SetPSShader(nullptr);
 		iter->Render(DxManager::GetDContext());
+		((AHeroObj*)iter)->ReturnVSShader();
 		((AHeroObj*)iter)->ReturnPSShader();
+		((AHeroObj*)iter)->SetMatrix(nullptr, &Cameras[ECamera::Main]->m_matView, &Cameras[ECamera::Main]->m_matProj);
+	}
+	for (auto& iter : *ObjectManager::Get().GetObjectList(EObjType::AObject))
+	{
+		((AHeroObj*)iter)->SetMatrix(nullptr, &CurCamera->m_matView, &CurCamera->m_matProj);
+		((AHeroObj*)iter)->SetVSShader(DxManager::Get().m_VShaderList["VS_DepthMapPNCT"]);
+		((AHeroObj*)iter)->SetPSShader(nullptr);
+		iter->Render(DxManager::GetDContext());
+		((AHeroObj*)iter)->ReturnVSShader();
+		((AHeroObj*)iter)->ReturnPSShader();
+		((AHeroObj*)iter)->SetMatrix(nullptr, &Cameras[ECamera::Main]->m_matView, &Cameras[ECamera::Main]->m_matProj);
 	}
 	// ±Ì¿Ã∏  ∑£¥ı
 	for (auto& iter : m_ObjectList[EObjType::Object])
@@ -167,6 +179,7 @@ bool ObjectManager::Render(ID3D11DeviceContext* pDContext) noexcept
 		{
 		 case EObjType::Character:
 		 case EObjType::Enemy:
+		 case EObjType::AObject:
 		 case EObjType::Object:
 		 case EObjType::Map:
 		 {

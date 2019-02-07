@@ -26,6 +26,7 @@ public:
 	JSliderCtrl* m_pMouseSense  = nullptr;
 	wstring		 m_chatMessage;
 	///
+	GameObject* m_pHeightMap = nullptr;
 	//GameRule	m_Rule;
 public:
 	void DrawBoundingBox()		noexcept;

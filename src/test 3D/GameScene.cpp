@@ -17,8 +17,8 @@ bool GameScene::Init() noexcept
 	auto pCollider = new Collider(1.0f);
 	pCollider->m_eTag = ETag::Ally;
 	PlayerController::Get().m_pHome = new GameObject(L"Shelter", { pCollider /*, ObjectManager::Get().TakeComponent(L"RowSphere")*/ }, EObjType::Object);
-	PlayerController::Get().m_pHome->SetPosition(-15.8f, 18.0f, 41.5f);
-	PlayerController::Get().m_pHome->SetScale(Vector3::One * 20.0f);
+	PlayerController::Get().m_pHome->SetPosition(-15.8f, 16.0f, 41.5f);
+	PlayerController::Get().m_pHome->SetScale(Vector3::One * 17.0f);
 	PlayerController::Get().m_pHome->SetGravityScale(0.0f);
 	PlayerController::Get().m_pHome->usePhysics(false);
 	PlayerController::Get().m_pHome->SetHP(200.0f);
@@ -30,6 +30,26 @@ bool GameScene::Init() noexcept
 	pHeight->Translate(Vector3::Down * 185.0f);
 	ObjectManager::Get().PushObject(pHeight);
 
+	pHeight = new GameObject(L"box", new RCube(L"Cube", L"none.png"), EObjType::Map);
+	pHeight->SetScale(Vector3::One * 20.0f);
+	pHeight->Translate(Vector3::Up * 45.0f);
+	ObjectManager::Get().PushObject(pHeight);
+
+	//I_MAPMGR.Init();
+	//I_MAPMGR.Load(DxManager::GetDevice(), DxManager::GetDContext(),L"../../Data/MAPOBJ/OBJTable.cit");
+	//AMapObj* test = (AMapObj*)I_MAPMGR.GetPtr(L"test")->clone();
+	//test->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+	//test->m_objType = EObjType::AObject;
+	//test->SetPositionY(150.0f);
+	//ObjectManager::Get().PushObject(test);
+
+	//// ³ôÀÌ ¸Ê
+	//auto mapMap = new HeightMap(L"HeightMap", EComponent::Renderer, L"mounds.jpg");
+	//m_pHeightMap = new GameObject(L"HeightMap", mapMap, EObjType::Map);
+	//mapMap->CreateHeightMap(DxManager::GetDContext(), L"HeightMap/Islands, Leafy.bmp", 10, 1.0f);
+	////mapMap->SetEnviromentMap(((Renderer*)m_pSkyBox->GetComponent(EComponent::Renderer))->m_srcName, EEnviType::Fresnel);
+	//m_pHeightMap->Translate(Vector3::Down * 100.0f);
+	//ObjectManager::Get().PushObject(m_pHeightMap);
 
 	//I_Object.ViewColliderSwitch();
 	//for (auto& [name, matrixList] : I_Object.m_ObjectMatrix)

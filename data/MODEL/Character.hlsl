@@ -16,7 +16,7 @@ SamplerState samShadowMap : register(s1);
 SamplerComparisonState samComShadowMap : register (s2);
 
 static const int SMapSize = 1024;
-static const float EPSILON = 0.005f;
+//static const float EPSILON = 0.005f;
 static const float refAtNormal_Incidence = 1.33f;
 
 cbuffer cb0: register (b0)
@@ -48,7 +48,6 @@ cbuffer cbMaterial : register (b3)
 	float			g_iNumKernel : packoffset(c5.y);
 	//float			g_iDummy	 : packoffset(c4.zw);
 }
-
 
 // ·»´õ Å¸°Ù
 struct PBUFFER_OUTPUT
@@ -144,7 +143,7 @@ VS_OUTPUT VS(PNCT5_VS_INPUT input)//,uniform bool bHalfVector )
 	float3 Norm = input.nor;
 
 	float4x4 matMatrix;
-		float4 vLocal;
+	float4 vLocal;
 	for (int iBiped = 0; iBiped < input.w1.w; iBiped++)
 	{
 		uint iBoneIndex = (uint)input.i0[iBiped];
@@ -168,7 +167,6 @@ VS_OUTPUT VS(PNCT5_VS_INPUT input)//,uniform bool bHalfVector )
 	}
 
 	float4 WorldPos = output.pos = mul(output.pos, g_matWorld);
-	float3 vLightDir = normalize(cb_LightVector.xyz - output.pos.xyz);
 	output.pos = mul(output.pos, g_matView);
 	output.pos = mul(output.pos, g_matProj);
 
@@ -177,31 +175,31 @@ VS_OUTPUT VS(PNCT5_VS_INPUT input)//,uniform bool bHalfVector )
 	output.nor.x = Norm.y;
 	output.nor.y = Norm.z;
 	output.nor = float4(normalize(mul(output.nor.xyz, (float3x3)g_matWorld)), output.pos.w / FAR);// g_matWorldInvTrans));
-	//output.nor = float4(normalize(mul(output.nor.xyz, ), output.pos.w / FAR);// g_matWorldInvTrans));
 	float3 vNormal = output.nor.xyz;
 	output.tex = input.tex;
 
+	float3 vLightDir = normalize(cb_LightVector.xyz - WorldPos.xyz);
 	//float fDot = max(0.2f, lerp(dot(vLightDir, output.nor.xyz), 1.0f, 0.2f) + 0.2f);
 	//output.col = /*float4(fDot, fDot, fDot, 1.0f) **/ /*input.col **/ fDot;
-	output.col = max(0.3f, dot(vLightDir, vNormal) + 0.7f);
+	output.col = max(0.3f, dot(vLightDir, vNormal) + 1.0f);
 	//output.col = input.col;
 
 	// È¯°æ
-	if (cb_useEnviMap)
-	{
+	//if (cb_useEnviMap)
+	//{
 		// camera/eye -> V?
-		float3 incident /*= output.eye*/ = normalize(cb_EyePos.xyz - WorldPos);
+		float3 incident = normalize(cb_EyePos.xyz - WorldPos);
 		// R = I - 2 * N * (I.N)	?
 		//output.ref = normalize(incident - 2.0f * output.nor * dot(incident, output.nor));
 		output.ref = normalize(reflect(incident, vNormal));
 		//output.fre = normalize(refract(incident, vNormal, 1.0f / refAtNormal_Incidence));
-	}
+	//}
 
 	// ½¦µµ¿ì ÅØ½ºÃ³ ÁÂÇ¥
-	if (cb_useShadow)
-	{
+	//if (cb_useShadow)
+	//{
 		output.TexShadow = mul(Pos, g_matShadow);
-	}
+	//}
 	return output;
 }
 
@@ -215,8 +213,8 @@ PBUFFER_OUTPUT PS(VS_OUTPUT input) : SV_Target
 	output.color0	= g_txDiffuse.Sample(samLinear, input.tex);
 
 	// È¯°æ
-	if (cb_useEnviMap)
-	{
+	//if (cb_useEnviMap)
+	//{
 		//uint type = cb_useEnviMap;
 		//switch (type)
 		//{
@@ -234,7 +232,7 @@ PBUFFER_OUTPUT PS(VS_OUTPUT input) : SV_Target
 			float fresnel = ComputeFresnel(input.ref, input.nor.xyz, r0);
 	
 			// µðÇ»Áî¸Ê°ú ¹Ý»ç¸Ê º¸°£
-			output.color0 = lerp(output.color0, reflectColor, fresnel * 0.15f/* + 0.3f*/);
+			output.color0 = lerp(output.color0, reflectColor, fresnel * 0.12f/* + 0.3f*/);
 		//} break;
 		//case 3:
 		//{
@@ -250,11 +248,11 @@ PBUFFER_OUTPUT PS(VS_OUTPUT input) : SV_Target
 		//	//color.a = 1.0f;
 		//} break;
 		//}
-	}
+	//}
 	
 	// ½¦µµ¿ì
-	if (cb_useShadow)
-	{
+	//if (cb_useShadow)
+	//{
 		static const float	iNumKernel = 3;
 		float fLightAmount = 0.0f;
 		float3 ShadowTexColor = input.TexShadow.xyz / input.TexShadow.w;
@@ -271,13 +269,11 @@ PBUFFER_OUTPUT PS(VS_OUTPUT input) : SV_Target
 			}
 		}
 		fLightAmount /= iNumKernel * iNumKernel;
+	
 		///float fColor = float4(fLightAmount, fLightAmount, fLightAmount, 1.0f);
-		//output.color0 *= max(0.5f, fLightAmount);
-	
 		output.color0 *= max(cb_useShadow, fLightAmount);
-	
 		//output.color0 = cb_useShadow > fLightAmount ? output.color0 * cb_useShadow : output.color0;
-	}
+	//}
 
 	output.color0 *= input.col;
 	output.color0.w = 1.0f;

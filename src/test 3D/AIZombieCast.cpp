@@ -25,8 +25,7 @@ bool AIZombieCast::Init() noexcept
 bool AIZombieCast::Frame(const float& spf, const float& accTime)	noexcept
 {
 	if (!m_isEnable) return false;
-	m_pParent->Rotate(Quaternion::Left * spf);
-	return false;
+
 	m_dealyAttack -= spf;
 	if (m_delay >= 0.0f)
 	{

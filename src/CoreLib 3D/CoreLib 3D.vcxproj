@@ -245,6 +245,7 @@ copy "*.h" "..\\..\\include\\core\\"</Command>
     <ClCompile Include="ColliderAABB.cpp" />
     <ClCompile Include="ColliderOBB.cpp" />
     <ClCompile Include="CTransformer.cpp" />
+    <ClCompile Include="HeightMap.cpp" />
     <ClCompile Include="Instancer.cpp" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="MaxImporter.cpp" />
@@ -287,6 +288,7 @@ copy "*.h" "..\\..\\include\\core\\"</Command>
     <ClInclude Include="ColliderOBB.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="CTransformer.h" />
+    <ClInclude Include="HeightMap.h" />
     <ClInclude Include="Instancer.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="MaxImporter.h" />
