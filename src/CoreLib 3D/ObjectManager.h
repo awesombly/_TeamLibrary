@@ -23,9 +23,9 @@ class ObjectManager : public IDxBasis, public ISingleton<ObjectManager>
 {
 private:
 	// 오브젝트 리스트
-	map<EObjType, forward_list<GameObject*> >	 m_ObjectList;		// 전체 순회용 리스트<타입>
-	map<wstring, stack<GameObject*> >			 m_DisabledPull;	// 대기 상태 풀<이름>
-	map<wstring, GameObject*>					 m_ProtoPull;		// 복사용 오브젝트 풀<이름>
+	map<EObjType, forward_list<GameObject*> >	 m_ObjectList;		// 전체 순회용 리스트
+	map<wstring, stack<GameObject*> >			 m_DisabledPull;	// 대기 상태 풀
+	map<wstring, GameObject*>					 m_ProtoPull;		// 복사용 오브젝트 풀
 
 	map<wstring, stack<Component*> >			 m_DisabledPullComp;// 대기 상태 컴포넌트 풀
 	map<wstring, Component*>					 m_ComponentPull;	// 복사용 컴포넌트
@@ -38,7 +38,7 @@ public:
 	static map<UINT, GameObject*> KeyObjects;						// 서버 처리용 오브젝트들
 	static UINT					  KeyCount;							// 키값 설정용
 	static map<ECamera, Camera*>  Cameras;							// 카메라들
-	static Camera*				  CurCamera;							// 적용중인 카메라
+	static Camera*				  CurCamera;						// 적용중인 카메라
 	static list<Light*>			  Lights;							// 조명들
 	// 후처리 이벤트 등록용(함수, 인자, 인자)
 	static queue<tuple<void(*)(void*, void*), void*, void*> > PostFrameEvent;
