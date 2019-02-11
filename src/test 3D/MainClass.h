@@ -18,7 +18,6 @@
 ///
 #include "MaxImporter.h"
 #include "SkySphere.h"
-//#include "SkyBox.h"
 #include "ParticleSystem.h"
 #include "Raycast.h"
 #include "Light.h"

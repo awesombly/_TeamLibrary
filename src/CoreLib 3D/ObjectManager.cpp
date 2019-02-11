@@ -93,7 +93,6 @@ bool ObjectManager::Render(ID3D11DeviceContext* pDContext) noexcept
 		iter->Render(pDContext);
 	}
 	CurCamera = Lights.front();
-
 	// ================================== ±Ì¿Ã∏  ª˝º∫ ======================================
 	DxManager::Get().m_RTDSViewShadow.ClearView(pDContext);
 	DxManager::Get().SetViewPort(EViewPort::Main);
@@ -101,6 +100,17 @@ bool ObjectManager::Render(ID3D11DeviceContext* pDContext) noexcept
 	DxManager::Get().SetRasterizerState(ERasterS::DepthBias);
 
 #pragma region DepthMap Render
+	auto pMainCamera = Cameras[ECamera::Main];
+	for (auto& iter : *ObjectManager::Get().GetObjectList(EObjType::AObject))
+	{
+		((AModel*)iter)->SetMatrix(nullptr, &CurCamera->m_matView, &CurCamera->m_matProj);
+		((AModel*)iter)->SetVSShader(DxManager::Get().m_VShaderList["VS_DepthMapPNCT"]);
+		((AModel*)iter)->SetPSShader(nullptr);
+		iter->Render(DxManager::GetDContext());
+		((AModel*)iter)->ReturnVSShader();
+		((AModel*)iter)->ReturnPSShader();
+		((AModel*)iter)->SetMatrix(nullptr, &pMainCamera->m_matView, &pMainCamera->m_matProj);
+	}
 	for (auto& iter : *ObjectManager::Get().GetObjectList(EObjType::Character))
 	{
 		((AModel*)iter)->SetMatrix(nullptr, &CurCamera->m_matView, &CurCamera->m_matProj);
@@ -109,7 +119,7 @@ bool ObjectManager::Render(ID3D11DeviceContext* pDContext) noexcept
 		iter->Render(DxManager::GetDContext());
 		((AModel*)iter)->ReturnVSShader();
 		((AModel*)iter)->ReturnPSShader();
-		((AModel*)iter)->SetMatrix(nullptr, &Cameras[ECamera::Main]->m_matView, &Cameras[ECamera::Main]->m_matProj);
+		((AModel*)iter)->SetMatrix(nullptr, &pMainCamera->m_matView, &pMainCamera->m_matProj);
 	}
 	for (auto& iter : *ObjectManager::Get().GetObjectList(EObjType::Enemy))
 	{
@@ -119,17 +129,7 @@ bool ObjectManager::Render(ID3D11DeviceContext* pDContext) noexcept
 		iter->Render(DxManager::GetDContext());
 		((AModel*)iter)->ReturnVSShader();
 		((AModel*)iter)->ReturnPSShader();
-		((AModel*)iter)->SetMatrix(nullptr, &Cameras[ECamera::Main]->m_matView, &Cameras[ECamera::Main]->m_matProj);
-	}
-	for (auto& iter : *ObjectManager::Get().GetObjectList(EObjType::AObject))
-	{
-		((AModel*)iter)->SetMatrix(nullptr, &CurCamera->m_matView, &CurCamera->m_matProj);
-		((AModel*)iter)->SetVSShader(DxManager::Get().m_VShaderList["VS_DepthMapPNCT"]);
-		((AModel*)iter)->SetPSShader(nullptr);
-		iter->Render(DxManager::GetDContext());
-		((AModel*)iter)->ReturnVSShader();
-		((AModel*)iter)->ReturnPSShader();
-		((AModel*)iter)->SetMatrix(nullptr, &Cameras[ECamera::Main]->m_matView, &Cameras[ECamera::Main]->m_matProj);
+		((AModel*)iter)->SetMatrix(nullptr, &pMainCamera->m_matView, &pMainCamera->m_matProj);
 	}
 	// ±Ì¿Ã∏  ∑£¥ı
 	for (auto& iter : m_ObjectList[EObjType::Object])
@@ -177,17 +177,16 @@ bool ObjectManager::Render(ID3D11DeviceContext* pDContext) noexcept
 	{
 		switch (type)
 		{
-		 case EObjType::Character:
-		 case EObjType::Enemy:
+		 //case EObjType::Character:
+		 //case EObjType::Enemy:
 		 case EObjType::AObject:
 		 case EObjType::Object:
 		 case EObjType::Map:
 		 {
-			 // ================================================ Ω¶µµøÏ(+) ∑£¥ı ============================================================
+			 // ============================================= Ω¶µµøÏ(+) ∑£¥ı ============================================================
 			 DxManager::Get().SetSamplerState(1, ESamTextureS::Clamp, ESamFilterS::Linear);
 			 DxManager::Get().SetSamplerState(2, ESamTextureS::Border, ESamFilterS::CompLinearPoint, 0, D3D11_COMPARISON_LESS);
 			 //DxManager::GetInstance().SetRasterizerState(ERasterS::CullBack);
-
 			 // ±Ì¿Ã∏  Ω¶µµøÏ
 			 for (auto& initer : outiter)
 			 {

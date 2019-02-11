@@ -48,8 +48,8 @@ bool Light::Render(ID3D11DeviceContext* pDContext)			noexcept
 {
 	if (!m_isEnable)	return false;
 	UpdateConstBuffer(pDContext);
-	pDContext->VSSetConstantBuffers(1, 1, &m_pEnviCBuffer);		// 상수(환경)
-	pDContext->PSSetConstantBuffers(1, 1, &m_pEnviCBuffer);		// 상수(환경)
+	pDContext->VSSetConstantBuffers(5, 1, &m_pEnviCBuffer);		// 상수(환경)
+	pDContext->PSSetConstantBuffers(5, 1, &m_pEnviCBuffer);		// 상수(환경)
 	pDContext->VSSetConstantBuffers(2, 1, &m_pLightCBuffer);	// 상수(조명)
 	pDContext->PSSetConstantBuffers(2, 1, &m_pLightCBuffer);	// 상수(조명)
 	pDContext->VSSetConstantBuffers(3, 1, &m_pMaterialCBuffer);	// 상수(그림자)

@@ -539,7 +539,7 @@ bool ArcherStateLSkill::Process(const float& spf) noexcept
 	{
 		if (m_pOwner->m_chargeCount >= 0.6f)
 		{
-			m_pOwner->m_curMP = max(m_pOwner->m_curMP - 0.4f, 0.0f);
+			m_pOwner->m_curMP = max(m_pOwner->m_curMP - 0.2f, 0.0f);
 			if (m_pOwner->m_chargeCount <= 1.1f)
 			{
 				m_pOwner->m_eAction = PlayerController::EAction::Attack;

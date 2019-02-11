@@ -16,7 +16,6 @@
     <ClCompile Include="PacketManager.cpp">
       <Filter>Etc</Filter>
     </ClCompile>
-    <ClCompile Include="GameRule.cpp" />
     <ClCompile Include="EventManager.cpp">
       <Filter>Etc</Filter>
     </ClCompile>
@@ -64,7 +63,6 @@
     <ClInclude Include="PacketManager.h">
       <Filter>Etc</Filter>
     </ClInclude>
-    <ClInclude Include="GameRule.h" />
     <ClInclude Include="EventManager.h">
       <Filter>Etc</Filter>
     </ClInclude>
@@ -115,8 +113,6 @@
     <Text Include="..\..\data\ui\ItemList.txt" />
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="..\..\data\map\Shader\Ase.hlsl" />
-    <FxCompile Include="..\..\data\map\Shader\MapShader_Specular.hlsl" />
     <FxCompile Include="..\..\data\MODEL\Character.hlsl" />
   </ItemGroup>
 </Project>

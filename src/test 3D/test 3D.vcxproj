@@ -222,7 +222,6 @@ copy "$(SolutionDir)lib\*.dll" "$(OutputPath)\"</Command>
     <ClCompile Include="AIZombieEx.cpp" />
     <ClCompile Include="AIZombieKing.cpp" />
     <ClCompile Include="EventManager.cpp" />
-    <ClCompile Include="GameRule.cpp" />
     <ClCompile Include="LobbyScene.cpp" />
     <ClCompile Include="IntroScene.cpp" />
     <ClCompile Include="GameScene.cpp" />
@@ -239,7 +238,6 @@ copy "$(SolutionDir)lib\*.dll" "$(OutputPath)\"</Command>
     <ClInclude Include="AIZombieEx.h" />
     <ClInclude Include="AIZombieKing.h" />
     <ClInclude Include="EventManager.h" />
-    <ClInclude Include="GameRule.h" />
     <ClInclude Include="LobbyScene.h" />
     <ClInclude Include="IntroScene.h" />
     <ClInclude Include="GameScene.h" />
@@ -255,18 +253,6 @@ copy "$(SolutionDir)lib\*.dll" "$(OutputPath)\"</Command>
     <Text Include="..\..\data\ui\ItemList.txt" />
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="..\..\data\map\Shader\Ase.hlsl">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </FxCompile>
-    <FxCompile Include="..\..\data\map\Shader\MapShader_Specular.hlsl">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </FxCompile>
     <FxCompile Include="..\..\data\MODEL\Character.hlsl">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>

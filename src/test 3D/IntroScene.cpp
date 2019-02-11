@@ -150,16 +150,16 @@ bool IntroScene::FirstInit() noexcept
 		SetObjects();
 		// =============================== 맵 생성 =================================
 		ErrorMessage(__FUNCTION__ + " -> Map Loading."s);
-		XMapImporter m_Importer;		// 세이브 데이터 로더
-		m_Importer.Import();
-		m_pMap = new XMap();
-		m_pMap->Create(DxManager::Get().GetDevice(), DxManager::Get().GetDContext(), &m_Importer, _T("../../Data/Map/Shader/MapShader_Specular.hlsl"), _T("../../Data/Map/Shader/MapShader_Color_Specular.hlsl"), "VS", "PS");
-		m_pMapTree = new XQuadTreeIndex();
-		m_pMapTree->Build(m_pMap);
-		m_pMap->m_objType = EObjType::Map;
-		m_pMap->isGlobal(true);
-		m_pMap->isStatic(true);
-		//ObjectManager::Get().PushObject(m_pMap);
+		//XMapImporter m_Importer;		// 세이브 데이터 로더
+		//m_Importer.Import();
+		//m_pMap = new XMap();
+		//m_pMap->Create(DxManager::Get().GetDevice(), DxManager::Get().GetDContext(), &m_Importer, _T("../../Data/Map/Shader/MapShader_Specular.hlsl"), _T("../../Data/Map/Shader/MapShader_Color_Specular.hlsl"), "VS", "PS");
+		//m_pMapTree = new XQuadTreeIndex();
+		//m_pMapTree->Build(m_pMap);
+		//m_pMap->m_objType = EObjType::Map;
+		//m_pMap->isGlobal(true);
+		//m_pMap->isStatic(true);
+		////ObjectManager::Get().PushObject(m_pMap);
 		return true;
 	}
 	return false;
@@ -176,13 +176,14 @@ void IntroScene::SetObjects() noexcept
 	//ObjectManager::Get().SetProtoComponent(new RSphere(20, L"Sphere", L"None.png"));
 	ObjectManager::Get().SetProtoComponent(new RSphere(10, L"RowSphere", L"None.png"));
 	// 라이트
-	auto pTrans = new CTransformer(Vector3::Up * 150.0f, Quaternion::Up * PI * 0.35f, Vector3::One);
-	pTrans->TransEvent = [](Transform* pParent, Transform* pTrans, const float& spf, const float& accTime) {
-		pParent->SetTransform(*pTrans);
-		pParent->Translate({ cosf(0.5f * accTime) * 200.0f, 0.0f, sinf(0.1f * accTime) * 200.0f });
-		return; spf; accTime; pTrans;
-	};
-	ObjectManager::Get().Lights.front()->AddComponent({ pTrans });
+	//auto pTrans = new CTransformer(Vector3::Up * 100.0f, Quaternion::Up * PI * 0.35f, Vector3::One);
+	//pTrans->TransEvent = [](Transform* pParent, Transform* pTrans, const float& spf, const float& accTime) {
+	//	pParent->SetTransform(*pTrans);
+	//	pParent->Translate({ cosf(0.1f * accTime) * 200.0f, 0.0f, sinf(0.1f * accTime) * 200.0f });
+	//	return; spf; accTime; pTrans;
+	//};
+	//ObjectManager::Get().Lights.front()->AddComponent({ pTrans });
+	ObjectManager::Get().Lights.front()->SetPosition(0.0f, 150.0f, 200.0f);
 	// 라이트 랜더러
 	auto pShpere = (Renderer*)ObjectManager::GetInstance().TakeComponent(L"RowSphere");
 	pShpere->SetShaderLayout("VS_Basic", "PS_Basic");
@@ -523,6 +524,20 @@ void IntroScene::SetObjects() noexcept
 	ObjectManager::Get().SetProtoObject(pHeroObj);
 
 	// ======================================= Character =====================================================
+	//I_MAPMGR.Init();
+	//I_MAPMGR.Load(DxManager::GetDevice(), DxManager::GetDContext(), L"../../Data/MAPOBJ/OBJTable.cit");
+	//I_MAPMGR.GetPtr(L"test")->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+	//ObjectManager::Get().PushObject(I_MAPMGR.GetPtr(L"test"));
+	//AMapObj* test = (AMapObj*)I_MAPMGR.GetPtr(L"test")->clone();
+	//test->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+	//test->m_myName = L"MObj";
+	//test->m_objType = EObjType::Character;
+	//test->SetPositionY(150.0f);
+	//test->SetScale(1.0f, 1.0f, 1.0f);
+	//test->AddComponent( pRenderer->clone());
+	////ObjectManager::Get().PushObject(test);
+	//ObjectManager::Get().SetProtoObject(test);
+
 	// 기사 
 	pHeroObj = new AHeroObj();
 	pHeroObj->SetPlayerCharacter(Paladin);

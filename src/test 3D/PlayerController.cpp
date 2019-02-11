@@ -382,7 +382,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 
 			auto pItem = ObjectManager::Get().TakeObject(L"Arrow");
 			pItem->SetPosition(pObject->GetPosition() + pObject->GetForward() * 40.0f + pObject->GetUp() * 65.0f + pObject->GetRight() * 20.0f);
-			pItem->SetRotation(pObject->GetRotation());
+			pItem->SetRotation(pObject->GetRotation().x, pObject->GetRotation().y, pObject->GetRotation().z);
 			pItem->SetScale(Vector3::One);
 			pItem->SetForce(forward * 200.0f);
 			pItem->m_pPhysics->UserSocket = socket;
@@ -397,7 +397,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 
 			auto pItem = ObjectManager::Get().TakeObject(L"Arrow");
 			pItem->SetPosition(pObject->GetPosition() + pObject->GetForward() * 40.0f + pObject->GetUp() * 65.0f + pObject->GetRight() * 20.0f);
-			pItem->SetRotation(pObject->GetRotation());
+			pItem->SetRotation(pObject->GetRotation().x, pObject->GetRotation().y, pObject->GetRotation().z);
 			pItem->SetScale(Vector3::One * 2.0f);
 			pItem->SetForce(forward * 350.0f);
 			pItem->m_pPhysics->UserSocket = socket;
@@ -412,7 +412,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 
 			auto pItem = ObjectManager::Get().TakeObject(L"Arrow");
 			pItem->SetPosition(pObject->GetPosition() + pObject->GetForward() * 40.0f + pObject->GetUp() * 65.0f + pObject->GetRight() * 20.0f);
-			pItem->SetRotation(pObject->GetRotation());
+			pItem->SetRotation(pObject->GetRotation().x, pObject->GetRotation().y, pObject->GetRotation().z);
 			pItem->SetScale(Vector3::One * 3.0f);
 			pItem->SetForce(forward * 600.0f);
 			pItem->m_pPhysics->UserSocket = socket;

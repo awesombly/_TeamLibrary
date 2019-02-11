@@ -5,7 +5,6 @@
 #include "XObjectManager.h"
 #include "uiheader.h"
 
-//#include "GameRule.h"
 
 class GameScene : public MainClass
 {
@@ -26,8 +25,8 @@ public:
 	JSliderCtrl* m_pMouseSense  = nullptr;
 	wstring		 m_chatMessage;
 	///
-	GameObject* m_pHeightMap = nullptr;
-	//GameRule	m_Rule;
+	AMapObj* m_pTest;
+	HeightMap*	 m_pHeightMap = nullptr;
 public:
 	void DrawBoundingBox()		noexcept;
 	bool CheatMessage()			noexcept;

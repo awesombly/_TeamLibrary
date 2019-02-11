@@ -129,19 +129,19 @@ bool DxManager::Frame() noexcept
 	else if (Input::GetKeyState(VK_F2) == EKeyState::DOWN)
 	{
 		m_RasterList[ERasterS::Current] = m_RasterList[ERasterS::Basic];
-		SetBlendState(EBlendS::Basic);
+		m_BlenderList[EBlendS::Current] = m_BlenderList[EBlendS::NoAlpha];
 		m_RTDSView.m_pScreen->SetPixelShader("PS_MRT_Normal");
 	}
 	else if (Input::GetKeyState(VK_F3) == EKeyState::DOWN)
 	{
 		m_RasterList[ERasterS::Current] = m_RasterList[ERasterS::Basic];
-		SetBlendState(EBlendS::Current);
+		m_BlenderList[EBlendS::Current] = m_BlenderList[EBlendS::Basic];
 		m_RTDSView.m_pScreen->SetPixelShader("PS_MRT_None");
 	}
 	else if (Input::GetKeyState(VK_F4) == EKeyState::DOWN)
 	{
 		m_RasterList[ERasterS::Current] = m_RasterList[ERasterS::Basic];
-		SetBlendState(EBlendS::Current);
+		m_BlenderList[EBlendS::Current] = m_BlenderList[EBlendS::Basic];
 		m_RTDSView.m_pScreen->SetPixelShader("PS_MRT");
 	}
 
@@ -440,7 +440,7 @@ HRESULT DxManager:: CreateRasterizerState()
 	RSDesc.CullMode = D3D11_CULL_BACK;
 	RSDesc.DepthBias = 2000;
 	RSDesc.DepthBiasClamp = 0.0f;
-	RSDesc.SlopeScaledDepthBias = 1.0f;
+	RSDesc.SlopeScaledDepthBias = 0.0f;
 	m_RasterList[ERasterS::DepthBias]->SetRasterizerState(RSDesc);
 	m_RasterList[ERasterS::Current] = m_RasterList[ERasterS::Basic];
 	return S_OK;

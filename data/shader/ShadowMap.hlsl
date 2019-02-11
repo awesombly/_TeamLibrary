@@ -7,7 +7,7 @@ SamplerState samLinear : register (s0);
 SamplerState samShadowMap : register(s1);
 SamplerComparisonState samComShadowMap : register (s2);
 
-static const int SMapSize = 1024;
+static const float SMapSize = 1024.0f;
 static const float EPSILON = 0.005f;
 
 
@@ -115,7 +115,7 @@ VS_OUTPUT_DepthMap VS_DepthMap(VS_INPUT_PNCTT input)
 	output.pos = mul(output.pos, g_matView);
 	output.pos = mul(output.pos, g_matProj);
 	output.dep = output.pos.zw;
-	//output.dep.y = (output.pos.w - NEAR) / (FAR - NEAR);
+	output.dep.y = (output.pos.w - NEAR) / (FAR - NEAR);
 	return output;
 }
 
@@ -126,7 +126,7 @@ VS_OUTPUT_DepthMap VS_DepthMapPNCT(VS_INPUT_PNCT input)
 	output.pos = mul(output.pos, g_matView);
 	output.pos = mul(output.pos, g_matProj);
 	output.dep = output.pos.zw;
-	//output.dep.y = (output.pos.w - NEAR) / (FAR - NEAR);
+	output.dep.y = (output.pos.w - NEAR) / (FAR - NEAR);
 	return output;
 }
 //--------------------------------------------------------------------------------------
