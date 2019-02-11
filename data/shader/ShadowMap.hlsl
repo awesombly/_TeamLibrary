@@ -7,7 +7,7 @@ SamplerState samLinear : register (s0);
 SamplerState samShadowMap : register(s1);
 SamplerComparisonState samComShadowMap : register (s2);
 
-static const float SMapSize = 4096.0f;
+static const float SMapSize = 1024.0f;
 static const float EPSILON = 0.005f;
 
 

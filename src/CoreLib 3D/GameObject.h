@@ -49,9 +49,11 @@ public:
 	void AddComponent(Component* pComponent)								noexcept;
 	void AddComponent(const initializer_list<Component*>& components)		noexcept;
 	void RemoveComponent(Component* pComponent)								noexcept;
+	//template <typename Type>
+	//Type*		 GetComponent()												noexcept;
+	Component*	 GetComponent(const EComponent& eCompType)					noexcept;
 	forward_list<Component*>* GetComponentList(const EComponent& eCompType) noexcept;
 	map<EComponent, forward_list<Component*> >& GetComponentList()			noexcept;
-	Component*	 GetComponent(const EComponent& eCompType)					noexcept;
 	Collider*	 GetCollider()												noexcept;
 	// 부모 설정
 	virtual void SetParent(GameObject* pParent)						  	    noexcept;
@@ -103,3 +105,17 @@ public:
 	GameObject(const wstring_view& myName, Component* pComponent, const EObjType& eType = EObjType::Dummy);
 	virtual ~GameObject() noexcept = default;
 };
+
+
+//template <typename Type>
+//Type* GameObject::GetComponent() noexcept
+//{
+//	for (auto& iter : m_components)
+//	{
+//		if (std::is_base_of<iter.second.front(), Type*>::value)
+//		{
+//			return iter.second.front();
+//		}
+//	}
+//	return nullptr;
+//}

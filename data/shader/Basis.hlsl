@@ -17,7 +17,7 @@ cbuffer cbMatrix: register(b0)
 	float4  g_MeshColor     : packoffset(c16);
 };
 // 환경 데이터
-cbuffer cbObjectData : register(b1)
+cbuffer cbObjectData : register(b5)
 {
 	//matrix g_matNormal;
 	float4 cb_LightVector;

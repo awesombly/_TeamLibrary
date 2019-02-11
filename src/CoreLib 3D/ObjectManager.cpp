@@ -177,17 +177,16 @@ bool ObjectManager::Render(ID3D11DeviceContext* pDContext) noexcept
 	{
 		switch (type)
 		{
-		 case EObjType::Character:
-		 case EObjType::Enemy:
+		 //case EObjType::Character:
+		 //case EObjType::Enemy:
 		 case EObjType::AObject:
 		 case EObjType::Object:
 		 case EObjType::Map:
 		 {
-			 // ================================================ ½¦µµ¿ì(+) ·£´õ ============================================================
+			 // ============================================= ½¦µµ¿ì(+) ·£´õ ============================================================
 			 DxManager::Get().SetSamplerState(1, ESamTextureS::Clamp, ESamFilterS::Linear);
 			 DxManager::Get().SetSamplerState(2, ESamTextureS::Border, ESamFilterS::CompLinearPoint, 0, D3D11_COMPARISON_LESS);
 			 //DxManager::GetInstance().SetRasterizerState(ERasterS::CullBack);
-
 			 // ±íÀÌ¸Ê ½¦µµ¿ì
 			 for (auto& initer : outiter)
 			 {

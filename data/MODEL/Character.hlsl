@@ -5,7 +5,7 @@
 //--------------------------------------------------------------------------------------
 
 Texture2D g_txDiffuse: register (t0);
-Texture2D	g_txNormalMap : register(t1);
+//Texture2D	g_txNormalMap : register(t1);
 TextureCube g_txEnviMap   : register(t2);
 Texture2D	g_txDepthMap : register(t4);
 
@@ -15,7 +15,7 @@ SamplerComparisonState samComShadowMap : register (s2);
 
 static const float NEAR = 0.1f;
 static const float FAR = 2000.0f;
-static const float SMapSize = 4096.0f;
+static const float SMapSize = 1024.0f;
 //static const float EPSILON = 0.005f;
 static const float refAtNormal_Incidence = 1.33f;
 
@@ -28,14 +28,19 @@ cbuffer cb0: register (b0)
 };
 
 // 환경 데이터
-cbuffer cbObjectData : register(b1)
+cbuffer cbObjectData : register(b5)
 {
-	//matrix g_matNormal;
 	float4 cb_LightVector;
 	float4 cb_EyePos;
 	float4 cb_EyeDir;
 }
-
+cbuffer cbLightMaterial : register(b2)
+{
+	float4 cb_AmbientLightColor : packoffset(c0);
+	float4 cb_DiffuseLightColor : packoffset(c1);
+	float3 cb_SpecularLightColor: packoffset(c2);
+	float  cb_SpecularPower : packoffset(c2.w);
+};
 // 메테리얼, 쉐도우 데이터
 cbuffer cbMaterial : register (b3)
 {
@@ -46,7 +51,11 @@ cbuffer cbMaterial : register (b3)
 	float4x4		g_matShadow  : packoffset(c1);
 	float			g_iObjectID : packoffset(c5.x);
 	float			g_iNumKernel : packoffset(c5.y);
-	//float			g_iDummy	 : packoffset(c4.zw);
+}
+// 큐브맵 행렬
+cbuffer cbCubeViewMatrix : register(b4)
+{
+	matrix g_matCubeView[6] : packoffset(c0);
 }
 
 // 렌더 타겟
@@ -172,7 +181,7 @@ VS_OUTPUT VS(PNCT5_VS_INPUT input)//,uniform bool bHalfVector )
 
 	Norm = output.nor.xyz;
 	output.nor.z = Norm.x;
-	output.nor.x = Norm.y;
+	output.nor.x = -Norm.y;
 	output.nor.y = Norm.z;
 	output.nor = float4(normalize(mul(output.nor.xyz, (float3x3)g_matWorld)), (output.pos.w - NEAR) / (FAR - NEAR));// g_matWorldInvTrans));
 	float3 vNormal = output.nor.xyz;
@@ -253,12 +262,12 @@ PBUFFER_OUTPUT PS(VS_OUTPUT input) : SV_Target
 	// 쉐도우
 	//if (cb_useShadow)
 	//{
-		static const float	iNumKernel = 3.0f;
+		static const float iNumKernel = 3;
 		float fLightAmount = 0.0f;
 		float3 ShadowTexColor = input.TexShadow.xyz / input.TexShadow.w;
 	
 		const float fdelta = 1.0f / SMapSize;
-		int iHalf = (iNumKernel - 1.0f) / 2.0f;
+		int iHalf = (iNumKernel - 1) / 2;
 		for (int v = -iHalf; v <= iHalf; v++)
 		{
 			for (int u = -iHalf; u <= iHalf; u++)
