@@ -438,8 +438,8 @@ HRESULT DxManager:: CreateRasterizerState()
 	RSDesc.DepthClipEnable = true;
 	RSDesc.FillMode = D3D11_FILL_SOLID;
 	RSDesc.CullMode = D3D11_CULL_BACK;
-	RSDesc.DepthBias = 100;
-	RSDesc.DepthBiasClamp = 0.2f;
+	RSDesc.DepthBias = 50;
+	RSDesc.DepthBiasClamp = 0.4f;
 	RSDesc.SlopeScaledDepthBias = 1.0f;
 	m_RasterList[ERasterS::DepthBias]->SetRasterizerState(RSDesc);
 	m_RasterList[ERasterS::Current] = m_RasterList[ERasterS::Basic];

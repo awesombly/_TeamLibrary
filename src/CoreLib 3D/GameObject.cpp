@@ -67,7 +67,7 @@ bool GameObject::Frame(const float& spf, const float& accTime) noexcept
 		m_pPhysics->m_force -= m_pPhysics->m_damping * spf * m_pPhysics->m_force;
 
 		// Èû Àû¿ë
-		if (GetVelocitySq() > 20.0f)
+		if (GetVelocitySq() > 15.0f)
 		{
 			//m_pParent->isMoved(true);
 			GetRoot()->Translate((GetTotalForce() + Vector3::Up) * spf * m_pPhysics->m_mass);
