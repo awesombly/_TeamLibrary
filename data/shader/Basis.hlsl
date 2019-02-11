@@ -1,11 +1,11 @@
-// setShaderResourceView~ 할때 첫번째 인자가 레지스터의 슬롯이고,
-// 변수명으로 그 슬롯에 해당하는 텍스쳐 픽셀 값을 받아와 조합해 사용할 수 있다.(Max 8, 샘플러도 마찬가지)
-//Texture2D g_txDiffuse  : register (t0);
-//Texture2D g_txDiffuse1 : register (t1);
-//SamplerState samLinear : register (s0);
+#define DirectLight
 
 static const float NEAR = 0.1f;
-static const float FAR = 2000.0f;
+static const float FAR = 1000.0f;
+static const float SMapSize = 1024.0f;
+static const float EPSILON = 0.005f;
+// 노말값에 대한 반사율?
+static const float refAtNormal_Incidence = 1.33f;
 
 // 상수 버퍼 : 버퍼 0번
 cbuffer cbMatrix: register(b0)
@@ -19,7 +19,6 @@ cbuffer cbMatrix: register(b0)
 // 환경 데이터
 cbuffer cbObjectData : register(b5)
 {
-	//matrix g_matNormal;
 	float4 cb_LightVector;
 	float4 cb_EyePos;
 	float4 cb_EyeDir;

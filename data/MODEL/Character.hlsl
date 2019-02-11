@@ -1,8 +1,14 @@
+#define DirectLight
 #define MAX_BONE_MATRICES 255 
 //#define FT_CONSTANTBUFFER 0
 //--------------------------------------------------------------------------------------
 // Constant Buffer Variables
 //--------------------------------------------------------------------------------------
+static const float NEAR = 0.1f;
+static const float FAR = 1000.0f;
+static const float SMapSize = 1024.0f;
+static const float EPSILON = 0.005f;
+static const float refAtNormal_Incidence = 1.33f;
 
 Texture2D g_txDiffuse: register (t0);
 //Texture2D	g_txNormalMap : register(t1);
@@ -13,11 +19,6 @@ SamplerState samLinear: register (s0);
 SamplerState samShadowMap : register(s1);
 SamplerComparisonState samComShadowMap : register (s2);
 
-static const float NEAR = 0.1f;
-static const float FAR = 2000.0f;
-static const float SMapSize = 1024.0f;
-//static const float EPSILON = 0.005f;
-static const float refAtNormal_Incidence = 1.33f;
 
 cbuffer cb0: register (b0)
 {
@@ -34,13 +35,7 @@ cbuffer cbObjectData : register(b5)
 	float4 cb_EyePos;
 	float4 cb_EyeDir;
 }
-cbuffer cbLightMaterial : register(b2)
-{
-	float4 cb_AmbientLightColor : packoffset(c0);
-	float4 cb_DiffuseLightColor : packoffset(c1);
-	float3 cb_SpecularLightColor: packoffset(c2);
-	float  cb_SpecularPower : packoffset(c2.w);
-};
+
 // ¸ÞÅ×¸®¾ó, ½¦µµ¿ì µ¥ÀÌÅÍ
 cbuffer cbMaterial : register (b3)
 {
@@ -51,11 +46,6 @@ cbuffer cbMaterial : register (b3)
 	float4x4		g_matShadow  : packoffset(c1);
 	float			g_iObjectID : packoffset(c5.x);
 	float			g_iNumKernel : packoffset(c5.y);
-}
-// Å¥ºê¸Ê Çà·Ä
-cbuffer cbCubeViewMatrix : register(b4)
-{
-	matrix g_matCubeView[6] : packoffset(c0);
 }
 
 // ·»´õ Å¸°Ù
@@ -183,26 +173,31 @@ VS_OUTPUT VS(PNCT5_VS_INPUT input)//,uniform bool bHalfVector )
 	output.nor.z = Norm.x;
 	output.nor.x = -Norm.y;
 	output.nor.y = Norm.z;
-	output.nor = float4(normalize(mul(output.nor.xyz, (float3x3)g_matWorld)), (output.pos.w - NEAR) / (FAR - NEAR));// g_matWorldInvTrans));
-	float3 vNormal = output.nor.xyz;
+	//output.nor = float4(normalize(mul(output.nor.xyz, (float3x3)g_matWorld)), (output.pos.w - NEAR) / (FAR - NEAR));// g_matWorldInvTrans));
+	output.nor = float4(normalize(mul(output.nor.xyz, (float3x3)g_matWorld)), output.pos.w / FAR);
+	//float3 vNormal = output.nor.xyz;
 	output.tex = input.tex;
 
+#ifdef DirectLight
+	float3 vLightDir = -cb_LightVector;
+#else
 	float3 vLightDir = normalize(cb_LightVector.xyz - WorldPos.xyz);
+#endif
 	//float fDot = max(0.2f, lerp(dot(vLightDir, output.nor.xyz), 1.0f, 0.2f) + 0.2f);
 	//output.col = /*float4(fDot, fDot, fDot, 1.0f) **/ /*input.col **/ fDot;
-	output.col = max(0.3f, dot(vLightDir, vNormal) + 1.0f);
+	output.col = max(0.3f, dot(vLightDir, output.nor.xyz) + 0.4f);
 	//output.col = input.col;
 
 	// È¯°æ
-	//if (cb_useEnviMap)
-	//{
+	if (cb_useEnviMap)
+	{
 		// camera/eye -> V?
 		float3 incident = normalize(cb_EyePos.xyz - WorldPos);
 		// R = I - 2 * N * (I.N)	?
 		//output.ref = normalize(incident - 2.0f * output.nor * dot(incident, output.nor));
-		output.ref = normalize(reflect(incident, vNormal));
+		output.ref = normalize(reflect(incident, output.nor.xyz));
 		//output.fre = normalize(refract(incident, vNormal, 1.0f / refAtNormal_Incidence));
-	//}
+	}
 
 	// ½¦µµ¿ì ÅØ½ºÃ³ ÁÂÇ¥
 	//if (cb_useShadow)
@@ -222,8 +217,8 @@ PBUFFER_OUTPUT PS(VS_OUTPUT input) : SV_Target
 	output.color0	= g_txDiffuse.Sample(samLinear, input.tex);
 
 	// È¯°æ
-	//if (cb_useEnviMap)
-	//{
+	if (cb_useEnviMap)
+	{
 		//uint type = cb_useEnviMap;
 		//switch (type)
 		//{
@@ -257,7 +252,7 @@ PBUFFER_OUTPUT PS(VS_OUTPUT input) : SV_Target
 		//	//color.a = 1.0f;
 		//} break;
 		//}
-	//}
+	}
 	
 	// ½¦µµ¿ì
 	//if (cb_useShadow)

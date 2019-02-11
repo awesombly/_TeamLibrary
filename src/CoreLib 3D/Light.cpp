@@ -32,7 +32,9 @@ Light::Light(const wstring_view& myName, const ELight& eLightType, const bool& i
 bool Light::Init()	noexcept
 {
 	Camera::Init();
-	//m_FOV = PI * 0.8f;
+	m_FOV = PI * 0.6f;
+	m_Near = 0.1f;
+	m_Far = 1000.0f;
 	return true;
 }
 
@@ -99,8 +101,8 @@ void Light::UpdateConstBuffer(ID3D11DeviceContext* pDContext) noexcept
 		pDContext->Map(m_pEnviCBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &MappedResource);
 		CB_Environment* pEnviData = (CB_Environment*)MappedResource.pData;
 
-		m_cbEnviData.LightVector = { GetPosition(), 1.33f };
-		//m_cbEnviData.matNormal = Matrix::Identity;
+		m_cbEnviData.LightVector = { GetForward(), 1.33f };
+		//m_cbEnviData.LightVector = { GetPosition(), 1.33f };
 		m_cbEnviData.EyePos = { (*m_ppCamera)->GetPosition(), 100.0f };
 		m_cbEnviData.EyeDir = { (*m_ppCamera)->GetForward(), 100.0f };
 

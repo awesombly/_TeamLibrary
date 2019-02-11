@@ -183,7 +183,9 @@ void IntroScene::SetObjects() noexcept
 	//	return; spf; accTime; pTrans;
 	//};
 	//ObjectManager::Get().Lights.front()->AddComponent({ pTrans });
-	ObjectManager::Get().Lights.front()->SetPosition(0.0f, 150.0f, 200.0f);
+	ObjectManager::Get().Lights.front()->SetPosition(0.0f, 200.0f, -200.0f);
+	ObjectManager::Get().Lights.front()->SetRotation(Quaternion::Up * PI * 0.25f);
+	//ObjectManager::Get().Lights.front()->SetFocus(Vector3::Zero);
 	// 라이트 랜더러
 	auto pShpere = (Renderer*)ObjectManager::GetInstance().TakeComponent(L"RowSphere");
 	pShpere->SetShaderLayout("VS_Basic", "PS_Basic");

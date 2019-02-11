@@ -20,36 +20,6 @@ struct VS_OUTPUT_PC
 	float4 col : COLOR0;
 };
 
-//// 기본 정점
-//VS_OUTPUT_PNCT VS_Basic(VS_INPUT_PNCTT input)
-//{
-//	VS_OUTPUT_PNCT output = (VS_OUTPUT_PNCT)0;
-//	output.pos = mul(float4(input.pos, 1.0f), g_matWorld);
-//	output.pos = mul(output.pos, g_matView);
-//	output.pos = mul(output.pos, g_matProj);
-//
-//	output.col = input.col;
-//	output.tex = input.tex;
-//	return output;
-//}
-//VS_OUTPUT_PNCT VS_Light(VS_INPUT_PNCTT input)
-//{
-//	VS_OUTPUT_PNCT output = (VS_OUTPUT_PNCT)0;
-//	output.pos = mul(float4(input.pos, 1.0f), g_matWorld);
-//	
-//	input.nor = normalize(mul(input.nor, (float3x3)g_matNormal));
-//
-//	float3 vLightDir = normalize(cb_LightVector.xyz - output.pos.xyz);// -output.pos.xyz;
-//	float fDot = lerp(dot(vLightDir, input.nor), 1.0f, 0.3f) + 0.2f;
-//	output.col = float4(fDot, fDot, fDot, 1.0f) * input.col;
-//
-//	output.pos = mul(output.pos, g_matView);
-//	output.pos = mul(output.pos, g_matProj);
-//
-//	//output.col = input.col;
-//	output.tex = input.tex;
-//	return output;
-//}
 
 // 기본 정점
 VS_OUTPUT_PNCT VS_Basic(VS_INPUT_PNCTT input)
@@ -77,7 +47,11 @@ VS_OUTPUT_PNCT VS_Light(VS_INPUT_PNCTT input)
 	input.nor = normalize(mul(input.nor, (float3x3)g_matNormal));
 	output.nor = float4(input.nor, (output.pos.w - NEAR) / (FAR - NEAR));
 
-	float3 vLightDir = normalize(cb_LightVector.xyz - output.pos.xyz);// -output.pos.xyz;
+#ifdef DirectLight
+	float3 vLightDir = -cb_LightVector;
+#else
+	float3 vLightDir = normalize(cb_LightVector.xyz - output.pos.xyz);
+#endif
 	float fDot = lerp(dot(vLightDir, input.nor), 1.0f, 0.2f) + 0.2f;
 	output.col = float4(fDot, fDot, fDot, 1.0f) * input.col;
 

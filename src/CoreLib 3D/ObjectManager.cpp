@@ -11,7 +11,7 @@ Camera*				   ObjectManager::CurCamera;
 list<Light*>		   ObjectManager::Lights;
 queue<tuple<void(*)(void*, void*), void*, void*> >	 ObjectManager::PostFrameEvent;
 
-static const float g_fMaxSize = 1024.0f;
+//static const float g_fMaxSize = 1024.0f;
 
 bool ObjectManager::Init() noexcept
 {
@@ -87,7 +87,7 @@ bool ObjectManager::Render(ID3D11DeviceContext* pDContext) noexcept
 {
 	Camera::SelectCamera->Render(pDContext);
 
-	Lights.front()->SetFocus(Vector3::Zero);
+	//Lights.front()->SetFocus(Vector3::Zero);
 	for (auto& iter : Lights)
 	{
 		iter->Render(pDContext);
@@ -177,8 +177,8 @@ bool ObjectManager::Render(ID3D11DeviceContext* pDContext) noexcept
 	{
 		switch (type)
 		{
-		 //case EObjType::Character:
-		 //case EObjType::Enemy:
+		 case EObjType::Character:
+		 case EObjType::Enemy:
 		 case EObjType::AObject:
 		 case EObjType::Object:
 		 case EObjType::Map:

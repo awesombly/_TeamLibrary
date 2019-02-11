@@ -8,10 +8,6 @@ SamplerState samLinear : register (s0);
 SamplerState samShadowMap : register(s1);
 SamplerComparisonState samComShadowMap : register (s2);
 
-static const float SMapSize = 1024.0f;
-static const float EPSILON = 0.005f;
-// 노말값에 대한 반사율?
-static const float refAtNormal_Incidence = 1.33f;
 
 
 struct VS_OUTPUT_Mix
@@ -56,8 +52,11 @@ VS_OUTPUT_Mix VS_Final(VS_INPUT_PNCTT input)
 	output.nor = float4(vNormal, (output.pos.w - NEAR) / (FAR - NEAR));
 	output.tex = input.tex;
 
-	//float3 vLightDir = -cb_LightVector;// normalize(cb_LightVector.xyz - WorldPos.xyz);
+#ifdef DirectLight
+	float3 vLightDir = -cb_LightVector;
+#else
 	float3 vLightDir = normalize(cb_LightVector.xyz - WorldPos.xyz);
+#endif
 
 	// 노말
 	if(cb_useNormalMap)

@@ -27,7 +27,7 @@ bool Camera::Init()	noexcept
 	m_Aspect = (float)Window::getClientRect().right / (float)Window::getClientRect().bottom;
 	m_FOV = PI * 0.5f;
 	m_Near = 0.1f;
-	m_Far = 2000.0f;
+	m_Far = 1000.0f;
 	SetProjMatrix();
 
 	m_position = { 0.0f, 0.0f, -6.0f };
