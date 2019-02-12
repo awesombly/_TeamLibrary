@@ -1,4 +1,4 @@
-*NUMCHARACTER		15
+*NUMCHARACTER		16
 
 ////////////////////////////////////////////////////////////////////////// 1
 *CHARACTERNAME	Paladin
@@ -221,6 +221,17 @@
 
 *SKIN_UPPER_BODY_COUNT	1
 *SKIN_UPPER_BODY		..\..\data\model\grenade\grenade.skm		null
+*SKIN_LOWER_BODY_COUNT	0
+
+//////////////////////////////////////////////////////////////////////////16
+*CHARACTERNAME	 ITEM_BarrelRed
+*SHADERFILENMAE		..\..\data\model\Character.hlsl
+
+*MATRIXMATRIXCOUNT  1
+*MATRIXFILENAME		..\..\data\MAPOBJ\Barrel\Barrel.Mat
+
+*SKIN_UPPER_BODY_COUNT	1
+*SKIN_UPPER_BODY		..\..\data\MAPOBJ\Barrel\BarrelRed.skm		null
 *SKIN_LOWER_BODY_COUNT	0
 
 
