@@ -54,8 +54,8 @@ private:
 	float		m_EXP			= 0.0f;
 	float		m_disEXP		= 0.0f;
 	//
-	const float	MoveSpeed = 35.0f;
-	const float	JumpPower = 70.0f;
+	const float	MoveSpeed = 105.0f;
+	const float	JumpPower = 210.0f;
 	
 	map<int, void(*)(PlayerController*, void*)> m_ItemList;
 public:
@@ -91,7 +91,7 @@ public:
 	float		m_mouseSense		 = 0.5f;
 	float		m_GameFrameCount		 = 0.0f;
 	// 들을 거리
-	const float SoundRange			 = 30000.0f;
+	const float SoundRange			 = 250000.0f;
 public:
 	GameObject* m_pHome			 = nullptr;
 	const float HomeRadius		 = 1600.0f;

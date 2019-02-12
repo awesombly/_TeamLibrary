@@ -19,7 +19,7 @@ bool AIZombie::Init() noexcept
 {
 	m_isEnable = true;
 	m_attackRange = m_pParent->GetScaleAverage() * 1500.0f;
-	m_moveSpeed   = RandomNormal() * 25.0f + 25.0f;
+	m_moveSpeed   = RandomNormal() * 75.0f + 75.0f;
 	m_delay = 0.0f;
 	m_eState = EState::Idle;
 	m_eDirState = EState::Idle;

@@ -18,7 +18,7 @@ bool AIZombieCrawl::Init() noexcept
 {
 	m_isEnable = true;
 	m_attackRange = m_pParent->GetScaleAverage() * 2000.0f;
-	m_moveSpeed = RandomNormal() * 5.0f + 10.0f;
+	m_moveSpeed = RandomNormal() * 15.0f + 30.0f;
 	m_delay = 0.0f;
 	m_eState = EState::Idle;
 	m_eDirState = EState::Idle;

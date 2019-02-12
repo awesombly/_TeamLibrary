@@ -5,7 +5,7 @@
 // Constant Buffer Variables
 //--------------------------------------------------------------------------------------
 static const float NEAR = 0.1f;
-static const float FAR = 1000.0f;
+static const float FAR = 2000.0f;
 static const float SMapSize = 1024.0f;
 static const float EPSILON = 0.005f;
 static const float refAtNormal_Incidence = 1.33f;
@@ -185,7 +185,9 @@ VS_OUTPUT VS(PNCT5_VS_INPUT input)//,uniform bool bHalfVector )
 #endif
 	//float fDot = max(0.2f, lerp(dot(vLightDir, output.nor.xyz), 1.0f, 0.2f) + 0.2f);
 	//output.col = /*float4(fDot, fDot, fDot, 1.0f) **/ /*input.col **/ fDot;
-	output.col = max(0.3f, dot(vLightDir, output.nor.xyz) + 0.4f);
+	vLocal.w = input.col.w;
+	output.col.xyz = max(0.3f, dot(vLightDir, output.nor.xyz) + 0.4f);
+	output.col.w = vLocal.w;
 	//output.col = input.col;
 
 	// È¯°æ
@@ -253,34 +255,34 @@ PBUFFER_OUTPUT PS(VS_OUTPUT input) : SV_Target
 		//} break;
 		//}
 	}
-	
+
 	// ½¦µµ¿ì
 	//if (cb_useShadow)
 	//{
-		static const float iNumKernel = 3;
-		float fLightAmount = 0.0f;
-		float3 ShadowTexColor = input.TexShadow.xyz / input.TexShadow.w;
-	
-		const float fdelta = 1.0f / SMapSize;
-		int iHalf = (iNumKernel - 1) / 2;
-		for (int v = -iHalf; v <= iHalf; v++)
-		{
-			for (int u = -iHalf; u <= iHalf; u++)
-			{
-				float2 vOffset = float2(u * fdelta, v * fdelta);
-				fLightAmount += g_txDepthMap.SampleCmpLevelZero(samComShadowMap,
-					ShadowTexColor.xy + vOffset, ShadowTexColor.z);
-			}
-		}
-		fLightAmount /= iNumKernel * iNumKernel;
-	
-		///float fColor = float4(fLightAmount, fLightAmount, fLightAmount, 1.0f);
-		output.color0 *= max(cb_useShadow, fLightAmount);
-		//output.color0 = cb_useShadow > fLightAmount ? output.color0 * cb_useShadow : output.color0;
-	//}
+	static const float iNumKernel = 3;
+	float fLightAmount = 0.0f;
+	float3 ShadowTexColor = input.TexShadow.xyz / input.TexShadow.w;
 
-	output.color0 *= input.col;
+	const float fdelta = 1.0f / SMapSize;
+	int iHalf = (iNumKernel - 1) / 2;
+	for (int v = -iHalf; v <= iHalf; v++)
+	{
+		for (int u = -iHalf; u <= iHalf; u++)
+		{
+			float2 vOffset = float2(u * fdelta, v * fdelta);
+			fLightAmount += g_txDepthMap.SampleCmpLevelZero(samComShadowMap,
+				ShadowTexColor.xy + vOffset, ShadowTexColor.z);
+		}
+	}
+	fLightAmount /= iNumKernel * iNumKernel;
+
+	///float fColor = float4(fLightAmount, fLightAmount, fLightAmount, 1.0f);
+	output.color0 *= max(cb_useShadow, fLightAmount);
+	//output.color0 = cb_useShadow > fLightAmount ? output.color0 * cb_useShadow : output.color0;
+//}
+
 	output.color0.w = 1.0f;
+	output.color0 *= input.col;
 	return output;
 }
 

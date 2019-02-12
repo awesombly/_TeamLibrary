@@ -33,8 +33,6 @@ bool Light::Init()	noexcept
 {
 	Camera::Init();
 	m_FOV = PI * 0.6f;
-	m_Near = 0.1f;
-	m_Far = 1000.0f;
 	return true;
 }
 

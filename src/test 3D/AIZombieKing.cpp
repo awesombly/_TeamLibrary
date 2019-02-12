@@ -26,7 +26,7 @@ bool AIZombieKing::Init() noexcept
 	}
 	m_isEnable = true;
 	m_attackRange = m_pParent->GetScaleAverage() * 3000.0f;
-	m_moveSpeed = RandomNormal() * 5.0f + 15.0f;
+	m_moveSpeed = RandomNormal() * 15.0f + 45.0f;
 	m_delayBreath = 0.0f;
 	m_delayStump = 0.0f;
 	m_delay = 0.0f;
@@ -134,7 +134,7 @@ bool AIZombieKing::Frame(const float& spf, const float& accTime)	noexcept
 					m_pParent->m_pPhysics->m_mass = 1.0f;
 					m_pParent->m_pPhysics->m_damping = 0.25f;
 					m_pParent->SetFocus(iter->GetPosition());
-					m_Target = (iter->GetPosition() - m_pParent->GetPosition()) * 1.6f + Vector3::Up * 200.0f;
+					m_Target = (iter->GetPosition() - m_pParent->GetPosition()) * 1.6f + Vector3::Up * 600.0f;
 					m_eDirState = EState::Action3;
 					m_delay = 0.5f;
 					((AHeroObj*)m_pParent)->SetANIM_OneTime(Zombie_KING_JUMP_ATTACK);
@@ -178,7 +178,7 @@ bool AIZombieKing::Frame(const float& spf, const float& accTime)	noexcept
 		pEffect->SetScale(m_pParent->GetScale());
 		m_dealyAttack = 4.0f;
 		///
-		m_delay = 1.5f;
+		m_delay = 0.9f;
 		m_eDirState = EState::Move;
 	}	break;
 	case EState::Action1:

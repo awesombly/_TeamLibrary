@@ -97,6 +97,7 @@ private:
 
 	Component* cloneAddition()										noexcept override;
 public:
+	ParticleSystem* SetEffectScale(const float& scale)				noexcept;
 	void SetParticle(Particle* pParticle, const bool& preParticleDelete = true)	noexcept;
 	Particle* GetParticle()						noexcept;
 	// ¸®¼Â

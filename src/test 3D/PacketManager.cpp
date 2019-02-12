@@ -587,7 +587,7 @@ void PacketManager::SendTakeObject(const WCHAR* objName, const UINT& socketNum, 
 	{
 		p_TakeObject.KeyValue = ++PacketManager::Get().PlayerKeyCount;
 		p_TakeObject.Position = { randPosition.x * RandomNormal() + minPosition.x, randPosition.y * RandomNormal() + minPosition.y, randPosition.z * RandomNormal() + minPosition.z };
-		p_TakeObject.Scale = (randScale * RandomNormal() + minScale) * Vector3::One;
+		p_TakeObject.Scale = (randScale * RandomNormal() + minScale) * 3.0f * Vector3::One;
 		PacketManager::Get().SendPacket((char*)&p_TakeObject, (USHORT)(PS_TakeObject + strSize), PACKET_TakeObject);
 	}
 }

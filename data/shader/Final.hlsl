@@ -198,6 +198,6 @@ PBUFFER_OUTPUT PS_Final(VS_OUTPUT_Mix input) : SV_Target
 		//output.color0 = cb_useShadow > fLightAmount ? output.color0 * cb_useShadow : output.color0;
 	}
 	
-	output.color0.w = 1.0f;
+	output.color0.w = input.col.w;
 	return  output;
 }

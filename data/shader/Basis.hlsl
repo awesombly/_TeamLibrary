@@ -1,7 +1,7 @@
 #define DirectLight
 
 static const float NEAR = 0.1f;
-static const float FAR = 1000.0f;
+static const float FAR = 2000.0f;
 static const float SMapSize = 1024.0f;
 static const float EPSILON = 0.005f;
 // 노말값에 대한 반사율?

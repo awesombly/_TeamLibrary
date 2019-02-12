@@ -10,7 +10,7 @@ namespace MyEvent {
 	void ForceWave(Collider* pMe, Collider* pYou) {
 		if (pYou != nullptr && pYou->m_eTag != ETag::Dummy)
 		{
-			pYou->SetForce((Normalize(pYou->GetCenter() - pMe->GetCenter()) + Vector3::Up) * 60.0f);
+			pYou->SetForce((Normalize(pYou->GetCenter() - pMe->GetCenter()) + Vector3::Up) * 180.0f);
 			pMe->AddIgnoreList(pYou);
 		}
 	}
@@ -29,7 +29,7 @@ namespace MyEvent {
 					auto pItem = ObjectManager::Get().TakeObject(L"Dagger");
 					pItem->SetPosition(position);
 					pItem->SetRotation(RandomNormal() * Quaternion::One * PI);
-					pItem->SetForce({RandomNormal() * 100.0f - 50.0f, 70.0f, RandomNormal() * 100.0f - 50.0f });
+					pItem->SetForce({RandomNormal() * 300.0f - 150.0f, 210.0f, RandomNormal() * 300.0f - 150.0f });
 					pItem->m_pPhysics->UserSocket = pA->m_pPhysics->UserSocket;
 					pItem->m_pPhysics->m_damage = 0.28f;
 				}
@@ -63,7 +63,7 @@ namespace MyEvent {
 		}
 		auto pItem = ObjectManager::Get().TakeObject(L"PBoom");
 		pItem->SetPosition(pA->m_pParent->GetPosition());
-		pItem->SetScale(Vector3::One);
+		pItem->SetScale(Vector3::One * 3.0f);
 		pItem->m_pPhysics->UserSocket = pA->m_pPhysics->UserSocket;
 		pItem->m_pPhysics->m_damage = 0.7f;
 
@@ -79,7 +79,7 @@ namespace MyEvent {
 				return;
 			if (pA->GetHP() <= 0.0f)
 			{
-				pB->SetForce((Normalize(pB->GetCenter() - pA->GetCenter())) * 80.0f);
+				pB->SetForce((Normalize(pB->GetCenter() - pA->GetCenter())) * 240.0f);
 				pB->m_pParent->OperHP(-pA->m_pPhysics->m_damage);
 				// 내가 맞았을때
 				if (pB->m_pParent == PlayerController::Get().GetParent())
@@ -120,7 +120,7 @@ namespace MyEvent {
 				return;
 			case ETag::Ally:
 			{
-				pB->SetForce((Normalize(pA->GetTotalForce())) * 30.0f);
+				pB->SetForce((Normalize(pA->GetTotalForce())) * 90.0f);
 				pB->m_pParent->HealHP(pA->m_pPhysics->m_damage);
 				// 내가 때렸을때
 				if (PacketManager::Get().pMyInfo->UserSocket == pA->m_pPhysics->UserSocket)
@@ -130,7 +130,7 @@ namespace MyEvent {
 			}	break;
 			case ETag::Enemy:
 			{
-				pB->SetForce((Normalize(-pA->GetTotalForce()) + Vector3::Up) * 70.0f);
+				pB->SetForce((Normalize(-pA->GetTotalForce()) + Vector3::Up) * 210.0f);
 				pB->m_pParent->OperHP(-pA->m_pPhysics->m_damage);
 				// 내가 맞았을때
 				if (pB->m_pParent == PlayerController::Get().GetParent())
@@ -171,7 +171,7 @@ namespace MyEvent {
 			 	return;
 			 case ETag::Ally:
 			 {
-			 	pB->SetForce((Normalize(pA->GetTotalForce()) + Vector3::Up) * 15.0f);
+			 	pB->SetForce((Normalize(pA->GetTotalForce()) + Vector3::Up) * 45.0f);
 			 	pB->m_pParent->HealHP(pA->m_pPhysics->m_damage * 1.5f);
 			 	//// 내가 맞았을때
 			 	//if (pB->m_pParent == PlayerController::Get().GetParent())
@@ -195,7 +195,7 @@ namespace MyEvent {
 			 }	break;
 			 case ETag::Enemy:
 			 {
-			 	pB->SetForce((Normalize(-pA->GetTotalForce()) + Vector3::Up) * 70.0f);
+			 	pB->SetForce((Normalize(-pA->GetTotalForce()) + Vector3::Up) * 210.0f);
 			 	pB->m_pParent->OperHP(-pA->m_pPhysics->m_damage);
 			 	// 내가 맞았을때
 			 	if (pB->m_pParent == PlayerController::Get().GetParent())
@@ -231,7 +231,7 @@ namespace MyEvent {
 		if (pB != nullptr &&
 			pB->m_eTag == ETag::Enemy)
 		{
-			pB->SetForce((Normalize(pB->GetCenter() - pA->GetCenter())) * 170.0f);
+			pB->SetForce((Normalize(pB->GetCenter() - pA->GetCenter())) * 510.0f);
 			pB->m_pParent->OperHP(-pA->m_pPhysics->m_damage);
 			// 내가 때렸을때
 			if (PacketManager::Get().pMyInfo->UserSocket == pA->m_pPhysics->UserSocket)
@@ -258,7 +258,7 @@ namespace MyEvent {
 		if (pB != nullptr &&
 			pB->m_eTag == ETag::Enemy)
 		{
-			pB->SetForce((Normalize(pB->GetCenter() - pA->GetCenter())) * 150.0f);
+			pB->SetForce((Normalize(pB->GetCenter() - pA->GetCenter())) * 450.0f);
 			pB->m_pParent->OperHP(-pA->m_pPhysics->m_damage);
 			pA->AddIgnoreList(pB);
 			// 내가 때렸을때
@@ -303,7 +303,7 @@ namespace MyEvent {
 			if (pB->m_eTag == ETag::Dummy)
 				return;
 
-			pB->SetForce((Normalize(-pA->GetTotalForce()) + Vector3::Up) * 70.0f);
+			pB->SetForce((Normalize(-pA->GetTotalForce()) + Vector3::Up) * 210.0f);
 			pB->m_pParent->OperHP(-pA->m_pPhysics->m_damage);
 			// 내가 맞았을때
 			if (pB->m_pParent == PlayerController::Get().GetParent())
@@ -339,7 +339,7 @@ namespace MyEvent {
 			if (pB->m_eTag != ETag::Enemy)
 				return;
 
-			pB->SetForce((Normalize(-pA->GetTotalForce())) * 70.0f);
+			pB->SetForce((Normalize(-pA->GetTotalForce())) * 210.0f);
 			pB->m_pParent->OperHP(-pA->m_pPhysics->m_damage);
 			// 내가 맞았을때
 			if (pB->m_pParent == PlayerController::Get().GetParent())
@@ -373,7 +373,7 @@ namespace MyEvent {
 		if (pB != nullptr &&
 			pB->m_eTag != ETag::Dummy)
 		{
-			pB->SetForce((Normalize(pB->GetCenter() - pA->GetCenter())) * 100.0f);
+			pB->SetForce((Normalize(pB->GetCenter() - pA->GetCenter())) * 300.0f);
 			pB->m_pParent->OperHP(-pA->m_pPhysics->m_damage);
 			pA->AddIgnoreList(pB);
 			// 내가 맞았을때
@@ -408,7 +408,7 @@ namespace MyEvent {
 			pB->m_pParent->m_objType == EObjType::Character &&
 			pB->m_eTag == ETag::Ally)
 		{
-			pB->SetForce((Normalize(pB->GetCenter() - pA->GetCenter())) * 40.0f);
+			pB->SetForce((Normalize(pB->GetCenter() - pA->GetCenter())) * 120.0f);
 			pB->m_pParent->OperHP(-pA->m_pPhysics->m_damage);
 			// 내가 맞았을때
 			if (pB->m_pParent == PlayerController::Get().GetParent())
@@ -432,7 +432,7 @@ namespace MyEvent {
 		if (pB != nullptr &&
 			pB->m_eTag == ETag::Ally)
 		{
-			pB->SetForce((Normalize(pB->GetCenter() - pA->GetCenter())) * 100.0f);
+			pB->SetForce((Normalize(pB->GetCenter() - pA->GetCenter())) * 300.0f);
 			pB->m_pParent->OperHP(-pA->m_pPhysics->m_damage);
 			pA->AddIgnoreList(pB);
 			// 내가 맞았을때
@@ -458,7 +458,7 @@ namespace MyEvent {
 			if (pB->m_eTag != ETag::Ally)
 				return;
 
-			pB->SetForce((Normalize(-pA->GetTotalForce()) + Vector3::Up) * 80.0f);
+			pB->SetForce((Normalize(-pA->GetTotalForce()) + Vector3::Up) * 240.0f);
 			pB->m_pParent->OperHP(-pA->m_pPhysics->m_damage);
 			// 내가 맞았을때
 			if (pB->m_pParent == PlayerController::Get().GetParent())
@@ -623,11 +623,11 @@ namespace TimeEvent {
 			pItem->SetPosition(pParent->GetPosition());
 			vecRot = { -RandomNormal() * PI * 0.4f - PI * 0.3f, RandomNormal() * PI, 0.0f };
 			pItem->SetRotation(vecRot);
-			pItem->SetScale(0.5f, 0.5f, 0.5f);
+			pItem->SetScale(Vector3::One * 1.5f);
 			//pItem->SetForce({ RandomNormal() * 100.0f + -50.0f, RandomNormal() * 150.0f - 200.0f, RandomNormal() * 100.0f + -50.0f });
 			D3DXMatrixRotationYawPitchRoll(&matRotation, -vecRot.y, vecRot.x, vecRot.z);
 			vecRot = { matRotation._31, matRotation._32, matRotation._33 };
-			pItem->SetForce(vecRot * (RandomNormal() * 60.0f + 60.0f));
+			pItem->SetForce(vecRot * (RandomNormal() * 180.0f + 180.0f));
 			pItem->m_pPhysics->UserSocket = pParent->m_pPhysics->UserSocket;
 			pItem->SetDamage(0.4f, PacketManager::Get().UserList[pParent->m_pPhysics->UserSocket]->StatStr);
 			//pItem->GetCollider()->AddIgnoreList(pObject->GetCollider());
@@ -649,7 +649,7 @@ namespace TimeEvent {
 	void MissileShot(GameObject* pParent, void* pVoid2)
 	{
 		auto pTarget = (D3DXVECTOR3*)pVoid2;
-		pParent->SetForce(Normalize(*pTarget - pParent->GetPosition()) * 130.0f + Vector3::Up * 5.0f);
+		pParent->SetForce(Normalize(*pTarget - pParent->GetPosition()) * 390.0f + Vector3::Up * 15.0f);
 	}
 
 	void NuclearLaunch(GameObject* pParent, void* pVoid2)
