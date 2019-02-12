@@ -334,6 +334,9 @@
     <FxCompile Include="..\..\data\shader\OutLine.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
+    <FxCompile Include="..\..\data\shader\ShaderData.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\..\..\_Study\src\geometry.txt" />

@@ -112,7 +112,7 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 		auto pCollider = pObject->GetComponentList(EComponent::Collider);
 		if (pCollider != nullptr)
 		{
-			pObject->SetGravityScale(pObject->GetScale().x * 5.0f);
+			pObject->SetGravityScale(pObject->GetScale().x * 1.5f);
 			if (pObject->m_objType == EObjType::Character)
 			{
 				for (auto& iter : *pCollider)
@@ -145,7 +145,7 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 		auto pCollider = pObject->GetComponentList(EComponent::Collider);
 		if (pCollider != nullptr)
 		{
-			pObject->SetGravityScale(pObject->GetScale().x * 5.0f);
+			pObject->SetGravityScale(pObject->GetScale().x * 1.5f);
 			if (pObject->m_objType == EObjType::Character)
 			{
 				for (auto& iter : *pCollider)
@@ -237,7 +237,7 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 		{
 			pObject->SetHP(p_TakeObject.HP);
 			pObject->m_pPhysics->m_maxHP = p_TakeObject.HP;
-			pObject->SetGravityScale(pObject->GetScale().x * 5.0f);
+			pObject->SetGravityScale(pObject->GetScale().x * 1.5f);
 			pObject->GetCollider()->m_pivot = Vector3::Up * 40.0f * pObject->GetScale().x;
 		}
 	}	break;
@@ -350,6 +350,7 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 			PacketManager::Get().SendPacket((char*)pMyInfo, (USHORT)(PS_UserInfo + pMyInfo->DataSize), PACKET_SendUserInfo);
 			PlayerController::Get().DeadEvent();
 		}
+
 		// 
 		switch (pObject->m_objType)
 		{
@@ -368,7 +369,9 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 		}	break;
 		case EObjType::Enemy:
 		{
-			((AIZombie*)pObject->GetComponent(EComponent::Etc))->DeadEvent();
+			if (pObject->m_pPhysics->DeadEvent != nullptr)
+				pObject->m_pPhysics->DeadEvent(pObject->GetCollider(), p_PlayerDead.KillUser);
+			//((AIZombie*)pObject->GetComponent(EComponent::Etc))->DeadEvent();
 
 			// 자기가 죽였을시
 			if (pMyInfo->UserSocket == p_PlayerDead.KillUser)
@@ -398,10 +401,8 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 					pMyInfo->Score += 5000;
 					PacketManager::Get().SendPacket((char*)pMyInfo, (USHORT)(PS_UserInfo + pMyInfo->DataSize), PACKET_SendUserInfo);
 				}	break;
-				case EDummy:
-					break;
-				default:
-					break;
+				//case EDummy:
+				//	break;
 				}
 			}
 		}	break;

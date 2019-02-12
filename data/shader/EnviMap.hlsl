@@ -71,10 +71,10 @@ VS_OUTPUT_Envi VS_Envi(VS_INPUT_PNCTT input)
 	output.pos = mul(output.pos, g_matProj);
 	
 	float3 vNormal = normalize(mul(input.nor, (float3x3)g_matNormal));
-	output.nor = float4(vNormal, (output.pos.w - NEAR) / (FAR - NEAR));
+	output.nor = float4(vNormal, (output.pos.w - fNEAR) / (fFAR - fNEAR));
 
 #ifdef DirectLight
-	float3 vLightDir = -cb_LightVector;
+	float3 vLightDir = -cb_LightVector.xyz;
 #else
 	float3 vLightDir = normalize(cb_LightVector.xyz - WorldPos.xyz);
 #endif

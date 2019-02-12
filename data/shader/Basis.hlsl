@@ -1,11 +1,4 @@
-#define DirectLight
-
-static const float NEAR = 0.1f;
-static const float FAR = 2000.0f;
-static const float SMapSize = 1024.0f;
-static const float EPSILON = 0.005f;
-// 노말값에 대한 반사율?
-static const float refAtNormal_Incidence = 1.33f;
+#include "ShaderData.hlsl"
 
 // 상수 버퍼 : 버퍼 0번
 cbuffer cbMatrix: register(b0)

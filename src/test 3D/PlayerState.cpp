@@ -335,7 +335,7 @@ void PlayerStateRun::StateInit(PlayerController* pOwner) noexcept
 		ObjectManager::Get().DisableObject(m_pOwner->m_pEffectFly);
 	m_pOwner->m_pEffectFly = ObjectManager::Get().TakeObject(L"EPDustStay", false);
 	m_pOwner->m_pEffectFly->SetParent(pOwner);
-	m_pOwner->m_pEffectFly->SetPosition(Vector3::Up * 5.0f);
+	m_pOwner->m_pEffectFly->SetPosition(Vector3::Up * 15.0f);
 }
 bool PlayerStateRun::Process(const float& spf) noexcept
 {

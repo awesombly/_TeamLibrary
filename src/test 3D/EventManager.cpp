@@ -661,3 +661,61 @@ namespace TimeEvent {
 		SoundManager::Get().PlayQueue("SE_fire1.mp3", pParent->GetPosition(), PlayerController::Get().SoundRange);
 	}
 }
+
+
+namespace DeadEvent {
+	void ZombieDead(Collider* pCollider, const UINT& killUser)
+	{
+		if (RandomNormal() >= 0.8f)
+		{
+			auto pObject = ObjectManager::Get().TakeObject(L"ItemBox");
+			pObject->SetPosition(pCollider->GetCenter());
+			pObject->SetHP(10000.0f);
+		}
+		PlayerController::Get().OperEXP(0.03f);
+		auto pEffect = ObjectManager::Get().TakeObject(L"EZDead");
+		pEffect->SetPosition(pCollider->GetCenter());
+	}
+
+	void ZombieExDead(Collider* pCollider, const UINT& killUser)
+	{
+		if (RandomNormal() >= 0.4f)
+		{
+			auto pObject = ObjectManager::Get().TakeObject(L"ItemBox");
+			pObject->SetPosition(pCollider->GetCenter());
+			pObject->SetHP(10000.0f);
+		}
+		PlayerController::Get().OperEXP(0.2f);
+		auto pEffect = ObjectManager::Get().TakeObject(L"EZDead2");
+		pEffect->SetPosition(pCollider->GetCenter());
+	}
+
+	void ZombieKingDead(Collider* pCollider, const UINT& killUser)
+	{
+		auto pObject = ObjectManager::Get().TakeObject(L"ItemBox");
+		pObject->SetPosition(pCollider->GetCenter());
+		pObject->SetHP(10000.0f);
+
+		PlayerController::Get().OperEXP(1.0f);
+		auto pEffect = ObjectManager::Get().TakeObject(L"EZDead3");
+		pEffect->SetPosition(pCollider->GetCenter());
+		//ObjectManager::Get().DisableObject(pObject);
+	}
+
+	void ShockBoomDead(Collider* pCollider, const UINT& killUser)
+	{
+		auto position = pCollider->GetCenter() + Vector3::Up * 20.0f;
+		//pA->m_pParent->SetPosition(Vector3::Up * 10000.0f);
+		for (int i = 0; i < 20; ++i)
+		{
+			auto pItem = ObjectManager::Get().TakeObject(L"Dagger");
+			pItem->SetPosition(position);
+			pItem->SetRotation(RandomNormal() * Quaternion::One * PI);
+			pItem->SetForce({ RandomNormal() * 300.0f - 150.0f, RandomNormal() * 230.0f - 100.0f, RandomNormal() * 300.0f - 150.0f });
+			pItem->m_pPhysics->UserSocket = killUser;
+			pItem->m_pPhysics->m_damage = 0.28f;
+		}
+		ObjectManager::Get().DisableObject(pObject);
+		SoundManager::Get().PlayQueue("SE_fire1.mp3", pA->m_pParent->GetPosition(), PlayerController::Get().SoundRange);
+	}	break;
+}

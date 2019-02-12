@@ -1,14 +1,10 @@
 #define DirectLight
 #define MAX_BONE_MATRICES 255 
+#include "../../data/shader/ShaderData.hlsl"
 //#define FT_CONSTANTBUFFER 0
 //--------------------------------------------------------------------------------------
 // Constant Buffer Variables
 //--------------------------------------------------------------------------------------
-static const float NEAR = 0.1f;
-static const float FAR = 2000.0f;
-static const float SMapSize = 1024.0f;
-static const float EPSILON = 0.005f;
-static const float refAtNormal_Incidence = 1.33f;
 
 Texture2D g_txDiffuse: register (t0);
 //Texture2D	g_txNormalMap : register(t1);
@@ -165,21 +161,21 @@ VS_OUTPUT VS(PNCT5_VS_INPUT input)//,uniform bool bHalfVector )
 		}
 	}
 
-	float4 WorldPos = output.pos = mul(output.pos, g_matWorld);
-	output.pos = mul(output.pos, g_matView);
+	float4 WorldPos = mul(output.pos, g_matWorld);
+	output.pos = mul(WorldPos, g_matView);
 	output.pos = mul(output.pos, g_matProj);
 
 	Norm = output.nor.xyz;
-	output.nor.z = Norm.x;
+	output.nor.z = -Norm.x;
 	output.nor.x = -Norm.y;
 	output.nor.y = Norm.z;
-	//output.nor = float4(normalize(mul(output.nor.xyz, (float3x3)g_matWorld)), (output.pos.w - NEAR) / (FAR - NEAR));// g_matWorldInvTrans));
-	output.nor = float4(normalize(mul(output.nor.xyz, (float3x3)g_matWorld)), output.pos.w / FAR);
+	//output.nor = float4(normalize(mul(output.nor.xyz, (float3x3)g_matWorld)), (output.pos.w - fNEAR) / (fFAR - fNEAR));// g_matWorldInvTrans));
+	output.nor = float4(normalize(mul(output.nor.xyz, (float3x3)g_matWorld)), output.pos.w / fFAR);
 	//float3 vNormal = output.nor.xyz;
 	output.tex = input.tex;
 
 #ifdef DirectLight
-	float3 vLightDir = -cb_LightVector;
+	float3 vLightDir = -cb_LightVector.xyz;
 #else
 	float3 vLightDir = normalize(cb_LightVector.xyz - WorldPos.xyz);
 #endif
@@ -188,13 +184,15 @@ VS_OUTPUT VS(PNCT5_VS_INPUT input)//,uniform bool bHalfVector )
 	vLocal.w = input.col.w;
 	output.col.xyz = max(0.3f, dot(vLightDir, output.nor.xyz) + 0.4f);
 	output.col.w = vLocal.w;
-	//output.col = input.col;
+	//g_AlphaRate -= 0.01f;
+	//if (g_AlphaRate <= 0.0f)
+	//	g_AlphaRate = 1.0f;
 
 	// È¯°æ
 	if (cb_useEnviMap)
 	{
 		// camera/eye -> V?
-		float3 incident = normalize(cb_EyePos.xyz - WorldPos);
+		float3 incident = normalize(cb_EyePos.xyz - WorldPos.xyz);
 		// R = I - 2 * N * (I.N)	?
 		//output.ref = normalize(incident - 2.0f * output.nor * dot(incident, output.nor));
 		output.ref = normalize(reflect(incident, output.nor.xyz));

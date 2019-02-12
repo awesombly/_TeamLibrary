@@ -30,7 +30,7 @@ VS_OUTPUT_PNCT VS_Basic(VS_INPUT_PNCTT input)
 	output.pos = mul(output.pos, g_matProj);
 	
 	input.nor = normalize(mul(input.nor, (float3x3)g_matNormal));
-	output.nor = float4(input.nor, (output.pos.w - NEAR) / (FAR - NEAR));
+	output.nor = float4(input.nor, (output.pos.w - fNEAR) / (fFAR - fNEAR));
 
 	output.col = input.col;
 	output.tex = input.tex;
@@ -45,10 +45,10 @@ VS_OUTPUT_PNCT VS_Light(VS_INPUT_PNCTT input)
 	output.pos = mul(output.pos, g_matProj);
 
 	input.nor = normalize(mul(input.nor, (float3x3)g_matNormal));
-	output.nor = float4(input.nor, (output.pos.w - NEAR) / (FAR - NEAR));
+	output.nor = float4(input.nor, (output.pos.w - fNEAR) / (fFAR - fNEAR));
 
 #ifdef DirectLight
-	float3 vLightDir = -cb_LightVector;
+	float3 vLightDir = -cb_LightVector.xyz;
 #else
 	float3 vLightDir = normalize(cb_LightVector.xyz - output.pos.xyz);
 #endif

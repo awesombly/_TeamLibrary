@@ -32,7 +32,7 @@ Light::Light(const wstring_view& myName, const ELight& eLightType, const bool& i
 bool Light::Init()	noexcept
 {
 	Camera::Init();
-	m_FOV = PI * 0.6f;
+	//m_FOV = PI * 0.6f;
 	return true;
 }
 

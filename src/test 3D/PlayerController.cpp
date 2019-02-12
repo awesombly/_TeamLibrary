@@ -279,9 +279,9 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 			pObject->SetANIM_OneTime(Paladin_THROW);
 			auto pItem = ObjectManager::Get().TakeObject(L"ShockBomb");
 			pItem->SetPosition(pObject->GetPosition() + pObject->GetForward() * 40.0f + pObject->GetUp() * 50.0f + pObject->GetRight() * 20.0f);
-			pItem->SetForce(forward * 300.0f);
-			pItem->m_pPhysics->UserSocket = socket;
-			pItem->SetHP(10.0f);
+			pItem->SetForce(forward * 350.0f);
+			//pItem->m_pPhysics->UserSocket = socket;
+			pItem->SetHP(0.2f);
 			SoundManager::Get().PlayQueue("SE_dash.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
 		}	break;
 		case EAction::IMine:
@@ -316,9 +316,9 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 			// ÇÙ
 			pObject->SetANIM_OneTime(Paladin_THROW);
 			auto pItem = ObjectManager::Get().TakeObject(L"SkyShip");
-			pItem->SetPosition(pObject->GetPosition() + Vector3::Up * 900.0f + pObject->GetBackward() * 450.0f);
+			pItem->SetPosition(pObject->GetPosition() + Vector3::Up * 800.0f + pObject->GetBackward() * 450.0f);
 			pItem->SetRotation(pObject->GetRotation());
-			pItem->SetDirectionForce(pObject->GetForward() * 2000.0f);
+			pItem->SetDirectionForce(pObject->GetForward() * 480.0f);
 			pItem->m_pPhysics->UserSocket = socket;
 			SoundManager::Get().PlayQueue("SV_paladin_shout.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
 			//SoundManager::Get().PlayQueue("SE_dash.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
@@ -383,7 +383,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 
 			auto pItem = ObjectManager::Get().TakeObject(L"Arrow");
 			pItem->SetPosition(pObject->GetPosition() + pObject->GetForward() * 40.0f + pObject->GetUp() * 65.0f + pObject->GetRight() * 20.0f);
-			pItem->SetRotation(pObject->GetRotation().x, pObject->GetRotation().y, pObject->GetRotation().z);
+			pItem->SetRotation(pObject->GetRotation());
 			pItem->SetScale(Vector3::One * 3.0f);
 			pItem->SetForce(forward * 600.0f);
 			pItem->m_pPhysics->UserSocket = socket;
@@ -398,14 +398,13 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 
 			auto pItem = ObjectManager::Get().TakeObject(L"Arrow");
 			pItem->SetPosition(pObject->GetPosition() + pObject->GetForward() * 40.0f + pObject->GetUp() * 65.0f + pObject->GetRight() * 20.0f);
-			pItem->SetRotation(pObject->GetRotation().x, pObject->GetRotation().y, pObject->GetRotation().z);
+			pItem->SetRotation(pObject->GetRotation());
 			pItem->SetScale(Vector3::One * 6.0f);
 			pItem->SetForce(forward * 1050.0f);
 			pItem->m_pPhysics->UserSocket = socket;
 			pItem->SetDamage(0.8f, PacketManager::Get().UserList[socket]->StatStr);
 			pItem->GetCollider()->AddIgnoreList(pObject->GetCollider());
 			SoundManager::Get().PlayQueue("SE_bow_shot.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
-			//SoundManager::Get().PlayQueue("SE_throw01.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
 		}	break;
 		case EAction::ChargeAttack2:
 		{
@@ -413,14 +412,13 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 
 			auto pItem = ObjectManager::Get().TakeObject(L"Arrow");
 			pItem->SetPosition(pObject->GetPosition() + pObject->GetForward() * 40.0f + pObject->GetUp() * 65.0f + pObject->GetRight() * 20.0f);
-			pItem->SetRotation(pObject->GetRotation().x, pObject->GetRotation().y, pObject->GetRotation().z);
+			pItem->SetRotation(pObject->GetRotation());
 			pItem->SetScale(Vector3::One * 9.0f);
 			pItem->SetForce(forward * 1800.0f);
 			pItem->m_pPhysics->UserSocket = socket;
 			pItem->SetDamage(1.6f, PacketManager::Get().UserList[socket]->StatStr);
 			pItem->GetCollider()->AddIgnoreList(pObject->GetCollider());
 			SoundManager::Get().PlayQueue("SE_bow_shot.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
-			//SoundManager::Get().PlayQueue("SE_throw01.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
 		}	break;
 		case EAction::RSkill:
 		{
@@ -491,9 +489,9 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 			pObject->SetANIM_OneTime(Archer_THROW);
 			auto pItem = ObjectManager::Get().TakeObject(L"ShockBomb");
 			pItem->SetPosition(pObject->GetPosition() + pObject->GetForward() * 40.0f + pObject->GetUp() * 50.0f + pObject->GetRight() * 20.0f);
-			pItem->SetForce(forward * 300.0f);
-			pItem->m_pPhysics->UserSocket = socket;
-			pItem->SetHP(10.0f);
+			pItem->SetForce(forward * 350.0f);
+			//pItem->m_pPhysics->UserSocket = socket;
+			pItem->SetHP(0.2f);
 			SoundManager::Get().PlayQueue("SE_dash.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
 		}	break;
 		case EAction::IMine:
@@ -528,9 +526,9 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 			// ÇÙ
 			pObject->SetANIM_OneTime(Archer_THROW);
 			auto pItem = ObjectManager::Get().TakeObject(L"SkyShip");
-			pItem->SetPosition(pObject->GetPosition() + Vector3::Up * 900.0f + pObject->GetBackward() * 562.5f);
+			pItem->SetPosition(pObject->GetPosition() + Vector3::Up * 800.0f + pObject->GetBackward() * 562.5f);
 			pItem->SetRotation(pObject->GetRotation());
-			pItem->SetDirectionForce(pObject->GetForward() * 700.0f);
+			pItem->SetDirectionForce(pObject->GetForward() * 600.0f);
 			pItem->m_pPhysics->UserSocket = socket;
 			SoundManager::Get().PlayQueue("SV_archer_atk4.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
 			//SoundManager::Get().PlayQueue("SE_dash.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
@@ -671,9 +669,9 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 			pObject->SetANIM_OneTime(Mage_THROW);
 			auto pItem = ObjectManager::Get().TakeObject(L"ShockBomb");
 			pItem->SetPosition(pObject->GetPosition() + pObject->GetForward() * 40.0f + pObject->GetUp() * 50.0f + pObject->GetRight() * 20.0f);
-			pItem->SetForce(forward * 300.0f);
-			pItem->m_pPhysics->UserSocket = socket;
-			pItem->SetHP(10.0f);
+			pItem->SetForce(forward * 350.0f);
+			//pItem->m_pPhysics->UserSocket = socket;
+			pItem->SetHP(0.2f);
 			SoundManager::Get().PlayQueue("SE_dash.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
 		}	break;
 		case EAction::IMine:
@@ -708,9 +706,9 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 			// ÇÙ
 			pObject->SetANIM_OneTime(Mage_THROW);
 			auto pItem = ObjectManager::Get().TakeObject(L"SkyShip");
-			pItem->SetPosition(pObject->GetPosition() + Vector3::Up * 900.0f + pObject->GetBackward() * 562.5f);
+			pItem->SetPosition(pObject->GetPosition() + Vector3::Up * 800.0f + pObject->GetBackward() * 562.5f);
 			pItem->SetRotation(pObject->GetRotation());
-			pItem->SetDirectionForce(pObject->GetForward() * 700.0f);
+			pItem->SetDirectionForce(pObject->GetForward() * 600.0f);
 			pItem->m_pPhysics->UserSocket = socket;
 			SoundManager::Get().PlayQueue("SV_mage_atk4.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
 			//SoundManager::Get().PlayQueue("SE_dash.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
@@ -984,6 +982,14 @@ void PlayerController::SendAnimTransform(const EAction& eAction, const ECharacte
 {
 	static Packet_AnimTransform p_AnimTransform;
 
+	p_AnimTransform.KeyValue = m_pParent->m_keyValue;
+	p_AnimTransform.UserSocket = PacketManager::Get().pMyInfo->UserSocket;
+	p_AnimTransform.Position = m_pParent->GetPosition();
+	p_AnimTransform.Rotation = m_pParent->GetRotation();
+	m_prevRotY = p_AnimTransform.Rotation.y;
+	p_AnimTransform.EAnimState = m_curAnim = eAction;
+	p_AnimTransform.ECharacter = eCharacter;
+
 	// ÀÌµ¿ Ã³¸®
 	switch (eAction)
 	{
@@ -1080,22 +1086,13 @@ void PlayerController::SendAnimTransform(const EAction& eAction, const ECharacte
 		p_AnimTransform.Force = (Normalize(m_pParent->GetForward() + m_pParent->GetRight() * 0.5f) * m_moveSpeed * 2.2f + Vector3::Up * 90.0f);
 		p_AnimTransform.Direction = Vector3::Zero;
 	}	break;
-	//case EAction::LSkill:
 	default:
 	{
 		p_AnimTransform.Force = m_pParent->GetForce();
 		p_AnimTransform.Direction = ObjectManager::Cameras[ECamera::Main]->GetForward();
 		p_AnimTransform.Direction = Normalize(p_AnimTransform.Direction);
-		//p_AnimTransform.Direction = Vector3::Zero;
 	}	break;
 	}
-	p_AnimTransform.KeyValue = m_pParent->m_keyValue;
-	p_AnimTransform.UserSocket = PacketManager::Get().pMyInfo->UserSocket;
-	p_AnimTransform.Position = m_pParent->GetPosition();
-	p_AnimTransform.Rotation = m_pParent->GetRotation();
-	m_prevRotY = p_AnimTransform.Rotation.y;
-	p_AnimTransform.EAnimState = m_curAnim = eAction;
-	p_AnimTransform.ECharacter = eCharacter;
 	PacketManager::Get().SendPacket((char*)&p_AnimTransform, sizeof(Packet_AnimTransform), PACKET_SetAnimTransform);
 }
 

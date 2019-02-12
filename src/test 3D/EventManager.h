@@ -45,3 +45,9 @@ namespace TimeEvent {
 	void MissileShot(GameObject* pParent, void* pVoid2);
 	void NuclearLaunch(GameObject* pParent, void* pVoid2);
 }
+
+namespace DeadEvent {
+	void ZombieDead(Collider* pCollider, const UINT& killUser);
+	void ZombieExDead(Collider* pCollider, const UINT& killUser);
+	void ZombieKingDead(Collider* pCollider, const UINT& killUser);
+}

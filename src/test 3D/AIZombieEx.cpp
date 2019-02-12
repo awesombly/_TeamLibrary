@@ -121,21 +121,6 @@ bool AIZombieEx::Release()	noexcept
 	return true;
 }
 
-void AIZombieEx::DeadEvent() noexcept
-{
-	if (RandomNormal() >= 0.4f)
-	{
-		auto pObject = ObjectManager::Get().TakeObject(L"ItemBox");
-		pObject->SetPosition(m_pParent->GetCollider()->GetCenter());
-		pObject->SetHP(10000.0f);
-	}
-	PlayerController::Get().OperEXP(0.2f);
-	auto pEffect = ObjectManager::Get().TakeObject(L"EZDead2");
-	pEffect->SetPosition(m_pParent->GetCollider()->GetCenter());
-}
-
-
-
 Component* AIZombieEx::clone() noexcept
 {
 	auto pAI = new AIZombieEx(*this);

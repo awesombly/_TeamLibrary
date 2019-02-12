@@ -55,6 +55,8 @@ bool ObjectManager::Frame(const float& spf, const float& accTime) noexcept
 	for (auto& iter : Lights)
 	{
 		iter->Frame(spf, accTime);
+		iter->SetPosition(CurCamera->GetWorldPosition() + Vector3::Up * 250.0f + Vector3::Backward * 500.0f);
+		//iter->SetRotation(CurCamera->GetWorldRotation() + Quaternion::Up * PI * 0.25f);
 	}
 	for (auto& outiter : m_ObjectList)
 	{

@@ -210,24 +210,6 @@ bool AIZombieKing::Release()	noexcept
 	return true;
 }
 
-void AIZombieKing::DeadEvent() noexcept
-{
-	if (m_Breath != nullptr)
-	{
-		ObjectManager::Get().DisableObject(m_Breath);
-		m_Breath = nullptr;
-	}
-	//if (RandomNormal() >= 0.2f)
-	{
-		auto pObject = ObjectManager::Get().TakeObject(L"ItemBox");
-		pObject->SetPosition(m_pParent->GetCollider()->GetCenter());
-		pObject->SetHP(10000.0f);
-	}
-	PlayerController::Get().OperEXP(1.0f);
-	auto pEffect = ObjectManager::Get().TakeObject(L"EZDead3");
-	pEffect->SetPosition(m_pParent->GetCollider()->GetCenter());
-}
-
 Component* AIZombieKing::clone() noexcept
 {
 	auto pAI = new AIZombieKing(*this);

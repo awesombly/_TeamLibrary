@@ -19,8 +19,6 @@ public:
 	float		m_moveSpeed;
 	float		m_delay = 0.0f;
 public:
-	virtual void DeadEvent()									noexcept;
-	///
 	virtual void Update()										noexcept override;
 	virtual bool Init()											noexcept override;
 	virtual bool Frame(const float& spf, const float& accTime)	noexcept override;

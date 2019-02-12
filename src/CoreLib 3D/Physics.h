@@ -26,6 +26,7 @@
 //	UCHAR warmStarted;				// 디버그 랜더용?
 //};
 
+class Collider;
 
 struct PhysicsInfo
 {
@@ -39,6 +40,7 @@ struct PhysicsInfo
 	float m_disHP		 = 1.0f;
 	float m_damage		 = 0.0f;
 	float m_armor		 = 1.0f;
+	void(*DeadEvent)(Collider* pCollider, const UINT& killUser) = nullptr;
 
 	D3DXVECTOR3 m_force		= Vector3::Zero;	// 적용중인 힘
 	D3DXVECTOR3 m_direction = Vector3::Zero;	// 이동 힘

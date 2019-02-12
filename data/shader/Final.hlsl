@@ -9,7 +9,6 @@ SamplerState samShadowMap : register(s1);
 SamplerComparisonState samComShadowMap : register (s2);
 
 
-
 struct VS_OUTPUT_Mix
 {
 	float4 pos		 : SV_POSITION;
@@ -49,11 +48,11 @@ VS_OUTPUT_Mix VS_Final(VS_INPUT_PNCTT input)
 	output.pos = mul(output.pos, g_matProj);
 
 	float3 vNormal = normalize(mul(input.nor, (float3x3)g_matNormal));
-	output.nor = float4(vNormal, (output.pos.w - NEAR) / (FAR - NEAR));
+	output.nor = float4(vNormal, (output.pos.w - fNEAR) / (fFAR - fNEAR));
 	output.tex = input.tex;
 
 #ifdef DirectLight
-	float3 vLightDir = -cb_LightVector;
+	float3 vLightDir = -cb_LightVector.xyz;
 #else
 	float3 vLightDir = normalize(cb_LightVector.xyz - WorldPos.xyz);
 #endif

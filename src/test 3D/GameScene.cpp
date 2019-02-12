@@ -2,6 +2,7 @@
 #include "PacketManager.h"
 #include "JEventBind.h"
 #include "UIManager.h"
+#include "../../data/shader/ShaderData.hlsl"
 
 
 bool GameScene::Init() noexcept
@@ -72,9 +73,10 @@ bool GameScene::Init() noexcept
 	// 높이 맵
 	m_pHeightMap = new HeightMap(L"HeightMap", EComponent::Renderer, L"mounds.jpg");
 	auto pObject = new GameObject(L"HeightMap", m_pHeightMap, EObjType::Map);
-	m_pHeightMap->CreateHeightMap(DxManager::GetDContext(), L"HeightMap/Islands, Leafy.bmp", 8, 1.0f);
+	m_pHeightMap->CreateHeightMap(DxManager::GetDContext(), L"HeightMap/Islands, Leafy.bmp", 20, 1.0f, 1.0f);
 	//mapMap->SetEnviromentMap(((Renderer*)m_pSkyBox->GetComponent(EComponent::Renderer))->m_srcName, EEnviType::Fresnel);
-	pObject->Translate(Vector3::Down * 100.0f);
+	//pObject->Translate(Vector3::Down * 100.0f);
+	pObject->SetScaleY(0.2f);
 	ObjectManager::Get().PushObject(pObject);
 
 
@@ -94,6 +96,11 @@ bool GameScene::Init() noexcept
 // 프레임
 bool GameScene::Frame() noexcept
 {
+	//g_AlphaRate -= Timer::SPF * 0.1f;
+	//if (g_AlphaRate < 0.0f)
+	//	g_AlphaRate = 1.0f;
+	//ErrorMessage(to_string(g_AlphaRate));
+
 	// IME 채팅
 	if (m_pChat->m_bRender)
 	{
@@ -151,20 +158,20 @@ bool GameScene::Frame() noexcept
 	//m_pTest->Frame(Timer::SPF, Timer::AccumulateTime);
 	SoundManager::Get().Frame();
 
-	// 경계 막기
-	for (auto objIter = ObjectManager::Get().GetObjectList(EObjType::Character)->begin();
-		objIter != ObjectManager::Get().GetObjectList(EObjType::Character)->end(); ++objIter)
-	{
-		auto& position = (*objIter)->GetPosition();
-		if (position.x > 460.0f)
-			(*objIter)->SetPositionX(460.0f);
-		if (position.x < -455.0f)
-			(*objIter)->SetPositionX(-455.0f);
-		if (position.z > 460.0f)
-			(*objIter)->SetPositionZ(460.0f);
-		if (position.z < -400.0f)
-			(*objIter)->SetPositionZ(-400.0f);
-	}
+	//// 경계 막기
+	//for (auto objIter = ObjectManager::Get().GetObjectList(EObjType::Character)->begin();
+	//	objIter != ObjectManager::Get().GetObjectList(EObjType::Character)->end(); ++objIter)
+	//{
+	//	auto& position = (*objIter)->GetPosition();
+	//	if (position.x > 460.0f)
+	//		(*objIter)->SetPositionX(460.0f);
+	//	if (position.x < -455.0f)
+	//		(*objIter)->SetPositionX(-455.0f);
+	//	if (position.z > 460.0f)
+	//		(*objIter)->SetPositionZ(460.0f);
+	//	if (position.z < -400.0f)
+	//		(*objIter)->SetPositionZ(-400.0f);
+	//}
 
 	// 맵 높이
 	for (auto& iter : ObjectManager::Get().GetColliderList())
@@ -481,6 +488,14 @@ void GameScene::HostFrame() noexcept
 	{
 		m_eState = EGameState::End;
 		PacketManager::Get().SendPacket((char*)&PI, sizeof(Packet_KeyValue), PACKET_EndGame);
+	}
+
+	static float spawnBarrel = 0.0f;
+	spawnBarrel += Timer::SPF;
+	if (spawnBarrel >= 10.0f)
+	{
+		spawnBarrel = 0.0f;
+		PacketManager::Get().SendTakeObject(L"BarrelRed", ESocketType::EBarrelRed, (UCHAR)PacketManager::Get().UserList.size(), 0.75f, 1.0f, 0.0f, { -500.0f, 10.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
 	}
 
 	if (*m_pFrameCount <= 0.0f)

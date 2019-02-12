@@ -6,7 +6,6 @@
 #include "PlayerController.h"
 #include "SoundManager.h"
 
-
 AIZombie::AIZombie()
 {
 	m_myName = L"AI";
@@ -130,21 +129,6 @@ void AIZombie::Update()	noexcept
 {
 	Init();
 }
-
-
-void AIZombie::DeadEvent() noexcept
-{
-	if (RandomNormal() >= 0.8f)
-	{
-		auto pObject = ObjectManager::Get().TakeObject(L"ItemBox");
-		pObject->SetPosition(m_pParent->GetCollider()->GetCenter());
-		pObject->SetHP(10000.0f);
-	}
-	PlayerController::Get().OperEXP(0.03f);
-	auto pEffect = ObjectManager::Get().TakeObject(L"EZDead");
-	pEffect->SetPosition(m_pParent->GetCollider()->GetCenter());
-}
-
 
 
 Component* AIZombie::clone() noexcept

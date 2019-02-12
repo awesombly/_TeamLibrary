@@ -119,7 +119,7 @@ VS_OUTPUT_Instance VS_Instance(VS_INPUT_Instance input)
 	//output.col = input.col * float4(fDot, fDot, fDot, 1.0f);
 
 	//float3 vNormal = normalize(mul(input.nor, (float3x3)g_matNormal));
-	output.nor = float4(input.nor.xyz, (output.pos.w - NEAR) / (FAR - NEAR));
+	output.nor = float4(input.nor.xyz, (output.pos.w - fNEAR) / (fFAR - fNEAR));
 
 	output.col = input.col;
 	output.tex = input.tex;
