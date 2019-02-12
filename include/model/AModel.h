@@ -122,8 +122,6 @@ public:
 	virtual void		UpdateMatrix() noexcept override;
 
 	//virtual GameObject* clone() noexcept override;
-
-
 	bool					SetVSShader(ID3D11VertexShader* pVs);
 	bool					SetPSShader(ID3D11PixelShader* pPs);
 
@@ -132,7 +130,6 @@ public:
 
 	bool					ReturnVSShader();
 	bool					ReturnPSShader();
-
 public:
 	AModel() ;
 	virtual ~AModel() ;
