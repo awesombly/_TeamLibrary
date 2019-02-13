@@ -344,7 +344,7 @@ void IntroScene::SetObjects() noexcept
 	pHeroObj->SetScale(Vector3::One * 0.9f);
 	pCollider = new Collider(13.0f);
 	//pCollider = new ColliderOBB(-Vector3::One, Vector3::One);
-	pHeroObj->AddComponent({ pCollider, pRenderer->clone(), new CTransformer(Vector3::Zero, Quaternion::Left * 3.0f) });
+	pHeroObj->AddComponent({ pCollider, pRenderer, new CTransformer(Vector3::Zero, Quaternion::Left * 3.0f) });
 	pHeroObj->SetHP(10000.0f);
 	pHeroObj->m_pPhysics->m_repulsion = 1.3f;
 	pHeroObj->SetGravityScale(2.0f);
@@ -360,7 +360,7 @@ void IntroScene::SetObjects() noexcept
 	pHeroObj->m_objType = EObjType::AObject;
 	pHeroObj->SetScale(Vector3::One * 2.5f);
 	pCollider = new Collider(17.0f);
-	pHeroObj->AddComponent({ pCollider, pRenderer->clone(), ObjectManager::Get().TakeComponent(L"Fire") });
+	pHeroObj->AddComponent({ pCollider, pRenderer, ObjectManager::Get().TakeComponent(L"Fire") });
 	pCollider->m_pivot = Vector3::Up * 6.0f;
 	pCollider->CollisionEvent = MyEvent::PlayerBomb;
 	pCollider->m_eTag = ETag::Dummy;
@@ -376,7 +376,7 @@ void IntroScene::SetObjects() noexcept
 	pHeroObj->SetScale(Vector3::One * 3.0f);
 	auto pTimer = new CEventTimer(3.0f);
 	pTimer->TimerEvent = { TimeEvent::TimeBomb, nullptr };
-	pHeroObj->AddComponent({ pCollider, pRenderer->clone(), pTimer, ObjectManager::Get().TakeComponent(L"Fire") });
+	pHeroObj->AddComponent({ pCollider, pRenderer, pTimer, ObjectManager::Get().TakeComponent(L"Fire") });
 	pCollider->m_eTag = ETag::Dummy;
 	ObjectManager::Get().SetProtoObject(pHeroObj);
 
@@ -388,7 +388,7 @@ void IntroScene::SetObjects() noexcept
 	pHeroObj->m_objType = EObjType::AObject;
 	pCollider = new Collider(28.0f);
 	pHeroObj->SetScale(Vector3::One * 1.2f);
-	pHeroObj->AddComponent({ pCollider, pRenderer->clone() });
+	pHeroObj->AddComponent({ pCollider, pRenderer });
 	pCollider->m_eTag = ETag::Enemy;
 	//pCollider->CollisionEvent = MyEvent::ShockBoom;
 	pHeroObj->m_pPhysics->DeadEvent	 = DyingEvent::ShockBoomDead;
@@ -403,7 +403,7 @@ void IntroScene::SetObjects() noexcept
 	pHeroObj->m_objType = EObjType::AObject;
 	pCollider = new Collider(15.0f);
 	pHeroObj->SetScale(Vector3::One * 3.0f);
-	pHeroObj->AddComponent({ pCollider, pRenderer->clone() });
+	pHeroObj->AddComponent({ pCollider, pRenderer });
 	pCollider->m_eTag = ETag::Dummy;
 	pCollider->CollisionEvent = MyEvent::MineBoom;
 	ObjectManager::Get().SetProtoObject(pHeroObj);
@@ -418,7 +418,7 @@ void IntroScene::SetObjects() noexcept
 	pCollider = new Collider(15.0f);
 	pTimer = new CEventTimer(1.2f);
 	pTimer->TimerEvent = { TimeEvent::MissileShot, (void*)&Vector3::Zero };
-	pHeroObj->AddComponent({pCollider, pRenderer->clone(), pTimer});
+	pHeroObj->AddComponent({pCollider, pRenderer, pTimer});
 	pCollider->m_pivot = Vector3::Up * 8.0f;
 	pCollider->SetGravityScale(0.1f);
 	pCollider->m_eTag = ETag::Dummy;
@@ -435,7 +435,7 @@ void IntroScene::SetObjects() noexcept
 	pCollider = new Collider(0.0001f);
 	pTimer = new CEventTimer(1.5f);
 	pTimer->TimerEvent = { TimeEvent::NuclearLaunch, nullptr };
-	pHeroObj->AddComponent({ pCollider, pRenderer->clone(), pTimer, new CEventTimer(6.0f) });
+	pHeroObj->AddComponent({ pCollider, pRenderer, pTimer, new CEventTimer(6.0f) });
 	//pCollider->m_pivot = Vector3::Up * 8.0f;
 	pCollider->SetGravityScale(0.0f);
 	pCollider->m_eTag = ETag::Dummy;
@@ -448,11 +448,9 @@ void IntroScene::SetObjects() noexcept
 	pHeroObj->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
 	pHeroObj->m_myName = L"Nuclear";
 	pHeroObj->m_objType = EObjType::AObject;
-	pHeroObj->SetScale(Vector3::One * 3.0f);
-	pHeroObj->SetRotation(Quaternion::Down * PI);
 	pCollider = new Collider(10.0f);
-	pHeroObj->AddComponent({ pCollider, pRenderer->clone() });
-	pCollider->m_pivot = Vector3::Down * 60.0f;
+	pHeroObj->AddComponent({ pCollider, pRenderer });
+	pCollider->m_pivot = Vector3::Down * 80.0f;
 	//pCollider->SetGravityScale(0.0f);
 	pCollider->m_eTag = ETag::Dummy;
 	pCollider->CollisionEvent = MyEvent::NuclearBoom;
@@ -466,7 +464,7 @@ void IntroScene::SetObjects() noexcept
 	pHeroObj->m_objType = EObjType::AObject;
 	pCollider = new Collider(6.0f);
 	pHeroObj->SetScale(Vector3::One * 0.75f);
-	pHeroObj->AddComponent({ pCollider, pRenderer->clone() });
+	pHeroObj->AddComponent({ pCollider, pRenderer });
 	pHeroObj->SetHP(100.0f);
 	pCollider->m_pivot = Vector3::Up * 6.0f + Vector3::Forward * 2.5f;
 	//pCollider->SetGravityScale(0.5f);
@@ -482,7 +480,7 @@ void IntroScene::SetObjects() noexcept
 	pHeroObj->m_myName = L"Arrow";
 	pHeroObj->m_objType = EObjType::AObject;
 	pCollider = new Collider(5.0f);
-	pHeroObj->AddComponent({ pCollider, pRenderer->clone(), ObjectManager::Get().TakeComponent(L"Fire") });
+	pHeroObj->AddComponent({ pCollider, pRenderer, ObjectManager::Get().TakeComponent(L"Fire") });
 	//pCollider->m_pivot = Vector3::Up * 6.0f + Vector3::Forward * 2.5f;
 	pCollider->SetGravityScale(0.5f);
 	pCollider->CollisionEvent = MyEvent::OneTimeHit;
@@ -499,7 +497,7 @@ void IntroScene::SetObjects() noexcept
 	pHeroObj->SetScale(Vector3::One * 3.0f);
 	pTimer = new CEventTimer(1.5f);
 	pTimer->TimerEvent = { TimeEvent::ArrowRain, nullptr };
-	pHeroObj->AddComponent({ pCollider, pRenderer->clone(), pTimer });
+	pHeroObj->AddComponent({ pCollider, pRenderer, pTimer });
 	pCollider->m_eTag = ETag::Dummy;
 	ObjectManager::Get().SetProtoObject(pHeroObj);
 
@@ -511,7 +509,7 @@ void IntroScene::SetObjects() noexcept
 	//pHeroObj->m_objType = EObjType::AObject;
 	//pHeroObj->SetScale(Vector3::One * 1.2f);
 	//pCollider = new Collider(15.0f);
-	//pHeroObj->AddComponent({ pCollider, pRenderer->clone(), ObjectManager::Get().TakeComponent(L"Fire") });
+	//pHeroObj->AddComponent({ pCollider, pRenderer, ObjectManager::Get().TakeComponent(L"Fire") });
 	//pCollider->m_pivot = Vector3::Up * 4.0f + Vector3::Forward * 2.5f;
 	//pCollider->CollisionEvent = MyEvent::ZombieThrow;
 	//pCollider->m_eTag = ETag::Dummy;
@@ -524,7 +522,7 @@ void IntroScene::SetObjects() noexcept
 	pHeroObj->m_myName = L"Explosive";
 	pHeroObj->m_objType = EObjType::AObject;
 	pCollider = new ColliderOBB({ -18.0f, -20.0f, -18.0f }, { 18.0f, 20.0f, 18.0f });
-	pHeroObj->AddComponent({ pCollider, pRenderer->clone() });
+	pHeroObj->AddComponent({ pCollider, pRenderer });
 	//pCollider->m_pivot = Vector3::Up * 4.0f + Vector3::Forward * 2.5f;
 	//pCollider->CollisionEvent = MyEvent::ZombieThrow;
 	pHeroObj->m_pPhysics->DeadEvent = DyingEvent::BarrelDead;
@@ -544,7 +542,7 @@ void IntroScene::SetObjects() noexcept
 	//test->m_objType = EObjType::Character;
 	//test->SetPositionY(150.0f);
 	//test->SetScale(1.0f, 1.0f, 1.0f);
-	//test->AddComponent( pRenderer->clone());
+	//test->AddComponent( pRenderer);
 	////ObjectManager::Get().PushObject(test);
 	//ObjectManager::Get().SetProtoObject(test);
 
@@ -568,7 +566,7 @@ void IntroScene::SetObjects() noexcept
 	pHeroObj->m_myName = L"Archer";
 	pHeroObj->m_objType = EObjType::Character;
 	pCollider = new ColliderOBB({ -13.0f, 0.0f , -13.0f }, { 13.0f, 80.0f , 13.0f });
-	pHeroObj->AddComponent({ pCollider, pRerderEnvi->clone() });
+	pHeroObj->AddComponent({ pCollider, pRerderEnvi });
 	pCollider->m_eTag = ETag::Ally;
 	ObjectManager::Get().SetProtoObject(pHeroObj);
 
@@ -580,7 +578,7 @@ void IntroScene::SetObjects() noexcept
 	pHeroObj->m_myName = L"Mage";
 	pHeroObj->m_objType = EObjType::Character;
 	pCollider = new ColliderOBB({ -13.0f, 0.0f , -13.0f }, { 13.0f, 80.0f , 13.0f });
-	pHeroObj->AddComponent({ pCollider, pRerderEnvi->clone() });
+	pHeroObj->AddComponent({ pCollider, pRerderEnvi });
 	pCollider->m_eTag = ETag::Ally;
 	ObjectManager::Get().SetProtoObject(pHeroObj);
 
@@ -592,7 +590,7 @@ void IntroScene::SetObjects() noexcept
 	pHeroObj->m_myName = L"Zombie";
 	pHeroObj->m_objType = EObjType::Enemy;
 	pCollider = new ColliderOBB({ -13.0f, 0.0f , -13.0f }, { 13.0f, 80.0f , 13.0f });
-	pHeroObj->AddComponent({ pCollider, pRerderEnvi->clone(), new AIZombie() });
+	pHeroObj->AddComponent({ pCollider, pRerderEnvi, new AIZombie() });
 	pCollider->CollisionEvent = MyEvent::ZombieHit;
 	pCollider->m_eTag = ETag::Enemy;
 	pHeroObj->m_pPhysics->DeadEvent = DyingEvent::ZombieDead;
@@ -607,7 +605,7 @@ void IntroScene::SetObjects() noexcept
 	pHeroObj->m_myName = L"Caster";
 	pHeroObj->m_objType = EObjType::Enemy;
 	pCollider = new ColliderOBB({ -13.0f, 0.0f , -13.0f }, { 13.0f, 80.0f , 13.0f });
-	pHeroObj->AddComponent({ pCollider, pRerderEnvi->clone(), new AIZombieCast() });
+	pHeroObj->AddComponent({ pCollider, pRerderEnvi, new AIZombieCast() });
 	pCollider->CollisionEvent = MyEvent::ZombieHit;
 	pCollider->m_eTag = ETag::Enemy;
 	pHeroObj->m_pPhysics->DeadEvent = DyingEvent::ZombieDead;
@@ -622,7 +620,7 @@ void IntroScene::SetObjects() noexcept
 	pHeroObj->m_myName = L"Crawler";
 	pHeroObj->m_objType = EObjType::Enemy;
 	pCollider = new ColliderOBB({ -13.0f, 0.0f , -40.0f }, { 13.0f, 25.0f , 40.0f });
-	pHeroObj->AddComponent({ pCollider, pRerderEnvi->clone(), new AIZombieCrawl() });
+	pHeroObj->AddComponent({ pCollider, pRerderEnvi, new AIZombieCrawl() });
 	pCollider->CollisionEvent = MyEvent::ZombieHit;
 	pCollider->m_pPhysics->m_mass = 0.15f;
 	pCollider->m_pPhysics->m_damping = 1.5f;
@@ -639,7 +637,7 @@ void IntroScene::SetObjects() noexcept
 	pHeroObj->m_myName = L"Mutant";
 	pHeroObj->m_objType = EObjType::Enemy;
 	pCollider = new ColliderOBB({ -13.0f, 0.0f , -13.0f }, { 13.0f, 80.0f , 13.0f });
-	pHeroObj->AddComponent({ pCollider, pRerderEnvi->clone(), new AIZombieEx() });
+	pHeroObj->AddComponent({ pCollider, pRerderEnvi, new AIZombieEx() });
 	pCollider->CollisionEvent = MyEvent::ZombieHit;
 	pCollider->m_pPhysics->m_mass = 0.15f;
 	pCollider->m_pPhysics->m_damping = 1.5f;
@@ -656,7 +654,7 @@ void IntroScene::SetObjects() noexcept
 	pHeroObj->m_myName = L"Tank";
 	pHeroObj->m_objType = EObjType::Enemy;
 	pCollider = new ColliderOBB({ -13.0f, 0.0f , -13.0f }, { 13.0f, 80.0f , 13.0f });
-	pHeroObj->AddComponent({ pCollider, pRerderEnvi->clone(), new AIZombieKing() });
+	pHeroObj->AddComponent({ pCollider, pRerderEnvi, new AIZombieKing() });
 	pCollider->CollisionEvent = MyEvent::ZombieHit;
 	pCollider->m_pPhysics->m_mass = 0.05f;
 	pCollider->m_pPhysics->m_damping = 3.0f;

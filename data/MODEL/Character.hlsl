@@ -174,18 +174,22 @@ VS_OUTPUT VS(PNCT5_VS_INPUT input)//,uniform bool bHalfVector )
 	//float3 vNormal = output.nor.xyz;
 	output.tex = input.tex;
 
-#ifdef DirectLight
-	float3 vLightDir = -cb_LightVector.xyz;
-#else
-	float3 vLightDir = normalize(cb_LightVector.xyz - WorldPos.xyz);
-#endif
-	//float fDot = max(0.2f, lerp(dot(vLightDir, output.nor.xyz), 1.0f, 0.2f) + 0.2f);
-	//output.col = /*float4(fDot, fDot, fDot, 1.0f) **/ /*input.col **/ fDot;
-	output.col.xyz = max(0.3f, dot(vLightDir, output.nor.xyz) + 0.4f);
-	output.col.w = input.col.w;
-	//g_AlphaRate -= 0.01f;
-	//if (g_AlphaRate <= 0.0f)
-	//	g_AlphaRate = 1.0f;
+	if (cb_useLight)
+	{
+	#ifdef DirectLight
+		float3 vLightDir = cb_LightVector.xyz;
+	#else
+		float3 vLightDir = normalize(-cb_LightVector.xyz - WorldPos.xyz);
+	#endif
+		//float fDot = max(0.2f, lerp(dot(vLightDir, output.nor.xyz), 1.0f, 0.2f) + 0.2f);
+		//output.col = /*float4(fDot, fDot, fDot, 1.0f) **/ /*input.col **/ fDot;
+		output.col.xyz = max(0.3f, dot(vLightDir, output.nor.xyz) + 0.5f);
+		output.col.w = input.col.w;
+	}
+	else
+	{
+		output.col = input.col;
+	}
 
 	// È¯°æ
 	if (cb_useEnviMap)
@@ -256,32 +260,30 @@ PBUFFER_OUTPUT PS(VS_OUTPUT input) : SV_Target
 	}
 
 	// ½¦µµ¿ì
-	//if (cb_useShadow)
-	//{
-	static const float iNumKernel = 3;
-	float fLightAmount = 0.0f;
-	float3 ShadowTexColor = input.TexShadow.xyz / input.TexShadow.w;
-
-	const float fdelta = 1.0f / SMapSize;
-	int iHalf = (iNumKernel - 1) / 2;
-	for (int v = -iHalf; v <= iHalf; v++)
+	if (cb_useShadow)
 	{
-		for (int u = -iHalf; u <= iHalf; u++)
+		static const float iNumKernel = 3;
+		float fLightAmount = 0.0f;
+		float3 ShadowTexColor = input.TexShadow.xyz / input.TexShadow.w;
+
+		const float fdelta = 1.0f / SMapSize;
+		int iHalf = (iNumKernel - 1) / 2;
+		for (int v = -iHalf; v <= iHalf; v++)
 		{
-			float2 vOffset = float2(u * fdelta, v * fdelta);
-			fLightAmount += g_txDepthMap.SampleCmpLevelZero(samComShadowMap,
-				ShadowTexColor.xy + vOffset, ShadowTexColor.z);
+			for (int u = -iHalf; u <= iHalf; u++)
+			{
+				float2 vOffset = float2(u * fdelta, v * fdelta);
+				fLightAmount += g_txDepthMap.SampleCmpLevelZero(samComShadowMap,
+					ShadowTexColor.xy + vOffset, ShadowTexColor.z);
+			}
 		}
+		fLightAmount /= iNumKernel * iNumKernel;
+
+		///float fColor = float4(fLightAmount, fLightAmount, fLightAmount, 1.0f);
+		output.color0.xyz *= max(cb_useShadow, fLightAmount);
 	}
-	fLightAmount /= iNumKernel * iNumKernel;
 
-	///float fColor = float4(fLightAmount, fLightAmount, fLightAmount, 1.0f);
-	output.color0.xyz *= max(cb_useShadow, fLightAmount);
-	//output.color0 = cb_useShadow > fLightAmount ? output.color0 * cb_useShadow : output.color0;
-//}
-
-	//output.color0.w = 1.0f;
-	output.color0 *= input.col;
+	output.color0 *= input.col; //* cb_useLight;
 	return output;
 }
 

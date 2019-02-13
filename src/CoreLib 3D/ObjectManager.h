@@ -55,7 +55,7 @@ public:
 	// 오브젝트 가져오기 (대기 풀에 남아있거나, 복사 풀에 등록 필요)
 	GameObject* TakeObject(const wstring_view& objName, const bool& pushObject = true) noexcept;
 	bool SetProtoObject(GameObject* pObject)					noexcept;	// 복사 풀에 추가
-	void PushObject(GameObject* pObject)						noexcept;	// 오브젝트 리스트에 추가
+	void PushObject(GameObject* pObject, const bool& isPostEvent = true)	noexcept;	// 오브젝트 리스트에 추가
 	void PopObject(GameObject* pObject)							noexcept;	// 오브젝트 리스트에서 꺼내기
 	void DisableObject(GameObject* pObject)						noexcept;	// 오브젝트 비활성화(->대기 풀)
 	bool RemoveObject(GameObject* pObject)						noexcept;	// 오브젝트 제거(삭제 이벤트 등록)
@@ -66,8 +66,8 @@ public:
 	bool RemoveComponent(Component* pComponent)					noexcept;	// 컴포넌트 제거("")
 	// 충돌체 리스트 추가, 제거
 	forward_list<Collider*>& GetColliderList()					noexcept;
-	void PushCollider(Collider* pCollider, const bool& isPostEvent = true) noexcept;
-	void PopCollider(Collider* pCollider, const bool& isPostEvent = true)  noexcept;
+	void PushCollider(Collider* pCollider, const bool& isPostEvent = true)	noexcept;
+	void PopCollider(Collider* pCollider, const bool& isPostEvent = true)	noexcept;
 
 	// 인스턴스 리스트 넣기, 빼기
 	InstanceRenderer* PushInstance(InstanceRenderer* pInstance) noexcept;
@@ -80,6 +80,7 @@ public:
 private:
 	friend class ISingleton<ObjectManager>;
 	friend class Dialog_Preset;
+	friend class GameScene;
 	ObjectManager() = default;
 public:
 	virtual ~ObjectManager() = default;

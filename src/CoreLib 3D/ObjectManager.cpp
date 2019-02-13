@@ -473,18 +473,27 @@ bool ObjectManager::SetProtoObject(GameObject* pObject) noexcept
 	return true;
 }
 
-void ObjectManager::PushObject(GameObject* pObject) noexcept
+void ObjectManager::PushObject(GameObject* pObject, const bool& isPostEvent) noexcept
 {
-	if (find(m_ObjectList[pObject->m_objType].begin(), m_ObjectList[pObject->m_objType].end(), pObject)
-		== m_ObjectList[pObject->m_objType].end())
+	if (isPostEvent)
 	{
-		static auto pushEvent = [](void* pVoid, void*) {
-			GameObject* pObj = (GameObject*)pVoid;
-			ObjectManager::Get().m_ObjectList[pObj->m_objType].push_front(pObj);
-			pObj->isEnable(true);
+		static auto pPushEvent = [](void* pObj, void*) {
+			ObjectManager::Get().PushObject((GameObject*)pObj, false);
 		};
-
-		PostFrameEvent.emplace(pushEvent, pObject, nullptr);
+		PostFrameEvent.emplace(pPushEvent, pObject, nullptr);
+	}
+	else
+	{
+		if (find(m_ObjectList[pObject->m_objType].begin(), m_ObjectList[pObject->m_objType].end(), pObject)
+			== m_ObjectList[pObject->m_objType].end())
+		{
+			ObjectManager::Get().m_ObjectList[pObject->m_objType].push_front(pObject);
+			pObject->isEnable(true);
+		}
+		else
+		{
+			ErrorMessage(__FUNCTION__ + " -> 중복된 객체 등록."s);
+		}
 	}
 }
 

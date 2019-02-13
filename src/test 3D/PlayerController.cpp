@@ -9,8 +9,6 @@
 #include "AIZombie.h"
 #include "UIManager.h"
 
-#include "CTransformer.h"
-
 bool PlayerController::Init() noexcept
 {
 	GameObject::Init();
@@ -266,6 +264,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 			auto pItem = ObjectManager::Get().TakeObject(L"TimeBomb");
 			pItem->SetPosition(pObject->GetPosition() + pObject->GetForward() * 40.0f + pObject->GetUp() * 50.0f + pObject->GetRight() * 20.0f);
 			pItem->SetForce(forward * 90.0f);
+			pItem->m_pPhysics->m_damage = 0.7f;
 			pItem->m_pPhysics->UserSocket = socket;
 
 			SoundManager::Get().PlayQueue("SE_dash.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
@@ -278,7 +277,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 			pItem->SetPosition(pObject->GetPosition() + pObject->GetForward() * 40.0f + pObject->GetUp() * 50.0f + pObject->GetRight() * 20.0f);
 			pItem->SetForce(forward * 350.0f);
 			//pItem->m_pPhysics->UserSocket = socket;
-			pItem->SetHP(0.2f);
+			pItem->SetHP(0.3f);
 			SoundManager::Get().PlayQueue("SE_dash.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
 		}	break;
 		case EAction::IMine:
@@ -477,6 +476,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 			auto pItem = ObjectManager::Get().TakeObject(L"TimeBomb");
 			pItem->SetPosition(pObject->GetPosition() + pObject->GetForward() * 40.0f + pObject->GetUp() * 50.0f + pObject->GetRight() * 20.0f);
 			pItem->SetForce(forward * 90.0f);
+			pItem->m_pPhysics->m_damage = 0.7f;
 			pItem->m_pPhysics->UserSocket = socket;
 
 			SoundManager::Get().PlayQueue("SE_dash.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
@@ -489,7 +489,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 			pItem->SetPosition(pObject->GetPosition() + pObject->GetForward() * 40.0f + pObject->GetUp() * 50.0f + pObject->GetRight() * 20.0f);
 			pItem->SetForce(forward * 350.0f);
 			//pItem->m_pPhysics->UserSocket = socket;
-			pItem->SetHP(0.2f);
+			pItem->SetHP(0.3f);
 			SoundManager::Get().PlayQueue("SE_dash.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
 		}	break;
 		case EAction::IMine:
@@ -658,6 +658,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 			auto pItem = ObjectManager::Get().TakeObject(L"TimeBomb");
 			pItem->SetPosition(pObject->GetPosition() + pObject->GetForward() * 40.0f + pObject->GetUp() * 50.0f + pObject->GetRight() * 20.0f);
 			pItem->SetForce(forward * 90.0f);
+			pItem->m_pPhysics->m_damage = 0.7f;
 			pItem->m_pPhysics->UserSocket = socket;
 
 			SoundManager::Get().PlayQueue("SE_dash.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
@@ -670,7 +671,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 			pItem->SetPosition(pObject->GetPosition() + pObject->GetForward() * 40.0f + pObject->GetUp() * 50.0f + pObject->GetRight() * 20.0f);
 			pItem->SetForce(forward * 350.0f);
 			//pItem->m_pPhysics->UserSocket = socket;
-			pItem->SetHP(0.2f);
+			pItem->SetHP(0.3f);
 			SoundManager::Get().PlayQueue("SE_dash.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
 		}	break;
 		case EAction::IMine:
@@ -757,7 +758,7 @@ void PlayerController::CameraInput(const float& spf) noexcept
 	// 카메라 Arm 조절
 	if (!pUIManager->m_pChat->m_bRender)
 	{
-		m_pCamera->m_armLength = std::clamp(m_pCamera->m_armLength - Input::GetWheelScroll() * m_mouseSense, 0.0f, 80.0f);
+		m_pCamera->m_armLength = std::clamp(m_pCamera->m_armLength - Input::GetWheelScroll() * m_mouseSense * spf * 5.0f, 0.0f, 320.0f);
 	}
 	// 회전
 	m_pCamera->SetRotationX(std::clamp(m_pCamera->GetRotation().x + Input::GetMouseMovePos().y * m_mouseSense * 0.004f, MinCameraY, MaxCameraY));
@@ -1150,6 +1151,7 @@ void PlayerController::SendReqRespawn(const ECharacter& eCharacter) noexcept
 	p_ReqAddPlayer.ECharacter = eCharacter;
 	PacketManager::Get().ReqSendPacket((char*)&p_ReqAddPlayer, (USHORT)sizeof(Packet_ReqAddPlayer), PACKET_ReqAddPlayer);
 }
+
 
 void PlayerController::SendGiantMode(const float& spf) noexcept
 {

@@ -19,18 +19,17 @@
 #include "MaxImporter.h"
 #include "SkySphere.h"
 #include "ParticleSystem.h"
-#include "Raycast.h"
+//#include "Raycast.h"
 #include "Light.h"
-#include "PlaneUI.h"
-#include "RLine.h"
+//#include "PlaneUI.h"
+//#include "RLine.h"
 #include "RSphere.h"
 #include "RCube.h"
 #include "CTransformer.h"
-#include "ColliderAABB.h"
+//#include "ColliderAABB.h"
 #include "ColliderOBB.h"
-#include "HeightMap.h"
 ///
-#include "AHeroObj.h"
+
 
 
 

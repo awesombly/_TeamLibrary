@@ -14,6 +14,8 @@ enum EPacketProtocol : USHORT {
 	PACKET_Scaling,
 	PACKET_SetAnimTransform,
 	PACKET_PlayerDead,
+	PACKET_PlayerDisable,
+	PACKET_Player,
 	PACKET_SetHP,
 	PACKET_HealHP,
 	PACKET_SetPhysicsInfo,

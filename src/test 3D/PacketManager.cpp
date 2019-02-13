@@ -449,6 +449,10 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 		}
 		pKillDisplay->push_string(killer + L" -> " + dead);
 	}	break;
+	case PACKET_PlayerDisable:
+	{
+		ObjectManager::Get().DisableObject(ObjectManager::KeyObjects[p_KeyValue.KeyValue]);
+	}	break;
 	case PACKET_PlaySound:
 	{
 		ZeroMemory(&p_SoundData, sizeof(p_SoundData));
@@ -595,6 +599,48 @@ void PacketManager::SendTakeObject(const WCHAR* objName, const UINT& socketNum, 
 	{
 		p_TakeObject.KeyValue = ++PacketManager::Get().PlayerKeyCount;
 		p_TakeObject.Position = { randPosition.x * RandomNormal() + minPosition.x, randPosition.y * RandomNormal() + minPosition.y, randPosition.z * RandomNormal() + minPosition.z };
+		p_TakeObject.Scale = (randScale * RandomNormal() + minScale) * 3.0f * Vector3::One;
+		PacketManager::Get().SendPacket((char*)&p_TakeObject, (USHORT)(PS_TakeObject + strSize), PACKET_TakeObject);
+	}
+}
+
+void PacketManager::SendSpawnEnemy(const WCHAR* objName, const UINT& socketNum, const UCHAR& spawnCount, const float& hp, const float& minScale, const float& randScale)  noexcept
+{
+	static Packet_TakeObject p_TakeObject;
+	static size_t			 strSize;
+
+	//strSize = objName.size() * 2;
+	strSize = lstrlenW(objName) * 2;
+	strSize = strSize > 100 ? 100 : strSize;
+
+	ZeroMemory(&p_TakeObject.ObjectName, 100);
+	memcpy(p_TakeObject.ObjectName, objName, strSize);
+	p_TakeObject.DataSize = (UCHAR)strSize;
+	p_TakeObject.Rotation = Quaternion::Base;
+	p_TakeObject.HP = hp;
+	p_TakeObject.UserSocket = socketNum;
+	for (int i = 0; i < spawnCount; ++i)
+	{
+		switch ((int)(RandomNormal() * 4.0f))
+		{
+		case 0:
+		{
+			p_TakeObject.Position = { 1500.0f, 0.0f, 0.0f };
+		}	break;
+		case 1:
+		{
+			p_TakeObject.Position = { -1500.0f, 0.0f, 0.0f };
+		}	break;
+		case 2:
+		{
+			p_TakeObject.Position = { 0.0f, 0.0f, 1500.0f };
+		}	break;
+		case 3:
+		{
+			p_TakeObject.Position = { 0.0f, 0.0f, -1500.0f };
+		}	break;
+		}
+		p_TakeObject.KeyValue = ++PacketManager::Get().PlayerKeyCount;
 		p_TakeObject.Scale = (randScale * RandomNormal() + minScale) * 3.0f * Vector3::One;
 		PacketManager::Get().SendPacket((char*)&p_TakeObject, (USHORT)(PS_TakeObject + strSize), PACKET_TakeObject);
 	}

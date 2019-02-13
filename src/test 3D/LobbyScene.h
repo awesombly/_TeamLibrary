@@ -1,7 +1,9 @@
 #pragma once
 #include "MainClass.h"
+#include "AHeroObj.h"
 #include "uiheader.h"
 #include "PlayerController.h"
+
 
 class LobbyScene : public MainClass
 {

@@ -44,6 +44,7 @@ public:
 	void SendPlaySound(const string_view& soundName, const D3DXVECTOR3& position, const float& maxDistance) noexcept;
 	void SendDeadEvent(const UINT& keyValue, const UINT& deadSocket, const UINT& killSocket) noexcept;
 	void SendTakeObject(const WCHAR* objName, const UINT& socketNum, const UCHAR& spawnCount, const float& hp, const float& minScale, const float& randScale, const D3DXVECTOR3& minPosition, const D3DXVECTOR3& randPosition)  noexcept;
+	void SendSpawnEnemy(const WCHAR* objName, const UINT& socketNum, const UCHAR& spawnCount, const float& hp, const float& minScale, const float& randScale)  noexcept;
 public:
 	friend class ISingleton<PacketManager>;
 	PacketManager()			 = default;

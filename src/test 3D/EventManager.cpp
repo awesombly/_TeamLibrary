@@ -659,7 +659,7 @@ namespace TimeEvent {
 		pItem->SetPosition(pParent->GetPosition());
 		pItem->SetScale(Vector3::One * 1.5f);
 		pItem->m_pPhysics->UserSocket = pParent->m_pPhysics->UserSocket;
-		pItem->m_pPhysics->m_damage = 0.7f;
+		pItem->m_pPhysics->m_damage = pParent->m_pPhysics->m_damage;
 		
 		ObjectManager::Get().DisableObject(pParent);
 	}
@@ -674,6 +674,8 @@ namespace TimeEvent {
 	{
 		auto pItem = ObjectManager::Get().TakeObject(L"Nuclear");
 		pItem->SetPosition(pParent->GetPosition() + Vector3::Down * 10.0f);
+		pItem->SetScale(Vector3::One * 3.0f);
+		pItem->SetRotation(Quaternion::Down * PI);
 		pItem->m_pPhysics->UserSocket = pParent->m_pPhysics->UserSocket;
 
 		SoundManager::Get().PlayQueue("SE_fire1.mp3", pParent->GetPosition(), PlayerController::Get().SoundRange);

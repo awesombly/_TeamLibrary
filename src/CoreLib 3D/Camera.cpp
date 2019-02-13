@@ -41,7 +41,7 @@ bool Camera::Init()	noexcept
 
 	m_lerpMoveSpeed = 3.5f;
 	m_lerpRotateSpeed = 5.0f;
-	m_armLength = 6.0f;
+	m_armLength = 12.0f;
 	return true;
 }
 

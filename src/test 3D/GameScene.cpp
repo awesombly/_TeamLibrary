@@ -181,17 +181,25 @@ bool GameScene::CheatMessage() noexcept
 			if (cha._Equal(L"Paladin"))
 			{
 				PlayerController::Get().SendReqRespawn(PlayerController::ECharacter::EGuard);
-				//PacketManager::Get().SendDeadEvent(PlayerController::Get().GetParent()->m_keyValue, PlayerController::Get().GetParent()->m_pPhysics->UserSocket, PlayerController::Get().GetParent()->m_pPhysics->UserSocket);
+				Packet_KeyValue p_KeyValue;
+				p_KeyValue.KeyValue = PlayerController::Get().GetParent()->m_keyValue;
+				PacketManager::Get().SendPacket((char*)&p_KeyValue, (USHORT)sizeof(Packet_KeyValue), PACKET_PlayerDisable);
 				return false;
 			}
 			else if (cha._Equal(L"Archer"))
 			{
 				PlayerController::Get().SendReqRespawn(PlayerController::ECharacter::EArcher);
+				Packet_KeyValue p_KeyValue;
+				p_KeyValue.KeyValue = PlayerController::Get().GetParent()->m_keyValue;
+				PacketManager::Get().SendPacket((char*)&p_KeyValue, (USHORT)sizeof(Packet_KeyValue), PACKET_PlayerDisable);
 				return false;
 			}
 			else if (cha._Equal(L"Mage"))
 			{
 				PlayerController::Get().SendReqRespawn(PlayerController::ECharacter::EMage);
+				Packet_KeyValue p_KeyValue;
+				p_KeyValue.KeyValue = PlayerController::Get().GetParent()->m_keyValue;
+				PacketManager::Get().SendPacket((char*)&p_KeyValue, (USHORT)sizeof(Packet_KeyValue), PACKET_PlayerDisable);
 				return false;
 			}
 		}
@@ -387,14 +395,14 @@ void GameScene::DrawBoundingBox()	noexcept
 	{
 		switch (iter->m_eCollider)
 		{
-		case ECollider::AABB:
-		{
-			pBox->SetPosition(iter->GetCenter());
-			pBox->SetRotation(Quaternion::Base);
-			pBox->SetScale(((ColliderAABB*)iter)->GetLength() * 0.5f);
-			pBox->Frame(0.0f, 0.0f);
-			pBox->Render(DxManager::GetDContext());
-		}	break;
+		//case ECollider::AABB:
+		//{
+		//	pBox->SetPosition(iter->GetCenter());
+		//	pBox->SetRotation(Quaternion::Base);
+		//	pBox->SetScale(((ColliderAABB*)iter)->GetLength() * 0.5f);
+		//	pBox->Frame(0.0f, 0.0f);
+		//	pBox->Render(DxManager::GetDContext());
+		//}	break;
 		case ECollider::OBB:
 		{
 			pBox->SetPosition(iter->GetCenter());
@@ -428,10 +436,30 @@ void GameScene::HostFrame() noexcept
 
 	static float spawnBarrel = 0.0f;
 	spawnBarrel += Timer::SPF;
-	if (spawnBarrel >= 12.0f)
+	if (spawnBarrel >= 4.0f)
 	{
 		spawnBarrel = 0.0f;
 		PacketManager::Get().SendTakeObject(L"Explosive", ESocketType::EDummy, (UCHAR)PacketManager::Get().UserList.size(), 0.6f, 0.3f, 0.0f, { -400.0f, 30.0f, -400.0f }, { 800.0f, 0.0f, 800.0f });
+		///
+
+		static const float shotRange = 150000.0f;
+		for (int i = 0; i < 8; ++i)
+		{
+			for (auto& iter : *ObjectManager::Get().GetObjectList(EObjType::Enemy))
+			{
+				if (VectorLengthSq(iter->GetPosition() - m_MapObjects.m_tower[i].GetPosition()) <= shotRange)
+				{
+					auto pItem = ObjectManager::Get().TakeObject(L"TimeBomb");
+					pItem->SetPosition(m_MapObjects.m_tower[i].GetPosition() + Vector3::Up * 100.0f);
+					//pItem->SetScale(Vector3::One * 1.0f);
+					//pItem->SetRotation();
+					pItem->SetForce((iter->GetPosition() - m_MapObjects.m_tower[i].GetPosition()) + Vector3::Up * 200.0f);
+					pItem->m_pPhysics->m_damage = 0.7f;
+					pItem->m_pPhysics->UserSocket = ESocketType::EDummy;
+				}
+				break;
+			}
+		}
 	}
 
 	if (*m_pFrameCount <= 0.0f)
@@ -476,37 +504,37 @@ void GameScene::HostFrame() noexcept
 			{
 			case 1:
 			{
-				PacketManager::Get().SendTakeObject(L"Zombie", ESocketType::EZombie, (UCHAR)PacketManager::Get().UserList.size(), 1.0f, 0.25f, 0.05f, { -500.0f, 10.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
-				PacketManager::Get().SendTakeObject(L"Caster", ESocketType::ECaster, (UCHAR)PacketManager::Get().UserList.size(), 0.8f, 0.22f, 0.05f, { -500.0f, 10.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
-				PacketManager::Get().SendTakeObject(L"Crawler", ESocketType::ECrawler, (UCHAR)PacketManager::Get().UserList.size(), 0.6f, 0.2f, 0.05f, { -500.0f, 10.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
+				PacketManager::Get().SendSpawnEnemy(L"Zombie", ESocketType::EZombie, (UCHAR)PacketManager::Get().UserList.size(), 1.0f, 0.25f, 0.05f);
+				PacketManager::Get().SendSpawnEnemy(L"Caster", ESocketType::ECaster, (UCHAR)PacketManager::Get().UserList.size(), 0.8f, 0.22f, 0.05f);
+				PacketManager::Get().SendSpawnEnemy(L"Crawler", ESocketType::ECrawler, (UCHAR)PacketManager::Get().UserList.size(), 0.6f, 0.2f, 0.05f);
 			}	break;
 			case 2:
 			{
-				PacketManager::Get().SendTakeObject(L"Zombie", ESocketType::EZombie, (UCHAR)PacketManager::Get().UserList.size(), 1.0f, 0.25f, 0.05f, { -500.0f, 10.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
-				PacketManager::Get().SendTakeObject(L"Caster", ESocketType::ECaster, (UCHAR)PacketManager::Get().UserList.size(), 0.8f, 0.22f, 0.05f, { -500.0f, 10.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
-				PacketManager::Get().SendTakeObject(L"Crawler", ESocketType::ECrawler, (UCHAR)PacketManager::Get().UserList.size(), 0.6f, 0.2f, 0.05f, { -500.0f, 10.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
-				PacketManager::Get().SendTakeObject(L"Mutant", ESocketType::EMutant, 1, 5.0f, 0.5f, 0.1f, { -500.0f, 10.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
+				PacketManager::Get().SendSpawnEnemy(L"Zombie", ESocketType::EZombie, (UCHAR)PacketManager::Get().UserList.size(), 1.0f, 0.25f, 0.05f);
+				PacketManager::Get().SendSpawnEnemy(L"Caster", ESocketType::ECaster, (UCHAR)PacketManager::Get().UserList.size(), 0.8f, 0.22f, 0.05f);
+				PacketManager::Get().SendSpawnEnemy(L"Crawler", ESocketType::ECrawler, (UCHAR)PacketManager::Get().UserList.size(), 0.6f, 0.2f, 0.05f);
+				PacketManager::Get().SendSpawnEnemy(L"Mutant", ESocketType::EMutant, 1, 5.0f, 0.5f, 0.1f);
 			}	break;
 			case 3:
 			{
 				if(m_spawnCount == 2)
-					PacketManager::Get().SendTakeObject(L"Tank", ESocketType::ETank, 1, 15.0f * PacketManager::Get().UserList.size(), 1.1f, 0.1f, { -500.0f, 10.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
-				PacketManager::Get().SendTakeObject(L"Zombie", ESocketType::EZombie, (UCHAR)PacketManager::Get().UserList.size(), 1.0f, 0.25f, 0.05f, { -500.0f, 10.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
-				PacketManager::Get().SendTakeObject(L"Caster", ESocketType::ECaster, (UCHAR)PacketManager::Get().UserList.size(), 0.8f, 0.22f, 0.05f, { -500.0f, 10.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
-				PacketManager::Get().SendTakeObject(L"Crawler", ESocketType::ECrawler, (UCHAR)PacketManager::Get().UserList.size(), 0.6f, 0.2f, 0.05f, { -500.0f, 10.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
+					PacketManager::Get().SendSpawnEnemy(L"Tank", ESocketType::ETank, 1, 15.0f * PacketManager::Get().UserList.size(), 1.1f, 0.1f);
+				PacketManager::Get().SendSpawnEnemy(L"Zombie", ESocketType::EZombie, (UCHAR)PacketManager::Get().UserList.size(), 1.0f, 0.25f, 0.05f);
+				PacketManager::Get().SendSpawnEnemy(L"Caster", ESocketType::ECaster, (UCHAR)PacketManager::Get().UserList.size(), 0.8f, 0.22f, 0.05f);
+				PacketManager::Get().SendSpawnEnemy(L"Crawler", ESocketType::ECrawler, (UCHAR)PacketManager::Get().UserList.size(), 0.6f, 0.2f, 0.05f);
 			}	break;
 			case 4:
 			{
 				if (m_spawnCount == 2)
-					PacketManager::Get().SendTakeObject(L"Tank", ESocketType::ETank, 1, 15.0f * PacketManager::Get().UserList.size(), 1.1f, 0.1f, { -500.0f, 10.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
-				PacketManager::Get().SendTakeObject(L"Mutant", ESocketType::EMutant, (UCHAR)PacketManager::Get().UserList.size(), 5.0f, 0.5f, 0.1f, { -500.0f, 10.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
-				PacketManager::Get().SendTakeObject(L"Crawler", ESocketType::ECrawler, (UCHAR)PacketManager::Get().UserList.size(), 0.6f, 0.15f, 0.1f, { -500.0f, 10.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
+					PacketManager::Get().SendSpawnEnemy(L"Tank", ESocketType::ETank, 1, 15.0f * PacketManager::Get().UserList.size(), 1.1f, 0.1f);
+				PacketManager::Get().SendSpawnEnemy(L"Mutant", ESocketType::EMutant, (UCHAR)PacketManager::Get().UserList.size(), 5.0f, 0.5f, 0.1f);
+				PacketManager::Get().SendSpawnEnemy(L"Crawler", ESocketType::ECrawler, (UCHAR)PacketManager::Get().UserList.size(), 0.6f, 0.15f, 0.1f);
 			}	break;
 			case 5:
 			{
 				if (m_spawnCount >= 2)
 				{
-					PacketManager::Get().SendTakeObject(L"Tank", ESocketType::ETank, 1, 15.0f * PacketManager::Get().UserList.size(), 1.1f, 0.1f, { -500.0f, 10.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
+					PacketManager::Get().SendSpawnEnemy(L"Tank", ESocketType::ETank, 1, 15.0f * PacketManager::Get().UserList.size(), 1.1f, 0.1f);
 					UIManager::Get().m_TimerText->m_bRender = false;
 				}
 			}	break;
@@ -672,10 +700,55 @@ void GameScene::LoadUI() noexcept
 	m_pCheckBox->SetCheck(true);
 	// 그래픽 체크
 	auto pLowGraphic = (JCheckCtrl*)pUIRoot->find_child(L"Set_LowMode_Check");
-	pLowGraphic->EventClick.first = [](void* pScene) {
+	pLowGraphic->EventClick.first = [](void* pVoid) {
+		auto pCheck = (JCheckCtrl*)pVoid;
+		if (pCheck->GetCheck())
+		{
+			for (auto& [name, iter] : ObjectManager::Get().m_ProtoPull)
+			{
+				if (iter->GetComponent(EComponent::Renderer) != nullptr)
+				{
+					((Renderer*)iter)->SetShadowRate(0.0f);
+					((Renderer*)iter)->SetLightRate(0.0f);
+				}
+			}
+			for (auto&[eType, objList] : ObjectManager::Get().m_ObjectList)
+			{
+				for (auto& iter : objList)
+				{
+					if (iter->GetComponent(EComponent::Renderer) != nullptr)
+					{
+						((Renderer*)iter)->SetShadowRate(0.0f);
+						((Renderer*)iter)->SetLightRate(0.0f);
+					}
+				}
+			}
+		}
+		else
+		{
+			for (auto&[name, iter] : ObjectManager::Get().m_ProtoPull)
+			{
+				if (iter->GetComponent(EComponent::Renderer) != nullptr)
+				{
+					((Renderer*)iter)->SetShadowRate(0.5f);
+					((Renderer*)iter)->SetLightRate(1.0f);
+				}
+			}
+			for (auto&[eType, objList] : ObjectManager::Get().m_ObjectList)
+			{
+				for (auto& iter : objList)
+				{
+					if (iter->GetComponent(EComponent::Renderer) != nullptr)
+					{
+						((Renderer*)iter)->SetShadowRate(0.5f);
+						((Renderer*)iter)->SetLightRate(1.0f);
+					}
+				}
+			}
+		}
 		///ObjectManager::Get().Set
 	};
-	pLowGraphic->EventClick.second = this;
+	pLowGraphic->EventClick.second = pLowGraphic;
 	// Timer
 	UIManager::Get().m_TimerText = (JTextCtrl*)pUIRoot->find_child(L"Timer_Text");
 

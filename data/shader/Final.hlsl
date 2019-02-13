@@ -75,10 +75,14 @@ VS_OUTPUT_Mix VS_Final(VS_INPUT_PNCTT input)
 		output.vEye = normalize(mul(output.vEye, matTangent));
 		output.col = input.col;
 	}
-	else
+	else if (cb_useLight)
 	{
 		float fDot = lerp(dot(vLightDir, output.nor.xyz), 1.0f, 0.15f) + 0.2f;
 		output.col = float4(fDot, fDot, fDot, 1.0f) * input.col;
+	}
+	else
+	{
+		output.col = input.col;
 	}
 
 	// È¯°æ

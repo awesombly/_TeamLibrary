@@ -1,10 +1,13 @@
 #pragma once
-#include "Component.h"
+#include "IDxBasis.h"
 #include "AHeroObj.h"
-#include "HeightMap.h"
+#include "ISingleton.h"
 
-class GameMap : public Component
+class HeightMap;
+
+class GameMap : public IDxBasis, public ISingleton<GameMap>
 {
+private:
 	HeightMap*		m_pHeightMap;
 
 	AHeroObj		m_fountain;
@@ -103,30 +106,28 @@ class GameMap : public Component
 	AHeroObj		m_fence33;
 
 public:
-	AHeroObj		m_tower0;
-	AHeroObj		m_tower1;
-	AHeroObj		m_tower2;
-	AHeroObj		m_tower3;
-	AHeroObj		m_tower4;
-	AHeroObj		m_tower5;
-	AHeroObj		m_tower6;
-	AHeroObj		m_tower7;
+	AHeroObj		m_tower[8];
+	//AHeroObj		m_tower1;
+	//AHeroObj		m_tower2;
+	//AHeroObj		m_tower3;
+	//AHeroObj		m_tower4;
+	//AHeroObj		m_tower5;
+	//AHeroObj		m_tower6;
+	//AHeroObj		m_tower7;
 
 	AHeroObj		m_carpet_blacksmith;
 	AHeroObj		m_carpet_church;
 	AHeroObj		m_carpet_windmill;
 	AHeroObj		m_carpet_towerRound;
-
+private:
+	friend class ISingleton<GameMap>;
+	GameMap() = default;
 public:
-//	virtual void Update()										noexcept override;
 	virtual bool Init()											noexcept override;
 	virtual bool Frame(const float& spf, const float& accTime)	noexcept override;
 	virtual bool Render(ID3D11DeviceContext* pDContext)			noexcept override;
 	virtual bool Release()										noexcept override;
-	virtual Component* clone()									noexcept override;
-
 public:
-	GameMap();
-	virtual ~GameMap();
+	virtual ~GameMap() = default;
 };
 
