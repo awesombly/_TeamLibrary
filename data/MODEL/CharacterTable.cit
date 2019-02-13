@@ -1,4 +1,4 @@
-*NUMCHARACTER		27
+*NUMCHARACTER		32
 
 ////////////////////////////////////////////////////////////////////////// 1
 *CHARACTERNAME	Paladin
@@ -358,6 +358,61 @@
 
 *SKIN_UPPER_BODY_COUNT	1
 *SKIN_UPPER_BODY		..\..\data\MAPOBJ\HOUSE\houseD.skm		null
+*SKIN_LOWER_BODY_COUNT	0
+
+//////////////////////////////////////////////////////////////////////////28
+*CHARACTERNAME	 MAP_TREE1
+*SHADERFILENMAE		..\..\data\model\Character.hlsl
+
+*MATRIXMATRIXCOUNT  1
+*MATRIXFILENAME		..\..\data\MAPOBJ\TREE\tree.Mat
+
+*SKIN_UPPER_BODY_COUNT	1
+*SKIN_UPPER_BODY		..\..\data\MAPOBJ\TREE\tree.skm		null
+*SKIN_LOWER_BODY_COUNT	0
+
+//////////////////////////////////////////////////////////////////////////29
+*CHARACTERNAME	 MAP_TREE2
+*SHADERFILENMAE		..\..\data\model\Character.hlsl
+
+*MATRIXMATRIXCOUNT  1
+*MATRIXFILENAME		..\..\data\MAPOBJ\TREE\tree2.Mat
+
+*SKIN_UPPER_BODY_COUNT	1
+*SKIN_UPPER_BODY		..\..\data\MAPOBJ\TREE\tree2.skm		null
+*SKIN_LOWER_BODY_COUNT	0
+
+//////////////////////////////////////////////////////////////////////////30
+*CHARACTERNAME	 MAP_FENCE
+*SHADERFILENMAE		..\..\data\model\Character.hlsl
+
+*MATRIXMATRIXCOUNT  1
+*MATRIXFILENAME		..\..\data\MAPOBJ\Fence\Fence.Mat
+
+*SKIN_UPPER_BODY_COUNT	1
+*SKIN_UPPER_BODY		..\..\data\MAPOBJ\Fence\Fence.skm		null
+*SKIN_LOWER_BODY_COUNT	0
+
+//////////////////////////////////////////////////////////////////////////31
+*CHARACTERNAME	 MAP_Barrel
+*SHADERFILENMAE		..\..\data\model\Character.hlsl
+
+*MATRIXMATRIXCOUNT  1
+*MATRIXFILENAME		..\..\data\MAPOBJ\Barrel\Barrel.Mat
+
+*SKIN_UPPER_BODY_COUNT	1
+*SKIN_UPPER_BODY		..\..\data\MAPOBJ\Barrel\Barrel.skm		null
+*SKIN_LOWER_BODY_COUNT	0
+
+//////////////////////////////////////////////////////////////////////////32
+*CHARACTERNAME	 MAP_Carpet
+*SHADERFILENMAE		..\..\data\model\Character.hlsl
+
+*MATRIXMATRIXCOUNT  1
+*MATRIXFILENAME		..\..\data\MAPOBJ\Carpet\Carpet.Mat
+
+*SKIN_UPPER_BODY_COUNT	1
+*SKIN_UPPER_BODY		..\..\data\MAPOBJ\Carpet\Carpet.skm		null
 *SKIN_LOWER_BODY_COUNT	0
 
 //////////////////////////////////////////////////////////////////////////
