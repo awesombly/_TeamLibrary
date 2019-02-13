@@ -333,75 +333,222 @@ bool GameMap::Init()											noexcept
 
 #pragma endregion
 
-#pragma region SetMatrix
-
-	m_blacksmith.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-	m_fountain.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-	m_church.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-	m_towerRound.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-	m_windmill.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+#pragma region MyTree
 
 
-	m_wall00.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-	m_wall01.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-	m_wall02.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-	m_wall03.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-	m_wall04.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-	m_wall05.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-	m_wall10.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-	m_wall11.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-	m_wall12.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-	m_wall13.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-	m_wall14.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-	m_wall15.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-	m_wall20.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-	m_wall21.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-	m_wall22.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-	m_wall23.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-	m_wall24.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-	m_wall25.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-	m_wall30.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-	m_wall31.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-	m_wall32.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-	m_wall33.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-	m_wall34.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-	m_wall35.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
 
+	m_tree00.SetPlayerCharacter(L"MAP_TREE1", -190, 0, 580);
+	m_tree00.m_objType = EObjType::AObject;
+	ObjectManager::Get().PushObject(&m_tree00);
 
-	m_towerTR.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-	m_towerTL.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-	m_towerBR.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-	m_towerBL.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+	m_tree01.SetPlayerCharacter(L"MAP_TREE1", 190, 0, 580);
+	m_tree01.m_objType = EObjType::AObject;
+	ObjectManager::Get().PushObject(&m_tree01);
 
-	m_tower0.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-	m_tower1.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-	m_tower2.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-	m_tower3.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-	m_tower4.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-	m_tower5.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-	m_tower6.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-	m_tower7.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+	m_tree02.SetPlayerCharacter(L"MAP_TREE1", 580, 0, -200);
+	m_tree02.m_objType = EObjType::AObject;
+	ObjectManager::Get().PushObject(&m_tree02);
 
-	m_house00.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-	m_house01.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-	m_house02.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+	m_tree03.SetPlayerCharacter(L"MAP_TREE1", 580, 0, 200);
+	m_tree03.m_objType = EObjType::AObject;
+	ObjectManager::Get().PushObject(&m_tree03);
 
-	m_house10.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-	m_house11.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-	m_house12.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+	m_tree04.SetPlayerCharacter(L"MAP_TREE1", -190, 0, -630);
+	m_tree04.m_objType = EObjType::AObject;
+	ObjectManager::Get().PushObject(&m_tree04);
 
-	m_house20.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-	m_house21.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-	m_house22.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+	m_tree05.SetPlayerCharacter(L"MAP_TREE1", 190, 0, -630);
+	m_tree05.m_objType = EObjType::AObject;
+	ObjectManager::Get().PushObject(&m_tree05);
 
-	m_house30.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-	m_house31.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-	m_house32.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+	m_tree06.SetPlayerCharacter(L"MAP_TREE1", -630, 0, -200);
+	m_tree06.m_objType = EObjType::AObject;
+	ObjectManager::Get().PushObject(&m_tree06);
 
-
+	m_tree07.SetPlayerCharacter(L"MAP_TREE1", -630, 0, 200);
+	m_tree07.m_objType = EObjType::AObject;
+	ObjectManager::Get().PushObject(&m_tree07);
 #pragma endregion
 
+#pragma region MyFence
 
+
+	//1½Ã
+	m_fence00.SetPlayerCharacter(L"MAP_FENCE", 190, 0, 520);//190 580
+	m_fence00.SetScale(D3DXVECTOR3(2.0f, 1.5f, 2.0f));
+	m_fence00.m_objType = EObjType::AObject;
+	ObjectManager::Get().PushObject(&m_fence00);
+	m_fence01.SetPlayerCharacter(L"MAP_FENCE", 190, 0, 425);
+	m_fence01.SetScale(D3DXVECTOR3(2.0f, 1.5f, 2.0f));
+	m_fence01.m_objType = EObjType::AObject;
+	ObjectManager::Get().PushObject(&m_fence01);
+	m_fence02.SetPlayerCharacter(L"MAP_FENCE", 510, 0, 200);
+	m_fence02.SetScale(D3DXVECTOR3(2.0f, 1.5f, 2.0f));
+	m_fence02.SetRotationY(PI*-0.5);
+	m_fence02.m_objType = EObjType::AObject;
+	ObjectManager::Get().PushObject(&m_fence02);
+	m_fence03.SetPlayerCharacter(L"MAP_FENCE", 415, 0, 200);
+	m_fence03.SetScale(D3DXVECTOR3(2.0f, 1.5f, 2.0f));
+	m_fence03.SetRotationY(PI*-0.5);
+	m_fence03.m_objType = EObjType::AObject;
+	ObjectManager::Get().PushObject(&m_fence03);
+
+
+	m_fence10.SetPlayerCharacter(L"MAP_FENCE", 190, 0, -520);//190 580
+	m_fence10.SetScale(D3DXVECTOR3(2.0f, 1.5f, 2.0f));
+	m_fence10.m_objType = EObjType::AObject;
+	ObjectManager::Get().PushObject(&m_fence10);
+	m_fence11.SetPlayerCharacter(L"MAP_FENCE", 190, 0, -425);
+	m_fence11.SetScale(D3DXVECTOR3(2.0f, 1.5f, 2.0f));
+	m_fence11.m_objType = EObjType::AObject;
+	ObjectManager::Get().PushObject(&m_fence11);
+	m_fence12.SetPlayerCharacter(L"MAP_FENCE", 510, 0, -200);
+	m_fence12.SetScale(D3DXVECTOR3(2.0f, 1.5f, 2.0f));
+	m_fence12.SetRotationY(PI*0.5);
+	m_fence12.m_objType = EObjType::AObject;
+	ObjectManager::Get().PushObject(&m_fence12);
+	m_fence13.SetPlayerCharacter(L"MAP_FENCE", 415, 0, -200);
+	m_fence13.SetScale(D3DXVECTOR3(2.0f, 1.5f, 2.0f));
+	m_fence13.SetRotationY(PI*0.5);
+	m_fence13.m_objType = EObjType::AObject;
+	ObjectManager::Get().PushObject(&m_fence13);
+
+
+	m_fence20.SetPlayerCharacter(L"MAP_FENCE", -190, 0, -520);//190 580
+	m_fence20.SetScale(D3DXVECTOR3(2.0f, 1.5f, 2.0f));
+	m_fence20.m_objType = EObjType::AObject;
+	ObjectManager::Get().PushObject(&m_fence20);
+	m_fence21.SetPlayerCharacter(L"MAP_FENCE", -190, 0, -425);
+	m_fence21.SetScale(D3DXVECTOR3(2.0f, 1.5f, 2.0f));
+	m_fence21.m_objType = EObjType::AObject;
+	ObjectManager::Get().PushObject(&m_fence21);
+	m_fence22.SetPlayerCharacter(L"MAP_FENCE", -510, 0, -200);
+	m_fence22.SetScale(D3DXVECTOR3(2.0f, 1.5f, 2.0f));
+	m_fence22.SetRotationY(PI*0.5);
+	m_fence22.m_objType = EObjType::AObject;
+	ObjectManager::Get().PushObject(&m_fence22);
+	m_fence23.SetPlayerCharacter(L"MAP_FENCE", -415, 0, -200);
+	m_fence23.SetScale(D3DXVECTOR3(2.0f, 1.5f, 2.0f));
+	m_fence23.SetRotationY(PI*0.5);
+	m_fence23.m_objType = EObjType::AObject;
+	ObjectManager::Get().PushObject(&m_fence23);
+
+
+	//11½Ã
+	m_fence30.SetPlayerCharacter(L"MAP_FENCE", -190, 0, 520);//190 580
+	m_fence30.SetScale(D3DXVECTOR3(2.0f, 1.5f, 2.0f));
+	m_fence30.SetRotationY(-PI);
+	m_fence30.m_objType = EObjType::AObject;
+	ObjectManager::Get().PushObject(&m_fence30);
+	m_fence31.SetPlayerCharacter(L"MAP_FENCE", -190, 0, 425);
+	m_fence31.SetScale(D3DXVECTOR3(2.0f, 1.5f, 2.0f));
+	m_fence31.SetRotationY(-PI);
+	m_fence31.m_objType = EObjType::AObject;
+	ObjectManager::Get().PushObject(&m_fence31);
+	m_fence32.SetPlayerCharacter(L"MAP_FENCE", -550, 0, 200);
+	m_fence32.SetScale(D3DXVECTOR3(2.0f, 1.5f, 2.0f));
+	m_fence32.SetRotationY(PI*-0.5);
+	m_fence32.m_objType = EObjType::AObject;
+	ObjectManager::Get().PushObject(&m_fence32);
+	m_fence33.SetPlayerCharacter(L"MAP_FENCE", -455, 0, 200);
+	m_fence33.SetScale(D3DXVECTOR3(2.0f, 1.5f, 2.0f));
+	m_fence33.SetRotationY(PI*-0.5);
+	m_fence33.m_objType = EObjType::AObject;
+	ObjectManager::Get().PushObject(&m_fence33);
+#pragma endregion
+
+#pragma region MyCarpet
+
+	m_carpet_blacksmith.SetPlayerCharacter(L"MAP_Carpet", 300, 0, 300);
+	m_carpet_blacksmith.SetScale(D3DXVECTOR3(4, 4, 4));
+	m_carpet_blacksmith.m_objType = EObjType::AObject;
+	ObjectManager::Get().PushObject(&m_carpet_blacksmith);
+
+	m_carpet_church.SetPlayerCharacter(L"MAP_Carpet", -300, 0, 300);
+	m_carpet_church.SetScale(D3DXVECTOR3(4, 4, 4));
+	m_carpet_church.m_objType = EObjType::AObject;
+	ObjectManager::Get().PushObject(&m_carpet_church);
+
+	m_carpet_windmill.SetPlayerCharacter(L"MAP_Carpet", 300, 0, -300);
+	m_carpet_windmill.SetScale(D3DXVECTOR3(4, 4, 4));
+	m_carpet_windmill.m_objType = EObjType::AObject;
+	ObjectManager::Get().PushObject(&m_carpet_windmill);
+
+	m_carpet_towerRound.SetPlayerCharacter(L"MAP_Carpet", -300, 0, -300);
+	m_carpet_towerRound.SetScale(D3DXVECTOR3(4, 4, 4));
+	m_carpet_towerRound.m_objType = EObjType::AObject;
+	ObjectManager::Get().PushObject(&m_carpet_towerRound);
+#pragma endregion
+
+//#pragma region SetMatrix
+//
+//	m_blacksmith.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+//	m_fountain.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+//	m_church.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+//	m_towerRound.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+//	m_windmill.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+//
+//
+//	m_wall00.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+//	m_wall01.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+//	m_wall02.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+//	m_wall03.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+//	m_wall04.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+//	m_wall05.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+//	m_wall10.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+//	m_wall11.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+//	m_wall12.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+//	m_wall13.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+//	m_wall14.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+//	m_wall15.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+//	m_wall20.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+//	m_wall21.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+//	m_wall22.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+//	m_wall23.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+//	m_wall24.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+//	m_wall25.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+//	m_wall30.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+//	m_wall31.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+//	m_wall32.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+//	m_wall33.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+//	m_wall34.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+//	m_wall35.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+//
+//
+//	m_towerTR.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+//	m_towerTL.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+//	m_towerBR.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+//	m_towerBL.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+//
+//	m_tower0.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+//	m_tower1.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+//	m_tower2.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+//	m_tower3.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+//	m_tower4.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+//	m_tower5.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+//	m_tower6.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+//	m_tower7.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+//
+//	m_house00.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+//	m_house01.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+//	m_house02.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+//
+//	m_house10.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+//	m_house11.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+//	m_house12.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+//
+//	m_house20.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+//	m_house21.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+//	m_house22.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+//
+//	m_house30.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+//	m_house31.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+//	m_house32.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+//
+//
+//#pragma endregion
+//
+//
 
 
 	return true;

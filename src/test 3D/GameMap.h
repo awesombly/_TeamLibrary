@@ -14,16 +14,6 @@ class GameMap : public Component
 	AHeroObj		m_towerRound;
 	AHeroObj		m_windmill;
 
-	AHeroObj		m_tower0;
-	AHeroObj		m_tower1;
-	AHeroObj		m_tower2;
-	AHeroObj		m_tower3;
-
-	AHeroObj		m_tower4;
-	AHeroObj		m_tower5;
-	AHeroObj		m_tower6;
-	AHeroObj		m_tower7;
-
 
 	AHeroObj		m_towerTR;
 	AHeroObj		m_towerTL;
@@ -74,6 +64,59 @@ class GameMap : public Component
 	AHeroObj		m_house30;
 	AHeroObj		m_house31;
 	AHeroObj		m_house32;
+
+
+	AHeroObj		m_tree00;
+	AHeroObj		m_tree01;
+
+	AHeroObj		m_tree02;
+	AHeroObj		m_tree03;
+
+	AHeroObj		m_tree04;
+	AHeroObj		m_tree05;
+
+	AHeroObj		m_tree06;
+	AHeroObj		m_tree07;
+
+
+
+	AHeroObj		m_fence00;
+	AHeroObj		m_fence01;
+	AHeroObj		m_fence02;
+	AHeroObj		m_fence03;
+
+
+	AHeroObj		m_fence10;
+	AHeroObj		m_fence11;
+	AHeroObj		m_fence12;
+	AHeroObj		m_fence13;
+
+
+	AHeroObj		m_fence20;
+	AHeroObj		m_fence21;
+	AHeroObj		m_fence22;
+	AHeroObj		m_fence23;
+
+	AHeroObj		m_fence30;
+	AHeroObj		m_fence31;
+	AHeroObj		m_fence32;
+	AHeroObj		m_fence33;
+
+public:
+	AHeroObj		m_tower0;
+	AHeroObj		m_tower1;
+	AHeroObj		m_tower2;
+	AHeroObj		m_tower3;
+	AHeroObj		m_tower4;
+	AHeroObj		m_tower5;
+	AHeroObj		m_tower6;
+	AHeroObj		m_tower7;
+
+	AHeroObj		m_carpet_blacksmith;
+	AHeroObj		m_carpet_church;
+	AHeroObj		m_carpet_windmill;
+	AHeroObj		m_carpet_towerRound;
+
 public:
 //	virtual void Update()										noexcept override;
 	virtual bool Init()											noexcept override;
