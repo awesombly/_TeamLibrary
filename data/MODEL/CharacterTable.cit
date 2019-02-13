@@ -1,4 +1,4 @@
-*NUMCHARACTER		16
+*NUMCHARACTER		27
 
 ////////////////////////////////////////////////////////////////////////// 1
 *CHARACTERNAME	Paladin
@@ -223,6 +223,7 @@
 *SKIN_UPPER_BODY		..\..\data\model\grenade\grenade.skm		null
 *SKIN_LOWER_BODY_COUNT	0
 
+
 //////////////////////////////////////////////////////////////////////////16
 *CHARACTERNAME	 ITEM_BarrelRed
 *SHADERFILENMAE		..\..\data\model\Character.hlsl
@@ -234,6 +235,130 @@
 *SKIN_UPPER_BODY		..\..\data\MAPOBJ\Barrel\BarrelRed.skm		null
 *SKIN_LOWER_BODY_COUNT	0
 
+//////////////////////////////////////////////////////////////////////////17
+*CHARACTERNAME	 MAP_Blacksmith
+*SHADERFILENMAE		..\..\data\model\Character.hlsl
+
+*MATRIXMATRIXCOUNT  1
+*MATRIXFILENAME		..\..\data\MAPOBJ\Blacksmith\Blacksmith.Mat
+
+*SKIN_UPPER_BODY_COUNT	1
+*SKIN_UPPER_BODY		..\..\data\MAPOBJ\Blacksmith\Blacksmith.skm		null
+*SKIN_LOWER_BODY_COUNT	0
+
+//////////////////////////////////////////////////////////////////////////18
+*CHARACTERNAME	 MAP_FOUNTAIN
+*SHADERFILENMAE		..\..\data\model\Character.hlsl
+
+*MATRIXMATRIXCOUNT  1
+*MATRIXFILENAME		..\..\data\MAPOBJ\Fountain\fountain.Mat
+
+*SKIN_UPPER_BODY_COUNT	1
+*SKIN_UPPER_BODY		..\..\data\MAPOBJ\Fountain\fountain.skm		null
+*SKIN_LOWER_BODY_COUNT	0
+
+
+//////////////////////////////////////////////////////////////////////////19
+*CHARACTERNAME	 MAP_Church
+*SHADERFILENMAE		..\..\data\model\Character.hlsl
+
+*MATRIXMATRIXCOUNT  1
+*MATRIXFILENAME		..\..\data\MAPOBJ\Church\Church.Mat
+
+*SKIN_UPPER_BODY_COUNT	1
+*SKIN_UPPER_BODY		..\..\data\MAPOBJ\Church\Church.skm		null
+*SKIN_LOWER_BODY_COUNT	0
+
+
+//////////////////////////////////////////////////////////////////////////20
+*CHARACTERNAME	 MAP_TowerRound
+*SHADERFILENMAE		..\..\data\model\Character.hlsl
+
+*MATRIXMATRIXCOUNT  1
+*MATRIXFILENAME		..\..\data\MAPOBJ\TOWER\towerRound.Mat
+
+*SKIN_UPPER_BODY_COUNT	1
+*SKIN_UPPER_BODY		..\..\data\MAPOBJ\TOWER\towerRound.skm		null
+*SKIN_LOWER_BODY_COUNT	0
+
+
+//////////////////////////////////////////////////////////////////////////21
+*CHARACTERNAME	 MAP_Tower
+*SHADERFILENMAE		..\..\data\model\Character.hlsl
+
+*MATRIXMATRIXCOUNT  1
+*MATRIXFILENAME		..\..\data\MAPOBJ\TOWER\tower.Mat
+
+*SKIN_UPPER_BODY_COUNT	1
+*SKIN_UPPER_BODY		..\..\data\MAPOBJ\TOWER\tower.skm		null
+*SKIN_LOWER_BODY_COUNT	0
+
+//////////////////////////////////////////////////////////////////////////22
+*CHARACTERNAME	 MAP_WALL
+*SHADERFILENMAE		..\..\data\model\Character.hlsl
+
+*MATRIXMATRIXCOUNT  1
+*MATRIXFILENAME		..\..\data\MAPOBJ\TOWER\wall.Mat
+
+*SKIN_UPPER_BODY_COUNT	1
+*SKIN_UPPER_BODY		..\..\data\MAPOBJ\TOWER\wall.skm		null
+*SKIN_LOWER_BODY_COUNT	0
+
+//////////////////////////////////////////////////////////////////////////23
+*CHARACTERNAME	 MAP_WINDMILL
+*SHADERFILENMAE		..\..\data\model\Character.hlsl
+
+*MATRIXMATRIXCOUNT  1
+*MATRIXFILENAME		..\..\data\MAPOBJ\WindMill\windmill.Mat
+
+*SKIN_UPPER_BODY_COUNT	1
+*SKIN_UPPER_BODY		..\..\data\MAPOBJ\WindMill\windmill.skm		null
+*SKIN_LOWER_BODY_COUNT	0
+
+
+//////////////////////////////////////////////////////////////////////////24
+*CHARACTERNAME	 MAP_HOUSE_A
+*SHADERFILENMAE		..\..\data\model\Character.hlsl
+
+*MATRIXMATRIXCOUNT  1
+*MATRIXFILENAME		..\..\data\MAPOBJ\HOUSE\houseA.Mat
+
+*SKIN_UPPER_BODY_COUNT	1
+*SKIN_UPPER_BODY		..\..\data\MAPOBJ\HOUSE\houseA.skm		null
+*SKIN_LOWER_BODY_COUNT	0
+
+//////////////////////////////////////////////////////////////////////////25
+*CHARACTERNAME	 MAP_HOUSE_B
+*SHADERFILENMAE		..\..\data\model\Character.hlsl
+
+*MATRIXMATRIXCOUNT  1
+*MATRIXFILENAME		..\..\data\MAPOBJ\HOUSE\houseB.Mat
+
+*SKIN_UPPER_BODY_COUNT	1
+*SKIN_UPPER_BODY		..\..\data\MAPOBJ\HOUSE\houseB.skm		null
+*SKIN_LOWER_BODY_COUNT	0
+
+//////////////////////////////////////////////////////////////////////////26
+*CHARACTERNAME	 MAP_HOUSE_C
+*SHADERFILENMAE		..\..\data\model\Character.hlsl
+
+*MATRIXMATRIXCOUNT  1
+*MATRIXFILENAME		..\..\data\MAPOBJ\HOUSE\houseC.Mat
+
+*SKIN_UPPER_BODY_COUNT	1
+*SKIN_UPPER_BODY		..\..\data\MAPOBJ\HOUSE\houseC.skm		null
+*SKIN_LOWER_BODY_COUNT	0
+
+//////////////////////////////////////////////////////////////////////////27
+*CHARACTERNAME	 MAP_HOUSE_D
+*SHADERFILENMAE		..\..\data\model\Character.hlsl
+
+*MATRIXMATRIXCOUNT  1
+*MATRIXFILENAME		..\..\data\MAPOBJ\HOUSE\houseD.Mat
+
+*SKIN_UPPER_BODY_COUNT	1
+*SKIN_UPPER_BODY		..\..\data\MAPOBJ\HOUSE\houseD.skm		null
+*SKIN_LOWER_BODY_COUNT	0
 
 //////////////////////////////////////////////////////////////////////////
 // 캐릭터이름   
