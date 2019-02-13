@@ -1,8 +1,7 @@
 #pragma once
 #include "MainClass.h"
 #include "PlayerController.h"
-
-#include "XObjectManager.h"
+#include "GameMap.h"
 #include "uiheader.h"
 
 
@@ -12,6 +11,7 @@ public:
 	enum class EGameState {
 		PreWait, Wait, WaveInit, Spawn, End,
 	};
+
 	EGameState m_eState = EGameState::PreWait;
 	PlayerController* m_pPlayer = &PlayerController::Get();		// 컨트롤러
 	float* m_pFrameCount = nullptr;
@@ -25,7 +25,7 @@ public:
 	JSliderCtrl* m_pMouseSense  = nullptr;
 	wstring		 m_chatMessage;
 	///
-	AMapObj* m_pTest;
+	GameMap		 m_MapObjects;
 	HeightMap*	 m_pHeightMap = nullptr;
 public:
 	void DrawBoundingBox()		noexcept;

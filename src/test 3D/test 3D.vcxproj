@@ -222,6 +222,7 @@ copy "$(SolutionDir)lib\*.dll" "$(OutputPath)\"</Command>
     <ClCompile Include="AIZombieEx.cpp" />
     <ClCompile Include="AIZombieKing.cpp" />
     <ClCompile Include="EventManager.cpp" />
+    <ClCompile Include="GameMap.cpp" />
     <ClCompile Include="LobbyScene.cpp" />
     <ClCompile Include="IntroScene.cpp" />
     <ClCompile Include="GameScene.cpp" />
@@ -238,6 +239,7 @@ copy "$(SolutionDir)lib\*.dll" "$(OutputPath)\"</Command>
     <ClInclude Include="AIZombieEx.h" />
     <ClInclude Include="AIZombieKing.h" />
     <ClInclude Include="EventManager.h" />
+    <ClInclude Include="GameMap.h" />
     <ClInclude Include="LobbyScene.h" />
     <ClInclude Include="IntroScene.h" />
     <ClInclude Include="GameScene.h" />

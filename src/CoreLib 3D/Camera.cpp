@@ -69,7 +69,9 @@ bool Camera::Frame(const float& spf, const float& accTime)	noexcept
 		if (Input::GetInstance().GetKeyState(VK_SPACE) == EKeyState::DOWN)
 		{
 			auto camPos = GetWorldPosition();
-			ErrorMessage("CameraPos -> x : " + to_string(camPos.x) + ", y : " + to_string(camPos.y) + ", z : " + to_string(camPos.z));
+			auto camRot = GetWorldRotation();
+			ErrorMessage("CameraPos -> " + to_string(camPos.x) + ", " + to_string(camPos.y) + ", " + to_string(camPos.z));
+			ErrorMessage("CameraRot -> " + to_string(camRot.x) + ", " + to_string(camRot.y) + ", " + to_string(camRot.z));
 		}
 		// FOV °ª Á¶Àý
 		if (Input::GetInstance().GetKeyState('Z') == EKeyState::HOLD)

@@ -181,9 +181,8 @@ VS_OUTPUT VS(PNCT5_VS_INPUT input)//,uniform bool bHalfVector )
 #endif
 	//float fDot = max(0.2f, lerp(dot(vLightDir, output.nor.xyz), 1.0f, 0.2f) + 0.2f);
 	//output.col = /*float4(fDot, fDot, fDot, 1.0f) **/ /*input.col **/ fDot;
-	vLocal.w = input.col.w;
 	output.col.xyz = max(0.3f, dot(vLightDir, output.nor.xyz) + 0.4f);
-	output.col.w = vLocal.w;
+	output.col.w = input.col.w;
 	//g_AlphaRate -= 0.01f;
 	//if (g_AlphaRate <= 0.0f)
 	//	g_AlphaRate = 1.0f;
@@ -213,8 +212,10 @@ VS_OUTPUT VS(PNCT5_VS_INPUT input)//,uniform bool bHalfVector )
 PBUFFER_OUTPUT PS(VS_OUTPUT input) : SV_Target
 {
 	PBUFFER_OUTPUT output = (PBUFFER_OUTPUT)0;
-	output.color1	= input.nor;
 	output.color0	= g_txDiffuse.Sample(samLinear, input.tex);
+	if (output.color0.w < 0.1f)
+		discard;
+	output.color1	= input.nor;
 
 	// 환경
 	if (cb_useEnviMap)
@@ -236,7 +237,7 @@ PBUFFER_OUTPUT PS(VS_OUTPUT input) : SV_Target
 			float fresnel = ComputeFresnel(input.ref, input.nor.xyz, r0);
 	
 			// 디퓨즈맵과 반사맵 보간
-			output.color0 = lerp(output.color0, reflectColor, fresnel * 0.12f/* + 0.3f*/);
+			output.color0.xyz = lerp(output.color0.xyz, reflectColor.xyz, fresnel * 0.12f/* + 0.3f*/);
 		//} break;
 		//case 3:
 		//{
@@ -275,11 +276,11 @@ PBUFFER_OUTPUT PS(VS_OUTPUT input) : SV_Target
 	fLightAmount /= iNumKernel * iNumKernel;
 
 	///float fColor = float4(fLightAmount, fLightAmount, fLightAmount, 1.0f);
-	output.color0 *= max(cb_useShadow, fLightAmount);
+	output.color0.xyz *= max(cb_useShadow, fLightAmount);
 	//output.color0 = cb_useShadow > fLightAmount ? output.color0 * cb_useShadow : output.color0;
 //}
 
-	output.color0.w = 1.0f;
+	//output.color0.w = 1.0f;
 	output.color0 *= input.col;
 	return output;
 }

@@ -15,69 +15,16 @@ bool GameScene::Init() noexcept
 	FirstInit();
 	ObjectManager::KeyCount = 1000;
 
-	auto pCollider = new Collider(1.0f);
-	pCollider->m_eTag = ETag::Ally;
-	PlayerController::Get().m_pHome = new GameObject(L"Shelter", { pCollider, ObjectManager::Get().TakeComponent(L"RowSphere") }, EObjType::Object);
-	PlayerController::Get().m_pHome->SetPosition(-15.8f, 16.0f, 41.5f);
-	PlayerController::Get().m_pHome->SetScale(Vector3::One * 54.0f);
-	PlayerController::Get().m_pHome->SetGravityScale(0.0f);
-	PlayerController::Get().m_pHome->usePhysics(false);
-	PlayerController::Get().m_pHome->SetHP(200.0f);
-	//pCollider->CollisionEvent = 
-	ObjectManager::Get().PushObject(PlayerController::Get().m_pHome);
+	m_MapObjects.Init();
 
-	//auto pHeight = new GameObject(L"map", new RCube(L"Cube", L"None.png"),EObjType::Map);
-	//pHeight->SetScale(Vector3::One * 200.0f);
-	//pHeight->Translate(Vector3::Down * 185.0f);
-	//ObjectManager::Get().PushObject(pHeight);
-	//
-	//auto pHeight = new GameObject(L"box", new RCube(L"Cube", L"None.png"), EObjType::Map);
-	//pHeight->SetScale(Vector3::One * 10.0f);
-	////pHeight->Translate(Vector3::Up * 45.0f);
-	//ObjectManager::Get().PushObject(pHeight);
-
-	//I_MAPMGR.Init();
-	//I_MAPMGR.Load(DxManager::GetDevice(), DxManager::GetDContext(),L"../../Data/MAPOBJ/OBJTable.cit");
-	//AMapObj* test = (AMapObj*)I_MAPMGR.GetPtr(L"test")->clone();
-	//test->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-	//test->m_objType = EObjType::AObject;
-	//test->SetPositionY(150.0f);
-	//test->SetScale(100.0f, 100.0f, 100.0f);
-	//ObjectManager::Get().PushObject(test);
-	//Renderer* pRenderer = new Renderer(L"Render");
-	//pRenderer->SetEnviromentMap(((Renderer*)m_pSkyBox->GetComponent(EComponent::Renderer))->m_srcName, EEnviType::Refraction);
-	//	I_MAPMGR.Init();
-	//I_MAPMGR.Load(DxManager::GetDevice(), DxManager::GetDContext(), L"../../Data/MAPOBJ/OBJTable.cit");
-	//m_pTest = I_MAPMGR.GetPtr(L"test");
-	//m_pTest->m_objType = EObjType::AObject;
-	//m_pTest->SetScale(10.0f, 10.0f, 10.0f);
-	//m_pTest->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-	//m_pTest->AddComponent(pRenderer);
-	//ObjectManager::Get().PushObject(m_pTest);
-	//AMapObj* test = (AMapObj*)I_MAPMGR.GetPtr(L"test")->clone();
-	//test->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-	//test->m_myName = L"MObj";
-	//test->m_objType = EObjType::Character;
-	//test->SetPositionY(150.0f);
-	//test->SetScale(1.0f, 1.0f, 1.0f);
-	//test->AddComponent( pRenderer->clone());
-	//ObjectManager::Get().PushObject(test);
-	//ObjectManager::Get().SetProtoObject(test);
-
-	//ObjectManager::Get().TakeObject(L"MObj")->SetPosition(0.0f, 100.0f, 0.0f);
-	//ObjectManager::Get().TakeObject(L"MObj")->SetPosition(100.0f, 200.0f, 0.0f);
-	//ObjectManager::Get().TakeObject(L"MObj")->SetPosition(-100.0f, 300.0f, 0.0f);
-	//ObjectManager::Get().TakeObject(L"MObj")->SetPosition(0.0f, 400.0f, 100.0f);
-	//ObjectManager::Get().TakeObject(L"MObj")->SetPosition(0.0f, 500.0f, -100.0f);
-
-	// 높이 맵
-	m_pHeightMap = new HeightMap(L"HeightMap", EComponent::Renderer, L"mounds.jpg");
-	auto pObject = new GameObject(L"HeightMap", m_pHeightMap, EObjType::Map);
-	m_pHeightMap->CreateHeightMap(DxManager::GetDContext(), L"HeightMap/Islands, Leafy.bmp", 20, 1.0f, 1.0f);
-	//mapMap->SetEnviromentMap(((Renderer*)m_pSkyBox->GetComponent(EComponent::Renderer))->m_srcName, EEnviType::Fresnel);
-	//pObject->Translate(Vector3::Down * 100.0f);
-	pObject->SetScaleY(0.2f);
-	ObjectManager::Get().PushObject(pObject);
+	//// 높이 맵
+	//m_pHeightMap = new HeightMap(L"HeightMap", EComponent::Renderer, L"mounds.jpg");
+	//auto pObject = new GameObject(L"HeightMap", m_pHeightMap, EObjType::Map);
+	//m_pHeightMap->CreateHeightMap(DxManager::GetDContext(), L"HeightMap/Islands, Leafy.bmp", 20, 1.0f, 1.0f);
+	////mapMap->SetEnviromentMap(((Renderer*)m_pSkyBox->GetComponent(EComponent::Renderer))->m_srcName, EEnviType::Fresnel);
+	////pObject->Translate(Vector3::Down * 100.0f);
+	//pObject->SetScaleY(0.2f);
+	//ObjectManager::Get().PushObject(pObject);
 
 
 	SoundManager::Get().Stop("bgm_Lobby_Theme.mp3");
@@ -96,11 +43,6 @@ bool GameScene::Init() noexcept
 // 프레임
 bool GameScene::Frame() noexcept
 {
-	//g_AlphaRate -= Timer::SPF * 0.1f;
-	//if (g_AlphaRate < 0.0f)
-	//	g_AlphaRate = 1.0f;
-	//ErrorMessage(to_string(g_AlphaRate));
-
 	// IME 채팅
 	if (m_pChat->m_bRender)
 	{
@@ -152,10 +94,8 @@ bool GameScene::Frame() noexcept
 		HostFrame();
 	}
 	///
-	//m_pMapTree->Frame();
 	DxManager::Get().Frame();
 	ObjectManager::Get().Frame(Timer::SPF, Timer::AccumulateTime);
-	//m_pTest->Frame(Timer::SPF, Timer::AccumulateTime);
 	SoundManager::Get().Frame();
 
 	//// 경계 막기
@@ -173,14 +113,14 @@ bool GameScene::Frame() noexcept
 	//		(*objIter)->SetPositionZ(-400.0f);
 	//}
 
-	// 맵 높이
-	for (auto& iter : ObjectManager::Get().GetColliderList())
-	{
-		if (iter == nullptr || iter->m_pParent == nullptr)
-			continue;
-		iter->m_mapHeight = m_pHeightMap->GetMapHeight(iter->m_pParent->GetPosition());
-		//iter->m_mapHeight = m_pMap->GetHeight(iter->m_pParent->GetPosition().x, iter->m_pParent->GetPosition().z);
-	}
+	m_MapObjects.Frame(Timer::SPF, Timer::AccumulateTime);
+	//// 맵 높이
+	//for (auto& iter : ObjectManager::Get().GetColliderList())
+	//{
+	//	if (iter == nullptr || iter->m_pParent == nullptr)
+	//		continue;
+	//	iter->m_mapHeight = MapObj m_pHeightMap->GetMapHeight(iter->m_pParent->GetPosition());
+	//}
 
 	/// 재생성
 	if (Input::GetKeyState('Z') == EKeyState::DOWN)
@@ -207,14 +147,9 @@ bool GameScene::Frame() noexcept
 // 랜더
 bool GameScene::Render() noexcept
 {
-	//m_pMap->SetMatrix(NULL, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-	//I_Object.SetMatrix(&ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-	//I_Object.Render(DxManager::Get().GetDContext());
-	///
 	DxManager::Get().Render();
 	ObjectManager::Get().Render(DxManager::GetDContext());
 	//DxManager::Get().ClearDepthStencilView();
-	//m_pTest->Render(DxManager::GetDContext());
 	SoundManager::Get().Render();
 
 	// 바운딩 박스 표시
@@ -246,6 +181,7 @@ bool GameScene::CheatMessage() noexcept
 			if (cha._Equal(L"Paladin"))
 			{
 				PlayerController::Get().SendReqRespawn(PlayerController::ECharacter::EGuard);
+				//PacketManager::Get().SendDeadEvent(PlayerController::Get().GetParent()->m_keyValue, PlayerController::Get().GetParent()->m_pPhysics->UserSocket, PlayerController::Get().GetParent()->m_pPhysics->UserSocket);
 				return false;
 			}
 			else if (cha._Equal(L"Archer"))
@@ -259,7 +195,7 @@ bool GameScene::CheatMessage() noexcept
 				return false;
 			}
 		}
-		else if (str._Equal(L"Dance"))
+		/*else if (str._Equal(L"Dance"))
 		{
 			if (PlayerController::Get().GetParent() == nullptr)
 				return false;
@@ -279,7 +215,7 @@ bool GameScene::CheatMessage() noexcept
 			}	break;
 			}
 			return false;
-		}
+		}*/
 		else if (str._Equal(L"Zombie"))
 		{
 			PacketManager::Get().SendTakeObject(L"Zombie", ESocketType::EZombie, atoi(WCharToChar(m_chatMessage.substr(finder + 1).c_str())), 1.0f, 0.25f, 0.05f, { -500.0f, 0.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
@@ -492,10 +428,10 @@ void GameScene::HostFrame() noexcept
 
 	static float spawnBarrel = 0.0f;
 	spawnBarrel += Timer::SPF;
-	if (spawnBarrel >= 10.0f)
+	if (spawnBarrel >= 12.0f)
 	{
 		spawnBarrel = 0.0f;
-		PacketManager::Get().SendTakeObject(L"BarrelRed", ESocketType::EBarrelRed, (UCHAR)PacketManager::Get().UserList.size(), 0.75f, 1.0f, 0.0f, { -500.0f, 10.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
+		PacketManager::Get().SendTakeObject(L"Explosive", ESocketType::EDummy, (UCHAR)PacketManager::Get().UserList.size(), 0.6f, 0.3f, 0.0f, { -400.0f, 30.0f, -400.0f }, { 800.0f, 0.0f, 800.0f });
 	}
 
 	if (*m_pFrameCount <= 0.0f)
@@ -614,8 +550,6 @@ bool GameScene::FirstInit() noexcept
 	if (m_isFirstInit)
 	{
 		m_isFirstInit = false;
-		// 맵 푸쉬
-		//ObjectManager::Get().PushObject(m_pMap);
 		//
 		m_pPlayer->m_myName = L"Player";
 		m_pPlayer->m_objType = EObjType::Object;
@@ -633,7 +567,7 @@ void GameScene::LoadUI() noexcept
 	pUIRoot->m_objType = EObjType::UI;
 	JParser par;
 	par.FileLoad(DxManager::GetDevice(), L"../../data/ui/InGame", *pUIRoot);
-	PlayerController::Get().pUIManager = &UIManager::Get();			// 매니저 등록
+	PlayerController::Get().pUIManager = &UIManager::Get();
 	// HP, MP
 	UIManager::Get().m_pHpBar = (JProgressBar*)pUIRoot->find_child(L"HP_Progress");
 	UIManager::Get().m_pMpBar = (JProgressBar*)pUIRoot->find_child(L"MP_Progress");
@@ -707,43 +641,47 @@ void GameScene::LoadUI() noexcept
 	UIManager::Get().m_pLeftIcon = (JProgressBar*)pUIRoot->find_child(L"Skill_Left");
 	UIManager::Get().m_pRightIcon = (JProgressBar*)pUIRoot->find_child(L"Skill_Right");
 
-	// Option Slider
-	static auto pSetVolume = [](void* pSlider) {
+	// Option Volume
+	m_pVolume = (JSliderCtrl*)pUIRoot->find_child(L"Set_Volum");
+	m_pVolume->EventHover.first = [](void* pSlider) {
 		SoundManager::Get().SetMasterVolume(*((JSliderCtrl*)pSlider)->GetValue());
 	};
-	m_pVolume = (JSliderCtrl*)pUIRoot->find_child(L"Set_Volum");
-	m_pVolume->EventHover.first = pSetVolume;
 	m_pVolume->EventHover.second = m_pVolume;
 	m_pVolume->SetValue(0.5f);
 	SoundManager::Get().SetMasterVolume(*m_pVolume->GetValue());
-
-	static auto pSetMouseSense = [](void* pSlider) {
+	// Mouse
+	m_pMouseSense = (JSliderCtrl*)pUIRoot->find_child(L"Set_Mouse");
+	m_pMouseSense->EventHover.first = [](void* pSlider) {
 		PlayerController::Get().m_mouseSense = *((JSliderCtrl*)pSlider)->GetValue();
 	};
-	m_pMouseSense = (JSliderCtrl*)pUIRoot->find_child(L"Set_Mouse");
-	m_pMouseSense->EventHover.first = pSetMouseSense;
 	m_pMouseSense->EventHover.second = m_pMouseSense;
 	m_pMouseSense->SetValue(0.5f);
 	PlayerController::Get().m_mouseSense = *m_pMouseSense->GetValue();
 	// Exit
-	static auto pGameExit = [](void* pScene) {
+	auto pExit = (JTextCtrl*)pUIRoot->find_child(L"Set_GameExit");
+	pExit->EventClick.first = [](void* pScene) {
 		Core::isPlaying = false;
 		pScene;
 		//PlayerController::Get().CutParent();
 		//PacketManager::Get().pSender->Release();
 		//((MainClass*)pScene)->SetScene(ESceneName::Lobby);
 	};
-	auto pExit = (JTextCtrl*)pUIRoot->find_child(L"Set_GameExit");
-	pExit->EventClick.first = pGameExit;
 	pExit->EventClick.second = this;
-	// CheckBox
+	// 충돌 박스
 	m_pCheckBox = (JCheckCtrl*)pUIRoot->find_child(L"Set_Collision_Check");
 	m_pCheckBox->SetCheck(true);
+	// 그래픽 체크
+	auto pLowGraphic = (JCheckCtrl*)pUIRoot->find_child(L"Set_LowMode_Check");
+	pLowGraphic->EventClick.first = [](void* pScene) {
+		///ObjectManager::Get().Set
+	};
+	pLowGraphic->EventClick.second = this;
 	// Timer
 	UIManager::Get().m_TimerText = (JTextCtrl*)pUIRoot->find_child(L"Timer_Text");
 
 	// Chatting
-	static auto pChatWheel = [](void* pVoid) {
+	PacketManager::Get().pChatList = (JListCtrl*)pUIRoot->find_child(L"Chat_Log");
+	PacketManager::Get().pChatList->EventHover.first = [](void* pVoid) {
 		static short wheel = 0;
 		wheel = Input::GetWheelScroll();
 		if (wheel != 0)
@@ -759,8 +697,6 @@ void GameScene::LoadUI() noexcept
 			}
 		}
 	};
-	PacketManager::Get().pChatList = (JListCtrl*)pUIRoot->find_child(L"Chat_Log");
-	PacketManager::Get().pChatList->EventHover.first = pChatWheel;
 	PacketManager::Get().pChatList->EventHover.second = PacketManager::Get().pChatList;
 	//JSliderCtrl* pSlider = (JSliderCtrl*)pUIRoot->find_child(L"Chat_Slider");
 	//m_pList->m_fValue = pSlider->GetValue();

@@ -55,7 +55,7 @@ bool ObjectManager::Frame(const float& spf, const float& accTime) noexcept
 	for (auto& iter : Lights)
 	{
 		iter->Frame(spf, accTime);
-		iter->SetPosition(CurCamera->GetWorldPosition() + Vector3::Up * 250.0f + Vector3::Backward * 500.0f);
+		//iter->SetPosition(CurCamera->GetWorldPosition() + Vector3::Up * 250.0f + Vector3::Backward * 500.0f);
 		//iter->SetRotation(CurCamera->GetWorldRotation() + Quaternion::Up * PI * 0.25f);
 	}
 	for (auto& outiter : m_ObjectList)
@@ -186,6 +186,7 @@ bool ObjectManager::Render(ID3D11DeviceContext* pDContext) noexcept
 		 case EObjType::Map:
 		 {
 			 // ============================================= ½¦µµ¿ì(+) ·£´õ ============================================================
+			 DxManager::Get().SetSamplerState(0, ESamTextureS::Wrap, ESamFilterS::Linear);
 			 DxManager::Get().SetSamplerState(1, ESamTextureS::Clamp, ESamFilterS::Linear);
 			 DxManager::Get().SetSamplerState(2, ESamTextureS::Border, ESamFilterS::CompLinearPoint, 0, D3D11_COMPARISON_LESS);
 			 //DxManager::GetInstance().SetRasterizerState(ERasterS::CullBack);
@@ -197,6 +198,7 @@ bool ObjectManager::Render(ID3D11DeviceContext* pDContext) noexcept
 			 }
 			 //DxManager::GetInstance().SetDepthStencilState(EDepthS::Current);
 			 //DxManager::GetInstance().SetRasterizerState(ERasterS::Current);
+			 DxManager::Get().SetSamplerState(0, ESamTextureS::Current, ESamFilterS::Current);
 			 DxManager::Get().SetSamplerState(1, ESamTextureS::Current, ESamFilterS::Current);
 			 DxManager::Get().SetSamplerState(2, ESamTextureS::Current, ESamFilterS::Current);
 		 }	break;
@@ -516,6 +518,7 @@ void ObjectManager::DisableObject(GameObject* pObject) noexcept
 	static auto disableEvent = [](void* pVoid, void*) {
 		GameObject* pObj = (GameObject*)pVoid;
 		pObj->isEnable(false);
+		pObj->SetPosition(Vector3::Up * 100000.0f);
 		ObjectManager::Get().PopObject(pObj);
 		ObjectManager::Get().m_DisabledPull[pObj->m_myName].push(pObj);
 		auto pColliders = pObj->GetComponentList(EComponent::Collider);

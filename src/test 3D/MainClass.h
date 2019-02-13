@@ -31,12 +31,7 @@
 #include "HeightMap.h"
 ///
 #include "AHeroObj.h"
-#include "AMapMgr.h"
-///
-//#include "XCamera.h"
-#include "XQuadTreeIndex.h"
-#include "XMapImporter.h"
-///
+
 
 
 
@@ -72,9 +67,6 @@ public:
 	static bool				m_isLoading;
 	static char				m_loginCheck;
 	static MaxImporter*		m_pParser;
-	///
-	static XMap*			m_pMap;						// 맵
-	static XQuadTreeIndex*	m_pMapTree;					// 맵->공간분할, LOD시 수정 예정
 public:
 	static int m_iMatchingStatus;
 	static std::string m_strHostIPv4;

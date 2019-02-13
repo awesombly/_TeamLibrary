@@ -261,23 +261,6 @@ void LobbyScene::StartToGuest()
 
 void LobbyScene::LoadUI() noexcept
 {
-	static auto pToGuest = [](void* pScene) {
-		if (PacketManager::Get().InputIP.empty())
-		{
-			MessageBox(Window::m_hWnd, L"IP µÞÀÚ¸®¸¦ ÀÔ·ÂÇÏ¼¼¿°.", L"»ßºò-", 0);
-			return;
-		}
-		m_strHostIPv4 = "192.168.0."s + WCharToChar(PacketManager::Get().InputIP.c_str());
-		((LobbyScene*)pScene)->StartToGuest();
-	};
-	static auto pToHost = [](void* pScene) {
-		((LobbyScene*)pScene)->StartToHost();
-	};
-	static auto pToExit = [](void* pScene) {
-		//exit(0); 
-		Core::isPlaying = false; pScene;
-	};
-
 	JState::SetState(DxManager::GetDevice());
 	JPanel* pUIRoot = new JPanel(L"UI_IntroRoot");
 	pUIRoot->m_objType = EObjType::UI;
@@ -286,42 +269,51 @@ void LobbyScene::LoadUI() noexcept
 
 	// È£½ºÆ® ÀÔÀå
 	auto pPanel = pUIRoot->find_child(L"D_Host"); // D_Host
-	pPanel->EventClick.first = pToHost;
+	pPanel->EventClick.first = [](void* pScene) {
+		((LobbyScene*)pScene)->StartToHost();
+	};
 	pPanel->EventClick.second = this;
 	// °Ô½ºÆ® ÀÔÀå
 	pPanel = (JTextCtrl*)pUIRoot->find_child(L"G_Enter"); // G_Enter
-	pPanel->EventClick.first = pToGuest;
+	pPanel->EventClick.first = [](void* pScene) {
+		if (PacketManager::Get().InputIP.empty())
+		{
+			MessageBox(Window::m_hWnd, L"IP µÞÀÚ¸®¸¦ ÀÔ·ÂÇÏ¼¼¿°.", L"»ßºò-", 0);
+			return;
+		}
+		m_strHostIPv4 = "192.168.0."s + WCharToChar(PacketManager::Get().InputIP.c_str());
+		((LobbyScene*)pScene)->StartToGuest();
+	};
 	pPanel->EventClick.second = this;
 	// Exit
 	pPanel = (JButtonCtrl*)pUIRoot->find_child(L"D_Exit");
-	pPanel->EventClick.first = pToExit;
-	pPanel->EventClick.second = this;
+	pPanel->EventClick.first = [](void*) {
+		Core::isPlaying = false;
+	};
+	//pPanel->EventClick.second = this;
 	// IP Ã¢
 	m_toGuestIP = (JTextCtrl*)pUIRoot->find_child(L"G_IP"); // G_IP
 	m_toGuestIP->m_Text = L"IP : ~." + PacketManager::Get().InputIP;
 	// ÆÐ³ÎÃ¢
 	m_toGuestPanel = m_toGuestIP->m_pParent;
 	// ¸ÅÄª
-	auto pMatching2 = [](void* pScene) {
+	JButtonCtrl* pMatchButton = (JButtonCtrl*)pUIRoot->find_child(L"Matching_Two");
+	pMatchButton->EventClick.first  = [](void* pScene) {
 		((LobbyScene*)pScene)->m_pIsMatching->m_bRender = true;
 		((LobbyScene*)pScene)->RequestMatch(2);
 	};
-	auto pMatching3 = [](void* pScene) {
+	pMatchButton->EventClick.second = this;
+	pMatchButton = (JButtonCtrl*)pUIRoot->find_child(L"Matching_Three");
+	pMatchButton->EventClick.first = [](void* pScene) {
 		((LobbyScene*)pScene)->m_pIsMatching->m_bRender = true;
 		((LobbyScene*)pScene)->RequestMatch(3);
 	};
-	auto pMatching4 = [](void* pScene) {
+	pMatchButton->EventClick.second = this;
+	pMatchButton = (JButtonCtrl*)pUIRoot->find_child(L"Matching_Four");
+	pMatchButton->EventClick.first = [](void* pScene) {
 		((LobbyScene*)pScene)->m_pIsMatching->m_bRender = true;
 		((LobbyScene*)pScene)->RequestMatch(4);
 	};
-	JButtonCtrl* pMatchButton = (JButtonCtrl*)pUIRoot->find_child(L"Matching_Two");
-	pMatchButton->EventClick.first  = pMatching2;
-	pMatchButton->EventClick.second = this;
-	pMatchButton = (JButtonCtrl*)pUIRoot->find_child(L"Matching_Three");
-	pMatchButton->EventClick.first = pMatching3;
-	pMatchButton->EventClick.second = this;
-	pMatchButton = (JButtonCtrl*)pUIRoot->find_child(L"Matching_Four");
-	pMatchButton->EventClick.first = pMatching4;
 	pMatchButton->EventClick.second = this;
 	// ½ÃÀÛ ÀÌÆå
 	m_pStartEffect = (JPanel*)pUIRoot->find_child(L"effect_hos"); //1234

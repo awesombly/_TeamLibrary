@@ -12,7 +12,6 @@ class Collider;
 enum ESocketType : UINT {
 	EZombie = DataInfo::MaxUINT - 20, 
 	ECaster, ECrawler, EMutant, ETank, 
-	EShockBoom, EBarrelRed, 
 	EDummy = DataInfo::MaxUINT
 };
 

@@ -367,11 +367,17 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 				PacketManager::Get().SendPacket((char*)pMyInfo, (USHORT)(PS_UserInfo + pMyInfo->DataSize), PACKET_SendUserInfo);
 			}
 		}	break;
+		case EObjType::AObject:
+		{
+			if (pObject->m_pPhysics->DeadEvent != nullptr)
+				pObject->m_pPhysics->DeadEvent(pObject->GetCollider(), p_PlayerDead.KillUser);
+			ObjectManager::Get().DisableObject(pObject);
+			return;
+		}	break;
 		case EObjType::Enemy:
 		{
 			if (pObject->m_pPhysics->DeadEvent != nullptr)
 				pObject->m_pPhysics->DeadEvent(pObject->GetCollider(), p_PlayerDead.KillUser);
-			//((AIZombie*)pObject->GetComponent(EComponent::Etc))->DeadEvent();
 
 			// 자기가 죽였을시
 			if (pMyInfo->UserSocket == p_PlayerDead.KillUser)
@@ -402,7 +408,8 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 					PacketManager::Get().SendPacket((char*)pMyInfo, (USHORT)(PS_UserInfo + pMyInfo->DataSize), PACKET_SendUserInfo);
 				}	break;
 				//case EDummy:
-				//	break;
+				//{
+				//}	break;
 				}
 			}
 		}	break;

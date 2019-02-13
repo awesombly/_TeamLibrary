@@ -43,6 +43,7 @@
     <ClCompile Include="PlayerState.cpp">
       <Filter>State</Filter>
     </ClCompile>
+    <ClCompile Include="GameMap.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainClass.h">
@@ -90,6 +91,7 @@
     <ClInclude Include="PlayerState.h">
       <Filter>State</Filter>
     </ClInclude>
+    <ClInclude Include="GameMap.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="MainCore">

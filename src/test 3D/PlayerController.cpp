@@ -91,9 +91,6 @@ bool PlayerController::Frame(const float& spf, const float& accTime)	noexcept
 		m_curDelayRespawn += spf;
 		if (m_curDelayRespawn >= m_DelayRespawn)
 		{
-			pUIManager->m_pRespawn->m_bRender = false;
-			m_curDelayRespawn = 0.0f;
-
 			SendReqRespawn(m_curCharacter);
 			return true;
 		}
@@ -303,10 +300,11 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 			{
 				auto pItem = ObjectManager::Get().TakeObject(L"Missile");
 				pItem->SetPosition(pObject->GetPosition() + pObject->GetBackward() * 60.0f + pObject->GetUp() * 55.0f);
-				pItem->SetRotation(pObject->GetRotation() + Quaternion::Down * 1.57f);
+				pItem->SetRotation(pObject->GetRotation() + Quaternion::Down * (RandomNormal() * 0.3f + 1.42f));
 				pItem->SetForce({ RandomNormal() * 240.0f - 120.0f, RandomNormal() * 210.0f - 30.0f, (RandomNormal() * 200.0f + 60.0f) * pObject->GetBackward().z });
 				pItem->m_pPhysics->UserSocket = socket;
 				pItem->m_pPhysics->m_damage = 0.3f;
+				((CEventTimer*)pItem->GetComponent(EComponent::Timer))->m_EventDelay = RandomNormal() * 0.8f + 0.5f;
 				((CEventTimer*)pItem->GetComponent(EComponent::Timer))->TimerEvent = { TimeEvent::MissileShot, (void*)&missileTarget };
 			}
 			SoundManager::Get().PlayQueue("SE_dash.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
@@ -513,10 +511,11 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 			{
 				auto pItem = ObjectManager::Get().TakeObject(L"Missile");
 				pItem->SetPosition(pObject->GetPosition() + pObject->GetBackward() * 60.0f + pObject->GetUp() * 55.0f);
-				pItem->SetRotation(pObject->GetRotation() + Quaternion::Down * 1.57f);
+				pItem->SetRotation(pObject->GetRotation() + Quaternion::Down * (RandomNormal() * 0.3f + 1.42f));
 				pItem->SetForce({ RandomNormal() * 240.0f - 120.0f, RandomNormal() * 210.0f - 30.0f, (RandomNormal() * 200.0f + 60.0f) * pObject->GetBackward().z });
 				pItem->m_pPhysics->UserSocket = socket;
 				pItem->m_pPhysics->m_damage = 0.3f;
+				((CEventTimer*)pItem->GetComponent(EComponent::Timer))->m_EventDelay = RandomNormal() * 0.8f + 0.5f;
 				((CEventTimer*)pItem->GetComponent(EComponent::Timer))->TimerEvent = { TimeEvent::MissileShot, (void*)&missileTarget };
 			}
 			SoundManager::Get().PlayQueue("SE_dash.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
@@ -693,10 +692,11 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 			{
 				auto pItem = ObjectManager::Get().TakeObject(L"Missile");
 				pItem->SetPosition(pObject->GetPosition() + pObject->GetBackward() * 60.0f + pObject->GetUp() * 55.0f);
-				pItem->SetRotation(pObject->GetRotation() + Quaternion::Down * 1.57f);
+				pItem->SetRotation(pObject->GetRotation() + Quaternion::Down * (RandomNormal() * 0.3f + 1.42f));
 				pItem->SetForce({ RandomNormal() * 240.0f - 120.0f, RandomNormal() * 210.0f - 30.0f, (RandomNormal() * 200.0f + 60.0f) * pObject->GetBackward().z });
 				pItem->m_pPhysics->UserSocket = socket;
 				pItem->m_pPhysics->m_damage = 0.3f;
+				((CEventTimer*)pItem->GetComponent(EComponent::Timer))->m_EventDelay = RandomNormal() * 0.8f + 0.5f;
 				((CEventTimer*)pItem->GetComponent(EComponent::Timer))->TimerEvent = { TimeEvent::MissileShot, (void*)&missileTarget };
 			}
 			SoundManager::Get().PlayQueue("SE_dash.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
@@ -757,7 +757,7 @@ void PlayerController::CameraInput(const float& spf) noexcept
 	// 카메라 Arm 조절
 	if (!pUIManager->m_pChat->m_bRender)
 	{
-		m_pCamera->m_armLength = std::clamp(m_pCamera->m_armLength - Input::GetWheelScroll() * m_mouseSense * spf, 0.0f, 80.0f);
+		m_pCamera->m_armLength = std::clamp(m_pCamera->m_armLength - Input::GetWheelScroll() * m_mouseSense, 0.0f, 80.0f);
 	}
 	// 회전
 	m_pCamera->SetRotationX(std::clamp(m_pCamera->GetRotation().x + Input::GetMouseMovePos().y * m_mouseSense * 0.004f, MinCameraY, MaxCameraY));
@@ -1098,6 +1098,9 @@ void PlayerController::SendAnimTransform(const EAction& eAction, const ECharacte
 
 void PlayerController::SendReqRespawn(const ECharacter& eCharacter) noexcept
 {
+	m_curDelayRespawn = 0.0f;
+	pUIManager->m_pRespawn->m_bRender = false;
+
 	// 다른 캐릭일시
 	if (m_curCharacter != eCharacter)
 	{

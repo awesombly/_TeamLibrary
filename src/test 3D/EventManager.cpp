@@ -15,29 +15,29 @@ namespace MyEvent {
 		}
 	}
 
-	void ShockBoom(Collider* pA, Collider* pB)
-	{
-		if (pB != nullptr &&
-			pB->m_eTag == ETag::Dummy)
-		{
-			if (pB->m_pPhysics->m_damage >= 0.2f)
-			{
-				auto position = pA->GetCenter() + Vector3::Up * 20.0f;
-				pA->m_pParent->SetPosition(Vector3::Up * 10000.0f);
-				for (int i = 0; i < 20; ++i)
-				{
-					auto pItem = ObjectManager::Get().TakeObject(L"Dagger");
-					pItem->SetPosition(position);
-					pItem->SetRotation(RandomNormal() * Quaternion::One * PI);
-					pItem->SetForce({RandomNormal() * 300.0f - 150.0f, 210.0f, RandomNormal() * 300.0f - 150.0f });
-					pItem->m_pPhysics->UserSocket = pA->m_pPhysics->UserSocket;
-					pItem->m_pPhysics->m_damage = 0.28f;
-				}
-				ObjectManager::Get().DisableObject(pA->m_pParent);
-				SoundManager::Get().PlayQueue("SE_fire1.mp3", pA->m_pParent->GetPosition(), PlayerController::Get().SoundRange);
-			}
-		}
-	}
+	//void ShockBoom(Collider* pA, Collider* pB)
+	//{
+	//	if (pB != nullptr &&
+	//		pB->m_eTag == ETag::Dummy)
+	//	{
+	//		if (pB->m_pPhysics->m_damage >= 0.2f)
+	//		{
+	//			auto position = pA->GetCenter() + Vector3::Up * 20.0f;
+	//			pA->m_pParent->SetPosition(Vector3::Up * 10000.0f);
+	//			for (int i = 0; i < 20; ++i)
+	//			{
+	//				auto pItem = ObjectManager::Get().TakeObject(L"Dagger");
+	//				pItem->SetPosition(position);
+	//				pItem->SetRotation(RandomNormal() * Quaternion::One * PI);
+	//				pItem->SetForce({RandomNormal() * 300.0f - 150.0f, 210.0f, RandomNormal() * 300.0f - 150.0f });
+	//				pItem->m_pPhysics->UserSocket = pA->m_pPhysics->UserSocket;
+	//				pItem->m_pPhysics->m_damage = 0.28f;
+	//			}
+	//			ObjectManager::Get().DisableObject(pA->m_pParent);
+	//			SoundManager::Get().PlayQueue("SE_fire1.mp3", pA->m_pParent->GetPosition(), PlayerController::Get().SoundRange);
+	//		}
+	//	}
+	//}
 
 	void MineBoom(Collider* pA, Collider* pB)
 	{
@@ -46,6 +46,7 @@ namespace MyEvent {
 		{
 			auto pItem = ObjectManager::Get().TakeObject(L"PBoom");
 			pItem->SetPosition(pA->m_pParent->GetPosition());
+			pItem->SetScale(Vector3::One);
 			pItem->m_pPhysics->UserSocket = pA->m_pPhysics->UserSocket;
 			pItem->m_pPhysics->m_damage = 0.8f;
 
@@ -290,6 +291,7 @@ namespace MyEvent {
 		}
 		auto pObject = ObjectManager::Get().TakeObject(L"PBoom");
 		pObject->SetPosition(pA->m_pParent->GetPosition());
+		pObject->SetScale(Vector3::One);
 		pObject->m_pPhysics->m_damage = 0.5f;
 		pObject->m_pPhysics->UserSocket = pA->m_pPhysics->UserSocket;
 		ObjectManager::Get().DisableObject(pA->m_pParent);
@@ -534,6 +536,21 @@ namespace MyEvent {
 				{
 					if (--value < 0)
 					{
+						if (UIManager::Get().m_pSlot1->Empty())
+						{
+							UIManager::Get().m_pSlot1->AddItem(iter.first);
+							break;
+						}
+						if (UIManager::Get().m_pSlot2->Empty())
+						{
+							UIManager::Get().m_pSlot2->AddItem(iter.first);
+							break;
+						}
+						if (UIManager::Get().m_pSlot3->Empty())
+						{
+							UIManager::Get().m_pSlot3->AddItem(iter.first);
+							break;
+						}
 						UIManager::Get().m_pInvenSlot->AddItem(iter.first);
 						break;
 					}
@@ -640,6 +657,7 @@ namespace TimeEvent {
 	{
 		auto pItem = ObjectManager::Get().TakeObject(L"PBoom");
 		pItem->SetPosition(pParent->GetPosition());
+		pItem->SetScale(Vector3::One * 1.5f);
 		pItem->m_pPhysics->UserSocket = pParent->m_pPhysics->UserSocket;
 		pItem->m_pPhysics->m_damage = 0.7f;
 		
@@ -649,7 +667,7 @@ namespace TimeEvent {
 	void MissileShot(GameObject* pParent, void* pVoid2)
 	{
 		auto pTarget = (D3DXVECTOR3*)pVoid2;
-		pParent->SetForce(Normalize(*pTarget - pParent->GetPosition()) * 390.0f + Vector3::Up * 15.0f);
+		pParent->AddForce(Normalize(*pTarget - pParent->GetPosition()) * (RandomNormal() * 200.0f + 300.0f) + Vector3::Up * 15.0f);
 	}
 
 	void NuclearLaunch(GameObject* pParent, void* pVoid2)
@@ -663,7 +681,7 @@ namespace TimeEvent {
 }
 
 
-namespace DeadEvent {
+namespace DyingEvent {
 	void ZombieDead(Collider* pCollider, const UINT& killUser)
 	{
 		if (RandomNormal() >= 0.8f)
@@ -711,11 +729,23 @@ namespace DeadEvent {
 			auto pItem = ObjectManager::Get().TakeObject(L"Dagger");
 			pItem->SetPosition(position);
 			pItem->SetRotation(RandomNormal() * Quaternion::One * PI);
-			pItem->SetForce({ RandomNormal() * 300.0f - 150.0f, RandomNormal() * 230.0f - 100.0f, RandomNormal() * 300.0f - 150.0f });
+			pItem->SetForce({ RandomNormal() * 300.0f - 150.0f, RandomNormal() * 230.0f + 100.0f, RandomNormal() * 300.0f - 150.0f });
 			pItem->m_pPhysics->UserSocket = killUser;
 			pItem->m_pPhysics->m_damage = 0.28f;
 		}
-		ObjectManager::Get().DisableObject(pObject);
-		SoundManager::Get().PlayQueue("SE_fire1.mp3", pA->m_pParent->GetPosition(), PlayerController::Get().SoundRange);
-	}	break;
+		//ObjectManager::Get().DisableObject(pCollider->m_pParent);
+		SoundManager::Get().PlayQueue("SE_fire1.mp3", pCollider->m_pParent->GetPosition(), PlayerController::Get().SoundRange);
+	}
+
+	void BarrelDead(Collider* pCollider, const UINT& killUser)
+	{
+		auto pItem = ObjectManager::Get().TakeObject(L"PBoom");
+		pItem->SetPosition(pCollider->m_pParent->GetPosition());
+		pItem->SetScale(Vector3::One * 1.5f);
+		pItem->m_pPhysics->UserSocket = killUser;
+		pItem->m_pPhysics->m_damage = 1.0f;
+
+		//ObjectManager::Get().DisableObject(pCollider->m_pParent);
+		SoundManager::Get().PlayQueue("SE_bomb.mp3", pCollider->m_pParent->GetPosition(), PlayerController::Get().SoundRange);
+	}
 }

@@ -1,4 +1,5 @@
 #pragma once
+#include "header.h"
 class Collider;
 class PlayerController;
 class GameObject;
@@ -6,7 +7,7 @@ class GameObject;
 namespace MyEvent {
 	void ForceWave(Collider* pA, Collider* pB);
 	void MissileCollision(Collider* pA, Collider* pB);
-	void ShockBoom(Collider* pA, Collider* pB);
+	//void ShockBoom(Collider* pA, Collider* pB);
 	void MineBoom(Collider* pA, Collider* pB);
 	void NuclearBoom(Collider* pA, Collider* pB);
 	void BuffWave(Collider* pA, Collider* pB);
@@ -46,8 +47,11 @@ namespace TimeEvent {
 	void NuclearLaunch(GameObject* pParent, void* pVoid2);
 }
 
-namespace DeadEvent {
+namespace DyingEvent {
 	void ZombieDead(Collider* pCollider, const UINT& killUser);
 	void ZombieExDead(Collider* pCollider, const UINT& killUser);
 	void ZombieKingDead(Collider* pCollider, const UINT& killUser);
+	
+	void ShockBoomDead(Collider* pCollider, const UINT& killUser);
+	void BarrelDead(Collider* pCollider, const UINT& killUser);
 }

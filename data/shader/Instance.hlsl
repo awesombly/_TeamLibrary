@@ -133,9 +133,11 @@ PBUFFER_OUTPUT PS_Instance(VS_OUTPUT_Instance input) : SV_TARGET
 	if (input.src < 0)
 		discard;
 	PBUFFER_OUTPUT output = (PBUFFER_OUTPUT)0;
-	output.color1 = input.nor;
 	uint index = (uint)input.src;
 	output.color0 = GetTextureColor(index, input.tex) * input.col;
+	if (output.color0.w < 0.05f)
+		discard;
+	output.color1 = input.nor;
 	return output;
 }
 
@@ -145,9 +147,11 @@ PBUFFER_OUTPUT PS_SingleInstance(VS_OUTPUT_Instance input) : SV_TARGET
 	if (input.src < 0)
 		discard;
 	PBUFFER_OUTPUT output = (PBUFFER_OUTPUT)0;
-	output.color1 = input.nor;
 	//uint index = (uint)input.src;
 	
 	output.color0 = g_txDiffuse.Sample(samLinear, input.tex) * input.col;
+	if (output.color0.w < 0.05f)
+		discard;
+	output.color1 = input.nor;
 	return output;
 }

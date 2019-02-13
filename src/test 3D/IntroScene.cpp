@@ -148,18 +148,6 @@ bool IntroScene::FirstInit() noexcept
 		// ===================================== 오브젝트 초기화 ==============================================
 		ErrorMessage(__FUNCTION__ + " -> Object Setting."s);
 		SetObjects();
-		// =============================== 맵 생성 =================================
-		//ErrorMessage(__FUNCTION__ + " -> Map Loading."s);
-		//XMapImporter m_Importer;		// 세이브 데이터 로더
-		//m_Importer.Import();
-		//m_pMap = new XMap();
-		//m_pMap->Create(DxManager::Get().GetDevice(), DxManager::Get().GetDContext(), &m_Importer, _T("../../Data/Map/Shader/MapShader_Specular.hlsl"), _T("../../Data/Map/Shader/MapShader_Color_Specular.hlsl"), "VS", "PS");
-		//m_pMapTree = new XQuadTreeIndex();
-		//m_pMapTree->Build(m_pMap);
-		//m_pMap->m_objType = EObjType::Map;
-		//m_pMap->isGlobal(true);
-		//m_pMap->isStatic(true);
-		////ObjectManager::Get().PushObject(m_pMap);
 		return true;
 	}
 	return false;
@@ -183,12 +171,12 @@ void IntroScene::SetObjects() noexcept
 	//	return; spf; accTime; pTrans;
 	//};
 	//ObjectManager::Get().Lights.front()->AddComponent({ pTrans });
-	//ObjectManager::Get().Lights.front()->SetPosition(0.0f, 300.0f, 200.0f);
 	ObjectManager::Get().Lights.front()->SetRotation(Quaternion::Up * PI * 0.35f);
+	ObjectManager::Get().Lights.front()->SetPosition(0.0f, 550.0f, -800.0f);
 	//ObjectManager::Get().Lights.front()->SetFocus(Vector3::Zero);
 	// 라이트 랜더러
 	auto pShpere = (Renderer*)ObjectManager::GetInstance().TakeComponent(L"RowSphere");
-	//pShpere->SetShaderLayout("VS_Basic", "PS_Basic");
+	pShpere->SetShaderLayout("VS_Basic", "PS_Basic");
 	pObject = new GameObject(L"Sun", pShpere);
 	pObject->isGlobal(true);
 	pObject->SetScale(Vector3::One * 10);
@@ -224,8 +212,9 @@ void IntroScene::SetObjects() noexcept
 	ObjectManager::Get().SetProtoObject(new GameObject(L"EBerserk", m_pParser->CreateFromParticle(L"Berserk.eff", urlEffect)->SetEffectScale(3.0f), EObjType::Effect));
 	ObjectManager::Get().SetProtoComponent(m_pParser->CreateFromParticle(L"Fire.eff", urlEffect)->SetEffectScale(3.0f));
 
-	Renderer* pRenderer = new Renderer(L"Render");
-	pRenderer->SetEnviromentMap(((Renderer*)m_pSkyBox->GetComponent(EComponent::Renderer))->m_srcName, EEnviType::Refraction);
+	Renderer* pRerderEnvi = new Renderer(L"EnviR");
+	pRerderEnvi->SetEnviromentMap(((Renderer*)m_pSkyBox->GetComponent(EComponent::Renderer))->m_srcName, EEnviType::Refraction);
+	Renderer* pRenderer = new Renderer(L"BaseR");
 
 	// ======================================== Effect =====================================================
 	// 플레이어 사망
@@ -338,7 +327,7 @@ void IntroScene::SetObjects() noexcept
 	ObjectManager::Get().SetProtoObject(pObject);
 
 	// 폭탄 폭발
-	pCollider = new Collider(60.0f);
+	pCollider = new Collider(100.0f);
 	pObject = new GameObject(L"PBoom", { pCollider, pZBoom->clone() }, EObjType::Effect);
 	pCollider->SetGravityScale(0.0f);
 	pCollider->usePhysics(false);
@@ -402,7 +391,8 @@ void IntroScene::SetObjects() noexcept
 	pHeroObj->AddComponent({ pCollider, pRenderer->clone() });
 	pCollider->m_eTag = ETag::Enemy;
 	//pCollider->CollisionEvent = MyEvent::ShockBoom;
-	pHeroObj->m_pPhysics->UserSocket = ESocketType::EShockBoom;
+	pHeroObj->m_pPhysics->DeadEvent	 = DyingEvent::ShockBoomDead;
+	pHeroObj->m_pPhysics->UserSocket = ESocketType::EDummy;
 	ObjectManager::Get().SetProtoObject(pHeroObj);
 
 	// 지뢰
@@ -462,7 +452,7 @@ void IntroScene::SetObjects() noexcept
 	pHeroObj->SetRotation(Quaternion::Down * PI);
 	pCollider = new Collider(10.0f);
 	pHeroObj->AddComponent({ pCollider, pRenderer->clone() });
-	pCollider->m_pivot = Vector3::Down * 50.0f;
+	pCollider->m_pivot = Vector3::Down * 60.0f;
 	//pCollider->SetGravityScale(0.0f);
 	pCollider->m_eTag = ETag::Dummy;
 	pCollider->CollisionEvent = MyEvent::NuclearBoom;
@@ -531,13 +521,16 @@ void IntroScene::SetObjects() noexcept
 	pHeroObj = new AHeroObj();
 	pHeroObj->SetPlayerCharacter(ITEM_BarrelRed);
 	pHeroObj->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-	pHeroObj->m_myName = L"BarrelRed";
+	pHeroObj->m_myName = L"Explosive";
 	pHeroObj->m_objType = EObjType::AObject;
-	pCollider = new ColliderAABB({ -20.0f, -40.0f, -20.0f }, { 20.0f, 40.0f, 20.0f });
+	pCollider = new ColliderOBB({ -18.0f, -20.0f, -18.0f }, { 18.0f, 20.0f, 18.0f });
 	pHeroObj->AddComponent({ pCollider, pRenderer->clone() });
 	//pCollider->m_pivot = Vector3::Up * 4.0f + Vector3::Forward * 2.5f;
 	//pCollider->CollisionEvent = MyEvent::ZombieThrow;
+	pHeroObj->m_pPhysics->DeadEvent = DyingEvent::BarrelDead;
 	pCollider->m_eTag = ETag::Enemy;
+	//pCollider->m_pPhysics->m_mass = 0.15f;
+	pCollider->m_pPhysics->m_damping = 1.5f;
 	ObjectManager::Get().SetProtoObject(pHeroObj);
 
 	// ======================================= Character =====================================================
@@ -563,7 +556,7 @@ void IntroScene::SetObjects() noexcept
 	pHeroObj->m_myName = L"Paladin";
 	pHeroObj->m_objType = EObjType::Character;
 	pCollider = new ColliderOBB({ -13.0f, 0.0f , -13.0f }, { 13.0f, 80.0f , 13.0f });
-	pHeroObj->AddComponent({ pCollider, pRenderer });
+	pHeroObj->AddComponent({ pCollider, pRerderEnvi });
 	pCollider->m_eTag = ETag::Ally;
 	ObjectManager::Get().SetProtoObject(pHeroObj);
 	
@@ -575,7 +568,7 @@ void IntroScene::SetObjects() noexcept
 	pHeroObj->m_myName = L"Archer";
 	pHeroObj->m_objType = EObjType::Character;
 	pCollider = new ColliderOBB({ -13.0f, 0.0f , -13.0f }, { 13.0f, 80.0f , 13.0f });
-	pHeroObj->AddComponent({ pCollider, pRenderer->clone() });
+	pHeroObj->AddComponent({ pCollider, pRerderEnvi->clone() });
 	pCollider->m_eTag = ETag::Ally;
 	ObjectManager::Get().SetProtoObject(pHeroObj);
 
@@ -587,7 +580,7 @@ void IntroScene::SetObjects() noexcept
 	pHeroObj->m_myName = L"Mage";
 	pHeroObj->m_objType = EObjType::Character;
 	pCollider = new ColliderOBB({ -13.0f, 0.0f , -13.0f }, { 13.0f, 80.0f , 13.0f });
-	pHeroObj->AddComponent({ pCollider, pRenderer->clone() });
+	pHeroObj->AddComponent({ pCollider, pRerderEnvi->clone() });
 	pCollider->m_eTag = ETag::Ally;
 	ObjectManager::Get().SetProtoObject(pHeroObj);
 
@@ -599,9 +592,10 @@ void IntroScene::SetObjects() noexcept
 	pHeroObj->m_myName = L"Zombie";
 	pHeroObj->m_objType = EObjType::Enemy;
 	pCollider = new ColliderOBB({ -13.0f, 0.0f , -13.0f }, { 13.0f, 80.0f , 13.0f });
-	pHeroObj->AddComponent({ pCollider, pRenderer->clone(), new AIZombie() });
+	pHeroObj->AddComponent({ pCollider, pRerderEnvi->clone(), new AIZombie() });
 	pCollider->CollisionEvent = MyEvent::ZombieHit;
 	pCollider->m_eTag = ETag::Enemy;
+	pHeroObj->m_pPhysics->DeadEvent = DyingEvent::ZombieDead;
 	pHeroObj->m_pPhysics->UserSocket = ESocketType::EZombie;
 	pHeroObj->m_pPhysics->m_damage = 0.08f;
 	ObjectManager::Get().SetProtoObject(pHeroObj);
@@ -613,9 +607,10 @@ void IntroScene::SetObjects() noexcept
 	pHeroObj->m_myName = L"Caster";
 	pHeroObj->m_objType = EObjType::Enemy;
 	pCollider = new ColliderOBB({ -13.0f, 0.0f , -13.0f }, { 13.0f, 80.0f , 13.0f });
-	pHeroObj->AddComponent({ pCollider, pRenderer->clone(), new AIZombieCast() });
+	pHeroObj->AddComponent({ pCollider, pRerderEnvi->clone(), new AIZombieCast() });
 	pCollider->CollisionEvent = MyEvent::ZombieHit;
 	pCollider->m_eTag = ETag::Enemy;
+	pHeroObj->m_pPhysics->DeadEvent = DyingEvent::ZombieDead;
 	pHeroObj->m_pPhysics->UserSocket = ESocketType::ECaster;
 	pHeroObj->m_pPhysics->m_damage = 0.08f;
 	ObjectManager::Get().SetProtoObject(pHeroObj);
@@ -627,11 +622,12 @@ void IntroScene::SetObjects() noexcept
 	pHeroObj->m_myName = L"Crawler";
 	pHeroObj->m_objType = EObjType::Enemy;
 	pCollider = new ColliderOBB({ -13.0f, 0.0f , -40.0f }, { 13.0f, 25.0f , 40.0f });
-	pHeroObj->AddComponent({ pCollider, pRenderer->clone(), new AIZombieCrawl() });
+	pHeroObj->AddComponent({ pCollider, pRerderEnvi->clone(), new AIZombieCrawl() });
 	pCollider->CollisionEvent = MyEvent::ZombieHit;
 	pCollider->m_pPhysics->m_mass = 0.15f;
 	pCollider->m_pPhysics->m_damping = 1.5f;
 	pCollider->m_eTag = ETag::Enemy;
+	pHeroObj->m_pPhysics->DeadEvent = DyingEvent::ZombieDead;
 	pHeroObj->m_pPhysics->UserSocket = ESocketType::ECrawler;
 	pHeroObj->m_pPhysics->m_damage = 0.3f;
 	ObjectManager::Get().SetProtoObject(pHeroObj);
@@ -643,11 +639,12 @@ void IntroScene::SetObjects() noexcept
 	pHeroObj->m_myName = L"Mutant";
 	pHeroObj->m_objType = EObjType::Enemy;
 	pCollider = new ColliderOBB({ -13.0f, 0.0f , -13.0f }, { 13.0f, 80.0f , 13.0f });
-	pHeroObj->AddComponent({ pCollider, pRenderer->clone(), new AIZombieEx() });
+	pHeroObj->AddComponent({ pCollider, pRerderEnvi->clone(), new AIZombieEx() });
 	pCollider->CollisionEvent = MyEvent::ZombieHit;
 	pCollider->m_pPhysics->m_mass = 0.15f;
 	pCollider->m_pPhysics->m_damping = 1.5f;
 	pCollider->m_eTag = ETag::Enemy;
+	pHeroObj->m_pPhysics->DeadEvent = DyingEvent::ZombieExDead;
 	pHeroObj->m_pPhysics->UserSocket = ESocketType::EMutant;
 	pHeroObj->m_pPhysics->m_damage = 0.3f;
 	ObjectManager::Get().SetProtoObject(pHeroObj);
@@ -659,11 +656,12 @@ void IntroScene::SetObjects() noexcept
 	pHeroObj->m_myName = L"Tank";
 	pHeroObj->m_objType = EObjType::Enemy;
 	pCollider = new ColliderOBB({ -13.0f, 0.0f , -13.0f }, { 13.0f, 80.0f , 13.0f });
-	pHeroObj->AddComponent({ pCollider, pRenderer->clone(), new AIZombieKing() });
+	pHeroObj->AddComponent({ pCollider, pRerderEnvi->clone(), new AIZombieKing() });
 	pCollider->CollisionEvent = MyEvent::ZombieHit;
 	pCollider->m_pPhysics->m_mass = 0.05f;
 	pCollider->m_pPhysics->m_damping = 3.0f;
 	pCollider->m_eTag = ETag::Enemy;
+	pHeroObj->m_pPhysics->DeadEvent = DyingEvent::ZombieKingDead;
 	pHeroObj->m_pPhysics->UserSocket = ESocketType::ETank;
 	pHeroObj->m_pPhysics->m_damage = 0.4f;
 	ObjectManager::Get().SetProtoObject(pHeroObj);
@@ -738,59 +736,6 @@ void IntroScene::LoadUI() noexcept
 	JParser par;
 	par.FileLoad(DxManager::GetDevice(), L"../../data/ui/Intro", *pUIRoot);
 	ObjectManager::Get().PushObject(pUIRoot);
-	//static auto GotoLobby = [](void* pScene) {
-	//	auto pIntro = (IntroScene*)pScene;
-	//
-	//	if (!pIntro->m_pPW->GetString().empty())
-	//	{
-	//		// 로그인이 처음이고 비번 입력시 서버 연결
-	//		int retValue = 0;
-	//		if (pIntro->m_loginCheck == 0)
-	//		{
-	//			ErrorMessage(__FUNCTION__ + "서버 접속"s);
-	//			retValue = pIntro->ConnectMatchingServer();
-	//			pIntro->m_loginCheck = 99;
-	//		}
-	//		if (retValue == 0)
-	//		{
-	//			// 로그인 요청
-	//			pIntro->m_loginCheck = 0;
-	//			pIntro->RequestSignIn(pIntro->m_pID->GetString().c_str(), pIntro->m_pPW->GetString().c_str());
-	//			while (pIntro->m_loginCheck == 0)
-	//			{
-	//				ErrorMessage(__FUNCTION__ + " -> 로그인 루프"s);
-	//				if (pIntro->m_loginCheck == 1)
-	//				{
-	//					ErrorMessage(__FUNCTION__ + " -> 정보 전송"s);
-	//					PacketManager::Get().pMyInfo = new UserInfo();
-	//					PacketManager::Get().pMyInfo->DataSize = (UCHAR)pIntro->m_pID->GetString().size() * 2;
-	//					PacketManager::Get().pMyInfo->DataSize = PacketManager::Get().pMyInfo->DataSize > 12 ? 12 : PacketManager::Get().pMyInfo->DataSize;
-	//					memcpy(PacketManager::Get().pMyInfo->UserID, pIntro->m_pID->GetString().c_str(), PacketManager::Get().pMyInfo->DataSize);
-	//					PacketManager::Get().pMyInfo->UserSocket = 0;
-	//					///
-	//					pIntro->SetScene(ESceneName::Lobby);
-	//					return;
-	//				}
-	//				if (pIntro->m_loginCheck == -1)
-	//				{
-	//					ErrorMessage(__FUNCTION__ + " -> 로그인 실패"s);
-	//					return;
-	//				}
-	//			}
-	//			ErrorMessage(__FUNCTION__ + " -> 로그인 종료"s);
-	//			return;
-	//		}
-	//	};
-	//	// 비번 없거나 서버 미접속시
-	//	PacketManager::Get().pMyInfo = new UserInfo();
-	//	PacketManager::Get().pMyInfo->DataSize = (UCHAR)pIntro->m_pID->GetString().size() * 2;
-	//	PacketManager::Get().pMyInfo->DataSize = PacketManager::Get().pMyInfo->DataSize > 12 ? 12 : PacketManager::Get().pMyInfo->DataSize;
-	//	memcpy(PacketManager::Get().pMyInfo->UserID, pIntro->m_pID->GetString().c_str(), PacketManager::Get().pMyInfo->DataSize);
-	//	PacketManager::Get().pMyInfo->UserSocket = 0;
-	//	///
-	//	pIntro->SetScene(ESceneName::Lobby);
-	//	ErrorMessage(__FUNCTION__ + " -> 서버 미접속"s);
-	//};
 
 	m_pID = (JEditCtrl*)pUIRoot->find_child(L"Login_ID");
 	m_pPW = (JEditCtrl*)pUIRoot->find_child(L"Login_PW");
