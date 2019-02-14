@@ -11,7 +11,7 @@ bool GameMap::Init() noexcept
 	//m_pHeightMap->SetShadowRate(0.0f);
 	//mapMap->SetEnviromentMap(((Renderer*)m_pSkyBox->GetComponent(EComponent::Renderer))->m_srcName, EEnviType::Fresnel);
 	//pObject->Translate(Vector3::Down * 100.0f);
-	pObject->SetScale(1.0f, 0.05f, 1.0f);
+	pObject->SetScale(2.0f, 0.05f, 2.0f);
 	ObjectManager::Get().PushObject(pObject, false);
 
 	//////////////////////////////////////////////////////////////////////////////////////
