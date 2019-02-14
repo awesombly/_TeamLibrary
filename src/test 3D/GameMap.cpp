@@ -564,6 +564,57 @@ bool GameMap::Init() noexcept
 	ObjectManager::Get().PushObject(&m_carpet_towerRound, false);
 #pragma endregion
 
+
+#pragma region MywagonSack
+
+	m_wagon1.SetPlayerCharacter(L"MAP_Wagon2", 440, 0, 240);	//280
+	m_wagon1.SetScale(D3DXVECTOR3(3.0f, 3.0f, 3.0f));
+	m_wagon1.m_objType = EObjType::AObject;
+	ObjectManager::Get().PushObject(&m_wagon1);
+
+	m_wagon2.SetPlayerCharacter(L"MAP_Wagon1", 460, 0, -280);	//280
+	m_wagon2.SetScale(D3DXVECTOR3(4.0f, 4.0f, 3.0f));
+	m_wagon2.m_objType = EObjType::AObject;
+	ObjectManager::Get().PushObject(&m_wagon2);
+
+	m_wagon3.SetPlayerCharacter(L"MAP_Wagon1", -460, 0, -280);	//280
+	m_wagon3.SetScale(D3DXVECTOR3(4.0f, 4.0f, 3.0f));
+	m_wagon3.SetRotationY(-PI);
+	m_wagon3.m_objType = EObjType::AObject;
+	ObjectManager::Get().PushObject(&m_wagon3);
+
+	m_Sack00.SetPlayerCharacter(L"MAP_Sack", 240, 0, -430);
+	m_Sack00.SetScale(D3DXVECTOR3(1.5f, 1.5f, 1.5f));
+	m_Sack00.m_objType = EObjType::AObject;
+	ObjectManager::Get().PushObject(&m_Sack00);
+	m_Sack01.SetPlayerCharacter(L"MAP_Sack", 280, 0, -430);
+	m_Sack01.SetScale(D3DXVECTOR3(1.5f, 1.5f, 1.5f));
+	m_Sack01.m_objType = EObjType::AObject;
+	ObjectManager::Get().PushObject(&m_Sack01);
+
+	m_Sack10.SetPlayerCharacter(L"MAP_Sack", 240, 0, 400);
+	m_Sack10.SetScale(D3DXVECTOR3(1.5f, 1.5f, 1.5f));
+	m_Sack10.m_objType = EObjType::AObject;
+	ObjectManager::Get().PushObject(&m_Sack10);
+	m_Sack11.SetPlayerCharacter(L"MAP_Sack", 280, 0, 400);
+	m_Sack11.SetScale(D3DXVECTOR3(1.5f, 1.5f, 1.5f));
+	m_Sack11.m_objType = EObjType::AObject;
+	ObjectManager::Get().PushObject(&m_Sack11);
+
+	m_Sack20.SetPlayerCharacter(L"MAP_Sack", -240, 0, -400);
+	m_Sack20.SetScale(D3DXVECTOR3(1.5f, 1.5f, 1.5f));
+	m_Sack20.m_objType = EObjType::AObject;
+	ObjectManager::Get().PushObject(&m_Sack20);
+	m_Sack21.SetPlayerCharacter(L"MAP_Sack", -280, 0, -400);
+	m_Sack21.SetScale(D3DXVECTOR3(1.5f, 1.5f, 1.5f));
+	m_Sack21.m_objType = EObjType::AObject;
+	ObjectManager::Get().PushObject(&m_Sack21);
+
+
+#pragma endregion
+
+
+
 //#pragma region SetMatrix
 //
 //	m_blacksmith.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
