@@ -179,8 +179,8 @@ VS_OUTPUT VS(PNCT5_VS_INPUT input)//,uniform bool bHalfVector )
 	//float3 vNormal = output.nor.xyz;
 	output.tex = input.tex;
 
-	if (cb_useLight)
-	{
+	//if (cb_useLight)
+	//{
 	#ifdef DirectLight
 		float3 vLightDir = -cb_LightVector.xyz;
 	#else
@@ -188,13 +188,13 @@ VS_OUTPUT VS(PNCT5_VS_INPUT input)//,uniform bool bHalfVector )
 	#endif
 		//float fDot = max(0.2f, lerp(dot(vLightDir, output.nor.xyz), 1.0f, 0.2f) + 0.2f);
 		//output.col = /*float4(fDot, fDot, fDot, 1.0f) **/ /*input.col **/ fDot;
-		output.col.xyz = max(0.3f, dot(vLightDir, output.nor.xyz) + 0.5f);
+		output.col.xyz = max(cb_useLight, dot(vLightDir, output.nor.xyz) + 0.3f);
 		output.col.w = input.col.w;
-	}
-	else
-	{
-		output.col = input.col;
-	}
+	//}
+	//else
+	//{
+	//	output.col = input.col;
+	//}
 
 	// È¯°æ
 	if (cb_useEnviMap)
@@ -288,7 +288,7 @@ PBUFFER_OUTPUT PS(VS_OUTPUT input) : SV_Target
 		output.color0.xyz *= max(cb_useShadow, fLightAmount);
 	}
 
-	output.color0 *= input.col; //* cb_useLight;
+	output.color0 *= input.col;
 	return output;
 }
 

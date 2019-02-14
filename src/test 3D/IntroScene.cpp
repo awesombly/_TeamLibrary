@@ -25,6 +25,11 @@ bool IntroScene::Init() noexcept
 // 프레임
 bool IntroScene::Frame() noexcept
 {
+	// Click
+	if (Input::GetKeyState(EMouseButton::Left) == EKeyState::DOWN)
+	{
+		SoundManager::Get().Play("SE_Click01.mp3");
+	}
 	DxManager::Get().Frame();
 	ObjectManager::Get().Frame(Timer::SPF, Timer::AccumulateTime);
 	SoundManager::Get().Frame();
@@ -212,9 +217,10 @@ void IntroScene::SetObjects() noexcept
 	ObjectManager::Get().SetProtoObject(new GameObject(L"EBerserk", m_pParser->CreateFromParticle(L"Berserk.eff", urlEffect)->SetEffectScale(3.0f), EObjType::Effect));
 	ObjectManager::Get().SetProtoComponent(m_pParser->CreateFromParticle(L"Fire.eff", urlEffect)->SetEffectScale(3.0f));
 
+	Renderer* pRenderer = new Renderer(L"BaseR");
 	Renderer* pRerderEnvi = new Renderer(L"EnviR");
 	pRerderEnvi->SetEnviromentMap(((Renderer*)m_pSkyBox->GetComponent(EComponent::Renderer))->m_srcName, EEnviType::Refraction);
-	Renderer* pRenderer = new Renderer(L"BaseR");
+
 
 	// ======================================== Effect =====================================================
 	// 플레이어 사망
@@ -261,7 +267,7 @@ void IntroScene::SetObjects() noexcept
 	ObjectManager::Get().SetProtoObject(pObject);
 
 	// 브레스
-	pCollider = new ColliderOBB({ -30.0f, -70.0f, -200.0f }, { 30.0f, 40.0f, 0.0f });
+	pCollider = new ColliderOBB({ -90.0f, -210.0f, -600.0f }, { 90.0f, 120.0f, 0.0f });
 	pObject = new GameObject(L"ZBreath", { pCollider, m_pParser->CreateFromParticle(L"Breath.eff", urlEffect)->SetEffectScale(3.0f) }, EObjType::Effect);
 	pCollider->CollisionEvent = MyEvent::ZombieAttack;
 	pCollider->m_eTag = ETag::Dummy;
@@ -450,7 +456,7 @@ void IntroScene::SetObjects() noexcept
 	pHeroObj->m_objType = EObjType::AObject;
 	pCollider = new Collider(10.0f);
 	pHeroObj->AddComponent({ pCollider, pRenderer });
-	pCollider->m_pivot = Vector3::Down * 80.0f;
+	pCollider->m_pivot = Vector3::Down * 100.0f;
 	//pCollider->SetGravityScale(0.0f);
 	pCollider->m_eTag = ETag::Dummy;
 	pCollider->CollisionEvent = MyEvent::NuclearBoom;

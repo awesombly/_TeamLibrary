@@ -39,7 +39,7 @@ bool LobbyScene::Init() noexcept
 // 프레임
 bool LobbyScene::Frame() noexcept
 {
-	// 채팅
+	// 아이피 입력
 	if (m_toGuestPanel->m_bRender == true)
 	{
 		if (Input::GetKeyState(VK_BACK) == EKeyState::DOWN &&

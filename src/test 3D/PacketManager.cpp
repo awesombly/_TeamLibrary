@@ -10,6 +10,7 @@
 #include "AIZombie.h"
 
 
+
 void PacketManager::SendPacket(const char* data, const USHORT& size, const USHORT& packeyType) noexcept
 {
 	if (isHost)
@@ -241,6 +242,107 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 			pObject->GetCollider()->m_pivot = Vector3::Up * 40.0f * pObject->GetScale().x;
 		}
 	}	break;
+	case PACKET_TowerAttack:
+	{
+		static const float shotRange = 200000.0f;
+		static D3DXVECTOR3 targetPos[4] = { Vector3::Forward * 700.0f,
+								Vector3::Right * 700.0f,
+								Vector3::Backward * 700.0f,
+								Vector3::Left * 700.0f };
+
+		switch (p_KeyValue.KeyValue)
+		{
+		case 0:
+		{
+			// 일반
+			for (int i = 0; i < 4; ++i)
+			{
+				int index = i * 2;
+				for (auto& iter : *ObjectManager::Get().GetObjectList(EObjType::Enemy))
+				{
+					if (VectorLengthSq(iter->GetPosition() - targetPos[i]) <= shotRange)
+					{
+						auto pItem = ObjectManager::Get().TakeObject(L"PBomb");
+						pItem->SetPosition(TowerPos[index] + Vector3::Up * 200.0f);
+						pItem->SetForce((iter->GetPosition() - TowerPos[index]) + Vector3::Up * 100.0f);
+						pItem->m_pPhysics->m_damage = 0.2f;
+						pItem->m_pPhysics->UserSocket = ESocketType::EDummy;
+
+						++index;
+						pItem = ObjectManager::Get().TakeObject(L"PBomb");
+						pItem->SetPosition(TowerPos[index] + Vector3::Up * 200.0f);
+						pItem->SetForce((iter->GetPosition() - TowerPos[index]) + Vector3::Up * 100.0f);
+						pItem->m_pPhysics->m_damage = 0.2f;
+						pItem->m_pPhysics->UserSocket = ESocketType::EDummy;
+						break;
+					}
+				}
+			}
+		}	break;
+		case 1:
+		{
+			// 시한
+			for (int i = 0; i < 4; ++i)
+			{
+				int index = i * 2;
+				for (auto& iter : *ObjectManager::Get().GetObjectList(EObjType::Enemy))
+				{
+					if (VectorLengthSq(iter->GetPosition() - targetPos[i]) <= shotRange)
+					{
+						auto pItem = ObjectManager::Get().TakeObject(L"TimeBomb");
+						pItem->SetPosition(TowerPos[index] + Vector3::Up * 200.0f);
+						//pItem->SetScale(Vector3::One * 1.0f);
+						//pItem->SetRotation();
+						pItem->SetForce((iter->GetPosition() - TowerPos[index]) * 0.7f + Vector3::Up * 200.0f);
+						pItem->m_pPhysics->m_damage = 0.3f;
+						pItem->m_pPhysics->UserSocket = ESocketType::EDummy;
+
+						++index;
+						pItem = ObjectManager::Get().TakeObject(L"TimeBomb");
+						pItem->SetPosition(TowerPos[index] + Vector3::Up * 200.0f);
+						pItem->SetForce((iter->GetPosition() - TowerPos[index]) * 0.7f + Vector3::Up * 200.0f);
+						pItem->m_pPhysics->m_damage = 0.3f;
+						pItem->m_pPhysics->UserSocket = ESocketType::EDummy;
+						break;
+					}
+				}
+			}
+		}	break;
+		case 2:
+		{
+			// 지뢰
+			for (int i = 0; i < 4; ++i)
+			{
+				int index = i * 2;
+				for (auto& iter : *ObjectManager::Get().GetObjectList(EObjType::Enemy))
+				{
+					if (VectorLengthSq(iter->GetPosition() - targetPos[i]) <= shotRange)
+					{
+						auto pItem = ObjectManager::Get().TakeObject(L"Mine");
+						pItem->SetPosition(TowerPos[index] + Vector3::Up * 100.0f);
+						pItem->SetForce((iter->GetPosition() - TowerPos[index]) * 0.35f + Vector3::Up * 600.0f);
+						pItem->m_pPhysics->m_damage = 0.3f;
+						pItem->m_pPhysics->UserSocket = ESocketType::EDummy;
+
+						++index;
+						pItem = ObjectManager::Get().TakeObject(L"Mine");
+						pItem->SetPosition(TowerPos[index] + Vector3::Up * 100.0f);
+						pItem->SetForce((iter->GetPosition() - TowerPos[index]) * 0.35f + Vector3::Up * 600.0f);
+						pItem->m_pPhysics->m_damage = 0.3f;
+						pItem->m_pPhysics->UserSocket = ESocketType::EDummy;
+						break;
+					}
+				}
+			}
+		}	break;
+		case 3:
+		{
+			///
+		}	break;
+		default:
+			break;
+		}
+	}	break;
 	case PACKET_SendNameUpdate:
 	{
 		memcpy(&p_KeyValue, data, sizeof(Packet_KeyValue));
@@ -332,6 +434,7 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 	{
 		memcpy(&p_PossessPlayer, data, sizeof(Packet_PossessPlayer));
 		PlayerController::Get().Possess(ObjectManager::KeyObjects[p_PossessPlayer.KeyValue]);
+		UIManager::Get().m_pRespawnEffect->SetEventTime(1.0f);
 		UIManager::Get().m_pRespawnEffect->EffectPlay();
 
 		pMyInfo->isDead = false;
@@ -379,8 +482,12 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 			if (pObject->m_pPhysics->DeadEvent != nullptr)
 				pObject->m_pPhysics->DeadEvent(pObject->GetCollider(), p_PlayerDead.KillUser);
 
+			float userRate = 1.0001f;
+			// 컴터가 죽였을시
+			if (p_PlayerDead.KillUser == ESocketType::EDummy)
+				userRate /= PacketManager::Get().UserList.size();
 			// 자기가 죽였을시
-			if (pMyInfo->UserSocket == p_PlayerDead.KillUser)
+			if (p_PlayerDead.KillUser == pMyInfo->UserSocket || p_PlayerDead.KillUser == ESocketType::EDummy)
 			{
 				switch (pObject->m_pPhysics->UserSocket)
 				{
@@ -388,28 +495,25 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 				case ECaster:
 				case ECrawler:
 				{
-					PlayerController::Get().OperEXP(0.12f);
-					++pMyInfo->KillCount;
-					pMyInfo->Score += 300;
+					PlayerController::Get().OperEXP(0.12f * userRate);
+					pMyInfo->KillCount += userRate;
+					pMyInfo->Score += 300 * userRate;
 					PacketManager::Get().SendPacket((char*)pMyInfo, (USHORT)(PS_UserInfo + pMyInfo->DataSize), PACKET_SendUserInfo);
 				}	break;
 				case EMutant:
 				{
-					PlayerController::Get().OperEXP(0.8f);
-					++pMyInfo->KillCount;
-					pMyInfo->Score += 1000;
+					PlayerController::Get().OperEXP(0.8f * userRate);
+					pMyInfo->KillCount += userRate;
+					pMyInfo->Score += 1000 * userRate;
 					PacketManager::Get().SendPacket((char*)pMyInfo, (USHORT)(PS_UserInfo + pMyInfo->DataSize), PACKET_SendUserInfo);
 				}	break;
 				case ETank:
 				{
-					PlayerController::Get().OperEXP(2.0f);
-					++pMyInfo->KillCount;
-					pMyInfo->Score += 5000;
+					PlayerController::Get().OperEXP(2.0f * userRate);
+					pMyInfo->KillCount += userRate;
+					pMyInfo->Score += 5000 * userRate;
 					PacketManager::Get().SendPacket((char*)pMyInfo, (USHORT)(PS_UserInfo + pMyInfo->DataSize), PACKET_SendUserInfo);
 				}	break;
-				//case EDummy:
-				//{
-				//}	break;
 				}
 			}
 		}	break;

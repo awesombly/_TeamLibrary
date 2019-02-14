@@ -77,8 +77,10 @@ VS_OUTPUT_Mix VS_Final(VS_INPUT_PNCTT input)
 	}
 	else if (cb_useLight)
 	{
-		float fDot = lerp(dot(vLightDir, output.nor.xyz), 1.0f, 0.15f) + 0.2f;
-		output.col = float4(fDot, fDot, fDot, 1.0f) * input.col;
+		//float fDot = lerp(dot(vLightDir, output.nor.xyz), 1.0f, 0.15f) + 0.2f;
+		//output.col = float4(fDot, fDot, fDot, 1.0f) * input.col;
+		output.col.xyz = max(cb_useLight, dot(vLightDir, output.nor.xyz) + 0.3f);
+		output.col.w = input.col.w;
 	}
 	else
 	{
@@ -167,13 +169,13 @@ PBUFFER_OUTPUT PS_Final(VS_OUTPUT_Mix input) : SV_Target
 
 		// 최종 컬러 조합
 		//return vDiffuseColor * float4(LightColor + SpecularColor, 1.0f) * input.col;
-		output.color0 *= float4(LightColor + SpecularColor + 0.2f, 1.0f)/* * input.col*/;
+		output.color0 *= float4(max(cb_useLight, LightColor + SpecularColor + 0.2f), 1.0f)/* * input.col*/;
 	}
-	// 음영 /// 음영 끄면 color도 미적용됨..
-	if (cb_useLight)
-	{
-		output.color0 *= input.col * cb_useLight;
-	}
+	/// 음영 /// 음영 끄면 color도 미적용됨..
+	//if (cb_useLight)
+	//{
+		output.color0 *= input.col;
+	//}
 	// 쉐도우
 	if(cb_useShadow)
 	{

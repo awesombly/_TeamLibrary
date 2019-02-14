@@ -1,6 +1,6 @@
 #include "PlayerController.h"
-#include "Collider.h"
 #include "AHeroObj.h"
+#include "Collider.h"
 #include "ObjectManager.h"
 #include "PacketManager.h"
 #include "SoundManager.h"
@@ -78,8 +78,8 @@ bool PlayerController::Frame(const float& spf, const float& accTime)	noexcept
 			if (Input::GetKeyState(VK_SUBTRACT) == EKeyState::DOWN)
 			{
 				m_curDelayRespawn = -9999.9f;
-				CutParent(true, true);
-				ObjectManager::Cameras[ECamera::Main]->CutParent(true, true);
+				CutParent(false, true);
+				ObjectManager::Cameras[ECamera::Main]->CutParent(false, true);
 			}
 		}
 	}
@@ -287,6 +287,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 			auto pItem = ObjectManager::Get().TakeObject(L"Mine");
 			pItem->SetPosition(pObject->GetPosition() + pObject->GetForward() * 45.0f + pObject->GetUp() * 50.0f);
 			pItem->SetForce(forward * 30.0f);
+			pItem->m_pPhysics->m_damage = 0.8f;
 			pItem->m_pPhysics->UserSocket = socket;
 			SoundManager::Get().PlayQueue("SE_dash.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
 		}	break;
@@ -319,6 +320,18 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 			pItem->m_pPhysics->UserSocket = socket;
 			SoundManager::Get().PlayQueue("SV_paladin_shout.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
 			//SoundManager::Get().PlayQueue("SE_dash.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
+		}	break;
+		case EAction::IPotion:
+		{
+			// ¹°¾à
+			pObject->SetANIM_OneTime(Paladin_THROW);
+			pObject->HealHP(pObject->GetHP() * 0.5f);
+			//auto pItem = ObjectManager::Get().TakeObject(L"SkyShip");
+			//pItem->SetPosition(pObject->GetPosition() + Vector3::Up * 800.0f + pObject->GetBackward() * 450.0f);
+			//pItem->SetRotation(pObject->GetRotation());
+			//pItem->SetDirectionForce(pObject->GetForward() * 480.0f);
+			//pItem->m_pPhysics->UserSocket = socket;
+			SoundManager::Get().Play("SE_dark.mp3");
 		}	break;
 		}
 	}	break;
@@ -499,6 +512,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 			auto pItem = ObjectManager::Get().TakeObject(L"Mine");
 			pItem->SetPosition(pObject->GetPosition() + pObject->GetForward() * 45.0f + pObject->GetUp() * 50.0f);
 			pItem->SetForce(forward * 30.0f);
+			pItem->m_pPhysics->m_damage = 0.8f;
 			pItem->m_pPhysics->UserSocket = socket;
 			SoundManager::Get().PlayQueue("SE_dash.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
 		}	break;
@@ -681,6 +695,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 			auto pItem = ObjectManager::Get().TakeObject(L"Mine");
 			pItem->SetPosition(pObject->GetPosition() + pObject->GetForward() * 45.0f + pObject->GetUp() * 50.0f);
 			pItem->SetForce(forward * 30.0f);
+			pItem->m_pPhysics->m_damage = 0.8f;
 			pItem->m_pPhysics->UserSocket = socket;
 			SoundManager::Get().PlayQueue("SE_dash.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
 		}	break;
@@ -931,7 +946,8 @@ void PlayerController::DeadEvent() noexcept
 {
 	if (m_pParent == nullptr)
 		return;
-	PacketManager::Get().SendPlaySound("SE_dead.mp3", m_pParent->GetPosition(), SoundRange);
+	SoundManager::Get().m_pListenerPos = &GetPosition();
+	SoundManager::Get().Play("SE_dead.mp3");
 	switch (m_curCharacter)
 	{
 	case PlayerController::EGuard:

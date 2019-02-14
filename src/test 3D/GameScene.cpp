@@ -2,7 +2,7 @@
 #include "PacketManager.h"
 #include "JEventBind.h"
 #include "UIManager.h"
-#include "../../data/shader/ShaderData.hlsl"
+//#include "../../data/shader/ShaderData.hlsl"
 
 
 bool GameScene::Init() noexcept
@@ -16,6 +16,10 @@ bool GameScene::Init() noexcept
 	ObjectManager::KeyCount = 1000;
 
 	m_MapObjects.Init();
+	for (int i = 0; i < 8; ++i)
+	{
+		PacketManager::Get().TowerPos[i] = m_MapObjects.Get().m_tower[i].GetPosition();
+	}
 
 	//// 높이 맵
 	//m_pHeightMap = new HeightMap(L"HeightMap", EComponent::Renderer, L"mounds.jpg");
@@ -341,17 +345,10 @@ bool GameScene::CheatMessage() noexcept
 			PacketManager::Get().SendPacket((char*)&p_HealHP, (USHORT)sizeof(Packet_Float), PACKET_HealHP);
 			return false;
 		}
-		else if (str._Equal(L"Clear"))
-		{
-			/*for (auto& iter : ObjectManager::Get().GetColliderList())
-			{
-				if (iter->m_pParent->m_myName == L"Melee")
-				{
-					ObjectManager::Get().RemoveObject(iter->m_pParent);
-				}
-			}*/
-			return false;
-		}
+		//else if (str._Equal(L"Clear"))
+		//{
+		//	return false;
+		//}
 		else if (str._Equal(L"ClearAll"))
 		{
 			for (auto& iter : *ObjectManager::Get().GetObjectList(EObjType::Enemy))
@@ -438,109 +435,54 @@ void GameScene::HostFrame() noexcept
 	static float spawnShot = 0.0f;
 	static float spawnShot2 = 0.0f;
 	static float spawnShot3 = 0.0f;
+	static float spawnShot4 = 0.0f;
 	spawnBarrel += Timer::SPF;
 	spawnShot += Timer::SPF;
 	spawnShot2 += Timer::SPF;
 	spawnShot3 += Timer::SPF;
-	if (spawnBarrel >= 12.0f)
+	spawnShot4 += Timer::SPF;
+
+	if (spawnBarrel >= 15.0f)
 	{
 		spawnBarrel = 0.0f;
-		//PacketManager::Get().SendTakeObject(L"Explosive", ESocketType::EDummy, (UCHAR)PacketManager::Get().UserList.size(), 0.6f, 0.3f, 0.0f, { -400.0f, 30.0f, -400.0f }, { 800.0f, 0.0f, 800.0f });
-		///
+		PacketManager::Get().SendTakeObject(L"Explosive", ESocketType::EDummy, (UCHAR)PacketManager::Get().UserList.size(), 0.6f, 0.3f, 0.0f, { -400.0f, 30.0f, -400.0f }, { 800.0f, 0.0f, 800.0f });
 	}
 
-	static const float shotRange = 200000.0f;
-	static D3DXVECTOR3 targetPos[4] = { Vector3::Forward * 600.0f,
-									Vector3::Right * 600.0f,
-									Vector3::Backward * 600.0f, 
-									Vector3::Left * 600.0f };
-	if (spawnShot >= 10.0f)
+	// 일반
+	if (spawnShot >= 19.0f)
 	{
 		spawnShot = 0.0f;
 
-		for (int i = 0; i < 4; ++i)
-		{
-			int index = i * 2;
-			for (auto& iter : *ObjectManager::Get().GetObjectList(EObjType::Enemy))
-			{
-				if (VectorLengthSq(iter->GetPosition() - targetPos[i]) <= shotRange)
-				{
-					auto pItem = ObjectManager::Get().TakeObject(L"TimeBomb");
-					pItem->SetPosition(m_MapObjects.m_tower[index].GetPosition() + Vector3::Up * 200.0f);
-					//pItem->SetScale(Vector3::One * 1.0f);
-					//pItem->SetRotation();
-					pItem->SetForce((iter->GetPosition() - m_MapObjects.m_tower[index].GetPosition()) * 0.7f + Vector3::Up * 200.0f);
-					pItem->m_pPhysics->m_damage = 0.3f;
-					pItem->m_pPhysics->UserSocket = ESocketType::EDummy;
-
-					++index;
-					pItem = ObjectManager::Get().TakeObject(L"TimeBomb");
-					pItem->SetPosition(m_MapObjects.m_tower[index].GetPosition() + Vector3::Up * 200.0f);
-					pItem->SetForce((iter->GetPosition() - m_MapObjects.m_tower[index].GetPosition()) * 0.7f + Vector3::Up * 200.0f);
-					pItem->m_pPhysics->m_damage = 0.3f;
-					pItem->m_pPhysics->UserSocket = ESocketType::EDummy;
-					break;
-				}
-			}
-		}
+		Packet_KeyValue p_KeyValue;
+		p_KeyValue.KeyValue = 0;
+		PacketManager::Get().SendPacket((char*)&p_KeyValue, sizeof(Packet_KeyValue), PACKET_TowerAttack);
 	}
-
-	if (spawnShot2 >= 6.0f)
+	// 시한폭
+	if (spawnShot2 >= 15.0f)
 	{
 		spawnShot2 = 0.0f;
 
-		for (int i = 0; i < 4; ++i)
-		{
-			int index = i * 2;
-			for (auto& iter : *ObjectManager::Get().GetObjectList(EObjType::Enemy))
-			{
-				if (VectorLengthSq(iter->GetPosition() - targetPos[i]) <= shotRange)
-				{
-					auto pItem = ObjectManager::Get().TakeObject(L"PBomb");
-					pItem->SetPosition(m_MapObjects.m_tower[index].GetPosition() + Vector3::Up * 200.0f);
-					pItem->SetForce((iter->GetPosition() - m_MapObjects.m_tower[index].GetPosition()) * 0.4f + Vector3::Up * 500.0f);
-					pItem->m_pPhysics->m_damage = 0.2f;
-					pItem->m_pPhysics->UserSocket = ESocketType::EDummy;
-
-					++index;
-					pItem = ObjectManager::Get().TakeObject(L"PBomb");
-					pItem->SetPosition(m_MapObjects.m_tower[index].GetPosition() + Vector3::Up * 200.0f);
-					pItem->SetForce((iter->GetPosition() - m_MapObjects.m_tower[index].GetPosition()) * 0.4f + Vector3::Up * 500.0f);
-					pItem->m_pPhysics->m_damage = 0.2f;
-					pItem->m_pPhysics->UserSocket = ESocketType::EDummy;
-					break;
-				}
-			}
-		}
+		Packet_KeyValue p_KeyValue;
+		p_KeyValue.KeyValue = 1;
+		PacketManager::Get().SendPacket((char*)&p_KeyValue, sizeof(Packet_KeyValue), PACKET_TowerAttack);
 	}
-
-	if (spawnShot3 >= 14.0f)
+	// 지뢰
+	if (spawnShot3 >= 21.0f)
 	{
 		spawnShot3 = 0.0f;
 
-		for (int i = 0; i < 4; ++i)
-		{
-			int index = i * 2;
-			for (auto& iter : *ObjectManager::Get().GetObjectList(EObjType::Enemy))
-			{
-				if (VectorLengthSq(iter->GetPosition() - targetPos[i]) <= shotRange)
-				{
-					auto pItem = ObjectManager::Get().TakeObject(L"Mine");
-					pItem->SetPosition(m_MapObjects.m_tower[index].GetPosition() + Vector3::Up * 100.0f);
-					pItem->SetForce((iter->GetPosition() - m_MapObjects.m_tower[index].GetPosition()) * 0.4f + Vector3::Up * 600.0f);
-					pItem->m_pPhysics->m_damage = 0.3f;
-					pItem->m_pPhysics->UserSocket = ESocketType::EDummy;
+		Packet_KeyValue p_KeyValue;
+		p_KeyValue.KeyValue = 2;
+		PacketManager::Get().SendPacket((char*)&p_KeyValue, sizeof(Packet_KeyValue), PACKET_TowerAttack);
+	}
+	// 미사일
+	if (spawnShot4 >= 30.0f)
+	{
+		spawnShot4 = 0.0f;
 
-					++index;
-					pItem = ObjectManager::Get().TakeObject(L"Mine");
-					pItem->SetPosition(m_MapObjects.m_tower[index].GetPosition() + Vector3::Up * 100.0f);
-					pItem->SetForce((iter->GetPosition() - m_MapObjects.m_tower[index].GetPosition()) * 0.4f + Vector3::Up * 600.0f);
-					pItem->m_pPhysics->m_damage = 0.3f;
-					pItem->m_pPhysics->UserSocket = ESocketType::EDummy;
-					break;
-				}
-			}
-		}
+		Packet_KeyValue p_KeyValue;
+		p_KeyValue.KeyValue = 3;
+		PacketManager::Get().SendPacket((char*)&p_KeyValue, sizeof(Packet_KeyValue), PACKET_TowerAttack);
 	}
 
 	///
@@ -782,26 +724,35 @@ void GameScene::LoadUI() noexcept
 	m_pCheckBox->SetCheck(true);
 	// 그래픽 체크
 	auto pLowGraphic = (JCheckCtrl*)pUIRoot->find_child(L"Set_LowMode_Check");
+	pLowGraphic->SetCheck(true);
 	pLowGraphic->EventClick.first = [](void* pVoid) {
 		auto pCheck = (JCheckCtrl*)pVoid;
 		if (pCheck->GetCheck())
 		{
 			for (auto& [name, iter] : ObjectManager::Get().m_ProtoPull)
 			{
-				if (iter->GetComponent(EComponent::Renderer) != nullptr)
+				if (auto pList = iter->GetComponentList(EComponent::Renderer);
+					pList != nullptr)
 				{
-					((Renderer*)iter)->SetShadowRate(0.0f);
-					((Renderer*)iter)->SetLightRate(0.0f);
+					for (auto& pRenderer : *pList)
+					{
+						((Renderer*)pRenderer)->SetShadowRate(0.0f);
+						((Renderer*)pRenderer)->SetLightRate(1.0f);
+					}
 				}
 			}
 			for (auto&[eType, objList] : ObjectManager::Get().m_ObjectList)
 			{
 				for (auto& iter : objList)
 				{
-					if (iter->GetComponent(EComponent::Renderer) != nullptr)
+					if (auto pList = iter->GetComponentList(EComponent::Renderer);
+						pList != nullptr)
 					{
-						((Renderer*)iter)->SetShadowRate(0.0f);
-						((Renderer*)iter)->SetLightRate(0.0f);
+						for (auto& pRenderer : *pList)
+						{
+							((Renderer*)pRenderer)->SetShadowRate(0.0f);
+							((Renderer*)pRenderer)->SetLightRate(1.0f);
+						}
 					}
 				}
 			}
@@ -810,25 +761,32 @@ void GameScene::LoadUI() noexcept
 		{
 			for (auto&[name, iter] : ObjectManager::Get().m_ProtoPull)
 			{
-				if (iter->GetComponent(EComponent::Renderer) != nullptr)
+				if (auto pList = iter->GetComponentList(EComponent::Renderer);
+					pList != nullptr)
 				{
-					((Renderer*)iter)->SetShadowRate(0.5f);
-					((Renderer*)iter)->SetLightRate(1.0f);
+					for (auto& pRenderer : *pList)
+					{
+						((Renderer*)pRenderer)->SetShadowRate(0.5f);
+						((Renderer*)pRenderer)->SetLightRate(0.2f);
+					}
 				}
 			}
 			for (auto&[eType, objList] : ObjectManager::Get().m_ObjectList)
 			{
 				for (auto& iter : objList)
 				{
-					if (iter->GetComponent(EComponent::Renderer) != nullptr)
+					if (auto pList = iter->GetComponentList(EComponent::Renderer);
+						pList != nullptr)
 					{
-						((Renderer*)iter)->SetShadowRate(0.5f);
-						((Renderer*)iter)->SetLightRate(1.0f);
+						for (auto& pRenderer : *pList)
+						{
+							((Renderer*)pRenderer)->SetShadowRate(0.5f);
+							((Renderer*)pRenderer)->SetLightRate(0.2f);
+						}
 					}
 				}
 			}
 		}
-		///ObjectManager::Get().Set
 	};
 	pLowGraphic->EventClick.second = pLowGraphic;
 	// Timer

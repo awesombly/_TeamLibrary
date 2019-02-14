@@ -1,7 +1,7 @@
 #pragma once
 #include "IDxBasis.h"
-#include "AHeroObj.h"
 #include "ISingleton.h"
+#include "AHeroObj.h"
 
 class HeightMap;
 

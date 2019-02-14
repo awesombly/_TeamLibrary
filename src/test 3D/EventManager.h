@@ -38,6 +38,7 @@ namespace ActiveEvent {
 	void ThrowMissile(PlayerController* pPlayer, void*);
 	void ThrowMine(PlayerController* pPlayer, void*);
 	void ThrowNuclear(PlayerController* pPlayer, void*);
+	void UsePotion(PlayerController* pPlayer, void*);
 }
 
 namespace TimeEvent {

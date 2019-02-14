@@ -19,11 +19,11 @@ bool GameMap::Init() noexcept
 	auto pCollider = new Collider(9.2f);
 	m_fountain.AddComponent(pCollider);
 	m_fountain.SetPlayerCharacter(L"MAP_Fountain", 0.0f, 0.0f, 0.0f);
-	m_fountain.SetScale(D3DXVECTOR3(6.0f, 6.0f, 6.0f));
+	m_fountain.SetScale(D3DXVECTOR3(8.0f, 8.0f, 8.0f));
 	m_fountain.m_objType = EObjType::AObject;
 	m_fountain.m_myName = L"HolyWater";
 	pCollider->m_eTag = ETag::Ally;
-	pCollider->m_pivot = Vector3::Up * 40.0f;
+	pCollider->m_pivot = Vector3::Up * 50.0f;
 	pCollider->SetGravityScale(0.0f);
 	pCollider->usePhysics(false);
 	pCollider->SetHP(200.0f);
@@ -635,6 +635,37 @@ bool GameMap::Init() noexcept
 //
 
 
+	pCollider = new Collider(330.0f);
+	pCollider->m_eTag = ETag::Collider;
+	pObject = new GameObject(L"-", pCollider);
+	pObject->SetGravityScale(0.0f);
+	pObject->usePhysics(false);
+	pObject->m_pPhysics->m_armor = 0.0f;
+	pObject->SetPosition(600.0f, 0.0f, 600.0f);
+
+	pCollider = new Collider(330.0f);
+	pCollider->m_eTag = ETag::Collider;
+	pObject = new GameObject(L"-", pCollider);
+	pObject->SetGravityScale(0.0f);
+	pObject->usePhysics(false);
+	pObject->m_pPhysics->m_armor = 0.0f;
+	pObject->SetPosition(600.0f, 0.0f, -600.0f);
+
+	pCollider = new Collider(330.0f);
+	pCollider->m_eTag = ETag::Collider;
+	pObject = new GameObject(L"-", pCollider);
+	pObject->SetGravityScale(0.0f);
+	pObject->usePhysics(false);
+	pObject->m_pPhysics->m_armor = 0.0f;
+	pObject->SetPosition(-600.0f, 0.0f, -600.0f);
+
+	pCollider = new Collider(330.0f);
+	pCollider->m_eTag = ETag::Collider;
+	pObject = new GameObject(L"-", pCollider);
+	pObject->SetGravityScale(0.0f);
+	pObject->usePhysics(false);
+	pObject->m_pPhysics->m_armor = 0.0f;
+	pObject->SetPosition(-600.0f, 0.0f, 600.0f);
 
 	for (auto& iter : *ObjectManager::Get().GetObjectList(EObjType::AObject))
 	{

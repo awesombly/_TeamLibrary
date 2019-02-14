@@ -28,6 +28,7 @@ enum EPacketProtocol : USHORT {
 	PACKET_ChatMessage,
 	PACKET_PlaySound,
 	PACKET_TakeObject,
+	PACKET_TowerAttack,
 	PACKET_PossessPlayer,
 	PACKET_SendUserInfo,
 	PACKET_SendLevelUp,

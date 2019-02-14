@@ -492,7 +492,7 @@ void ObjectManager::PushObject(GameObject* pObject, const bool& isPostEvent) noe
 		}
 		else
 		{
-			ErrorMessage(__FUNCTION__ + " -> 중복된 객체 등록."s);
+			ErrorMessage(__FUNCTIONW__ + L" -> 중복 객체 등록, "s + pObject->m_myName + L" : "  + to_wstring(pObject->m_keyValue));
 		}
 	}
 }

@@ -13,7 +13,7 @@ Renderer::Renderer(const wstring_view& myName, const string_view& vertexShaderNa
 	SetShaderLayout(vertexShaderName, pixelShaderName);
 	SetSpriteList(L"None.png");
 
-	m_cbMaterial.useLight = 1.0f;
+	m_cbMaterial.useLight = 0.2f;
 	m_cbMaterial.useShadow = 0.5f;		// ½¦µµ¿ì ºñÀ²
 	m_cbMaterial.useEnviMap = 0.0f;
 	m_cbMaterial.useNormalMap = 0.0f;
@@ -36,7 +36,7 @@ void Renderer::SetInfo(const wstring_view& myName, const EComponent& eComType, c
 		m_srcName = srcName;
 	SetSpriteList(m_srcName);
 
-	m_cbMaterial.useLight = 1.0f;
+	m_cbMaterial.useLight = 0.2f;
 	m_cbMaterial.useShadow = 0.5f;		// ½¦µµ¿ì ºñÀ²
 	m_cbMaterial.useEnviMap = 0.0f;
 	m_cbMaterial.useNormalMap= 0.0f;
@@ -616,5 +616,8 @@ Component* Renderer::cloneAddition() noexcept
 {
 	m_pVertexBuffer = nullptr;
 	CreateVertexBuffer();
+
+	m_pMaterialCBuffer = nullptr;
+	CreateConstBuffer(&m_cbMaterial, sizeof(m_cbMaterial), &m_pMaterialCBuffer);
 	return this;
 }

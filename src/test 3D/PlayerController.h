@@ -25,7 +25,7 @@ public:
 		Dash, DashLeft, DashRight, Run, RunLeft, RunRight, 
 		Special,		Special2, Special3, Attack,
 		ChargeAttack,	ChargeAttack2, LCharging, LCharge1, LCharge2,
-		ShockWave,		ThrowBomb,	ITimeBomb, IShockBomb, IMine, IMissile, INuclear,
+		ShockWave,		ThrowBomb,	ITimeBomb, IShockBomb, IMine, IMissile, INuclear, IPotion,
 	};
 	enum ECharacter : UCHAR {
 		EDummy = 0, EGuard, EArcher, EMage
@@ -91,7 +91,7 @@ public:
 	float		m_mouseSense		 = 0.5f;
 	float		m_GameFrameCount		 = 0.0f;
 	// 들을 거리
-	const float SoundRange			 = 250000.0f;
+	const float SoundRange			 = 302500.0f;
 public:
 	GameObject* m_pHome			 = nullptr;
 	const float HomeRadius		 = 1600.0f;

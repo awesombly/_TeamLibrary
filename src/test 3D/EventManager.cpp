@@ -8,7 +8,7 @@
 
 namespace MyEvent {
 	void ForceWave(Collider* pMe, Collider* pYou) {
-		if (pYou != nullptr && pYou->m_eTag != ETag::Dummy)
+		if (pYou != nullptr && (pYou->m_eTag == ETag::Enemy || pYou->m_eTag == ETag::Ally))
 		{
 			pYou->SetForce((Normalize(pYou->GetCenter() - pMe->GetCenter()) + Vector3::Up) * 180.0f);
 			pMe->AddIgnoreList(pYou);
@@ -48,7 +48,7 @@ namespace MyEvent {
 			pItem->SetPosition(pA->m_pParent->GetPosition());
 			pItem->SetScale(Vector3::One);
 			pItem->m_pPhysics->UserSocket = pA->m_pPhysics->UserSocket;
-			pItem->m_pPhysics->m_damage = 0.8f;
+			pItem->m_pPhysics->m_damage = pA->m_pPhysics->m_damage;
 
 			ObjectManager::Get().DisableObject(pA->m_pParent);
 			SoundManager::Get().PlayQueue("SE_bomb.mp3", pA->m_pParent->GetPosition(), PlayerController::Get().SoundRange);
@@ -102,6 +102,10 @@ namespace MyEvent {
 						PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
 					}
 				}
+				else if (pA->m_pPhysics->UserSocket == ESocketType::EDummy && PacketManager::Get().isHost && pB->m_pParent->GetHP() <= 0.0f)
+				{
+					PacketManager::Get().SendDeadEvent(pB->m_pParent->m_keyValue, pB->m_pPhysics->UserSocket, ESocketType::EDummy);
+				}
 			}
 		}
 		auto pEffect = ObjectManager::Get().TakeObject(L"EHit");
@@ -123,6 +127,12 @@ namespace MyEvent {
 			{
 				pB->SetForce((Normalize(pA->GetTotalForce())) * 90.0f);
 				pB->m_pParent->HealHP(pA->m_pPhysics->m_damage);
+				// 내가 맞았을때
+				if (pB->m_pParent == PlayerController::Get().GetParent())
+				{
+					UIManager::Get().m_pRespawnEffect->SetEventTime(0.2f);
+					((JPanel*)UIManager::Get().m_pRespawnEffect)->EffectPlay();
+				}
 				// 내가 때렸을때
 				if (PacketManager::Get().pMyInfo->UserSocket == pA->m_pPhysics->UserSocket)
 				{
@@ -153,6 +163,10 @@ namespace MyEvent {
 						PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
 					}
 				}
+				else if (pA->m_pPhysics->UserSocket == ESocketType::EDummy && PacketManager::Get().isHost && pB->m_pParent->GetHP() <= 0.0f)
+				{
+					PacketManager::Get().SendDeadEvent(pB->m_pParent->m_keyValue, pB->m_pPhysics->UserSocket, ESocketType::EDummy);
+				}
 			}	break;
 			}
 			auto pEffect = ObjectManager::Get().TakeObject(L"EHitLight");
@@ -174,24 +188,16 @@ namespace MyEvent {
 			 {
 			 	pB->SetForce((Normalize(pA->GetTotalForce()) + Vector3::Up) * 45.0f);
 			 	pB->m_pParent->HealHP(pA->m_pPhysics->m_damage * 1.5f);
-			 	//// 내가 맞았을때
-			 	//if (pB->m_pParent == PlayerController::Get().GetParent())
-			 	//{
-			 	//	((JPanel*)UIManager::Get().m_pHitEffect)->EffectPlay();
-			 	//}
+			 	// 내가 맞았을때
+			 	if (pB->m_pParent == PlayerController::Get().GetParent())
+			 	{
+					UIManager::Get().m_pRespawnEffect->SetEventTime(0.2f);
+			 		((JPanel*)UIManager::Get().m_pRespawnEffect)->EffectPlay();
+			 	}
 			 	// 내가 때렸을때
 			 	if (PacketManager::Get().pMyInfo->UserSocket == pA->m_pPhysics->UserSocket)
 			 	{
 			 		PlayerController::Get().HitEvent(pB);
-			 		//if (pB->m_pParent->GetHP() <= 0.0f)
-			 		//{
-			 		//	PacketManager::Get().SendDeadEvent(pB->m_pParent->m_keyValue, pB->m_pPhysics->UserSocket, pA->m_pPhysics->UserSocket);
-			 		//}
-			 		//else
-			 		//{
-			 		//	PacketManager::Get().pMyInfo->Score += (int)(pA->m_pPhysics->m_damage * 100.0f);
-			 		//	PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
-			 		//}
 			 	}
 			 }	break;
 			 case ETag::Enemy:
@@ -218,6 +224,10 @@ namespace MyEvent {
 			 			PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
 			 		}
 			 	}
+				else if (pA->m_pPhysics->UserSocket == ESocketType::EDummy && PacketManager::Get().isHost && pB->m_pParent->GetHP() <= 0.0f)
+				{
+					PacketManager::Get().SendDeadEvent(pB->m_pParent->m_keyValue, pB->m_pPhysics->UserSocket, ESocketType::EDummy);
+				}
 			 }	break;
 			}
 		}
@@ -248,6 +258,10 @@ namespace MyEvent {
 					PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
 				}
 			}
+			else if (pA->m_pPhysics->UserSocket == ESocketType::EDummy && PacketManager::Get().isHost && pB->m_pParent->GetHP() <= 0.0f)
+			{
+				PacketManager::Get().SendDeadEvent(pB->m_pParent->m_keyValue, pB->m_pPhysics->UserSocket, ESocketType::EDummy);
+			}
 			auto pEffect = ObjectManager::Get().TakeObject(L"EHit");
 			pEffect->SetPosition(pA->m_pParent->GetWorldPosition());
 			//SoundManager::Get().PlayQueue("SE_HIT.mp3", pA->m_pParent->GetWorldPosition(), SoundRange);
@@ -275,6 +289,10 @@ namespace MyEvent {
 					PacketManager::Get().pMyInfo->Score += (int)(pA->m_pPhysics->m_damage * 100.0f);
 					PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
 				}
+			}
+			else if (pA->m_pPhysics->UserSocket == ESocketType::EDummy && PacketManager::Get().isHost && pB->m_pParent->GetHP() <= 0.0f)
+			{
+				PacketManager::Get().SendDeadEvent(pB->m_pParent->m_keyValue, pB->m_pPhysics->UserSocket, ESocketType::EDummy);
 			}
 			auto pEffect = ObjectManager::Get().TakeObject(L"EPSlash");
 			pEffect->SetPosition(pA->m_pParent->GetWorldPosition());
@@ -327,6 +345,10 @@ namespace MyEvent {
 					PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
 				}
 			}
+			else if (pA->m_pPhysics->UserSocket == ESocketType::EDummy && PacketManager::Get().isHost && pB->m_pParent->GetHP() <= 0.0f)
+			{
+				PacketManager::Get().SendDeadEvent(pB->m_pParent->m_keyValue, pB->m_pPhysics->UserSocket, ESocketType::EDummy);
+			}
 		}
 		auto pEffect = ObjectManager::Get().TakeObject(L"EPAttack");
 		pEffect->SetPosition(pA->m_pParent->GetPosition());
@@ -363,6 +385,10 @@ namespace MyEvent {
 					PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
 				}
 			}
+			else if (pA->m_pPhysics->UserSocket == ESocketType::EDummy && PacketManager::Get().isHost && pB->m_pParent->GetHP() <= 0.0f)
+			{
+				PacketManager::Get().SendDeadEvent(pB->m_pParent->m_keyValue, pB->m_pPhysics->UserSocket, ESocketType::EDummy);
+			}
 		}
 		auto pEffect = ObjectManager::Get().TakeObject(L"EPAttack");
 		pEffect->SetPosition(pA->m_pParent->GetPosition());
@@ -398,6 +424,10 @@ namespace MyEvent {
 					PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
 				}
 			}
+			else if (pA->m_pPhysics->UserSocket == ESocketType::EDummy && PacketManager::Get().isHost && pB->m_pParent->GetHP() <= 0.0f)
+			{
+				PacketManager::Get().SendDeadEvent(pB->m_pParent->m_keyValue, pB->m_pPhysics->UserSocket, ESocketType::EDummy);
+			}
 			auto pEffect = ObjectManager::Get().TakeObject(L"EPSlash");
 			pEffect->SetPosition(pA->m_pParent->GetWorldPosition());
 			//SoundManager::Get().PlayQueue("SE_HIT.mp3", pA->m_pParent->GetWorldPosition(), SoundRange);
@@ -415,6 +445,7 @@ namespace MyEvent {
 			// 내가 맞았을때
 			if (pB->m_pParent == PlayerController::Get().GetParent())
 			{
+				//ErrorMessage(L"좀비 힛 : " + pA->m_pParent->m_myName + L", " + to_wstring(pA->m_pPhysics->UserSocket));
 				UIManager::Get().m_pHitEffect->SetEventTime(0.2f);
 				UIManager::Get().m_pHitEffect->EffectPlay();
 				
@@ -479,49 +510,49 @@ namespace MyEvent {
 		//SoundManager::Get().Play("SE_HIT.mp3");//, pObject->GetWorldPosition(), SoundRange);
 	}
 
-	void OneShots(Collider* pA, Collider* pB) {
-		if (pB != nullptr &&
-			pB->m_eTag == ETag::Enemy)
-		{
-			//pB->SetForce((Normalize(pB->GetCenter() - pA->GetCenter()) + Vector3::Up) * 130.0f);
-			///pA->m_pParent->HealHP(pB->m_pPhysics->m_damage * pA->m_pPhysics->m_armor * 0.6f);		0밑으로 가면 1로 됨?
-			pB->m_pParent->OperHP(-1.1f);
-			// 내가 맞았을때
-			if (pB->m_pParent == PlayerController::Get().GetParent())
-			{
-				UIManager::Get().m_pHitEffect->SetEventTime(1.0f);
-				UIManager::Get().m_pHitEffect->EffectPlay();
-			}
-			// 내가 때렸을때
-			else if (PacketManager::Get().pMyInfo->UserSocket == pA->m_pPhysics->UserSocket)
-			{
-				PlayerController::Get().HitEvent(pB);
-				if (pB->m_pParent->GetHP() <= 0.0f)
-				{
-					PacketManager::Get().SendDeadEvent(pB->m_pParent->m_keyValue, pB->m_pPhysics->UserSocket, pA->m_pPhysics->UserSocket);
-				}
-			}
-			auto pEffect = ObjectManager::Get().TakeObject(L"EPAttack");
-			pEffect->SetPosition(pA->m_pParent->GetPosition());
-		}
-	}
+	//void OneShots(Collider* pA, Collider* pB) {
+	//	if (pB != nullptr &&
+	//		pB->m_eTag == ETag::Enemy)
+	//	{
+	//		//pB->SetForce((Normalize(pB->GetCenter() - pA->GetCenter()) + Vector3::Up) * 130.0f);
+	//		///pA->m_pParent->HealHP(pB->m_pPhysics->m_damage * pA->m_pPhysics->m_armor * 0.6f);		0밑으로 가면 1로 됨?
+	//		pB->m_pParent->OperHP(-1.1f);
+	//		// 내가 맞았을때
+	//		if (pB->m_pParent == PlayerController::Get().GetParent())
+	//		{
+	//			UIManager::Get().m_pHitEffect->SetEventTime(1.0f);
+	//			UIManager::Get().m_pHitEffect->EffectPlay();
+	//		}
+	//		// 내가 때렸을때
+	//		else if (PacketManager::Get().pMyInfo->UserSocket == pA->m_pPhysics->UserSocket)
+	//		{
+	//			PlayerController::Get().HitEvent(pB);
+	//			if (pB->m_pParent->GetHP() <= 0.0f)
+	//			{
+	//				PacketManager::Get().SendDeadEvent(pB->m_pParent->m_keyValue, pB->m_pPhysics->UserSocket, pA->m_pPhysics->UserSocket);
+	//			}
+	//		}
+	//		auto pEffect = ObjectManager::Get().TakeObject(L"EPAttack");
+	//		pEffect->SetPosition(pA->m_pParent->GetPosition());
+	//	}
+	//}
 
-	void GiantItem(Collider* pA, Collider* pB) {
-		if (pB != nullptr &&
-			(pB->m_pParent->m_objType == EObjType::Character))
-		{
-			// 플레이어 충돌 이벤트
-			pB->CollisionEvent = MyEvent::OneShots;
-			// 대상이 자신
-			if (pB->m_pParent == PlayerController::Get().GetParent())
-			{
-				// Giant
-				std::thread giant(&PlayerController::StartGiantMode, &PlayerController::Get());
-				giant.detach();
-			}
-			ObjectManager::Get().DisableObject(pA->m_pParent);
-		}
-	}
+	//void GiantItem(Collider* pA, Collider* pB) {
+	//	if (pB != nullptr &&
+	//		(pB->m_pParent->m_objType == EObjType::Character))
+	//	{
+	//		// 플레이어 충돌 이벤트
+	//		pB->CollisionEvent = MyEvent::OneShots;
+	//		// 대상이 자신
+	//		if (pB->m_pParent == PlayerController::Get().GetParent())
+	//		{
+	//			// Giant
+	//			std::thread giant(&PlayerController::StartGiantMode, &PlayerController::Get());
+	//			giant.detach();
+	//		}
+	//		ObjectManager::Get().DisableObject(pA->m_pParent);
+	//	}
+	//}
 
 	void ItemBox(Collider* pA, Collider* pB) {
 		if (pB != nullptr &&
@@ -626,6 +657,12 @@ namespace ActiveEvent {
 	void ThrowNuclear(PlayerController* pPlayer, void*)
 	{
 		pPlayer->m_eAction = PlayerController::EAction::INuclear;
+	}
+
+	// 물약
+	void UsePotion(PlayerController* pPlayer, void*)
+	{
+		pPlayer->m_eAction = PlayerController::EAction::IPotion;
 	}
 }
 

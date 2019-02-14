@@ -3,7 +3,6 @@
 #include "ISingleton.h"
 #include "MyProtocol.h"
 #include "uiheader.h"
-
 #include "../network/PPTCPIOCPClient.h"
 #include "../network/PPRecvPacketPool.h"
 
@@ -35,6 +34,8 @@ public:
 	JListCtrl*			pKillDisplay	= nullptr;
 	//
 	std::function<int()> PacketFunc;
+
+	D3DXVECTOR3			TowerPos[8];
 public:
 	void SendPacket(const char* data, const USHORT& size, const USHORT& packeyType) noexcept;
 	void ReqSendPacket(const char* data, const USHORT& size, const USHORT& packeyType) noexcept;
