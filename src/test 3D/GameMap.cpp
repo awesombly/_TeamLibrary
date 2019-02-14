@@ -380,6 +380,78 @@ bool GameMap::Init() noexcept
 	ObjectManager::Get().PushObject(&m_tree07, false);
 #pragma endregion
 
+
+#pragma region MyBarrel
+
+	m_barrel00.SetPlayerCharacter(L"MAP_Barrel", -190, 0, 640);
+	m_barrel00.m_objType = EObjType::AObject;
+	ObjectManager::Get().PushObject(&m_barrel00);
+
+	m_barrel01.SetPlayerCharacter(L"MAP_Barrel", -190, 0, 700);
+	m_barrel01.m_objType = EObjType::AObject;
+	ObjectManager::Get().PushObject(&m_barrel01);
+
+	m_barrel02.SetPlayerCharacter(L"MAP_Barrel", 190, 0, 640);
+	m_barrel02.m_objType = EObjType::AObject;
+	ObjectManager::Get().PushObject(&m_barrel02);
+
+	m_barrel03.SetPlayerCharacter(L"MAP_Barrel", 190, 0, 700);
+	m_barrel03.m_objType = EObjType::AObject;
+	ObjectManager::Get().PushObject(&m_barrel03);
+
+
+	m_barrel10.SetPlayerCharacter(L"MAP_Barrel", -190, 0, -720);
+	m_barrel10.m_objType = EObjType::AObject;
+	ObjectManager::Get().PushObject(&m_barrel10);
+
+	m_barrel11.SetPlayerCharacter(L"MAP_Barrel", -190, 0, -780);
+	m_barrel11.m_objType = EObjType::AObject;
+	ObjectManager::Get().PushObject(&m_barrel11);
+
+	m_barrel12.SetPlayerCharacter(L"MAP_Barrel", 190, 0, -720);
+	m_barrel12.m_objType = EObjType::AObject;
+	ObjectManager::Get().PushObject(&m_barrel12);
+
+	m_barrel13.SetPlayerCharacter(L"MAP_Barrel", 190, 0, -780);
+	m_barrel13.m_objType = EObjType::AObject;
+	ObjectManager::Get().PushObject(&m_barrel13);
+
+
+	m_barrel20.SetPlayerCharacter(L"MAP_Barrel", 670, 0, 200);
+	m_barrel20.m_objType = EObjType::AObject;
+	ObjectManager::Get().PushObject(&m_barrel20);
+
+	m_barrel21.SetPlayerCharacter(L"MAP_Barrel", 730, 0, 200);
+	m_barrel21.m_objType = EObjType::AObject;
+	ObjectManager::Get().PushObject(&m_barrel21);
+
+	m_barrel22.SetPlayerCharacter(L"MAP_Barrel", 670, 0, -200);
+	m_barrel22.m_objType = EObjType::AObject;
+	ObjectManager::Get().PushObject(&m_barrel22);
+
+	m_barrel23.SetPlayerCharacter(L"MAP_Barrel", 730, 0, -200);
+	m_barrel23.m_objType = EObjType::AObject;
+	ObjectManager::Get().PushObject(&m_barrel23);
+
+	m_barrel30.SetPlayerCharacter(L"MAP_Barrel", -670, 0, 200);
+	m_barrel30.m_objType = EObjType::AObject;
+	ObjectManager::Get().PushObject(&m_barrel30);
+
+	m_barrel31.SetPlayerCharacter(L"MAP_Barrel", -730, 0, 200);
+	m_barrel31.m_objType = EObjType::AObject;
+	ObjectManager::Get().PushObject(&m_barrel31);
+
+	m_barrel32.SetPlayerCharacter(L"MAP_Barrel", -670, 0, -200);
+	m_barrel32.m_objType = EObjType::AObject;
+	ObjectManager::Get().PushObject(&m_barrel32);
+
+	m_barrel33.SetPlayerCharacter(L"MAP_Barrel", -730, 0, -200);
+	m_barrel33.m_objType = EObjType::AObject;
+	ObjectManager::Get().PushObject(&m_barrel33);
+#pragma endregion
+
+
+
 #pragma region MyFence
 
 

@@ -105,6 +105,26 @@ private:
 	AHeroObj		m_fence32;
 	AHeroObj		m_fence33;
 
+	AHeroObj		m_barrel00;
+	AHeroObj		m_barrel01;
+	AHeroObj		m_barrel02;
+	AHeroObj		m_barrel03;
+
+	AHeroObj		m_barrel10;
+	AHeroObj		m_barrel11;
+	AHeroObj		m_barrel12;
+	AHeroObj		m_barrel13;
+
+	AHeroObj		m_barrel20;
+	AHeroObj		m_barrel21;
+	AHeroObj		m_barrel22;
+	AHeroObj		m_barrel23;
+
+	AHeroObj		m_barrel30;
+	AHeroObj		m_barrel31;
+	AHeroObj		m_barrel32;
+	AHeroObj		m_barrel33;
+
 public:
 	AHeroObj		m_tower[8];
 	//AHeroObj		m_tower1;
