@@ -125,6 +125,17 @@ private:
 	AHeroObj		m_barrel32;
 	AHeroObj		m_barrel33;
 
+	AHeroObj		m_wagon1;
+	AHeroObj		m_wagon2;
+	AHeroObj		m_wagon3;
+
+	AHeroObj		m_Sack00;
+	AHeroObj		m_Sack01;
+	AHeroObj		m_Sack10;
+	AHeroObj		m_Sack11;
+	AHeroObj		m_Sack20;
+	AHeroObj		m_Sack21;
+
 public:
 	AHeroObj		m_tower[8];
 	//AHeroObj		m_tower1;

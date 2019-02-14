@@ -1,5 +1,4 @@
-*NUMCHARACTER		32
-
+*NUMCHARACTER		35
 ////////////////////////////////////////////////////////////////////////// 1
 *CHARACTERNAME	Paladin
 *SHADERFILENMAE		..\..\data\model\Character.hlsl
@@ -414,7 +413,38 @@
 *SKIN_UPPER_BODY_COUNT	1
 *SKIN_UPPER_BODY		..\..\data\MAPOBJ\Carpet\Carpet.skm		null
 *SKIN_LOWER_BODY_COUNT	0
+//////////////////////////////////////////////////////////////////////////33
+*CHARACTERNAME	 MAP_Wagon1
+*SHADERFILENMAE		..\..\data\model\Character2.hlsl
 
+*MATRIXMATRIXCOUNT  1
+*MATRIXFILENAME		..\..\data\MAPOBJ\Wagon\wagon1.Mat
+
+*SKIN_UPPER_BODY_COUNT	1
+*SKIN_UPPER_BODY		..\..\data\MAPOBJ\Wagon\wagon1.skm		null
+*SKIN_LOWER_BODY_COUNT	0
+//////////////////////////////////////////////////////////////////////////34
+*CHARACTERNAME	 MAP_Wagon2
+*SHADERFILENMAE		..\..\data\model\Character2.hlsl
+
+*MATRIXMATRIXCOUNT  1
+*MATRIXFILENAME		..\..\data\MAPOBJ\Wagon\wagon2.Mat
+
+*SKIN_UPPER_BODY_COUNT	1
+*SKIN_UPPER_BODY		..\..\data\MAPOBJ\Wagon\wagon2.skm		null
+*SKIN_LOWER_BODY_COUNT	0
+
+
+//////////////////////////////////////////////////////////////////////////35
+*CHARACTERNAME	 MAP_Sack
+*SHADERFILENMAE		..\..\data\model\Character.hlsl
+
+*MATRIXMATRIXCOUNT  1
+*MATRIXFILENAME		..\..\data\MAPOBJ\Sack\Sack.Mat
+
+*SKIN_UPPER_BODY_COUNT	1
+*SKIN_UPPER_BODY		..\..\data\MAPOBJ\Sack\Sack.skm		null
+*SKIN_LOWER_BODY_COUNT	0
 //////////////////////////////////////////////////////////////////////////
 // 캐릭터이름   
 // 0=상체				=> SKIN_UPPER_BODY
