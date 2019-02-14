@@ -435,33 +435,115 @@ void GameScene::HostFrame() noexcept
 	}
 
 	static float spawnBarrel = 0.0f;
+	static float spawnShot = 0.0f;
+	static float spawnShot2 = 0.0f;
+	static float spawnShot3 = 0.0f;
 	spawnBarrel += Timer::SPF;
-	if (spawnBarrel >= 4.0f)
+	spawnShot += Timer::SPF;
+	spawnShot2 += Timer::SPF;
+	spawnShot3 += Timer::SPF;
+	if (spawnBarrel >= 12.0f)
 	{
 		spawnBarrel = 0.0f;
-		PacketManager::Get().SendTakeObject(L"Explosive", ESocketType::EDummy, (UCHAR)PacketManager::Get().UserList.size(), 0.6f, 0.3f, 0.0f, { -400.0f, 30.0f, -400.0f }, { 800.0f, 0.0f, 800.0f });
+		//PacketManager::Get().SendTakeObject(L"Explosive", ESocketType::EDummy, (UCHAR)PacketManager::Get().UserList.size(), 0.6f, 0.3f, 0.0f, { -400.0f, 30.0f, -400.0f }, { 800.0f, 0.0f, 800.0f });
 		///
+	}
 
-		static const float shotRange = 150000.0f;
-		for (int i = 0; i < 8; ++i)
+	static const float shotRange = 200000.0f;
+	static D3DXVECTOR3 targetPos[4] = { Vector3::Forward * 600.0f,
+									Vector3::Right * 600.0f,
+									Vector3::Backward * 600.0f, 
+									Vector3::Left * 600.0f };
+	if (spawnShot >= 10.0f)
+	{
+		spawnShot = 0.0f;
+
+		for (int i = 0; i < 4; ++i)
 		{
+			int index = i * 2;
 			for (auto& iter : *ObjectManager::Get().GetObjectList(EObjType::Enemy))
 			{
-				if (VectorLengthSq(iter->GetPosition() - m_MapObjects.m_tower[i].GetPosition()) <= shotRange)
+				if (VectorLengthSq(iter->GetPosition() - targetPos[i]) <= shotRange)
 				{
 					auto pItem = ObjectManager::Get().TakeObject(L"TimeBomb");
-					pItem->SetPosition(m_MapObjects.m_tower[i].GetPosition() + Vector3::Up * 100.0f);
+					pItem->SetPosition(m_MapObjects.m_tower[index].GetPosition() + Vector3::Up * 200.0f);
 					//pItem->SetScale(Vector3::One * 1.0f);
 					//pItem->SetRotation();
-					pItem->SetForce((iter->GetPosition() - m_MapObjects.m_tower[i].GetPosition()) + Vector3::Up * 200.0f);
-					pItem->m_pPhysics->m_damage = 0.7f;
+					pItem->SetForce((iter->GetPosition() - m_MapObjects.m_tower[index].GetPosition()) * 0.7f + Vector3::Up * 200.0f);
+					pItem->m_pPhysics->m_damage = 0.3f;
 					pItem->m_pPhysics->UserSocket = ESocketType::EDummy;
+
+					++index;
+					pItem = ObjectManager::Get().TakeObject(L"TimeBomb");
+					pItem->SetPosition(m_MapObjects.m_tower[index].GetPosition() + Vector3::Up * 200.0f);
+					pItem->SetForce((iter->GetPosition() - m_MapObjects.m_tower[index].GetPosition()) * 0.7f + Vector3::Up * 200.0f);
+					pItem->m_pPhysics->m_damage = 0.3f;
+					pItem->m_pPhysics->UserSocket = ESocketType::EDummy;
+					break;
 				}
-				break;
 			}
 		}
 	}
 
+	if (spawnShot2 >= 6.0f)
+	{
+		spawnShot2 = 0.0f;
+
+		for (int i = 0; i < 4; ++i)
+		{
+			int index = i * 2;
+			for (auto& iter : *ObjectManager::Get().GetObjectList(EObjType::Enemy))
+			{
+				if (VectorLengthSq(iter->GetPosition() - targetPos[i]) <= shotRange)
+				{
+					auto pItem = ObjectManager::Get().TakeObject(L"PBomb");
+					pItem->SetPosition(m_MapObjects.m_tower[index].GetPosition() + Vector3::Up * 200.0f);
+					pItem->SetForce((iter->GetPosition() - m_MapObjects.m_tower[index].GetPosition()) * 0.4f + Vector3::Up * 500.0f);
+					pItem->m_pPhysics->m_damage = 0.2f;
+					pItem->m_pPhysics->UserSocket = ESocketType::EDummy;
+
+					++index;
+					pItem = ObjectManager::Get().TakeObject(L"PBomb");
+					pItem->SetPosition(m_MapObjects.m_tower[index].GetPosition() + Vector3::Up * 200.0f);
+					pItem->SetForce((iter->GetPosition() - m_MapObjects.m_tower[index].GetPosition()) * 0.4f + Vector3::Up * 500.0f);
+					pItem->m_pPhysics->m_damage = 0.2f;
+					pItem->m_pPhysics->UserSocket = ESocketType::EDummy;
+					break;
+				}
+			}
+		}
+	}
+
+	if (spawnShot3 >= 14.0f)
+	{
+		spawnShot3 = 0.0f;
+
+		for (int i = 0; i < 4; ++i)
+		{
+			int index = i * 2;
+			for (auto& iter : *ObjectManager::Get().GetObjectList(EObjType::Enemy))
+			{
+				if (VectorLengthSq(iter->GetPosition() - targetPos[i]) <= shotRange)
+				{
+					auto pItem = ObjectManager::Get().TakeObject(L"Mine");
+					pItem->SetPosition(m_MapObjects.m_tower[index].GetPosition() + Vector3::Up * 100.0f);
+					pItem->SetForce((iter->GetPosition() - m_MapObjects.m_tower[index].GetPosition()) * 0.4f + Vector3::Up * 600.0f);
+					pItem->m_pPhysics->m_damage = 0.3f;
+					pItem->m_pPhysics->UserSocket = ESocketType::EDummy;
+
+					++index;
+					pItem = ObjectManager::Get().TakeObject(L"Mine");
+					pItem->SetPosition(m_MapObjects.m_tower[index].GetPosition() + Vector3::Up * 100.0f);
+					pItem->SetForce((iter->GetPosition() - m_MapObjects.m_tower[index].GetPosition()) * 0.4f + Vector3::Up * 600.0f);
+					pItem->m_pPhysics->m_damage = 0.3f;
+					pItem->m_pPhysics->UserSocket = ESocketType::EDummy;
+					break;
+				}
+			}
+		}
+	}
+
+	///
 	if (*m_pFrameCount <= 0.0f)
 	{
 		switch (m_eState)
