@@ -165,10 +165,15 @@ VS_OUTPUT VS(PNCT5_VS_INPUT input)//,uniform bool bHalfVector )
 	output.pos = mul(WorldPos, g_matView);
 	output.pos = mul(output.pos, g_matProj);
 
-	Norm = output.nor.xyz;
-	output.nor.z = -Norm.x;
-	output.nor.x = -Norm.y;
-	output.nor.y = Norm.z;
+	//Norm = output.nor.xyz;
+	//output.nor.z = -Norm.x;
+	//output.nor.x = -Norm.y;
+	//output.nor.y = Norm.z;
+
+	output.nor.x = -Norm.z;	//r
+	output.nor.y = Norm.y; 	//g
+	output.nor.z = Norm.x;	//b
+
 	//output.nor = float4(normalize(mul(output.nor.xyz, (float3x3)g_matWorld)), (output.pos.w - fNEAR) / (fFAR - fNEAR));// g_matWorldInvTrans));
 	output.nor = float4(normalize(mul(output.nor.xyz, (float3x3)g_matWorld)), output.pos.w / fFAR);
 	//float3 vNormal = output.nor.xyz;

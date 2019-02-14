@@ -498,10 +498,12 @@ bool GameMap::Init() noexcept
 
 	m_fence20.SetPlayerCharacter(L"MAP_FENCE", -190.0f, 0.0f, -520.0f);//190.0f80.0f
 	m_fence20.SetScale(D3DXVECTOR3(2.0f, 1.5f, 2.0f));
+	m_fence20.SetRotationY(-PI);
 	m_fence20.m_objType = EObjType::AObject;
 	ObjectManager::Get().PushObject(&m_fence20, false);
 	m_fence21.SetPlayerCharacter(L"MAP_FENCE", -190.0f, 0.0f, -425.0f);
 	m_fence21.SetScale(D3DXVECTOR3(2.0f, 1.5f, 2.0f));
+	m_fence21.SetRotationY(-PI);
 	m_fence21.m_objType = EObjType::AObject;
 	ObjectManager::Get().PushObject(&m_fence21, false);
 	m_fence22.SetPlayerCharacter(L"MAP_FENCE", -510.0f, 0.0f, -200.0f);
