@@ -226,7 +226,7 @@
 
 //////////////////////////////////////////////////////////////////////////16
 *CHARACTERNAME	 ITEM_BarrelRed
-*SHADERFILENMAE		..\..\data\model\Character.hlsl
+*SHADERFILENMAE		..\..\data\model\Character3.hlsl
 
 *MATRIXMATRIXCOUNT  1
 *MATRIXFILENAME		..\..\data\MAPOBJ\Barrel\Barrel.Mat
@@ -237,7 +237,7 @@
 
 //////////////////////////////////////////////////////////////////////////17
 *CHARACTERNAME	 MAP_Blacksmith
-*SHADERFILENMAE		..\..\data\model\Character.hlsl
+*SHADERFILENMAE		..\..\data\model\Character3.hlsl
 
 *MATRIXMATRIXCOUNT  1
 *MATRIXFILENAME		..\..\data\MAPOBJ\Blacksmith\Blacksmith.Mat
@@ -248,7 +248,7 @@
 
 //////////////////////////////////////////////////////////////////////////18
 *CHARACTERNAME	 MAP_FOUNTAIN
-*SHADERFILENMAE		..\..\data\model\Character.hlsl
+*SHADERFILENMAE		..\..\data\model\Character4.hlsl
 
 *MATRIXMATRIXCOUNT  1
 *MATRIXFILENAME		..\..\data\MAPOBJ\Fountain\fountain.Mat
@@ -260,7 +260,7 @@
 
 //////////////////////////////////////////////////////////////////////////19
 *CHARACTERNAME	 MAP_Church
-*SHADERFILENMAE		..\..\data\model\Character.hlsl
+*SHADERFILENMAE		..\..\data\model\Character3.hlsl
 
 *MATRIXMATRIXCOUNT  1
 *MATRIXFILENAME		..\..\data\MAPOBJ\Church\Church.Mat
@@ -272,7 +272,7 @@
 
 //////////////////////////////////////////////////////////////////////////20
 *CHARACTERNAME	 MAP_TowerRound
-*SHADERFILENMAE		..\..\data\model\Character.hlsl
+*SHADERFILENMAE		..\..\data\model\Character3.hlsl
 
 *MATRIXMATRIXCOUNT  1
 *MATRIXFILENAME		..\..\data\MAPOBJ\TOWER\towerRound.Mat
@@ -284,7 +284,7 @@
 
 //////////////////////////////////////////////////////////////////////////21
 *CHARACTERNAME	 MAP_Tower
-*SHADERFILENMAE		..\..\data\model\Character.hlsl
+*SHADERFILENMAE		..\..\data\model\Character3.hlsl
 
 *MATRIXMATRIXCOUNT  1
 *MATRIXFILENAME		..\..\data\MAPOBJ\TOWER\tower.Mat
@@ -295,7 +295,7 @@
 
 //////////////////////////////////////////////////////////////////////////22
 *CHARACTERNAME	 MAP_WALL
-*SHADERFILENMAE		..\..\data\model\Character.hlsl
+*SHADERFILENMAE		..\..\data\model\Character3.hlsl
 
 *MATRIXMATRIXCOUNT  1
 *MATRIXFILENAME		..\..\data\MAPOBJ\TOWER\wall.Mat
@@ -306,7 +306,7 @@
 
 //////////////////////////////////////////////////////////////////////////23
 *CHARACTERNAME	 MAP_WINDMILL
-*SHADERFILENMAE		..\..\data\model\Character.hlsl
+*SHADERFILENMAE		..\..\data\model\Character3.hlsl
 
 *MATRIXMATRIXCOUNT  1
 *MATRIXFILENAME		..\..\data\MAPOBJ\WindMill\windmill.Mat
@@ -318,7 +318,7 @@
 
 //////////////////////////////////////////////////////////////////////////24
 *CHARACTERNAME	 MAP_HOUSE_A
-*SHADERFILENMAE		..\..\data\model\Character.hlsl
+*SHADERFILENMAE		..\..\data\model\Character3.hlsl
 
 *MATRIXMATRIXCOUNT  1
 *MATRIXFILENAME		..\..\data\MAPOBJ\HOUSE\houseA.Mat
@@ -329,7 +329,7 @@
 
 //////////////////////////////////////////////////////////////////////////25
 *CHARACTERNAME	 MAP_HOUSE_B
-*SHADERFILENMAE		..\..\data\model\Character.hlsl
+*SHADERFILENMAE		..\..\data\model\Character3.hlsl
 
 *MATRIXMATRIXCOUNT  1
 *MATRIXFILENAME		..\..\data\MAPOBJ\HOUSE\houseB.Mat
@@ -340,7 +340,7 @@
 
 //////////////////////////////////////////////////////////////////////////26
 *CHARACTERNAME	 MAP_HOUSE_C
-*SHADERFILENMAE		..\..\data\model\Character.hlsl
+*SHADERFILENMAE		..\..\data\model\Character3.hlsl
 
 *MATRIXMATRIXCOUNT  1
 *MATRIXFILENAME		..\..\data\MAPOBJ\HOUSE\houseC.Mat
@@ -351,7 +351,7 @@
 
 //////////////////////////////////////////////////////////////////////////27
 *CHARACTERNAME	 MAP_HOUSE_D
-*SHADERFILENMAE		..\..\data\model\Character.hlsl
+*SHADERFILENMAE		..\..\data\model\Character3.hlsl
 
 *MATRIXMATRIXCOUNT  1
 *MATRIXFILENAME		..\..\data\MAPOBJ\HOUSE\houseD.Mat
@@ -362,7 +362,7 @@
 
 //////////////////////////////////////////////////////////////////////////28
 *CHARACTERNAME	 MAP_TREE1
-*SHADERFILENMAE		..\..\data\model\Character.hlsl
+*SHADERFILENMAE		..\..\data\model\Character3.hlsl
 
 *MATRIXMATRIXCOUNT  1
 *MATRIXFILENAME		..\..\data\MAPOBJ\TREE\tree.Mat
@@ -373,7 +373,7 @@
 
 //////////////////////////////////////////////////////////////////////////29
 *CHARACTERNAME	 MAP_TREE2
-*SHADERFILENMAE		..\..\data\model\Character.hlsl
+*SHADERFILENMAE		..\..\data\model\Character3.hlsl
 
 *MATRIXMATRIXCOUNT  1
 *MATRIXFILENAME		..\..\data\MAPOBJ\TREE\tree2.Mat
@@ -384,7 +384,7 @@
 
 //////////////////////////////////////////////////////////////////////////30
 *CHARACTERNAME	 MAP_FENCE
-*SHADERFILENMAE		..\..\data\model\Character.hlsl
+*SHADERFILENMAE		..\..\data\model\Character4.hlsl
 
 *MATRIXMATRIXCOUNT  1
 *MATRIXFILENAME		..\..\data\MAPOBJ\Fence\Fence.Mat
@@ -395,7 +395,7 @@
 
 //////////////////////////////////////////////////////////////////////////31
 *CHARACTERNAME	 MAP_Barrel
-*SHADERFILENMAE		..\..\data\model\Character.hlsl
+*SHADERFILENMAE		..\..\data\model\Character3.hlsl
 
 *MATRIXMATRIXCOUNT  1
 *MATRIXFILENAME		..\..\data\MAPOBJ\Barrel\Barrel.Mat
