@@ -456,7 +456,7 @@ void IntroScene::SetObjects() noexcept
 	pHeroObj->m_objType = EObjType::AObject;
 	pCollider = new Collider(10.0f);
 	pHeroObj->AddComponent({ pCollider, pRenderer });
-	pCollider->m_pivot = Vector3::Down * 100.0f;
+	pCollider->m_pivot = Vector3::Down * 130.0f;
 	//pCollider->SetGravityScale(0.0f);
 	pCollider->m_eTag = ETag::Dummy;
 	pCollider->CollisionEvent = MyEvent::NuclearBoom;
