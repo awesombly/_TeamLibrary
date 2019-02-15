@@ -60,6 +60,8 @@ bool PlayerController::Frame(const float& spf, const float& accTime)	noexcept
 		m_pParent != nullptr)
 	{
 		PlayerInput(spf);
+		// HP, MP ¹Ù
+		m_pParent->m_pPhysics->m_disHP = max<float>(m_pTargetEnemy->m_pPhysics->m_disHP - spf * 0.5f * m_pTargetEnemy->m_pPhysics->m_maxHP, m_pTargetEnemy->GetHP());
 
 		if (pUIManager->m_pMouseIcon->m_bRender)
 		{

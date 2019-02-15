@@ -554,7 +554,7 @@ bool GameMap::Init() noexcept
 	pCollider->m_eTag = ETag::Dummy;
 	pCollider->SetGravityScale(0.0f);
 	pCollider->usePhysics(false);
-	pCollider->CollisionEvent = MyEvent::CarpetChurch;
+	pCollider->CollisionEvent = MyEvent::CarpetSmithy;
 	ObjectManager::Get().PushObject(&m_carpet_blacksmith, false);
 
 	m_carpet_church.SetPlayerCharacter(L"MAP_Carpet", -300.0f, 0.0f, 300.0f);
@@ -574,7 +574,7 @@ bool GameMap::Init() noexcept
 	pCollider->m_eTag = ETag::Dummy;
 	pCollider->SetGravityScale(0.0f);
 	pCollider->usePhysics(false);
-	pCollider->CollisionEvent = MyEvent::CarpetChurch;
+	pCollider->CollisionEvent = MyEvent::CarpetShop;
 	ObjectManager::Get().PushObject(&m_carpet_windmill, false);
 
 	m_carpet_towerRound.SetPlayerCharacter(L"MAP_Carpet", -300.0f, 0.0f, -300.0f);
@@ -584,7 +584,7 @@ bool GameMap::Init() noexcept
 	pCollider->m_eTag = ETag::Dummy;
 	pCollider->SetGravityScale(0.0f);
 	pCollider->usePhysics(false);
-	pCollider->CollisionEvent = MyEvent::CarpetChurch;
+	pCollider->CollisionEvent = MyEvent::CarpetTower;
 	ObjectManager::Get().PushObject(&m_carpet_towerRound, false);
 #pragma endregion
 
