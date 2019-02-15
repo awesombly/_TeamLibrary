@@ -1001,64 +1001,113 @@ void PlayerController::OperEXP(const float& value) noexcept
 
 void PlayerController::CheckTownCollision() noexcept
 {
-	//for (int i = 0; i < 4; ++i)
-	//{
-	//	if (VectorLengthSq(m_CarpetPos[i] - GetWorldPosition()) <= 5000.0f)
-	//	{
-	//		switch (i)
-	//		{
-	//		case ECarpet::Smithy:
-	//		{
-	//			
-	//		}	break;
-	//		case ECarpet::Church:
-	//		{
-	//			if (PlayerController::Get().m_canChurh)
-	//			{
-	//				UIManager::Get().m_pXPush->m_bRender = true;
-	//				if (Input::GetKeyState('X') == EKeyState::DOWN)
-	//				{
-	//					UIManager::Get().m_pXPush->m_bRender = false;
-	//					PlayerController::Get().m_canChurh = false;
-	//					UIManager::Get().m_pRespawnEffect->SetEventTime(1.5f);
-	//					UIManager::Get().m_pRespawnEffect->EffectPlay();
+	for (int i = 0; i < 4; ++i)
+	{
+		if (VectorLengthSq(m_CarpetPos[i] - GetWorldPosition()) <= 5000.0f)
+		{
+			switch (i)
+			{
+			case ECarpet::Smithy:
+			{
+				if (Input::GetKeyState('X') == EKeyState::DOWN)
+				{
+					if (UIManager::Get().m_pSmithyPanel->m_bRender)
+					{
+						// ²û
+						UIManager::Get().m_pXPush->m_bRender = false;
+						UIManager::Get().m_pSmithyPanel->m_bRender = false;
+						UIManager::Get().m_pMouseIcon->m_bRender = false;
+					}
+					else
+					{
+						// Å´
+						UIManager::Get().m_pXPush->m_bRender = false;
+						UIManager::Get().m_pSmithyPanel->m_bRender = true;
+						UIManager::Get().m_pMouseIcon->m_bRender = true;
+					}
+				}
+			}	break;
+			case ECarpet::Church:
+			{
+				if (PlayerController::Get().m_canChurh)
+				{
+					if (Input::GetKeyState('X') == EKeyState::DOWN)
+					{
+						UIManager::Get().m_pXPush->m_bRender = false;
+						PlayerController::Get().m_canChurh = false;
+						UIManager::Get().m_pRespawnEffect->SetEventTime(1.5f);
+						UIManager::Get().m_pRespawnEffect->EffectPlay();
 
-	//					Packet_Float p_HealHP;
-	//					p_HealHP.KeyValue = PlayerController::Get().GetParent()->m_keyValue;
-	//					p_HealHP.Value = 10000.0f;
-	//					PacketManager::Get().SendPacket((char*)&p_HealHP, (USHORT)sizeof(Packet_Float), PACKET_HealHP);
-	//					// + Æ÷¼Ç
-	//					if (UIManager::Get().m_pSlot1->Empty())
-	//					{
-	//						UIManager::Get().m_pSlot1->AddItem(L"Potion_0");
-	//						return;
-	//					}
-	//					if (UIManager::Get().m_pSlot2->Empty())
-	//					{
-	//						UIManager::Get().m_pSlot2->AddItem(L"Potion_0");
-	//						return;
-	//					}
-	//					if (UIManager::Get().m_pSlot3->Empty())
-	//					{
-	//						UIManager::Get().m_pSlot3->AddItem(L"Potion_0");
-	//						return;
-	//					}
-	//					UIManager::Get().m_pInvenSlot->AddItem(L"Potion_0");
-	//				}
-	//			}
-	//		}	break;
-	//		case ECarpet::Shop:
-	//		{
-
-	//		}	break;
-	//		case ECarpet::Tower:
-	//		{
-
-	//		}	break;
-	//		}
-	//	}
-	//	return;
-	//}
+						Packet_Float p_HealHP;
+						p_HealHP.KeyValue = PlayerController::Get().GetParent()->m_keyValue;
+						p_HealHP.Value = 10000.0f;
+						PacketManager::Get().SendPacket((char*)&p_HealHP, (USHORT)sizeof(Packet_Float), PACKET_HealHP);
+						// + Æ÷¼Ç
+						if (UIManager::Get().m_pSlot1->Empty())
+						{
+							UIManager::Get().m_pSlot1->AddItem(L"Potion_0");
+							return;
+						}
+						if (UIManager::Get().m_pSlot2->Empty())
+						{
+							UIManager::Get().m_pSlot2->AddItem(L"Potion_0");
+							return;
+						}
+						if (UIManager::Get().m_pSlot3->Empty())
+						{
+							UIManager::Get().m_pSlot3->AddItem(L"Potion_0");
+							return;
+						}
+						UIManager::Get().m_pInvenSlot->AddItem(L"Potion_0");
+					}
+				}
+			}	break;
+			case ECarpet::Shop:
+			{
+				if (Input::GetKeyState('X') == EKeyState::DOWN)
+				{
+					if (UIManager::Get().m_pShopPanel->m_bRender)
+					{
+						// ²û
+						UIManager::Get().m_pXPush->m_bRender = false;
+						UIManager::Get().m_pShopPanel->m_bRender = false;
+						UIManager::Get().m_pMouseIcon->m_bRender = false;
+					}
+					else
+					{
+						// Å´
+						UIManager::Get().m_pXPush->m_bRender = false;
+						UIManager::Get().m_pShopPanel->m_bRender = true;
+						UIManager::Get().m_pMouseIcon->m_bRender = true;
+					}
+				}
+			}	break;
+			case ECarpet::Tower:
+			{
+				UIManager::Get().m_pXPush->m_bRender = true;
+				if (Input::GetKeyState('X') == EKeyState::DOWN)
+				{
+					if (UIManager::Get().m_pTowerPanel->m_bRender)
+					{
+						// ²û
+						UIManager::Get().m_pXPush->m_bRender = false;
+						UIManager::Get().m_pTowerPanel->m_bRender = false;
+						UIManager::Get().m_pMouseIcon->m_bRender = false;
+					}
+					else
+					{
+						// Å´
+						UIManager::Get().m_pXPush->m_bRender = false;
+						UIManager::Get().m_pTowerPanel->m_bRender = true;
+						UIManager::Get().m_pMouseIcon->m_bRender = true;
+					}
+				}
+			}	break;
+			}
+		}
+		UIManager::Get().m_pXPush->m_bRender = true;
+		return;
+	}
 	pUIManager->m_pXPush->m_bRender = false;
 	pUIManager->m_pShopPanel->m_bRender = false;
 	pUIManager->m_pSmithyPanel->m_bRender = false;
