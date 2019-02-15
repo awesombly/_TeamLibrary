@@ -77,7 +77,7 @@ void Transform::Transformation(const Transform& transform) noexcept
 	m_position += transform.m_position;
 	m_rotation += transform.m_rotation;
 	m_scale    += transform.m_scale;
-}
+}                                  
 void Transform::Translate(const D3DXVECTOR3& position) noexcept
 {
 	m_position += position;

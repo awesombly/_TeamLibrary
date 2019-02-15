@@ -3,7 +3,8 @@
 #include "ObjectManager.h"
 #include "PlayerController.h"
 #include "EventManager.h"
-#include "ColliderAABB.h"
+//#include "ColliderAABB.h"
+#include "ColliderOBB.h"
 #include "RPlane.h"
 
 
@@ -15,7 +16,7 @@ bool GameMap::Init() noexcept
 	//m_pHeightMap->SetShadowRate(0.0f);
 	//mapMap->SetEnviromentMap(((Renderer*)m_pSkyBox->GetComponent(EComponent::Renderer))->m_srcName, EEnviType::Fresnel);
 	//pObject->Translate(Vector3::Down * 100.0f);
-	pObject->SetScale(2.0f, 0.05f, 2.0f);
+	pObject->SetScale(1.0f, 0.1f, 1.0f);
 	ObjectManager::Get().PushObject(pObject, false);
 
 	//////////////////////////////////////////////////////////////////////////////////////
@@ -920,31 +921,31 @@ bool GameMap::Init() noexcept
 #pragma region TownCollider
 	pObject = new GameObject(L"-");
 	
-	pCollider = new ColliderAABB({ -1000, 0.0f, 400.0f }, {-200.0f, 200.0f, 1000.0f});
+	pCollider = new ColliderOBB({ -1000, 0.0f, 400.0f }, {-200.0f, 200.0f, 1000.0f});
 	pCollider->m_eTag = ETag::Collider;
 	pObject->AddComponent(pCollider);
-	pCollider = new ColliderAABB({ -1000, 0.0f, 200.0f }, { -400.0f, 200.0f, 1000.0f });
-	pCollider->m_eTag = ETag::Collider;
-	pObject->AddComponent(pCollider);
-
-	pCollider = new ColliderAABB({ -1000, 0.0f, -1000.0f }, { -200.0f, 200.0f, -400.0f });
-	pCollider->m_eTag = ETag::Collider;
-	pObject->AddComponent(pCollider);
-	pCollider = new ColliderAABB({ -1000, 0.0f, -1000.0f }, { -400.0f, 200.0f, -200.0f });
+	pCollider = new ColliderOBB({ -1000, 0.0f, 200.0f }, { -400.0f, 200.0f, 1000.0f });
 	pCollider->m_eTag = ETag::Collider;
 	pObject->AddComponent(pCollider);
 
-	pCollider = new ColliderAABB({ 400, 0.0f, 200.0f }, { 1000.0f, 200.0f, 1000.0f });
+	pCollider = new ColliderOBB({ -1000, 0.0f, -1000.0f }, { -200.0f, 200.0f, -400.0f });
 	pCollider->m_eTag = ETag::Collider;
 	pObject->AddComponent(pCollider);
-	pCollider = new ColliderAABB({ 200, 0.0f, 400.0f }, { 1000.0f, 200.0f, 1000.0f });
+	pCollider = new ColliderOBB({ -1000, 0.0f, -1000.0f }, { -400.0f, 200.0f, -200.0f });
 	pCollider->m_eTag = ETag::Collider;
 	pObject->AddComponent(pCollider);
 
-	pCollider = new ColliderAABB({ 400, 0.0f, -1000.0f }, { 1000.0f, 200.0f, -200.0f });
+	pCollider = new ColliderOBB({ 400, 0.0f, 200.0f }, { 1000.0f, 200.0f, 1000.0f });
 	pCollider->m_eTag = ETag::Collider;
 	pObject->AddComponent(pCollider);
-	pCollider = new ColliderAABB({ 200, 0.0f, -1000.0f }, { 1000.0f, 200.0f, -400.0f });
+	pCollider = new ColliderOBB({ 200, 0.0f, 400.0f }, { 1000.0f, 200.0f, 1000.0f });
+	pCollider->m_eTag = ETag::Collider;
+	pObject->AddComponent(pCollider);
+
+	pCollider = new ColliderOBB({ 400, 0.0f, -1000.0f }, { 1000.0f, 200.0f, -200.0f });
+	pCollider->m_eTag = ETag::Collider;
+	pObject->AddComponent(pCollider);
+	pCollider = new ColliderOBB({ 200, 0.0f, -1000.0f }, { 1000.0f, 200.0f, -400.0f });
 	pCollider->m_eTag = ETag::Collider;
 	pObject->AddComponent(pCollider);
 

@@ -4,7 +4,7 @@
 #include "ObjectManager.h"
 //#include "q3Mat3.h"
 
-const float Collider::PushPower = 120.0f;
+const float Collider::PushPower = 180.0f;
 
 
 

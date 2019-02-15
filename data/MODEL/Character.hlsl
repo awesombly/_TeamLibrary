@@ -241,7 +241,7 @@ PBUFFER_OUTPUT PS(VS_OUTPUT input) : SV_Target
 			float fresnel = ComputeFresnel(input.ref, input.nor.xyz, r0);
 	
 			// 디퓨즈맵과 반사맵 보간
-			output.color0.xyz = lerp(output.color0.xyz, reflectColor.xyz, fresnel * 0.12f/* + 0.3f*/);
+			output.color0.xyz = lerp(output.color0.xyz, reflectColor.xyz, fresnel * 0.15f/* + 0.3f*/);
 		//} break;
 		//case 3:
 		//{

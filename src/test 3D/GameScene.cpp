@@ -907,10 +907,26 @@ void GameScene::LoadUI() noexcept
 
 
 	// 마을
-	auto pXPUSH = (JImageCtrl*)pUIRoot->find_child(L"XPUSH");
-	//auto pXPUSH = (JPanel*)pUIRoot->find_child(L"Shop_Panel");
-	//auto pXPUSH = (JPanel*)pUIRoot->find_child(L"Tower_Panel");
-	//auto pXPUSH = (JPanel*)pUIRoot->find_child(L"Smithy_Panel");
+	UIManager::Get().m_pXPush = (JImageCtrl*)pUIRoot->find_child(L"XPUSH");
+	UIManager::Get().m_pShopPanel = (JPanel*)pUIRoot->find_child(L"Shop_Panel");
+	UIManager::Get().m_pSmithyPanel = (JPanel*)pUIRoot->find_child(L"Smithy_Panel");
+	// 타워
+	UIManager::Get().m_pTowerPanel = (JPanel*)pUIRoot->find_child(L"Tower_Panel");
+	UIManager::Get().m_pTowerCurLevel = (JTextCtrl*)pUIRoot->find_child(L"Tower_CurrentLv");
+	UIManager::Get().m_pTowerCurAtkDamage = (JTextCtrl*)pUIRoot->find_child(L"Tower_CurrentAtk");
+	UIManager::Get().m_pTowerCurAtkSpeed = (JTextCtrl*)pUIRoot->find_child(L"Tower_CurrentAtkSpeed");
+	UIManager::Get().m_pTowerText1 = (JTextCtrl*)pUIRoot->find_child(L"Tower_Explanation0");
+
+	UIManager::Get().m_pTowerNextLevel = (JTextCtrl*)pUIRoot->find_child(L"Tower_NextLv");
+	UIManager::Get().m_pTowerNextAtkDamage = (JTextCtrl*)pUIRoot->find_child(L"Tower_NextAtk");
+	UIManager::Get().m_pTowerNextAtkSpeed = (JTextCtrl*)pUIRoot->find_child(L"Tower_NextAtkSpeed");
+	UIManager::Get().m_pTowerText2 = (JTextCtrl*)pUIRoot->find_child(L"Tower_Explantion1");
+	UIManager::Get().m_pTowerText2->SetString(L"머라머라123");
+	UIManager::Get().m_pTowerUpgrade = (JButtonCtrl*)pUIRoot->find_child(L"Tower_Btn");
+	UIManager::Get().m_pTowerUpgrade->EventClick.first = [](void*) {
+		ErrorMessage("업글!");
+	};
+	///
 	//
 	ObjectManager::Get().PushObject(pUIRoot);
 	UI::InGameEvent(pUIRoot);

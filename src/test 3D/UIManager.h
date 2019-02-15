@@ -51,7 +51,25 @@ public:
 	JSlot*			m_pSlot3 = nullptr;
 	// 인벤토리
 	JInventory*		m_pInvenSlot = nullptr;
+
+	// 타워
+	JPanel*			m_pTowerPanel			= nullptr;
+	JTextCtrl*	m_pTowerCurLevel		= nullptr;
+	JTextCtrl*		m_pTowerCurAtkDamage	= nullptr;
+	JTextCtrl*		m_pTowerCurAtkSpeed		= nullptr;
+	JTextCtrl*		m_pTowerText1			= nullptr;
+
+	JTextCtrl*	m_pTowerNextLevel		= nullptr;
+	JTextCtrl*		m_pTowerNextAtkDamage	= nullptr;
+	JTextCtrl*		m_pTowerNextAtkSpeed	= nullptr;
+	JTextCtrl*		m_pTowerText2			= nullptr;
+	JButtonCtrl*	m_pTowerUpgrade			= nullptr;
+	// 상점
+	JPanel*			m_pShopPanel			= nullptr;
+	// 대장간
+	JPanel*			m_pSmithyPanel			= nullptr;
 	///
+	JImageCtrl*		m_pXPush = nullptr;
 private:
 	friend class ISingleton<UIManager>;
 	UIManager() = default;
