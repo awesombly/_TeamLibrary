@@ -458,8 +458,6 @@ bool GameMap::Init() noexcept
 
 
 #pragma region MyFence
-
-
 	//1½Ã
 	m_fence00.SetPlayerCharacter(L"MAP_FENCE", 190.0f, 0.0f, 520.0f);//190.0f80.0f
 	m_fence00.SetScale(D3DXVECTOR3(2.0f, 1.5f, 2.0f));
