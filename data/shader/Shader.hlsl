@@ -74,6 +74,8 @@ PBUFFER_OUTPUT PS_Basic(VS_OUTPUT_PNCT input)
 {
 	PBUFFER_OUTPUT output;
 	output.color0 = g_txDiffuse.Sample(samLinear, input.tex) * input.col;
+	if (output.color0.w < 0.05f)
+		discard;
 	//output.color1 = float4(input.nor.xyz * 0.5f + 0.5f, input.nor.w);
 	//input.nor.w = 1.0f;
 	output.color1 = float4(input.nor);

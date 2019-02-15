@@ -7,11 +7,25 @@
 
 
 namespace MyEvent {
-	void ForceWave(Collider* pMe, Collider* pYou) {
-		if (pYou != nullptr && (pYou->m_eTag == ETag::Enemy || pYou->m_eTag == ETag::Ally))
+	void CarpetChurch(Collider* pA, Collider* pB)
+	{
+		if (pB != nullptr &&
+			pB->m_pParent == PlayerController::Get().GetParent() &&
+			PlayerController::Get().m_canChurh)
 		{
-			pYou->SetForce((Normalize(pYou->GetCenter() - pMe->GetCenter()) + Vector3::Up) * 180.0f);
-			pMe->AddIgnoreList(pYou);
+			Packet_Float p_HealHP;
+			p_HealHP.KeyValue = PlayerController::Get().GetParent()->m_keyValue;
+			p_HealHP.Value = 10000.0f;
+			PacketManager::Get().SendPacket((char*)&p_HealHP, (USHORT)sizeof(Packet_Float), PACKET_HealHP);
+			// + Æ÷¼Ç, ÀÌÆå
+		}
+	}
+
+	void ForceWave(Collider* pA, Collider* pB) {
+		if (pB != nullptr && (pB->m_eTag == ETag::Enemy || pB->m_eTag == ETag::Ally))
+		{
+			pB->SetForce((Normalize(pB->GetCenter() - pA->GetCenter()) + Vector3::Up) * 180.0f);
+			pA->AddIgnoreList(pB);
 		}
 	}
 
@@ -718,7 +732,6 @@ namespace TimeEvent {
 		SoundManager::Get().PlayQueue("SE_fire1.mp3", pParent->GetPosition(), PlayerController::Get().SoundRange);
 	}
 }
-
 
 namespace DyingEvent {
 	void ZombieDead(Collider* pCollider, const UINT& killUser)

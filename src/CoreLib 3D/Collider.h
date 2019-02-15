@@ -36,12 +36,12 @@ private:
 protected:												  
 	virtual bool CollisionCheck(Collider* pCollider)				  noexcept;
 public:
-	bool SphereToSphere(Collider* pSphereA, Collider* pSphereB)	const noexcept;
-	bool SphereToAABB(Collider* pSphere, ColliderAABB* pAABB)	const noexcept;
-	bool SphereToOBB(Collider* pSphere, ColliderOBB* pOBB)		const noexcept;
-	bool AABBToAABB(ColliderAABB* ApAABB, ColliderAABB* BpAABB)	const noexcept;
-	bool AABBToOBB(ColliderAABB* pAABB, ColliderOBB* pOBB)		const noexcept;
-	bool OBBToOBB(ColliderOBB* ApOBB, ColliderOBB* BpOBB)		const noexcept;
+	bool SphereToSphere(Collider* pA, Collider* pB)				const noexcept;
+	bool SphereToAABB(Collider* pA, ColliderAABB* pB)			const noexcept;
+	bool SphereToOBB(Collider* pA, ColliderOBB* pB)				const noexcept;
+	bool AABBToAABB(ColliderAABB* pA, ColliderAABB* pB)			const noexcept;
+	bool AABBToOBB(ColliderAABB* pA, ColliderOBB* pB)			const noexcept;
+	bool OBBToOBB(ColliderOBB* pA, ColliderOBB* pB)				const noexcept;
 	///
 	void AddIgnoreList(Collider* pCollider)							  noexcept;
 	void ClearIgnoreList(const bool& isPostEvent = true)			  noexcept;

@@ -188,15 +188,9 @@ private:
 	AHeroObj		m_oTree39;
 #pragma endregion
 
+	GameObject*		m_pTree2D[80];
 public:
 	AHeroObj		m_tower[8];
-	//AHeroObj		m_tower1;
-	//AHeroObj		m_tower2;
-	//AHeroObj		m_tower3;
-	//AHeroObj		m_tower4;
-	//AHeroObj		m_tower5;
-	//AHeroObj		m_tower6;
-	//AHeroObj		m_tower7;
 
 	AHeroObj		m_carpet_blacksmith;
 	AHeroObj		m_carpet_church;

@@ -2,6 +2,10 @@
 #include "HeightMap.h"
 #include "ObjectManager.h"
 #include "PlayerController.h"
+#include "EventManager.h"
+#include "ColliderAABB.h"
+#include "RPlane.h"
+
 
 bool GameMap::Init() noexcept
 {
@@ -18,7 +22,7 @@ bool GameMap::Init() noexcept
 	PlayerController::Get().m_pHome = &m_fountain;
 	auto pCollider = new Collider(9.2f);
 	m_fountain.AddComponent(pCollider);
-	m_fountain.SetPlayerCharacter(L"MAP_Fountain", 0.0f, 0.0f, 0.0f);
+	m_fountain.SetPlayerCharacter(L"MAP_Fountain", 0.0f, -15.0f, 0.0f);
 	m_fountain.SetScale(D3DXVECTOR3(8.0f, 8.0f, 8.0f));
 	m_fountain.m_objType = EObjType::AObject;
 	m_fountain.m_myName = L"HolyWater";
@@ -542,29 +546,47 @@ bool GameMap::Init() noexcept
 #pragma endregion
 
 #pragma region MyCarpet
-
 	m_carpet_blacksmith.SetPlayerCharacter(L"MAP_Carpet", 300.0f, 0.0f, 300.0f);
+	m_carpet_blacksmith.AddComponent(pCollider = new Collider(14.0f));
 	m_carpet_blacksmith.SetScale(D3DXVECTOR3(4.0f, 4.0f, 4.0f));
 	m_carpet_blacksmith.m_objType = EObjType::AObject;
+	pCollider->m_eTag = ETag::Dummy;
+	pCollider->SetGravityScale(0.0f);
+	pCollider->usePhysics(false);
+	pCollider->CollisionEvent = MyEvent::CarpetChurch;
 	ObjectManager::Get().PushObject(&m_carpet_blacksmith, false);
 
 	m_carpet_church.SetPlayerCharacter(L"MAP_Carpet", -300.0f, 0.0f, 300.0f);
 	m_carpet_church.SetScale(D3DXVECTOR3(4.0f, 4.0f, 4.0f));
 	m_carpet_church.m_objType = EObjType::AObject;
+	m_carpet_church.AddComponent(pCollider = new Collider(14.0f));
+	pCollider->m_eTag = ETag::Dummy;
+	pCollider->SetGravityScale(0.0f);
+	pCollider->usePhysics(false);
+	pCollider->CollisionEvent = MyEvent::CarpetChurch;
 	ObjectManager::Get().PushObject(&m_carpet_church, false);
 
 	m_carpet_windmill.SetPlayerCharacter(L"MAP_Carpet", 300.0f, 0.0f, -300.0f);
 	m_carpet_windmill.SetScale(D3DXVECTOR3(4.0f, 4.0f, 4.0f));
 	m_carpet_windmill.m_objType = EObjType::AObject;
+	m_carpet_windmill.AddComponent(pCollider = new Collider(14.0f));
+	pCollider->m_eTag = ETag::Dummy;
+	pCollider->SetGravityScale(0.0f);
+	pCollider->usePhysics(false);
+	pCollider->CollisionEvent = MyEvent::CarpetChurch;
 	ObjectManager::Get().PushObject(&m_carpet_windmill, false);
 
 	m_carpet_towerRound.SetPlayerCharacter(L"MAP_Carpet", -300.0f, 0.0f, -300.0f);
 	m_carpet_towerRound.SetScale(D3DXVECTOR3(4.0f, 4.0f, 4.0f));
 	m_carpet_towerRound.m_objType = EObjType::AObject;
+	m_carpet_towerRound.AddComponent(pCollider = new Collider(14.0f));
+	pCollider->m_eTag = ETag::Dummy;
+	pCollider->SetGravityScale(0.0f);
+	pCollider->usePhysics(false);
+	pCollider->CollisionEvent = MyEvent::CarpetChurch;
 	ObjectManager::Get().PushObject(&m_carpet_towerRound, false);
 #pragma endregion
-
-
+	
 #pragma region MywagonSack
 
 	m_wagon1.SetPlayerCharacter(L"MAP_Wagon2", 440, 0, 240);	//280
@@ -615,316 +637,507 @@ bool GameMap::Init() noexcept
 
 #pragma region MyOutTree
 
+	//m_oTree00.SetPlayerCharacter(L"MAP_TREE1", -1300, 0, 0);
+	//m_oTree00.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
+	//m_oTree00.m_objType = EObjType::AObject;
+	//ObjectManager::Get().PushObject(&m_oTree00);
+
+	//m_oTree01.SetPlayerCharacter(L"MAP_TREE1", -1200, 0, 100);
+	//m_oTree01.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
+	//m_oTree01.m_objType = EObjType::AObject;
+	//ObjectManager::Get().PushObject(&m_oTree01);
+
+	//m_oTree02.SetPlayerCharacter(L"MAP_TREE1", -1100, 0, 200);
+	//m_oTree02.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
+	//m_oTree02.m_objType = EObjType::AObject;
+	//ObjectManager::Get().PushObject(&m_oTree02);
+
+	//m_oTree03.SetPlayerCharacter(L"MAP_TREE1", -1200, 0, -100);
+	//m_oTree03.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
+	//m_oTree03.m_objType = EObjType::AObject;
+	//ObjectManager::Get().PushObject(&m_oTree03);
+
+	//m_oTree04.SetPlayerCharacter(L"MAP_TREE1", -1100, 0, -200);
+	//m_oTree04.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
+	//m_oTree04.m_objType = EObjType::AObject;
+	//ObjectManager::Get().PushObject(&m_oTree04);
+
+	//m_oTree05.SetPlayerCharacter(L"MAP_TREE1", -1300, 0, 200);
+	//m_oTree05.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
+	//m_oTree05.m_objType = EObjType::AObject;
+	//ObjectManager::Get().PushObject(&m_oTree05);
+
+	//m_oTree06.SetPlayerCharacter(L"MAP_TREE1", -1300, 0, -200);
+	//m_oTree06.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
+	//m_oTree06.m_objType = EObjType::AObject;
+	//ObjectManager::Get().PushObject(&m_oTree06);
+
+	//m_oTree07.SetPlayerCharacter(L"MAP_TREE1", -1350, 0, -100);
+	//m_oTree07.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
+	//m_oTree07.m_objType = EObjType::AObject;
+	//ObjectManager::Get().PushObject(&m_oTree07);
+
+	//m_oTree08.SetPlayerCharacter(L"MAP_TREE1", -1350, 0, 100);
+	//m_oTree08.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
+	//m_oTree08.m_objType = EObjType::AObject;
+	//ObjectManager::Get().PushObject(&m_oTree08);
+
+	//m_oTree09.SetPlayerCharacter(L"MAP_TREE1", -1100, 0, 000);
+	//m_oTree09.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
+	//m_oTree09.m_objType = EObjType::AObject;
+	//ObjectManager::Get().PushObject(&m_oTree09);
 
 
-	m_oTree00.SetPlayerCharacter(L"MAP_TREE1", -1300, 0, 0);
-	m_oTree00.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
-	m_oTree00.m_objType = EObjType::AObject;
-	ObjectManager::Get().PushObject(&m_oTree00);
+	//m_oTree10.SetPlayerCharacter(L"MAP_TREE1", 0, 0, 1300);
+	//m_oTree10.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
+	//m_oTree10.m_objType = EObjType::AObject;
+	//ObjectManager::Get().PushObject(&m_oTree10);
 
-	m_oTree01.SetPlayerCharacter(L"MAP_TREE1", -1200, 0, 100);
-	m_oTree01.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
-	m_oTree01.m_objType = EObjType::AObject;
-	ObjectManager::Get().PushObject(&m_oTree01);
+	//m_oTree11.SetPlayerCharacter(L"MAP_TREE1", 100, 0, 1200);
+	//m_oTree11.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
+	//m_oTree11.m_objType = EObjType::AObject;
+	//ObjectManager::Get().PushObject(&m_oTree11);
 
-	m_oTree02.SetPlayerCharacter(L"MAP_TREE1", -1100, 0, 200);
-	m_oTree02.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
-	m_oTree02.m_objType = EObjType::AObject;
-	ObjectManager::Get().PushObject(&m_oTree02);
+	//m_oTree12.SetPlayerCharacter(L"MAP_TREE1", 200, 0, 1100);
+	//m_oTree12.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
+	//m_oTree12.m_objType = EObjType::AObject;
+	//ObjectManager::Get().PushObject(&m_oTree12);
 
-	m_oTree03.SetPlayerCharacter(L"MAP_TREE1", -1200, 0, -100);
-	m_oTree03.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
-	m_oTree03.m_objType = EObjType::AObject;
-	ObjectManager::Get().PushObject(&m_oTree03);
+	//m_oTree13.SetPlayerCharacter(L"MAP_TREE1", -100, 0, 1200);
+	//m_oTree13.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
+	//m_oTree13.m_objType = EObjType::AObject;
+	//ObjectManager::Get().PushObject(&m_oTree13);
 
-	m_oTree04.SetPlayerCharacter(L"MAP_TREE1", -1100, 0, -200);
-	m_oTree04.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
-	m_oTree04.m_objType = EObjType::AObject;
-	ObjectManager::Get().PushObject(&m_oTree04);
+	//m_oTree14.SetPlayerCharacter(L"MAP_TREE1", -200, 0, 1100);
+	//m_oTree14.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
+	//m_oTree14.m_objType = EObjType::AObject;
+	//ObjectManager::Get().PushObject(&m_oTree14);
 
-	m_oTree05.SetPlayerCharacter(L"MAP_TREE1", -1300, 0, 200);
-	m_oTree05.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
-	m_oTree05.m_objType = EObjType::AObject;
-	ObjectManager::Get().PushObject(&m_oTree05);
+	//m_oTree15.SetPlayerCharacter(L"MAP_TREE1", 200, 0, 1300);
+	//m_oTree15.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
+	//m_oTree15.m_objType = EObjType::AObject;
+	//ObjectManager::Get().PushObject(&m_oTree15);
 
-	m_oTree06.SetPlayerCharacter(L"MAP_TREE1", -1300, 0, -200);
-	m_oTree06.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
-	m_oTree06.m_objType = EObjType::AObject;
-	ObjectManager::Get().PushObject(&m_oTree06);
+	//m_oTree16.SetPlayerCharacter(L"MAP_TREE1", -200, 0, 1300);
+	//m_oTree16.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
+	//m_oTree16.m_objType = EObjType::AObject;
+	//ObjectManager::Get().PushObject(&m_oTree16);
 
-	m_oTree07.SetPlayerCharacter(L"MAP_TREE1", -1350, 0, -100);
-	m_oTree07.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
-	m_oTree07.m_objType = EObjType::AObject;
-	ObjectManager::Get().PushObject(&m_oTree07);
+	//m_oTree17.SetPlayerCharacter(L"MAP_TREE1", -100, 0, 1350);
+	//m_oTree17.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
+	//m_oTree17.m_objType = EObjType::AObject;
+	//ObjectManager::Get().PushObject(&m_oTree17);
 
-	m_oTree08.SetPlayerCharacter(L"MAP_TREE1", -1350, 0, 100);
-	m_oTree08.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
-	m_oTree08.m_objType = EObjType::AObject;
-	ObjectManager::Get().PushObject(&m_oTree08);
+	//m_oTree18.SetPlayerCharacter(L"MAP_TREE1", 100, 0, 1350);
+	//m_oTree18.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
+	//m_oTree18.m_objType = EObjType::AObject;
+	//ObjectManager::Get().PushObject(&m_oTree18);
 
-	m_oTree09.SetPlayerCharacter(L"MAP_TREE1", -1100, 0, 000);
-	m_oTree09.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
-	m_oTree09.m_objType = EObjType::AObject;
-	ObjectManager::Get().PushObject(&m_oTree09);
-
-
-	m_oTree10.SetPlayerCharacter(L"MAP_TREE1", 0, 0, 1300);
-	m_oTree10.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
-	m_oTree10.m_objType = EObjType::AObject;
-	ObjectManager::Get().PushObject(&m_oTree10);
-
-	m_oTree11.SetPlayerCharacter(L"MAP_TREE1", 100, 0, 1200);
-	m_oTree11.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
-	m_oTree11.m_objType = EObjType::AObject;
-	ObjectManager::Get().PushObject(&m_oTree11);
-
-	m_oTree12.SetPlayerCharacter(L"MAP_TREE1", 200, 0, 1100);
-	m_oTree12.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
-	m_oTree12.m_objType = EObjType::AObject;
-	ObjectManager::Get().PushObject(&m_oTree12);
-
-	m_oTree13.SetPlayerCharacter(L"MAP_TREE1", -100, 0, 1200);
-	m_oTree13.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
-	m_oTree13.m_objType = EObjType::AObject;
-	ObjectManager::Get().PushObject(&m_oTree13);
-
-	m_oTree14.SetPlayerCharacter(L"MAP_TREE1", -200, 0, 1100);
-	m_oTree14.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
-	m_oTree14.m_objType = EObjType::AObject;
-	ObjectManager::Get().PushObject(&m_oTree14);
-
-	m_oTree15.SetPlayerCharacter(L"MAP_TREE1", 200, 0, 1300);
-	m_oTree15.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
-	m_oTree15.m_objType = EObjType::AObject;
-	ObjectManager::Get().PushObject(&m_oTree15);
-
-	m_oTree16.SetPlayerCharacter(L"MAP_TREE1", -200, 0, 1300);
-	m_oTree16.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
-	m_oTree16.m_objType = EObjType::AObject;
-	ObjectManager::Get().PushObject(&m_oTree16);
-
-	m_oTree17.SetPlayerCharacter(L"MAP_TREE1", -100, 0, 1350);
-	m_oTree17.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
-	m_oTree17.m_objType = EObjType::AObject;
-	ObjectManager::Get().PushObject(&m_oTree17);
-
-	m_oTree18.SetPlayerCharacter(L"MAP_TREE1", 100, 0, 1350);
-	m_oTree18.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
-	m_oTree18.m_objType = EObjType::AObject;
-	ObjectManager::Get().PushObject(&m_oTree18);
-
-	m_oTree19.SetPlayerCharacter(L"MAP_TREE1", 0, 0, 1100);
-	m_oTree19.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
-	m_oTree19.m_objType = EObjType::AObject;
-	ObjectManager::Get().PushObject(&m_oTree19);
+	//m_oTree19.SetPlayerCharacter(L"MAP_TREE1", 0, 0, 1100);
+	//m_oTree19.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
+	//m_oTree19.m_objType = EObjType::AObject;
+	//ObjectManager::Get().PushObject(&m_oTree19);
 
 
-	m_oTree20.SetPlayerCharacter(L"MAP_TREE1", 0, 0, -1300);
-	m_oTree20.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
-	m_oTree20.m_objType = EObjType::AObject;
-	ObjectManager::Get().PushObject(&m_oTree20);
+	//m_oTree20.SetPlayerCharacter(L"MAP_TREE1", 0, 0, -1300);
+	//m_oTree20.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
+	//m_oTree20.m_objType = EObjType::AObject;
+	//ObjectManager::Get().PushObject(&m_oTree20);
 
-	m_oTree21.SetPlayerCharacter(L"MAP_TREE1", 100, 0, -1200);
-	m_oTree21.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
-	m_oTree21.m_objType = EObjType::AObject;
-	ObjectManager::Get().PushObject(&m_oTree21);
+	//m_oTree21.SetPlayerCharacter(L"MAP_TREE1", 100, 0, -1200);
+	//m_oTree21.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
+	//m_oTree21.m_objType = EObjType::AObject;
+	//ObjectManager::Get().PushObject(&m_oTree21);
 
-	m_oTree22.SetPlayerCharacter(L"MAP_TREE1", 200, 0, -1100);
-	m_oTree22.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
-	m_oTree22.m_objType = EObjType::AObject;
-	ObjectManager::Get().PushObject(&m_oTree22);
+	//m_oTree22.SetPlayerCharacter(L"MAP_TREE1", 200, 0, -1100);
+	//m_oTree22.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
+	//m_oTree22.m_objType = EObjType::AObject;
+	//ObjectManager::Get().PushObject(&m_oTree22);
 
-	m_oTree23.SetPlayerCharacter(L"MAP_TREE1", -100, 0, -1200);
-	m_oTree23.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
-	m_oTree23.m_objType = EObjType::AObject;
-	ObjectManager::Get().PushObject(&m_oTree23);
+	//m_oTree23.SetPlayerCharacter(L"MAP_TREE1", -100, 0, -1200);
+	//m_oTree23.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
+	//m_oTree23.m_objType = EObjType::AObject;
+	//ObjectManager::Get().PushObject(&m_oTree23);
 
-	m_oTree24.SetPlayerCharacter(L"MAP_TREE1", -200, 0, -1100);
-	m_oTree24.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
-	m_oTree24.m_objType = EObjType::AObject;
-	ObjectManager::Get().PushObject(&m_oTree24);
+	//m_oTree24.SetPlayerCharacter(L"MAP_TREE1", -200, 0, -1100);
+	//m_oTree24.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
+	//m_oTree24.m_objType = EObjType::AObject;
+	//ObjectManager::Get().PushObject(&m_oTree24);
 
-	m_oTree25.SetPlayerCharacter(L"MAP_TREE1", 200, 0, -1300);
-	m_oTree25.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
-	m_oTree25.m_objType = EObjType::AObject;
-	ObjectManager::Get().PushObject(&m_oTree25);
+	//m_oTree25.SetPlayerCharacter(L"MAP_TREE1", 200, 0, -1300);
+	//m_oTree25.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
+	//m_oTree25.m_objType = EObjType::AObject;
+	//ObjectManager::Get().PushObject(&m_oTree25);
 
-	m_oTree26.SetPlayerCharacter(L"MAP_TREE1", -200, 0, -1300);
-	m_oTree26.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
-	m_oTree26.m_objType = EObjType::AObject;
-	ObjectManager::Get().PushObject(&m_oTree26);
+	//m_oTree26.SetPlayerCharacter(L"MAP_TREE1", -200, 0, -1300);
+	//m_oTree26.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
+	//m_oTree26.m_objType = EObjType::AObject;
+	//ObjectManager::Get().PushObject(&m_oTree26);
 
-	m_oTree27.SetPlayerCharacter(L"MAP_TREE1", -100, 0, -1350);
-	m_oTree27.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
-	m_oTree27.m_objType = EObjType::AObject;
-	ObjectManager::Get().PushObject(&m_oTree27);
+	//m_oTree27.SetPlayerCharacter(L"MAP_TREE1", -100, 0, -1350);
+	//m_oTree27.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
+	//m_oTree27.m_objType = EObjType::AObject;
+	//ObjectManager::Get().PushObject(&m_oTree27);
 
-	m_oTree28.SetPlayerCharacter(L"MAP_TREE1", 100, 0, -1350);
-	m_oTree28.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
-	m_oTree28.m_objType = EObjType::AObject;
-	ObjectManager::Get().PushObject(&m_oTree28);
+	//m_oTree28.SetPlayerCharacter(L"MAP_TREE1", 100, 0, -1350);
+	//m_oTree28.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
+	//m_oTree28.m_objType = EObjType::AObject;
+	//ObjectManager::Get().PushObject(&m_oTree28);
 
-	m_oTree29.SetPlayerCharacter(L"MAP_TREE1", 0, 0, -1100);
-	m_oTree29.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
-	m_oTree29.m_objType = EObjType::AObject;
-	ObjectManager::Get().PushObject(&m_oTree29);
+	//m_oTree29.SetPlayerCharacter(L"MAP_TREE1", 0, 0, -1100);
+	//m_oTree29.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
+	//m_oTree29.m_objType = EObjType::AObject;
+	//ObjectManager::Get().PushObject(&m_oTree29);
 
 
-	m_oTree30.SetPlayerCharacter(L"MAP_TREE1", 1300, 0, 0);
-	m_oTree30.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
-	m_oTree30.m_objType = EObjType::AObject;
-	ObjectManager::Get().PushObject(&m_oTree30);
+	//m_oTree30.SetPlayerCharacter(L"MAP_TREE1", 1300, 0, 0);
+	//m_oTree30.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
+	//m_oTree30.m_objType = EObjType::AObject;
+	//ObjectManager::Get().PushObject(&m_oTree30);
 
-	m_oTree31.SetPlayerCharacter(L"MAP_TREE1", 1200, 0, 100);
-	m_oTree31.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
-	m_oTree31.m_objType = EObjType::AObject;
-	ObjectManager::Get().PushObject(&m_oTree31);
+	//m_oTree31.SetPlayerCharacter(L"MAP_TREE1", 1200, 0, 100);
+	//m_oTree31.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
+	//m_oTree31.m_objType = EObjType::AObject;
+	//ObjectManager::Get().PushObject(&m_oTree31);
 
-	m_oTree32.SetPlayerCharacter(L"MAP_TREE1", 1100, 0, 200);
-	m_oTree32.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
-	m_oTree32.m_objType = EObjType::AObject;
-	ObjectManager::Get().PushObject(&m_oTree32);
+	//m_oTree32.SetPlayerCharacter(L"MAP_TREE1", 1100, 0, 200);
+	//m_oTree32.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
+	//m_oTree32.m_objType = EObjType::AObject;
+	//ObjectManager::Get().PushObject(&m_oTree32);
 
-	m_oTree33.SetPlayerCharacter(L"MAP_TREE1", 1200, 0, -100);
-	m_oTree33.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
-	m_oTree33.m_objType = EObjType::AObject;
-	ObjectManager::Get().PushObject(&m_oTree33);
+	//m_oTree33.SetPlayerCharacter(L"MAP_TREE1", 1200, 0, -100);
+	//m_oTree33.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
+	//m_oTree33.m_objType = EObjType::AObject;
+	//ObjectManager::Get().PushObject(&m_oTree33);
 
-	m_oTree34.SetPlayerCharacter(L"MAP_TREE1", 1100, 0, -200);
-	m_oTree34.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
-	m_oTree34.m_objType = EObjType::AObject;
-	ObjectManager::Get().PushObject(&m_oTree34);
+	//m_oTree34.SetPlayerCharacter(L"MAP_TREE1", 1100, 0, -200);
+	//m_oTree34.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
+	//m_oTree34.m_objType = EObjType::AObject;
+	//ObjectManager::Get().PushObject(&m_oTree34);
 
-	m_oTree35.SetPlayerCharacter(L"MAP_TREE1", 1300, 0, 200);
-	m_oTree35.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
-	m_oTree35.m_objType = EObjType::AObject;
-	ObjectManager::Get().PushObject(&m_oTree35);
+	//m_oTree35.SetPlayerCharacter(L"MAP_TREE1", 1300, 0, 200);
+	//m_oTree35.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
+	//m_oTree35.m_objType = EObjType::AObject;
+	//ObjectManager::Get().PushObject(&m_oTree35);
 
-	m_oTree36.SetPlayerCharacter(L"MAP_TREE1", 1300, 0, -200);
-	m_oTree36.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
-	m_oTree36.m_objType = EObjType::AObject;
-	ObjectManager::Get().PushObject(&m_oTree36);
+	//m_oTree36.SetPlayerCharacter(L"MAP_TREE1", 1300, 0, -200);
+	//m_oTree36.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
+	//m_oTree36.m_objType = EObjType::AObject;
+	//ObjectManager::Get().PushObject(&m_oTree36);
 
-	m_oTree37.SetPlayerCharacter(L"MAP_TREE1", 1350, 0, -100);
-	m_oTree37.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
-	m_oTree37.m_objType = EObjType::AObject;
-	ObjectManager::Get().PushObject(&m_oTree37);
+	//m_oTree37.SetPlayerCharacter(L"MAP_TREE1", 1350, 0, -100);
+	//m_oTree37.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
+	//m_oTree37.m_objType = EObjType::AObject;
+	//ObjectManager::Get().PushObject(&m_oTree37);
 
-	m_oTree38.SetPlayerCharacter(L"MAP_TREE1", 1350, 0, 100);
-	m_oTree38.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
-	m_oTree38.m_objType = EObjType::AObject;
-	ObjectManager::Get().PushObject(&m_oTree38);
+	//m_oTree38.SetPlayerCharacter(L"MAP_TREE1", 1350, 0, 100);
+	//m_oTree38.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
+	//m_oTree38.m_objType = EObjType::AObject;
+	//ObjectManager::Get().PushObject(&m_oTree38);
 
-	m_oTree39.SetPlayerCharacter(L"MAP_TREE1", 1100, 0, 0);
-	m_oTree39.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
-	m_oTree39.m_objType = EObjType::AObject;
-	ObjectManager::Get().PushObject(&m_oTree39);
+	//m_oTree39.SetPlayerCharacter(L"MAP_TREE1", 1100, 0, 0);
+	//m_oTree39.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
+	//m_oTree39.m_objType = EObjType::AObject;
+	//ObjectManager::Get().PushObject(&m_oTree39);
+
+#pragma endregion
+
+#pragma region MyBillTree
+
+auto pPlane = new RPlane(L"T", L"Tree1.png", "VS_Light", "PS_Basic");
+int i = 0;
+m_pTree2D[i] = new GameObject(L"T", pPlane);
+m_pTree2D[i]->SetScale(Vector3::One * 50.0f);
+m_pTree2D[i]->SetPosition(-1000.0f, 180.0f, 0.0f);
+m_pTree2D[i]->SetScale(180.0f, 180.0f, 180.0f);
+ObjectManager::Get().PushObject(m_pTree2D[i]);
+m_pTree2D[++i] = m_pTree2D[0]->clone();
+m_pTree2D[i]->SetPosition(-1100.0f, 180.0f, 50.0f);
+ObjectManager::Get().PushObject(m_pTree2D[i]);
+m_pTree2D[++i] = m_pTree2D[0]->clone();
+m_pTree2D[i]->SetPosition(-1150.0f, 180.0f, 100.0f);
+ObjectManager::Get().PushObject(m_pTree2D[i]);
+m_pTree2D[++i] = m_pTree2D[0]->clone();
+m_pTree2D[i]->SetPosition(-1200.0f, 180.0f, 150.0f);
+ObjectManager::Get().PushObject(m_pTree2D[i]);
+m_pTree2D[++i] = m_pTree2D[0]->clone();
+m_pTree2D[i]->SetPosition(-1250.0f, 180.0f, 200.0f);
+ObjectManager::Get().PushObject(m_pTree2D[i]);
+m_pTree2D[++i] = m_pTree2D[0]->clone();
+m_pTree2D[i]->SetPosition(-1300.0f, 180.0f, 250.0f);
+ObjectManager::Get().PushObject(m_pTree2D[i]);
+m_pTree2D[++i] = m_pTree2D[0]->clone();
+m_pTree2D[i]->SetPosition(-1250.0f, 180.0f, -200.0f);
+ObjectManager::Get().PushObject(m_pTree2D[i]);
+m_pTree2D[++i] = m_pTree2D[0]->clone();
+m_pTree2D[i]->SetPosition(-1200.0f, 180.0f, -150.0f);
+ObjectManager::Get().PushObject(m_pTree2D[i]);
+m_pTree2D[++i] = m_pTree2D[0]->clone();
+m_pTree2D[i]->SetPosition(-1150.0f, 180.0f, -100.0f);
+ObjectManager::Get().PushObject(m_pTree2D[i]);
+m_pTree2D[++i] = m_pTree2D[0]->clone();
+m_pTree2D[i]->SetPosition(-1100.0f, 180.0f, -50.0f);
+ObjectManager::Get().PushObject(m_pTree2D[i]);
+m_pTree2D[++i] = m_pTree2D[0]->clone();
+m_pTree2D[i]->SetPosition(-1000.0f, 180.0f, 150.0f);
+ObjectManager::Get().PushObject(m_pTree2D[i]);
+m_pTree2D[++i] = m_pTree2D[0]->clone();
+m_pTree2D[i]->SetPosition(-1000.0f, 180.0f, -150.0f);
+ObjectManager::Get().PushObject(m_pTree2D[i]);
+m_pTree2D[++i] = m_pTree2D[0]->clone();
+m_pTree2D[i]->SetPosition(-1250.0f, 180.0f, 150.0f);
+ObjectManager::Get().PushObject(m_pTree2D[i]);
+m_pTree2D[++i] = m_pTree2D[0]->clone();
+m_pTree2D[i]->SetPosition(-1250.0f, 180.0f, -150.0f);
+ObjectManager::Get().PushObject(m_pTree2D[i]);
+m_pTree2D[++i] = m_pTree2D[0]->clone();
+m_pTree2D[i]->SetPosition(-1150.0f, 180.0f, 100.0f);
+ObjectManager::Get().PushObject(m_pTree2D[i]);
+m_pTree2D[++i] = m_pTree2D[0]->clone();
+m_pTree2D[i]->SetPosition(-1150.0f, 180.0f, -100.0f);
+ObjectManager::Get().PushObject(m_pTree2D[i]);
+m_pTree2D[++i] = m_pTree2D[0]->clone();
+m_pTree2D[i]->SetPosition(-1100.0f, 180.0f, 200.0f);
+ObjectManager::Get().PushObject(m_pTree2D[i]);
+m_pTree2D[++i] = m_pTree2D[0]->clone();
+m_pTree2D[i]->SetPosition(-1100.0f, 180.0f, -200.0f);
+ObjectManager::Get().PushObject(m_pTree2D[i]);
+m_pTree2D[++i] = m_pTree2D[0]->clone();
+m_pTree2D[i]->SetPosition(-1100.0f, 180.0f, 300.0f);
+ObjectManager::Get().PushObject(m_pTree2D[i]);
+m_pTree2D[++i] = m_pTree2D[0]->clone();
+m_pTree2D[i]->SetPosition(-1100.0f, 180.0f, -300.0f);
+ObjectManager::Get().PushObject(m_pTree2D[i]);
+
+
+m_pTree2D[++i] = m_pTree2D[0]->clone();
+m_pTree2D[i]->SetPosition(1000.0f, 180.0f, 0.0f);
+ObjectManager::Get().PushObject(m_pTree2D[i]);
+m_pTree2D[++i] = m_pTree2D[0]->clone();
+m_pTree2D[i]->SetPosition(1100.0f, 180.0f, 50.0f);
+ObjectManager::Get().PushObject(m_pTree2D[i]);
+m_pTree2D[++i] = m_pTree2D[0]->clone();
+m_pTree2D[i]->SetPosition(1150.0f, 180.0f, 100.0f);
+ObjectManager::Get().PushObject(m_pTree2D[i]);
+m_pTree2D[++i] = m_pTree2D[0]->clone();
+m_pTree2D[i]->SetPosition(1200.0f, 180.0f, 150.0f);
+ObjectManager::Get().PushObject(m_pTree2D[i]);
+m_pTree2D[++i] = m_pTree2D[0]->clone();
+m_pTree2D[i]->SetPosition(1250.0f, 180.0f, 200.0f);
+ObjectManager::Get().PushObject(m_pTree2D[i]);
+m_pTree2D[++i] = m_pTree2D[0]->clone();
+m_pTree2D[i]->SetPosition(1300.0f, 180.0f, 250.0f);
+ObjectManager::Get().PushObject(m_pTree2D[i]);
+m_pTree2D[++i] = m_pTree2D[0]->clone();
+m_pTree2D[i]->SetPosition(1250.0f, 180.0f, -200.0f);
+ObjectManager::Get().PushObject(m_pTree2D[i]);
+m_pTree2D[++i] = m_pTree2D[0]->clone();
+m_pTree2D[i]->SetPosition(1200.0f, 180.0f, -150.0f);
+ObjectManager::Get().PushObject(m_pTree2D[i]);
+m_pTree2D[++i] = m_pTree2D[0]->clone();
+m_pTree2D[i]->SetPosition(1150.0f, 180.0f, -100.0f);
+ObjectManager::Get().PushObject(m_pTree2D[i]);
+m_pTree2D[++i] = m_pTree2D[0]->clone();
+m_pTree2D[i]->SetPosition(1100.0f, 180.0f, -50.0f);
+ObjectManager::Get().PushObject(m_pTree2D[i]);
+m_pTree2D[++i] = m_pTree2D[0]->clone();
+m_pTree2D[i]->SetPosition(1000.0f, 180.0f, 150.0f);
+ObjectManager::Get().PushObject(m_pTree2D[i]);
+m_pTree2D[++i] = m_pTree2D[0]->clone();
+m_pTree2D[i]->SetPosition(1000.0f, 180.0f, -150.0f);
+ObjectManager::Get().PushObject(m_pTree2D[i]);
+m_pTree2D[++i] = m_pTree2D[0]->clone();
+m_pTree2D[i]->SetPosition(1250.0f, 180.0f, 150.0f);
+ObjectManager::Get().PushObject(m_pTree2D[i]);
+m_pTree2D[++i] = m_pTree2D[0]->clone();
+m_pTree2D[i]->SetPosition(1250.0f, 180.0f, -150.0f);
+ObjectManager::Get().PushObject(m_pTree2D[i]);
+m_pTree2D[++i] = m_pTree2D[0]->clone();
+m_pTree2D[i]->SetPosition(1150.0f, 180.0f, 100.0f);
+ObjectManager::Get().PushObject(m_pTree2D[i]);
+m_pTree2D[++i] = m_pTree2D[0]->clone();
+m_pTree2D[i]->SetPosition(1150.0f, 180.0f, -100.0f);
+ObjectManager::Get().PushObject(m_pTree2D[i]);
+m_pTree2D[++i] = m_pTree2D[0]->clone();
+m_pTree2D[i]->SetPosition(1100.0f, 180.0f, 200.0f);
+ObjectManager::Get().PushObject(m_pTree2D[i]);
+m_pTree2D[++i] = m_pTree2D[0]->clone();
+m_pTree2D[i]->SetPosition(1100.0f, 180.0f, -200.0f);
+ObjectManager::Get().PushObject(m_pTree2D[i]);
+m_pTree2D[++i] = m_pTree2D[0]->clone();
+m_pTree2D[i]->SetPosition(1100.0f, 180.0f, 300.0f);
+ObjectManager::Get().PushObject(m_pTree2D[i]);
+m_pTree2D[++i] = m_pTree2D[0]->clone();
+m_pTree2D[i]->SetPosition(1100.0f, 180.0f, -300.0f);
+ObjectManager::Get().PushObject(m_pTree2D[i]);
+
+
+
+m_pTree2D[++i] = m_pTree2D[0]->clone();
+m_pTree2D[i]->SetPosition(0.0f, 180.0f, 1000.0f);
+ObjectManager::Get().PushObject(m_pTree2D[i]);
+m_pTree2D[++i] = m_pTree2D[0]->clone();
+m_pTree2D[i]->SetPosition(50.0f, 180.0f, 1100.0f);
+ObjectManager::Get().PushObject(m_pTree2D[i]);
+m_pTree2D[++i] = m_pTree2D[0]->clone();
+m_pTree2D[i]->SetPosition(100.0f, 180.0f, 1150.0f);
+ObjectManager::Get().PushObject(m_pTree2D[i]);
+m_pTree2D[++i] = m_pTree2D[0]->clone();
+
+m_pTree2D[i]->SetPosition(150.0f, 180.0f, 1200.0f);
+ObjectManager::Get().PushObject(m_pTree2D[i]);
+m_pTree2D[++i] = m_pTree2D[0]->clone();
+m_pTree2D[i]->SetPosition(200.0f, 180.0f, 1250.0f);
+ObjectManager::Get().PushObject(m_pTree2D[i]);
+m_pTree2D[++i] = m_pTree2D[0]->clone();
+m_pTree2D[i]->SetPosition(250.0f, 180.0f, 1300.0f);
+ObjectManager::Get().PushObject(m_pTree2D[i]);
+m_pTree2D[++i] = m_pTree2D[0]->clone();
+m_pTree2D[i]->SetPosition(-200.0f, 180.0f, 1250.0f);
+ObjectManager::Get().PushObject(m_pTree2D[i]);
+m_pTree2D[++i] = m_pTree2D[0]->clone();
+m_pTree2D[i]->SetPosition(-150.0f, 180.0f, 1200.0f);
+ObjectManager::Get().PushObject(m_pTree2D[i]);
+m_pTree2D[++i] = m_pTree2D[0]->clone();
+m_pTree2D[i]->SetPosition(-100.0f, 180.0f, 1150.0f);
+ObjectManager::Get().PushObject(m_pTree2D[i]);
+m_pTree2D[++i] = m_pTree2D[0]->clone();
+m_pTree2D[i]->SetPosition(-50.0f, 180.0f, 1100.0f);
+ObjectManager::Get().PushObject(m_pTree2D[i]);
+m_pTree2D[++i] = m_pTree2D[0]->clone();
+m_pTree2D[i]->SetPosition(150.0f, 180.0f, 1000.0f);
+ObjectManager::Get().PushObject(m_pTree2D[i]);
+m_pTree2D[++i] = m_pTree2D[0]->clone();
+m_pTree2D[i]->SetPosition(-150.0f, 180.0f, 1000.0f);
+ObjectManager::Get().PushObject(m_pTree2D[i]);
+m_pTree2D[++i] = m_pTree2D[0]->clone();
+m_pTree2D[i]->SetPosition(150.0f, 180.0f, 1250.0f);
+ObjectManager::Get().PushObject(m_pTree2D[i]);
+m_pTree2D[++i] = m_pTree2D[0]->clone();
+m_pTree2D[i]->SetPosition(-150.0f, 180.0f, 1250.0f);
+ObjectManager::Get().PushObject(m_pTree2D[i]);
+m_pTree2D[++i] = m_pTree2D[0]->clone();
+m_pTree2D[i]->SetPosition(100.0f, 180.0f, 1150.0f);
+ObjectManager::Get().PushObject(m_pTree2D[i]);
+m_pTree2D[++i] = m_pTree2D[0]->clone();
+m_pTree2D[i]->SetPosition(-100.0f, 180.0f, 1150.0f);
+ObjectManager::Get().PushObject(m_pTree2D[i]);
+m_pTree2D[++i] = m_pTree2D[0]->clone();
+m_pTree2D[i]->SetPosition(200.0f, 180.0f, 1100.0f);
+ObjectManager::Get().PushObject(m_pTree2D[i]);
+m_pTree2D[++i] = m_pTree2D[0]->clone();
+m_pTree2D[i]->SetPosition(-200.0f, 180.0f, 1100.0f);
+ObjectManager::Get().PushObject(m_pTree2D[i]);
+m_pTree2D[++i] = m_pTree2D[0]->clone();
+m_pTree2D[i]->SetPosition(300.0f, 180.0f, 1100.0f);
+ObjectManager::Get().PushObject(m_pTree2D[i]);
+m_pTree2D[++i] = m_pTree2D[0]->clone();
+m_pTree2D[i]->SetPosition(-300.0f, 180.0f, 1100.0f);
+ObjectManager::Get().PushObject(m_pTree2D[i]);
+
+m_pTree2D[++i] = m_pTree2D[0]->clone();
+m_pTree2D[i]->SetPosition(0.0f, 180.0f, -1000.0f);
+ObjectManager::Get().PushObject(m_pTree2D[i]);
+m_pTree2D[++i] = m_pTree2D[0]->clone();
+m_pTree2D[i]->SetPosition(50.0f, 180.0f, -1100.0f);
+ObjectManager::Get().PushObject(m_pTree2D[i]);
+m_pTree2D[++i] = m_pTree2D[0]->clone();
+m_pTree2D[i]->SetPosition(100.0f, 180.0f, -1150.0f);
+ObjectManager::Get().PushObject(m_pTree2D[i]);
+m_pTree2D[++i] = m_pTree2D[0]->clone();
+m_pTree2D[i]->SetPosition(150.0f, 180.0f, -1200.0f);
+ObjectManager::Get().PushObject(m_pTree2D[i]);
+m_pTree2D[++i] = m_pTree2D[0]->clone();
+m_pTree2D[i]->SetPosition(200.0f, 180.0f, -1250.0f);
+ObjectManager::Get().PushObject(m_pTree2D[i]);
+m_pTree2D[++i] = m_pTree2D[0]->clone();
+m_pTree2D[i]->SetPosition(250.0f, 180.0f, -1300.0f);
+ObjectManager::Get().PushObject(m_pTree2D[i]);
+m_pTree2D[++i] = m_pTree2D[0]->clone();
+m_pTree2D[i]->SetPosition(-200.0f, 180.0f, -1250.0f);
+ObjectManager::Get().PushObject(m_pTree2D[i]);
+m_pTree2D[++i] = m_pTree2D[0]->clone();
+m_pTree2D[i]->SetPosition(-150.0f, 180.0f, -1200.0f);
+ObjectManager::Get().PushObject(m_pTree2D[i]);
+m_pTree2D[++i] = m_pTree2D[0]->clone();
+m_pTree2D[i]->SetPosition(-100.0f, 180.0f, -1150.0f);
+ObjectManager::Get().PushObject(m_pTree2D[i]);
+m_pTree2D[++i] = m_pTree2D[0]->clone();
+m_pTree2D[i]->SetPosition(-50.0f, 180.0f, -1100.0f);
+ObjectManager::Get().PushObject(m_pTree2D[i]);
+m_pTree2D[++i] = m_pTree2D[0]->clone();
+m_pTree2D[i]->SetPosition(150.0f, 180.0f, -1000.0f);
+ObjectManager::Get().PushObject(m_pTree2D[i]);
+m_pTree2D[++i] = m_pTree2D[0]->clone();
+m_pTree2D[i]->SetPosition(-150.0f, 180.0f, -1000.0f);
+ObjectManager::Get().PushObject(m_pTree2D[i]);
+m_pTree2D[++i] = m_pTree2D[0]->clone();
+m_pTree2D[i]->SetPosition(150.0f, 180.0f, -1250.0f);
+ObjectManager::Get().PushObject(m_pTree2D[i]);
+m_pTree2D[++i] = m_pTree2D[0]->clone();
+m_pTree2D[i]->SetPosition(-150.0f, 180.0f, -1250.0f);
+ObjectManager::Get().PushObject(m_pTree2D[i]);
+m_pTree2D[++i] = m_pTree2D[0]->clone();
+m_pTree2D[i]->SetPosition(100.0f, 180.0f, -1150.0f);
+ObjectManager::Get().PushObject(m_pTree2D[i]);
+m_pTree2D[++i] = m_pTree2D[0]->clone();
+m_pTree2D[i]->SetPosition(-100.0f, 180.0f, -1150.0f);
+ObjectManager::Get().PushObject(m_pTree2D[i]);
+m_pTree2D[++i] = m_pTree2D[0]->clone();
+m_pTree2D[i]->SetPosition(200.0f, 180.0f, -1100.0f);
+ObjectManager::Get().PushObject(m_pTree2D[i]);
+m_pTree2D[++i] = m_pTree2D[0]->clone();
+m_pTree2D[i]->SetPosition(-200.0f, 180.0f, -1100.0f);
+ObjectManager::Get().PushObject(m_pTree2D[i]);
+m_pTree2D[++i] = m_pTree2D[0]->clone();
+m_pTree2D[i]->SetPosition(300.0f, 180.0f, -1100.0f);
+ObjectManager::Get().PushObject(m_pTree2D[i]);
+m_pTree2D[++i] = m_pTree2D[0]->clone();
+m_pTree2D[i]->SetPosition(-300.0f, 180.0f, -1100.0f);
+ObjectManager::Get().PushObject(m_pTree2D[i]);
 #pragma endregion
 
 
-//#pragma region SetMatrix
-//
-//	m_blacksmith.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-//	m_fountain.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-//	m_church.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-//	m_towerRound.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-//	m_windmill.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-//
-//
-//	m_wall00.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-//	m_wall01.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-//	m_wall02.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-//	m_wall03.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-//	m_wall04.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-//	m_wall05.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-//	m_wall10.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-//	m_wall11.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-//	m_wall12.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-//	m_wall13.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-//	m_wall14.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-//	m_wall15.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-//	m_wall20.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-//	m_wall21.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-//	m_wall22.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-//	m_wall23.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-//	m_wall24.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-//	m_wall25.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-//	m_wall30.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-//	m_wall31.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-//	m_wall32.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-//	m_wall33.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-//	m_wall34.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-//	m_wall35.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-//
-//
-//	m_towerTR.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-//	m_towerTL.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-//	m_towerBR.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-//	m_towerBL.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-//
-//	m_tower[0].SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-//	m_tower[1].SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-//	m_tower[2].SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-//	m_tower[3].SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-//	m_tower[4.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-//	m_tower[5].SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-//	m_tower[6].SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-//	m_tower[7].SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-//
-//	m_house00.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-//	m_house01.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-//	m_house02.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-//
-//	m_house10.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-//	m_house11.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-//	m_house12.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-//
-//	m_house20.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-//	m_house21.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-//	m_house22.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-//
-//	m_house30.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-//	m_house31.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-//	m_house32.SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-//
-//
-//#pragma endregion
-//
-//
 
 
-	pCollider = new Collider(330.0f);
+
+#pragma region TownCollider
+	pObject = new GameObject(L"-");
+	
+	pCollider = new ColliderAABB({ -1000, 0.0f, 400.0f }, {-200.0f, 200.0f, 1000.0f});
 	pCollider->m_eTag = ETag::Collider;
-	pObject = new GameObject(L"-", pCollider);
+	pObject->AddComponent(pCollider);
+	pCollider = new ColliderAABB({ -1000, 0.0f, 200.0f }, { -400.0f, 200.0f, 1000.0f });
+	pCollider->m_eTag = ETag::Collider;
+	pObject->AddComponent(pCollider);
+
+	pCollider = new ColliderAABB({ -1000, 0.0f, -1000.0f }, { -200.0f, 200.0f, -400.0f });
+	pCollider->m_eTag = ETag::Collider;
+	pObject->AddComponent(pCollider);
+	pCollider = new ColliderAABB({ -1000, 0.0f, -1000.0f }, { -400.0f, 200.0f, -200.0f });
+	pCollider->m_eTag = ETag::Collider;
+	pObject->AddComponent(pCollider);
+
+	pCollider = new ColliderAABB({ 400, 0.0f, 200.0f }, { 1000.0f, 200.0f, 1000.0f });
+	pCollider->m_eTag = ETag::Collider;
+	pObject->AddComponent(pCollider);
+	pCollider = new ColliderAABB({ 200, 0.0f, 400.0f }, { 1000.0f, 200.0f, 1000.0f });
+	pCollider->m_eTag = ETag::Collider;
+	pObject->AddComponent(pCollider);
+
+	pCollider = new ColliderAABB({ 400, 0.0f, -1000.0f }, { 1000.0f, 200.0f, -200.0f });
+	pCollider->m_eTag = ETag::Collider;
+	pObject->AddComponent(pCollider);
+	pCollider = new ColliderAABB({ 200, 0.0f, -1000.0f }, { 1000.0f, 200.0f, -400.0f });
+	pCollider->m_eTag = ETag::Collider;
+	pObject->AddComponent(pCollider);
+
 	pObject->SetGravityScale(0.0f);
 	pObject->usePhysics(false);
 	pObject->m_pPhysics->m_armor = 0.0f;
-	pObject->SetPosition(600.0f, 0.0f, 600.0f);
+#pragma endregion
 
-	pCollider = new Collider(330.0f);
-	pCollider->m_eTag = ETag::Collider;
-	pObject = new GameObject(L"-", pCollider);
-	pObject->SetGravityScale(0.0f);
-	pObject->usePhysics(false);
-	pObject->m_pPhysics->m_armor = 0.0f;
-	pObject->SetPosition(600.0f, 0.0f, -600.0f);
-
-	pCollider = new Collider(330.0f);
-	pCollider->m_eTag = ETag::Collider;
-	pObject = new GameObject(L"-", pCollider);
-	pObject->SetGravityScale(0.0f);
-	pObject->usePhysics(false);
-	pObject->m_pPhysics->m_armor = 0.0f;
-	pObject->SetPosition(-600.0f, 0.0f, -600.0f);
-
-	pCollider = new Collider(330.0f);
-	pCollider->m_eTag = ETag::Collider;
-	pObject = new GameObject(L"-", pCollider);
-	pObject->SetGravityScale(0.0f);
-	pObject->usePhysics(false);
-	pObject->m_pPhysics->m_armor = 0.0f;
-	pObject->SetPosition(-600.0f, 0.0f, 600.0f);
-
+	
 	for (auto& iter : *ObjectManager::Get().GetObjectList(EObjType::AObject))
 	{
 		iter->SetPositionY(m_pHeightMap->GetMapHeight(iter->GetPosition()));
@@ -941,6 +1154,15 @@ bool GameMap::Frame(const float& spf, const float& accTime)	noexcept
 		iter->m_mapHeight = m_pHeightMap->GetMapHeight(iter->m_pParent->GetPosition());
 	}
 
+	auto rotBill = ObjectManager::Get().CurCamera->GetWorldRotation();
+	for (auto& iter : m_pTree2D)
+	{
+		if (iter == nullptr)
+			break;
+		iter->SetRotation(0.0f, rotBill.y, 0.0f);
+		//iter->UpdateMatrix();
+		//iter->Render(pDContext);
+	}
 	return true;
 	accTime; spf;
 }

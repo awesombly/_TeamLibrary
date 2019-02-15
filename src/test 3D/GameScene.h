@@ -26,7 +26,6 @@ public:
 	wstring		 m_chatMessage;
 	///
 	GameMap&	 m_MapObjects = GameMap::Get();
-	HeightMap*	 m_pHeightMap = nullptr;
 public:
 	void DrawBoundingBox()		noexcept;
 	bool CheatMessage()			noexcept;

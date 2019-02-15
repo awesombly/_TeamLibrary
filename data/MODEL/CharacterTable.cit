@@ -3,9 +3,11 @@
 *CHARACTERNAME	Paladin
 *SHADERFILENMAE		..\..\data\model\Character.hlsl
 
-*MATRIXMATRIXCOUNT  10
+*MATRIXMATRIXCOUNT  12
 *MATRIXFILENAME		..\..\data\model\Paladin\Paladin_Walk.mat
 *MATRIXFILENAME		..\..\data\model\Paladin\Paladin_Atk.mat
+*MATRIXFILENAME		..\..\data\model\Paladin\Paladin_Atk2.mat
+*MATRIXFILENAME		..\..\data\model\Paladin\Paladin_Atk3.mat
 *MATRIXFILENAME		..\..\data\model\Paladin\Paladin_Back.mat
 *MATRIXFILENAME		..\..\data\model\Paladin\Paladin_Block.mat
 *MATRIXFILENAME		..\..\data\model\Paladin\Paladin_left.mat

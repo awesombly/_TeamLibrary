@@ -217,8 +217,8 @@ void IntroScene::SetObjects() noexcept
 	ObjectManager::Get().SetProtoObject(new GameObject(L"EBerserk", m_pParser->CreateFromParticle(L"Berserk.eff", urlEffect)->SetEffectScale(3.0f), EObjType::Effect));
 	ObjectManager::Get().SetProtoComponent(m_pParser->CreateFromParticle(L"Fire.eff", urlEffect)->SetEffectScale(3.0f));
 
-	Renderer* pRenderer = new Renderer(L"BaseR");
 	Renderer* pRerderEnvi = new Renderer(L"EnviR");
+	Renderer* pRenderer = pRerderEnvi;// new Renderer(L"BaseR");
 	pRerderEnvi->SetEnviromentMap(((Renderer*)m_pSkyBox->GetComponent(EComponent::Renderer))->m_srcName, EEnviType::Refraction);
 
 
