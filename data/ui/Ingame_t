@@ -593,6 +593,28 @@
 ^pfEventClick 7274
 ^vpEventClick 
 
+^Type 783
+^NodeName Inventory_ItemAdd
+^ParentName Inventory_Panel
+^KeyState 135 135
+^bRender 1
+^Position 275.000000 -103.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 20.000000 11.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^Align 0
+^strText Ãß°¡
+^TextSize 15.000000
+^tx_Normal Btn3_Normal.png
+^tx_Hover Btn3_Hover.png
+^tx_Press Btn3_Hover.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
 ^Type 790
 ^NodeName Inventory_Slot
 ^ParentName Inventory_Panel
@@ -4961,7 +4983,7 @@
 ^NodeName XPUSH
 ^ParentName Root
 ^KeyState 135 135
-^bRender 1
+^bRender 0
 ^Position 0.000000 -165.002365 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 200.000000 20.000000 1.000000
@@ -4973,3 +4995,20 @@
 ^vpEventPress 
 ^pfEventClick 7274
 ^vpEventClick ýýýýy?
+
+^Type 788
+^NodeName fadeout_green
+^ParentName Root
+^KeyState 135 135
+^bRender 0
+^Position 0.000000 0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 400.000000 300.000000 1.000000
+^Color 0.450000 1.000000 0.350000 0.000000
+^tx_Normal White.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick ýýýý
