@@ -188,7 +188,7 @@ private:
 	AHeroObj		m_oTree39;
 #pragma endregion
 
-	GameObject*		m_pTree2D[20];
+	GameObject*		m_pTree2D[80];
 public:
 	AHeroObj		m_tower[8];
 
