@@ -24,6 +24,7 @@ private:
 	AHeroObj		m_towerBL;
 
 
+#pragma region MyWall
 	AHeroObj		m_wall00;
 	AHeroObj		m_wall01;
 	AHeroObj		m_wall02;
@@ -51,7 +52,8 @@ private:
 	AHeroObj		m_wall33;
 	AHeroObj		m_wall34;
 	AHeroObj		m_wall35;
-
+#pragma endregion
+#pragma region MyHouse
 	AHeroObj		m_house00;
 	AHeroObj		m_house01;
 	AHeroObj		m_house02;
@@ -67,7 +69,8 @@ private:
 	AHeroObj		m_house30;
 	AHeroObj		m_house31;
 	AHeroObj		m_house32;
-
+#pragma endregion
+#pragma region MyTree
 
 	AHeroObj		m_tree00;
 	AHeroObj		m_tree01;
@@ -80,8 +83,8 @@ private:
 
 	AHeroObj		m_tree06;
 	AHeroObj		m_tree07;
-
-
+#pragma endregion
+#pragma region MyFence
 
 	AHeroObj		m_fence00;
 	AHeroObj		m_fence01;
@@ -104,7 +107,8 @@ private:
 	AHeroObj		m_fence31;
 	AHeroObj		m_fence32;
 	AHeroObj		m_fence33;
-
+#pragma endregion
+#pragma region MyBarrel
 	AHeroObj		m_barrel00;
 	AHeroObj		m_barrel01;
 	AHeroObj		m_barrel02;
@@ -124,7 +128,8 @@ private:
 	AHeroObj		m_barrel31;
 	AHeroObj		m_barrel32;
 	AHeroObj		m_barrel33;
-
+#pragma endregion
+#pragma region MywagonSack
 	AHeroObj		m_wagon1;
 	AHeroObj		m_wagon2;
 	AHeroObj		m_wagon3;
@@ -135,6 +140,53 @@ private:
 	AHeroObj		m_Sack11;
 	AHeroObj		m_Sack20;
 	AHeroObj		m_Sack21;
+#pragma endregion
+#pragma region MyOutTree
+
+	AHeroObj		m_oTree00;
+	AHeroObj		m_oTree01;
+	AHeroObj		m_oTree02;
+	AHeroObj		m_oTree03;
+	AHeroObj		m_oTree04;
+	AHeroObj		m_oTree05;
+	AHeroObj		m_oTree06;
+	AHeroObj		m_oTree07;
+	AHeroObj		m_oTree08;
+	AHeroObj		m_oTree09;
+
+	AHeroObj		m_oTree10;
+	AHeroObj		m_oTree11;
+	AHeroObj		m_oTree12;
+	AHeroObj		m_oTree13;
+	AHeroObj		m_oTree14;
+	AHeroObj		m_oTree15;
+	AHeroObj		m_oTree16;
+	AHeroObj		m_oTree17;
+	AHeroObj		m_oTree18;
+	AHeroObj		m_oTree19;
+
+	AHeroObj		m_oTree20;
+	AHeroObj		m_oTree21;
+	AHeroObj		m_oTree22;
+	AHeroObj		m_oTree23;
+	AHeroObj		m_oTree24;
+	AHeroObj		m_oTree25;
+	AHeroObj		m_oTree26;
+	AHeroObj		m_oTree27;
+	AHeroObj		m_oTree28;
+	AHeroObj		m_oTree29;
+
+	AHeroObj		m_oTree30;
+	AHeroObj		m_oTree31;
+	AHeroObj		m_oTree32;
+	AHeroObj		m_oTree33;
+	AHeroObj		m_oTree34;
+	AHeroObj		m_oTree35;
+	AHeroObj		m_oTree36;
+	AHeroObj		m_oTree37;
+	AHeroObj		m_oTree38;
+	AHeroObj		m_oTree39;
+#pragma endregion
 
 public:
 	AHeroObj		m_tower[8];

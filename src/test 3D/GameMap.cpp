@@ -613,6 +613,213 @@ bool GameMap::Init() noexcept
 
 #pragma endregion
 
+#pragma region MyOutTree
+
+
+
+	m_oTree00.SetPlayerCharacter(L"MAP_TREE1", -1300, 0, 0);
+	m_oTree00.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
+	m_oTree00.m_objType = EObjType::AObject;
+	ObjectManager::Get().PushObject(&m_oTree00);
+
+	m_oTree01.SetPlayerCharacter(L"MAP_TREE1", -1200, 0, 100);
+	m_oTree01.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
+	m_oTree01.m_objType = EObjType::AObject;
+	ObjectManager::Get().PushObject(&m_oTree01);
+
+	m_oTree02.SetPlayerCharacter(L"MAP_TREE1", -1100, 0, 200);
+	m_oTree02.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
+	m_oTree02.m_objType = EObjType::AObject;
+	ObjectManager::Get().PushObject(&m_oTree02);
+
+	m_oTree03.SetPlayerCharacter(L"MAP_TREE1", -1200, 0, -100);
+	m_oTree03.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
+	m_oTree03.m_objType = EObjType::AObject;
+	ObjectManager::Get().PushObject(&m_oTree03);
+
+	m_oTree04.SetPlayerCharacter(L"MAP_TREE1", -1100, 0, -200);
+	m_oTree04.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
+	m_oTree04.m_objType = EObjType::AObject;
+	ObjectManager::Get().PushObject(&m_oTree04);
+
+	m_oTree05.SetPlayerCharacter(L"MAP_TREE1", -1300, 0, 200);
+	m_oTree05.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
+	m_oTree05.m_objType = EObjType::AObject;
+	ObjectManager::Get().PushObject(&m_oTree05);
+
+	m_oTree06.SetPlayerCharacter(L"MAP_TREE1", -1300, 0, -200);
+	m_oTree06.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
+	m_oTree06.m_objType = EObjType::AObject;
+	ObjectManager::Get().PushObject(&m_oTree06);
+
+	m_oTree07.SetPlayerCharacter(L"MAP_TREE1", -1350, 0, -100);
+	m_oTree07.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
+	m_oTree07.m_objType = EObjType::AObject;
+	ObjectManager::Get().PushObject(&m_oTree07);
+
+	m_oTree08.SetPlayerCharacter(L"MAP_TREE1", -1350, 0, 100);
+	m_oTree08.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
+	m_oTree08.m_objType = EObjType::AObject;
+	ObjectManager::Get().PushObject(&m_oTree08);
+
+	m_oTree09.SetPlayerCharacter(L"MAP_TREE1", -1100, 0, 000);
+	m_oTree09.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
+	m_oTree09.m_objType = EObjType::AObject;
+	ObjectManager::Get().PushObject(&m_oTree09);
+
+
+	m_oTree10.SetPlayerCharacter(L"MAP_TREE1", 0, 0, 1300);
+	m_oTree10.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
+	m_oTree10.m_objType = EObjType::AObject;
+	ObjectManager::Get().PushObject(&m_oTree10);
+
+	m_oTree11.SetPlayerCharacter(L"MAP_TREE1", 100, 0, 1200);
+	m_oTree11.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
+	m_oTree11.m_objType = EObjType::AObject;
+	ObjectManager::Get().PushObject(&m_oTree11);
+
+	m_oTree12.SetPlayerCharacter(L"MAP_TREE1", 200, 0, 1100);
+	m_oTree12.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
+	m_oTree12.m_objType = EObjType::AObject;
+	ObjectManager::Get().PushObject(&m_oTree12);
+
+	m_oTree13.SetPlayerCharacter(L"MAP_TREE1", -100, 0, 1200);
+	m_oTree13.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
+	m_oTree13.m_objType = EObjType::AObject;
+	ObjectManager::Get().PushObject(&m_oTree13);
+
+	m_oTree14.SetPlayerCharacter(L"MAP_TREE1", -200, 0, 1100);
+	m_oTree14.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
+	m_oTree14.m_objType = EObjType::AObject;
+	ObjectManager::Get().PushObject(&m_oTree14);
+
+	m_oTree15.SetPlayerCharacter(L"MAP_TREE1", 200, 0, 1300);
+	m_oTree15.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
+	m_oTree15.m_objType = EObjType::AObject;
+	ObjectManager::Get().PushObject(&m_oTree15);
+
+	m_oTree16.SetPlayerCharacter(L"MAP_TREE1", -200, 0, 1300);
+	m_oTree16.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
+	m_oTree16.m_objType = EObjType::AObject;
+	ObjectManager::Get().PushObject(&m_oTree16);
+
+	m_oTree17.SetPlayerCharacter(L"MAP_TREE1", -100, 0, 1350);
+	m_oTree17.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
+	m_oTree17.m_objType = EObjType::AObject;
+	ObjectManager::Get().PushObject(&m_oTree17);
+
+	m_oTree18.SetPlayerCharacter(L"MAP_TREE1", 100, 0, 1350);
+	m_oTree18.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
+	m_oTree18.m_objType = EObjType::AObject;
+	ObjectManager::Get().PushObject(&m_oTree18);
+
+	m_oTree19.SetPlayerCharacter(L"MAP_TREE1", 0, 0, 1100);
+	m_oTree19.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
+	m_oTree19.m_objType = EObjType::AObject;
+	ObjectManager::Get().PushObject(&m_oTree19);
+
+
+	m_oTree20.SetPlayerCharacter(L"MAP_TREE1", 0, 0, -1300);
+	m_oTree20.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
+	m_oTree20.m_objType = EObjType::AObject;
+	ObjectManager::Get().PushObject(&m_oTree20);
+
+	m_oTree21.SetPlayerCharacter(L"MAP_TREE1", 100, 0, -1200);
+	m_oTree21.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
+	m_oTree21.m_objType = EObjType::AObject;
+	ObjectManager::Get().PushObject(&m_oTree21);
+
+	m_oTree22.SetPlayerCharacter(L"MAP_TREE1", 200, 0, -1100);
+	m_oTree22.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
+	m_oTree22.m_objType = EObjType::AObject;
+	ObjectManager::Get().PushObject(&m_oTree22);
+
+	m_oTree23.SetPlayerCharacter(L"MAP_TREE1", -100, 0, -1200);
+	m_oTree23.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
+	m_oTree23.m_objType = EObjType::AObject;
+	ObjectManager::Get().PushObject(&m_oTree23);
+
+	m_oTree24.SetPlayerCharacter(L"MAP_TREE1", -200, 0, -1100);
+	m_oTree24.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
+	m_oTree24.m_objType = EObjType::AObject;
+	ObjectManager::Get().PushObject(&m_oTree24);
+
+	m_oTree25.SetPlayerCharacter(L"MAP_TREE1", 200, 0, -1300);
+	m_oTree25.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
+	m_oTree25.m_objType = EObjType::AObject;
+	ObjectManager::Get().PushObject(&m_oTree25);
+
+	m_oTree26.SetPlayerCharacter(L"MAP_TREE1", -200, 0, -1300);
+	m_oTree26.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
+	m_oTree26.m_objType = EObjType::AObject;
+	ObjectManager::Get().PushObject(&m_oTree26);
+
+	m_oTree27.SetPlayerCharacter(L"MAP_TREE1", -100, 0, -1350);
+	m_oTree27.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
+	m_oTree27.m_objType = EObjType::AObject;
+	ObjectManager::Get().PushObject(&m_oTree27);
+
+	m_oTree28.SetPlayerCharacter(L"MAP_TREE1", 100, 0, -1350);
+	m_oTree28.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
+	m_oTree28.m_objType = EObjType::AObject;
+	ObjectManager::Get().PushObject(&m_oTree28);
+
+	m_oTree29.SetPlayerCharacter(L"MAP_TREE1", 0, 0, -1100);
+	m_oTree29.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
+	m_oTree29.m_objType = EObjType::AObject;
+	ObjectManager::Get().PushObject(&m_oTree29);
+
+
+	m_oTree30.SetPlayerCharacter(L"MAP_TREE1", 1300, 0, 0);
+	m_oTree30.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
+	m_oTree30.m_objType = EObjType::AObject;
+	ObjectManager::Get().PushObject(&m_oTree30);
+
+	m_oTree31.SetPlayerCharacter(L"MAP_TREE1", 1200, 0, 100);
+	m_oTree31.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
+	m_oTree31.m_objType = EObjType::AObject;
+	ObjectManager::Get().PushObject(&m_oTree31);
+
+	m_oTree32.SetPlayerCharacter(L"MAP_TREE1", 1100, 0, 200);
+	m_oTree32.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
+	m_oTree32.m_objType = EObjType::AObject;
+	ObjectManager::Get().PushObject(&m_oTree32);
+
+	m_oTree33.SetPlayerCharacter(L"MAP_TREE1", 1200, 0, -100);
+	m_oTree33.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
+	m_oTree33.m_objType = EObjType::AObject;
+	ObjectManager::Get().PushObject(&m_oTree33);
+
+	m_oTree34.SetPlayerCharacter(L"MAP_TREE1", 1100, 0, -200);
+	m_oTree34.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
+	m_oTree34.m_objType = EObjType::AObject;
+	ObjectManager::Get().PushObject(&m_oTree34);
+
+	m_oTree35.SetPlayerCharacter(L"MAP_TREE1", 1300, 0, 200);
+	m_oTree35.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
+	m_oTree35.m_objType = EObjType::AObject;
+	ObjectManager::Get().PushObject(&m_oTree35);
+
+	m_oTree36.SetPlayerCharacter(L"MAP_TREE1", 1300, 0, -200);
+	m_oTree36.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
+	m_oTree36.m_objType = EObjType::AObject;
+	ObjectManager::Get().PushObject(&m_oTree36);
+
+	m_oTree37.SetPlayerCharacter(L"MAP_TREE1", 1350, 0, -100);
+	m_oTree37.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
+	m_oTree37.m_objType = EObjType::AObject;
+	ObjectManager::Get().PushObject(&m_oTree37);
+
+	m_oTree38.SetPlayerCharacter(L"MAP_TREE1", 1350, 0, 100);
+	m_oTree38.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
+	m_oTree38.m_objType = EObjType::AObject;
+	ObjectManager::Get().PushObject(&m_oTree38);
+
+	m_oTree39.SetPlayerCharacter(L"MAP_TREE1", 1100, 0, 0);
+	m_oTree39.SetScale(D3DXVECTOR3(1.3f, 0.9f, 1.3f));
+	m_oTree39.m_objType = EObjType::AObject;
+	ObjectManager::Get().PushObject(&m_oTree39);
+#pragma endregion
 
 
 //#pragma region SetMatrix
