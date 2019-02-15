@@ -267,7 +267,7 @@ struct A_Plane
 	//bool	CreatePlane(D3DXVECTOR3 vNormal, D3DXVECTOR3 v0);
 	void	Normalize()
 	{
-		float fValue = sqrtf(fA*fA + fB * fB + fC * fC);
+		float fValue = sqrt(fA*fA + fB * fB + fC * fC);
 		fA = fA / fValue;
 		fB = fB / fValue;
 		fC = fC / fValue;

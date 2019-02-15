@@ -90,6 +90,7 @@ public:
 	bool					ReturnPSShader();
 
 
+	void					SetHeroAnimSpeed(float fSpeed);
 
 	//D3DXVECTOR3 GetPlayerPos();
 	//INT GetPlayerPosX();
