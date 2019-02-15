@@ -8,6 +8,8 @@
 //ANIM_COUNT  10
 #define	 Paladin_BLOCK		L"Paladin_Block.Mat"
 #define	 Paladin_ATTACK		L"Paladin_Atk.Mat"
+#define	 Paladin_SWING		L"Paladin_Atk2.Mat"
+#define	 Paladin_SLASH		L"Paladin_Atk3.Mat"
 #define	 Paladin_THROW		L"Paladin_Throw.Mat"
 #define	 Paladin_LEFT		L"Paladin_Left.Mat"
 #define	 Paladin_RIGHT		L"Paladin_Right.Mat"

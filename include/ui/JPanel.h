@@ -94,6 +94,7 @@ namespace UI
 		void rtUpdate();
 		void* uiclone();
 	public:
+		void SetColor(const D3DXVECTOR4 vColor);
 		void SetEventTime(const float fTime);
 		float GetEventTime();
 		void EffectPlay();

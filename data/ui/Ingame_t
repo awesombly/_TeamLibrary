@@ -131,7 +131,7 @@
 ^SubScale 50.000000 50.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
 ^tx_BackGround black.png
-^tx_FrontGround blue.png
+^tx_FrontGround White.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
