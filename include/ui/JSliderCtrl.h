@@ -12,6 +12,7 @@ namespace UI
 		VHType      m_VHType = Horizontal;
 		bool        m_bClick = false;
 	public:
+		void SetColor(const D3DXVECTOR4 vColor);
 		bool Create(ID3D11Device* pDevice, const TCHAR* szBar, const TCHAR* szHandle, const char* PSName = "PS", const TCHAR* szShaderName = L"../../data/ui/shader/DefaultUI.hlsl");
 		bool SetTexture(ID3D11Device* pDevice, const TCHAR* szBar, const TCHAR* szHandle);
 		const float* GetValue();
