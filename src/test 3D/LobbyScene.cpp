@@ -110,14 +110,13 @@ bool LobbyScene::Frame() noexcept
 	DxManager::Get().Frame();
 	ObjectManager::Get().Frame(Timer::SPF, Timer::AccumulateTime);
 	SoundManager::Get().Frame();
-	m_pBackHero->Frame(Timer::SPF, Timer::AccumulateTime);
 	// 게임 시작
 	if (m_isStart)
 	{
 		static float frameCount = 0.0f;
 		frameCount += Timer::SPF;
 		m_pBackHero->Scaling(-Vector3::One * 0.22f * Timer::SPF);
-		m_pBackHero->Translate(Vector3::One * 1.1f * Timer::SPF);
+		m_pBackHero->Translate(Vector3::One * 0.006f * Timer::SPF);
 		if (frameCount > 2.0f)
 		{
 			// 시작
@@ -141,6 +140,7 @@ bool LobbyScene::Frame() noexcept
 			return true;
 		}
 	}
+	m_pBackHero->Frame(Timer::SPF, Timer::AccumulateTime);
 	return true;
 }
 

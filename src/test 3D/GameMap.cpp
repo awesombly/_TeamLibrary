@@ -22,7 +22,7 @@ bool GameMap::Init() noexcept
 	PlayerController::Get().m_pHome = &m_fountain;
 	auto pCollider = new Collider(9.2f);
 	m_fountain.AddComponent(pCollider);
-	m_fountain.SetPlayerCharacter(L"MAP_Fountain", 0.0f, -5.0f, 0.0f);
+	m_fountain.SetPlayerCharacter(L"MAP_Fountain", 0.0f, -15.0f, 0.0f);
 	m_fountain.SetScale(D3DXVECTOR3(8.0f, 8.0f, 8.0f));
 	m_fountain.m_objType = EObjType::AObject;
 	m_fountain.m_myName = L"HolyWater";
@@ -953,11 +953,16 @@ bool GameMap::Init() noexcept
 	pObject->m_pPhysics->m_armor = 0.0f;
 #pragma endregion
 
-	auto pPlane = new RPlane(L"Tree1.png");
-	m_pTree2D = new GameObject(L"Tree", pPlane, EObjType::Dummy);
-	m_pTree2D->SetPosition(Vector3::Left * 300.0f + Vector3::Up * 50.0f);
-	m_pTree2D->SetScale(Vector3::One * 50.0f);
-	m_pTree2D->Frame(0.0f, 0.0f);
+	auto pPlane = new RPlane(L"T", L"Tree1.png", "VS_Light", "PS_Basic");
+	int i = 0;
+	m_pTree2D[i] = new GameObject(L"T", pPlane);
+	m_pTree2D[i]->SetScale(Vector3::One * 50.0f);
+	m_pTree2D[i]->SetPosition(300.0f, 50.0f, 0.0f);
+	ObjectManager::Get().PushObject(m_pTree2D[i]);
+
+	m_pTree2D[++i] = m_pTree2D[0]->clone();
+	m_pTree2D[i]->SetPosition(300.0f, 50.0f, 20.0f);
+	ObjectManager::Get().PushObject(m_pTree2D[i]);
 	
 	for (auto& iter : *ObjectManager::Get().GetObjectList(EObjType::AObject))
 	{
@@ -975,16 +980,21 @@ bool GameMap::Frame(const float& spf, const float& accTime)	noexcept
 		iter->m_mapHeight = m_pHeightMap->GetMapHeight(iter->m_pParent->GetPosition());
 	}
 
+	auto rotBill = ObjectManager::Get().CurCamera->GetWorldRotation();
+	for (auto& iter : m_pTree2D)
+	{
+		if (iter == nullptr)
+			break;
+		iter->SetRotation(0.0f, rotBill.y, 0.0f);
+		//iter->UpdateMatrix();
+		//iter->Render(pDContext);
+	}
 	return true;
 	accTime; spf;
 }
 
 bool GameMap::Render(ID3D11DeviceContext* pDContext)			noexcept
 {
-	auto rotBill = ObjectManager::Get().CurCamera->GetWorldRotation();
-	m_pTree2D->SetRotation(0.0f, -rotBill.y, 0.0f);
-	m_pTree2D->Frame(0.0f, 0.0f);
-	m_pTree2D->Render(pDContext);
 	return true;
 	pDContext;
 }
