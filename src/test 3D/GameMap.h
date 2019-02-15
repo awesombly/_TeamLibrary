@@ -136,6 +136,7 @@ private:
 	AHeroObj		m_Sack20;
 	AHeroObj		m_Sack21;
 
+	GameObject*		m_pTree2D;
 public:
 	AHeroObj		m_tower[8];
 	//AHeroObj		m_tower1;

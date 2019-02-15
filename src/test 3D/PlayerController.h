@@ -95,6 +95,8 @@ public:
 public:
 	GameObject* m_pHome			 = nullptr;
 	const float HomeRadius		 = 1600.0f;
+
+	bool		m_canChurh = false;
 private:
 	void SendGiantMode(const float& spf)											noexcept;
 public:

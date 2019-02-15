@@ -2,6 +2,10 @@
 #include "HeightMap.h"
 #include "ObjectManager.h"
 #include "PlayerController.h"
+#include "EventManager.h"
+#include "ColliderAABB.h"
+#include "RPlane.h"
+
 
 bool GameMap::Init() noexcept
 {
@@ -18,7 +22,7 @@ bool GameMap::Init() noexcept
 	PlayerController::Get().m_pHome = &m_fountain;
 	auto pCollider = new Collider(9.2f);
 	m_fountain.AddComponent(pCollider);
-	m_fountain.SetPlayerCharacter(L"MAP_Fountain", 0.0f, 0.0f, 0.0f);
+	m_fountain.SetPlayerCharacter(L"MAP_Fountain", 0.0f, -5.0f, 0.0f);
 	m_fountain.SetScale(D3DXVECTOR3(8.0f, 8.0f, 8.0f));
 	m_fountain.m_objType = EObjType::AObject;
 	m_fountain.m_myName = L"HolyWater";
@@ -542,29 +546,47 @@ bool GameMap::Init() noexcept
 #pragma endregion
 
 #pragma region MyCarpet
-
 	m_carpet_blacksmith.SetPlayerCharacter(L"MAP_Carpet", 300.0f, 0.0f, 300.0f);
+	m_carpet_blacksmith.AddComponent(pCollider = new Collider(14.0f));
 	m_carpet_blacksmith.SetScale(D3DXVECTOR3(4.0f, 4.0f, 4.0f));
 	m_carpet_blacksmith.m_objType = EObjType::AObject;
+	pCollider->m_eTag = ETag::Dummy;
+	pCollider->SetGravityScale(0.0f);
+	pCollider->usePhysics(false);
+	pCollider->CollisionEvent = MyEvent::CarpetChurch;
 	ObjectManager::Get().PushObject(&m_carpet_blacksmith, false);
 
 	m_carpet_church.SetPlayerCharacter(L"MAP_Carpet", -300.0f, 0.0f, 300.0f);
 	m_carpet_church.SetScale(D3DXVECTOR3(4.0f, 4.0f, 4.0f));
 	m_carpet_church.m_objType = EObjType::AObject;
+	m_carpet_church.AddComponent(pCollider = new Collider(14.0f));
+	pCollider->m_eTag = ETag::Dummy;
+	pCollider->SetGravityScale(0.0f);
+	pCollider->usePhysics(false);
+	pCollider->CollisionEvent = MyEvent::CarpetChurch;
 	ObjectManager::Get().PushObject(&m_carpet_church, false);
 
 	m_carpet_windmill.SetPlayerCharacter(L"MAP_Carpet", 300.0f, 0.0f, -300.0f);
 	m_carpet_windmill.SetScale(D3DXVECTOR3(4.0f, 4.0f, 4.0f));
 	m_carpet_windmill.m_objType = EObjType::AObject;
+	m_carpet_windmill.AddComponent(pCollider = new Collider(14.0f));
+	pCollider->m_eTag = ETag::Dummy;
+	pCollider->SetGravityScale(0.0f);
+	pCollider->usePhysics(false);
+	pCollider->CollisionEvent = MyEvent::CarpetChurch;
 	ObjectManager::Get().PushObject(&m_carpet_windmill, false);
 
 	m_carpet_towerRound.SetPlayerCharacter(L"MAP_Carpet", -300.0f, 0.0f, -300.0f);
 	m_carpet_towerRound.SetScale(D3DXVECTOR3(4.0f, 4.0f, 4.0f));
 	m_carpet_towerRound.m_objType = EObjType::AObject;
+	m_carpet_towerRound.AddComponent(pCollider = new Collider(14.0f));
+	pCollider->m_eTag = ETag::Dummy;
+	pCollider->SetGravityScale(0.0f);
+	pCollider->usePhysics(false);
+	pCollider->CollisionEvent = MyEvent::CarpetChurch;
 	ObjectManager::Get().PushObject(&m_carpet_towerRound, false);
 #pragma endregion
-
-
+	
 #pragma region MywagonSack
 
 	m_wagon1.SetPlayerCharacter(L"MAP_Wagon2", 440, 0, 240);	//280
@@ -684,40 +706,52 @@ bool GameMap::Init() noexcept
 //#pragma endregion
 //
 //
+	//-200, 0   400
+	//	- 1000     1000
+	//	- 400     200
 
-
-	pCollider = new Collider(330.0f);
+#pragma region TownCollider
+	pObject = new GameObject(L"-");
+	
+	pCollider = new ColliderAABB({ -1000, 0.0f, 400.0f }, {-200.0f, 200.0f, 1000.0f});
 	pCollider->m_eTag = ETag::Collider;
-	pObject = new GameObject(L"-", pCollider);
+	pObject->AddComponent(pCollider);
+	pCollider = new ColliderAABB({ -1000, 0.0f, 200.0f }, { -400.0f, 200.0f, 1000.0f });
+	pCollider->m_eTag = ETag::Collider;
+	pObject->AddComponent(pCollider);
+
+	pCollider = new ColliderAABB({ -1000, 0.0f, -1000.0f }, { -200.0f, 200.0f, -400.0f });
+	pCollider->m_eTag = ETag::Collider;
+	pObject->AddComponent(pCollider);
+	pCollider = new ColliderAABB({ -1000, 0.0f, -1000.0f }, { -400.0f, 200.0f, -200.0f });
+	pCollider->m_eTag = ETag::Collider;
+	pObject->AddComponent(pCollider);
+
+	pCollider = new ColliderAABB({ 400, 0.0f, 200.0f }, { 1000.0f, 200.0f, 1000.0f });
+	pCollider->m_eTag = ETag::Collider;
+	pObject->AddComponent(pCollider);
+	pCollider = new ColliderAABB({ 200, 0.0f, 400.0f }, { 1000.0f, 200.0f, 1000.0f });
+	pCollider->m_eTag = ETag::Collider;
+	pObject->AddComponent(pCollider);
+
+	pCollider = new ColliderAABB({ 400, 0.0f, -1000.0f }, { 1000.0f, 200.0f, -200.0f });
+	pCollider->m_eTag = ETag::Collider;
+	pObject->AddComponent(pCollider);
+	pCollider = new ColliderAABB({ 200, 0.0f, -1000.0f }, { 1000.0f, 200.0f, -400.0f });
+	pCollider->m_eTag = ETag::Collider;
+	pObject->AddComponent(pCollider);
+
 	pObject->SetGravityScale(0.0f);
 	pObject->usePhysics(false);
 	pObject->m_pPhysics->m_armor = 0.0f;
-	pObject->SetPosition(600.0f, 0.0f, 600.0f);
+#pragma endregion
 
-	pCollider = new Collider(330.0f);
-	pCollider->m_eTag = ETag::Collider;
-	pObject = new GameObject(L"-", pCollider);
-	pObject->SetGravityScale(0.0f);
-	pObject->usePhysics(false);
-	pObject->m_pPhysics->m_armor = 0.0f;
-	pObject->SetPosition(600.0f, 0.0f, -600.0f);
-
-	pCollider = new Collider(330.0f);
-	pCollider->m_eTag = ETag::Collider;
-	pObject = new GameObject(L"-", pCollider);
-	pObject->SetGravityScale(0.0f);
-	pObject->usePhysics(false);
-	pObject->m_pPhysics->m_armor = 0.0f;
-	pObject->SetPosition(-600.0f, 0.0f, -600.0f);
-
-	pCollider = new Collider(330.0f);
-	pCollider->m_eTag = ETag::Collider;
-	pObject = new GameObject(L"-", pCollider);
-	pObject->SetGravityScale(0.0f);
-	pObject->usePhysics(false);
-	pObject->m_pPhysics->m_armor = 0.0f;
-	pObject->SetPosition(-600.0f, 0.0f, 600.0f);
-
+	auto pPlane = new RPlane(L"Tree1.png");
+	m_pTree2D = new GameObject(L"Tree", pPlane, EObjType::Dummy);
+	m_pTree2D->SetPosition(Vector3::Left * 300.0f + Vector3::Up * 50.0f);
+	m_pTree2D->SetScale(Vector3::One * 50.0f);
+	m_pTree2D->Frame(0.0f, 0.0f);
+	
 	for (auto& iter : *ObjectManager::Get().GetObjectList(EObjType::AObject))
 	{
 		iter->SetPositionY(m_pHeightMap->GetMapHeight(iter->GetPosition()));
@@ -740,6 +774,10 @@ bool GameMap::Frame(const float& spf, const float& accTime)	noexcept
 
 bool GameMap::Render(ID3D11DeviceContext* pDContext)			noexcept
 {
+	auto rotBill = ObjectManager::Get().CurCamera->GetWorldRotation();
+	m_pTree2D->SetRotation(0.0f, -rotBill.y, 0.0f);
+	m_pTree2D->Frame(0.0f, 0.0f);
+	m_pTree2D->Render(pDContext);
 	return true;
 	pDContext;
 }

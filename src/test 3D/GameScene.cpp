@@ -3,7 +3,7 @@
 #include "JEventBind.h"
 #include "UIManager.h"
 //#include "../../data/shader/ShaderData.hlsl"
-
+#include "ColliderAABB.h"
 
 bool GameScene::Init() noexcept
 {
@@ -20,16 +20,6 @@ bool GameScene::Init() noexcept
 	{
 		PacketManager::Get().TowerPos[i] = m_MapObjects.Get().m_tower[i].GetPosition();
 	}
-
-	//// 높이 맵
-	//m_pHeightMap = new HeightMap(L"HeightMap", EComponent::Renderer, L"mounds.jpg");
-	//auto pObject = new GameObject(L"HeightMap", m_pHeightMap, EObjType::Map);
-	//m_pHeightMap->CreateHeightMap(DxManager::GetDContext(), L"HeightMap/Islands, Leafy.bmp", 20, 1.0f, 1.0f);
-	////mapMap->SetEnviromentMap(((Renderer*)m_pSkyBox->GetComponent(EComponent::Renderer))->m_srcName, EEnviType::Fresnel);
-	////pObject->Translate(Vector3::Down * 100.0f);
-	//pObject->SetScaleY(0.2f);
-	//ObjectManager::Get().PushObject(pObject);
-
 
 	SoundManager::Get().Stop("bgm_Lobby_Theme.mp3");
 	//SoundManager::Get().SetBGM("bgm_InGame_Theme.mp3");
@@ -100,6 +90,7 @@ bool GameScene::Frame() noexcept
 	///
 	DxManager::Get().Frame();
 	ObjectManager::Get().Frame(Timer::SPF, Timer::AccumulateTime);
+	m_MapObjects.Frame(Timer::SPF, Timer::AccumulateTime);
 	SoundManager::Get().Frame();
 
 	//// 경계 막기
@@ -117,7 +108,6 @@ bool GameScene::Frame() noexcept
 	//		(*objIter)->SetPositionZ(-400.0f);
 	//}
 
-	m_MapObjects.Frame(Timer::SPF, Timer::AccumulateTime);
 	//// 맵 높이
 	//for (auto& iter : ObjectManager::Get().GetColliderList())
 	//{
@@ -153,6 +143,7 @@ bool GameScene::Render() noexcept
 {
 	DxManager::Get().Render();
 	ObjectManager::Get().Render(DxManager::GetDContext());
+	m_MapObjects.Render(DxManager::GetDContext());
 	//DxManager::Get().ClearDepthStencilView();
 	SoundManager::Get().Render();
 
@@ -392,14 +383,14 @@ void GameScene::DrawBoundingBox()	noexcept
 	{
 		switch (iter->m_eCollider)
 		{
-		//case ECollider::AABB:
-		//{
-		//	pBox->SetPosition(iter->GetCenter());
-		//	pBox->SetRotation(Quaternion::Base);
-		//	pBox->SetScale(((ColliderAABB*)iter)->GetLength() * 0.5f);
-		//	pBox->Frame(0.0f, 0.0f);
-		//	pBox->Render(DxManager::GetDContext());
-		//}	break;
+		case ECollider::AABB:
+		{
+			pBox->SetPosition(iter->GetCenter());
+			pBox->SetRotation(Quaternion::Base);
+			pBox->SetScale(((ColliderAABB*)iter)->GetLength() * 0.5f);
+			pBox->Frame(0.0f, 0.0f);
+			pBox->Render(DxManager::GetDContext());
+		}	break;
 		case ECollider::OBB:
 		{
 			pBox->SetPosition(iter->GetCenter());
@@ -888,7 +879,6 @@ void GameScene::LoadUI() noexcept
 	UIManager::Get().m_pSlot1 = (JSlot*)pUIRoot->find_child(L"Slot1");
 	UIManager::Get().m_pSlot2 = (JSlot*)pUIRoot->find_child(L"Slot2");
 	UIManager::Get().m_pSlot3 = (JSlot*)pUIRoot->find_child(L"Slot3");
-
 	 //UIManager::Get().m_pSlot3->m_pItem->m_pIndexList[0] = -1;
 	//UIManager::Get().m_pSlot1->AddItem(L"");
 	//UIManager::Get().m_pSlot1->m_bEmpty; // > AddItem(L"");
@@ -914,6 +904,13 @@ void GameScene::LoadUI() noexcept
 	pNameChange->EventClick.second = this;
 
 	UIManager::Get().m_pInvenSlot = (JInventory*)pUIRoot->find_child(L"Inventory_Slot");
+
+
+	// 마을
+	auto pXPUSH = (JImageCtrl*)pUIRoot->find_child(L"XPUSH");
+	//auto pXPUSH = (JPanel*)pUIRoot->find_child(L"Shop_Panel");
+	//auto pXPUSH = (JPanel*)pUIRoot->find_child(L"Tower_Panel");
+	//auto pXPUSH = (JPanel*)pUIRoot->find_child(L"Smithy_Panel");
 	//
 	ObjectManager::Get().PushObject(pUIRoot);
 	UI::InGameEvent(pUIRoot);

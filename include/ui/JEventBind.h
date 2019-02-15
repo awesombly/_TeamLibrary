@@ -148,13 +148,13 @@ namespace UI
 		pInventorySort->EventClick.first = E_INVENTORY_SORT;
 		pInventorySort->EventClick.second = pInventorySlot;
 
-		JPanel* pInventoryAdd = (JPanel*)pInventoryPanel->find_child(L"Inventory_ItemAdd");
-		pInventoryAdd->EventClick.first = E_INVENTORY_ADD;
-		pInventoryAdd->EventClick.second = pInventorySlot;
-
-		JPanel* pInventoryDel = (JPanel*)pInventoryPanel->find_child(L"Inventory_Del");
-		pInventoryDel->EventClick.first = E_INVENTORY_DEL;
-		pInventoryDel->EventClick.second = pInventorySlot;
+		//JPanel* pInventoryAdd = (JPanel*)pInventoryPanel->find_child(L"Inventory_ItemAdd");
+		//pInventoryAdd->EventClick.first = E_INVENTORY_ADD;
+		//pInventoryAdd->EventClick.second = pInventorySlot;
+		//
+		//JPanel* pInventoryDel = (JPanel*)pInventoryPanel->find_child(L"Inventory_Del");
+		//pInventoryDel->EventClick.first = E_INVENTORY_DEL;
+		//pInventoryDel->EventClick.second = pInventorySlot;
 
 		JPanel* pInfoPanel = (JPanel*)pRoot->find_child(L"Info_Panel");
 		pInfoPanel->PreEvent.first = E_KEY_REVERSESHOW;

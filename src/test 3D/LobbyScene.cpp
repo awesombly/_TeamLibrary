@@ -117,7 +117,7 @@ bool LobbyScene::Frame() noexcept
 		static float frameCount = 0.0f;
 		frameCount += Timer::SPF;
 		m_pBackHero->Scaling(-Vector3::One * 0.22f * Timer::SPF);
-		m_pBackHero->Translate(Vector3::One * 2.1f * Timer::SPF);
+		m_pBackHero->Translate(Vector3::One * 1.1f * Timer::SPF);
 		if (frameCount > 2.0f)
 		{
 			// 시작
@@ -127,9 +127,7 @@ bool LobbyScene::Frame() noexcept
 				SetScene(ESceneName::Main);
 				StartupServer();
 
-				//this_thread::sleep_for(chrono::seconds(2));
 				PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
-				//PlayerController::Get().SendReqRespawn(m_selectCharacter);
 			}
 			else
 			{
@@ -138,9 +136,7 @@ bool LobbyScene::Frame() noexcept
 				StartupClient();
 				while (PacketManager::Get().pMyInfo->UserSocket == 0);	// 소켓 받을때까지 대기
 
-				//this_thread::sleep_for(chrono::seconds(2));
 				PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
-				//PlayerController::Get().SendReqRespawn(m_selectCharacter);
 			}
 			return true;
 		}
