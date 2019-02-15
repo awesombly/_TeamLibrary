@@ -61,8 +61,10 @@ bool PlayerController::Frame(const float& spf, const float& accTime)	noexcept
 	{
 		PlayerInput(spf);
 		// HP, MP ¹Ù
-		m_pParent->m_pPhysics->m_disHP = max<float>(m_pTargetEnemy->m_pPhysics->m_disHP - spf * 0.5f * m_pTargetEnemy->m_pPhysics->m_maxHP, m_pTargetEnemy->GetHP());
+		m_pParent->m_pPhysics->m_disHP = max<float>(m_pParent->m_pPhysics->m_disHP - spf * 0.5f * m_pParent->GetHP(), m_pParent->GetHP());
+		m_disMP = max<float>(m_disMP - spf * 0.5f * m_curMP, m_curMP);
 
+		CheckTownCollision();
 		if (pUIManager->m_pMouseIcon->m_bRender)
 		{
 			UpdateStatus();
@@ -835,6 +837,12 @@ void PlayerController::ResetOption() noexcept
 	m_pCamera->SetPosition(Vector3::Up * 85.0f * m_pParent->GetScale().x);
 	m_pCamera->m_armLength = 10.0f * m_pParent->GetScale().x;
 	Input::isDebug = false;
+
+	pUIManager->m_pXPush->m_bRender = false;
+	pUIManager->m_pShopPanel->m_bRender = false;
+	pUIManager->m_pSmithyPanel->m_bRender = false;
+	pUIManager->m_pTowerPanel->m_bRender = false;
+	pUIManager->m_pMouseIcon->m_bRender = false;
 }
 
 void PlayerController::UpdateStatus(const bool& infoUpdate) noexcept
@@ -853,7 +861,7 @@ void PlayerController::UpdateStatus(const bool& infoUpdate) noexcept
 	m_RegenMP = 0.3f + pUserInfo->StatInt * 0.045f;
 	m_maxMP = 1.0f + pUserInfo->StatInt * 0.2f;
 	
-	pUIManager->m_pMpBar->SetValue(m_curMP, m_maxMP, m_curMP);
+	pUIManager->m_pMpBar->SetValue(m_curMP, m_maxMP, m_disMP);
 	pUIManager->m_pExpProgress->SetValue(m_EXP, m_NeedEXP, m_disEXP);
 	if (m_pParent != nullptr)
 	{
@@ -994,6 +1002,21 @@ void PlayerController::OperEXP(const float& value) noexcept
 		m_NeedEXP = 1.0f + PacketManager::Get().pMyInfo->Level * 0.3f;
 		PacketManager::Get().pMyInfo->KeyValue = m_pParent->m_keyValue;
 		PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendLevelUp);
+	}
+}
+
+void PlayerController::CheckTownCollision() noexcept
+{
+	for (int i = 0; i < 4; ++i)
+	{
+		if (VectorLengthSq(m_CarpetPos[i] - GetWorldPosition()) <= 5000.0f)
+		{
+			//switch (i)
+			//{
+			//default:
+			//	break;
+			//}
+		}
 	}
 }
 

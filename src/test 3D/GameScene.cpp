@@ -88,6 +88,7 @@ bool GameScene::Frame() noexcept
 		HostFrame();
 	}
 	///
+	UIManager::Get().m_pXPush->m_bRender = false;
 	DxManager::Get().Frame();
 	ObjectManager::Get().Frame(Timer::SPF, Timer::AccumulateTime);
 	m_MapObjects.Frame(Timer::SPF, Timer::AccumulateTime);
@@ -108,28 +109,21 @@ bool GameScene::Frame() noexcept
 	//		(*objIter)->SetPositionZ(-400.0f);
 	//}
 
-	//// 맵 높이
-	//for (auto& iter : ObjectManager::Get().GetColliderList())
-	//{
-	//	if (iter == nullptr || iter->m_pParent == nullptr)
-	//		continue;
-	//	iter->m_mapHeight = MapObj m_pHeightMap->GetMapHeight(iter->m_pParent->GetPosition());
-	//}
 
 	/// 재생성
-	if (Input::GetKeyState('Z') == EKeyState::DOWN)
+	if (Input::GetKeyState('B') == EKeyState::DOWN)
 	{
 		if (PlayerController::Get().GetParent() != nullptr)
 			PlayerController::Get().GetParent()->m_pPhysics->UserSocket = (UINT)-1;
 		PlayerController::Get().SendReqRespawn(PlayerController::ECharacter::EGuard);
 	}
-	if (Input::GetKeyState('X') == EKeyState::DOWN)
+	if (Input::GetKeyState('N') == EKeyState::DOWN)
 	{
 		if (PlayerController::Get().GetParent() != nullptr)
 			PlayerController::Get().GetParent()->m_pPhysics->UserSocket = (UINT)-1;
 		PlayerController::Get().SendReqRespawn(PlayerController::ECharacter::EArcher);
 	}
-	if (Input::GetKeyState('C') == EKeyState::DOWN)
+	if (Input::GetKeyState('M') == EKeyState::DOWN)
 	{
 		if (PlayerController::Get().GetParent() != nullptr)
 			PlayerController::Get().GetParent()->m_pPhysics->UserSocket = (UINT)-1;

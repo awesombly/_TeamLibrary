@@ -266,7 +266,7 @@ PBUFFER_OUTPUT PS(VS_OUTPUT input) : SV_Target
 	}
 
 	// ½¦µµ¿ì
-	if (cb_useShadow)
+	/*if (cb_useShadow)
 	{
 		static const float iNumKernel = 3;
 		float fLightAmount = 0.0f;
@@ -287,7 +287,7 @@ PBUFFER_OUTPUT PS(VS_OUTPUT input) : SV_Target
 
 		///float fColor = float4(fLightAmount, fLightAmount, fLightAmount, 1.0f);
 		output.color0.xyz *= max(cb_useShadow, fLightAmount);
-	}
+	}*/
 
 	output.color0 *= input.col;
 	return output;

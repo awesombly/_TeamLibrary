@@ -33,6 +33,9 @@ public:
 	enum EItem : UCHAR {
 		Shock = 0, Bomb, 
 	};
+	enum ECarpet : UCHAR {
+		Smithy = 0, Church, Shop, Tower
+	};
 private:
 	map<EPlayerState, PlayerState*>  m_stateList;			// 상태별 행동
 	PlayerState*					 m_curState = nullptr;	// 현재 상태
@@ -88,14 +91,16 @@ public:
 	float		m_berserkFrame		 = 0.0f;
 	float		m_maxMP				 = 1.0f;
 	float		m_curMP				 = 0.0f;
+	float		m_disMP				 = 0.0f;
 	float		m_mouseSense		 = 0.5f;
-	float		m_GameFrameCount		 = 0.0f;
+	float		m_GameFrameCount	 = 0.0f;
 	// 들을 거리
 	const float SoundRange			 = 302500.0f;
 public:
 	GameObject* m_pHome			 = nullptr;
 	const float HomeRadius		 = 1600.0f;
 
+	D3DXVECTOR3 m_CarpetPos[4];
 	bool		m_canChurh = false;
 private:
 	void SendGiantMode(const float& spf)											noexcept;
@@ -111,6 +116,7 @@ public:
 	void DeadEvent()																noexcept;
 	void HitEvent(Collider* pTarget)												noexcept;
 	void OperEXP(const float& value)												noexcept;
+	void CheckTownCollision()														noexcept;
 
 	void SendAnimTransform(const EAction& eAction, const ECharacter& eCharacter)	noexcept;
 	void SendReqRespawn(const ECharacter& eCharacter)								noexcept;
