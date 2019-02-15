@@ -119,6 +119,10 @@ namespace UI
 		pEff3->PreEvent.first = E_FADEOUT;
 		pEff3->PreEvent.second = pEff3;
 
+		JPanel* pEff4 = (JPanel*)pRoot->find_child(L"fadeout_green");
+		pEff4->PreEvent.first = E_FADEOUT;
+		pEff4->PreEvent.second = pEff4;
+
 		JPanel* pEff2 = (JPanel*)pRoot->find_child(L"fadein");
 		pEff2->PreEvent.first = E_FADEIN;
 		pEff2->PreEvent.second = pEff2;
@@ -139,7 +143,7 @@ namespace UI
 		pKillToDeath->PreEvent.first = E_KILLTODEATH;
 		pKillToDeath->PreEvent.second = pKillToDeath;
 
-		JPanel* pInventoryPanel = (JPanel*)pRoot->find_child(L"Inventory_Panel");
+		static JPanel* pInventoryPanel = (JPanel*)pRoot->find_child(L"Inventory_Panel");
 		pInventoryPanel->PreEvent.first = E_KEY_REVERSESHOW;
 		pInventoryPanel->PreEvent.second = pInventoryPanel;
 
@@ -152,12 +156,37 @@ namespace UI
 		pInventoryAdd->EventClick.first = E_INVENTORY_ADD;
 		pInventoryAdd->EventClick.second = pInventorySlot;
 
-		JPanel* pInventoryDel = (JPanel*)pInventoryPanel->find_child(L"Inventory_Del");
-		pInventoryDel->EventClick.first = E_INVENTORY_DEL;
-		pInventoryDel->EventClick.second = pInventorySlot;
+		//JPanel* pInventoryDel = (JPanel*)pInventoryPanel->find_child(L"Inventory_Del");
+		//pInventoryDel->EventClick.first = E_INVENTORY_DEL;
+		//pInventoryDel->EventClick.second = pInventorySlot;
 
 		JPanel* pInfoPanel = (JPanel*)pRoot->find_child(L"Info_Panel");
 		pInfoPanel->PreEvent.first = E_KEY_REVERSESHOW;
 		pInfoPanel->PreEvent.second = pInfoPanel;
+
+		static JPanel* pItemHelp = (JPanel*)pRoot->find_child(L"Item_Info_Panel");
+		static JPanel* pItemHelpBack = (JPanel*)pRoot->find_child(L"Item_Info_Back");
+		static JPanel* Weapon = (JPanel*)pRoot->find_child(L"Inventory_Weapon_Back");
+		static JPanel* Armor = (JPanel*)pRoot->find_child(L"Inventory_Armor_Back");
+		static JPanel* Accessoris = (JPanel*)pRoot->find_child(L"Inventory_Accessories_Back");
+		static JPanel* Accessoris2 = (JPanel*)pRoot->find_child(L"Inventory_Accessories2_Back");
+
+		static auto E_SHOW_ITEM_INFO = [](void* vp)
+		{
+			pItemHelp->m_bRender = false;
+			if (!pInventoryPanel->m_bRender) return;
+
+			if (Weapon->m_pShape->Hovered(Weapon->m_rt, Weapon->m_ptMouse.Getpt()) ||
+				Armor->m_pShape->Hovered(Armor->m_rt, Armor->m_ptMouse.Getpt()) ||
+				Accessoris->m_pShape->Hovered(Accessoris->m_rt, Accessoris->m_ptMouse.Getpt()) ||
+				Accessoris2->m_pShape->Hovered(Accessoris2->m_rt, Accessoris2->m_ptMouse.Getpt()))
+			{
+				pItemHelp->m_vPos.x = pItemHelp->m_ptMouse.Getpt().x - pItemHelpBack->m_vScl.x;
+				pItemHelp->m_vPos.y = pItemHelp->m_ptMouse.Getpt().y - pItemHelpBack->m_vScl.y;
+				pItemHelp->m_bRender = true;
+			}
+		};
+		pItemHelp->PreEvent.first = E_SHOW_ITEM_INFO;
+		pItemHelp->PreEvent.second = pItemHelp;
 	}
 }
