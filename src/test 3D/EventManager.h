@@ -6,6 +6,9 @@ class GameObject;
 
 namespace MyEvent {
 	void CarpetChurch(Collider* pA, Collider* pB);
+	void CarpetSmithy(Collider* pA, Collider* pB);
+	void CarpetShop(Collider* pA, Collider* pB);
+	void CarpetTower(Collider* pA, Collider* pB);
 	void ForceWave(Collider* pA, Collider* pB);
 	void MissileCollision(Collider* pA, Collider* pB);
 	//void ShockBoom(Collider* pA, Collider* pB);

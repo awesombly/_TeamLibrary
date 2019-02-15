@@ -186,7 +186,7 @@ bool ObjectManager::Render(ID3D11DeviceContext* pDContext) noexcept
 		 case EObjType::Map:
 		 {
 			 // ============================================= ½¦µµ¿ì(+) ·£´õ ============================================================
-			 //DxManager::Get().SetSamplerState(0, ESamTextureS::Wrap, ESamFilterS::Linear);
+			 DxManager::Get().SetSamplerState(0, ESamTextureS::Wrap, ESamFilterS::Linear);
 			 DxManager::Get().SetSamplerState(1, ESamTextureS::Clamp, ESamFilterS::Linear);
 			 DxManager::Get().SetSamplerState(2, ESamTextureS::Border, ESamFilterS::CompLinearPoint, 0, D3D11_COMPARISON_LESS);
 			 //DxManager::GetInstance().SetRasterizerState(ERasterS::CullBack);

@@ -54,20 +54,41 @@ public:
 
 	// 타워
 	JPanel*			m_pTowerPanel			= nullptr;
-	JTextCtrl*	m_pTowerCurLevel		= nullptr;
+	JTextCtrl*		m_pTowerCurLevel		= nullptr;
 	JTextCtrl*		m_pTowerCurAtkDamage	= nullptr;
 	JTextCtrl*		m_pTowerCurAtkSpeed		= nullptr;
 	JTextCtrl*		m_pTowerText1			= nullptr;
 
-	JTextCtrl*	m_pTowerNextLevel		= nullptr;
+	JTextCtrl*		m_pTowerNextLevel		= nullptr;
 	JTextCtrl*		m_pTowerNextAtkDamage	= nullptr;
 	JTextCtrl*		m_pTowerNextAtkSpeed	= nullptr;
 	JTextCtrl*		m_pTowerText2			= nullptr;
 	JButtonCtrl*	m_pTowerUpgrade			= nullptr;
 	// 상점
 	JPanel*			m_pShopPanel			= nullptr;
+	JButtonCtrl*	m_pShopItem0			= nullptr;
+	JButtonCtrl*	m_pShopItem1			= nullptr;
+	JButtonCtrl*	m_pShopItem2			= nullptr;
+	JButtonCtrl*	m_pShopItem3			= nullptr;
+	JButtonCtrl*	m_pShopItem4			= nullptr;
+	JButtonCtrl*	m_pShopItem5			= nullptr;
+	JButtonCtrl*	m_pShopItem6			= nullptr;
+	JButtonCtrl*	m_pShopItem7			= nullptr;
 	// 대장간
 	JPanel*			m_pSmithyPanel			= nullptr;
+	JButtonCtrl*	m_pSmithyBtnWeapon		= nullptr;
+	JButtonCtrl*	m_pSmithyBtnArmor		= nullptr;
+	JButtonCtrl*	m_pSmithyBtnAcce1		= nullptr;
+	JButtonCtrl*	m_pSmithyBtnAcce2		= nullptr;
+
+	JTextCtrl*		m_pSmithyInfo1Weapon = nullptr;
+	JTextCtrl*		m_pSmithyInfo2Weapon = nullptr;
+	JTextCtrl*		m_pSmithyInfo1Armor = nullptr;
+	JTextCtrl*		m_pSmithyInfo2Armor = nullptr;
+	JTextCtrl*		m_pSmithyInfo1Acce1 = nullptr;
+	JTextCtrl*		m_pSmithyInfo2Acce1 = nullptr;
+	JTextCtrl*		m_pSmithyInfo1Acce2 = nullptr;
+	JTextCtrl*		m_pSmithyInfo2Acce2 = nullptr;
 	///
 	JImageCtrl*		m_pXPush = nullptr;
 private:

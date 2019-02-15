@@ -846,16 +846,17 @@ void PlayerController::UpdateStatus(const bool& infoUpdate) noexcept
 	m_DelayLSkill = 0.7f * 5.0f / (5.0f + pUserInfo->StatDex);
 	m_DelayDash = 2.5f * 5.0f / (5.0f + pUserInfo->StatDex);
 	m_DelayRSkill = 4.0f * 5.0f / (5.0f + pUserInfo->StatDex);
-	pUIManager->m_pLeftIcon->SetValue(m_curDelayDash, m_DelayDash);
-	pUIManager->m_pRightIcon->SetValue(m_curDelayRSkill, m_DelayRSkill);
+	pUIManager->m_pLeftIcon->SetValue(m_curDelayDash, m_DelayDash, m_curDelayDash);
+	pUIManager->m_pRightIcon->SetValue(m_curDelayRSkill, m_DelayRSkill, m_curDelayDash);
 	m_RegenMP = 0.3f + pUserInfo->StatInt * 0.045f;
 	m_maxMP = 1.0f + pUserInfo->StatInt * 0.2f;
-	pUIManager->m_pMpBar->SetValue(m_curMP, m_maxMP);
-	pUIManager->m_pExpProgress->SetValue(m_disEXP, m_NeedEXP);
+	
+	pUIManager->m_pMpBar->SetValue(m_curMP, m_maxMP, m_curMP);
+	pUIManager->m_pExpProgress->SetValue(m_EXP, m_NeedEXP, m_disEXP);
 	if (m_pParent != nullptr)
 	{
 		m_pParent->m_pPhysics->m_maxHP = 1.0f + pUserInfo->StatLuk * 0.2f;
-		pUIManager->m_pHpBar->SetValue(m_pParent->GetHP(), m_pParent->m_pPhysics->m_maxHP);
+		pUIManager->m_pHpBar->SetValue(m_pParent->GetHP(), m_pParent->m_pPhysics->m_maxHP, m_pParent->m_pPhysics->m_disHP);
 		pUIManager->m_pInfoHP->SetString(to_wstring((int)(m_pParent->GetHP() * 100.0f)) + L" / " + to_wstring((int)(m_pParent->m_pPhysics->m_maxHP * 100.0f)));
 		//pUIManager->m_pInfoTitle->SetString(m_pParent->m_myName);
 		pUIManager->m_pInfoArmor->SetString(to_wstring((1.0f - m_pParent->m_pPhysics->m_armor) * 100.0f).substr(0, 4) + L" %");
@@ -966,7 +967,7 @@ void PlayerController::DeadEvent() noexcept
 	CutParent(true, true);
 	m_curDelayRespawn = 0.0f;
 	pUIManager->m_pRespawn->m_bRender = true;
-	pUIManager->m_pRespawnBar->SetValue(m_curDelayRespawn, m_DelayRespawn);
+	pUIManager->m_pRespawnBar->SetValue(m_curDelayRespawn, m_DelayRespawn, m_curDelayRespawn);
 }
 
 void PlayerController::HitEvent(Collider* pTarget) noexcept
@@ -975,7 +976,7 @@ void PlayerController::HitEvent(Collider* pTarget) noexcept
 	pUIManager->m_pEnemyPanel->m_bRender = true;
 
 	m_pTargetEnemy = pTarget->m_pParent;
-	pUIManager->m_pEnemyHP->SetValue(pTarget->m_pPhysics->m_disHP, pTarget->m_pPhysics->m_maxHP);
+	pUIManager->m_pEnemyHP->SetValue(pTarget->m_pPhysics->m_curHP, pTarget->m_pPhysics->m_maxHP, pTarget->m_pPhysics->m_disHP);
 	pUIManager->m_pEnemyName->SetString(pTarget->m_pParent->m_myName);
 }
 

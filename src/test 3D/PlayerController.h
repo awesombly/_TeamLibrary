@@ -57,8 +57,8 @@ private:
 	const float	MoveSpeed = 105.0f;
 	const float	JumpPower = 210.0f;
 	
-	map<int, void(*)(PlayerController*, void*)> m_ItemList;
 public:
+	map<int, void(*)(PlayerController*, void*)> m_ItemList;
 	UIManager*  pUIManager		= nullptr;
 	EAction		m_eAction;				// 눌린 애니메이션
 	ECharacter  m_curCharacter = ECharacter::EDummy;	// 현재 캐릭터

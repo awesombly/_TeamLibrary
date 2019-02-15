@@ -13,11 +13,59 @@ namespace MyEvent {
 			pB->m_pParent == PlayerController::Get().GetParent() &&
 			PlayerController::Get().m_canChurh)
 		{
+			PlayerController::Get().m_canChurh = false;
+			UIManager::Get().m_pRespawnEffect->SetEventTime(1.5f);
+			UIManager::Get().m_pRespawnEffect->EffectPlay();
+
 			Packet_Float p_HealHP;
 			p_HealHP.KeyValue = PlayerController::Get().GetParent()->m_keyValue;
 			p_HealHP.Value = 10000.0f;
 			PacketManager::Get().SendPacket((char*)&p_HealHP, (USHORT)sizeof(Packet_Float), PACKET_HealHP);
-			// + 포션, 이펙
+			// + 포션
+			//auto value = JItem::Get()->m_pItemList[L"Potion_0"];
+			if (UIManager::Get().m_pSlot1->Empty())
+			{
+				UIManager::Get().m_pSlot1->AddItem(L"Potion_0");
+				return;
+			}
+			if (UIManager::Get().m_pSlot2->Empty())
+			{
+				UIManager::Get().m_pSlot2->AddItem(L"Potion_0");
+				return;
+			}
+			if (UIManager::Get().m_pSlot3->Empty())
+			{
+				UIManager::Get().m_pSlot3->AddItem(L"Potion_0");
+				return;
+			}
+			UIManager::Get().m_pInvenSlot->AddItem(L"Potion_0");
+		}
+	}
+
+	void CarpetSmithy(Collider* pA, Collider* pB)
+	{
+		if (pB != nullptr &&
+			pB->m_pParent == PlayerController::Get().GetParent())
+		{
+			UIManager::Get().m_pSmithyPanel->m_bRender = true;
+		}
+	}
+
+	void CarpetShop(Collider* pA, Collider* pB)
+	{
+		if (pB != nullptr &&
+			pB->m_pParent == PlayerController::Get().GetParent())
+		{
+			UIManager::Get().m_pShopPanel->m_bRender = true;
+		}
+	}
+
+	void CarpetTower(Collider* pA, Collider* pB)
+	{
+		if (pB != nullptr &&
+			pB->m_pParent == PlayerController::Get().GetParent())
+		{
+			UIManager::Get().m_pTowerPanel->m_bRender = true;
 		}
 	}
 

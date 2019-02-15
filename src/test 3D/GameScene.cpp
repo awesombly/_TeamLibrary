@@ -616,6 +616,8 @@ void GameScene::LoadUI() noexcept
 	UIManager::Get().m_pMpBar = (JProgressBar*)pUIRoot->find_child(L"MP_Progress");
 	UIManager::Get().m_FightPanel = (JPanel*)pUIRoot->find_child(L"fight_panel");
 	UIManager::Get().m_pStatePanel = (JPanel*)pUIRoot->find_child(L"State_Panel");
+	//UIManager::Get().m_pMpBar->m_pShape->m_cbData.vColor;
+
 	// 상황판
 	/* Name Kill Death Score */
 	//m_pUser1->PreEvent.first; // bRender 상관없이 돌아감
@@ -906,10 +908,17 @@ void GameScene::LoadUI() noexcept
 	UIManager::Get().m_pInvenSlot = (JInventory*)pUIRoot->find_child(L"Inventory_Slot");
 
 
-	// 마을
 	UIManager::Get().m_pXPush = (JImageCtrl*)pUIRoot->find_child(L"XPUSH");
+	// 상점
 	UIManager::Get().m_pShopPanel = (JPanel*)pUIRoot->find_child(L"Shop_Panel");
-	UIManager::Get().m_pSmithyPanel = (JPanel*)pUIRoot->find_child(L"Smithy_Panel");
+	UIManager::Get().m_pShopItem0 = (JButtonCtrl*)pUIRoot->find_child(L"Shop_Item0_Btn");
+	UIManager::Get().m_pShopItem1 = (JButtonCtrl*)pUIRoot->find_child(L"Shop_Item1_Btn");
+	UIManager::Get().m_pShopItem2 = (JButtonCtrl*)pUIRoot->find_child(L"Shop_Item2_Btn");
+	UIManager::Get().m_pShopItem3 = (JButtonCtrl*)pUIRoot->find_child(L"Shop_Item3_Btn");
+	UIManager::Get().m_pShopItem4 = (JButtonCtrl*)pUIRoot->find_child(L"Shop_Item4_Btn");
+	UIManager::Get().m_pShopItem5 = (JButtonCtrl*)pUIRoot->find_child(L"Shop_Item5_Btn");
+	UIManager::Get().m_pShopItem6 = (JButtonCtrl*)pUIRoot->find_child(L"Shop_Item6_Btn");
+	UIManager::Get().m_pShopItem7 = (JButtonCtrl*)pUIRoot->find_child(L"Shop_Item7_Btn");
 	// 타워
 	UIManager::Get().m_pTowerPanel = (JPanel*)pUIRoot->find_child(L"Tower_Panel");
 	UIManager::Get().m_pTowerCurLevel = (JTextCtrl*)pUIRoot->find_child(L"Tower_CurrentLv");
@@ -920,14 +929,26 @@ void GameScene::LoadUI() noexcept
 	UIManager::Get().m_pTowerNextLevel = (JTextCtrl*)pUIRoot->find_child(L"Tower_NextLv");
 	UIManager::Get().m_pTowerNextAtkDamage = (JTextCtrl*)pUIRoot->find_child(L"Tower_NextAtk");
 	UIManager::Get().m_pTowerNextAtkSpeed = (JTextCtrl*)pUIRoot->find_child(L"Tower_NextAtkSpeed");
-	UIManager::Get().m_pTowerText2 = (JTextCtrl*)pUIRoot->find_child(L"Tower_Explantion1");
-	UIManager::Get().m_pTowerText2->SetString(L"머라머라123");
+	UIManager::Get().m_pTowerText2 = (JTextCtrl*)pUIRoot->find_child(L"Tower_Explanation1");
 	UIManager::Get().m_pTowerUpgrade = (JButtonCtrl*)pUIRoot->find_child(L"Tower_Btn");
 	UIManager::Get().m_pTowerUpgrade->EventClick.first = [](void*) {
 		ErrorMessage("업글!");
 	};
+	// 대장간
+	UIManager::Get().m_pSmithyPanel = (JPanel*)pUIRoot->find_child(L"Smithy_Panel");
+	UIManager::Get().m_pSmithyBtnWeapon = (JButtonCtrl*)pUIRoot->find_child(L"Smithy_Weapon_Btn");
+	UIManager::Get().m_pSmithyBtnArmor = (JButtonCtrl*)pUIRoot->find_child(L"Smithy_Armor_Btn");
+	UIManager::Get().m_pSmithyBtnAcce1 = (JButtonCtrl*)pUIRoot->find_child(L"Smithy_Accessories_Btn");
+	UIManager::Get().m_pSmithyBtnAcce2 = (JButtonCtrl*)pUIRoot->find_child(L"Smithy_Accessories2_Btn");
+	UIManager::Get().m_pSmithyInfo1Weapon = (JTextCtrl*)pUIRoot->find_child(L"Smithy_Weapon_Info_Text0");
+	UIManager::Get().m_pSmithyInfo2Weapon = (JTextCtrl*)pUIRoot->find_child(L"Smithy_Weapon_Info_Text1");
+	UIManager::Get().m_pSmithyInfo1Armor = (JTextCtrl*)pUIRoot->find_child(L"Smithy_Armor_Info_Text0");
+	UIManager::Get().m_pSmithyInfo2Armor = (JTextCtrl*)pUIRoot->find_child(L"Smithy_Armor_Info_Text1");
+	UIManager::Get().m_pSmithyInfo1Acce1 = (JTextCtrl*)pUIRoot->find_child(L"Smithy_Accessories_Info_Text0");
+	UIManager::Get().m_pSmithyInfo2Acce1 = (JTextCtrl*)pUIRoot->find_child(L"Smithy_Accessories_Info_Text1");
+	UIManager::Get().m_pSmithyInfo1Acce2 = (JTextCtrl*)pUIRoot->find_child(L"Smithy_Accessories2_Info_Text0");
+	UIManager::Get().m_pSmithyInfo2Acce2 = (JTextCtrl*)pUIRoot->find_child(L"Smithy_Accessories2_Info_Text1");
 	///
-	//
 	ObjectManager::Get().PushObject(pUIRoot);
 	UI::InGameEvent(pUIRoot);
 }
