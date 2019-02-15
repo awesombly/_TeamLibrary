@@ -264,7 +264,7 @@
 ^bRender 1
 ^Position 0.000000 0.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 29.999664 29.999664 1.000000
+^Scale 34.999748 34.999748 1.000000
 ^Color 0.000000 0.000000 0.000000 1.000000
 ^tx_Normal CrossHair.png
 ^pfEventHover 7274
@@ -571,34 +571,12 @@
 ^pfEventClick 7274
 ^vpEventClick 
 
-^Type 789
-^NodeName Inventory_Slot_Head
-^ParentName Inventory_Panel
-^KeyState 135 135
-^bRender 1
-^Position 130.000000 180.000000 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 15.000000 15.000000 1.000000
-^Color 1.000000 1.000000 1.000000 1.000000
-^tx_Normal black_wdim10.png
-
-^Type 789
-^NodeName Inventory_Slot_Weapon
-^ParentName Inventory_Panel
-^KeyState 135 135
-^bRender 1
-^Position 280.000000 180.000000 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 15.000000 15.000000 1.000000
-^Color 1.000000 1.000000 1.000000 1.000000
-^tx_Normal black_wdim10.png
-
 ^Type 783
 ^NodeName Inventory_Sort
 ^ParentName Inventory_Panel
 ^KeyState 135 135
 ^bRender 1
-^Position 315.000000 -120.000000 0.000000
+^Position 315.000000 -103.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 20.000000 11.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
@@ -615,210 +593,12 @@
 ^pfEventClick 7274
 ^vpEventClick 
 
-^Type 789
-^NodeName Inventory_Slot_Jacket
-^ParentName Inventory_Panel
-^KeyState 135 135
-^bRender 1
-^Position 160.000000 180.000000 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 15.000000 15.000000 1.000000
-^Color 1.000000 1.000000 1.000000 1.000000
-^tx_Normal black_wdim10.png
-
-^Type 783
-^NodeName Inventory_Del
-^ParentName Inventory_Panel
-^KeyState 135 135
-^bRender 1
-^Position 165.000000 -120.000000 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 20.000000 11.000000 1.000000
-^Color 1.000000 1.000000 1.000000 1.000000
-^Align 0
-^strText Á¦°Å
-^TextSize 15.000000
-^tx_Normal Btn3_Normal.png
-^tx_Hover Btn3_Hover.png
-^tx_Press Btn3_Press.png
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick 
-
-^Type 789
-^NodeName Inventory_Slot_Pants
-^ParentName Inventory_Panel
-^KeyState 135 135
-^bRender 1
-^Position 130.000000 150.000000 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 15.000000 15.000000 1.000000
-^Color 1.000000 1.000000 1.000000 1.000000
-^tx_Normal black_wdim10.png
-
-^Type 783
-^NodeName Inventory_ItemAdd
-^ParentName Inventory_Panel
-^KeyState 135 135
-^bRender 1
-^Position 124.630951 -120.000000 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 20.000000 11.000000 1.000000
-^Color 1.000000 1.000000 1.000000 1.000000
-^Align 0
-^strText Ãß°¡
-^TextSize 15.000000
-^tx_Normal Btn3_Normal.png
-^tx_Hover Btn3_Hover.png
-^tx_Press Btn3_Press.png
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick 
-
-^Type 789
-^NodeName Inventory_Slot_Shoes
-^ParentName Inventory_Panel
-^KeyState 135 135
-^bRender 1
-^Position 130.000000 120.000000 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 15.000000 15.000000 1.000000
-^Color 1.000000 1.000000 1.000000 1.000000
-^tx_Normal black_wdim10.png
-
-^Type 783
-^NodeName Inventory_Material
-^ParentName Inventory_Panel
-^KeyState 135 135
-^bRender 1
-^Position 204.666656 65.000000 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 20.000000 11.000000 1.000000
-^Color 1.000000 1.000000 1.000000 1.000000
-^Align 0
-^strText Àç·á
-^TextSize 15.000000
-^tx_Normal Btn3_Normal.png
-^tx_Hover Btn3_Hover.png
-^tx_Press Btn3_Press.png
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick 
-
-^Type 789
-^NodeName Inventory_Slot_Belt
-^ParentName Inventory_Panel
-^KeyState 135 135
-^bRender 1
-^Position 160.000000 150.000000 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 15.000000 15.000000 1.000000
-^Color 1.000000 1.000000 1.000000 1.000000
-^tx_Normal black_wdim10.png
-
-^Type 783
-^NodeName Inventory_Supplies
-^ParentName Inventory_Panel
-^KeyState 135 135
-^bRender 1
-^Position 164.666641 65.000000 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 20.000000 11.000000 1.000000
-^Color 1.000000 1.000000 1.000000 1.000000
-^Align 0
-^strText ¼Ò¸ðÇ°
-^TextSize 15.000000
-^tx_Normal Btn3_Normal.png
-^tx_Hover Btn3_Hover.png
-^tx_Press Btn3_Press.png
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick 
-
-^Type 789
-^NodeName Inventory_Slot_Ring
-^ParentName Inventory_Panel
-^KeyState 135 135
-^bRender 1
-^Position 310.000000 150.000000 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 15.000000 15.000000 1.000000
-^Color 1.000000 1.000000 1.000000 1.000000
-^tx_Normal black_wdim10.png
-
-^Type 783
-^NodeName Inventory_Equipment
-^ParentName Inventory_Panel
-^KeyState 135 135
-^bRender 1
-^Position 124.667702 65.000000 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 20.000000 11.000000 1.000000
-^Color 1.000000 1.000000 1.000000 1.000000
-^Align 0
-^strText Àåºñ
-^TextSize 15.000000
-^tx_Normal Btn3_Normal.png
-^tx_Hover Btn3_Hover.png
-^tx_Press Btn3_Press.png
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick 
-
-^Type 789
-^NodeName Inventory_Slot_Necklace
-^ParentName Inventory_Panel
-^KeyState 135 135
-^bRender 1
-^Position 280.000000 150.000000 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 15.000000 15.000000 1.000000
-^Color 1.000000 1.000000 1.000000 1.000000
-^tx_Normal black_wdim10.png
-
-^Type 789
-^NodeName Inventory_Slot_Style
-^ParentName Inventory_Panel
-^KeyState 135 135
-^bRender 1
-^Position 310.000000 180.000000 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 15.000000 15.000000 1.000000
-^Color 1.000000 1.000000 1.000000 1.000000
-^tx_Normal black_wdim10.png
-
-^Type 789
-^NodeName Inventory_Slot_Bracelet
-^ParentName Inventory_Panel
-^KeyState 135 135
-^bRender 1
-^Position 310.000000 120.000000 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 15.000000 15.000000 1.000000
-^Color 1.000000 1.000000 1.000000 1.000000
-^tx_Normal black_wdim10.png
-
 ^Type 790
 ^NodeName Inventory_Slot
 ^ParentName Inventory_Panel
 ^KeyState 135 135
 ^bRender 1
-^Position 220.000000 -27.179497 0.000000
+^Position 220.000000 -10.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 115.000000 85.000000 1.000000
 ^RowCol 8 5 
@@ -847,6 +627,271 @@
 ^vpEventPress 
 ^pfEventClick 7274
 ^vpEventClick 
+
+^Type 782
+
+^SpriteType 6430
+^NodeName Inventory_Movey_Sprite
+^ParentName Inventory_Panel
+^KeyState 135 135
+^bRender 1
+^bLoop 1
+^Position 120.000000 -125.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 13.000000 13.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^AnimTime 1.000000
+^AnimUV 4 2 
+^SPRITESTART 1 
+^02Sprite_Gold-97c22b9c49552ae499f748b5fb535d0d-1.png
+^SPRITEEND
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 783
+^NodeName Inventory_Movey
+^ParentName Inventory_Panel
+^KeyState 135 135
+^bRender 1
+^Position 235.000000 -125.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 100.000000 10.000000 1.000000
+^Color 0.000000 0.000000 0.000000 1.000000
+^Align 0
+^strText 999999999999
+^TextSize 15.000000
+^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName Inventory_Movey_Back
+^ParentName Inventory_Panel
+^KeyState 135 135
+^bRender 1
+^Position 235.000000 -125.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 98.000000 8.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 783
+^NodeName Inventory_Movey_Text
+^ParentName Inventory_Panel
+^KeyState 135 135
+^bRender 1
+^Position 320.000000 -125.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 10.000000 10.000000 1.000000
+^Color 1.000000 1.000000 1.000000 0.000000
+^Align 0
+^strText ¿ø
+^TextSize 15.000000
+^tx_Normal NO_IMAGE.png
+^tx_Hover NO_IMAGE.png
+^tx_Press NO_IMAGE.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName Inventory_Weapon_Back
+^ParentName Inventory_Panel
+^KeyState 135 135
+^bRender 1
+^Position 130.000000 140.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 25.000000 25.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_Normal black_wdim10.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName Inventory_Armor_Back
+^ParentName Inventory_Panel
+^KeyState 135 135
+^bRender 1
+^Position 190.000000 140.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 25.000000 25.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_Normal black_wdim10.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName Inventory_Accessories_Back
+^ParentName Inventory_Panel
+^KeyState 135 135
+^bRender 1
+^Position 250.000000 140.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 25.000000 25.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_Normal black_wdim10.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName Inventory_Accessories2_Back
+^ParentName Inventory_Panel
+^KeyState 135 135
+^bRender 1
+^Position 310.000000 140.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 25.000000 25.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_Normal black_wdim10.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName Inventory_Weapon_Back2
+^ParentName Inventory_Panel
+^KeyState 135 135
+^bRender 1
+^Position 130.000000 140.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 20.000000 20.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_Normal 1_111.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName Inventory_Armor_Back2
+^ParentName Inventory_Panel
+^KeyState 135 135
+^bRender 1
+^Position 190.000000 140.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 20.000000 20.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_Normal 1_222.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName Inventory_Accessories_Back2
+^ParentName Inventory_Panel
+^KeyState 135 135
+^bRender 1
+^Position 250.000000 140.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 20.000000 20.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_Normal 1_333.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName Inventory_Accessories2_Back2
+^ParentName Inventory_Panel
+^KeyState 135 135
+^bRender 1
+^Position 310.000000 140.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 20.000000 20.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_Normal 1_444.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 783
+^NodeName Temp_Btn0
+^ParentName Inventory_Panel
+^KeyState 135 135
+^bRender 1
+^Position 157.000000 95.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 50.000000 15.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^Align 0
+^strText Shop
+^TextSize 20.000000
+^tx_Normal blue_button00.png
+^tx_Hover blue_button01.png
+^tx_Press blue_button02.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7277
+^vpEventClick Shop_Panel
+
+^Type 783
+^NodeName Temp_Btn1
+^ParentName Inventory_Panel
+^KeyState 135 135
+^bRender 1
+^Position 280.000000 95.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 50.000000 15.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^Align 0
+^strText Smithy
+^TextSize 20.000000
+^tx_Normal blue_button00.png
+^tx_Hover blue_button01.png
+^tx_Press blue_button02.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7277
+^vpEventClick Smithy_Panel
 
 ^Type 777
 ^NodeName Info_Panel
@@ -2980,6 +3025,1693 @@
 ^vpEventClick 
 
 ^Type 777
+^NodeName Item_Info_Panel
+^ParentName Root
+^KeyState 135 135
+^bRender 0
+^Position 41.000000 147.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 1.000000 1.000000 1.000000
+
+^Type 788
+^NodeName Item_Info_Back
+^ParentName Item_Info_Panel
+^KeyState 135 135
+^bRender 1
+^Position 0.000000 0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 100.000000 75.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_Normal panel2.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 783
+^NodeName Item_Info_STR
+^ParentName Item_Info_Panel
+^KeyState 135 135
+^bRender 1
+^Position 25.000000 25.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 60.000000 8.000000 1.000000
+^Color 0.800000 0.700000 1.000000 1.000000
+^Align 0
+^strText Sample
+^TextSize 15.000000
+^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 783
+^NodeName Item_Info_DEX
+^ParentName Item_Info_Panel
+^KeyState 135 135
+^bRender 1
+^Position 25.000000 0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 60.000000 8.000000 1.000000
+^Color 0.800000 0.700000 1.000000 1.000000
+^Align 0
+^strText Sample
+^TextSize 15.000000
+^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 783
+^NodeName Item_Info_INT
+^ParentName Item_Info_Panel
+^KeyState 135 135
+^bRender 1
+^Position 25.000000 -25.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 60.000000 8.000000 1.000000
+^Color 0.800000 0.700000 1.000000 1.000000
+^Align 0
+^strText Sample
+^TextSize 15.000000
+^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 783
+^NodeName Item_Info_LUK
+^ParentName Item_Info_Panel
+^KeyState 135 135
+^bRender 1
+^Position 25.000000 -50.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 60.000000 8.000000 1.000000
+^Color 0.800000 0.700000 1.000000 1.000000
+^Align 0
+^strText Sample
+^TextSize 15.000000
+^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 783
+^NodeName Item_Info_Name
+^ParentName Item_Info_Panel
+^KeyState 135 135
+^bRender 1
+^Position 25.000000 50.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 60.000000 8.000000 1.000000
+^Color 0.800000 0.700000 1.000000 1.000000
+^Align 0
+^strText Sample
+^TextSize 15.000000
+^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 783
+^NodeName Item_Info_LUK_txt
+^ParentName Item_Info_Panel
+^KeyState 135 135
+^bRender 1
+^Position -55.000000 -50.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 30.000000 8.000000 1.000000
+^Color 1.000000 1.000000 0.300000 1.000000
+^Align 0
+^strText LUK
+^TextSize 17.000000
+^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 783
+^NodeName Item_Info_INT_txt
+^ParentName Item_Info_Panel
+^KeyState 135 135
+^bRender 1
+^Position -55.000000 -25.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 30.000000 8.000000 1.000000
+^Color 1.000000 1.000000 0.300000 1.000000
+^Align 0
+^strText INT
+^TextSize 17.000000
+^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 783
+^NodeName Item_Info_DEX_txt
+^ParentName Item_Info_Panel
+^KeyState 135 135
+^bRender 1
+^Position -55.000000 0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 30.000000 8.000000 1.000000
+^Color 1.000000 1.000000 0.300000 1.000000
+^Align 0
+^strText DEX
+^TextSize 17.000000
+^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 783
+^NodeName Item_Info_STR_txt
+^ParentName Item_Info_Panel
+^KeyState 135 135
+^bRender 1
+^Position -55.000000 25.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 30.000000 8.000000 1.000000
+^Color 1.000000 1.000000 0.300000 1.000000
+^Align 0
+^strText STR
+^TextSize 17.000000
+^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 783
+^NodeName Item_Info_Name_txt
+^ParentName Item_Info_Panel
+^KeyState 135 135
+^bRender 1
+^Position -55.000000 50.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 30.000000 8.000000 1.000000
+^Color 1.000000 1.000000 0.300000 1.000000
+^Align 0
+^strText Name
+^TextSize 17.000000
+^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick ýýýý
+
+^Type 777
+^NodeName Shop_Panel
+^ParentName Root
+^KeyState 135 135
+^bRender 0
+^Position -150.000000 0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 1.000000 1.000000 1.000000
+
+^Type 788
+^NodeName Shop_Back
+^ParentName Shop_Panel
+^KeyState 135 135
+^bRender 1
+^Position 0.000000 0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 200.000000 150.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_Normal panel1.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 783
+^NodeName Shop_Title
+^ParentName Shop_Panel
+^KeyState 135 135
+^bRender 1
+^Position 0.000000 145.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 80.000000 20.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^Align 0
+^strText ¾ß¸Å»óÁ¡
+^TextSize 25.000000
+^tx_Normal Edit.png
+^tx_Hover Edit.png
+^tx_Press Edit.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName Shop_Item0_Back
+^ParentName Shop_Panel
+^KeyState 135 135
+^bRender 1
+^Position -140.000000 80.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 35.000000 35.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_Normal black_wdim10.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName Shop_Item0
+^ParentName Shop_Item0_Back
+^KeyState 135 135
+^bRender 1
+^Position 0.000000 0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 27.000000 27.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_Normal Bomb.jpg
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName Shop_Item2_Back
+^ParentName Shop_Panel
+^KeyState 135 135
+^bRender 1
+^Position 45.000000 80.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 35.000000 35.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_Normal black_wdim10.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName Shop_Item2
+^ParentName Shop_Item2_Back
+^KeyState 135 135
+^bRender 1
+^Position 0.000000 0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 27.000000 27.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_Normal Bomb3.jpg
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName Shop_Item1_Back
+^ParentName Shop_Panel
+^KeyState 135 135
+^bRender 1
+^Position -45.000000 80.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 35.000000 35.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_Normal black_wdim10.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName Shop_Item1
+^ParentName Shop_Item1_Back
+^KeyState 135 135
+^bRender 1
+^Position 0.000000 -0.833344 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 27.000000 27.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_Normal Bomb2.jpg
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName Shop_Item3_Back
+^ParentName Shop_Panel
+^KeyState 135 135
+^bRender 1
+^Position 140.000000 80.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 35.000000 35.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_Normal black_wdim10.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName Shop_Item3
+^ParentName Shop_Item3_Back
+^KeyState 135 135
+^bRender 1
+^Position 0.000000 0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 27.000000 27.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_Normal LandMine.jpg
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick ýýýý
+
+^Type 788
+^NodeName Shop_Item4_Back
+^ParentName Shop_Panel
+^KeyState 135 135
+^bRender 1
+^Position -140.000000 -40.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 35.000000 35.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_Normal black_wdim10.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName Shop_Item4
+^ParentName Shop_Item4_Back
+^KeyState 135 135
+^bRender 1
+^Position 0.000000 0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 27.000000 27.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_Normal Missile.jpg
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName Shop_Item5_Back
+^ParentName Shop_Panel
+^KeyState 135 135
+^bRender 1
+^Position -45.000000 -40.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 35.000000 35.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_Normal black_wdim10.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName Shop_Item5
+^ParentName Shop_Item5_Back
+^KeyState 135 135
+^bRender 1
+^Position 0.000000 0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 27.000000 27.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_Normal Potion.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName Shop_Item6_Back
+^ParentName Shop_Panel
+^KeyState 135 135
+^bRender 1
+^Position 45.000000 -40.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 35.000000 35.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_Normal black_wdim10.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName Shop_Item6
+^ParentName Shop_Item6_Back
+^KeyState 135 135
+^bRender 1
+^Position 0.000000 0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 27.000000 27.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_Normal TNT.jpg
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName Shop_Item7_Back
+^ParentName Shop_Panel
+^KeyState 135 135
+^bRender 1
+^Position 140.000000 -40.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 35.000000 35.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_Normal black_wdim10.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName Shop_Item7
+^ParentName Shop_Item7_Back
+^KeyState 135 135
+^bRender 1
+^Position 0.000000 0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 27.000000 27.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_Normal Nuclear.jpg
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 783
+^NodeName Shop_Item0_Btn
+^ParentName Shop_Panel
+^KeyState 135 135
+^bRender 1
+^Position -140.000000 20.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 40.000000 15.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^Align 0
+^strText ¹é¸¸¿ø
+^TextSize 15.000000
+^tx_Normal btn_177.png
+^tx_Hover btn_176.png
+^tx_Press btn_176.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 783
+^NodeName Shop_Item2_Btn
+^ParentName Shop_Panel
+^KeyState 135 135
+^bRender 1
+^Position -45.000000 20.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 40.000000 15.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^Align 0
+^strText Ä¥¾ï
+^TextSize 15.000000
+^tx_Normal btn_177.png
+^tx_Hover btn_176.png
+^tx_Press btn_176.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 783
+^NodeName Shop_Item1_Btn
+^ParentName Shop_Panel
+^KeyState 135 135
+^bRender 1
+^Position 45.000000 20.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 40.000000 15.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^Align 0
+^strText Ãµ¸¸¿ø
+^TextSize 15.000000
+^tx_Normal btn_177.png
+^tx_Hover btn_176.png
+^tx_Press btn_176.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 783
+^NodeName Shop_Item3_Btn
+^ParentName Shop_Panel
+^KeyState 135 135
+^bRender 1
+^Position 140.000000 20.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 40.000000 15.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^Align 0
+^strText 100Kg¿ø
+^TextSize 15.000000
+^tx_Normal btn_177.png
+^tx_Hover btn_176.png
+^tx_Press btn_176.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 783
+^NodeName Shop_Item4_Btn
+^ParentName Shop_Panel
+^KeyState 135 135
+^bRender 1
+^Position -140.000000 -100.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 40.000000 15.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^Align 0
+^strText 76*6/12.5¿ø
+^TextSize 15.000000
+^tx_Normal btn_177.png
+^tx_Hover btn_176.png
+^tx_Press btn_176.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 783
+^NodeName Shop_Item5_Btn
+^ParentName Shop_Panel
+^KeyState 135 135
+^bRender 1
+^Position -45.000000 -100.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 40.000000 15.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^Align 0
+^strText 4-8+6¿ø
+^TextSize 15.000000
+^tx_Normal btn_177.png
+^tx_Hover btn_176.png
+^tx_Press btn_176.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 783
+^NodeName Shop_Item6_Btn
+^ParentName Shop_Panel
+^KeyState 135 135
+^bRender 1
+^Position 45.000000 -100.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 40.000000 15.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^Align 0
+^strText ¼­¸¥¸¶Èç´Ù¼¸
+^TextSize 15.000000
+^tx_Normal btn_177.png
+^tx_Hover btn_176.png
+^tx_Press btn_176.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 783
+^NodeName Shop_Item7_Btn
+^ParentName Shop_Panel
+^KeyState 135 135
+^bRender 1
+^Position 140.000000 -100.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 40.000000 15.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^Align 0
+^strText 15Á¶
+^TextSize 15.000000
+^tx_Normal btn_177.png
+^tx_Hover btn_176.png
+^tx_Press btn_176.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick ýýýý
+
+^Type 777
+^NodeName Smithy_Panel
+^ParentName Root
+^KeyState 135 135
+^bRender 0
+^Position 0.000000 0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 1.000000 1.000000 1.000000
+
+^Type 788
+^NodeName Smithy_Back
+^ParentName Smithy_Panel
+^KeyState 135 135
+^bRender 1
+^Position 0.000000 0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 200.000000 150.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_Normal panel1.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 783
+^NodeName Smithy_Title
+^ParentName Smithy_Panel
+^KeyState 135 135
+^bRender 1
+^Position 0.000000 150.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 80.000000 20.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^Align 0
+^strText ´ëÀå°£
+^TextSize 25.000000
+^tx_Normal Edit.png
+^tx_Hover Edit.png
+^tx_Press Edit.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName Smithy_Weapon_Back
+^ParentName Smithy_Panel
+^KeyState 135 135
+^bRender 1
+^Position -140.000000 95.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 30.000000 30.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_Normal black_wdim10.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName Smithy_Weapon_Img
+^ParentName Smithy_Weapon_Back
+^KeyState 135 135
+^bRender 1
+^Position 0.000000 0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 23.000000 23.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_Normal 1_111.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName Smithy_Weapon_Info_Back
+^ParentName Smithy_Panel
+^KeyState 135 135
+^bRender 1
+^Position 0.000000 95.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 100.000000 25.000000 1.000000
+^Color 1.000000 0.700000 0.300000 1.000000
+^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 783
+^NodeName Smithy_Weapon_Info_Text0
+^ParentName Smithy_Weapon_Info_Back
+^KeyState 135 135
+^bRender 1
+^Position 0.000000 10.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 100.000000 10.000000 1.000000
+^Color 1.000000 1.000000 1.000000 0.000000
+^Align 0
+^strText STR+5
+^TextSize 20.000000
+^tx_Normal NO_IMAGE.png
+^tx_Hover NO_IMAGE.png
+^tx_Press NO_IMAGE.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 783
+^NodeName Smithy_Weapon_Info_Text1
+^ParentName Smithy_Weapon_Info_Back
+^KeyState 135 135
+^bRender 1
+^Position 0.000000 -10.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 100.000000 10.000000 1.000000
+^Color 1.000000 1.000000 1.000000 0.000000
+^Align 0
+^strText °­È­È®·ü50%
+^TextSize 25.000000
+^tx_Normal NO_IMAGE.png
+^tx_Hover NO_IMAGE.png
+^tx_Press NO_IMAGE.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 783
+^NodeName Smithy_Weapon_Btn
+^ParentName Smithy_Panel
+^KeyState 135 135
+^bRender 1
+^Position 140.000000 95.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 35.000000 20.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^Align 0
+^strText 10,000
+^TextSize 20.000000
+^tx_Normal btn_177.png
+^tx_Hover btn_176.png
+^tx_Press btn_176.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName Smithy_Armor_Back
+^ParentName Smithy_Panel
+^KeyState 135 135
+^bRender 1
+^Position -140.000000 35.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 30.000000 30.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_Normal black_wdim10.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName Smithy_Armor_Img
+^ParentName Smithy_Armor_Back
+^KeyState 135 135
+^bRender 1
+^Position 0.000000 0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 23.000000 23.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_Normal 1_222.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName Smithy_Armor_Info_Back
+^ParentName Smithy_Panel
+^KeyState 135 135
+^bRender 1
+^Position 0.000000 35.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 100.000000 25.000000 1.000000
+^Color 0.000000 1.000000 1.000000 1.000000
+^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 783
+^NodeName Smithy_Armor_Info_Text0
+^ParentName Smithy_Armor_Info_Back
+^KeyState 135 135
+^bRender 1
+^Position 0.000000 10.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 100.000000 10.000000 1.000000
+^Color 1.000000 1.000000 1.000000 0.000000
+^Align 0
+^strText DEX+5
+^TextSize 20.000000
+^tx_Normal NO_IMAGE.png
+^tx_Hover NO_IMAGE.png
+^tx_Press NO_IMAGE.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 783
+^NodeName Smithy_Armor_Info_Text1
+^ParentName Smithy_Armor_Info_Back
+^KeyState 135 135
+^bRender 1
+^Position 0.000000 -10.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 100.000000 10.000000 1.000000
+^Color 1.000000 1.000000 1.000000 0.000000
+^Align 0
+^strText °­È­È®·ü50%
+^TextSize 25.000000
+^tx_Normal NO_IMAGE.png
+^tx_Hover NO_IMAGE.png
+^tx_Press NO_IMAGE.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 783
+^NodeName Smithy_Armor_Btn
+^ParentName Smithy_Panel
+^KeyState 135 135
+^bRender 1
+^Position 140.000000 35.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 35.000000 20.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^Align 0
+^strText 10,000
+^TextSize 20.000000
+^tx_Normal btn_177.png
+^tx_Hover btn_176.png
+^tx_Press btn_176.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName Smithy_Accessories_Back
+^ParentName Smithy_Panel
+^KeyState 135 135
+^bRender 1
+^Position -140.000000 -25.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 30.000000 30.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_Normal black_wdim10.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName Smithy_Accessories_Img
+^ParentName Smithy_Accessories_Back
+^KeyState 135 135
+^bRender 1
+^Position 0.000000 0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 23.000000 23.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_Normal 1_333.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName Smithy_Accessories_Info_Back
+^ParentName Smithy_Panel
+^KeyState 135 135
+^bRender 1
+^Position -1.000000 -25.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 100.000000 25.000000 1.000000
+^Color 1.000000 1.000000 0.000000 1.000000
+^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 783
+^NodeName Smithy_Accessories_Info_Text0
+^ParentName Smithy_Accessories_Info_Back
+^KeyState 135 135
+^bRender 1
+^Position 0.000000 10.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 100.000000 10.000000 1.000000
+^Color 1.000000 1.000000 1.000000 0.000000
+^Align 0
+^strText INT+5
+^TextSize 20.000000
+^tx_Normal NO_IMAGE.png
+^tx_Hover NO_IMAGE.png
+^tx_Press NO_IMAGE.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 783
+^NodeName Smithy_Accessories_Info_Text1
+^ParentName Smithy_Accessories_Info_Back
+^KeyState 135 135
+^bRender 1
+^Position 0.000000 -10.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 100.000000 10.000000 1.000000
+^Color 1.000000 1.000000 1.000000 0.000000
+^Align 0
+^strText °­È­È®·ü50%
+^TextSize 25.000000
+^tx_Normal NO_IMAGE.png
+^tx_Hover NO_IMAGE.png
+^tx_Press NO_IMAGE.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 783
+^NodeName Smithy_Accessories_Btn
+^ParentName Smithy_Panel
+^KeyState 135 135
+^bRender 1
+^Position 140.000000 -25.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 35.000000 20.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^Align 0
+^strText 10,000
+^TextSize 20.000000
+^tx_Normal btn_177.png
+^tx_Hover btn_176.png
+^tx_Press btn_176.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName Smithy_Accessories2_Back
+^ParentName Smithy_Panel
+^KeyState 135 135
+^bRender 1
+^Position -140.000000 -85.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 30.000000 30.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_Normal black_wdim10.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName Smithy_Accessories2_Img
+^ParentName Smithy_Accessories2_Back
+^KeyState 135 135
+^bRender 1
+^Position 0.000000 0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 23.000000 23.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_Normal 1_444.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName Smithy_Accessories2_Info_Back
+^ParentName Smithy_Panel
+^KeyState 135 135
+^bRender 1
+^Position 0.000000 -85.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 100.000000 25.000000 1.000000
+^Color 0.500000 0.700000 0.000000 1.000000
+^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 783
+^NodeName Smithy_Accessories2_Info_Text0
+^ParentName Smithy_Accessories2_Info_Back
+^KeyState 135 135
+^bRender 1
+^Position 0.000000 10.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 100.000000 10.000000 1.000000
+^Color 1.000000 1.000000 1.000000 0.000000
+^Align 0
+^strText LUK+5
+^TextSize 20.000000
+^tx_Normal NO_IMAGE.png
+^tx_Hover NO_IMAGE.png
+^tx_Press NO_IMAGE.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 783
+^NodeName Smithy_Accessories2_Info_Text1
+^ParentName Smithy_Accessories2_Info_Back
+^KeyState 135 135
+^bRender 1
+^Position 0.000000 -10.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 100.000000 10.000000 1.000000
+^Color 1.000000 1.000000 1.000000 0.000000
+^Align 0
+^strText °­È­È®·ü50%
+^TextSize 25.000000
+^tx_Normal NO_IMAGE.png
+^tx_Hover NO_IMAGE.png
+^tx_Press NO_IMAGE.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 783
+^NodeName Smithy_Accessories2_Btn
+^ParentName Smithy_Panel
+^KeyState 135 135
+^bRender 1
+^Position 140.000000 -85.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 35.000000 20.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^Align 0
+^strText 10,000
+^TextSize 20.000000
+^tx_Normal btn_177.png
+^tx_Hover btn_176.png
+^tx_Press btn_176.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 777
+^NodeName Tower_Panel
+^ParentName Root
+^KeyState 135 135
+^bRender 0
+^Position 0.000000 0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 1.000000 1.000000 1.000000
+
+^Type 788
+^NodeName Tower_Back
+^ParentName Tower_Panel
+^KeyState 135 135
+^bRender 1
+^Position 0.000000 0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 200.000000 150.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_Normal bx_000.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 783
+^NodeName Tower_Title
+^ParentName Tower_Panel
+^KeyState 135 135
+^bRender 1
+^Position 0.000000 135.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 80.000000 20.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^Align 0
+^strText Å¸¿ö°­È­
+^TextSize 25.000000
+^tx_Normal Edit.png
+^tx_Hover Edit.png
+^tx_Press Edit.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 783
+^NodeName Tower_CurrentLv
+^ParentName Tower_Panel
+^KeyState 135 135
+^bRender 1
+^Position -20.000000 85.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 50.000000 15.000000 1.000000
+^Color 1.000000 1.000000 1.000000 0.000000
+^Align 0
+^strText 0
+^TextSize 20.000000
+^tx_Normal NO_IMAGE.png
+^tx_Hover NO_IMAGE.png
+^tx_Press NO_IMAGE.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName Tower_Lv_Back
+^ParentName Tower_Panel
+^KeyState 135 135
+^bRender 1
+^Position 50.000000 85.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 130.000000 15.000000 1.000000
+^Color 1.000000 0.700000 1.000000 1.000000
+^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName Tower_Atk_Back
+^ParentName Tower_Panel
+^KeyState 135 135
+^bRender 1
+^Position 50.000000 40.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 130.000000 15.000000 1.000000
+^Color 1.000000 0.700000 1.000000 1.000000
+^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName Tower_AtkSpeed_Back
+^ParentName Tower_Panel
+^KeyState 135 135
+^bRender 1
+^Position 50.000000 -5.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 130.000000 15.000000 1.000000
+^Color 1.000000 0.700000 1.000000 1.000000
+^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 783
+^NodeName Tower_Lv_txt
+^ParentName Tower_Panel
+^KeyState 135 135
+^bRender 1
+^Position -120.000000 85.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 50.000000 15.000000 1.000000
+^Color 0.800000 1.000000 1.000000 1.000000
+^Align 0
+^strText ·¹º§
+^TextSize 25.000000
+^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 783
+^NodeName Tower_Akt_txt
+^ParentName Tower_Panel
+^KeyState 135 135
+^bRender 1
+^Position -120.000000 40.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 50.000000 15.000000 1.000000
+^Color 0.800000 1.000000 1.000000 1.000000
+^Align 0
+^strText °ø°Ý·Â
+^TextSize 25.000000
+^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 783
+^NodeName Tower_AtkSpeed_txt
+^ParentName Tower_Panel
+^KeyState 135 135
+^bRender 1
+^Position -120.000000 -5.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 50.000000 15.000000 1.000000
+^Color 0.800000 1.000000 1.000000 1.000000
+^Align 0
+^strText °ø°Ý¼Óµµ
+^TextSize 25.000000
+^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 783
+^NodeName Tower_Lv_Arrow
+^ParentName Tower_Panel
+^KeyState 135 135
+^bRender 1
+^Position 50.000000 85.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 15.000000 15.000000 1.000000
+^Color 1.000000 1.000000 1.000000 0.000000
+^Align 0
+^strText ¡æ
+^TextSize 45.000000
+^tx_Normal NO_IMAGE.png
+^tx_Hover NO_IMAGE.png
+^tx_Press NO_IMAGE.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 783
+^NodeName Tower_NextLv
+^ParentName Tower_Panel
+^KeyState 135 135
+^bRender 1
+^Position 120.000000 85.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 50.000000 15.000000 1.000000
+^Color 1.000000 1.000000 1.000000 0.000000
+^Align 0
+^strText 1
+^TextSize 23.000000
+^tx_Normal NO_IMAGE.png
+^tx_Hover NO_IMAGE.png
+^tx_Press NO_IMAGE.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 783
+^NodeName Tower_CurrentAtk
+^ParentName Tower_Panel
+^KeyState 135 135
+^bRender 1
+^Position -20.000000 40.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 50.000000 15.000000 1.000000
+^Color 1.000000 1.000000 1.000000 0.000000
+^Align 0
+^strText 100
+^TextSize 20.000000
+^tx_Normal NO_IMAGE.png
+^tx_Hover NO_IMAGE.png
+^tx_Press NO_IMAGE.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 783
+^NodeName Tower_Atk_Arrow
+^ParentName Tower_Panel
+^KeyState 135 135
+^bRender 1
+^Position 50.000000 40.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 15.000000 15.000000 1.000000
+^Color 1.000000 1.000000 1.000000 0.000000
+^Align 0
+^strText ¡æ
+^TextSize 45.000000
+^tx_Normal NO_IMAGE.png
+^tx_Hover NO_IMAGE.png
+^tx_Press NO_IMAGE.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 783
+^NodeName Tower_NextAtk
+^ParentName Tower_Panel
+^KeyState 135 135
+^bRender 1
+^Position 120.000000 40.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 50.000000 15.000000 1.000000
+^Color 1.000000 1.000000 1.000000 0.000000
+^Align 0
+^strText 108
+^TextSize 23.000000
+^tx_Normal NO_IMAGE.png
+^tx_Hover NO_IMAGE.png
+^tx_Press NO_IMAGE.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 783
+^NodeName Tower_CurrentAtkSpeed
+^ParentName Tower_Panel
+^KeyState 135 135
+^bRender 1
+^Position -20.000000 -5.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 50.000000 15.000000 1.000000
+^Color 1.000000 1.000000 1.000000 0.000000
+^Align 0
+^strText 0.75
+^TextSize 20.000000
+^tx_Normal NO_IMAGE.png
+^tx_Hover NO_IMAGE.png
+^tx_Press NO_IMAGE.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 783
+^NodeName Tower_AtkSpeed_Arrow
+^ParentName Tower_Panel
+^KeyState 135 135
+^bRender 1
+^Position 50.000000 -5.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 15.000000 15.000000 1.000000
+^Color 1.000000 1.000000 1.000000 0.000000
+^Align 0
+^strText ¡æ
+^TextSize 45.000000
+^tx_Normal NO_IMAGE.png
+^tx_Hover NO_IMAGE.png
+^tx_Press NO_IMAGE.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 783
+^NodeName Tower_NextAtkSpeed
+^ParentName Tower_Panel
+^KeyState 135 135
+^bRender 1
+^Position 120.000000 -5.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 50.000000 15.000000 1.000000
+^Color 1.000000 1.000000 1.000000 0.000000
+^Align 0
+^strText 0.87
+^TextSize 23.000000
+^tx_Normal NO_IMAGE.png
+^tx_Hover NO_IMAGE.png
+^tx_Press NO_IMAGE.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 783
+^NodeName Tower_Btn
+^ParentName Tower_Panel
+^KeyState 135 135
+^bRender 1
+^Position -2.000000 -113.246681 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 75.000000 15.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^Align 0
+^strText Ãµ¸¸¿ø
+^TextSize 25.000000
+^tx_Normal btn_001.png
+^tx_Hover btn_000.png
+^tx_Press btn_002.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 783
+^NodeName Tower_Explanation0
+^ParentName Tower_Panel
+^KeyState 135 135
+^bRender 1
+^Position -110.000000 -70.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 75.000000 25.000000 1.000000
+^Color 1.000000 0.800000 1.000000 1.000000
+^Align 0
+^strText 5·¹º§:Æ÷ÅºÃß°¡
+^TextSize 25.000000
+^tx_Normal backimg_000.png
+^tx_Hover backimg_000.png
+^tx_Press backimg_000.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 783
+^NodeName Tower_Explanation1
+^ParentName Tower_Panel
+^KeyState 135 135
+^bRender 1
+^Position 110.000000 -70.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 75.000000 25.000000 1.000000
+^Color 1.000000 0.800000 1.000000 1.000000
+^Align 0
+^strText 15·¹º§:Áö·ÚÃß°¡
+^TextSize 25.000000
+^tx_Normal backimg_000.png
+^tx_Hover backimg_000.png
+^tx_Press backimg_000.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 777
 ^NodeName Chat_Panel
 ^ParentName Root
 ^KeyState 135 135
@@ -3073,9 +4805,9 @@
 ^NodeName mouse_cursor
 ^ParentName Root
 ^KeyState 135 135
-^bRender 0
+^bRender 1
 ^bLoop 1
-^Position 885.000000 -23.000000 0.000000
+^Position 875.000000 -22.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 10.000000 10.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
@@ -3084,25 +4816,6 @@
 ^SPRITESTART 1 
 ^sel.png
 ^SPRITEEND
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick 
-
-^Type 778
-^NodeName fadein
-^ParentName Root
-^KeyState 135 135
-^bRender 0
-^Position 0.000000 0.000000 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 400.000000 300.000000 1.000000
-^Color 1.000000 1.000000 1.000000 1.000576
-^tx_Normal White.png
-^tx_Hover White.png
-^tx_Press White.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -3122,25 +4835,6 @@
 ^tx_Normal red.png
 ^tx_Hover red.png
 ^tx_Press red.png
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick 
-
-^Type 778
-^NodeName fadeout_white
-^ParentName Root
-^KeyState 135 135
-^bRender 0
-^Position 0.000000 -0.000000 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 400.000000 300.000000 1.000000
-^Color 1.000000 1.000000 1.000000 -0.000054
-^tx_Normal White.png
-^tx_Hover White.png
-^tx_Press White.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -3224,3 +4918,58 @@
 ^vpEventPress 
 ^pfEventClick 7274
 ^vpEventClick ýýýý
+
+^Type 778
+^NodeName fadeout_white
+^ParentName Root
+^KeyState 135 135
+^bRender 0
+^Position 0.000000 -0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 400.000000 300.000000 1.000000
+^Color 1.000000 1.000000 1.000000 -0.000054
+^tx_Normal White.png
+^tx_Hover White.png
+^tx_Press White.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 778
+^NodeName fadein
+^ParentName Root
+^KeyState 135 135
+^bRender 0
+^Position 0.000000 0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 400.000000 300.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000576
+^tx_Normal White.png
+^tx_Hover White.png
+^tx_Press White.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick ýýýý
+
+^Type 788
+^NodeName XPUSH
+^ParentName Root
+^KeyState 135 135
+^bRender 1
+^Position 0.000000 -165.002365 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 200.000000 20.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_Normal xPush.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick ýýýýy?
