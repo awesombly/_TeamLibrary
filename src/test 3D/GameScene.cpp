@@ -834,6 +834,8 @@ void GameScene::LoadUI() noexcept
 	UIManager::Get().m_pInfoArmor = (JTextCtrl*)pUIRoot->find_child(L"Info_Armor");
 	//auto pArmor = (JTextCtrl*)pUIRoot->find_child(L"Info_Armor_txt");
 	//pArmor->SetString(L"¸®½ºÆù");
+	auto pText = (JTextCtrl*)pUIRoot->find_child(L"Info_MoveSpeed_txt");
+	pText->SetString(L"È¹µæ·ü");
 	UIManager::Get().m_pInfoSP = (JTextCtrl*)pUIRoot->find_child(L"Info_SP");
 	UIManager::Get().m_pInfoStr = (JTextCtrl*)pUIRoot->find_child(L"Info_STR");
 	UIManager::Get().m_pInfoDex = (JTextCtrl*)pUIRoot->find_child(L"Info_DEX");
@@ -847,16 +849,6 @@ void GameScene::LoadUI() noexcept
 			++(*(UCHAR*)pStat);
 			PlayerController::Get().UpdateStatus();
 			PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
-
-			//// Luk ¿Ã·ÈÀ»½Ã
-			//if (&PacketManager::Get().pMyInfo->StatLuk == pStat &&
-			//	PlayerController::Get().GetParent() != nullptr)
-			//{
-			//	Packet_Vector3 p_Scailing;
-			//	p_Scailing.KeyValue = PlayerController::Get().GetParent()->m_keyValue;
-			//	p_Scailing.Vec3 = Vector3::One * 0.005f;
-			//	PacketManager::Get().SendPacket((char*)&p_Scailing, (USHORT)sizeof(Packet_Vector3), PACKET_Scaling);
-			//}
 		}
 	};
 	UIManager::Get().m_pInfoStrBtn = (JTextCtrl*)pUIRoot->find_child(L"Info_STR_Btn");
@@ -943,8 +935,7 @@ void GameScene::LoadUI() noexcept
 		//if()
 		{
 			++PlayerController::Get().m_upgradeWeapon;
-			++PacketManager::Get().pMyInfo->StatStr;
-			PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
+			PlayerController::Get().UpdateStatus();
 		}
 	};
 	UIManager::Get().m_pSmithyBtnArmor = (JTextCtrl*)pUIRoot->find_child(L"Smithy_Armor_Btn");

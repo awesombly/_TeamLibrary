@@ -6,11 +6,6 @@
 #include "UIManager.h"
 
 
-bool PlayerState::CommonProcess(const float& spf) noexcept
-{
-	return true;
-}
-
 // 기본
 void PlayerStateBasic::StateInit(PlayerController* pOwner) noexcept
 {
@@ -37,11 +32,9 @@ bool PlayerStateBasic::Process(const float& spf) noexcept
 	}
 	if (m_pOwner->m_DelayFrame >= 0.0f)
 	{
-		m_pOwner->m_DelayFrame -= spf;
+		m_pOwner->m_DelayFrame -= spf * PacketManager::Get().pMyInfo->MotionRate;
 		return false;
 	}
-	/// 공통 작업
-	//CommonProcess(spf);
 
 	m_pOwner->m_eAction = PlayerController::EAction::Idle;
 	if (Input::GetKeyState('W') == EKeyState::HOLD)
@@ -84,47 +77,6 @@ bool PlayerStateBasic::Process(const float& spf) noexcept
 			UIManager::Get().m_pSlot3->DelItem();
 		}
 	}
-
-	//static bool isFly = false;
-	//if (Input::GetKeyState(VK_SPACE) == EKeyState::DOWN)
-	//{
-	//	if (m_pOwner->m_pParent->isGround())
-	//	{
-	//		m_pOwner->m_eAction = PlayerController::EAction::Jump;
-	//	}
-		//else
-		//{
-		//	// 날기
-		//	isFly = true;
-		//	m_pOwner->m_eAction = PlayerController::EAction::Fly;
-		//	m_pOwner->m_pEffectFly = ObjectManager::Get().TakeObject(L"EFly");
-		//	m_pOwner->m_pEffectFly->SetParent(m_pOwner->m_pParent);
-		//}
-	//}
-	//if (isFly && Input::GetKeyState(VK_SPACE) == EKeyState::HOLD)
-	//{
-	//	m_pOwner->m_curMP -= (0.65f + m_pOwner->m_RegenMP) * spf;
-	//	if (m_pOwner->m_curMP <= 0.0f)
-	//	{
-	//		isFly = false;
-	//		m_pOwner->m_eAction = PlayerController::EAction::FlyEnd;
-	//		if (m_pOwner->m_pEffectFly != nullptr)
-	//		{
-	//			ObjectManager::Get().DisableObject(m_pOwner->m_pEffectFly);
-	//			m_pOwner->m_pEffectFly = nullptr;
-	//		}
-	//	}
-	//}
-	//if (Input::GetKeyState(VK_SPACE) == EKeyState::UP)
-	//{
-	//	isFly = false;
-	//	m_pOwner->m_eAction = PlayerController::EAction::FlyEnd;
-	//	if (m_pOwner->m_pEffectFly != nullptr)
-	//	{
-	//		ObjectManager::Get().DisableObject(m_pOwner->m_pEffectFly);
-	//		m_pOwner->m_pEffectFly = nullptr;
-	//	}
-	//}
 
 
 	// L 클릭
@@ -195,7 +147,7 @@ bool PlayerStateLSkill::Process(const float& spf) noexcept
 			return true;
 		}
 	}
-	m_pOwner->m_DelayFrame -= spf;
+	m_pOwner->m_DelayFrame -= spf * PacketManager::Get().pMyInfo->MotionRate;
 	if (m_pOwner->m_DelayFrame <= 0.0f)
 	{
 		m_pOwner->SetState(EPlayerState::Basic);
@@ -236,7 +188,7 @@ void PlayerStateRSkill::StateInit(PlayerController* pOwner) noexcept
 }
 bool PlayerStateRSkill::Process(const float& spf) noexcept
 {
-	m_pOwner->m_DelayFrame -= spf;
+	m_pOwner->m_DelayFrame -= spf * PacketManager::Get().pMyInfo->MotionRate;
 	if (m_pOwner->m_DelayFrame <= 0.0f)
 	{
 		m_pOwner->SetState(EPlayerState::Basic);
@@ -292,7 +244,7 @@ bool PlayerStateGuard::Process(const float& spf) noexcept
 {
 	if (m_pOwner->m_DelayFrame >= 0.0f)
 	{
-		m_pOwner->m_DelayFrame -= spf;
+		m_pOwner->m_DelayFrame -= spf * PacketManager::Get().pMyInfo->MotionRate;
 		return true;
 	}
 
@@ -405,7 +357,7 @@ bool ArcherStateBasic::Process(const float& spf) noexcept
 	m_pOwner->m_eAction = PlayerController::EAction::Idle;
 	if (m_pOwner->m_DelayFrame >= 0.0f)
 	{
-		m_pOwner->m_DelayFrame -= spf;
+		m_pOwner->m_DelayFrame -= spf * PacketManager::Get().pMyInfo->MotionRate;
 		return false;
 	}
 
@@ -503,10 +455,10 @@ void ArcherStateLSkill::StateInit(PlayerController* pOwner) noexcept
 }
 bool ArcherStateLSkill::Process(const float& spf) noexcept
 {
-	m_pOwner->m_DelayFrame -= (spf + spf * PacketManager::Get().pMyInfo->StatDex * 0.1f);
+	m_pOwner->m_DelayFrame -= (spf * PacketManager::Get().pMyInfo->MotionRate);
 	if (m_pOwner->m_DelayFrame <= 0.0f)
 	{
-		m_pOwner->m_chargeCount += (spf + spf * PacketManager::Get().pMyInfo->StatDex * 0.1f);
+		m_pOwner->m_chargeCount += (spf * PacketManager::Get().pMyInfo->MotionRate);
 		// 차징
 		if (m_pOwner->m_chargeCount >= 3.0f)
 		{
@@ -539,7 +491,7 @@ bool ArcherStateLSkill::Process(const float& spf) noexcept
 		}
 	}
 
-	m_pOwner->m_chargeCount += (spf + spf * PacketManager::Get().pMyInfo->StatDex * 0.1f);
+	m_pOwner->m_chargeCount += (spf * PacketManager::Get().pMyInfo->MotionRate);
 	if (Input::GetKeyState(VK_LBUTTON) == EKeyState::FREE || 
 		m_pOwner->m_curMP <= 0.0f)
 	{
@@ -595,10 +547,10 @@ void ArcherStateRSkill::StateInit(PlayerController* pOwner) noexcept
 }
 bool ArcherStateRSkill::Process(const float& spf) noexcept
 {
-	m_pOwner->m_DelayFrame -= spf;
+	m_pOwner->m_DelayFrame -= spf * PacketManager::Get().pMyInfo->MotionRate;
 	if (m_pOwner->m_DelayFrame <= 0.0f)
 	{
-		m_pOwner->SetState(EPlayerState::Basic);
+		m_pOwner->SetState(EPlayerState::Wait);
 		m_pOwner->m_eAction = PlayerController::EAction::Special;
 		m_pOwner->m_DelayFrame = 0.65f;
 		return true;
@@ -633,10 +585,10 @@ void ArcherStateDash::StateInit(PlayerController* pOwner) noexcept
 }
 bool ArcherStateDash::Process(const float& spf) noexcept
 {
-	m_pOwner->m_DelayFrame -= spf;
+	m_pOwner->m_DelayFrame -= spf * PacketManager::Get().pMyInfo->MotionRate;
 	if (m_pOwner->m_DelayFrame <= 0.0f)
 	{
-		m_pOwner->SetState(EPlayerState::Basic);
+		m_pOwner->SetState(EPlayerState::Wait);
 		return true;
 	}
 
@@ -667,7 +619,7 @@ void ArcherStateWait::StateInit(PlayerController* pOwner) noexcept
 }
 bool ArcherStateWait::Process(const float& spf) noexcept
 {
-	m_pOwner->m_DelayFrame -= (spf + spf * PacketManager::Get().pMyInfo->StatDex * 0.05f);
+	m_pOwner->m_DelayFrame -= (spf * PacketManager::Get().pMyInfo->MotionRate);
 	if (m_pOwner->m_DelayFrame <= 0.0f)
 	{
 		m_pOwner->SetState(EPlayerState::Basic);
@@ -707,7 +659,7 @@ bool MageStateBasic::Process(const float& spf) noexcept
 {
 	if (m_pOwner->m_DelayFrame >= 0.0f)
 	{
-		m_pOwner->m_DelayFrame -= spf;
+		m_pOwner->m_DelayFrame -= spf * PacketManager::Get().pMyInfo->MotionRate;
 		return false;
 	}
 
@@ -766,9 +718,9 @@ bool MageStateBasic::Process(const float& spf) noexcept
 	// R 클릭
 	if (Input::GetKeyState(EMouseButton::Right) == EKeyState::DOWN &&
 		m_pOwner->m_curDelayRSkill <= 0.0f &&
-		m_pOwner->m_curMP >= 0.8f)
+		m_pOwner->m_curMP >= 0.7f)
 	{
-		m_pOwner->m_curMP -= 0.8f;
+		m_pOwner->m_curMP -= 0.7f;
 		m_pOwner->SetState(EPlayerState::RSkill);
 		return true;
 	}
@@ -796,7 +748,7 @@ void MageStateLSkill::StateInit(PlayerController* pOwner) noexcept
 }
 bool MageStateLSkill::Process(const float& spf) noexcept
 {
-	m_pOwner->m_DelayFrame -= spf;
+	m_pOwner->m_DelayFrame -= spf * PacketManager::Get().pMyInfo->MotionRate;
 
 	if (m_pOwner->m_DelayFrame <= 0.0f)
 	{
@@ -837,7 +789,7 @@ void MageStateRSkill::StateInit(PlayerController* pOwner) noexcept
 }
 bool MageStateRSkill::Process(const float& spf) noexcept
 {
-	m_pOwner->m_DelayFrame -= spf;
+	m_pOwner->m_DelayFrame -= spf * PacketManager::Get().pMyInfo->MotionRate;
 
 	if (m_pOwner->m_DelayFrame <= 0.0f)
 	{
@@ -878,7 +830,7 @@ void MageStateDash::StateInit(PlayerController* pOwner) noexcept
 }
 bool MageStateDash::Process(const float& spf) noexcept
 {
-	m_pOwner->m_DelayFrame -= spf;
+	m_pOwner->m_DelayFrame -= spf * PacketManager::Get().pMyInfo->MotionRate;
 	if (m_pOwner->m_DelayFrame <= 0.0f)
 	{
 		// 준비

@@ -61,6 +61,8 @@ struct UserInfo
 	UCHAR StatDex	= 0;
 	UCHAR StatInt	= 0;
 	UCHAR StatLuk	= 0;
+	float AttackRate = 1.0f;
+	float MotionRate = 1.0f;
 
 	UCHAR DataSize	= 0;
 	WCHAR UserID[11];

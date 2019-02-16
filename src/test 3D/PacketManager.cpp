@@ -378,7 +378,7 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 				auto pEffect = ObjectManager::Get().TakeObject(L"EPLevelUp");
 				pEffect->SetPosition(iter->second->GetPosition());
 				//pEffect->SetParent(iter->second);
-				iter->second->m_pPhysics->m_maxHP = 1.0f + pMyInfo->StatLuk * 0.2f;
+				iter->second->m_pPhysics->m_maxHP = 1.0f + pMyInfo->StatStr * 0.2f;
 				iter->second->HealHP(iter->second->m_pPhysics->m_maxHP * 0.5f);
 			}
 		}

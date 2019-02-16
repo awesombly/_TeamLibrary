@@ -76,6 +76,7 @@ public:
 	const float GetVelocitySq()						  const noexcept;
 	///
 	void SetDamage(const float& value, const UCHAR& stat)	noexcept;
+	void SetDamage(const float& value)						noexcept;
 	//void SetArmor(const UCHAR& armorStat)					noexcept;
 	void OperHP(const float& value)							noexcept;
 	void HealHP(const float& value)							noexcept;

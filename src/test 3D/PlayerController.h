@@ -23,7 +23,7 @@ public:
 		NBackwardLeft = 69, NBackwardRight = 72,
 		Jump		= 100,	Dance1, Dance2, Dance3, LSkill, RSkill, Fly, FlyEnd, 
 		Dash, DashLeft, DashRight, Run, RunLeft, RunRight, 
-		Special,		Special2, Special3, Attack,
+		Special,		Special2, Special3, Attack, Wait,
 		ChargeAttack,	ChargeAttack2, LCharging, LCharge1, LCharge2,
 		ShockWave,		ThrowBomb,	ITimeBomb, IShockBomb, IMine, IMissile, INuclear, IPotion,
 	};
@@ -70,7 +70,6 @@ public:
 	UCHAR		m_statPoint			= 0;
 	float		m_moveSpeed;
 	float		m_jumpPower;
-	float		m_dexSpeed;
 	///
 	float		m_DelayFrame = 0.0f;
 	float		m_DelayRespawn;
@@ -80,6 +79,7 @@ public:
 	float		m_DelayRSkill;
 	float		m_DelayDash;
 	float		m_RegenMP;
+	float		m_RegenHP;
 										 
 	float		m_curDelayRespawn	 = 0.0f;
 	float		m_curDelayEnemyPanel = 0.0f;
@@ -109,6 +109,8 @@ public:
 	UCHAR		m_upgradeArmor = 0;
 	UCHAR		m_upgradeAcce1 = 0;
 	UCHAR		m_upgradeAcce2 = 0;
+
+	int			m_money;
 private:
 	void SendGiantMode(const float& spf)											noexcept;
 public:

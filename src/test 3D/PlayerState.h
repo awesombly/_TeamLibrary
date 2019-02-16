@@ -23,7 +23,6 @@ public:
 	PlayerState(const EPlayerState& state) : m_myState(state) {};
 	virtual ~PlayerState() = default;
 
-	bool CommonProcess(const float& spf) noexcept;
 	virtual bool Process(const float& spf) noexcept = 0;
 	virtual void StateInit(PlayerController* pOwner) noexcept = 0;
 };

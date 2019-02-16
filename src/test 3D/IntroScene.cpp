@@ -176,7 +176,7 @@ void IntroScene::SetObjects() noexcept
 	//	return; spf; accTime; pTrans;
 	//};
 	//ObjectManager::Get().Lights.front()->AddComponent(pTrans);
-	ObjectManager::Get().Lights.front()->SetRotation(Quaternion::Down * PI * 0.35f);
+	ObjectManager::Get().Lights.front()->SetRotation(Quaternion::Up * PI * 0.65f);
 	ObjectManager::Get().Lights.front()->SetPosition(0.0f, 550.0f, 800.0f);
 	//ObjectManager::Get().Lights.front()->SetFocus(Vector3::Zero);
 	// 라이트 랜더러

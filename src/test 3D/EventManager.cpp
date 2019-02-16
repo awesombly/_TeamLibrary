@@ -137,6 +137,8 @@ namespace MyEvent {
 				if (PacketManager::Get().pMyInfo->UserSocket == pA->m_pPhysics->UserSocket)
 				{
 					PlayerController::Get().HitEvent(pB);
+					PacketManager::Get().pMyInfo->Score += (int)(pA->m_pPhysics->m_damage * 100.0f);
+					PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
 				}
 			}	break;
 			case ETag::Enemy:
@@ -198,6 +200,8 @@ namespace MyEvent {
 			 	if (PacketManager::Get().pMyInfo->UserSocket == pA->m_pPhysics->UserSocket)
 			 	{
 			 		PlayerController::Get().HitEvent(pB);
+					PacketManager::Get().pMyInfo->Score += (int)(pA->m_pPhysics->m_damage * 100.0f);
+					PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
 			 	}
 			 }	break;
 			 case ETag::Enemy:
@@ -310,7 +314,7 @@ namespace MyEvent {
 		auto pObject = ObjectManager::Get().TakeObject(L"PBoom");
 		pObject->SetPosition(pA->GetCenter());
 		pObject->SetScale(Vector3::One);
-		pObject->m_pPhysics->m_damage = 0.5f;
+		pObject->m_pPhysics->m_damage = pA->m_pPhysics->m_damage;
 		pObject->m_pPhysics->UserSocket = pA->m_pPhysics->UserSocket;
 		SoundManager::Get().PlayQueue("SE_bomb.mp3", pA->GetCenter(), PlayerController::Get().SoundRange);
 		ObjectManager::Get().DisableObject(pA->m_pParent);
@@ -707,7 +711,7 @@ namespace TimeEvent {
 namespace DyingEvent {
 	void ZombieDead(Collider* pCollider, const UINT& killUser)
 	{
-		if (RandomNormal() >= 0.8f)
+		if (RandomNormal() >= 0.8f * 5.0f / (5.0f + PacketManager::Get().pMyInfo->StatLuk))
 		{
 			auto pObject = ObjectManager::Get().TakeObject(L"ItemBox");
 			pObject->SetPosition(pCollider->GetCenter());
@@ -720,7 +724,7 @@ namespace DyingEvent {
 
 	void ZombieExDead(Collider* pCollider, const UINT& killUser)
 	{
-		if (RandomNormal() >= 0.4f)
+		if (RandomNormal() >= 0.4f * 5.0f / (5.0f + PacketManager::Get().pMyInfo->StatLuk))
 		{
 			auto pObject = ObjectManager::Get().TakeObject(L"ItemBox");
 			pObject->SetPosition(pCollider->GetCenter());
@@ -736,6 +740,12 @@ namespace DyingEvent {
 		auto pObject = ObjectManager::Get().TakeObject(L"ItemBox");
 		pObject->SetPosition(pCollider->GetCenter());
 		pObject->SetHP(10000.0f);
+		if (RandomNormal() >= 0.5f * 5.0f / (5.0f + PacketManager::Get().pMyInfo->StatLuk))
+		{
+			auto pObject = ObjectManager::Get().TakeObject(L"ItemBox");
+			pObject->SetPosition(pCollider->GetCenter());
+			pObject->SetHP(10000.0f);
+		}
 
 		PlayerController::Get().OperEXP(1.0f);
 		auto pEffect = ObjectManager::Get().TakeObject(L"EZDead3");

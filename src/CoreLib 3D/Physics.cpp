@@ -81,6 +81,11 @@ void Physics::SetDamage(const float& value, const UCHAR& stat)	noexcept
 {
 	m_pPhysics->m_damage = value + (value * stat * 0.15f);
 }
+void Physics::SetDamage(const float& value)	noexcept
+{
+	m_pPhysics->m_damage = value;
+}
+
 //void Physics::SetArmor(const UCHAR& armorStat)	noexcept
 //{
 //	m_pPhysics->m_armor = 5.0f / (5 + armorStat);
