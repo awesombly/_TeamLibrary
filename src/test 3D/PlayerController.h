@@ -59,7 +59,6 @@ private:
 	//
 	const float	MoveSpeed = 105.0f;
 	const float	JumpPower = 210.0f;
-	
 public:
 	map<int, void(*)(PlayerController*, void*)> m_ItemList;
 	UIManager*  pUIManager		= nullptr;
@@ -71,10 +70,12 @@ public:
 	UCHAR		m_statPoint			= 0;
 	float		m_moveSpeed;
 	float		m_jumpPower;
+	float		m_dexSpeed;
 	///
 	float		m_DelayFrame = 0.0f;
 	float		m_DelayRespawn;
 	float		m_DelayEnemyPanel;
+
 	float		m_DelayLSkill;
 	float		m_DelayRSkill;
 	float		m_DelayDash;
@@ -82,9 +83,10 @@ public:
 										 
 	float		m_curDelayRespawn	 = 0.0f;
 	float		m_curDelayEnemyPanel = 0.0f;
+
 	float		m_curDelayLSkill	 = 0.0f;
-	float		m_curDelayDash		 = 0.0f;
 	float		m_curDelayRSkill	 = 0.0f;
+	float		m_curDelayDash		 = 0.0f;
 
 	char		m_defencePoint		 = 0;
 	float		m_chargeCount		 = 0.0f;
@@ -102,6 +104,11 @@ public:
 
 	D3DXVECTOR3 m_CarpetPos[4];
 	bool		m_canChurh = false;
+
+	UCHAR		m_upgradeWeapon = 0;
+	UCHAR		m_upgradeArmor = 0;
+	UCHAR		m_upgradeAcce1 = 0;
+	UCHAR		m_upgradeAcce2 = 0;
 private:
 	void SendGiantMode(const float& spf)											noexcept;
 public:

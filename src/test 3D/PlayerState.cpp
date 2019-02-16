@@ -24,7 +24,8 @@ bool PlayerStateBasic::Process(const float& spf) noexcept
 		if ((m_pOwner->m_berserkFrame -= spf) <= 1.0f)
 		{
 			// 변수 설정
-			m_pOwner->GetParent()->SetArmor(m_pOwner->m_defencePoint -= 10);
+			m_pOwner->m_defencePoint = max(m_pOwner->m_defencePoint - 10, 2);
+			m_pOwner->GetParent()->SetArmor(m_pOwner->m_defencePoint + m_pOwner->m_upgradeArmor);
 			m_pOwner->SendPhysicsInfo();
 
 			m_pOwner->m_berserkFrame = 0.0f;
@@ -183,7 +184,8 @@ bool PlayerStateLSkill::Process(const float& spf) noexcept
 		if ((m_pOwner->m_berserkFrame -= spf) <= 1.0f)
 		{
 			// 변수 설정
-			m_pOwner->GetParent()->SetArmor(m_pOwner->m_defencePoint -= 10);
+			m_pOwner->m_defencePoint = max(m_pOwner->m_defencePoint - 10, 2);
+			m_pOwner->GetParent()->SetArmor(m_pOwner->m_defencePoint + m_pOwner->m_upgradeArmor);
 			m_pOwner->SendPhysicsInfo();
 
 			m_pOwner->m_berserkFrame = 0.0f;
@@ -240,7 +242,8 @@ bool PlayerStateRSkill::Process(const float& spf) noexcept
 		m_pOwner->SetState(EPlayerState::Basic);
 		m_pOwner->m_eAction = PlayerController::EAction::ChargeAttack;
 		// 변수 설정
-		m_pOwner->GetParent()->SetArmor(m_pOwner->m_defencePoint += 10);
+		m_pOwner->m_defencePoint += 10;
+		m_pOwner->GetParent()->SetArmor(m_pOwner->m_defencePoint + m_pOwner->m_upgradeArmor);
 		m_pOwner->SendPhysicsInfo();
 
 		m_pOwner->m_berserkFrame = 18.0f;
@@ -280,7 +283,8 @@ void PlayerStateGuard::StateInit(PlayerController* pOwner) noexcept
 	// 변수 설정
 	m_pOwner->GetParent()->SetGravityScale(3.0f);
 	m_pOwner->GetParent()->m_pPhysics->m_damping = 2.0f;
-	m_pOwner->GetParent()->SetArmor(m_pOwner->m_defencePoint += 45);
+	m_pOwner->m_defencePoint += 45;
+	m_pOwner->GetParent()->SetArmor(m_pOwner->m_defencePoint + m_pOwner->m_upgradeArmor);
 	m_pOwner->SendPhysicsInfo();
 	
 }
@@ -317,7 +321,8 @@ bool PlayerStateGuard::Process(const float& spf) noexcept
 		{
 			m_pOwner->GetParent()->SetGravityScale(3.0f);
 			m_pOwner->GetParent()->m_pPhysics->m_damping = 0.3f;
-			m_pOwner->GetParent()->SetArmor(max(m_pOwner->m_defencePoint -= 45, 2));
+			m_pOwner->m_defencePoint = max(m_pOwner->m_defencePoint - 45, 2);
+			m_pOwner->GetParent()->SetArmor(m_pOwner->m_defencePoint + m_pOwner->m_upgradeArmor);
 			m_pOwner->SendPhysicsInfo();
 		}
 		m_pOwner->SetState(EPlayerState::Basic);
@@ -344,7 +349,8 @@ bool PlayerStateRun::Process(const float& spf) noexcept
 		if ((m_pOwner->m_berserkFrame -= spf) <= 1.0f)
 		{
 			// 변수 설정
-			m_pOwner->GetParent()->SetArmor(m_pOwner->m_defencePoint -= 10);
+			m_pOwner->m_defencePoint = max(m_pOwner->m_defencePoint - 10, 2);
+			m_pOwner->GetParent()->SetArmor(m_pOwner->m_defencePoint + m_pOwner->m_upgradeArmor);
 			m_pOwner->SendPhysicsInfo();
 
 			m_pOwner->m_berserkFrame = 0.0f;
@@ -584,7 +590,7 @@ void ArcherStateRSkill::StateInit(PlayerController* pOwner) noexcept
 {
 	m_pOwner = pOwner;
 	m_pOwner->m_eAction = PlayerController::EAction::RSkill;
-	m_pOwner->m_DelayFrame = 0.3f;
+	m_pOwner->m_DelayFrame = 0.35f;
 	m_pOwner->m_moveSpeed *= 0.4f;
 }
 bool ArcherStateRSkill::Process(const float& spf) noexcept
@@ -594,7 +600,7 @@ bool ArcherStateRSkill::Process(const float& spf) noexcept
 	{
 		m_pOwner->SetState(EPlayerState::Basic);
 		m_pOwner->m_eAction = PlayerController::EAction::Special;
-		m_pOwner->m_DelayFrame = 0.5f;
+		m_pOwner->m_DelayFrame = 0.65f;
 		return true;
 	}
 

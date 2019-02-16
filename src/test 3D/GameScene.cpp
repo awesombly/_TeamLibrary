@@ -88,7 +88,6 @@ bool GameScene::Frame() noexcept
 		HostFrame();
 	}
 	///
-	UIManager::Get().m_pXPush->m_bRender = false;
 	DxManager::Get().Frame();
 	ObjectManager::Get().Frame(Timer::SPF, Timer::AccumulateTime);
 	m_MapObjects.Frame(Timer::SPF, Timer::AccumulateTime);
@@ -111,19 +110,19 @@ bool GameScene::Frame() noexcept
 
 
 	/// 재생성
-	if (Input::GetKeyState('B') == EKeyState::DOWN)
+	if (Input::GetKeyState(VK_NUMPAD1) == EKeyState::DOWN)
 	{
 		if (PlayerController::Get().GetParent() != nullptr)
 			PlayerController::Get().GetParent()->m_pPhysics->UserSocket = (UINT)-1;
 		PlayerController::Get().SendReqRespawn(PlayerController::ECharacter::EGuard);
 	}
-	if (Input::GetKeyState('N') == EKeyState::DOWN)
+	if (Input::GetKeyState(VK_NUMPAD2) == EKeyState::DOWN)
 	{
 		if (PlayerController::Get().GetParent() != nullptr)
 			PlayerController::Get().GetParent()->m_pPhysics->UserSocket = (UINT)-1;
 		PlayerController::Get().SendReqRespawn(PlayerController::ECharacter::EArcher);
 	}
-	if (Input::GetKeyState('M') == EKeyState::DOWN)
+	if (Input::GetKeyState(VK_NUMPAD3) == EKeyState::DOWN)
 	{
 		if (PlayerController::Get().GetParent() != nullptr)
 			PlayerController::Get().GetParent()->m_pPhysics->UserSocket = (UINT)-1;
@@ -684,6 +683,7 @@ void GameScene::LoadUI() noexcept
 	m_pVolume = (JSliderCtrl*)pUIRoot->find_child(L"Set_Volum");
 	m_pVolume->EventHover.first = [](void* pSlider) {
 		SoundManager::Get().SetMasterVolume(*((JSliderCtrl*)pSlider)->GetValue());
+		ErrorMessage("볼륨 : " + to_string(*((JSliderCtrl*)pSlider)->GetValue()));
 	};
 	m_pVolume->EventHover.second = m_pVolume;
 	m_pVolume->SetValue(0.5f);
@@ -930,10 +930,6 @@ void GameScene::LoadUI() noexcept
 	};
 	// 대장간
 	UIManager::Get().m_pSmithyPanel = (JPanel*)pUIRoot->find_child(L"Smithy_Panel");
-	UIManager::Get().m_pSmithyBtnWeapon = (JButtonCtrl*)pUIRoot->find_child(L"Smithy_Weapon_Btn");
-	UIManager::Get().m_pSmithyBtnArmor = (JButtonCtrl*)pUIRoot->find_child(L"Smithy_Armor_Btn");
-	UIManager::Get().m_pSmithyBtnAcce1 = (JButtonCtrl*)pUIRoot->find_child(L"Smithy_Accessories_Btn");
-	UIManager::Get().m_pSmithyBtnAcce2 = (JButtonCtrl*)pUIRoot->find_child(L"Smithy_Accessories2_Btn");
 	UIManager::Get().m_pSmithyInfo1Weapon = (JTextCtrl*)pUIRoot->find_child(L"Smithy_Weapon_Info_Text0");
 	UIManager::Get().m_pSmithyInfo2Weapon = (JTextCtrl*)pUIRoot->find_child(L"Smithy_Weapon_Info_Text1");
 	UIManager::Get().m_pSmithyInfo1Armor = (JTextCtrl*)pUIRoot->find_child(L"Smithy_Armor_Info_Text0");
@@ -942,6 +938,44 @@ void GameScene::LoadUI() noexcept
 	UIManager::Get().m_pSmithyInfo2Acce1 = (JTextCtrl*)pUIRoot->find_child(L"Smithy_Accessories_Info_Text1");
 	UIManager::Get().m_pSmithyInfo1Acce2 = (JTextCtrl*)pUIRoot->find_child(L"Smithy_Accessories2_Info_Text0");
 	UIManager::Get().m_pSmithyInfo2Acce2 = (JTextCtrl*)pUIRoot->find_child(L"Smithy_Accessories2_Info_Text1");
+	UIManager::Get().m_pSmithyBtnWeapon = (JTextCtrl*)pUIRoot->find_child(L"Smithy_Weapon_Btn");
+	UIManager::Get().m_pSmithyBtnWeapon->EventClick.first = [](void*) {
+		//if()
+		{
+			++PlayerController::Get().m_upgradeWeapon;
+			++PacketManager::Get().pMyInfo->StatStr;
+			PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
+		}
+	};
+	UIManager::Get().m_pSmithyBtnArmor = (JTextCtrl*)pUIRoot->find_child(L"Smithy_Armor_Btn");
+	UIManager::Get().m_pSmithyBtnArmor->EventClick.first = [](void*) {
+		//if()
+		{
+			++PlayerController::Get().m_upgradeArmor;
+			if (PlayerController::Get().GetParent() != nullptr)
+				PlayerController::Get().GetParent()->SetArmor(PlayerController::Get().m_defencePoint + PlayerController::Get().m_upgradeArmor);
+		}
+	};
+	UIManager::Get().m_pSmithyBtnAcce1 = (JTextCtrl*)pUIRoot->find_child(L"Smithy_Accessories_Btn");
+	UIManager::Get().m_pSmithyBtnAcce1->EventClick.first = [](void*) {
+		//if()
+		{
+			++PlayerController::Get().m_upgradeAcce1;
+			PlayerController::Get().UpdateStatus(false);
+		}
+	};
+	UIManager::Get().m_pSmithyBtnAcce2 = (JTextCtrl*)pUIRoot->find_child(L"Smithy_Accessories2_Btn");
+	UIManager::Get().m_pSmithyBtnAcce2->EventClick.first = [](void*) {
+		//if()
+		{
+			++PlayerController::Get().m_upgradeAcce2;
+			++PacketManager::Get().pMyInfo->StatStr;
+			++PacketManager::Get().pMyInfo->StatDex;
+			++PacketManager::Get().pMyInfo->StatInt;
+			++PacketManager::Get().pMyInfo->StatLuk;
+			PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
+		}
+	};
 	///
 	ObjectManager::Get().PushObject(pUIRoot);
 	UI::InGameEvent(pUIRoot);

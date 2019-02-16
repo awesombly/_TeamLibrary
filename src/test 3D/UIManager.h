@@ -76,10 +76,10 @@ public:
 	JButtonCtrl*	m_pShopItem7			= nullptr;
 	// ¥Î¿Â∞£
 	JPanel*			m_pSmithyPanel			= nullptr;
-	JButtonCtrl*	m_pSmithyBtnWeapon		= nullptr;
-	JButtonCtrl*	m_pSmithyBtnArmor		= nullptr;
-	JButtonCtrl*	m_pSmithyBtnAcce1		= nullptr;
-	JButtonCtrl*	m_pSmithyBtnAcce2		= nullptr;
+	JTextCtrl*		m_pSmithyBtnWeapon		= nullptr;
+	JTextCtrl*		m_pSmithyBtnArmor		= nullptr;
+	JTextCtrl*		m_pSmithyBtnAcce1		= nullptr;
+	JTextCtrl*		m_pSmithyBtnAcce2		= nullptr;
 
 	JTextCtrl*		m_pSmithyInfo1Weapon = nullptr;
 	JTextCtrl*		m_pSmithyInfo2Weapon = nullptr;
@@ -91,6 +91,8 @@ public:
 	JTextCtrl*		m_pSmithyInfo2Acce2 = nullptr;
 	///
 	JImageCtrl*		m_pXPush = nullptr;
+public:
+	void			AddSlotItem(const wstring_view& itemName);
 private:
 	friend class ISingleton<UIManager>;
 	UIManager() = default;

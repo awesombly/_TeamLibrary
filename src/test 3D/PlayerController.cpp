@@ -445,8 +445,8 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 			pItem->SetRotation(pObject->GetRotation());
 			pItem->SetScale(Vector3::One * 3.0f);
 			pItem->SetForce((forward * 0.4f + Vector3::Up) * 540.0f);
+			pItem->SetDamage(0.4f, PacketManager::Get().UserList[socket]->StatStr);
 			pItem->m_pPhysics->UserSocket = socket;
-			//pItem->SetDamage(0.3f, PacketManager::Get().UserList[socket]->StatStr);
 			pItem->GetCollider()->AddIgnoreList(pObject->GetCollider());
 		}	break;
 		case Dash:
@@ -840,14 +840,14 @@ void PlayerController::ResetOption() noexcept
 void PlayerController::UpdateStatus(const bool& infoUpdate) noexcept
 {
 	auto pUserInfo = PacketManager::Get().pMyInfo;
-	m_moveSpeed = MoveSpeed + MoveSpeed * pUserInfo->StatDex * 0.1f;
+	m_moveSpeed = MoveSpeed + MoveSpeed * pUserInfo->StatDex * 0.05f;
 	m_jumpPower = JumpPower;
-
+	m_dexSpeed = 1.0f + pUserInfo->StatDex * 0.05f;
 	m_DelayEnemyPanel = 3.0f;
 	m_DelayRespawn = 8.0f * 5.0f / (5.0f + pUserInfo->StatLuk);
-	m_DelayLSkill = 0.7f * 5.0f / (5.0f + pUserInfo->StatDex);
-	m_DelayDash = 2.5f * 5.0f / (5.0f + pUserInfo->StatDex);
-	m_DelayRSkill = 4.0f * 5.0f / (5.0f + pUserInfo->StatDex);
+	m_DelayLSkill = 0.7f * 5.0f / (5.0f + m_upgradeAcce1);
+	m_DelayRSkill = 4.0f * 5.0f / (5.0f + m_upgradeAcce1);
+	m_DelayDash = 2.5f * 5.0f / (5.0f + m_upgradeAcce1);
 	pUIManager->m_pLeftIcon->SetValue(m_curDelayDash, m_DelayDash, m_curDelayDash);
 	pUIManager->m_pRightIcon->SetValue(m_curDelayRSkill, m_DelayRSkill, m_curDelayDash);
 	m_RegenMP = 0.3f + pUserInfo->StatInt * 0.045f;
@@ -869,15 +869,28 @@ void PlayerController::UpdateStatus(const bool& infoUpdate) noexcept
 		pUIManager->m_pInfoMP->SetString(to_wstring((int)(m_curMP * 100.0f)) + L" / " + to_wstring((int)(m_maxMP * 100.0f)));
 		pUIManager->m_pInfoEXP->SetString(to_wstring((int)(m_EXP * 100.0f)) + L" / " + to_wstring((int)(m_NeedEXP * 100.0f)));
 		//pUIManager->m_pInfoName->SetString(pUserInfo->UserID);
-		pUIManager->m_pInfoAttackSpeed->SetString(to_wstring(1.0f / (5.0f / (5.0f + pUserInfo->StatDex))).substr(0, 4));
-		pUIManager->m_pInfoMoveSpeed->SetString(to_wstring(1.0f + pUserInfo->StatDex * 0.15f).substr(0, 4));
+		pUIManager->m_pInfoAttackSpeed->SetString(to_wstring(m_dexSpeed * 100.0f).substr(0, 5) + L" %");
+		pUIManager->m_pInfoMoveSpeed->SetString(to_wstring(m_dexSpeed * 100.0f).substr(0, 5) + L" %");
 		pUIManager->m_pInfoLevel->SetString(to_wstring(pUserInfo->Level));
-		pUIManager->m_pInfoDamage->SetString(to_wstring(1.0f + pUserInfo->StatStr * 0.15f).substr(0, 4));
+		if(m_upgradeWeapon >= 1)
+			pUIManager->m_pInfoDamage->SetString(to_wstring(100.0f + (pUserInfo->StatStr - m_upgradeWeapon) * 15.0f).substr(0, 5) + L" + " + to_wstring(m_upgradeWeapon * 15.0f).substr(0, 5) + L" %");
+		else
+			pUIManager->m_pInfoDamage->SetString(to_wstring(100.0f + pUserInfo->StatStr * 15.0f).substr(0, 5) + L" %");
 		pUIManager->m_pInfoSP->SetString(to_wstring(m_statPoint));
-		pUIManager->m_pInfoStr->SetString(to_wstring(pUserInfo->StatStr));
-		pUIManager->m_pInfoDex->SetString(to_wstring(pUserInfo->StatDex));
-		pUIManager->m_pInfoInt->SetString(to_wstring(pUserInfo->StatInt));
-		pUIManager->m_pInfoLuk->SetString(to_wstring(pUserInfo->StatLuk));
+		if (m_upgradeAcce2 >= 1)
+		{
+			pUIManager->m_pInfoStr->SetString(to_wstring(pUserInfo->StatStr - m_upgradeAcce2 - m_upgradeWeapon) + L" + " + to_wstring(m_upgradeAcce2));
+			pUIManager->m_pInfoDex->SetString(to_wstring(pUserInfo->StatDex - m_upgradeAcce2) + L" + " + to_wstring(m_upgradeAcce2));
+			pUIManager->m_pInfoInt->SetString(to_wstring(pUserInfo->StatInt - m_upgradeAcce2) + L" + " + to_wstring(m_upgradeAcce2));
+			pUIManager->m_pInfoLuk->SetString(to_wstring(pUserInfo->StatLuk - m_upgradeAcce2) + L" + " + to_wstring(m_upgradeAcce2));
+		}
+		else
+		{
+			pUIManager->m_pInfoStr->SetString(to_wstring(pUserInfo->StatStr - m_upgradeWeapon));
+			pUIManager->m_pInfoDex->SetString(to_wstring(pUserInfo->StatDex));
+			pUIManager->m_pInfoInt->SetString(to_wstring(pUserInfo->StatInt));
+			pUIManager->m_pInfoLuk->SetString(to_wstring(pUserInfo->StatLuk));
+		}
 	}
 }
 
@@ -921,7 +934,7 @@ void PlayerController::Possess(GameObject* pObject) noexcept
 				((Collider*)pCollider)->m_pivot = Vector3::Up * 40.0f * pObj->GetScale().x;
 			}
 		}
-		pObj->SetArmor(pPlayer->m_defencePoint);
+		pObj->SetArmor(pPlayer->m_defencePoint + pPlayer->m_upgradeArmor);
 		pPlayer->SendPhysicsInfo();
 		if (pPlayer->m_pEffectFly != nullptr)
 			ObjectManager::Get().DisableObject(pPlayer->m_pEffectFly);
@@ -1009,19 +1022,35 @@ void PlayerController::CheckTownCollision() noexcept
 			{
 				if (Input::GetKeyState('X') == EKeyState::DOWN)
 				{
-					if (UIManager::Get().m_pSmithyPanel->m_bRender)
+					if (pUIManager->m_pSmithyPanel->m_bRender)
 					{
 						// ²û
-						UIManager::Get().m_pSmithyPanel->m_bRender = false;
-						UIManager::Get().m_pMouseIcon->m_bRender = false;
+						pUIManager->m_pSmithyPanel->m_bRender = false;
+						pUIManager->m_pMouseIcon->m_bRender = false;
 					}
 					else
 					{
 						// Å´
-						UIManager::Get().m_pSmithyPanel->m_bRender = true;
-						UIManager::Get().m_pMouseIcon->m_bRender = true;
+						pUIManager->m_pSmithyPanel->m_bRender = true;
+						pUIManager->m_pMouseIcon->m_bRender = true;
 					}
 				}
+				pUIManager->m_pSmithyBtnWeapon->SetString(to_wstring((m_upgradeWeapon + 1) * 1000) + L" KG");
+				pUIManager->m_pSmithyBtnArmor->SetString(to_wstring((m_upgradeArmor + 1) * 1000) + L" KG");
+				pUIManager->m_pSmithyBtnAcce1->SetString(to_wstring((m_upgradeAcce1 + 1) * 1000) + L" KG");
+				pUIManager->m_pSmithyBtnAcce2->SetString(to_wstring((m_upgradeAcce2 + 1) * 3000) + L" KG");
+
+				pUIManager->m_pSmithyInfo1Weapon->SetString(L"Level " + to_wstring(m_upgradeWeapon) + L" ¡æ Level " + to_wstring(m_upgradeWeapon + 1));
+				pUIManager->m_pSmithyInfo2Weapon->SetString(L"Damage " + to_wstring((m_upgradeWeapon) * 15) + L"% ¡æ " + to_wstring((m_upgradeWeapon + 1) * 15) + L"%");
+
+				pUIManager->m_pSmithyInfo1Weapon->SetString(L"Level " + to_wstring(m_upgradeArmor) + L" ¡æ Level " + to_wstring(m_upgradeArmor + 1));
+				pUIManager->m_pSmithyInfo2Armor->SetString(L"Armor " + to_wstring((1.0f - (5.0f / (5.0f + m_defencePoint + m_upgradeArmor))) * 100.0f).substr(0, 4) + L"% ¡æ " + to_wstring((1.0f - (5.0f / (5.0f + m_defencePoint + m_upgradeArmor + 1))) * 100.0f).substr(0, 4) + L"%"); 
+
+				pUIManager->m_pSmithyInfo1Weapon->SetString(L"Level " + to_wstring(m_upgradeAcce1) + L" ¡æ Level " + to_wstring(m_upgradeAcce1 + 1));
+				pUIManager->m_pSmithyInfo2Acce1->SetString(L"Cooltime " + to_wstring((1.0f - (5.0f / (5.0f + m_upgradeAcce1))) * 100.0f).substr(0, 4) + L"% ¡æ " + to_wstring((1.0f - (5.0f / (5.0f + m_upgradeAcce1 + 1))) * 100.0f).substr(0, 4) + L"%");
+
+				pUIManager->m_pSmithyInfo1Weapon->SetString(L"Level " + to_wstring(m_upgradeAcce1) + L" ¡æ Level " + to_wstring(m_upgradeAcce2 + 1));
+				pUIManager->m_pSmithyInfo2Acce2->SetString(L"All Stat " + to_wstring(m_upgradeAcce2) + L" ¡æ " + to_wstring(m_upgradeAcce2));
 			}	break;
 			case ECarpet::Church:
 			{
@@ -1030,30 +1059,15 @@ void PlayerController::CheckTownCollision() noexcept
 					if (Input::GetKeyState('X') == EKeyState::DOWN)
 					{
 						PlayerController::Get().m_canChurh = false;
-						UIManager::Get().m_pRespawnEffect->SetEventTime(1.5f);
-						UIManager::Get().m_pRespawnEffect->EffectPlay();
+						pUIManager->m_pRespawnEffect->SetEventTime(1.5f);
+						pUIManager->m_pRespawnEffect->EffectPlay();
 
 						Packet_Float p_HealHP;
 						p_HealHP.KeyValue = PlayerController::Get().GetParent()->m_keyValue;
 						p_HealHP.Value = 10000.0f;
 						PacketManager::Get().SendPacket((char*)&p_HealHP, (USHORT)sizeof(Packet_Float), PACKET_HealHP);
 						// + Æ÷¼Ç
-						if (UIManager::Get().m_pSlot1->Empty())
-						{
-							UIManager::Get().m_pSlot1->AddItem(L"Potion_0");
-							return;
-						}
-						if (UIManager::Get().m_pSlot2->Empty())
-						{
-							UIManager::Get().m_pSlot2->AddItem(L"Potion_0");
-							return;
-						}
-						if (UIManager::Get().m_pSlot3->Empty())
-						{
-							UIManager::Get().m_pSlot3->AddItem(L"Potion_0");
-							return;
-						}
-						UIManager::Get().m_pInvenSlot->AddItem(L"Potion_0");
+						UIManager::Get().AddSlotItem(L"Potion_0");
 					}
 				}
 			}	break;
@@ -1061,17 +1075,17 @@ void PlayerController::CheckTownCollision() noexcept
 			{
 				if (Input::GetKeyState('X') == EKeyState::DOWN)
 				{
-					if (UIManager::Get().m_pShopPanel->m_bRender)
+					if (pUIManager->m_pShopPanel->m_bRender)
 					{
 						// ²û
-						UIManager::Get().m_pShopPanel->m_bRender = false;
-						UIManager::Get().m_pMouseIcon->m_bRender = false;
+						pUIManager->m_pShopPanel->m_bRender = false;
+						pUIManager->m_pMouseIcon->m_bRender = false;
 					}
 					else
 					{
 						// Å´
-						UIManager::Get().m_pShopPanel->m_bRender = true;
-						UIManager::Get().m_pMouseIcon->m_bRender = true;
+						pUIManager->m_pShopPanel->m_bRender = true;
+						pUIManager->m_pMouseIcon->m_bRender = true;
 					}
 				}
 			}	break;
@@ -1079,26 +1093,26 @@ void PlayerController::CheckTownCollision() noexcept
 			{
 				if (Input::GetKeyState('X') == EKeyState::DOWN)
 				{
-					if (UIManager::Get().m_pTowerPanel->m_bRender)
+					if (pUIManager->m_pTowerPanel->m_bRender)
 					{
 						// ²û
-						UIManager::Get().m_pTowerPanel->m_bRender = false;
-						UIManager::Get().m_pMouseIcon->m_bRender = false;
+						pUIManager->m_pTowerPanel->m_bRender = false;
+						pUIManager->m_pMouseIcon->m_bRender = false;
 					}
 					else
 					{
 						// Å´
-						UIManager::Get().m_pTowerPanel->m_bRender = true;
-						UIManager::Get().m_pMouseIcon->m_bRender = true;
+						pUIManager->m_pTowerPanel->m_bRender = true;
+						pUIManager->m_pMouseIcon->m_bRender = true;
 					}
 				}
 			}	break;
 			}
-			UIManager::Get().m_pXPush->m_bRender = true;
+			pUIManager->m_pXPush->m_bRender = true;
 			return;
 		}
 	}
-	if (UIManager::Get().m_pXPush->m_bRender)
+	if (pUIManager->m_pXPush->m_bRender)
 	{
 		pUIManager->m_pXPush->m_bRender = false;
 		pUIManager->m_pShopPanel->m_bRender = false;

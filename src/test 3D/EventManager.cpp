@@ -7,127 +7,6 @@
 
 
 namespace MyEvent {
-	//void CarpetChurch(Collider* pA, Collider* pB)
-	//{
-	//	if (pB != nullptr &&
-	//		pB->m_pParent == PlayerController::Get().GetParent() &&
-	//		PlayerController::Get().m_canChurh)
-	//	{
-	//		UIManager::Get().m_pXPush->m_bRender = true;
-	//		if (Input::GetKeyState('X') == EKeyState::DOWN)
-	//		{
-	//			UIManager::Get().m_pXPush->m_bRender = false;
-	//			PlayerController::Get().m_canChurh = false;
-	//			UIManager::Get().m_pRespawnEffect->SetEventTime(1.5f);
-	//			UIManager::Get().m_pRespawnEffect->EffectPlay();
-
-	//			Packet_Float p_HealHP;
-	//			p_HealHP.KeyValue = PlayerController::Get().GetParent()->m_keyValue;
-	//			p_HealHP.Value = 10000.0f;
-	//			PacketManager::Get().SendPacket((char*)&p_HealHP, (USHORT)sizeof(Packet_Float), PACKET_HealHP);
-	//			// + Æ÷¼Ç
-	//			//auto value = JItem::Get()->m_pItemList[L"Potion_0"];
-	//			if (UIManager::Get().m_pSlot1->Empty())
-	//			{
-	//				UIManager::Get().m_pSlot1->AddItem(L"Potion_0");
-	//				return;
-	//			}
-	//			if (UIManager::Get().m_pSlot2->Empty())
-	//			{
-	//				UIManager::Get().m_pSlot2->AddItem(L"Potion_0");
-	//				return;
-	//			}
-	//			if (UIManager::Get().m_pSlot3->Empty())
-	//			{
-	//				UIManager::Get().m_pSlot3->AddItem(L"Potion_0");
-	//				return;
-	//			}
-	//			UIManager::Get().m_pInvenSlot->AddItem(L"Potion_0");
-	//		}
-	//	}
-	//}
-
-	//void CarpetSmithy(Collider* pA, Collider* pB)
-	//{
-	//	if (pB != nullptr &&
-	//		pB->m_pParent == PlayerController::Get().GetParent())
-	//	{
-	//		UIManager::Get().m_pXPush->m_bRender = true;
-	//		if (Input::GetKeyState('X') == EKeyState::DOWN)
-	//		{
-	//			if (UIManager::Get().m_pSmithyPanel->m_bRender)
-	//			{
-	//				// ²û
-	//				UIManager::Get().m_pXPush->m_bRender = false;
-	//				UIManager::Get().m_pSmithyPanel->m_bRender = false;
-	//				UIManager::Get().m_pMouseIcon->m_bRender = false;
-	//				pB->m_pParent->SetPosition(pA->GetCenter() - Normalize(pA->GetCenter()) * 100.0f);
-	//			}
-	//			else
-	//			{
-	//				// Å´
-	//				UIManager::Get().m_pXPush->m_bRender = false;
-	//				UIManager::Get().m_pSmithyPanel->m_bRender = true;
-	//				UIManager::Get().m_pMouseIcon->m_bRender = true;
-	//			}
-	//		}
-	//	}
-	//}
-
-	//void CarpetShop(Collider* pA, Collider* pB)
-	//{
-	//	if (pB != nullptr &&
-	//		pB->m_pParent == PlayerController::Get().GetParent())
-	//	{
-	//		UIManager::Get().m_pXPush->m_bRender = true;
-	//		if (Input::GetKeyState('X') == EKeyState::DOWN)
-	//		{
-	//			if (UIManager::Get().m_pShopPanel->m_bRender)
-	//			{
-	//				// ²û
-	//				UIManager::Get().m_pXPush->m_bRender = false;
-	//				UIManager::Get().m_pShopPanel->m_bRender = false;
-	//				UIManager::Get().m_pMouseIcon->m_bRender = false;
-	//				pB->m_pParent->SetPosition(pA->GetCenter() - Normalize(pA->GetCenter()) * 100.0f);
-	//			}
-	//			else
-	//			{
-	//				// Å´
-	//				UIManager::Get().m_pXPush->m_bRender = false;
-	//				UIManager::Get().m_pShopPanel->m_bRender = true;
-	//				UIManager::Get().m_pMouseIcon->m_bRender = true;
-	//			}
-	//		}
-	//	}
-	//}
-
-	//void CarpetTower(Collider* pA, Collider* pB)
-	//{
-	//	if (pB != nullptr &&
-	//		pB->m_pParent == PlayerController::Get().GetParent())
-	//	{
-	//		UIManager::Get().m_pXPush->m_bRender = true;
-	//		if (Input::GetKeyState('X') == EKeyState::DOWN)
-	//		{
-	//			if (UIManager::Get().m_pTowerPanel->m_bRender)
-	//			{
-	//				// ²û
-	//				UIManager::Get().m_pXPush->m_bRender = false;
-	//				UIManager::Get().m_pTowerPanel->m_bRender = false;
-	//				UIManager::Get().m_pMouseIcon->m_bRender = false;
-	//				pB->m_pParent->SetPosition(pA->GetCenter() - Normalize(pA->GetCenter()) * 100.0f);
-	//			}
-	//			else
-	//			{
-	//				// Å´
-	//				UIManager::Get().m_pXPush->m_bRender = false;
-	//				UIManager::Get().m_pTowerPanel->m_bRender = true;
-	//				UIManager::Get().m_pMouseIcon->m_bRender = true;
-	//			}
-	//		}
-	//	}
-	//}
-
 	void ForceWave(Collider* pA, Collider* pB) {
 		if (pB != nullptr && (pB->m_eTag == ETag::Enemy || pB->m_eTag == ETag::Ally))
 		{
@@ -688,22 +567,7 @@ namespace MyEvent {
 				{
 					if (--value < 0)
 					{
-						if (UIManager::Get().m_pSlot1->Empty())
-						{
-							UIManager::Get().m_pSlot1->AddItem(iter.first);
-							break;
-						}
-						if (UIManager::Get().m_pSlot2->Empty())
-						{
-							UIManager::Get().m_pSlot2->AddItem(iter.first);
-							break;
-						}
-						if (UIManager::Get().m_pSlot3->Empty())
-						{
-							UIManager::Get().m_pSlot3->AddItem(iter.first);
-							break;
-						}
-						UIManager::Get().m_pInvenSlot->AddItem(iter.first);
+						UIManager::Get().AddSlotItem(iter.first);
 						break;
 					}
 				}
@@ -804,7 +668,7 @@ namespace TimeEvent {
 			vecRot = { matRotation._31, matRotation._32, matRotation._33 };
 			pItem->SetForce(vecRot * (RandomNormal() * 180.0f + 180.0f));
 			pItem->m_pPhysics->UserSocket = pParent->m_pPhysics->UserSocket;
-			pItem->SetDamage(0.4f, PacketManager::Get().UserList[pParent->m_pPhysics->UserSocket]->StatStr);
+			pItem->m_pPhysics->m_damage = pParent->m_pPhysics->m_damage;
 			//pItem->GetCollider()->AddIgnoreList(pObject->GetCollider());
 		}
 		//SoundManager::Get().PlayQueue("SE_throw01.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);

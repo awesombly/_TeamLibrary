@@ -169,15 +169,15 @@ void IntroScene::SetObjects() noexcept
 	//ObjectManager::Get().SetProtoComponent(new RSphere(20, L"Sphere", L"None.png"));
 	ObjectManager::Get().SetProtoComponent(new RSphere(10, L"RowSphere", L"None.png"));
 	// 라이트
-	//auto pTrans = new CTransformer(Vector3::Up * 100.0f, Quaternion::Up * PI * 0.35f, Vector3::One);
+	//auto pTrans = new CTransformer(Vector3::Up * 550.0f, Quaternion::Down * PI * 0.35f, Vector3::One);
 	//pTrans->TransEvent = [](Transform* pParent, Transform* pTrans, const float& spf, const float& accTime) {
 	//	pParent->SetTransform(*pTrans);
-	//	pParent->Translate({ cosf(0.1f * accTime) * 200.0f, 0.0f, sinf(0.1f * accTime) * 200.0f });
+	//	pParent->Translate({ cosf(0.2f * accTime) * 800.0f, 0.0f, sinf(0.2f * accTime) * 800.0f });
 	//	return; spf; accTime; pTrans;
 	//};
-	//ObjectManager::Get().Lights.front()->AddComponent({ pTrans });
-	ObjectManager::Get().Lights.front()->SetRotation(Quaternion::Up * PI * 0.35f);
-	ObjectManager::Get().Lights.front()->SetPosition(0.0f, 550.0f, -800.0f);
+	//ObjectManager::Get().Lights.front()->AddComponent(pTrans);
+	ObjectManager::Get().Lights.front()->SetRotation(Quaternion::Down * PI * 0.35f);
+	ObjectManager::Get().Lights.front()->SetPosition(0.0f, 550.0f, 800.0f);
 	//ObjectManager::Get().Lights.front()->SetFocus(Vector3::Zero);
 	// 라이트 랜더러
 	auto pShpere = (Renderer*)ObjectManager::GetInstance().TakeComponent(L"RowSphere");
