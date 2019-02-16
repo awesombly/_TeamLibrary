@@ -115,8 +115,8 @@ bool LobbyScene::Frame() noexcept
 	{
 		static float frameCount = 0.0f;
 		frameCount += Timer::SPF;
-		m_pBackHero->Scaling(-m_pBackHero->GetScale() * Timer::SPF);
-		m_pBackHero->Translate(Timer::SPF * 0.01f, Timer::SPF * 0.01f, 0.0f);
+		//m_pBackHero->Scaling(-m_pBackHero->GetScale() * Timer::SPF);
+		m_pBackHero->Translate(Timer::SPF * 0.01f, Timer::SPF * 0.005f, Timer::SPF * 0.05f);
 		if (frameCount > 2.0f)
 		{
 			// Ω√¿€

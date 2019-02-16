@@ -546,9 +546,9 @@ bool GameMap::Init() noexcept
 
 #pragma region MyCarpet
 	m_carpet_blacksmith.SetPlayerCharacter(L"MAP_Carpet", 300.0f, 0.0f, 300.0f);
-	m_carpet_blacksmith.AddComponent(pCollider = new Collider(14.0f));
 	m_carpet_blacksmith.SetScale(D3DXVECTOR3(4.0f, 4.0f, 4.0f));
 	m_carpet_blacksmith.m_objType = EObjType::AObject;
+	//m_carpet_blacksmith.AddComponent(pCollider = new Collider(14.0f));
 	/*pCollider->m_eTag = ETag::Dummy;
 	pCollider->SetGravityScale(0.0f);
 	pCollider->usePhysics(false);
@@ -565,29 +565,29 @@ bool GameMap::Init() noexcept
 	//pCollider->usePhysics(false);
 	//pCollider->CollisionEvent = MyEvent::CarpetChurch;
 	ObjectManager::Get().PushObject(&m_carpet_church, false);
-	PlayerController::Get().m_CarpetPos[1] = m_carpet_blacksmith.GetPosition();
+	PlayerController::Get().m_CarpetPos[1] = m_carpet_church.GetPosition();
 
 	m_carpet_windmill.SetPlayerCharacter(L"MAP_Carpet", 300.0f, 0.0f, -300.0f);
 	m_carpet_windmill.SetScale(D3DXVECTOR3(4.0f, 4.0f, 4.0f));
 	m_carpet_windmill.m_objType = EObjType::AObject;
-	m_carpet_windmill.AddComponent(pCollider = new Collider(14.0f));
+	//m_carpet_windmill.AddComponent(pCollider = new Collider(14.0f));
 	//pCollider->m_eTag = ETag::Dummy;
 	//pCollider->SetGravityScale(0.0f);
 	//pCollider->usePhysics(false);
 	//pCollider->CollisionEvent = MyEvent::CarpetShop;
 	ObjectManager::Get().PushObject(&m_carpet_windmill, false);
-	PlayerController::Get().m_CarpetPos[2] = m_carpet_blacksmith.GetPosition();
+	PlayerController::Get().m_CarpetPos[2] = m_carpet_windmill.GetPosition();
 
 	m_carpet_towerRound.SetPlayerCharacter(L"MAP_Carpet", -300.0f, 0.0f, -300.0f);
 	m_carpet_towerRound.SetScale(D3DXVECTOR3(4.0f, 4.0f, 4.0f));
 	m_carpet_towerRound.m_objType = EObjType::AObject;
-	m_carpet_towerRound.AddComponent(pCollider = new Collider(14.0f));
+	//m_carpet_towerRound.AddComponent(pCollider = new Collider(14.0f));
 	//pCollider->m_eTag = ETag::Dummy;
 	//pCollider->SetGravityScale(0.0f);
 	//pCollider->usePhysics(false);
 	//pCollider->CollisionEvent = MyEvent::CarpetTower;
 	ObjectManager::Get().PushObject(&m_carpet_towerRound, false);
-	PlayerController::Get().m_CarpetPos[3] = m_carpet_blacksmith.GetPosition();
+	PlayerController::Get().m_CarpetPos[3] = m_carpet_towerRound.GetPosition();
 #pragma endregion
 
 #pragma region MywagonSack
@@ -1106,7 +1106,7 @@ bool GameMap::Init() noexcept
 #pragma region TownCollider
 	pObject = new GameObject(L"-");
 
-	pCollider = new ColliderOBB({ -1000, 0.0f, 400.0f }, { -200.0f, 200.0f, 1000.0f });
+	pCollider = new ColliderOBB({ -1000, 0.0f, 400.0f }, { -190.0f, 200.0f, 1000.0f });
 	pCollider->m_eTag = ETag::Collider;
 	pObject->AddComponent(pCollider);
 	pCollider = new ColliderOBB({ -1000, 0.0f, 200.0f }, { -400.0f, 200.0f, 1000.0f });
@@ -1116,14 +1116,14 @@ bool GameMap::Init() noexcept
 	pCollider = new ColliderOBB({ -1000, 0.0f, -1000.0f }, { -190.0f, 200.0f, -400.0f });
 	pCollider->m_eTag = ETag::Collider;
 	pObject->AddComponent(pCollider);
-	pCollider = new ColliderOBB({ -1000, 0.0f, -1000.0f }, { -400.0f, 200.0f, -190.0f });
+	pCollider = new ColliderOBB({ -1000, 0.0f, -1000.0f }, { -400.0f, 200.0f, -200.0f });
 	pCollider->m_eTag = ETag::Collider;
 	pObject->AddComponent(pCollider);
 
 	pCollider = new ColliderOBB({ 400, 0.0f, 200.0f }, { 1000.0f, 200.0f, 1000.0f });
 	pCollider->m_eTag = ETag::Collider;
 	pObject->AddComponent(pCollider);
-	pCollider = new ColliderOBB({ 200, 0.0f, 400.0f }, { 1000.0f, 200.0f, 1000.0f });
+	pCollider = new ColliderOBB({ 190, 0.0f, 400.0f }, { 1000.0f, 200.0f, 1000.0f });
 	pCollider->m_eTag = ETag::Collider;
 	pObject->AddComponent(pCollider);
 

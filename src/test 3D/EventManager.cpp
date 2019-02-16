@@ -429,12 +429,12 @@ namespace MyEvent {
 			return;
 		}
 		auto pObject = ObjectManager::Get().TakeObject(L"PBoom");
-		pObject->SetPosition(pA->m_pParent->GetPosition());
+		pObject->SetPosition(pA->GetCenter());
 		pObject->SetScale(Vector3::One);
 		pObject->m_pPhysics->m_damage = 0.5f;
 		pObject->m_pPhysics->UserSocket = pA->m_pPhysics->UserSocket;
+		SoundManager::Get().PlayQueue("SE_bomb.mp3", pA->GetCenter(), PlayerController::Get().SoundRange);
 		ObjectManager::Get().DisableObject(pA->m_pParent);
-		SoundManager::Get().PlayQueue("SE_bomb.mp3", pA->m_pParent->GetPosition(), PlayerController::Get().SoundRange);
 	}
 
 	void OneTimeHit(Collider* pA, Collider* pB)

@@ -76,7 +76,6 @@ bool PlayerController::Frame(const float& spf, const float& accTime)	noexcept
 			// ÃÊ±âÈ­
 			if (Input::GetKeyState('R') == EKeyState::DOWN)
 			{
-				Input::isDebug = !Input::isDebug;
 				ResetOption();
 			}
 			if (Input::GetKeyState(VK_SUBTRACT) == EKeyState::DOWN)
@@ -836,7 +835,6 @@ void PlayerController::ResetOption() noexcept
 		return;
 	m_pCamera->SetPosition(Vector3::Up * 85.0f * m_pParent->GetScale().x);
 	m_pCamera->m_armLength = 10.0f * m_pParent->GetScale().x;
-	Input::isDebug = false;
 }
 
 void PlayerController::UpdateStatus(const bool& infoUpdate) noexcept
@@ -1014,14 +1012,12 @@ void PlayerController::CheckTownCollision() noexcept
 					if (UIManager::Get().m_pSmithyPanel->m_bRender)
 					{
 						// ²û
-						UIManager::Get().m_pXPush->m_bRender = false;
 						UIManager::Get().m_pSmithyPanel->m_bRender = false;
 						UIManager::Get().m_pMouseIcon->m_bRender = false;
 					}
 					else
 					{
 						// Å´
-						UIManager::Get().m_pXPush->m_bRender = false;
 						UIManager::Get().m_pSmithyPanel->m_bRender = true;
 						UIManager::Get().m_pMouseIcon->m_bRender = true;
 					}
@@ -1033,7 +1029,6 @@ void PlayerController::CheckTownCollision() noexcept
 				{
 					if (Input::GetKeyState('X') == EKeyState::DOWN)
 					{
-						UIManager::Get().m_pXPush->m_bRender = false;
 						PlayerController::Get().m_canChurh = false;
 						UIManager::Get().m_pRespawnEffect->SetEventTime(1.5f);
 						UIManager::Get().m_pRespawnEffect->EffectPlay();
@@ -1069,14 +1064,12 @@ void PlayerController::CheckTownCollision() noexcept
 					if (UIManager::Get().m_pShopPanel->m_bRender)
 					{
 						// ²û
-						UIManager::Get().m_pXPush->m_bRender = false;
 						UIManager::Get().m_pShopPanel->m_bRender = false;
 						UIManager::Get().m_pMouseIcon->m_bRender = false;
 					}
 					else
 					{
 						// Å´
-						UIManager::Get().m_pXPush->m_bRender = false;
 						UIManager::Get().m_pShopPanel->m_bRender = true;
 						UIManager::Get().m_pMouseIcon->m_bRender = true;
 					}
@@ -1084,35 +1077,35 @@ void PlayerController::CheckTownCollision() noexcept
 			}	break;
 			case ECarpet::Tower:
 			{
-				UIManager::Get().m_pXPush->m_bRender = true;
 				if (Input::GetKeyState('X') == EKeyState::DOWN)
 				{
 					if (UIManager::Get().m_pTowerPanel->m_bRender)
 					{
 						// ²û
-						UIManager::Get().m_pXPush->m_bRender = false;
 						UIManager::Get().m_pTowerPanel->m_bRender = false;
 						UIManager::Get().m_pMouseIcon->m_bRender = false;
 					}
 					else
 					{
 						// Å´
-						UIManager::Get().m_pXPush->m_bRender = false;
 						UIManager::Get().m_pTowerPanel->m_bRender = true;
 						UIManager::Get().m_pMouseIcon->m_bRender = true;
 					}
 				}
 			}	break;
 			}
+			UIManager::Get().m_pXPush->m_bRender = true;
+			return;
 		}
-		UIManager::Get().m_pXPush->m_bRender = true;
-		return;
 	}
-	pUIManager->m_pXPush->m_bRender = false;
-	pUIManager->m_pShopPanel->m_bRender = false;
-	pUIManager->m_pSmithyPanel->m_bRender = false;
-	pUIManager->m_pTowerPanel->m_bRender = false;
-	pUIManager->m_pMouseIcon->m_bRender = false;
+	if (UIManager::Get().m_pXPush->m_bRender)
+	{
+		pUIManager->m_pXPush->m_bRender = false;
+		pUIManager->m_pShopPanel->m_bRender = false;
+		pUIManager->m_pSmithyPanel->m_bRender = false;
+		pUIManager->m_pTowerPanel->m_bRender = false;
+		pUIManager->m_pMouseIcon->m_bRender = false;
+	}
 }
 
 

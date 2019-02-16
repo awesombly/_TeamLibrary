@@ -91,11 +91,14 @@ bool Collider::CollisionAllCheck(const float& spf) noexcept
 		// 자신 또는 처리된 객체 제외
 		auto finder = std::find(m_CollisionList.begin(), m_CollisionList.end(), iter);
 		if(finder != m_CollisionList.end())
-		{
 			continue;
-		}
+
 		if (CollisionCheck(iter))
 		{
+			if (!m_pParent->isEnable())
+				return false;
+			if (!iter->m_pParent->isEnable())
+				continue;
 			// 상대 충돌 목록 추가
 			iter->m_CollisionList.push_front(this);
 
