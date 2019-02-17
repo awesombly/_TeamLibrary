@@ -418,56 +418,66 @@ void GameScene::HostFrame() noexcept
 	static float spawnBarrel = 0.0f;
 	static float spawnShot = 0.0f;
 	static float spawnShot2 = 0.0f;
-	static float spawnShot3 = 0.0f;
-	static float spawnShot4 = 0.0f;
-	spawnBarrel += Timer::SPF;
-	spawnShot += Timer::SPF;
-	spawnShot2 += Timer::SPF;
-	spawnShot3 += Timer::SPF;
-	spawnShot4 += Timer::SPF;
+	//static float spawnShot3 = 0.0f;
+	//static float spawnShot4 = 0.0f;
+	//spawnShot3 += Timer::SPF;
+	//spawnShot4 += Timer::SPF;
 
+	spawnBarrel += Timer::SPF;
 	if (spawnBarrel >= 15.0f)
 	{
 		spawnBarrel = 0.0f;
 		PacketManager::Get().SendTakeObject(L"Explosive", ESocketType::EDummy, (UCHAR)PacketManager::Get().UserList.size(), 0.6f, 0.3f, 0.0f, { -400.0f, 30.0f, -400.0f }, { 800.0f, 0.0f, 800.0f });
 	}
 
-	// 일반
-	if (spawnShot >= 19.0f)
+	if (PacketManager::Get().TowerLevel >= 1)
 	{
-		spawnShot = 0.0f;
+		// 일반
+		spawnShot += Timer::SPF;
+		if (spawnShot >= PacketManager::Get().TowerDelayShot)
+		{
+			spawnShot = 0.0f;
 
-		Packet_KeyValue p_KeyValue;
-		p_KeyValue.KeyValue = 0;
-		PacketManager::Get().SendPacket((char*)&p_KeyValue, sizeof(Packet_KeyValue), PACKET_TowerAttack);
-	}
-	// 시한폭
-	if (spawnShot2 >= 15.0f)
-	{
-		spawnShot2 = 0.0f;
+			Packet_TowerAttack p_Tower;
+			p_Tower.KeyValue = 0;
+			p_Tower.TowerLevel = PacketManager::Get().TowerLevel;
+			PacketManager::Get().SendPacket((char*)&p_Tower, sizeof(Packet_TowerAttack), PACKET_TowerAttack);
+		}
 
-		Packet_KeyValue p_KeyValue;
-		p_KeyValue.KeyValue = 1;
-		PacketManager::Get().SendPacket((char*)&p_KeyValue, sizeof(Packet_KeyValue), PACKET_TowerAttack);
-	}
-	// 지뢰
-	if (spawnShot3 >= 21.0f)
-	{
-		spawnShot3 = 0.0f;
+		if (PacketManager::Get().TowerLevel >= 5)
+		{
+			// 폭탄
+			spawnShot2 += Timer::SPF;
+			if (spawnShot2 >= PacketManager::Get().TowerDelayShot2)
+			{
+				spawnShot2 = 0.0f;
 
-		Packet_KeyValue p_KeyValue;
-		p_KeyValue.KeyValue = 2;
-		PacketManager::Get().SendPacket((char*)&p_KeyValue, sizeof(Packet_KeyValue), PACKET_TowerAttack);
+				Packet_TowerAttack p_Tower;
+				p_Tower.KeyValue = 1;
+				p_Tower.TowerLevel = PacketManager::Get().TowerLevel;
+				PacketManager::Get().SendPacket((char*)&p_Tower, sizeof(Packet_TowerAttack), PACKET_TowerAttack);
+			}
+		}
 	}
-	// 미사일
-	if (spawnShot4 >= 30.0f)
-	{
-		spawnShot4 = 0.0f;
 
-		Packet_KeyValue p_KeyValue;
-		p_KeyValue.KeyValue = 3;
-		PacketManager::Get().SendPacket((char*)&p_KeyValue, sizeof(Packet_KeyValue), PACKET_TowerAttack);
-	}
+	//// 지뢰
+	//if (spawnShot3 >= 21.0f)
+	//{
+	//	spawnShot3 = 0.0f;
+
+	//	Packet_KeyValue p_KeyValue;
+	//	p_KeyValue.KeyValue = 2;
+	//	PacketManager::Get().SendPacket((char*)&p_KeyValue, sizeof(Packet_KeyValue), PACKET_TowerAttack);
+	//}
+	//// 미사일
+	//if (spawnShot4 >= 30.0f)
+	//{
+	//	spawnShot4 = 0.0f;
+
+	//	Packet_KeyValue p_KeyValue;
+	//	p_KeyValue.KeyValue = 3;
+	//	PacketManager::Get().SendPacket((char*)&p_KeyValue, sizeof(Packet_KeyValue), PACKET_TowerAttack);
+	//}
 
 	///
 	if (*m_pFrameCount <= 0.0f)
@@ -863,7 +873,10 @@ void GameScene::LoadUI() noexcept
 	UIManager::Get().m_pInfoLukBtn = (JTextCtrl*)pUIRoot->find_child(L"Info_LUK_btn");
 	UIManager::Get().m_pInfoLukBtn->EventClick.first = pStatUp;
 	UIManager::Get().m_pInfoLukBtn->EventClick.second = &PacketManager::Get().pMyInfo->StatLuk;
-	// 슬롯
+	// 인벤, 슬롯
+	UIManager::Get().m_pInvenSlot = (JInventory*)pUIRoot->find_child(L"Inventory_Slot");
+	UIManager::Get().m_pInvenPanel = (JPanel*)pUIRoot->find_child(L"Inventory_Panel");
+
 	UIManager::Get().m_pSlot1 = (JSlot*)pUIRoot->find_child(L"Slot1");
 	UIManager::Get().m_pSlot2 = (JSlot*)pUIRoot->find_child(L"Slot2");
 	UIManager::Get().m_pSlot3 = (JSlot*)pUIRoot->find_child(L"Slot3");
@@ -871,6 +884,7 @@ void GameScene::LoadUI() noexcept
 	//UIManager::Get().m_pSlot1->AddItem(L"");
 	//UIManager::Get().m_pSlot1->m_bEmpty; // > AddItem(L"");
 
+	// 이름 변경
 	UIManager::Get().m_pInfoName = (JEditCtrl*)pUIRoot->find_child(L"Info_Name");
 	auto pNameChange = (JButtonCtrl*)pUIRoot->find_child(L"Info_Name_Change_Btn");
 	pNameChange->EventClick.first = [](void* pScene) {
@@ -891,20 +905,30 @@ void GameScene::LoadUI() noexcept
 	};
 	pNameChange->EventClick.second = this;
 
-	UIManager::Get().m_pInvenSlot = (JInventory*)pUIRoot->find_child(L"Inventory_Slot");
-
 
 	UIManager::Get().m_pXPush = (JImageCtrl*)pUIRoot->find_child(L"XPUSH");
 	// 상점
 	UIManager::Get().m_pShopPanel = (JPanel*)pUIRoot->find_child(L"Shop_Panel");
-	UIManager::Get().m_pShopItem0 = (JButtonCtrl*)pUIRoot->find_child(L"Shop_Item0_Btn");
-	UIManager::Get().m_pShopItem1 = (JButtonCtrl*)pUIRoot->find_child(L"Shop_Item1_Btn");
-	UIManager::Get().m_pShopItem2 = (JButtonCtrl*)pUIRoot->find_child(L"Shop_Item2_Btn");
-	UIManager::Get().m_pShopItem3 = (JButtonCtrl*)pUIRoot->find_child(L"Shop_Item3_Btn");
-	UIManager::Get().m_pShopItem4 = (JButtonCtrl*)pUIRoot->find_child(L"Shop_Item4_Btn");
-	UIManager::Get().m_pShopItem5 = (JButtonCtrl*)pUIRoot->find_child(L"Shop_Item5_Btn");
-	UIManager::Get().m_pShopItem6 = (JButtonCtrl*)pUIRoot->find_child(L"Shop_Item6_Btn");
-	UIManager::Get().m_pShopItem7 = (JButtonCtrl*)pUIRoot->find_child(L"Shop_Item7_Btn");
+	UIManager::Get().m_pShopItem0 = (JTextCtrl*)pUIRoot->find_child(L"Shop_Item0_Btn");
+	UIManager::Get().m_pShopItem0->EventClick.first = [](void*) {
+		//if()
+		{
+			UIManager::Get().AddSlotItem(L"Berry_0");
+		}
+	};
+	UIManager::Get().m_pShopItem1 = (JTextCtrl*)pUIRoot->find_child(L"Shop_Item1_Btn");
+	UIManager::Get().m_pShopItem1->EventClick.first = [](void*) {
+		//if()
+		{
+			UIManager::Get().AddSlotItem(L"Gems_0");
+		}
+	};
+	UIManager::Get().m_pShopItem2 = (JTextCtrl*)pUIRoot->find_child(L"Shop_Item2_Btn");
+	UIManager::Get().m_pShopItem3 = (JTextCtrl*)pUIRoot->find_child(L"Shop_Item3_Btn");
+	UIManager::Get().m_pShopItem4 = (JTextCtrl*)pUIRoot->find_child(L"Shop_Item4_Btn");
+	UIManager::Get().m_pShopItem5 = (JTextCtrl*)pUIRoot->find_child(L"Shop_Item5_Btn");
+	UIManager::Get().m_pShopItem6 = (JTextCtrl*)pUIRoot->find_child(L"Shop_Item6_Btn");
+	UIManager::Get().m_pShopItem7 = (JTextCtrl*)pUIRoot->find_child(L"Shop_Item7_Btn");
 	// 타워
 	UIManager::Get().m_pTowerPanel = (JPanel*)pUIRoot->find_child(L"Tower_Panel");
 	UIManager::Get().m_pTowerCurLevel = (JTextCtrl*)pUIRoot->find_child(L"Tower_CurrentLv");
@@ -918,7 +942,10 @@ void GameScene::LoadUI() noexcept
 	UIManager::Get().m_pTowerText2 = (JTextCtrl*)pUIRoot->find_child(L"Tower_Explanation1");
 	UIManager::Get().m_pTowerUpgrade = (JButtonCtrl*)pUIRoot->find_child(L"Tower_Btn");
 	UIManager::Get().m_pTowerUpgrade->EventClick.first = [](void*) {
-		ErrorMessage("업글!");
+		//if()
+		{
+			PacketManager::Get().SendPacket((char*)&PI, sizeof(PI), PACKET_TowerUpgrade);
+		}
 	};
 	// 대장간
 	UIManager::Get().m_pSmithyPanel = (JPanel*)pUIRoot->find_child(L"Smithy_Panel");

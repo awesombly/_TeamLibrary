@@ -29,6 +29,7 @@ enum EPacketProtocol : USHORT {
 	PACKET_PlaySound,
 	PACKET_TakeObject,
 	PACKET_TowerAttack,
+	PACKET_TowerUpgrade,
 	PACKET_PossessPlayer,
 	PACKET_SendUserInfo,
 	PACKET_SendLevelUp,
@@ -77,6 +78,12 @@ struct Packet_Physics
 	float MaxHP;
 	float Armor;
 	float GravityScale;
+};
+
+struct Packet_TowerAttack
+{
+	UINT KeyValue;
+	char TowerLevel;
 };
 
 struct Packet_PlayerDead

@@ -45,13 +45,13 @@ public:
 	JButtonCtrl*	m_pInfoDexBtn		= nullptr;	
 	JButtonCtrl*	m_pInfoIntBtn		= nullptr;	
 	JButtonCtrl*	m_pInfoLukBtn		= nullptr;	
-	// 슬롯
-	JSlot*			m_pSlot1 = nullptr;
-	JSlot*			m_pSlot2 = nullptr;
-	JSlot*			m_pSlot3 = nullptr;
-	// 인벤토리
-	JInventory*		m_pInvenSlot = nullptr;
+	// 인벤, 슬롯
+	JInventory*		m_pInvenSlot		= nullptr;
+	JPanel*			m_pInvenPanel		= nullptr;
 
+	JSlot*			m_pSlot1			= nullptr;
+	JSlot*			m_pSlot2			= nullptr;
+	JSlot*			m_pSlot3			= nullptr;
 	// 타워
 	JPanel*			m_pTowerPanel			= nullptr;
 	JTextCtrl*		m_pTowerCurLevel		= nullptr;
@@ -66,14 +66,14 @@ public:
 	JButtonCtrl*	m_pTowerUpgrade			= nullptr;
 	// 상점
 	JPanel*			m_pShopPanel			= nullptr;
-	JButtonCtrl*	m_pShopItem0			= nullptr;
-	JButtonCtrl*	m_pShopItem1			= nullptr;
-	JButtonCtrl*	m_pShopItem2			= nullptr;
-	JButtonCtrl*	m_pShopItem3			= nullptr;
-	JButtonCtrl*	m_pShopItem4			= nullptr;
-	JButtonCtrl*	m_pShopItem5			= nullptr;
-	JButtonCtrl*	m_pShopItem6			= nullptr;
-	JButtonCtrl*	m_pShopItem7			= nullptr;
+	JTextCtrl*		m_pShopItem0			= nullptr;
+	JTextCtrl*		m_pShopItem1			= nullptr;
+	JTextCtrl*		m_pShopItem2			= nullptr;
+	JTextCtrl*		m_pShopItem3			= nullptr;
+	JTextCtrl*		m_pShopItem4			= nullptr;
+	JTextCtrl*		m_pShopItem5			= nullptr;
+	JTextCtrl*		m_pShopItem6			= nullptr;
+	JTextCtrl*		m_pShopItem7			= nullptr;
 	// 대장간
 	JPanel*			m_pSmithyPanel			= nullptr;
 	JTextCtrl*		m_pSmithyBtnWeapon		= nullptr;
@@ -81,16 +81,16 @@ public:
 	JTextCtrl*		m_pSmithyBtnAcce1		= nullptr;
 	JTextCtrl*		m_pSmithyBtnAcce2		= nullptr;
 
-	JTextCtrl*		m_pSmithyInfo1Weapon = nullptr;
-	JTextCtrl*		m_pSmithyInfo2Weapon = nullptr;
-	JTextCtrl*		m_pSmithyInfo1Armor = nullptr;
-	JTextCtrl*		m_pSmithyInfo2Armor = nullptr;
-	JTextCtrl*		m_pSmithyInfo1Acce1 = nullptr;
-	JTextCtrl*		m_pSmithyInfo2Acce1 = nullptr;
-	JTextCtrl*		m_pSmithyInfo1Acce2 = nullptr;
-	JTextCtrl*		m_pSmithyInfo2Acce2 = nullptr;
+	JTextCtrl*		m_pSmithyInfo1Weapon	= nullptr;
+	JTextCtrl*		m_pSmithyInfo2Weapon	= nullptr;
+	JTextCtrl*		m_pSmithyInfo1Armor		= nullptr;
+	JTextCtrl*		m_pSmithyInfo2Armor		= nullptr;
+	JTextCtrl*		m_pSmithyInfo1Acce1		= nullptr;
+	JTextCtrl*		m_pSmithyInfo2Acce1		= nullptr;
+	JTextCtrl*		m_pSmithyInfo1Acce2		= nullptr;
+	JTextCtrl*		m_pSmithyInfo2Acce2		= nullptr;
 	///
-	JImageCtrl*		m_pXPush = nullptr;
+	JImageCtrl*		m_pXPush				= nullptr;
 public:
 	void			AddSlotItem(const wstring_view& itemName);
 private:

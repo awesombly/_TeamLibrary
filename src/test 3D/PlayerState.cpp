@@ -464,9 +464,9 @@ bool ArcherStateLSkill::Process(const float& spf) noexcept
 		{
 			m_pOwner->m_curMP = max(m_pOwner->m_curMP - 0.4f, 0.0f);
 			// 강제 발사
+			m_pOwner->SetState(EPlayerState::Wait);
 			m_pOwner->m_eAction = PlayerController::EAction::ChargeAttack2;
 			m_pOwner->m_DelayFrame = 0.5f;
-			m_pOwner->SetState(EPlayerState::Wait);
 			return true;
 		}
 		else if (m_pOwner->m_chargeCount >= 2.2f)
@@ -498,6 +498,7 @@ bool ArcherStateLSkill::Process(const float& spf) noexcept
 		if (m_pOwner->m_chargeCount >= 0.6f)
 		{
 			m_pOwner->m_curMP = max(m_pOwner->m_curMP - 0.2f, 0.0f);
+			m_pOwner->SetState(EPlayerState::Wait);
 			if (m_pOwner->m_chargeCount <= 1.1f)
 			{
 				m_pOwner->m_eAction = PlayerController::EAction::Attack;
@@ -511,7 +512,6 @@ bool ArcherStateLSkill::Process(const float& spf) noexcept
 				m_pOwner->m_eAction = PlayerController::EAction::ChargeAttack2;
 			}
 			m_pOwner->m_DelayFrame = 0.55f;
-			m_pOwner->SetState(EPlayerState::Wait);
 			return true;
 		}
 	}
@@ -616,6 +616,7 @@ bool ArcherStateDash::Process(const float& spf) noexcept
 void ArcherStateWait::StateInit(PlayerController* pOwner) noexcept
 {
 	m_pOwner = pOwner;
+	m_pOwner->m_eAction = PlayerController::EAction::Wait;
 }
 bool ArcherStateWait::Process(const float& spf) noexcept
 {

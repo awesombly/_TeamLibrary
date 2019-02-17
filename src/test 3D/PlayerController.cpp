@@ -308,10 +308,10 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 				auto pItem = ObjectManager::Get().TakeObject(L"Missile");
 				pItem->SetPosition(pObject->GetPosition() + pObject->GetBackward() * 60.0f + pObject->GetUp() * 55.0f);
 				pItem->SetRotation(pObject->GetRotation() + Quaternion::Down * (RandomNormal() * 0.3f + 1.42f));
-				pItem->SetForce({ RandomNormal() * 240.0f - 120.0f, RandomNormal() * 210.0f - 30.0f, (RandomNormal() * 200.0f + 60.0f) * pObject->GetBackward().z });
+				pItem->SetForce({ RandomNormal() * 360.0f - 180.0f, RandomNormal() * 210.0f - 30.0f, (RandomNormal() * 200.0f + 60.0f) * pObject->GetBackward().z });
 				pItem->m_pPhysics->UserSocket = socket;
 				pItem->m_pPhysics->m_damage = 0.3f;
-				((CEventTimer*)pItem->GetComponent(EComponent::Timer))->m_EventDelay = RandomNormal() * 0.8f + 0.5f;
+				((CEventTimer*)pItem->GetComponent(EComponent::Timer))->m_EventDelay = RandomNormal() * 1.0f + 0.5f;
 				((CEventTimer*)pItem->GetComponent(EComponent::Timer))->TimerEvent = { TimeEvent::MissileShot, (void*)&missileTarget };
 			}
 			SoundManager::Get().PlayQueue("SE_dash.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
@@ -540,10 +540,10 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 				auto pItem = ObjectManager::Get().TakeObject(L"Missile");
 				pItem->SetPosition(pObject->GetPosition() + pObject->GetBackward() * 60.0f + pObject->GetUp() * 55.0f);
 				pItem->SetRotation(pObject->GetRotation() + Quaternion::Down * (RandomNormal() * 0.3f + 1.42f));
-				pItem->SetForce({ RandomNormal() * 240.0f - 120.0f, RandomNormal() * 210.0f - 30.0f, (RandomNormal() * 200.0f + 60.0f) * pObject->GetBackward().z });
+				pItem->SetForce({ RandomNormal() * 360.0f - 180.0f, RandomNormal() * 210.0f - 30.0f, (RandomNormal() * 200.0f + 60.0f) * pObject->GetBackward().z });
 				pItem->m_pPhysics->UserSocket = socket;
 				pItem->m_pPhysics->m_damage = 0.3f;
-				((CEventTimer*)pItem->GetComponent(EComponent::Timer))->m_EventDelay = RandomNormal() * 0.8f + 0.5f;
+				((CEventTimer*)pItem->GetComponent(EComponent::Timer))->m_EventDelay = RandomNormal() * 1.0f + 0.5f;
 				((CEventTimer*)pItem->GetComponent(EComponent::Timer))->TimerEvent = { TimeEvent::MissileShot, (void*)&missileTarget };
 			}
 			SoundManager::Get().PlayQueue("SE_dash.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
@@ -724,10 +724,10 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 				auto pItem = ObjectManager::Get().TakeObject(L"Missile");
 				pItem->SetPosition(pObject->GetPosition() + pObject->GetBackward() * 60.0f + pObject->GetUp() * 55.0f);
 				pItem->SetRotation(pObject->GetRotation() + Quaternion::Down * (RandomNormal() * 0.3f + 1.42f));
-				pItem->SetForce({ RandomNormal() * 240.0f - 120.0f, RandomNormal() * 210.0f - 30.0f, (RandomNormal() * 200.0f + 60.0f) * pObject->GetBackward().z });
+				pItem->SetForce({ RandomNormal() * 360.0f - 180.0f, RandomNormal() * 210.0f - 30.0f, (RandomNormal() * 200.0f + 60.0f) * pObject->GetBackward().z });
 				pItem->m_pPhysics->UserSocket = socket;
 				pItem->m_pPhysics->m_damage = 0.3f;
-				((CEventTimer*)pItem->GetComponent(EComponent::Timer))->m_EventDelay = RandomNormal() * 0.8f + 0.5f;
+				((CEventTimer*)pItem->GetComponent(EComponent::Timer))->m_EventDelay = RandomNormal() * 1.0f + 0.5f;
 				((CEventTimer*)pItem->GetComponent(EComponent::Timer))->TimerEvent = { TimeEvent::MissileShot, (void*)&missileTarget };
 			}
 			SoundManager::Get().PlayQueue("SE_dash.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
@@ -938,6 +938,7 @@ void PlayerController::Possess(GameObject* pObject) noexcept
 			auto pCollider = pObj->GetCollider();
 			{
 				pPlayer->m_defencePoint = 2;
+				pPlayer->pUIManager->m_pMpBar->SetColor({ 0.7f, 0.0f, 0.7f, 1.0f });
 				((Collider*)pCollider)->CollisionEvent = nullptr;
 				((Collider*)pCollider)->m_pivot = Vector3::Up * 40.0f * pObj->GetScale().x;
 			}
@@ -948,6 +949,7 @@ void PlayerController::Possess(GameObject* pObject) noexcept
 			auto pCollider = pObj->GetCollider();
 			{
 				pPlayer->m_defencePoint = 1;
+				pPlayer->pUIManager->m_pMpBar->SetColor({0.7f, 0.7f, 0.0f, 1.0f});
 				((Collider*)pCollider)->CollisionEvent = nullptr;
 				((Collider*)pCollider)->m_pivot = Vector3::Up * 40.0f * pObj->GetScale().x;
 			}
@@ -958,6 +960,7 @@ void PlayerController::Possess(GameObject* pObject) noexcept
 			auto pCollider = pObj->GetCollider();
 			{
 				pPlayer->m_defencePoint = 0;
+				pPlayer->pUIManager->m_pMpBar->SetColor(Color::Blue);
 				((Collider*)pCollider)->CollisionEvent = nullptr;
 				((Collider*)pCollider)->m_pivot = Vector3::Up * 40.0f * pObj->GetScale().x;
 			}
@@ -1072,13 +1075,13 @@ void PlayerController::CheckTownCollision() noexcept
 				pUIManager->m_pSmithyInfo1Weapon->SetString(L"Level " + to_wstring(m_upgradeWeapon) + L" ¡æ Level " + to_wstring(m_upgradeWeapon + 1));
 				pUIManager->m_pSmithyInfo2Weapon->SetString(L"Damage " + to_wstring((m_upgradeWeapon) * 15) + L"% ¡æ " + to_wstring((m_upgradeWeapon + 1) * 15) + L"%");
 
-				pUIManager->m_pSmithyInfo1Weapon->SetString(L"Level " + to_wstring(m_upgradeArmor) + L" ¡æ Level " + to_wstring(m_upgradeArmor + 1));
+				pUIManager->m_pSmithyInfo1Armor->SetString(L"Level " + to_wstring(m_upgradeArmor) + L" ¡æ Level " + to_wstring(m_upgradeArmor + 1));
 				pUIManager->m_pSmithyInfo2Armor->SetString(L"Armor " + to_wstring((1.0f - (5.0f / (5.0f + m_defencePoint + m_upgradeArmor))) * 100.0f).substr(0, 4) + L"% ¡æ " + to_wstring((1.0f - (5.0f / (5.0f + m_defencePoint + m_upgradeArmor + 1))) * 100.0f).substr(0, 4) + L"%"); 
 
-				pUIManager->m_pSmithyInfo1Weapon->SetString(L"Level " + to_wstring(m_upgradeAcce1) + L" ¡æ Level " + to_wstring(m_upgradeAcce1 + 1));
+				pUIManager->m_pSmithyInfo1Acce1->SetString(L"Level " + to_wstring(m_upgradeAcce1) + L" ¡æ Level " + to_wstring(m_upgradeAcce1 + 1));
 				pUIManager->m_pSmithyInfo2Acce1->SetString(L"Cooltime " + to_wstring((1.0f - (5.0f / (5.0f + m_upgradeAcce1))) * 100.0f).substr(0, 4) + L"% ¡æ " + to_wstring((1.0f - (5.0f / (5.0f + m_upgradeAcce1 + 1))) * 100.0f).substr(0, 4) + L"%");
 
-				pUIManager->m_pSmithyInfo1Weapon->SetString(L"Level " + to_wstring(m_upgradeAcce1) + L" ¡æ Level " + to_wstring(m_upgradeAcce2 + 1));
+				pUIManager->m_pSmithyInfo1Acce2->SetString(L"Level " + to_wstring(m_upgradeAcce1) + L" ¡æ Level " + to_wstring(m_upgradeAcce2 + 1));
 				pUIManager->m_pSmithyInfo2Acce2->SetString(L"All Stat " + to_wstring(m_upgradeAcce2) + L" ¡æ " + to_wstring(m_upgradeAcce2 + 1));
 			}	break;
 			case ECarpet::Church:
@@ -1109,12 +1112,23 @@ void PlayerController::CheckTownCollision() noexcept
 						// ²û
 						pUIManager->m_pShopPanel->m_bRender = false;
 						pUIManager->m_pMouseIcon->m_bRender = false;
+						pUIManager->m_pInvenPanel->m_bRender = false;
 					}
 					else
 					{
 						// Å´
 						pUIManager->m_pShopPanel->m_bRender = true;
 						pUIManager->m_pMouseIcon->m_bRender = true;
+						pUIManager->m_pInvenPanel->m_bRender = true;
+
+						pUIManager->m_pShopItem0->SetString(L"100 KG");
+						pUIManager->m_pShopItem1->SetString(L"200 KG");
+						pUIManager->m_pShopItem2->SetString(L"300 KG");
+						pUIManager->m_pShopItem3->SetString(L"400 KG");
+						pUIManager->m_pShopItem4->SetString(L"500 KG");
+						pUIManager->m_pShopItem5->SetString(L"600 KG");
+						pUIManager->m_pShopItem6->SetString(L"700 KG");
+						pUIManager->m_pShopItem7->SetString(L"800 KG");
 					}
 				}
 			}	break;
@@ -1133,8 +1147,28 @@ void PlayerController::CheckTownCollision() noexcept
 						// Å´
 						pUIManager->m_pTowerPanel->m_bRender = true;
 						pUIManager->m_pMouseIcon->m_bRender = true;
+
 					}
 				}
+				pUIManager->m_pTowerCurLevel->SetString(to_wstring(PacketManager::Get().TowerLevel));
+				pUIManager->m_pTowerCurAtkDamage->SetString(to_wstring(PacketManager::Get().TowerDamage * 100.0f).substr(0, 4));
+				pUIManager->m_pTowerCurAtkSpeed->SetString(to_wstring(PacketManager::Get().TowerDelayShot).substr(0, 4));
+				if(PacketManager::Get().TowerLevel >= 5)
+					pUIManager->m_pTowerText1->SetString(L"ÆøÅº °ø°İ");
+				else
+					pUIManager->m_pTowerText1->SetString(L"");
+						
+				pUIManager->m_pTowerNextLevel->SetString(to_wstring(PacketManager::Get().TowerLevel + 1));
+				pUIManager->m_pTowerNextAtkDamage->SetString(to_wstring((0.2f + PacketManager::Get().TowerLevel * 0.05f) * 100.0f).substr(0, 4));
+				if(PacketManager::Get().TowerLevel == 0)
+					pUIManager->m_pTowerNextAtkSpeed->SetString(to_wstring(8.0f).substr(0, 4));
+				else
+					pUIManager->m_pTowerNextAtkSpeed->SetString(to_wstring(PacketManager::Get().TowerDelayShot * 0.85f).substr(0, 4));
+
+				if (PacketManager::Get().TowerLevel == 4)
+					pUIManager->m_pTowerText2->SetString(L"ÆøÅº Ãß°¡");
+				else
+					pUIManager->m_pTowerText2->SetString(L"");
 			}	break;
 			}
 			pUIManager->m_pXPush->m_bRender = true;
@@ -1148,6 +1182,7 @@ void PlayerController::CheckTownCollision() noexcept
 		pUIManager->m_pSmithyPanel->m_bRender = false;
 		pUIManager->m_pTowerPanel->m_bRender = false;
 		pUIManager->m_pMouseIcon->m_bRender = false;
+		pUIManager->m_pInvenPanel->m_bRender = false;
 	}
 }
 
