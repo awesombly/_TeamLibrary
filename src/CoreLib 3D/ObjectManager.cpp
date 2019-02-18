@@ -249,7 +249,6 @@ bool ObjectManager::Render(ID3D11DeviceContext* pDContext) noexcept
 
 bool ObjectManager::Release() noexcept
 {
-
 	for (auto& outIter : m_ObjectList)
 	{
 		for (auto& inIter : outIter.second)
@@ -394,8 +393,9 @@ map<wstring, vector<Sprite> >& ObjectManager::GetSpriteList() noexcept
 GameObject* ObjectManager::TakeObject(const wstring_view& objName, const bool& pushObject) noexcept
 {
 	GameObject* pObject = nullptr;
-	if (m_DisabledPull.find(objName.data()) == m_DisabledPull.end() ||
-		m_DisabledPull[objName.data()].empty())
+	auto&& finder = m_DisabledPull.find(objName.data());
+	if (finder == m_DisabledPull.end() ||
+		finder->second.empty())
 	{
 		//대기 풀이 비었다면 복사 생성
 		auto&& iter = m_ProtoPull.find(objName.data());
@@ -409,8 +409,8 @@ GameObject* ObjectManager::TakeObject(const wstring_view& objName, const bool& p
 	else
 	{
 		// 대기 풀이 있다면 꺼내옴
-		pObject = m_DisabledPull[objName.data()].top();
-		m_DisabledPull[objName.data()].pop();
+		pObject = finder->second.top();
+		finder->second.pop();
 		//auto pComp = pObject->GetComponentList(EComponent::Collider);
 		//if (pComp != nullptr)
 		//{
@@ -457,7 +457,6 @@ bool ObjectManager::SetProtoObject(GameObject* pObject) noexcept
 		return false;
 	}
 	m_ProtoPull[pObject->m_myName] = pObject;
-	//pObject->isEnable(false);
 
 	// KeyObject 제거
 	KeyObjects.erase(pObject->m_keyValue);
@@ -484,10 +483,10 @@ void ObjectManager::PushObject(GameObject* pObject, const bool& isPostEvent) noe
 	}
 	else
 	{
-		if (find(m_ObjectList[pObject->m_objType].begin(), m_ObjectList[pObject->m_objType].end(), pObject)
-			== m_ObjectList[pObject->m_objType].end())
+		auto& objList = m_ObjectList[pObject->m_objType];
+		if (find(objList.begin(), objList.end(), pObject) == objList.end())
 		{
-			ObjectManager::Get().m_ObjectList[pObject->m_objType].push_front(pObject);
+			objList.push_front(pObject);
 			pObject->isEnable(true);
 		}
 		else
@@ -500,12 +499,13 @@ void ObjectManager::PushObject(GameObject* pObject, const bool& isPostEvent) noe
 void ObjectManager::PopObject(GameObject* pObject) noexcept
 {
 	auto& findList = m_ObjectList[pObject->m_objType];
-	auto&& iter = find(findList.begin(), findList.end(), pObject);
-	if (iter == findList.end())
-	{
-		//ErrorMessage(__FUNCTIONW__ + L" -> "s + pObject->m_myName + L", Not Found!" );
-		return;
-	}
+	findList.remove(pObject);
+	//auto&& iter = find(findList.begin(), findList.end(), pObject);
+	//if (iter == findList.end())
+	//{
+	//	//ErrorMessage(__FUNCTIONW__ + L" -> "s + pObject->m_myName + L", Not Found!" );
+	//	return;
+	//}
 	// 충돌체 제거
 	auto pColliders = pObject->GetComponentList(EComponent::Collider);
 	if (pColliders != nullptr)
@@ -519,7 +519,7 @@ void ObjectManager::PopObject(GameObject* pObject) noexcept
 	//{
 	//	pObject->CutParent(false);
 	//}
-	findList.remove(*iter);
+	//findList.remove(*iter);
 }
 
 void ObjectManager::DisableObject(GameObject* pObject) noexcept
@@ -541,7 +541,13 @@ void ObjectManager::DisableObject(GameObject* pObject) noexcept
 		}
 	};
 
-	PostFrameEvent.emplace(disableEvent, pObject, nullptr);
+	//if (pObject->isEnable())
+	//{
+		pObject->isEnable(false);
+		PostFrameEvent.emplace(disableEvent, pObject, nullptr);
+	//}
+	//else
+	//	ErrorMessage(__FUNCTIONW__ + L" -> 비활성 오브젝트 : "s + pObject->m_myName);
 }
 
 bool ObjectManager::RemoveObject(GameObject* pObject) noexcept

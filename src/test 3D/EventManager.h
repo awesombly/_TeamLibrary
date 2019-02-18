@@ -5,10 +5,10 @@ class PlayerController;
 class GameObject;
 
 namespace MyEvent {
-	void CarpetChurch(Collider* pA, Collider* pB);
-	void CarpetSmithy(Collider* pA, Collider* pB);
-	void CarpetShop(Collider* pA, Collider* pB);
-	void CarpetTower(Collider* pA, Collider* pB);
+	//void CarpetChurch(Collider* pA, Collider* pB);
+	//void CarpetSmithy(Collider* pA, Collider* pB);
+	//void CarpetShop(Collider* pA, Collider* pB);
+	//void CarpetTower(Collider* pA, Collider* pB);
 	void ForceWave(Collider* pA, Collider* pB);
 	void MissileCollision(Collider* pA, Collider* pB);
 	//void ShockBoom(Collider* pA, Collider* pB);
@@ -25,8 +25,8 @@ namespace MyEvent {
 	void ZombieHit(Collider* pA, Collider* pB);
 	void ZombieAttack(Collider* pA, Collider* pB);
 	void ZombieThrow(Collider* pA, Collider* pB);
-	void OneShots(Collider* pA, Collider* pB);
-	void GiantItem(Collider* pA, Collider* pB);
+	//void OneShots(Collider* pA, Collider* pB);
+	//void GiantItem(Collider* pA, Collider* pB);
 	void ItemBox(Collider* pA, Collider* pB);
 
 	// ·Îµù¿ë
@@ -53,6 +53,7 @@ namespace TimeEvent {
 }
 
 namespace DyingEvent {
+	void CenterDead(Collider* pCollider, const UINT& killUser);
 	void ZombieDead(Collider* pCollider, const UINT& killUser);
 	void ZombieExDead(Collider* pCollider, const UINT& killUser);
 	void ZombieKingDead(Collider* pCollider, const UINT& killUser);

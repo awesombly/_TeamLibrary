@@ -75,7 +75,8 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 	static Packet_SyncObjects	p_SyncObjects;
 	static Packet_PlayerDead	p_PlayerDead;
 	static Packet_Float			p_Float;
-	static Packet_Physics  p_ColliderInfo;
+	static Packet_Physics		p_ColliderInfo;
+	static Packet_TowerAttack	p_Tower;
 
 	memcpy(&p_KeyValue, data, sizeof(Packet_KeyValue));
 	if (sendMode < 2000 &&
@@ -244,13 +245,14 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 	}	break;
 	case PACKET_TowerAttack:
 	{
+		memcpy(&p_Tower, data, sizeof(Packet_TowerAttack));
 		static const float shotRange = 200000.0f;
 		static D3DXVECTOR3 targetPos[4] = { Vector3::Forward * 700.0f,
 								Vector3::Right * 700.0f,
 								Vector3::Backward * 700.0f,
 								Vector3::Left * 700.0f };
-
-		switch (p_KeyValue.KeyValue)
+		//TowerLevel = p_Tower.TowerLevel;
+		switch (p_Tower.KeyValue)
 		{
 		case 0:
 		{
@@ -262,17 +264,23 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 				{
 					if (VectorLengthSq(iter->GetPosition() - targetPos[i]) <= shotRange)
 					{
-						auto pItem = ObjectManager::Get().TakeObject(L"PBomb");
-						pItem->SetPosition(TowerPos[index] + Vector3::Up * 200.0f);
-						pItem->SetForce((iter->GetPosition() - TowerPos[index]) + Vector3::Up * 100.0f);
-						pItem->m_pPhysics->m_damage = 0.2f;
+						SoundManager::Get().PlayQueue("SE_bow_shot.mp3", TowerPos[index], PlayerController::Get().SoundRange * 0.5f);
+
+						auto pItem = ObjectManager::Get().TakeObject(L"Arrow");
+						pItem->SetPosition(TowerPos[index] + Vector3::Up * 250.0f);
+						//pItem->SetRotation(pObject->GetRotation());
+						pItem->SetScale(Vector3::One);
+						pItem->SetForce((iter->GetPosition() - TowerPos[index] - Vector3::Up * 250.0f) * 1.2f + Vector3::Up * 20.0f);
+						pItem->m_pPhysics->m_damage = TowerDamage;
 						pItem->m_pPhysics->UserSocket = ESocketType::EDummy;
 
 						++index;
-						pItem = ObjectManager::Get().TakeObject(L"PBomb");
-						pItem->SetPosition(TowerPos[index] + Vector3::Up * 200.0f);
-						pItem->SetForce((iter->GetPosition() - TowerPos[index]) + Vector3::Up * 100.0f);
-						pItem->m_pPhysics->m_damage = 0.2f;
+						pItem = ObjectManager::Get().TakeObject(L"Arrow");
+						pItem->SetPosition(TowerPos[index] + Vector3::Up * 250.0f);
+						//pItem->SetRotation(pObject->GetRotation());
+						pItem->SetScale(Vector3::One);
+						pItem->SetForce((iter->GetPosition() - TowerPos[index] - Vector3::Up * 250.0f) * 1.2f + Vector3::Up * 20.0f);
+						pItem->m_pPhysics->m_damage = TowerDamage;
 						pItem->m_pPhysics->UserSocket = ESocketType::EDummy;
 						break;
 					}
@@ -281,7 +289,7 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 		}	break;
 		case 1:
 		{
-			// ½ÃÇÑ
+			// ÆøÅº
 			for (int i = 0; i < 4; ++i)
 			{
 				int index = i * 2;
@@ -289,59 +297,101 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 				{
 					if (VectorLengthSq(iter->GetPosition() - targetPos[i]) <= shotRange)
 					{
-						auto pItem = ObjectManager::Get().TakeObject(L"TimeBomb");
-						pItem->SetPosition(TowerPos[index] + Vector3::Up * 200.0f);
-						//pItem->SetScale(Vector3::One * 1.0f);
-						//pItem->SetRotation();
-						pItem->SetForce((iter->GetPosition() - TowerPos[index]) * 0.7f + Vector3::Up * 200.0f);
-						pItem->m_pPhysics->m_damage = 0.3f;
+						auto pItem = ObjectManager::Get().TakeObject(L"PBomb");
+						pItem->SetPosition(TowerPos[index] + Vector3::Up * 250.0f);
+						pItem->SetForce((iter->GetPosition() - TowerPos[index]) * 0.7f + Vector3::Up * 150.0f);
+						pItem->m_pPhysics->m_damage = TowerDamage * 3.0f;
 						pItem->m_pPhysics->UserSocket = ESocketType::EDummy;
 
 						++index;
-						pItem = ObjectManager::Get().TakeObject(L"TimeBomb");
-						pItem->SetPosition(TowerPos[index] + Vector3::Up * 200.0f);
-						pItem->SetForce((iter->GetPosition() - TowerPos[index]) * 0.7f + Vector3::Up * 200.0f);
-						pItem->m_pPhysics->m_damage = 0.3f;
+						pItem = ObjectManager::Get().TakeObject(L"PBomb");
+						pItem->SetPosition(TowerPos[index] + Vector3::Up * 250.0f);
+						pItem->SetForce((iter->GetPosition() - TowerPos[index]) * 0.7f + Vector3::Up * 150.0f);
+						pItem->m_pPhysics->m_damage = TowerDamage * 3.0f;
 						pItem->m_pPhysics->UserSocket = ESocketType::EDummy;
 						break;
 					}
 				}
 			}
 		}	break;
-		case 2:
-		{
-			// Áö·Ú
-			for (int i = 0; i < 4; ++i)
-			{
-				int index = i * 2;
-				for (auto& iter : *ObjectManager::Get().GetObjectList(EObjType::Enemy))
-				{
-					if (VectorLengthSq(iter->GetPosition() - targetPos[i]) <= shotRange)
-					{
-						auto pItem = ObjectManager::Get().TakeObject(L"Mine");
-						pItem->SetPosition(TowerPos[index] + Vector3::Up * 100.0f);
-						pItem->SetForce((iter->GetPosition() - TowerPos[index]) * 0.35f + Vector3::Up * 600.0f);
-						pItem->m_pPhysics->m_damage = 0.3f;
-						pItem->m_pPhysics->UserSocket = ESocketType::EDummy;
-
-						++index;
-						pItem = ObjectManager::Get().TakeObject(L"Mine");
-						pItem->SetPosition(TowerPos[index] + Vector3::Up * 100.0f);
-						pItem->SetForce((iter->GetPosition() - TowerPos[index]) * 0.35f + Vector3::Up * 600.0f);
-						pItem->m_pPhysics->m_damage = 0.3f;
-						pItem->m_pPhysics->UserSocket = ESocketType::EDummy;
-						break;
-					}
-				}
-			}
-		}	break;
-		case 3:
-		{
-			///
-		}	break;
+		//case 1:
+		//{
+		//	// ½ÃÇÑ
+		//	for (int i = 0; i < 4; ++i)
+		//	{
+		//		int index = i * 2;
+		//		for (auto& iter : *ObjectManager::Get().GetObjectList(EObjType::Enemy))
+		//		{
+		//			if (VectorLengthSq(iter->GetPosition() - targetPos[i]) <= shotRange)
+		//			{
+		//				auto pItem = ObjectManager::Get().TakeObject(L"TimeBomb");
+		//				pItem->SetPosition(TowerPos[index] + Vector3::Up * 200.0f);
+		//				//pItem->SetScale(Vector3::One * 1.0f);
+		//				//pItem->SetRotation();
+		//				pItem->SetForce((iter->GetPosition() - TowerPos[index]) * 0.7f + Vector3::Up * 200.0f);
+		//				pItem->m_pPhysics->m_damage = 0.3f;
+		//				pItem->m_pPhysics->UserSocket = ESocketType::EDummy;
+		//
+		//				++index;
+		//				pItem = ObjectManager::Get().TakeObject(L"TimeBomb");
+		//				pItem->SetPosition(TowerPos[index] + Vector3::Up * 200.0f);
+		//				pItem->SetForce((iter->GetPosition() - TowerPos[index]) * 0.7f + Vector3::Up * 200.0f);
+		//				pItem->m_pPhysics->m_damage = 0.3f;
+		//				pItem->m_pPhysics->UserSocket = ESocketType::EDummy;
+		//				break;
+		//			}
+		//		}
+		//	}
+		//}	break;
+		//case 2:
+		//{
+		//	// Áö·Ú
+		//	for (int i = 0; i < 4; ++i)
+		//	{
+		//		int index = i * 2;
+		//		for (auto& iter : *ObjectManager::Get().GetObjectList(EObjType::Enemy))
+		//		{
+		//			if (VectorLengthSq(iter->GetPosition() - targetPos[i]) <= shotRange)
+		//			{
+		//				auto pItem = ObjectManager::Get().TakeObject(L"Mine");
+		//				pItem->SetPosition(TowerPos[index] + Vector3::Up * 100.0f);
+		//				pItem->SetForce((iter->GetPosition() - TowerPos[index]) * 0.35f + Vector3::Up * 600.0f);
+		//				pItem->m_pPhysics->m_damage = 0.3f;
+		//				pItem->m_pPhysics->UserSocket = ESocketType::EDummy;
+		//
+		//				++index;
+		//				pItem = ObjectManager::Get().TakeObject(L"Mine");
+		//				pItem->SetPosition(TowerPos[index] + Vector3::Up * 100.0f);
+		//				pItem->SetForce((iter->GetPosition() - TowerPos[index]) * 0.35f + Vector3::Up * 600.0f);
+		//				pItem->m_pPhysics->m_damage = 0.3f;
+		//				pItem->m_pPhysics->UserSocket = ESocketType::EDummy;
+		//				break;
+		//			}
+		//		}
+		//	}
+		//}	break;
 		default:
 			break;
 		}
+	}	break;
+	case PACKET_TowerUpgrade:
+	{
+		TowerDamage = 0.2f + TowerLevel * 0.05f;
+		++TowerLevel;
+		if (TowerLevel == 1)
+		{
+			TowerDelayShot = 8.0f;
+			TowerDelayShot2 = 99999.0f;
+			return;
+		}
+		else if (TowerLevel == 5)
+		{
+			TowerDelayShot *= 0.85f;
+			TowerDelayShot2 = 15.0f;
+			return;
+		}
+		TowerDelayShot *= 0.85f;
+		TowerDelayShot2 *= 0.85f;
 	}	break;
 	case PACKET_SendNameUpdate:
 	{
@@ -378,13 +428,14 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 				auto pEffect = ObjectManager::Get().TakeObject(L"EPLevelUp");
 				pEffect->SetPosition(iter->second->GetPosition());
 				//pEffect->SetParent(iter->second);
-				iter->second->m_pPhysics->m_maxHP = 1.0f + pMyInfo->StatLuk * 0.2f;
+				iter->second->m_pPhysics->m_maxHP = 1.0f + pMyInfo->StatStr * 0.2f;
 				iter->second->HealHP(iter->second->m_pPhysics->m_maxHP * 0.5f);
 			}
 		}
 		// ÀÚ½ÅÀÏ½Ã
 		if (pMyInfo == userIter->second)
 		{
+			SoundManager::Get().Play("SE_levelup.mp3");
 			PlayerController::Get().UpdateStatus();
 		}
 	}	break;

@@ -75,17 +75,17 @@ VS_OUTPUT_Mix VS_Final(VS_INPUT_PNCTT input)
 		output.vEye = normalize(mul(output.vEye, matTangent));
 		output.col = input.col;
 	}
-	else if (cb_useLight)
-	{
+	//else if (cb_useLight)
+	//{
 		//float fDot = lerp(dot(vLightDir, output.nor.xyz), 1.0f, 0.15f) + 0.2f;
 		//output.col = float4(fDot, fDot, fDot, 1.0f) * input.col;
-		output.col.xyz = max(cb_useLight, dot(vLightDir, output.nor.xyz) + 0.3f);
+		output.col.xyz = input.col.xyz * max(cb_useLight, dot(vLightDir, output.nor.xyz) + 0.3f);
 		output.col.w = input.col.w;
-	}
-	else
-	{
-		output.col = input.col;
-	}
+	//}
+	//else
+	//{
+	//	output.col = input.col;
+	//}
 
 	// 환경
 	if(cb_useEnviMap)
@@ -145,7 +145,8 @@ PBUFFER_OUTPUT PS_Final(VS_OUTPUT_Mix input) : SV_Target
 				float fresnel = ComputeFresnel(input.ref, input.nor.xyz, r0);
 			
 				// 굴절, 반사 보간
-				output.color0 *= lerp(refractColor, reflectColor, fresnel * 7.0f)/* * input.col*/ * 1.15f;
+				//output.color0 *= lerp(refractColor, reflectColor, fresnel * 7.0f)/* * input.col*/ * 1.15f;
+				output.color0.xyz = lerp(output.color0.xyz, lerp(refractColor.xyz, reflectColor.xyz, fresnel * 7.0f), 0.15f)/* * input.col*/;
 				//color = lerp(refractColor, color, fresnel * 0.1f);
 				//color.a = 1.0f;
 			} break;

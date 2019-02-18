@@ -108,28 +108,21 @@ bool GameScene::Frame() noexcept
 	//		(*objIter)->SetPositionZ(-400.0f);
 	//}
 
-	//// ¸Ê ³ôÀÌ
-	//for (auto& iter : ObjectManager::Get().GetColliderList())
-	//{
-	//	if (iter == nullptr || iter->m_pParent == nullptr)
-	//		continue;
-	//	iter->m_mapHeight = MapObj m_pHeightMap->GetMapHeight(iter->m_pParent->GetPosition());
-	//}
 
 	/// Àç»ý¼º
-	if (Input::GetKeyState('Z') == EKeyState::DOWN)
+	if (Input::GetKeyState(VK_NUMPAD1) == EKeyState::DOWN)
 	{
 		if (PlayerController::Get().GetParent() != nullptr)
 			PlayerController::Get().GetParent()->m_pPhysics->UserSocket = (UINT)-1;
 		PlayerController::Get().SendReqRespawn(PlayerController::ECharacter::EGuard);
 	}
-	if (Input::GetKeyState('X') == EKeyState::DOWN)
+	if (Input::GetKeyState(VK_NUMPAD2) == EKeyState::DOWN)
 	{
 		if (PlayerController::Get().GetParent() != nullptr)
 			PlayerController::Get().GetParent()->m_pPhysics->UserSocket = (UINT)-1;
 		PlayerController::Get().SendReqRespawn(PlayerController::ECharacter::EArcher);
 	}
-	if (Input::GetKeyState('C') == EKeyState::DOWN)
+	if (Input::GetKeyState(VK_NUMPAD3) == EKeyState::DOWN)
 	{
 		if (PlayerController::Get().GetParent() != nullptr)
 			PlayerController::Get().GetParent()->m_pPhysics->UserSocket = (UINT)-1;
@@ -198,27 +191,6 @@ bool GameScene::CheatMessage() noexcept
 				return false;
 			}
 		}
-		/*else if (str._Equal(L"Dance"))
-		{
-			if (PlayerController::Get().GetParent() == nullptr)
-				return false;
-			switch (atoi(WCharToChar(m_chatMessage.substr(finder + 1).c_str())))
-			{
-			case 1:
-			{
-				PlayerController::Get().SendAnimTransform(PlayerController::EAction::Dance1, PlayerController::Get().m_curCharacter);
-			}	break;
-			case 2:
-			{
-				PlayerController::Get().SendAnimTransform(PlayerController::EAction::Dance2, PlayerController::Get().m_curCharacter);
-			}	break;
-			case 3:
-			{
-				PlayerController::Get().SendAnimTransform(PlayerController::EAction::Dance3, PlayerController::Get().m_curCharacter);
-			}	break;
-			}
-			return false;
-		}*/
 		else if (str._Equal(L"Zombie"))
 		{
 			PacketManager::Get().SendTakeObject(L"Zombie", ESocketType::EZombie, atoi(WCharToChar(m_chatMessage.substr(finder + 1).c_str())), 1.0f, 0.25f, 0.05f, { -500.0f, 0.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
@@ -253,16 +225,6 @@ bool GameScene::CheatMessage() noexcept
 			p_PlayerDead.KillUser = (UINT)-1;
 			p_PlayerDead.DeadUser = PacketManager::Get().pMyInfo->UserSocket;
 			PacketManager::Get().SendPacket((char*)&p_PlayerDead, (USHORT)sizeof(Packet_PlayerDead), PACKET_PlayerDead);
-			return false;
-		}
-		else if (str._Equal(L"MoveSpeed"))
-		{
-			PlayerController::Get().m_moveSpeed = (float)atof(WCharToChar(m_chatMessage.substr(finder + 1).c_str()));
-			return false;
-		}
-		else if (str._Equal(L"JumpPower"))
-		{
-			PlayerController::Get().m_jumpPower = (float)atof(WCharToChar(m_chatMessage.substr(finder + 1).c_str()));
 			return false;
 		}
 		else if (str._Equal(L"Level"))
@@ -425,56 +387,66 @@ void GameScene::HostFrame() noexcept
 	static float spawnBarrel = 0.0f;
 	static float spawnShot = 0.0f;
 	static float spawnShot2 = 0.0f;
-	static float spawnShot3 = 0.0f;
-	static float spawnShot4 = 0.0f;
-	spawnBarrel += Timer::SPF;
-	spawnShot += Timer::SPF;
-	spawnShot2 += Timer::SPF;
-	spawnShot3 += Timer::SPF;
-	spawnShot4 += Timer::SPF;
+	//static float spawnShot3 = 0.0f;
+	//static float spawnShot4 = 0.0f;
+	//spawnShot3 += Timer::SPF;
+	//spawnShot4 += Timer::SPF;
 
+	spawnBarrel += Timer::SPF;
 	if (spawnBarrel >= 15.0f)
 	{
 		spawnBarrel = 0.0f;
 		PacketManager::Get().SendTakeObject(L"Explosive", ESocketType::EDummy, (UCHAR)PacketManager::Get().UserList.size(), 0.6f, 0.3f, 0.0f, { -400.0f, 30.0f, -400.0f }, { 800.0f, 0.0f, 800.0f });
 	}
 
-	// ÀÏ¹Ý
-	if (spawnShot >= 19.0f)
+	if (PacketManager::Get().TowerLevel >= 1)
 	{
-		spawnShot = 0.0f;
+		// ÀÏ¹Ý
+		spawnShot += Timer::SPF;
+		if (spawnShot >= PacketManager::Get().TowerDelayShot)
+		{
+			spawnShot = 0.0f;
 
-		Packet_KeyValue p_KeyValue;
-		p_KeyValue.KeyValue = 0;
-		PacketManager::Get().SendPacket((char*)&p_KeyValue, sizeof(Packet_KeyValue), PACKET_TowerAttack);
-	}
-	// ½ÃÇÑÆø
-	if (spawnShot2 >= 15.0f)
-	{
-		spawnShot2 = 0.0f;
+			Packet_TowerAttack p_Tower;
+			p_Tower.KeyValue = 0;
+			p_Tower.TowerLevel = PacketManager::Get().TowerLevel;
+			PacketManager::Get().SendPacket((char*)&p_Tower, sizeof(Packet_TowerAttack), PACKET_TowerAttack);
+		}
 
-		Packet_KeyValue p_KeyValue;
-		p_KeyValue.KeyValue = 1;
-		PacketManager::Get().SendPacket((char*)&p_KeyValue, sizeof(Packet_KeyValue), PACKET_TowerAttack);
-	}
-	// Áö·Ú
-	if (spawnShot3 >= 21.0f)
-	{
-		spawnShot3 = 0.0f;
+		if (PacketManager::Get().TowerLevel >= 5)
+		{
+			// ÆøÅº
+			spawnShot2 += Timer::SPF;
+			if (spawnShot2 >= PacketManager::Get().TowerDelayShot2)
+			{
+				spawnShot2 = 0.0f;
 
-		Packet_KeyValue p_KeyValue;
-		p_KeyValue.KeyValue = 2;
-		PacketManager::Get().SendPacket((char*)&p_KeyValue, sizeof(Packet_KeyValue), PACKET_TowerAttack);
+				Packet_TowerAttack p_Tower;
+				p_Tower.KeyValue = 1;
+				p_Tower.TowerLevel = PacketManager::Get().TowerLevel;
+				PacketManager::Get().SendPacket((char*)&p_Tower, sizeof(Packet_TowerAttack), PACKET_TowerAttack);
+			}
+		}
 	}
-	// ¹Ì»çÀÏ
-	if (spawnShot4 >= 30.0f)
-	{
-		spawnShot4 = 0.0f;
 
-		Packet_KeyValue p_KeyValue;
-		p_KeyValue.KeyValue = 3;
-		PacketManager::Get().SendPacket((char*)&p_KeyValue, sizeof(Packet_KeyValue), PACKET_TowerAttack);
-	}
+	//// Áö·Ú
+	//if (spawnShot3 >= 21.0f)
+	//{
+	//	spawnShot3 = 0.0f;
+
+	//	Packet_KeyValue p_KeyValue;
+	//	p_KeyValue.KeyValue = 2;
+	//	PacketManager::Get().SendPacket((char*)&p_KeyValue, sizeof(Packet_KeyValue), PACKET_TowerAttack);
+	//}
+	//// ¹Ì»çÀÏ
+	//if (spawnShot4 >= 30.0f)
+	//{
+	//	spawnShot4 = 0.0f;
+
+	//	Packet_KeyValue p_KeyValue;
+	//	p_KeyValue.KeyValue = 3;
+	//	PacketManager::Get().SendPacket((char*)&p_KeyValue, sizeof(Packet_KeyValue), PACKET_TowerAttack);
+	//}
 
 	///
 	if (*m_pFrameCount <= 0.0f)
@@ -594,6 +566,25 @@ bool GameScene::FirstInit() noexcept
 	{
 		m_isFirstInit = false;
 		//
+		// ¶óÀÌÆ®
+		//auto pTrans = new CTransformer(Vector3::Up * 550.0f, Quaternion::Down * PI * 0.35f, Vector3::One);
+		//pTrans->TransEvent = [](Transform* pParent, Transform* pTrans, const float& spf, const float& accTime) {
+		//	pParent->SetTransform(*pTrans);
+		//	pParent->Translate({ cosf(0.2f * accTime) * 800.0f, 0.0f, sinf(0.2f * accTime) * 800.0f });
+		//	return; spf; accTime; pTrans;
+		//};
+		//ObjectManager::Get().Lights.front()->AddComponent(pTrans);
+		ObjectManager::Get().Lights.front()->SetRotation(Quaternion::Up * PI * 0.65f);
+		ObjectManager::Get().Lights.front()->SetPosition(0.0f, 550.0f, 800.0f);
+		//ObjectManager::Get().Lights.front()->SetFocus(Vector3::Zero);
+		// ¶óÀÌÆ® ·£´õ·¯
+		auto pShpere = (Renderer*)ObjectManager::GetInstance().TakeComponent(L"RowSphere");
+		pShpere->SetShaderLayout("VS_Basic", "PS_Basic");
+		auto pObject = new GameObject(L"Sun", pShpere);
+		pObject->isGlobal(true);
+		pObject->SetScale(Vector3::One * 10);
+		pObject->SetParent(ObjectManager::Get().Lights.front());
+		///
 		m_pPlayer->m_myName = L"Player";
 		m_pPlayer->m_objType = EObjType::Object;
 		ObjectManager::Cameras[ECamera::Main]->SetParent(m_pPlayer);
@@ -690,6 +681,7 @@ void GameScene::LoadUI() noexcept
 	m_pVolume = (JSliderCtrl*)pUIRoot->find_child(L"Set_Volum");
 	m_pVolume->EventHover.first = [](void* pSlider) {
 		SoundManager::Get().SetMasterVolume(*((JSliderCtrl*)pSlider)->GetValue());
+		ErrorMessage("º¼·ý : " + to_string(*((JSliderCtrl*)pSlider)->GetValue()));
 	};
 	m_pVolume->EventHover.second = m_pVolume;
 	m_pVolume->SetValue(0.5f);
@@ -760,7 +752,7 @@ void GameScene::LoadUI() noexcept
 					for (auto& pRenderer : *pList)
 					{
 						((Renderer*)pRenderer)->SetShadowRate(0.5f);
-						((Renderer*)pRenderer)->SetLightRate(0.2f);
+						((Renderer*)pRenderer)->SetLightRate(0.3f);
 					}
 				}
 			}
@@ -774,7 +766,7 @@ void GameScene::LoadUI() noexcept
 						for (auto& pRenderer : *pList)
 						{
 							((Renderer*)pRenderer)->SetShadowRate(0.5f);
-							((Renderer*)pRenderer)->SetLightRate(0.2f);
+							((Renderer*)pRenderer)->SetLightRate(0.3f);
 						}
 					}
 				}
@@ -840,6 +832,8 @@ void GameScene::LoadUI() noexcept
 	UIManager::Get().m_pInfoArmor = (JTextCtrl*)pUIRoot->find_child(L"Info_Armor");
 	//auto pArmor = (JTextCtrl*)pUIRoot->find_child(L"Info_Armor_txt");
 	//pArmor->SetString(L"¸®½ºÆù");
+	auto pText = (JTextCtrl*)pUIRoot->find_child(L"Info_MoveSpeed_txt");
+	pText->SetString(L"È¹µæ·ü");
 	UIManager::Get().m_pInfoSP = (JTextCtrl*)pUIRoot->find_child(L"Info_SP");
 	UIManager::Get().m_pInfoStr = (JTextCtrl*)pUIRoot->find_child(L"Info_STR");
 	UIManager::Get().m_pInfoDex = (JTextCtrl*)pUIRoot->find_child(L"Info_DEX");
@@ -853,16 +847,6 @@ void GameScene::LoadUI() noexcept
 			++(*(UCHAR*)pStat);
 			PlayerController::Get().UpdateStatus();
 			PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
-
-			//// Luk ¿Ã·ÈÀ»½Ã
-			//if (&PacketManager::Get().pMyInfo->StatLuk == pStat &&
-			//	PlayerController::Get().GetParent() != nullptr)
-			//{
-			//	Packet_Vector3 p_Scailing;
-			//	p_Scailing.KeyValue = PlayerController::Get().GetParent()->m_keyValue;
-			//	p_Scailing.Vec3 = Vector3::One * 0.005f;
-			//	PacketManager::Get().SendPacket((char*)&p_Scailing, (USHORT)sizeof(Packet_Vector3), PACKET_Scaling);
-			//}
 		}
 	};
 	UIManager::Get().m_pInfoStrBtn = (JTextCtrl*)pUIRoot->find_child(L"Info_STR_Btn");
@@ -877,7 +861,10 @@ void GameScene::LoadUI() noexcept
 	UIManager::Get().m_pInfoLukBtn = (JTextCtrl*)pUIRoot->find_child(L"Info_LUK_btn");
 	UIManager::Get().m_pInfoLukBtn->EventClick.first = pStatUp;
 	UIManager::Get().m_pInfoLukBtn->EventClick.second = &PacketManager::Get().pMyInfo->StatLuk;
-	// ½½·Ô
+	// ÀÎº¥, ½½·Ô
+	UIManager::Get().m_pInvenSlot = (JInventory*)pUIRoot->find_child(L"Inventory_Slot");
+	UIManager::Get().m_pInvenPanel = (JPanel*)pUIRoot->find_child(L"Inventory_Panel");
+
 	UIManager::Get().m_pSlot1 = (JSlot*)pUIRoot->find_child(L"Slot1");
 	UIManager::Get().m_pSlot2 = (JSlot*)pUIRoot->find_child(L"Slot2");
 	UIManager::Get().m_pSlot3 = (JSlot*)pUIRoot->find_child(L"Slot3");
@@ -885,6 +872,7 @@ void GameScene::LoadUI() noexcept
 	//UIManager::Get().m_pSlot1->AddItem(L"");
 	//UIManager::Get().m_pSlot1->m_bEmpty; // > AddItem(L"");
 
+	// ÀÌ¸§ º¯°æ
 	UIManager::Get().m_pInfoName = (JEditCtrl*)pUIRoot->find_child(L"Info_Name");
 	auto pNameChange = (JButtonCtrl*)pUIRoot->find_child(L"Info_Name_Change_Btn");
 	pNameChange->EventClick.first = [](void* pScene) {
@@ -905,20 +893,66 @@ void GameScene::LoadUI() noexcept
 	};
 	pNameChange->EventClick.second = this;
 
-	UIManager::Get().m_pInvenSlot = (JInventory*)pUIRoot->find_child(L"Inventory_Slot");
-
 
 	UIManager::Get().m_pXPush = (JImageCtrl*)pUIRoot->find_child(L"XPUSH");
 	// »óÁ¡
 	UIManager::Get().m_pShopPanel = (JPanel*)pUIRoot->find_child(L"Shop_Panel");
-	UIManager::Get().m_pShopItem0 = (JButtonCtrl*)pUIRoot->find_child(L"Shop_Item0_Btn");
-	UIManager::Get().m_pShopItem1 = (JButtonCtrl*)pUIRoot->find_child(L"Shop_Item1_Btn");
-	UIManager::Get().m_pShopItem2 = (JButtonCtrl*)pUIRoot->find_child(L"Shop_Item2_Btn");
-	UIManager::Get().m_pShopItem3 = (JButtonCtrl*)pUIRoot->find_child(L"Shop_Item3_Btn");
-	UIManager::Get().m_pShopItem4 = (JButtonCtrl*)pUIRoot->find_child(L"Shop_Item4_Btn");
-	UIManager::Get().m_pShopItem5 = (JButtonCtrl*)pUIRoot->find_child(L"Shop_Item5_Btn");
-	UIManager::Get().m_pShopItem6 = (JButtonCtrl*)pUIRoot->find_child(L"Shop_Item6_Btn");
-	UIManager::Get().m_pShopItem7 = (JButtonCtrl*)pUIRoot->find_child(L"Shop_Item7_Btn");
+	UIManager::Get().m_pShopItem0 = (JTextCtrl*)pUIRoot->find_child(L"Shop_Item0_Btn");
+	UIManager::Get().m_pShopItem0->EventClick.first = [](void*) {
+		//if()
+		{
+			UIManager::Get().AddSlotItem(L"Berry_0");
+		}
+	};
+	UIManager::Get().m_pShopItem1 = (JTextCtrl*)pUIRoot->find_child(L"Shop_Item1_Btn");
+	UIManager::Get().m_pShopItem1->EventClick.first = [](void*) {
+		//if()
+		{
+			UIManager::Get().AddSlotItem(L"Gems_0");
+		}
+	};
+	UIManager::Get().m_pShopItem2 = (JTextCtrl*)pUIRoot->find_child(L"Shop_Item2_Btn");
+	UIManager::Get().m_pShopItem2->EventClick.first = [](void*) {
+		//if()
+		{
+			UIManager::Get().AddSlotItem(L"Gems_0");
+		}
+	};
+	UIManager::Get().m_pShopItem3 = (JTextCtrl*)pUIRoot->find_child(L"Shop_Item3_Btn");
+	UIManager::Get().m_pShopItem3->EventClick.first = [](void*) {
+		//if()
+		{
+			UIManager::Get().AddSlotItem(L"Gems_0");
+		}
+	};
+	UIManager::Get().m_pShopItem4 = (JTextCtrl*)pUIRoot->find_child(L"Shop_Item4_Btn");
+	UIManager::Get().m_pShopItem4->EventClick.first = [](void*) {
+		//if()
+		{
+			UIManager::Get().AddSlotItem(L"Gems_0");
+		}
+	};
+	UIManager::Get().m_pShopItem5 = (JTextCtrl*)pUIRoot->find_child(L"Shop_Item5_Btn");
+	UIManager::Get().m_pShopItem5->EventClick.first = [](void*) {
+		//if()
+		{
+			UIManager::Get().AddSlotItem(L"Gems_0");
+		}
+	};
+	UIManager::Get().m_pShopItem6 = (JTextCtrl*)pUIRoot->find_child(L"Shop_Item6_Btn");
+	UIManager::Get().m_pShopItem6->EventClick.first = [](void*) {
+		//if()
+		{
+			UIManager::Get().AddSlotItem(L"Gems_0");
+		}
+	};
+	UIManager::Get().m_pShopItem7 = (JTextCtrl*)pUIRoot->find_child(L"Shop_Item7_Btn");
+	UIManager::Get().m_pShopItem7->EventClick.first = [](void*) {
+		//if()
+		{
+			UIManager::Get().AddSlotItem(L"Gems_0");
+		}
+	};
 	// Å¸¿ö
 	UIManager::Get().m_pTowerPanel = (JPanel*)pUIRoot->find_child(L"Tower_Panel");
 	UIManager::Get().m_pTowerCurLevel = (JTextCtrl*)pUIRoot->find_child(L"Tower_CurrentLv");
@@ -932,14 +966,13 @@ void GameScene::LoadUI() noexcept
 	UIManager::Get().m_pTowerText2 = (JTextCtrl*)pUIRoot->find_child(L"Tower_Explanation1");
 	UIManager::Get().m_pTowerUpgrade = (JButtonCtrl*)pUIRoot->find_child(L"Tower_Btn");
 	UIManager::Get().m_pTowerUpgrade->EventClick.first = [](void*) {
-		ErrorMessage("¾÷±Û!");
+		//if()
+		{
+			PacketManager::Get().SendPacket((char*)&PI, sizeof(PI), PACKET_TowerUpgrade);
+		}
 	};
 	// ´ëÀå°£
 	UIManager::Get().m_pSmithyPanel = (JPanel*)pUIRoot->find_child(L"Smithy_Panel");
-	UIManager::Get().m_pSmithyBtnWeapon = (JButtonCtrl*)pUIRoot->find_child(L"Smithy_Weapon_Btn");
-	UIManager::Get().m_pSmithyBtnArmor = (JButtonCtrl*)pUIRoot->find_child(L"Smithy_Armor_Btn");
-	UIManager::Get().m_pSmithyBtnAcce1 = (JButtonCtrl*)pUIRoot->find_child(L"Smithy_Accessories_Btn");
-	UIManager::Get().m_pSmithyBtnAcce2 = (JButtonCtrl*)pUIRoot->find_child(L"Smithy_Accessories2_Btn");
 	UIManager::Get().m_pSmithyInfo1Weapon = (JTextCtrl*)pUIRoot->find_child(L"Smithy_Weapon_Info_Text0");
 	UIManager::Get().m_pSmithyInfo2Weapon = (JTextCtrl*)pUIRoot->find_child(L"Smithy_Weapon_Info_Text1");
 	UIManager::Get().m_pSmithyInfo1Armor = (JTextCtrl*)pUIRoot->find_child(L"Smithy_Armor_Info_Text0");
@@ -948,6 +981,43 @@ void GameScene::LoadUI() noexcept
 	UIManager::Get().m_pSmithyInfo2Acce1 = (JTextCtrl*)pUIRoot->find_child(L"Smithy_Accessories_Info_Text1");
 	UIManager::Get().m_pSmithyInfo1Acce2 = (JTextCtrl*)pUIRoot->find_child(L"Smithy_Accessories2_Info_Text0");
 	UIManager::Get().m_pSmithyInfo2Acce2 = (JTextCtrl*)pUIRoot->find_child(L"Smithy_Accessories2_Info_Text1");
+	UIManager::Get().m_pSmithyBtnWeapon = (JTextCtrl*)pUIRoot->find_child(L"Smithy_Weapon_Btn");
+	UIManager::Get().m_pSmithyBtnWeapon->EventClick.first = [](void*) {
+		//if()
+		{
+			++PlayerController::Get().m_upgradeWeapon;
+			PlayerController::Get().UpdateStatus();
+		}
+	};
+	UIManager::Get().m_pSmithyBtnArmor = (JTextCtrl*)pUIRoot->find_child(L"Smithy_Armor_Btn");
+	UIManager::Get().m_pSmithyBtnArmor->EventClick.first = [](void*) {
+		//if()
+		{
+			++PlayerController::Get().m_upgradeArmor;
+			if (PlayerController::Get().GetParent() != nullptr)
+				PlayerController::Get().GetParent()->SetArmor(PlayerController::Get().m_defencePoint + PlayerController::Get().m_upgradeArmor);
+		}
+	};
+	UIManager::Get().m_pSmithyBtnAcce1 = (JTextCtrl*)pUIRoot->find_child(L"Smithy_Accessories_Btn");
+	UIManager::Get().m_pSmithyBtnAcce1->EventClick.first = [](void*) {
+		//if()
+		{
+			++PlayerController::Get().m_upgradeAcce1;
+			PlayerController::Get().UpdateStatus(false);
+		}
+	};
+	UIManager::Get().m_pSmithyBtnAcce2 = (JTextCtrl*)pUIRoot->find_child(L"Smithy_Accessories2_Btn");
+	UIManager::Get().m_pSmithyBtnAcce2->EventClick.first = [](void*) {
+		//if()
+		{
+			++PlayerController::Get().m_upgradeAcce2;
+			++PacketManager::Get().pMyInfo->StatStr;
+			++PacketManager::Get().pMyInfo->StatDex;
+			++PacketManager::Get().pMyInfo->StatInt;
+			++PacketManager::Get().pMyInfo->StatLuk;
+			PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
+		}
+	};
 	///
 	ObjectManager::Get().PushObject(pUIRoot);
 	UI::InGameEvent(pUIRoot);

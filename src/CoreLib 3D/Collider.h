@@ -6,11 +6,12 @@ enum class ECollider : char {
 	AABB = 0, OBB, Sphere,
 };
 
-enum class ETag : char {
-	Collider, Dummy, 
-	Enemy, Ally, 
-};
-
+namespace ETag{
+	enum EETag : char {
+		Collider = 0, Dummy,
+		Enemy, Ally, size
+	};
+}
 
 class ColliderAABB;
 class ColliderOBB;
@@ -26,7 +27,8 @@ protected:
 public:
 	void (*CollisionEvent)(Collider*, Collider*) = nullptr;
 	ECollider	m_eCollider;
-	ETag		m_eTag = ETag::Collider;
+	ETag::EETag	m_eTag = ETag::Collider;
+	bool m_eTagArray[ETag::size] = {true, true, true, true};
 
 	D3DXVECTOR3 m_pivot = Vector3::Zero;		// 부모 상대 피벗
 	

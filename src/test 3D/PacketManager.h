@@ -36,6 +36,10 @@ public:
 	std::function<int()> PacketFunc;
 
 	D3DXVECTOR3			TowerPos[8];
+	char				TowerLevel		= 0;
+	float				TowerDelayShot  = 0.0f;
+	float				TowerDelayShot2 = 0.0f;
+	float				TowerDamage		= 0.0f;
 public:
 	void SendPacket(const char* data, const USHORT& size, const USHORT& packeyType) noexcept;
 	void ReqSendPacket(const char* data, const USHORT& size, const USHORT& packeyType) noexcept;

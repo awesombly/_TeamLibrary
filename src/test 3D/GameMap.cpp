@@ -10,20 +10,21 @@
 
 bool GameMap::Init() noexcept
 {
-	m_pHeightMap = new HeightMap(L"HeightMap", EComponent::Renderer, L"mounds.jpg");
+	m_pHeightMap = new HeightMap(L"HeightMap", EComponent::Renderer, L"gamemap.png");
 	auto pObject = new GameObject(L"HeightMap", m_pHeightMap, EObjType::Map);
-	m_pHeightMap->CreateHeightMap(DxManager::GetDContext(), L"HeightMap/Islands, Leafy.bmp", 10, 1.0f, 1.0f);
+	m_pHeightMap->CreateHeightMap(DxManager::GetDContext(), L"HeightMap/heightmap.png", 13, 1.0f, 1.0f);
 	//m_pHeightMap->SetShadowRate(0.0f);
-	//mapMap->SetEnviromentMap(((Renderer*)m_pSkyBox->GetComponent(EComponent::Renderer))->m_srcName, EEnviType::Fresnel);
+	m_pHeightMap->SetEnviromentMap(L"CubeMap/A_nightsky.dds", EEnviType::Refraction);
+	m_pHeightMap->SetColor(DxManager::GetDContext(), 0.6f, 0.6f, 0.6f);
 	//pObject->Translate(Vector3::Down * 100.0f);
-	pObject->SetScale(1.0f, 0.1f, 1.0f);
+	//pObject->SetScale(1.0f, 0.1f, 1.0f);
 	ObjectManager::Get().PushObject(pObject, false);
 
 	//////////////////////////////////////////////////////////////////////////////////////
 	PlayerController::Get().m_pHome = &m_fountain;
 	auto pCollider = new Collider(9.2f);
 	m_fountain.AddComponent(pCollider);
-	m_fountain.SetPlayerCharacter(L"MAP_Fountain", 0.0f, -15.0f, 0.0f);
+	m_fountain.SetPlayerCharacter(L"MAP_Fountain", 0.0f, -50.0f, 0.0f);
 	m_fountain.SetScale(D3DXVECTOR3(8.0f, 8.0f, 8.0f));
 	m_fountain.m_objType = EObjType::AObject;
 	m_fountain.m_myName = L"HolyWater";
@@ -32,6 +33,7 @@ bool GameMap::Init() noexcept
 	pCollider->SetGravityScale(0.0f);
 	pCollider->usePhysics(false);
 	pCollider->SetHP(200.0f);
+	pCollider->m_pPhysics->DeadEvent = DyingEvent::CenterDead;
 	ObjectManager::Get().PushObject(&m_fountain, false);
 
 	m_church.SetPlayerCharacter(L"MAP_Church", -450.0f, 0, 450.0f);	//280
@@ -458,8 +460,6 @@ bool GameMap::Init() noexcept
 
 
 #pragma region MyFence
-
-
 	//1½Ã
 	m_fence00.SetPlayerCharacter(L"MAP_FENCE", 190.0f, 0.0f, 520.0f);//190.0f80.0f
 	m_fence00.SetScale(D3DXVECTOR3(2.0f, 1.5f, 2.0f));
@@ -548,44 +548,28 @@ bool GameMap::Init() noexcept
 
 #pragma region MyCarpet
 	m_carpet_blacksmith.SetPlayerCharacter(L"MAP_Carpet", 300.0f, 0.0f, 300.0f);
-	m_carpet_blacksmith.AddComponent(pCollider = new Collider(14.0f));
 	m_carpet_blacksmith.SetScale(D3DXVECTOR3(4.0f, 4.0f, 4.0f));
 	m_carpet_blacksmith.m_objType = EObjType::AObject;
-	pCollider->m_eTag = ETag::Dummy;
-	pCollider->SetGravityScale(0.0f);
-	pCollider->usePhysics(false);
-	pCollider->CollisionEvent = MyEvent::CarpetChurch;
 	ObjectManager::Get().PushObject(&m_carpet_blacksmith, false);
+	PlayerController::Get().m_CarpetPos[0] = m_carpet_blacksmith.GetPosition();
 
 	m_carpet_church.SetPlayerCharacter(L"MAP_Carpet", -300.0f, 0.0f, 300.0f);
 	m_carpet_church.SetScale(D3DXVECTOR3(4.0f, 4.0f, 4.0f));
 	m_carpet_church.m_objType = EObjType::AObject;
-	m_carpet_church.AddComponent(pCollider = new Collider(14.0f));
-	pCollider->m_eTag = ETag::Dummy;
-	pCollider->SetGravityScale(0.0f);
-	pCollider->usePhysics(false);
-	pCollider->CollisionEvent = MyEvent::CarpetChurch;
 	ObjectManager::Get().PushObject(&m_carpet_church, false);
+	PlayerController::Get().m_CarpetPos[1] = m_carpet_church.GetPosition();
 
 	m_carpet_windmill.SetPlayerCharacter(L"MAP_Carpet", 300.0f, 0.0f, -300.0f);
 	m_carpet_windmill.SetScale(D3DXVECTOR3(4.0f, 4.0f, 4.0f));
 	m_carpet_windmill.m_objType = EObjType::AObject;
-	m_carpet_windmill.AddComponent(pCollider = new Collider(14.0f));
-	pCollider->m_eTag = ETag::Dummy;
-	pCollider->SetGravityScale(0.0f);
-	pCollider->usePhysics(false);
-	pCollider->CollisionEvent = MyEvent::CarpetChurch;
 	ObjectManager::Get().PushObject(&m_carpet_windmill, false);
+	PlayerController::Get().m_CarpetPos[2] = m_carpet_windmill.GetPosition();
 
 	m_carpet_towerRound.SetPlayerCharacter(L"MAP_Carpet", -300.0f, 0.0f, -300.0f);
 	m_carpet_towerRound.SetScale(D3DXVECTOR3(4.0f, 4.0f, 4.0f));
 	m_carpet_towerRound.m_objType = EObjType::AObject;
-	m_carpet_towerRound.AddComponent(pCollider = new Collider(14.0f));
-	pCollider->m_eTag = ETag::Dummy;
-	pCollider->SetGravityScale(0.0f);
-	pCollider->usePhysics(false);
-	pCollider->CollisionEvent = MyEvent::CarpetChurch;
 	ObjectManager::Get().PushObject(&m_carpet_towerRound, false);
+	PlayerController::Get().m_CarpetPos[3] = m_carpet_towerRound.GetPosition();
 #pragma endregion
 
 #pragma region MywagonSack
@@ -846,7 +830,7 @@ bool GameMap::Init() noexcept
 #pragma region MyBillTree
 	auto pPlane = new RPlane(L"T", L"Tree1.png", "VS_Basic", "PS_Basic");
 	int i = 0;
-	m_pTree2D[i] = new GameObject(L"T", pPlane, EObjType::Object);
+	m_pTree2D[i] = new GameObject(L"T", pPlane, EObjType::Dummy);
 	m_pTree2D[i]->SetScale(Vector3::One * 50.0f);
 	m_pTree2D[i]->SetPosition(-1000.0f, 180.0f, 0.0f);
 	m_pTree2D[i]->SetScale(180.0f, 180.0f, 180.0f);
@@ -1104,14 +1088,14 @@ bool GameMap::Init() noexcept
 #pragma region TownCollider
 	pObject = new GameObject(L"-");
 
-	pCollider = new ColliderOBB({ -1000, 0.0f, 400.0f }, { -200.0f, 200.0f, 1000.0f });
+	pCollider = new ColliderOBB({ -1000, 0.0f, 400.0f }, { -190.0f, 200.0f, 1000.0f });
 	pCollider->m_eTag = ETag::Collider;
 	pObject->AddComponent(pCollider);
 	pCollider = new ColliderOBB({ -1000, 0.0f, 200.0f }, { -400.0f, 200.0f, 1000.0f });
 	pCollider->m_eTag = ETag::Collider;
 	pObject->AddComponent(pCollider);
 
-	pCollider = new ColliderOBB({ -1000, 0.0f, -1000.0f }, { -200.0f, 200.0f, -400.0f });
+	pCollider = new ColliderOBB({ -1000, 0.0f, -1000.0f }, { -190.0f, 200.0f, -400.0f });
 	pCollider->m_eTag = ETag::Collider;
 	pObject->AddComponent(pCollider);
 	pCollider = new ColliderOBB({ -1000, 0.0f, -1000.0f }, { -400.0f, 200.0f, -200.0f });
@@ -1121,14 +1105,14 @@ bool GameMap::Init() noexcept
 	pCollider = new ColliderOBB({ 400, 0.0f, 200.0f }, { 1000.0f, 200.0f, 1000.0f });
 	pCollider->m_eTag = ETag::Collider;
 	pObject->AddComponent(pCollider);
-	pCollider = new ColliderOBB({ 200, 0.0f, 400.0f }, { 1000.0f, 200.0f, 1000.0f });
+	pCollider = new ColliderOBB({ 190, 0.0f, 400.0f }, { 1000.0f, 200.0f, 1000.0f });
 	pCollider->m_eTag = ETag::Collider;
 	pObject->AddComponent(pCollider);
 
-	pCollider = new ColliderOBB({ 400, 0.0f, -1000.0f }, { 1000.0f, 200.0f, -200.0f });
+	pCollider = new ColliderOBB({ 400, 0.0f, -1000.0f }, { 1000.0f, 200.0f, -190.0f });
 	pCollider->m_eTag = ETag::Collider;
 	pObject->AddComponent(pCollider);
-	pCollider = new ColliderOBB({ 200, 0.0f, -1000.0f }, { 1000.0f, 200.0f, -400.0f });
+	pCollider = new ColliderOBB({ 190, 0.0f, -1000.0f }, { 1000.0f, 200.0f, -400.0f });
 	pCollider->m_eTag = ETag::Collider;
 	pObject->AddComponent(pCollider);
 
