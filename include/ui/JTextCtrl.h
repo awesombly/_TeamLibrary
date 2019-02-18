@@ -8,6 +8,7 @@ namespace UI
 	public:
 		wstring m_Text;
 		D3DXVECTOR4 m_rtText;
+		D3DXVECTOR4 m_rtBackText;
 		float m_fSize;
 		EAlign m_Align = EAlign::Center;
 	public:
