@@ -129,6 +129,7 @@
 ^Rotate 0.000000 0.000000 1.570796
 ^Scale 50.000000 50.000000 1.000000
 ^SubScale 50.000000 50.000000 1.000000
+^bDecrease 1
 ^Color 1.000000 1.000000 1.000000 1.000000
 ^tx_BackGround black.png
 ^tx_FrontGround White.png
@@ -149,6 +150,7 @@
 ^Rotate 0.000000 0.000000 1.570796
 ^Scale 50.000000 50.000000 1.000000
 ^SubScale 50.000000 50.000000 1.000000
+^bDecrease 1
 ^Color 1.000000 1.000000 1.000000 1.000000
 ^tx_BackGround black.png
 ^tx_FrontGround red.png
@@ -169,6 +171,7 @@
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 221.000000 2.000000 1.000000
 ^SubScale 221.000000 2.000000 1.000000
+^bDecrease 1
 ^Color 0.000000 1.000000 0.000000 1.000000
 ^tx_BackGround black.png
 ^tx_FrontGround White.png
@@ -227,6 +230,7 @@
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 26.000000 26.000000 1.000000
 ^SubScale 26.000000 26.000000 1.000000
+^bDecrease 1
 ^Color 1.000000 1.000000 1.000000 1.000000
 ^tx_BackGround boots_mobile-5301437f3fd3acb46bc8924e850b75cf-1.png
 ^tx_FrontGround black.png
@@ -247,6 +251,7 @@
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 26.000000 26.000000 1.000000
 ^SubScale 26.000000 26.000000 1.000000
+^bDecrease 1
 ^Color 1.000000 1.000000 1.000000 1.000000
 ^tx_BackGround axe_mobile-d4d9e8a208f1f964783b426340fc8c29-1.png
 ^tx_FrontGround black.png
@@ -330,9 +335,10 @@
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 115.801628 8.354493 1.000000
 ^SubScale 115.801628 8.354493 1.000000
-^Color 1.000000 1.000000 1.000000 1.000000
+^bDecrease 1
+^Color 1.000000 0.000000 0.000000 1.000000
 ^tx_BackGround Alpha.png
-^tx_FrontGround red.png
+^tx_FrontGround White.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -2247,6 +2253,7 @@
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 151.000000 8.500000 1.000000
 ^SubScale 151.000000 8.500000 1.000000
+^bDecrease 0
 ^Color 1.000000 0.500000 1.000000 1.000000
 ^tx_BackGround Alpha.png
 ^tx_FrontGround µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
