@@ -8,36 +8,12 @@
 
 namespace MyEvent {
 	void ForceWave(Collider* pA, Collider* pB) {
-		if (pB != nullptr && (pB->m_eTag == ETag::Enemy || pB->m_eTag == ETag::Ally))
+		if (pB != nullptr)
 		{
 			pB->SetForce((Normalize(pB->GetCenter() - pA->GetCenter()) + Vector3::Up) * 180.0f);
 			pA->AddIgnoreList(pB);
 		}
 	}
-
-	//void ShockBoom(Collider* pA, Collider* pB)
-	//{
-	//	if (pB != nullptr &&
-	//		pB->m_eTag == ETag::Dummy)
-	//	{
-	//		if (pB->m_pPhysics->m_damage >= 0.2f)
-	//		{
-	//			auto position = pA->GetCenter() + Vector3::Up * 20.0f;
-	//			pA->m_pParent->SetPosition(Vector3::Up * 10000.0f);
-	//			for (int i = 0; i < 20; ++i)
-	//			{
-	//				auto pItem = ObjectManager::Get().TakeObject(L"Dagger");
-	//				pItem->SetPosition(position);
-	//				pItem->SetRotation(RandomNormal() * Quaternion::One * PI);
-	//				pItem->SetForce({RandomNormal() * 300.0f - 150.0f, 210.0f, RandomNormal() * 300.0f - 150.0f });
-	//				pItem->m_pPhysics->UserSocket = pA->m_pPhysics->UserSocket;
-	//				pItem->m_pPhysics->m_damage = 0.28f;
-	//			}
-	//			ObjectManager::Get().DisableObject(pA->m_pParent);
-	//			SoundManager::Get().PlayQueue("SE_fire1.mp3", pA->m_pParent->GetPosition(), PlayerController::Get().SoundRange);
-	//		}
-	//	}
-	//}
 
 	void MineBoom(Collider* pA, Collider* pB)
 	{
@@ -57,11 +33,6 @@ namespace MyEvent {
 
 	void NuclearBoom(Collider* pA, Collider* pB)
 	{
-		if (pB != nullptr)
-		{
-			if (pB->m_eTag == ETag::Dummy)
-				return;
-		}
 		auto pItem = ObjectManager::Get().TakeObject(L"PBoom");
 		pItem->SetPosition(pA->m_pParent->GetPosition());
 		pItem->SetScale(Vector3::One * 3.0f);
@@ -76,8 +47,6 @@ namespace MyEvent {
 	{
 		if (pB != nullptr)
 		{
-			if (pB->m_eTag != ETag::Enemy)
-				return;
 			if (pA->GetHP() <= 0.0f)
 			{
 				pB->SetForce((Normalize(pB->GetCenter() - pA->GetCenter())) * 240.0f);
@@ -174,7 +143,6 @@ namespace MyEvent {
 			auto pEffect = ObjectManager::Get().TakeObject(L"EHitLight");
 			pEffect->SetPosition(pB->GetCenter());
 		}
-		//ObjectManager::Get().DisableObject(pA->m_pParent);
 		//SoundManager::Get().Play("SE_HIT.mp3");//, pObject->GetWorldPosition(), SoundRange);
 	}
 
@@ -274,8 +242,7 @@ namespace MyEvent {
 
 	void PlayerAttack(Collider* pA, Collider* pB)
 	{
-		if (pB != nullptr &&
-			pB->m_eTag == ETag::Enemy)
+		if (pB != nullptr)
 		{
 			pB->SetForce((Normalize(pB->GetCenter() - pA->GetCenter())) * 450.0f);
 			pB->m_pParent->OperHP(-pA->m_pPhysics->m_damage);
@@ -306,11 +273,6 @@ namespace MyEvent {
 
 	void PlayerBomb(Collider* pA, Collider* pB)
 	{
-		if (pB != nullptr &&
-			pB->m_eTag == ETag::Dummy)
-		{
-			return;
-		}
 		auto pObject = ObjectManager::Get().TakeObject(L"PBoom");
 		pObject->SetPosition(pA->GetCenter());
 		pObject->SetScale(Vector3::One);
@@ -324,9 +286,6 @@ namespace MyEvent {
 	{
 		if (pB != nullptr)
 		{
-			if (pB->m_eTag == ETag::Dummy)
-				return;
-
 			pB->SetForce((Normalize(-pA->GetTotalForce()) + Vector3::Up) * 210.0f);
 			pB->m_pParent->OperHP(-pA->m_pPhysics->m_damage);
 			// 내가 맞았을때
@@ -364,9 +323,6 @@ namespace MyEvent {
 	{
 		if (pB != nullptr)
 		{
-			if (pB->m_eTag != ETag::Enemy)
-				return;
-
 			pB->SetForce((Normalize(-pA->GetTotalForce())) * 210.0f);
 			pB->m_pParent->OperHP(-pA->m_pPhysics->m_damage);
 			// 내가 맞았을때
@@ -402,8 +358,7 @@ namespace MyEvent {
 
 	void MeleeHit(Collider* pA, Collider* pB)
 	{
-		if (pB != nullptr &&
-			pB->m_eTag != ETag::Dummy)
+		if (pB != nullptr)
 		{
 			pB->SetForce((Normalize(pB->GetCenter() - pA->GetCenter())) * 300.0f);
 			pB->m_pParent->OperHP(-pA->m_pPhysics->m_damage);
@@ -440,11 +395,10 @@ namespace MyEvent {
 
 	void ZombieHit(Collider* pA, Collider* pB)
 	{
-		if (pB != nullptr &&
-			pB->m_pParent->m_objType == EObjType::Character &&
-			pB->m_eTag == ETag::Ally)
+		if (pB != nullptr && 
+			pB->m_pParent->m_objType == EObjType::Character)
 		{
-			pB->SetForce((Normalize(pB->GetCenter() - pA->GetCenter())) * 120.0f);
+			pB->SetForce((Normalize(pB->GetCenter() - pA->GetCenter())) * 180.0f);
 			pB->m_pParent->OperHP(-pA->m_pPhysics->m_damage);
 			// 내가 맞았을때
 			if (pB->m_pParent == PlayerController::Get().GetParent())
@@ -466,8 +420,7 @@ namespace MyEvent {
 
 	void ZombieAttack(Collider* pA, Collider* pB)
 	{
-		if (pB != nullptr &&
-			pB->m_eTag == ETag::Ally)
+		if (pB != nullptr)
 		{
 			pB->SetForce((Normalize(pB->GetCenter() - pA->GetCenter())) * 300.0f);
 			pB->m_pParent->OperHP(-pA->m_pPhysics->m_damage);
@@ -492,9 +445,6 @@ namespace MyEvent {
 	{
 		if (pB != nullptr)
 		{
-			if (pB->m_eTag != ETag::Ally)
-				return;
-
 			pB->SetForce((Normalize(-pA->GetTotalForce()) + Vector3::Up) * 240.0f);
 			pB->m_pParent->OperHP(-pA->m_pPhysics->m_damage);
 			// 내가 맞았을때
@@ -742,7 +692,7 @@ namespace DyingEvent {
 		pObject->SetHP(10000.0f);
 		if (RandomNormal() >= 0.5f * 5.0f / (5.0f + PacketManager::Get().pMyInfo->StatLuk))
 		{
-			auto pObject = ObjectManager::Get().TakeObject(L"ItemBox");
+			pObject = ObjectManager::Get().TakeObject(L"ItemBox");
 			pObject->SetPosition(pCollider->GetCenter());
 			pObject->SetHP(10000.0f);
 		}

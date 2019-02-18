@@ -6,7 +6,7 @@
 #include "EventManager.h"
 #include "PlayerController.h"
 #include "SoundManager.h"
-#include "ColliderOBB.h"
+#include "Collider.h"
 
 AIZombieKing::AIZombieKing()
 {
@@ -19,6 +19,7 @@ AIZombieKing::AIZombieKing()
 bool AIZombieKing::Init() noexcept
 {
 	AIZombie::Init();
+	m_pCollider = m_pParent->GetCollider();
 	if (m_Breath != nullptr)
 	{
 		ObjectManager::Get().DisableObject(m_Breath);
@@ -59,6 +60,9 @@ bool AIZombieKing::Frame(const float& spf, const float& accTime)	noexcept
 		 {
 			 m_pParent->m_pPhysics->m_mass = 0.05f;
 			 m_pParent->m_pPhysics->m_damping = 3.0f;
+			 m_pCollider->m_eTagArray[ETag::Enemy] = true;
+			 m_pCollider->m_eTagArray[ETag::Dummy] = true;
+			 m_pCollider->m_eTagArray[ETag::Collider] = true;
 		 	((AHeroObj*)m_pParent)->SetANIM_Loop(Zombie_KING_WALK);
 		 	m_pParent->SetFocus(m_Target = PlayerController::Get().m_pHome->GetPosition());
 		 }	break;
@@ -131,9 +135,12 @@ bool AIZombieKing::Frame(const float& spf, const float& accTime)	noexcept
 				{
 					// 점프 어택
 					m_delayStump = 0.0f;
+					m_pParent->SetFocus(iter->GetPosition());
 					m_pParent->m_pPhysics->m_mass = 1.0f;
 					m_pParent->m_pPhysics->m_damping = 0.25f;
-					m_pParent->SetFocus(iter->GetPosition());
+					m_pCollider->m_eTagArray[ETag::Enemy] = false;
+					m_pCollider->m_eTagArray[ETag::Dummy] = false;
+					m_pCollider->m_eTagArray[ETag::Collider] = false;
 					m_Target = (iter->GetPosition() - m_pParent->GetPosition()) * 1.6f + Vector3::Up * 600.0f;
 					m_eDirState = EState::Action3;
 					m_delay = 0.5f;

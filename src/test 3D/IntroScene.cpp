@@ -168,25 +168,7 @@ void IntroScene::SetObjects() noexcept
 	ObjectManager::Get().SetProtoComponent(new RCube(L"Cube", L"None.png"));
 	//ObjectManager::Get().SetProtoComponent(new RSphere(20, L"Sphere", L"None.png"));
 	ObjectManager::Get().SetProtoComponent(new RSphere(10, L"RowSphere", L"None.png"));
-	// ¶óÀÌÆ®
-	//auto pTrans = new CTransformer(Vector3::Up * 550.0f, Quaternion::Down * PI * 0.35f, Vector3::One);
-	//pTrans->TransEvent = [](Transform* pParent, Transform* pTrans, const float& spf, const float& accTime) {
-	//	pParent->SetTransform(*pTrans);
-	//	pParent->Translate({ cosf(0.2f * accTime) * 800.0f, 0.0f, sinf(0.2f * accTime) * 800.0f });
-	//	return; spf; accTime; pTrans;
-	//};
-	//ObjectManager::Get().Lights.front()->AddComponent(pTrans);
-	ObjectManager::Get().Lights.front()->SetRotation(Quaternion::Up * PI * 0.65f);
-	ObjectManager::Get().Lights.front()->SetPosition(0.0f, 550.0f, 800.0f);
-	//ObjectManager::Get().Lights.front()->SetFocus(Vector3::Zero);
-	// ¶óÀÌÆ® ·£´õ·¯
-	auto pShpere = (Renderer*)ObjectManager::GetInstance().TakeComponent(L"RowSphere");
-	pShpere->SetShaderLayout("VS_Basic", "PS_Basic");
-	pObject = new GameObject(L"Sun", pShpere);
-	pObject->isGlobal(true);
-	pObject->SetScale(Vector3::One * 10);
-	pObject->SetParent(ObjectManager::Get().Lights.front());
-
+	//ObjectManager::Get().Lights.front()->SetPosition(0.0f, 350.0f, 0.0f);
 	// ======================================= Load =====================================================
 	const auto urlEffect = L"../../data/script";
 	ObjectManager::Get().SetProtoObject(new GameObject(L"EZDead", m_pParser->CreateFromParticle(L"ZombieDead.eff", urlEffect)->SetEffectScale(3.0f), EObjType::Effect));
@@ -228,6 +210,8 @@ void IntroScene::SetObjects() noexcept
 	pObject = new GameObject(L"PDead", { pCollider, m_pParser->CreateFromParticle(L"Boom3.eff", urlEffect)->SetEffectScale(3.0f) }, EObjType::Effect);
 	pCollider->CollisionEvent = MyEvent::ForceWave;
 	pCollider->m_eTag = ETag::Dummy;
+	pCollider->m_eTagArray[ETag::Dummy] = false;
+	pCollider->m_eTagArray[ETag::Collider] = false;
 	pCollider->SetGravityScale(0.0f);
 	pCollider->usePhysics(false);
 	ObjectManager::Get().SetProtoObject(pObject);
@@ -237,6 +221,9 @@ void IntroScene::SetObjects() noexcept
 	pObject = new GameObject(L"ZThrow", { pCollider, m_pParser->CreateFromParticle(L"Fire2.eff", urlEffect)->SetEffectScale(3.0f) }, EObjType::Effect);
 	pCollider->CollisionEvent = MyEvent::ZombieThrow;
 	pCollider->m_eTag = ETag::Dummy;
+	pCollider->m_eTagArray[ETag::Dummy] = false;
+	pCollider->m_eTagArray[ETag::Enemy] = false;
+	pCollider->m_eTagArray[ETag::Collider] = false;
 	ObjectManager::Get().SetProtoObject(pObject);
 
 	// Á»ºñ ¾îÅÃ
@@ -244,6 +231,9 @@ void IntroScene::SetObjects() noexcept
 	pObject = new GameObject(L"ZAttack", { pCollider, m_pParser->CreateFromParticle(L"ZombieAttack.eff", urlEffect)->SetEffectScale(3.0f) }, EObjType::Effect);
 	pCollider->CollisionEvent = MyEvent::ZombieAttack;
 	pCollider->m_eTag = ETag::Dummy;
+	pCollider->m_eTagArray[ETag::Dummy] = false;
+	pCollider->m_eTagArray[ETag::Enemy] = false;
+	pCollider->m_eTagArray[ETag::Collider] = false;
 	pCollider->SetGravityScale(0.0f);
 	pCollider->usePhysics(false);
 	ObjectManager::Get().SetProtoObject(pObject);
@@ -253,6 +243,9 @@ void IntroScene::SetObjects() noexcept
 	pObject = new GameObject(L"ZAttack2", { pCollider, m_pParser->CreateFromParticle(L"ZombieAttack2.eff", urlEffect)->SetEffectScale(3.0f) }, EObjType::Effect);
 	pCollider->CollisionEvent = MyEvent::ZombieAttack;
 	pCollider->m_eTag = ETag::Dummy;
+	pCollider->m_eTagArray[ETag::Dummy] = false;
+	pCollider->m_eTagArray[ETag::Enemy] = false;
+	pCollider->m_eTagArray[ETag::Collider] = false;
 	pCollider->SetGravityScale(0.0f);
 	pCollider->usePhysics(false);
 	ObjectManager::Get().SetProtoObject(pObject);
@@ -262,6 +255,9 @@ void IntroScene::SetObjects() noexcept
 	pObject = new GameObject(L"ZAttack3", { pCollider, m_pParser->CreateFromParticle(L"ZombieAttack3.eff", urlEffect)->SetEffectScale(3.0f) }, EObjType::Effect);
 	pCollider->CollisionEvent = MyEvent::ZombieAttack;
 	pCollider->m_eTag = ETag::Dummy;
+	pCollider->m_eTagArray[ETag::Dummy] = false;
+	pCollider->m_eTagArray[ETag::Enemy] = false;
+	pCollider->m_eTagArray[ETag::Collider] = false;
 	pCollider->SetGravityScale(0.0f);
 	pCollider->usePhysics(false);
 	ObjectManager::Get().SetProtoObject(pObject);
@@ -271,6 +267,9 @@ void IntroScene::SetObjects() noexcept
 	pObject = new GameObject(L"ZBreath", { pCollider, m_pParser->CreateFromParticle(L"Breath.eff", urlEffect)->SetEffectScale(3.0f) }, EObjType::Effect);
 	pCollider->CollisionEvent = MyEvent::ZombieAttack;
 	pCollider->m_eTag = ETag::Dummy;
+	pCollider->m_eTagArray[ETag::Dummy] = false;
+	pCollider->m_eTagArray[ETag::Enemy] = false;
+	pCollider->m_eTagArray[ETag::Collider] = false;
 	pCollider->SetGravityScale(0.0f);
 	pCollider->usePhysics(false);
 	ObjectManager::Get().SetProtoObject(pObject);
@@ -281,6 +280,9 @@ void IntroScene::SetObjects() noexcept
 	pObject = new GameObject(L"ZBoom", { pCollider, pZBoom }, EObjType::Effect);
 	pCollider->CollisionEvent = MyEvent::ZombieAttack;
 	pCollider->m_eTag = ETag::Dummy;
+	pCollider->m_eTagArray[ETag::Dummy] = false;
+	pCollider->m_eTagArray[ETag::Enemy] = false;
+	pCollider->m_eTagArray[ETag::Collider] = false;
 	pCollider->SetGravityScale(0.0f);
 	pCollider->usePhysics(false);
 	ObjectManager::Get().SetProtoObject(pObject);
@@ -302,6 +304,8 @@ void IntroScene::SetObjects() noexcept
 	pCollider->usePhysics(false);
 	pCollider->CollisionEvent = MyEvent::PlayerAttack;
 	pCollider->m_eTag = ETag::Dummy;
+	pCollider->m_eTagArray[ETag::Collider] = false;
+	pCollider->m_eTagArray[ETag::Ally] = false;
 	ObjectManager::Get().SetProtoObject(pObject);
 
 	// ¹Ð¸® ¾îÅÃ
@@ -309,6 +313,7 @@ void IntroScene::SetObjects() noexcept
 	pObject = new GameObject(L"Melee", { pCollider, m_pParser->CreateFromParticle(L"Hit4.eff", urlEffect)->SetEffectScale(3.0f) }, EObjType::Effect);
 	pCollider->CollisionEvent = MyEvent::MeleeHit;
 	pCollider->m_eTag = ETag::Dummy;
+	pCollider->m_eTagArray[ETag::Collider] = false;
 	pCollider->SetGravityScale(0.0f);
 	pCollider->usePhysics(false);
 	ObjectManager::Get().SetProtoObject(pObject);
@@ -320,6 +325,8 @@ void IntroScene::SetObjects() noexcept
 	pObject = new GameObject(L"Magic", { pCollider, pParticle }, EObjType::Effect);
 	pCollider->CollisionEvent = MyEvent::EnergyBall;
 	pCollider->m_eTag = ETag::Dummy;
+	pCollider->m_eTagArray[ETag::Dummy] = false;
+	pCollider->m_eTagArray[ETag::Collider] = false;
 	//pCollider->SetGravityScale(0.5f);
 	ObjectManager::Get().SetProtoObject(pObject);
 
@@ -330,6 +337,7 @@ void IntroScene::SetObjects() noexcept
 	pCollider->usePhysics(false);
 	pCollider->CollisionEvent = MyEvent::BuffWave;
 	pCollider->m_eTag = ETag::Dummy;
+	pCollider->m_eTagArray[ETag::Collider] = false;
 	ObjectManager::Get().SetProtoObject(pObject);
 
 	// ÆøÅº Æø¹ß
@@ -339,6 +347,8 @@ void IntroScene::SetObjects() noexcept
 	pCollider->usePhysics(false);
 	pCollider->CollisionEvent = MyEvent::MeleeHit;
 	pCollider->m_eTag = ETag::Dummy;
+	pCollider->m_eTagArray[ETag::Dummy] = false;
+	pCollider->m_eTagArray[ETag::Collider] = false;
 	ObjectManager::Get().SetProtoObject(pObject);
 	// ========================================== ¿ÀºêÁ§Æ® ==================================================================
 	// ÅÛ »óÀÚ
@@ -370,6 +380,8 @@ void IntroScene::SetObjects() noexcept
 	pCollider->m_pivot = Vector3::Up * 6.0f;
 	pCollider->CollisionEvent = MyEvent::PlayerBomb;
 	pCollider->m_eTag = ETag::Dummy;
+	pCollider->m_eTagArray[ETag::Collider] = false;
+	pCollider->m_eTagArray[ETag::Dummy] = false;
 	ObjectManager::Get().SetProtoObject(pHeroObj);
 
 	// ½ÃÇÑÆøÅº
@@ -384,6 +396,7 @@ void IntroScene::SetObjects() noexcept
 	pTimer->TimerEvent = { TimeEvent::TimeBomb, nullptr };
 	pHeroObj->AddComponent({ pCollider, pRenderer, pTimer, ObjectManager::Get().TakeComponent(L"Fire") });
 	pCollider->m_eTag = ETag::Dummy;
+	pCollider->m_eTagArray[ETag::Collider] = false;
 	ObjectManager::Get().SetProtoObject(pHeroObj);
 
 	// Ãæ°Ý ÆøÅº
@@ -396,6 +409,7 @@ void IntroScene::SetObjects() noexcept
 	pHeroObj->SetScale(Vector3::One * 1.2f);
 	pHeroObj->AddComponent({ pCollider, pRenderer });
 	pCollider->m_eTag = ETag::Enemy;
+	pCollider->m_eTagArray[ETag::Collider] = false;
 	//pCollider->CollisionEvent = MyEvent::ShockBoom;
 	pHeroObj->m_pPhysics->DeadEvent	 = DyingEvent::ShockBoomDead;
 	pHeroObj->m_pPhysics->UserSocket = ESocketType::EDummy;
@@ -411,6 +425,7 @@ void IntroScene::SetObjects() noexcept
 	pHeroObj->SetScale(Vector3::One * 3.0f);
 	pHeroObj->AddComponent({ pCollider, pRenderer });
 	pCollider->m_eTag = ETag::Dummy;
+	pCollider->m_eTagArray[ETag::Dummy] = false;
 	pCollider->CollisionEvent = MyEvent::MineBoom;
 	ObjectManager::Get().SetProtoObject(pHeroObj);
 
@@ -428,6 +443,9 @@ void IntroScene::SetObjects() noexcept
 	pCollider->m_pivot = Vector3::Up * 8.0f;
 	pCollider->SetGravityScale(0.1f);
 	pCollider->m_eTag = ETag::Dummy;
+	pCollider->m_eTagArray[ETag::Collider] = false;
+	pCollider->m_eTagArray[ETag::Dummy] = false;
+	pCollider->m_eTagArray[ETag::Ally] = false;
 	pCollider->CollisionEvent = MyEvent::MissileCollision;
 	ObjectManager::Get().SetProtoObject(pHeroObj);
 
@@ -445,6 +463,10 @@ void IntroScene::SetObjects() noexcept
 	//pCollider->m_pivot = Vector3::Up * 8.0f;
 	pCollider->SetGravityScale(0.0f);
 	pCollider->m_eTag = ETag::Dummy;
+	pCollider->m_eTagArray[ETag::Collider] = false;
+	pCollider->m_eTagArray[ETag::Dummy] = false;
+	pCollider->m_eTagArray[ETag::Ally] = false;
+	pCollider->m_eTagArray[ETag::Enemy] = false;
 	//pCollider->CollisionEvent = MyEvent::MissileCollision;
 	ObjectManager::Get().SetProtoObject(pHeroObj);
 
@@ -459,6 +481,7 @@ void IntroScene::SetObjects() noexcept
 	pCollider->m_pivot = Vector3::Down * 200.0f;
 	//pCollider->SetGravityScale(0.0f);
 	pCollider->m_eTag = ETag::Dummy;
+	pCollider->m_eTagArray[ETag::Dummy] = false;
 	pCollider->CollisionEvent = MyEvent::NuclearBoom;
 	ObjectManager::Get().SetProtoObject(pHeroObj);
 
@@ -476,6 +499,8 @@ void IntroScene::SetObjects() noexcept
 	//pCollider->SetGravityScale(0.5f);
 	pCollider->CollisionEvent = MyEvent::DaggerHit;
 	pCollider->m_eTag = ETag::Dummy;
+	pCollider->m_eTagArray[ETag::Collider] = false;
+	pCollider->m_eTagArray[ETag::Dummy] = false;
 	ObjectManager::Get().SetProtoObject(pHeroObj);
 
 	///
@@ -491,6 +516,8 @@ void IntroScene::SetObjects() noexcept
 	pCollider->SetGravityScale(0.5f);
 	pCollider->CollisionEvent = MyEvent::OneTimeHit;
 	pCollider->m_eTag = ETag::Dummy;
+	pCollider->m_eTagArray[ETag::Collider] = false;
+	pCollider->m_eTagArray[ETag::Dummy] = false;
 	ObjectManager::Get().SetProtoObject(pHeroObj);
 
 	// È­»ìºñ
@@ -505,6 +532,10 @@ void IntroScene::SetObjects() noexcept
 	pTimer->TimerEvent = { TimeEvent::ArrowRain, nullptr };
 	pHeroObj->AddComponent({ pCollider, pRenderer, pTimer });
 	pCollider->m_eTag = ETag::Dummy;
+	pCollider->m_eTagArray[ETag::Collider] = false;
+	pCollider->m_eTagArray[ETag::Dummy] = false;
+	pCollider->m_eTagArray[ETag::Enemy] = false;
+	pCollider->m_eTagArray[ETag::Ally] = false;
 	ObjectManager::Get().SetProtoObject(pHeroObj);
 
 	//// ´ß
