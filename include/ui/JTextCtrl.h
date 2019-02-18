@@ -8,9 +8,9 @@ namespace UI
 	public:
 		wstring m_Text;
 		D3DXVECTOR4 m_rtText;
-		D3DXVECTOR4 m_rtBackText;
 		float m_fSize;
 		EAlign m_Align = EAlign::Center;
+		bool m_bOutline = true;
 	public:
 		bool Create(ID3D11Device* pDevice, wstring Text, float TextSize,
 			const TCHAR* szNORMAL, const TCHAR* szHOVER, const TCHAR* szPRESS,
