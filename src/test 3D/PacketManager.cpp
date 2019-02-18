@@ -435,6 +435,7 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 		// 자신일시
 		if (pMyInfo == userIter->second)
 		{
+			SoundManager::Get().Play("SE_levelup.mp3");
 			PlayerController::Get().UpdateStatus();
 		}
 	}	break;
