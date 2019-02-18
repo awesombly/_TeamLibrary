@@ -10,13 +10,13 @@
 
 bool GameMap::Init() noexcept
 {
-	m_pHeightMap = new HeightMap(L"HeightMap", EComponent::Renderer, L"mounds.jpg");
+	m_pHeightMap = new HeightMap(L"HeightMap", EComponent::Renderer, L"gamemap.png");
 	auto pObject = new GameObject(L"HeightMap", m_pHeightMap, EObjType::Map);
-	m_pHeightMap->CreateHeightMap(DxManager::GetDContext(), L"HeightMap/Islands, Leafy.bmp", 10, 1.0f, 1.0f);
+	m_pHeightMap->CreateHeightMap(DxManager::GetDContext(), L"HeightMap/heightmap.png", 13, 1.0f, 1.0f);
 	//m_pHeightMap->SetShadowRate(0.0f);
 	//mapMap->SetEnviromentMap(((Renderer*)m_pSkyBox->GetComponent(EComponent::Renderer))->m_srcName, EEnviType::Fresnel);
 	//pObject->Translate(Vector3::Down * 100.0f);
-	pObject->SetScale(1.0f, 0.1f, 1.0f);
+	//pObject->SetScale(1.0f, 0.1f, 1.0f);
 	ObjectManager::Get().PushObject(pObject, false);
 
 	//////////////////////////////////////////////////////////////////////////////////////
