@@ -183,13 +183,9 @@ VS_OUTPUT VS(PNCT5_VS_INPUT input)//,uniform bool bHalfVector )
 	#endif
 		//float fDot = max(0.2f, lerp(dot(vLightDir, output.nor.xyz), 1.0f, 0.2f) + 0.2f);
 		//output.col = /*float4(fDot, fDot, fDot, 1.0f) **/ /*input.col **/ fDot;
-		output.col.xyz = max(cb_useLight, dot(vLightDir, output.nor.xyz) + 0.3f);
+		output.col.xyz = input.col.xyz * max(cb_useLight, dot(vLightDir, output.nor.xyz) + 0.3f);
+		//output.col.xy *= 0.85f;
 		output.col.w = input.col.w;
-	//}
-	//else
-	//{
-	//	output.col = input.col;
-	//}
 
 	// 환경
 	if (cb_useEnviMap)
@@ -241,7 +237,7 @@ PBUFFER_OUTPUT PS(VS_OUTPUT input) : SV_Target
 			float fresnel = ComputeFresnel(input.ref, input.nor.xyz, r0);
 	
 			// 디퓨즈맵과 반사맵 보간
-			output.color0.xyz = lerp(output.color0.xyz, reflectColor.xyz, fresnel * 0.15f/* + 0.3f*/);
+			output.color0.xyz = lerp(output.color0.xyz, reflectColor.xyz, fresnel * 0.2f/* + 0.3f*/);
 		//} break;
 		//case 3:
 		//{

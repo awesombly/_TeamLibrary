@@ -200,8 +200,8 @@ void IntroScene::SetObjects() noexcept
 	ObjectManager::Get().SetProtoComponent(m_pParser->CreateFromParticle(L"Fire.eff", urlEffect)->SetEffectScale(3.0f));
 
 	Renderer* pRerderEnvi = new Renderer(L"EnviR");
-	Renderer* pRenderer = pRerderEnvi;// new Renderer(L"BaseR");
 	pRerderEnvi->SetEnviromentMap(((Renderer*)m_pSkyBox->GetComponent(EComponent::Renderer))->m_srcName, EEnviType::Refraction);
+	Renderer* pRenderer = pRerderEnvi;// new Renderer(L"BaseR");
 
 
 	// ======================================== Effect =====================================================
@@ -286,16 +286,6 @@ void IntroScene::SetObjects() noexcept
 	pCollider->SetGravityScale(0.0f);
 	pCollider->usePhysics(false);
 	ObjectManager::Get().SetProtoObject(pObject);
-
-	//// 거인템
-	//pCollider = new Collider(80.0f);
-	//pObject = new GameObject(L"Atom", { pCollider, m_pParser->CreateFromParticle(L"Bigbang.eff", urlEffect), new CTransformer(Vector3::Zero, {3.0f, 5.0f, 7.0f, 0.0f}) }, EObjType::Effect);
-	//pCollider->SetGravityScale(0.0f);
-	//pCollider->usePhysics(false);
-	//pCollider->CollisionEvent = MyEvent::GiantItem;
-	//pCollider->m_eTag = ETag::Dummy;
-	//ObjectManager::Get().SetProtoObject(pObject);
-
 
 	// 충격파
 	pCollider = new Collider(1.0f);
@@ -501,6 +491,7 @@ void IntroScene::SetObjects() noexcept
 	pCollider->m_eTag = ETag::Dummy;
 	pCollider->m_eTagArray[ETag::Collider] = false;
 	pCollider->m_eTagArray[ETag::Dummy] = false;
+	pCollider->m_eTagArray[ETag::Ally] = false;
 	ObjectManager::Get().SetProtoObject(pHeroObj);
 
 	///
