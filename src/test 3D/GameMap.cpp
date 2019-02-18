@@ -548,44 +548,24 @@ bool GameMap::Init() noexcept
 	m_carpet_blacksmith.SetPlayerCharacter(L"MAP_Carpet", 300.0f, 0.0f, 300.0f);
 	m_carpet_blacksmith.SetScale(D3DXVECTOR3(4.0f, 4.0f, 4.0f));
 	m_carpet_blacksmith.m_objType = EObjType::AObject;
-	//m_carpet_blacksmith.AddComponent(pCollider = new Collider(14.0f));
-	/*pCollider->m_eTag = ETag::Dummy;
-	pCollider->SetGravityScale(0.0f);
-	pCollider->usePhysics(false);
-	pCollider->CollisionEvent = MyEvent::CarpetSmithy;*/
 	ObjectManager::Get().PushObject(&m_carpet_blacksmith, false);
 	PlayerController::Get().m_CarpetPos[0] = m_carpet_blacksmith.GetPosition();
 
 	m_carpet_church.SetPlayerCharacter(L"MAP_Carpet", -300.0f, 0.0f, 300.0f);
 	m_carpet_church.SetScale(D3DXVECTOR3(4.0f, 4.0f, 4.0f));
 	m_carpet_church.m_objType = EObjType::AObject;
-	//m_carpet_church.AddComponent(pCollider = new Collider(14.0f));
-	//pCollider->m_eTag = ETag::Dummy;
-	//pCollider->SetGravityScale(0.0f);
-	//pCollider->usePhysics(false);
-	//pCollider->CollisionEvent = MyEvent::CarpetChurch;
 	ObjectManager::Get().PushObject(&m_carpet_church, false);
 	PlayerController::Get().m_CarpetPos[1] = m_carpet_church.GetPosition();
 
 	m_carpet_windmill.SetPlayerCharacter(L"MAP_Carpet", 300.0f, 0.0f, -300.0f);
 	m_carpet_windmill.SetScale(D3DXVECTOR3(4.0f, 4.0f, 4.0f));
 	m_carpet_windmill.m_objType = EObjType::AObject;
-	//m_carpet_windmill.AddComponent(pCollider = new Collider(14.0f));
-	//pCollider->m_eTag = ETag::Dummy;
-	//pCollider->SetGravityScale(0.0f);
-	//pCollider->usePhysics(false);
-	//pCollider->CollisionEvent = MyEvent::CarpetShop;
 	ObjectManager::Get().PushObject(&m_carpet_windmill, false);
 	PlayerController::Get().m_CarpetPos[2] = m_carpet_windmill.GetPosition();
 
 	m_carpet_towerRound.SetPlayerCharacter(L"MAP_Carpet", -300.0f, 0.0f, -300.0f);
 	m_carpet_towerRound.SetScale(D3DXVECTOR3(4.0f, 4.0f, 4.0f));
 	m_carpet_towerRound.m_objType = EObjType::AObject;
-	//m_carpet_towerRound.AddComponent(pCollider = new Collider(14.0f));
-	//pCollider->m_eTag = ETag::Dummy;
-	//pCollider->SetGravityScale(0.0f);
-	//pCollider->usePhysics(false);
-	//pCollider->CollisionEvent = MyEvent::CarpetTower;
 	ObjectManager::Get().PushObject(&m_carpet_towerRound, false);
 	PlayerController::Get().m_CarpetPos[3] = m_carpet_towerRound.GetPosition();
 #pragma endregion

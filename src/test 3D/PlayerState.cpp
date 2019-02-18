@@ -166,14 +166,14 @@ bool PlayerStateLSkill::Process(const float& spf) noexcept
 	{
 		m_pOwner->m_eAction = (PlayerController::EAction)(m_pOwner->m_eAction + PlayerController::EAction::NBackward);
 	}
-	if (Input::GetKeyState('A') == EKeyState::HOLD)
+	/*if (Input::GetKeyState('A') == EKeyState::HOLD)
 	{
 		m_pOwner->m_eAction = (PlayerController::EAction)(m_pOwner->m_eAction + PlayerController::EAction::NLeft);
 	}
 	if (Input::GetKeyState('D') == EKeyState::HOLD)
 	{
 		m_pOwner->m_eAction = (PlayerController::EAction)(m_pOwner->m_eAction + PlayerController::EAction::NRight);
-	}
+	}*/
 	return true;
 }
 

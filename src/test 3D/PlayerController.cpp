@@ -457,7 +457,8 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 		case EAction::DashLeft:
 		case EAction::DashRight:
 		{
-			pObject->GetCollider()->m_eTag = ETag::Dummy;
+			pObject->GetCollider()->m_eTagArray[ETag::Enemy] = false;
+			pObject->GetCollider()->m_eTagArray[ETag::Dummy] = false;
 			//
 			SoundManager::Get().PlayQueue("SE_dive.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
 			SoundManager::Get().PlayQueue("SV_archer_atk2.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
@@ -467,7 +468,8 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 		}	break;
 		case EAction::Wait:
 		{
-			pObject->GetCollider()->m_eTag = ETag::Ally;
+			pObject->GetCollider()->m_eTagArray[ETag::Enemy] = true;
+			pObject->GetCollider()->m_eTagArray[ETag::Dummy] = true;
 		}	break;
 		// ================================== еш ╩Г©К =========================================
 		case EAction::ShockWave:
@@ -640,13 +642,15 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 			auto pEffect = ObjectManager::Get().TakeObject(L"ETeleport");
 			pEffect->SetPosition(pObject->GetPosition());
 			pObject->SetHeroRender(false);
-			pObject->GetCollider()->m_eTag = ETag::Dummy;
+			pObject->GetCollider()->m_eTagArray[ETag::Enemy] = false;
+			pObject->GetCollider()->m_eTagArray[ETag::Dummy] = false;
 			SoundManager::Get().PlayQueue("SE_healing.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
 		}	break;
 		case EAction::Special3:
 		{
 			pObject->SetHeroRender(true);
-			pObject->GetCollider()->m_eTag = ETag::Ally;
+			pObject->GetCollider()->m_eTagArray[ETag::Enemy] = true;
+			pObject->GetCollider()->m_eTagArray[ETag::Dummy] = true;
 
 			pObject->SetPosition(pObject->GetPosition() + forward * 360.0f);
 			auto pEffect = ObjectManager::Get().TakeObject(L"EHit2");
@@ -935,34 +939,34 @@ void PlayerController::Possess(GameObject* pObject) noexcept
 		if (pObj->m_myName == L"Paladin")
 		{
 			pPlayer->m_curCharacter = PlayerController::ECharacter::EGuard;
-			auto pCollider = pObj->GetCollider();
+			pPlayer->m_pCollider = pObj->GetCollider();
 			{
 				pPlayer->m_defencePoint = 2;
 				pPlayer->pUIManager->m_pMpBar->SetColor({ 0.7f, 0.0f, 0.7f, 1.0f });
-				((Collider*)pCollider)->CollisionEvent = nullptr;
-				((Collider*)pCollider)->m_pivot = Vector3::Up * 40.0f * pObj->GetScale().x;
+				pPlayer->m_pCollider->CollisionEvent = nullptr;
+				pPlayer->m_pCollider->m_pivot = Vector3::Up * 40.0f * pObj->GetScale().x;
 			}
 		}
 		else if (pObj->m_myName == L"Archer")
 		{
 			pPlayer->m_curCharacter = PlayerController::ECharacter::EArcher;
-			auto pCollider = pObj->GetCollider();
+			pPlayer->m_pCollider = pObj->GetCollider();
 			{
 				pPlayer->m_defencePoint = 1;
 				pPlayer->pUIManager->m_pMpBar->SetColor({0.7f, 0.7f, 0.0f, 1.0f});
-				((Collider*)pCollider)->CollisionEvent = nullptr;
-				((Collider*)pCollider)->m_pivot = Vector3::Up * 40.0f * pObj->GetScale().x;
+				pPlayer->m_pCollider->CollisionEvent = nullptr;
+				pPlayer->m_pCollider->m_pivot = Vector3::Up * 40.0f * pObj->GetScale().x;
 			}
 		}
 		else if (pObj->m_myName == L"Mage")
 		{
 			pPlayer->m_curCharacter = PlayerController::ECharacter::EMage;
-			auto pCollider = pObj->GetCollider();
+			pPlayer->m_pCollider = pObj->GetCollider();
 			{
 				pPlayer->m_defencePoint = 0;
 				pPlayer->pUIManager->m_pMpBar->SetColor(Color::Blue);
-				((Collider*)pCollider)->CollisionEvent = nullptr;
-				((Collider*)pCollider)->m_pivot = Vector3::Up * 40.0f * pObj->GetScale().x;
+				pPlayer->m_pCollider->CollisionEvent = nullptr;
+				pPlayer->m_pCollider->m_pivot = Vector3::Up * 40.0f * pObj->GetScale().x;
 			}
 		}
 		pObj->SetArmor(pPlayer->m_defencePoint + pPlayer->m_upgradeArmor);

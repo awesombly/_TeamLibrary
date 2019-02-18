@@ -41,6 +41,7 @@ private:
 	PlayerState*					 m_curState = nullptr;	// 현재 상태
 	PlayerState*					 m_preState;			// 이전 상태
 	///
+	Collider*	m_pCollider		= nullptr;
 	Camera*		m_pCamera		= nullptr;
 	EAction		m_preAction;			// 현재 눌린 액션
 	EAction		m_curAnim;				// 실제 애니메이션

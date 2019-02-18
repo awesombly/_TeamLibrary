@@ -298,15 +298,15 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 					if (VectorLengthSq(iter->GetPosition() - targetPos[i]) <= shotRange)
 					{
 						auto pItem = ObjectManager::Get().TakeObject(L"PBomb");
-						pItem->SetPosition(TowerPos[index] + Vector3::Up * 200.0f);
-						pItem->SetForce((iter->GetPosition() - TowerPos[index]) + Vector3::Up * 200.0f);
+						pItem->SetPosition(TowerPos[index] + Vector3::Up * 250.0f);
+						pItem->SetForce((iter->GetPosition() - TowerPos[index]) * 0.7f + Vector3::Up * 150.0f);
 						pItem->m_pPhysics->m_damage = TowerDamage * 3.0f;
 						pItem->m_pPhysics->UserSocket = ESocketType::EDummy;
 
 						++index;
 						pItem = ObjectManager::Get().TakeObject(L"PBomb");
-						pItem->SetPosition(TowerPos[index] + Vector3::Up * 200.0f);
-						pItem->SetForce((iter->GetPosition() - TowerPos[index]) + Vector3::Up * 200.0f);
+						pItem->SetPosition(TowerPos[index] + Vector3::Up * 300.0f);
+						pItem->SetForce((iter->GetPosition() - TowerPos[index]) * 0.7f + Vector3::Up * 150.0f);
 						pItem->m_pPhysics->m_damage = TowerDamage * 3.0f;
 						pItem->m_pPhysics->UserSocket = ESocketType::EDummy;
 						break;
