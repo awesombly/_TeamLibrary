@@ -409,8 +409,8 @@ GameObject* ObjectManager::TakeObject(const wstring_view& objName, const bool& p
 	else
 	{
 		// ´ë±â Ç®ÀÌ ÀÖ´Ù¸é ²¨³»¿È
-		pObject = m_DisabledPull[objName.data()].top();
-		m_DisabledPull[objName.data()].pop();
+		pObject = finder->second.top();
+		finder->second.pop();
 		//auto pComp = pObject->GetComponentList(EComponent::Collider);
 		//if (pComp != nullptr)
 		//{
@@ -526,7 +526,7 @@ void ObjectManager::DisableObject(GameObject* pObject) noexcept
 {
 	static auto disableEvent = [](void* pVoid, void*) {
 		GameObject* pObj = (GameObject*)pVoid;
-		//pObj->isEnable(false);
+		pObj->isEnable(false);
 		pObj->SetPosition(Vector3::Up * 100000.0f);
 		ObjectManager::Get().PopObject(pObj);
 		ObjectManager::Get().m_DisabledPull[pObj->m_myName].push(pObj);

@@ -126,8 +126,10 @@ void PlayerStateLSkill::StateInit(PlayerController* pOwner) noexcept
 {
 	m_pOwner = pOwner;
 	m_pOwner->m_eAction = PlayerController::EAction::LSkill;
-	m_pOwner->m_DelayFrame = 0.5f;
-	m_pOwner->m_moveSpeed *= 0.4f;
+	m_pOwner->m_DelayFrame = 0.3f;
+	m_pOwner->m_moveSpeed *= 0.25f;
+	m_pOwner->m_inputCombo = false;
+	m_pOwner->m_comboCount = 0;
 }
 bool PlayerStateLSkill::Process(const float& spf) noexcept
 {
@@ -141,19 +143,113 @@ bool PlayerStateLSkill::Process(const float& spf) noexcept
 			m_pOwner->SendPhysicsInfo();
 
 			m_pOwner->m_berserkFrame = 0.0f;
-			//m_pOwner->m_DelayFrame = 0.5f;
 			m_pOwner->m_curDelayRSkill = m_pOwner->m_DelayRSkill;
 			m_pOwner->m_eAction = PlayerController::EAction::Special3;
 			return true;
 		}
 	}
 
+	if (Input::GetKeyState(VK_LBUTTON) == EKeyState::DOWN)
+	{
+		m_pOwner->m_inputCombo = true;
+	}
 	m_pOwner->m_DelayFrame -= spf * PacketManager::Get().pMyInfo->MotionRate;
 	if (m_pOwner->m_DelayFrame <= 0.0f)
 	{
-		m_pOwner->SetState(EPlayerState::Combo1);
-		m_pOwner->m_eAction = PlayerController::EAction::Attack;
-		m_pOwner->m_DelayFrame = 0.5f;
+		static float forwardRate = 1.0f;
+		forwardRate = 1.0f;
+		if (Input::GetKeyState('W') == EKeyState::HOLD)
+			forwardRate = 1.5f;
+		if (Input::GetKeyState('S') == EKeyState::HOLD)
+			forwardRate = 0.35f;
+		switch (m_pOwner->m_comboCount)
+		{
+		case 0:
+		{
+			// 전진
+			++m_pOwner->m_comboCount;
+			m_pOwner->m_DelayFrame = 0.2f;
+			m_pOwner->GetParent()->AddForce(m_pOwner->GetParent()->GetForward() * 600.0f * forwardRate);
+		}	break;
+		case 1:
+		{
+			// 어택1
+			++m_pOwner->m_comboCount;
+			m_pOwner->m_eAction = PlayerController::EAction::Attack;
+			m_pOwner->m_DelayFrame = 0.65f;
+		}	break;
+		case 2:
+		{
+			// 어택2동작
+			if (m_pOwner->m_inputCombo)
+			{
+				m_pOwner->m_inputCombo = false;
+				++m_pOwner->m_comboCount;
+				m_pOwner->m_eAction = PlayerController::EAction::LCharge1;
+				m_pOwner->m_DelayFrame = 0.35f;
+			}
+			else
+			{
+				m_pOwner->SetState(EPlayerState::Basic);
+				m_pOwner->m_curDelayLSkill = m_pOwner->m_DelayLSkill;
+			}
+		}	break;
+		case 3:
+		{
+			// 전진
+			++m_pOwner->m_comboCount;
+			m_pOwner->m_DelayFrame = 0.2f;
+			m_pOwner->GetParent()->AddForce(m_pOwner->GetParent()->GetForward() * 800.0f * forwardRate);
+		}	break;
+		case 4:
+		{
+			// 어택2
+			++m_pOwner->m_comboCount;
+			m_pOwner->m_eAction = PlayerController::EAction::ChargeAttack;
+			m_pOwner->m_DelayFrame = 0.5f;
+		}	break;
+		case 5:
+		{
+			// 어택3동작
+			if (m_pOwner->m_inputCombo)
+			{
+				m_pOwner->m_inputCombo = false;
+				++m_pOwner->m_comboCount;
+				m_pOwner->m_eAction = PlayerController::EAction::LCharge2;
+				m_pOwner->m_DelayFrame = 0.6f;
+				m_pOwner->m_moveSpeed = 0.0f;
+			}
+			else
+			{
+				m_pOwner->SetState(EPlayerState::Basic);
+				m_pOwner->m_DelayFrame = 0.15f;
+				m_pOwner->m_curDelayLSkill = m_pOwner->m_DelayLSkill * 1.5f;
+			}
+		}	break;
+		case 6:
+		{
+			// 전진
+			++m_pOwner->m_comboCount;
+			m_pOwner->m_DelayFrame = 0.2f;
+			m_pOwner->GetParent()->AddForce(m_pOwner->GetParent()->GetForward() * 1000.0f * forwardRate);
+		}	break;
+		case 7:
+		{
+			// 어택3
+			++m_pOwner->m_comboCount;
+			m_pOwner->m_eAction = PlayerController::EAction::ChargeAttack2;
+			m_pOwner->m_DelayFrame = 0.85f;
+		}	break;
+		case 8:
+		{
+			// 끝
+			m_pOwner->SetState(EPlayerState::Basic);
+			m_pOwner->m_curDelayLSkill = m_pOwner->m_DelayLSkill * 2.0f;
+		}	break;
+		default:
+			break;
+		}
+		
 		return true;
 	}
 
@@ -166,189 +262,16 @@ bool PlayerStateLSkill::Process(const float& spf) noexcept
 	{
 		m_pOwner->m_eAction = (PlayerController::EAction)(m_pOwner->m_eAction + PlayerController::EAction::NBackward);
 	}
-	/*if (Input::GetKeyState('A') == EKeyState::HOLD)
+	if (Input::GetKeyState('A') == EKeyState::HOLD)
 	{
 		m_pOwner->m_eAction = (PlayerController::EAction)(m_pOwner->m_eAction + PlayerController::EAction::NLeft);
 	}
 	if (Input::GetKeyState('D') == EKeyState::HOLD)
 	{
 		m_pOwner->m_eAction = (PlayerController::EAction)(m_pOwner->m_eAction + PlayerController::EAction::NRight);
-	}*/
-	return true;
-}
-
-// Combo1
-void PlayerStateCombo1::StateInit(PlayerController* pOwner) noexcept
-{
-	m_pOwner = pOwner;
-	//m_pOwner->m_eAction = PlayerController::EAction::LSkill;
-	m_pOwner->m_moveSpeed *= 0.4f;
-	m_pOwner->m_inputCombo = false;
-}
-bool PlayerStateCombo1::Process(const float& spf) noexcept
-{
-	if (m_pOwner->m_berserkFrame >= 1.0f)
-	{
-		if ((m_pOwner->m_berserkFrame -= spf) <= 1.0f)
-		{
-			// 변수 설정
-			m_pOwner->m_defencePoint = max(m_pOwner->m_defencePoint - 10, 2);
-			m_pOwner->GetParent()->SetArmor(m_pOwner->m_defencePoint + m_pOwner->m_upgradeArmor);
-			m_pOwner->SendPhysicsInfo();
-
-			m_pOwner->m_berserkFrame = 0.0f;
-			//m_pOwner->m_DelayFrame = 0.5f;
-			m_pOwner->m_curDelayRSkill = m_pOwner->m_DelayRSkill;
-			m_pOwner->m_eAction = PlayerController::EAction::Special3;
-			return true;
-		}
-	}
-
-	if (Input::GetKeyState(VK_LBUTTON) == EKeyState::DOWN)
-	{
-		m_pOwner->m_inputCombo = true;
-	}
-	m_pOwner->m_DelayFrame -= spf * PacketManager::Get().pMyInfo->MotionRate;
-	if (m_pOwner->m_DelayFrame <= 0.0f)
-	{
-		if (m_pOwner->m_inputCombo)
-		{
-			m_pOwner->SetState(EPlayerState::Combo2);
-			m_pOwner->m_eAction = PlayerController::EAction::LCharge1;
-			m_pOwner->m_DelayFrame = 0.5f;
-			m_pOwner->m_curDelayLSkill = m_pOwner->m_DelayLSkill;
-		}
-		else
-		{
-			m_pOwner->SetState(EPlayerState::Basic);
-			//m_pOwner->m_DelayFrame = 0.5f;
-			m_pOwner->m_curDelayLSkill = m_pOwner->m_DelayLSkill;
-		}
-		return true;
-	}
-
-	m_pOwner->m_eAction = PlayerController::EAction::NIdle;
-	if (Input::GetKeyState('W') == EKeyState::HOLD)
-	{
-		m_pOwner->m_eAction = (PlayerController::EAction)(m_pOwner->m_eAction + PlayerController::EAction::NForward);
-	}
-	if (Input::GetKeyState('S') == EKeyState::HOLD)
-	{
-		m_pOwner->m_eAction = (PlayerController::EAction)(m_pOwner->m_eAction + PlayerController::EAction::NBackward);
 	}
 	return true;
 }
-
-// Combo2
-void PlayerStateCombo2::StateInit(PlayerController* pOwner) noexcept
-{
-	m_pOwner = pOwner;
-	//m_pOwner->m_eAction = PlayerController::EAction::LSkill;
-	m_pOwner->m_moveSpeed *= 0.4f;
-	m_pOwner->m_inputCombo = false;
-}
-bool PlayerStateCombo2::Process(const float& spf) noexcept
-{
-	if (m_pOwner->m_berserkFrame >= 1.0f)
-	{
-		if ((m_pOwner->m_berserkFrame -= spf) <= 1.0f)
-		{
-			// 변수 설정
-			m_pOwner->m_defencePoint = max(m_pOwner->m_defencePoint - 10, 2);
-			m_pOwner->GetParent()->SetArmor(m_pOwner->m_defencePoint + m_pOwner->m_upgradeArmor);
-			m_pOwner->SendPhysicsInfo();
-
-			m_pOwner->m_berserkFrame = 0.0f;
-			//m_pOwner->m_DelayFrame = 0.5f;
-			m_pOwner->m_curDelayRSkill = m_pOwner->m_DelayRSkill;
-			m_pOwner->m_eAction = PlayerController::EAction::Special3;
-			return true;
-		}
-	}
-
-	if (Input::GetKeyState(VK_LBUTTON) == EKeyState::DOWN)
-	{
-		m_pOwner->m_inputCombo = true;
-	}
-	m_pOwner->m_DelayFrame -= spf * PacketManager::Get().pMyInfo->MotionRate;
-	if (m_pOwner->m_DelayFrame <= 0.0f)
-	{
-		if (m_pOwner->m_inputCombo)
-		{
-			m_pOwner->SetState(EPlayerState::Combo3);
-			m_pOwner->m_DelayFrame = 0.5f;
-			m_pOwner->m_curDelayLSkill = m_pOwner->m_DelayLSkill;
-		}
-		else
-		{
-			m_pOwner->SetState(EPlayerState::Basic);
-			m_pOwner->m_DelayFrame = 0.5f;
-			m_pOwner->m_curDelayLSkill = m_pOwner->m_DelayLSkill;
-		}
-		m_pOwner->m_eAction = PlayerController::EAction::ChargeAttack;
-		return true;
-	}
-
-	m_pOwner->m_eAction = PlayerController::EAction::NIdle;
-	//if (Input::GetKeyState('W') == EKeyState::HOLD)
-	//{
-	//	m_pOwner->m_eAction = (PlayerController::EAction)(m_pOwner->m_eAction + PlayerController::EAction::NForward);
-	//}
-	//if (Input::GetKeyState('S') == EKeyState::HOLD)
-	//{
-	//	m_pOwner->m_eAction = (PlayerController::EAction)(m_pOwner->m_eAction + PlayerController::EAction::NBackward);
-	//}
-	return true;
-}
-
-// Combo3
-void PlayerStateCombo3::StateInit(PlayerController* pOwner) noexcept
-{
-	m_pOwner = pOwner;
-	//m_pOwner->m_eAction = PlayerController::EAction::LSkill;
-	m_pOwner->m_moveSpeed *= 0.4f;
-}
-bool PlayerStateCombo3::Process(const float& spf) noexcept
-{
-	if (m_pOwner->m_berserkFrame >= 1.0f)
-	{
-		if ((m_pOwner->m_berserkFrame -= spf) <= 1.0f)
-		{
-			// 변수 설정
-			m_pOwner->m_defencePoint = max(m_pOwner->m_defencePoint - 10, 2);
-			m_pOwner->GetParent()->SetArmor(m_pOwner->m_defencePoint + m_pOwner->m_upgradeArmor);
-			m_pOwner->SendPhysicsInfo();
-
-			m_pOwner->m_berserkFrame = 0.0f;
-			//m_pOwner->m_DelayFrame = 0.5f;
-			m_pOwner->m_curDelayRSkill = m_pOwner->m_DelayRSkill;
-			m_pOwner->m_eAction = PlayerController::EAction::Special3;
-			return true;
-		}
-	}
-
-	m_pOwner->m_DelayFrame -= spf * PacketManager::Get().pMyInfo->MotionRate;
-	if (m_pOwner->m_DelayFrame <= 0.0f)
-	{
-		m_pOwner->SetState(EPlayerState::Basic);
-		m_pOwner->m_eAction = PlayerController::EAction::ChargeAttack2;
-		m_pOwner->m_DelayFrame = 0.5f;
-		m_pOwner->m_curDelayLSkill = m_pOwner->m_DelayLSkill;
-		return true;
-	}
-
-	m_pOwner->m_eAction = PlayerController::EAction::NIdle;
-	if (Input::GetKeyState('W') == EKeyState::HOLD)
-	{
-		m_pOwner->m_eAction = (PlayerController::EAction)(m_pOwner->m_eAction + PlayerController::EAction::NForward);
-	}
-	if (Input::GetKeyState('S') == EKeyState::HOLD)
-	{
-		m_pOwner->m_eAction = (PlayerController::EAction)(m_pOwner->m_eAction + PlayerController::EAction::NBackward);
-	}
-	return true;
-}
-
 
 // RSkill
 void PlayerStateRSkill::StateInit(PlayerController* pOwner) noexcept
@@ -378,22 +301,6 @@ bool PlayerStateRSkill::Process(const float& spf) noexcept
 	}
 	
 	m_pOwner->m_eAction = PlayerController::EAction::NIdle;
-	//if (Input::GetKeyState('W') == EKeyState::HOLD)
-	//{
-	//	m_pOwner->m_eAction = (PlayerController::EAction)(m_pOwner->m_eAction + PlayerController::EAction::NForward);
-	//}
-	//if (Input::GetKeyState('S') == EKeyState::HOLD)
-	//{
-	//	m_pOwner->m_eAction = (PlayerController::EAction)(m_pOwner->m_eAction + PlayerController::EAction::NBackward);
-	//}
-	//if (Input::GetKeyState('A') == EKeyState::HOLD)
-	//{
-	//	m_pOwner->m_eAction = (PlayerController::EAction)(m_pOwner->m_eAction + PlayerController::EAction::NLeft);
-	//}
-	//if (Input::GetKeyState('D') == EKeyState::HOLD)
-	//{
-	//	m_pOwner->m_eAction = (PlayerController::EAction)(m_pOwner->m_eAction + PlayerController::EAction::NRight);
-	//}
 	return true;
 }
 
@@ -918,17 +825,85 @@ void MageStateLSkill::StateInit(PlayerController* pOwner) noexcept
 	m_pOwner->m_eAction = PlayerController::EAction::LSkill;
 	m_pOwner->m_DelayFrame = 0.6f;
 	m_pOwner->m_moveSpeed *= 0.6f;
+	m_pOwner->m_inputCombo = false;
+	m_pOwner->m_comboCount = 0;
 }
 bool MageStateLSkill::Process(const float& spf) noexcept
 {
+	if (Input::GetKeyState(VK_LBUTTON) == EKeyState::DOWN)
+	{
+		m_pOwner->m_inputCombo = true;
+	}
 	m_pOwner->m_DelayFrame -= spf * PacketManager::Get().pMyInfo->MotionRate;
-
 	if (m_pOwner->m_DelayFrame <= 0.0f)
 	{
-		m_pOwner->m_eAction = PlayerController::EAction::Attack;
-		m_pOwner->SetState(EPlayerState::Basic);
-		m_pOwner->m_curDelayLSkill = m_pOwner->m_DelayLSkill;
-		m_pOwner->m_DelayFrame = 0.6f;
+		switch (m_pOwner->m_comboCount)
+		{
+		case 0:
+		{
+			// 어택1
+			++m_pOwner->m_comboCount;
+			m_pOwner->m_eAction = PlayerController::EAction::Attack;
+			m_pOwner->m_DelayFrame = 1.0f;
+		}	break;
+		case 1:
+		{
+			// 어택2동작
+			if (m_pOwner->m_inputCombo)
+			{
+				m_pOwner->m_inputCombo = false;
+				++m_pOwner->m_comboCount;
+				m_pOwner->m_eAction = PlayerController::EAction::LCharge1;
+				m_pOwner->m_DelayFrame = 0.8f;
+				m_pOwner->m_moveSpeed *= 0.5f;
+			}
+			else
+			{
+				m_pOwner->SetState(EPlayerState::Basic);
+				m_pOwner->m_curDelayLSkill = m_pOwner->m_DelayLSkill;
+			}
+		}	break;
+		case 2:
+		{
+			// 어택2
+			++m_pOwner->m_comboCount;
+			m_pOwner->m_eAction = PlayerController::EAction::ChargeAttack;
+			m_pOwner->m_DelayFrame = 1.0f;
+		}	break;
+		case 3:
+		{
+			// 어택3동작
+			if (m_pOwner->m_inputCombo)
+			{
+				m_pOwner->m_inputCombo = false;
+				++m_pOwner->m_comboCount;
+				m_pOwner->m_eAction = PlayerController::EAction::LCharge2;
+				m_pOwner->m_DelayFrame = 1.1f;
+			}
+			else
+			{
+				m_pOwner->SetState(EPlayerState::Basic);
+				m_pOwner->m_DelayFrame = 0.0f;
+				m_pOwner->m_curDelayLSkill = m_pOwner->m_DelayLSkill * 1.5f;
+			}
+		}	break;
+		case 4:
+		{
+			// 어택3
+			++m_pOwner->m_comboCount;
+			m_pOwner->m_eAction = PlayerController::EAction::ChargeAttack2;
+			m_pOwner->m_DelayFrame = 1.05f;
+		}	break;
+		case 5:
+		{
+			// 끝
+			m_pOwner->SetState(EPlayerState::Basic);
+			m_pOwner->m_curDelayLSkill = m_pOwner->m_DelayLSkill * 2.0f;
+		}	break;
+		default:
+			break;
+		}
+
 		return true;
 	}
 
@@ -966,10 +941,10 @@ bool MageStateRSkill::Process(const float& spf) noexcept
 
 	if (m_pOwner->m_DelayFrame <= 0.0f)
 	{
-		m_pOwner->m_eAction = PlayerController::EAction::ChargeAttack;
+		m_pOwner->m_eAction = PlayerController::EAction::Attack2;
 		m_pOwner->SetState(EPlayerState::Basic);
 		m_pOwner->m_curDelayRSkill = m_pOwner->m_DelayRSkill;
-		m_pOwner->m_DelayFrame = 1.0f;
+		m_pOwner->m_DelayFrame = 1.05f;
 		return true;
 	}
 
@@ -1018,7 +993,7 @@ bool MageStateDash::Process(const float& spf) noexcept
 		m_pOwner->SetState(EPlayerState::Basic);
 		m_pOwner->m_eAction = PlayerController::EAction::Special3;
 		m_pOwner->m_curDelayDash = m_pOwner->m_DelayDash;
-		m_pOwner->m_DelayFrame = 1.0f;
+		m_pOwner->m_DelayFrame = 0.8f;
 		return true;
 	}
 

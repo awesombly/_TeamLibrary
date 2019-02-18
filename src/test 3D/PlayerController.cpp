@@ -65,6 +65,7 @@ bool PlayerController::Frame(const float& spf, const float& accTime)	noexcept
 		m_pParent->m_pPhysics->m_disHP = max<float>(m_pParent->m_pPhysics->m_disHP - spf * 0.5f * m_pParent->GetHP(), m_pParent->GetHP());
 		m_disMP = max<float>(m_disMP - spf * 0.5f * m_curMP, m_curMP);
 
+		PlayerInput(spf);
 		CheckTownCollision();
 		if (pUIManager->m_pMouseIcon->m_bRender)
 		{
@@ -72,7 +73,6 @@ bool PlayerController::Frame(const float& spf, const float& accTime)	noexcept
 		}
 		else
 		{
-			PlayerInput(spf);
 			CameraInput(spf);
 
 			// ÃÊ±âÈ­
@@ -190,16 +190,11 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 		case EAction::Attack:
 		{
 			auto pItem = ObjectManager::Get().TakeObject(L"Melee");
-			//pItem->SetParent(pObject);
-			//pItem->SetPosition(pObject->GetForward() * 50.0f + pObject->GetUp() * 45.0f);
 			pItem->SetPosition(pObject->GetPosition() + pObject->GetForward() * 60.0f + pObject->GetUp() * 45.0f);
 			pItem->SetScale(pObject->GetScale());
-			//pItem->UpdateMatrix();
 			pItem->m_pPhysics->UserSocket = socket;
-			pItem->SetDamage(0.5f * PacketManager::Get().UserList[socket]->AttackRate);
+			pItem->SetDamage(0.4f * PacketManager::Get().UserList[socket]->AttackRate);
 			pItem->GetCollider()->AddIgnoreList(pObject->GetCollider());
-
-			pObject->SetForce(pObject->GetForward() * 60.0f);
 
 			SoundManager::Get().PlayVariation("SV_paladin_atk", false, 4);
 			SoundManager::Get().PlayQueue("SE_Sword_slash1.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
@@ -213,8 +208,6 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 			pItem->SetDamage(0.6f * PacketManager::Get().UserList[socket]->AttackRate);
 			pItem->GetCollider()->AddIgnoreList(pObject->GetCollider());
 
-			pObject->SetForce(pObject->GetForward() * 70.0f);
-
 			SoundManager::Get().PlayVariation("SV_paladin_atk", false, 4);
 			SoundManager::Get().PlayQueue("SE_Sword_slash1.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
 		}	break;
@@ -224,10 +217,8 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 			pItem->SetPosition(pObject->GetPosition() + pObject->GetForward() * 60.0f + pObject->GetUp() * 45.0f);
 			pItem->SetScale(pObject->GetScale());
 			pItem->m_pPhysics->UserSocket = socket;
-			pItem->SetDamage(0.7f * PacketManager::Get().UserList[socket]->AttackRate);
+			pItem->SetDamage(0.8f * PacketManager::Get().UserList[socket]->AttackRate);
 			pItem->GetCollider()->AddIgnoreList(pObject->GetCollider());
-
-			pObject->SetForce(pObject->GetForward() * 80.0f);
 
 			SoundManager::Get().PlayVariation("SV_paladin_atk", false, 4);
 			SoundManager::Get().PlayQueue("SE_Sword_slash1.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
@@ -640,7 +631,29 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 		{
 			pObject->SetANIM_Loop(Mage_ATK);
 		}	break;
+		case EAction::LCharge1:
+		{
+			pObject->SetANIM_Loop(Mage_ATK_DU);
+		}	break;
+		case EAction::LCharge2:
+		{
+			pObject->SetANIM_Loop(Mage_ATK_UD);
+		}	break;
 		case EAction::Attack:
+		{
+			auto pItem = ObjectManager::Get().TakeObject(L"Magic");
+			pItem->SetPosition(pObject->GetPosition() + pObject->GetForward() * 40.0f + pObject->GetUp() * 65.0f + pObject->GetRight() * 20.0f);
+			pItem->SetRotation(pObject->GetRotation());
+			pItem->SetScale(pObject->GetScale());
+			pItem->SetForce((forward + Vector3::Up * 0.8f) * 240.0f);
+			pItem->m_pPhysics->UserSocket = socket;
+			pItem->SetDamage(0.25f * PacketManager::Get().UserList[socket]->AttackRate);
+			pItem->GetCollider()->AddIgnoreList(pObject->GetCollider());
+
+			SoundManager::Get().PlayQueue("SE_flare_shot.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
+			SoundManager::Get().PlayQueue("SV_mage_atk1.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
+		}	break;
+		case EAction::ChargeAttack:
 		{
 			auto pItem = ObjectManager::Get().TakeObject(L"Magic");
 			pItem->SetPosition(pObject->GetPosition() + pObject->GetForward() * 40.0f + pObject->GetUp() * 65.0f + pObject->GetRight() * 20.0f);
@@ -654,11 +667,25 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 			SoundManager::Get().PlayQueue("SE_flare_shot.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
 			SoundManager::Get().PlayQueue("SV_mage_atk2.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
 		}	break;
+		case EAction::ChargeAttack2:
+		{
+			auto pItem = ObjectManager::Get().TakeObject(L"Magic");
+			pItem->SetPosition(pObject->GetPosition() + pObject->GetForward() * 40.0f + pObject->GetUp() * 65.0f + pObject->GetRight() * 20.0f);
+			pItem->SetRotation(pObject->GetRotation());
+			pItem->SetScale(pObject->GetScale());
+			pItem->SetForce((forward + Vector3::Up * 0.8f) * 240.0f);
+			pItem->m_pPhysics->UserSocket = socket;
+			pItem->SetDamage(0.25f * PacketManager::Get().UserList[socket]->AttackRate);
+			pItem->GetCollider()->AddIgnoreList(pObject->GetCollider());
+
+			SoundManager::Get().PlayQueue("SE_flare_shot.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
+			SoundManager::Get().PlayQueue("SV_mage_atk3.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
+		}	break;
 		case EAction::RSkill:
 		{
 			pObject->SetANIM_Loop(Mage_BUFF);
 		}	break;
-		case EAction::ChargeAttack:
+		case EAction::Attack2:
 		{
 			// ¹öÇÁ ¿þÀÌºê
 			auto pItem = ObjectManager::Get().TakeObject(L"BuffWave");
@@ -695,7 +722,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 			pObject->SetPosition(pObject->GetPosition() + forward * 360.0f);
 			auto pEffect = ObjectManager::Get().TakeObject(L"EHit2");
 			pEffect->SetPosition(pObject->GetPosition() + Vector3::Up * 25.5f);
-			pObject->SetANIM_Loop(Mage_ATK_DU);
+			pObject->SetANIM_Loop(Mage_ATK_UD);
 		}	break;
 		// ================================== ÅÛ »ç¿ë =========================================
 		case EAction::ShockWave:
@@ -905,7 +932,7 @@ void PlayerController::UpdateStatus(const bool& infoUpdate) noexcept
 	auto pUserInfo = PacketManager::Get().pMyInfo;
 	m_moveSpeed = MoveSpeed + MoveSpeed * pUserInfo->StatDex * 0.05f;
 	m_jumpPower = JumpPower;
-	pUserInfo->MotionRate = 1.0f + pUserInfo->StatDex * 0.05f;
+	pUserInfo->MotionRate = 1.3f + pUserInfo->StatDex * 0.05f;
 	switch (m_curCharacter)
 	{
 	case PlayerController::EGuard:
@@ -930,7 +957,7 @@ void PlayerController::UpdateStatus(const bool& infoUpdate) noexcept
 
 	m_maxMP = 1.0f + pUserInfo->StatInt * 0.2f;
 	m_RegenMP = 0.3f + pUserInfo->StatInt * 0.045f;
-	m_RegenHP = 0.05f + pUserInfo->StatStr * 0.0075f;
+	m_RegenHP = 0.04f + pUserInfo->StatStr * 0.006f;
 	
 	pUIManager->m_pMpBar->SetValue(m_curMP, m_maxMP, m_disMP);
 	pUIManager->m_pExpProgress->SetValue(m_EXP, m_NeedEXP, m_disEXP);
@@ -948,7 +975,7 @@ void PlayerController::UpdateStatus(const bool& infoUpdate) noexcept
 		pUIManager->m_pInfoMP->SetString(to_wstring((int)(m_curMP * 100.0f)) + L" / " + to_wstring((int)(m_maxMP * 100.0f)));
 		pUIManager->m_pInfoEXP->SetString(to_wstring((int)(m_EXP * 100.0f)) + L" / " + to_wstring((int)(m_NeedEXP * 100.0f)));
 		//pUIManager->m_pInfoName->SetString(pUserInfo->UserID);
-		pUIManager->m_pInfoAttackSpeed->SetString(to_wstring(pUserInfo->MotionRate * 100.0f).substr(0, 5) + L" %");
+		pUIManager->m_pInfoAttackSpeed->SetString(to_wstring((pUserInfo->MotionRate * 0.769f) * 100.0f).substr(0, 5) + L" %");
 		pUIManager->m_pInfoMoveSpeed->SetString(to_wstring((2.0f - 5.0f / (5.0f + pUserInfo->StatLuk)) * 100.0f).substr(0, 5) + L" %");
 		pUIManager->m_pInfoLevel->SetString(to_wstring(pUserInfo->Level));
 		if(m_upgradeWeapon >= 1)
@@ -1105,7 +1132,6 @@ void PlayerController::CheckTownCollision() noexcept
 			{
 				if (Input::GetKeyState('X') == EKeyState::DOWN)
 				{
-					SoundManager::Get().Play("SE_blacksmith.mp3");
 					if (pUIManager->m_pSmithyPanel->m_bRender)
 					{
 						// ²û
@@ -1115,6 +1141,7 @@ void PlayerController::CheckTownCollision() noexcept
 					else
 					{
 						// Å´
+						SoundManager::Get().Play("SE_blacksmith.mp3");
 						pUIManager->m_pSmithyPanel->m_bRender = true;
 						pUIManager->m_pMouseIcon->m_bRender = true;
 					}
@@ -1125,13 +1152,13 @@ void PlayerController::CheckTownCollision() noexcept
 				pUIManager->m_pSmithyBtnAcce2->SetString(to_wstring((m_upgradeAcce2 + 1) * 5000) + L" KG");
 
 				pUIManager->m_pSmithyInfo1Weapon->SetString(L"Level " + to_wstring(m_upgradeWeapon) + L" ¡æ Level " + to_wstring(m_upgradeWeapon + 1));
-				pUIManager->m_pSmithyInfo2Weapon->SetString(L"Damage " + to_wstring((m_upgradeWeapon) * 15) + L"% ¡æ " + to_wstring((m_upgradeWeapon + 1) * 15) + L"%");
+				pUIManager->m_pSmithyInfo2Weapon->SetString(L"Dmg " + to_wstring((m_upgradeWeapon) * 15) + L"% ¡æ " + to_wstring((m_upgradeWeapon + 1) * 15) + L"%");
 
 				pUIManager->m_pSmithyInfo1Armor->SetString(L"Level " + to_wstring(m_upgradeArmor) + L" ¡æ Level " + to_wstring(m_upgradeArmor + 1));
-				pUIManager->m_pSmithyInfo2Armor->SetString(L"Armor " + to_wstring((1.0f - (5.0f / (5.0f + m_defencePoint + m_upgradeArmor))) * 100.0f).substr(0, 4) + L"% ¡æ " + to_wstring((1.0f - (5.0f / (5.0f + m_defencePoint + m_upgradeArmor + 1))) * 100.0f).substr(0, 4) + L"%"); 
+				pUIManager->m_pSmithyInfo2Armor->SetString(L"Arm " + to_wstring((1.0f - (5.0f / (5.0f + m_defencePoint + m_upgradeArmor))) * 100.0f).substr(0, 4) + L"% ¡æ " + to_wstring((1.0f - (5.0f / (5.0f + m_defencePoint + m_upgradeArmor + 1))) * 100.0f).substr(0, 4) + L"%"); 
 
 				pUIManager->m_pSmithyInfo1Acce1->SetString(L"Level " + to_wstring(m_upgradeAcce1) + L" ¡æ Level " + to_wstring(m_upgradeAcce1 + 1));
-				pUIManager->m_pSmithyInfo2Acce1->SetString(L"Cooltime " + to_wstring((1.0f - (5.0f / (5.0f + m_upgradeAcce1))) * 100.0f).substr(0, 4) + L"% ¡æ " + to_wstring((1.0f - (5.0f / (5.0f + m_upgradeAcce1 + 1))) * 100.0f).substr(0, 4) + L"%");
+				pUIManager->m_pSmithyInfo2Acce1->SetString(L"Cool " + to_wstring((1.0f - (5.0f / (5.0f + m_upgradeAcce1))) * 100.0f).substr(0, 4) + L"% ¡æ " + to_wstring((1.0f - (5.0f / (5.0f + m_upgradeAcce1 + 1))) * 100.0f).substr(0, 4) + L"%");
 
 				pUIManager->m_pSmithyInfo1Acce2->SetString(L"Level " + to_wstring(m_upgradeAcce1) + L" ¡æ Level " + to_wstring(m_upgradeAcce2 + 1));
 				pUIManager->m_pSmithyInfo2Acce2->SetString(L"All Stat " + to_wstring(m_upgradeAcce2) + L" ¡æ " + to_wstring(m_upgradeAcce2 + 1));
@@ -1151,7 +1178,7 @@ void PlayerController::CheckTownCollision() noexcept
 						p_HealHP.KeyValue = PlayerController::Get().GetParent()->m_keyValue;
 						p_HealHP.Value = 10000.0f;
 						PacketManager::Get().SendPacket((char*)&p_HealHP, (USHORT)sizeof(Packet_Float), PACKET_HealHP);
-						SoundManager::Get().Play("SE_dark.mp3");
+						//SoundManager::Get().Play("SE_dark.mp3");
 						// + Æ÷¼Ç
 						UIManager::Get().AddSlotItem(L"Potion_0");
 					}
@@ -1161,7 +1188,6 @@ void PlayerController::CheckTownCollision() noexcept
 			{
 				if (Input::GetKeyState('X') == EKeyState::DOWN)
 				{
-					SoundManager::Get().Play("SE_windmill.mp3");
 					if (pUIManager->m_pShopPanel->m_bRender)
 					{
 						// ²û
@@ -1172,6 +1198,7 @@ void PlayerController::CheckTownCollision() noexcept
 					else
 					{
 						// Å´
+						SoundManager::Get().Play("SE_windmill.mp3");
 						pUIManager->m_pShopPanel->m_bRender = true;
 						pUIManager->m_pMouseIcon->m_bRender = true;
 						pUIManager->m_pInvenPanel->m_bRender = true;
@@ -1191,7 +1218,6 @@ void PlayerController::CheckTownCollision() noexcept
 			{
 				if (Input::GetKeyState('X') == EKeyState::DOWN)
 				{
-					SoundManager::Get().Play("SE_towerround.mp3");
 					if (pUIManager->m_pTowerPanel->m_bRender)
 					{
 						// ²û
@@ -1201,6 +1227,7 @@ void PlayerController::CheckTownCollision() noexcept
 					else
 					{
 						// Å´
+						SoundManager::Get().Play("SE_towerround.mp3");
 						pUIManager->m_pTowerPanel->m_bRender = true;
 						pUIManager->m_pMouseIcon->m_bRender = true;
 
@@ -1389,9 +1416,6 @@ void PlayerController::SendReqRespawn(const ECharacter& eCharacter) noexcept
 			m_stateList.try_emplace(EPlayerState::RSkill, new PlayerStateRSkill());
 			m_stateList.try_emplace(EPlayerState::Run, new PlayerStateRun());
 			m_stateList.try_emplace(EPlayerState::Special, new PlayerStateGuard());
-			m_stateList.try_emplace(EPlayerState::Combo1, new PlayerStateCombo1());
-			m_stateList.try_emplace(EPlayerState::Combo2, new PlayerStateCombo2());
-			m_stateList.try_emplace(EPlayerState::Combo3, new PlayerStateCombo3());
 			//m_stateList.try_emplace(EPlayerState::Dead, new PlayerStateDead());
 			break;
 		case PlayerController::EArcher:

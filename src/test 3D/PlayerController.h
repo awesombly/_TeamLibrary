@@ -23,7 +23,7 @@ public:
 		NBackwardLeft = 69, NBackwardRight = 72,
 		Jump		= 100,	Dance1, Dance2, Dance3, LSkill, RSkill, Fly, FlyEnd, 
 		Dash, DashLeft, DashRight, Run, RunLeft, RunRight, 
-		Special,		Special2, Special3, Attack, Wait,
+		Special,		Special2, Special3, Attack, Attack2, Wait,
 		ChargeAttack,	ChargeAttack2, LCharging, LCharge1, LCharge2,
 		ShockWave,		ThrowBomb,	ITimeBomb, IShockBomb, IMine, IMissile, INuclear, IPotion,
 	};
@@ -55,6 +55,7 @@ private:
 	GameObject* m_pTargetEnemy	= nullptr;
 	GameObject*	m_pEffectFly	= nullptr;
 	bool		m_inputCombo	= false;
+	char		m_comboCount	= 0;
 	///
 	float		m_EXP			= 0.0f;
 	float		m_disEXP		= 0.0f;
@@ -102,7 +103,7 @@ public:
 	const float SoundRange			 = 302500.0f;
 public:
 	GameObject* m_pHome			 = nullptr;
-	const float HomeRadius		 = 8000.0f;
+	const float HomeRadius		 = 12000.0f;
 
 	D3DXVECTOR3 m_CarpetPos[4];
 	bool		m_canChurh = false;
