@@ -10,16 +10,18 @@ namespace UI
 		JImageCtrl*			m_pFrontGround;
 		VHType				m_VHType = Horizontal;
 		const float*		m_fCur;
+		const float*		m_fDis;
 		float				m_fTemp = 1.0f; // 초기에 넣어놓는 값..
 		float			    m_fMaxValue = 1.0f;
 		float				m_fCurValue;
 		float				m_fDisValue = 0.0f;
 		bool				m_bDecrease = true;
+		bool				m_bEngineDecrease = false;
 	public:
 		void CheckDis(const float& spf);
 		void SetColor(D3DXVECTOR4 vColor);
 		void SetMiddleColor(D3DXVECTOR4 vColor);
-		void SetValue(const float& fValue, float fMaxValue, float& temp);
+		void SetValue(const float& fValue, float fMaxValue, float& fDisValue);
 		bool Create(ID3D11Device* pDevice, const TCHAR* szBack, const TCHAR* szFront, 
 			 const char* PSName = "PS", const TCHAR* szShaderName = L"../../data/ui/shader/DefaultUI.hlsl");
 	public:

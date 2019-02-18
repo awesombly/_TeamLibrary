@@ -877,50 +877,6 @@
 ^pfEventClick 7274
 ^vpEventClick 
 
-^Type 783
-^NodeName Temp_Btn0
-^ParentName Inventory_Panel
-^KeyState 135 135
-^bRender 1
-^Position 157.000000 95.000000 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 50.000000 15.000000 1.000000
-^Color 1.000000 1.000000 1.000000 1.000000
-^Align 0
-^strText Shop
-^TextSize 20.000000
-^tx_Normal blue_button00.png
-^tx_Hover blue_button01.png
-^tx_Press blue_button02.png
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7277
-^vpEventClick Shop_Panel
-
-^Type 783
-^NodeName Temp_Btn1
-^ParentName Inventory_Panel
-^KeyState 135 135
-^bRender 1
-^Position 280.000000 95.000000 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 50.000000 15.000000 1.000000
-^Color 1.000000 1.000000 1.000000 1.000000
-^Align 0
-^strText Smithy
-^TextSize 20.000000
-^tx_Normal blue_button00.png
-^tx_Hover blue_button01.png
-^tx_Press blue_button02.png
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7277
-^vpEventClick Smithy_Panel
-
 ^Type 777
 ^NodeName Info_Panel
 ^ParentName Game_Panel
@@ -3905,7 +3861,7 @@
 ^Color 1.000000 1.000000 1.000000 0.000000
 ^Align 0
 ^strText STR+5
-^TextSize 20.000000
+^TextSize 17.000000
 ^tx_Normal NO_IMAGE.png
 ^tx_Hover NO_IMAGE.png
 ^tx_Press NO_IMAGE.png
@@ -3927,7 +3883,7 @@
 ^Color 1.000000 1.000000 1.000000 0.000000
 ^Align 0
 ^strText °­È­È®·ü50%
-^TextSize 25.000000
+^TextSize 20.000000
 ^tx_Normal NO_IMAGE.png
 ^tx_Hover NO_IMAGE.png
 ^tx_Press NO_IMAGE.png
@@ -4022,7 +3978,7 @@
 ^Color 1.000000 1.000000 1.000000 0.000000
 ^Align 0
 ^strText DEX+5
-^TextSize 20.000000
+^TextSize 17.000000
 ^tx_Normal NO_IMAGE.png
 ^tx_Hover NO_IMAGE.png
 ^tx_Press NO_IMAGE.png
@@ -4044,7 +4000,7 @@
 ^Color 1.000000 1.000000 1.000000 0.000000
 ^Align 0
 ^strText °­È­È®·ü50%
-^TextSize 25.000000
+^TextSize 20.000000
 ^tx_Normal NO_IMAGE.png
 ^tx_Hover NO_IMAGE.png
 ^tx_Press NO_IMAGE.png
@@ -4139,7 +4095,7 @@
 ^Color 1.000000 1.000000 1.000000 0.000000
 ^Align 0
 ^strText INT+5
-^TextSize 20.000000
+^TextSize 17.000000
 ^tx_Normal NO_IMAGE.png
 ^tx_Hover NO_IMAGE.png
 ^tx_Press NO_IMAGE.png
@@ -4161,7 +4117,7 @@
 ^Color 1.000000 1.000000 1.000000 0.000000
 ^Align 0
 ^strText °­È­È®·ü50%
-^TextSize 25.000000
+^TextSize 20.000000
 ^tx_Normal NO_IMAGE.png
 ^tx_Hover NO_IMAGE.png
 ^tx_Press NO_IMAGE.png
@@ -4256,7 +4212,7 @@
 ^Color 1.000000 1.000000 1.000000 0.000000
 ^Align 0
 ^strText LUK+5
-^TextSize 20.000000
+^TextSize 17.000000
 ^tx_Normal NO_IMAGE.png
 ^tx_Hover NO_IMAGE.png
 ^tx_Press NO_IMAGE.png
@@ -4278,7 +4234,7 @@
 ^Color 1.000000 1.000000 1.000000 0.000000
 ^Align 0
 ^strText °­È­È®·ü50%
-^TextSize 25.000000
+^TextSize 20.000000
 ^tx_Normal NO_IMAGE.png
 ^tx_Hover NO_IMAGE.png
 ^tx_Press NO_IMAGE.png
@@ -4684,8 +4640,8 @@
 ^Scale 75.000000 15.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
 ^Align 0
-^strText Ãµ¸¸¿ø
-^TextSize 25.000000
+^strText 100,000,000
+^TextSize 23.000000
 ^tx_Normal btn_001.png
 ^tx_Hover btn_000.png
 ^tx_Press btn_002.png
