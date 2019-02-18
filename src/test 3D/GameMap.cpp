@@ -15,7 +15,6 @@ bool GameMap::Init() noexcept
 	m_pHeightMap->CreateHeightMap(DxManager::GetDContext(), L"HeightMap/heightmap.png", 13, 1.0f, 1.0f);
 	//m_pHeightMap->SetShadowRate(0.0f);
 	m_pHeightMap->SetEnviromentMap(L"CubeMap/A_nightsky.dds", EEnviType::Refraction);
-	m_pHeightMap->SetColor(DxManager::GetDContext(), 0.6f, 0.6f, 0.6f);
 	//pObject->Translate(Vector3::Down * 100.0f);
 	//pObject->SetScale(1.0f, 0.1f, 1.0f);
 	ObjectManager::Get().PushObject(pObject, false);
@@ -33,7 +32,6 @@ bool GameMap::Init() noexcept
 	pCollider->SetGravityScale(0.0f);
 	pCollider->usePhysics(false);
 	pCollider->SetHP(200.0f);
-	pCollider->m_pPhysics->DeadEvent = DyingEvent::CenterDead;
 	ObjectManager::Get().PushObject(&m_fountain, false);
 
 	m_church.SetPlayerCharacter(L"MAP_Church", -450.0f, 0, 450.0f);	//280
@@ -830,7 +828,7 @@ bool GameMap::Init() noexcept
 #pragma region MyBillTree
 	auto pPlane = new RPlane(L"T", L"Tree1.png", "VS_Basic", "PS_Basic");
 	int i = 0;
-	m_pTree2D[i] = new GameObject(L"T", pPlane, EObjType::Dummy);
+	m_pTree2D[i] = new GameObject(L"T", pPlane, EObjType::Object);
 	m_pTree2D[i]->SetScale(Vector3::One * 50.0f);
 	m_pTree2D[i]->SetPosition(-1000.0f, 180.0f, 0.0f);
 	m_pTree2D[i]->SetScale(180.0f, 180.0f, 180.0f);

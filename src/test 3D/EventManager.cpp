@@ -47,31 +47,34 @@ namespace MyEvent {
 	{
 		if (pB != nullptr)
 		{
-			pB->SetForce((Normalize(pB->GetCenter() - pA->GetCenter())) * 240.0f);
-			pB->m_pParent->OperHP(-pA->m_pPhysics->m_damage);
-			// 내가 맞았을때
-			if (pB->m_pParent == PlayerController::Get().GetParent())
+			if (pA->GetHP() <= 0.0f)
 			{
-				UIManager::Get().m_pHitEffect->SetEventTime(0.5f);
-				((JPanel*)UIManager::Get().m_pHitEffect)->EffectPlay();
-			}
-			// 내가 때렸을때
-			if (PacketManager::Get().pMyInfo->UserSocket == pA->m_pPhysics->UserSocket)
-			{
-				PlayerController::Get().HitEvent(pB);
-				if (pB->m_pParent->GetHP() <= 0.0f)
+				pB->SetForce((Normalize(pB->GetCenter() - pA->GetCenter())) * 240.0f);
+				pB->m_pParent->OperHP(-pA->m_pPhysics->m_damage);
+				// 내가 맞았을때
+				if (pB->m_pParent == PlayerController::Get().GetParent())
 				{
-					PacketManager::Get().SendDeadEvent(pB->m_pParent->m_keyValue, pB->m_pPhysics->UserSocket, pA->m_pPhysics->UserSocket);
+					UIManager::Get().m_pHitEffect->SetEventTime(0.5f);
+					((JPanel*)UIManager::Get().m_pHitEffect)->EffectPlay();
 				}
-				else
+				// 내가 때렸을때
+				if (PacketManager::Get().pMyInfo->UserSocket == pA->m_pPhysics->UserSocket)
 				{
-					PacketManager::Get().pMyInfo->Score += (int)(pA->m_pPhysics->m_damage * 100.0f);
-					PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
+					PlayerController::Get().HitEvent(pB);
+					if (pB->m_pParent->GetHP() <= 0.0f)
+					{
+						PacketManager::Get().SendDeadEvent(pB->m_pParent->m_keyValue, pB->m_pPhysics->UserSocket, pA->m_pPhysics->UserSocket);
+					}
+					else
+					{
+						PacketManager::Get().pMyInfo->Score += (int)(pA->m_pPhysics->m_damage * 100.0f);
+						PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
+					}
 				}
-			}
-			else if (pA->m_pPhysics->UserSocket == ESocketType::EDummy && PacketManager::Get().isHost && pB->m_pParent->GetHP() <= 0.0f)
-			{
-				PacketManager::Get().SendDeadEvent(pB->m_pParent->m_keyValue, pB->m_pPhysics->UserSocket, ESocketType::EDummy);
+				else if (pA->m_pPhysics->UserSocket == ESocketType::EDummy && PacketManager::Get().isHost && pB->m_pParent->GetHP() <= 0.0f)
+				{
+					PacketManager::Get().SendDeadEvent(pB->m_pParent->m_keyValue, pB->m_pPhysics->UserSocket, ESocketType::EDummy);
+				}
 			}
 		}
 		auto pEffect = ObjectManager::Get().TakeObject(L"EHit");
@@ -232,7 +235,7 @@ namespace MyEvent {
 				PacketManager::Get().SendDeadEvent(pB->m_pParent->m_keyValue, pB->m_pPhysics->UserSocket, ESocketType::EDummy);
 			}
 			auto pEffect = ObjectManager::Get().TakeObject(L"EHit");
-			pEffect->SetPosition(pA->GetCenter());
+			pEffect->SetPosition(pA->m_pParent->GetWorldPosition());
 			//SoundManager::Get().PlayQueue("SE_HIT.mp3", pA->m_pParent->GetWorldPosition(), SoundRange);
 		}
 	}
@@ -656,12 +659,6 @@ namespace TimeEvent {
 }
 
 namespace DyingEvent {
-	void CenterDead(Collider* pCollider, const UINT& killUser)
-	{
-		//ObjectManager::Get().DisableObject(pCollider->m_pParent);
-		SoundManager::Get().PlayQueue("SE_fire1.mp3", pCollider->m_pParent->GetPosition(), PlayerController::Get().SoundRange);
-	}
-
 	void ZombieDead(Collider* pCollider, const UINT& killUser)
 	{
 		if (RandomNormal() >= 0.8f * 5.0f / (5.0f + PacketManager::Get().pMyInfo->StatLuk))
@@ -729,7 +726,7 @@ namespace DyingEvent {
 		pItem->SetPosition(pCollider->m_pParent->GetPosition());
 		pItem->SetScale(Vector3::One * 1.5f);
 		pItem->m_pPhysics->UserSocket = killUser;
-		pItem->m_pPhysics->m_damage = 0.75f * PacketManager::Get().UserList[killUser]->AttackRate;		
+		pItem->m_pPhysics->m_damage = 0.55f * PacketManager::Get().UserList[killUser]->AttackRate;		
 
 		//ObjectManager::Get().DisableObject(pCollider->m_pParent);
 		SoundManager::Get().PlayQueue("SE_bomb.mp3", pCollider->m_pParent->GetPosition(), PlayerController::Get().SoundRange);

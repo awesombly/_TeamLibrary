@@ -752,7 +752,7 @@ void GameScene::LoadUI() noexcept
 					for (auto& pRenderer : *pList)
 					{
 						((Renderer*)pRenderer)->SetShadowRate(0.5f);
-						((Renderer*)pRenderer)->SetLightRate(0.3f);
+						((Renderer*)pRenderer)->SetLightRate(0.2f);
 					}
 				}
 			}
@@ -766,7 +766,7 @@ void GameScene::LoadUI() noexcept
 						for (auto& pRenderer : *pList)
 						{
 							((Renderer*)pRenderer)->SetShadowRate(0.5f);
-							((Renderer*)pRenderer)->SetLightRate(0.3f);
+							((Renderer*)pRenderer)->SetLightRate(0.2f);
 						}
 					}
 				}
@@ -912,47 +912,11 @@ void GameScene::LoadUI() noexcept
 		}
 	};
 	UIManager::Get().m_pShopItem2 = (JTextCtrl*)pUIRoot->find_child(L"Shop_Item2_Btn");
-	UIManager::Get().m_pShopItem2->EventClick.first = [](void*) {
-		//if()
-		{
-			UIManager::Get().AddSlotItem(L"Gems_0");
-		}
-	};
 	UIManager::Get().m_pShopItem3 = (JTextCtrl*)pUIRoot->find_child(L"Shop_Item3_Btn");
-	UIManager::Get().m_pShopItem3->EventClick.first = [](void*) {
-		//if()
-		{
-			UIManager::Get().AddSlotItem(L"Gems_0");
-		}
-	};
 	UIManager::Get().m_pShopItem4 = (JTextCtrl*)pUIRoot->find_child(L"Shop_Item4_Btn");
-	UIManager::Get().m_pShopItem4->EventClick.first = [](void*) {
-		//if()
-		{
-			UIManager::Get().AddSlotItem(L"Gems_0");
-		}
-	};
 	UIManager::Get().m_pShopItem5 = (JTextCtrl*)pUIRoot->find_child(L"Shop_Item5_Btn");
-	UIManager::Get().m_pShopItem5->EventClick.first = [](void*) {
-		//if()
-		{
-			UIManager::Get().AddSlotItem(L"Gems_0");
-		}
-	};
 	UIManager::Get().m_pShopItem6 = (JTextCtrl*)pUIRoot->find_child(L"Shop_Item6_Btn");
-	UIManager::Get().m_pShopItem6->EventClick.first = [](void*) {
-		//if()
-		{
-			UIManager::Get().AddSlotItem(L"Gems_0");
-		}
-	};
 	UIManager::Get().m_pShopItem7 = (JTextCtrl*)pUIRoot->find_child(L"Shop_Item7_Btn");
-	UIManager::Get().m_pShopItem7->EventClick.first = [](void*) {
-		//if()
-		{
-			UIManager::Get().AddSlotItem(L"Gems_0");
-		}
-	};
 	// Å¸¿ö
 	UIManager::Get().m_pTowerPanel = (JPanel*)pUIRoot->find_child(L"Tower_Panel");
 	UIManager::Get().m_pTowerCurLevel = (JTextCtrl*)pUIRoot->find_child(L"Tower_CurrentLv");

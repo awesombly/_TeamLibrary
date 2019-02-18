@@ -53,7 +53,6 @@ namespace TimeEvent {
 }
 
 namespace DyingEvent {
-	void CenterDead(Collider* pCollider, const UINT& killUser);
 	void ZombieDead(Collider* pCollider, const UINT& killUser);
 	void ZombieExDead(Collider* pCollider, const UINT& killUser);
 	void ZombieKingDead(Collider* pCollider, const UINT& killUser);
