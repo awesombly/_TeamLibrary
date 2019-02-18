@@ -1058,6 +1058,7 @@ void PlayerController::CheckTownCollision() noexcept
 			{
 				if (Input::GetKeyState('X') == EKeyState::DOWN)
 				{
+					SoundManager::Get().Play("SE_blacksmith.mp3");
 					if (pUIManager->m_pSmithyPanel->m_bRender)
 					{
 						// ²û
@@ -1094,6 +1095,7 @@ void PlayerController::CheckTownCollision() noexcept
 				{
 					if (Input::GetKeyState('X') == EKeyState::DOWN)
 					{
+						SoundManager::Get().Play("SE_church.mp3");
 						PlayerController::Get().m_canChurh = false;
 						pUIManager->m_pRespawnEffect->SetEventTime(1.5f);
 						pUIManager->m_pRespawnEffect->EffectPlay();
@@ -1111,6 +1113,7 @@ void PlayerController::CheckTownCollision() noexcept
 			{
 				if (Input::GetKeyState('X') == EKeyState::DOWN)
 				{
+					SoundManager::Get().Play("SE_windmill.mp3");
 					if (pUIManager->m_pShopPanel->m_bRender)
 					{
 						// ²û
@@ -1140,6 +1143,7 @@ void PlayerController::CheckTownCollision() noexcept
 			{
 				if (Input::GetKeyState('X') == EKeyState::DOWN)
 				{
+					SoundManager::Get().Play("SE_towerround.mp3");
 					if (pUIManager->m_pTowerPanel->m_bRender)
 					{
 						// ²û

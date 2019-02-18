@@ -109,7 +109,8 @@ void IntroScene::LoadSound() noexcept
 	SoundManager::Get().Load("SE_church.mp3");
 	SoundManager::Get().Load("SE_windmill.mp3");
 	SoundManager::Get().Load("SE_towerround.mp3");
-
+	SoundManager::Get().Load("SE_levelup.mp3");
+	
 
 	SoundManager::Get().Load("SE_fire1.mp3");
 	SoundManager::Get().Load("SE_flare_shot.mp3");
