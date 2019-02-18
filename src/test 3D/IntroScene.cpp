@@ -129,7 +129,8 @@ void IntroScene::LoadSound() noexcept
 	SoundManager::Get().Load("SE_flame.mp3");
 	SoundManager::Get().Load("SE_freeze.mp3");
 	SoundManager::Get().Load("SE_healing.mp3");
-
+	///
+	SoundManager::Get().Load("SE_drink.mp3");
 }
 
 bool IntroScene::FirstInit() noexcept

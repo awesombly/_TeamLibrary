@@ -54,6 +54,7 @@ private:
 
 	GameObject* m_pTargetEnemy	= nullptr;
 	GameObject*	m_pEffectFly	= nullptr;
+	bool		m_inputCombo	= false;
 	///
 	float		m_EXP			= 0.0f;
 	float		m_disEXP		= 0.0f;
@@ -101,7 +102,7 @@ public:
 	const float SoundRange			 = 302500.0f;
 public:
 	GameObject* m_pHome			 = nullptr;
-	const float HomeRadius		 = 1600.0f;
+	const float HomeRadius		 = 8000.0f;
 
 	D3DXVECTOR3 m_CarpetPos[4];
 	bool		m_canChurh = false;
@@ -149,6 +150,9 @@ public:
 	friend class PlayerState;
 	friend class PlayerStateBasic;
 	friend class PlayerStateLSkill;
+	friend class PlayerStateCombo1;
+	friend class PlayerStateCombo2;
+	friend class PlayerStateCombo3;
 	friend class PlayerStateRSkill;
 	friend class PlayerStateRun;
 

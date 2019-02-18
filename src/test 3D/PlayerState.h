@@ -10,6 +10,7 @@ enum class EPlayerState :char {
 	Run,
 	Special,
 	Wait,
+	Combo1, Combo2, Combo3
 };
 
 class PlayerController;
@@ -50,18 +51,51 @@ public:
 	virtual void StateInit(PlayerController* pOwner)	noexcept override;
 };
 
+// Combo1
+class PlayerStateCombo1 : public PlayerState
+{
+public:
+	PlayerStateCombo1() : PlayerState(EPlayerState::Combo1) {};
+	virtual ~PlayerStateCombo1() = default;
+public:
+	virtual bool Process(const float& spf)				noexcept override;
+	virtual void StateInit(PlayerController* pOwner)	noexcept override;
+};
+
+// Combo2
+class PlayerStateCombo2 : public PlayerState
+{
+public:
+	PlayerStateCombo2() : PlayerState(EPlayerState::Combo2) {};
+	virtual ~PlayerStateCombo2() = default;
+public:
+	virtual bool Process(const float& spf)				noexcept override;
+	virtual void StateInit(PlayerController* pOwner)	noexcept override;
+};
+
+// Combo3
+class PlayerStateCombo3 : public PlayerState
+{
+public:
+	PlayerStateCombo3() : PlayerState(EPlayerState::Combo3) {};
+	virtual ~PlayerStateCombo3() = default;
+public:
+	virtual bool Process(const float& spf)				noexcept override;
+	virtual void StateInit(PlayerController* pOwner)	noexcept override;
+};
+
 // RButton
 class PlayerStateRSkill : public PlayerState
 {
 public:
-	PlayerStateRSkill() : PlayerState(EPlayerState::LSkill) {};
+	PlayerStateRSkill() : PlayerState(EPlayerState::RSkill) {};
 	virtual ~PlayerStateRSkill() = default;
 public:
 	virtual bool Process(const float& spf)				noexcept override;
 	virtual void StateInit(PlayerController* pOwner)	noexcept override;
 };
 
-// ´ë½¬
+// ·±
 class PlayerStateRun : public PlayerState
 {
 public:
@@ -76,7 +110,7 @@ public:
 class PlayerStateGuard : public PlayerState
 {
 public:
-	PlayerStateGuard() : PlayerState(EPlayerState::Run) {};
+	PlayerStateGuard() : PlayerState(EPlayerState::Special) {};
 	virtual ~PlayerStateGuard() = default;
 public:
 	virtual bool Process(const float& spf)				noexcept override;
@@ -111,7 +145,7 @@ public:
 class ArcherStateRSkill : public PlayerState
 {
 public:
-	ArcherStateRSkill() : PlayerState(EPlayerState::LSkill) {};
+	ArcherStateRSkill() : PlayerState(EPlayerState::RSkill) {};
 	virtual ~ArcherStateRSkill() = default;
 public:
 	virtual bool Process(const float& spf)				noexcept override;
@@ -133,7 +167,7 @@ public:
 class ArcherStateWait : public PlayerState
 {
 public:
-	ArcherStateWait() : PlayerState(EPlayerState::Dash) {};
+	ArcherStateWait() : PlayerState(EPlayerState::Wait) {};
 	virtual ~ArcherStateWait() = default;
 public:
 	virtual bool Process(const float& spf)				noexcept override;
@@ -169,7 +203,7 @@ public:
 class MageStateRSkill : public PlayerState
 {
 public:
-	MageStateRSkill() : PlayerState(EPlayerState::LSkill) {};
+	MageStateRSkill() : PlayerState(EPlayerState::RSkill) {};
 	virtual ~MageStateRSkill() = default;
 public:
 	virtual bool Process(const float& spf)				noexcept override;

@@ -191,27 +191,6 @@ bool GameScene::CheatMessage() noexcept
 				return false;
 			}
 		}
-		/*else if (str._Equal(L"Dance"))
-		{
-			if (PlayerController::Get().GetParent() == nullptr)
-				return false;
-			switch (atoi(WCharToChar(m_chatMessage.substr(finder + 1).c_str())))
-			{
-			case 1:
-			{
-				PlayerController::Get().SendAnimTransform(PlayerController::EAction::Dance1, PlayerController::Get().m_curCharacter);
-			}	break;
-			case 2:
-			{
-				PlayerController::Get().SendAnimTransform(PlayerController::EAction::Dance2, PlayerController::Get().m_curCharacter);
-			}	break;
-			case 3:
-			{
-				PlayerController::Get().SendAnimTransform(PlayerController::EAction::Dance3, PlayerController::Get().m_curCharacter);
-			}	break;
-			}
-			return false;
-		}*/
 		else if (str._Equal(L"Zombie"))
 		{
 			PacketManager::Get().SendTakeObject(L"Zombie", ESocketType::EZombie, atoi(WCharToChar(m_chatMessage.substr(finder + 1).c_str())), 1.0f, 0.25f, 0.05f, { -500.0f, 0.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
@@ -246,16 +225,6 @@ bool GameScene::CheatMessage() noexcept
 			p_PlayerDead.KillUser = (UINT)-1;
 			p_PlayerDead.DeadUser = PacketManager::Get().pMyInfo->UserSocket;
 			PacketManager::Get().SendPacket((char*)&p_PlayerDead, (USHORT)sizeof(Packet_PlayerDead), PACKET_PlayerDead);
-			return false;
-		}
-		else if (str._Equal(L"MoveSpeed"))
-		{
-			PlayerController::Get().m_moveSpeed = (float)atof(WCharToChar(m_chatMessage.substr(finder + 1).c_str()));
-			return false;
-		}
-		else if (str._Equal(L"JumpPower"))
-		{
-			PlayerController::Get().m_jumpPower = (float)atof(WCharToChar(m_chatMessage.substr(finder + 1).c_str()));
 			return false;
 		}
 		else if (str._Equal(L"Level"))

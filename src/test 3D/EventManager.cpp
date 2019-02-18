@@ -726,7 +726,7 @@ namespace DyingEvent {
 		pItem->SetPosition(pCollider->m_pParent->GetPosition());
 		pItem->SetScale(Vector3::One * 1.5f);
 		pItem->m_pPhysics->UserSocket = killUser;
-		pItem->m_pPhysics->m_damage = 1.0f;
+		pItem->m_pPhysics->m_damage = 0.55f * PacketManager::Get().UserList[killUser]->AttackRate;		
 
 		//ObjectManager::Get().DisableObject(pCollider->m_pParent);
 		SoundManager::Get().PlayQueue("SE_bomb.mp3", pCollider->m_pParent->GetPosition(), PlayerController::Get().SoundRange);
