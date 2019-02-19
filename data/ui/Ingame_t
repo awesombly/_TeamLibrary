@@ -129,6 +129,7 @@
 ^Rotate 0.000000 0.000000 1.570796
 ^Scale 50.000000 50.000000 1.000000
 ^SubScale 50.000000 50.000000 1.000000
+^bDecrease 1
 ^Color 1.000000 1.000000 1.000000 1.000000
 ^tx_BackGround black.png
 ^tx_FrontGround White.png
@@ -149,6 +150,7 @@
 ^Rotate 0.000000 0.000000 1.570796
 ^Scale 50.000000 50.000000 1.000000
 ^SubScale 50.000000 50.000000 1.000000
+^bDecrease 1
 ^Color 1.000000 1.000000 1.000000 1.000000
 ^tx_BackGround black.png
 ^tx_FrontGround red.png
@@ -169,6 +171,7 @@
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 221.000000 2.000000 1.000000
 ^SubScale 221.000000 2.000000 1.000000
+^bDecrease 1
 ^Color 0.000000 1.000000 0.000000 1.000000
 ^tx_BackGround black.png
 ^tx_FrontGround White.png
@@ -227,6 +230,7 @@
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 26.000000 26.000000 1.000000
 ^SubScale 26.000000 26.000000 1.000000
+^bDecrease 1
 ^Color 1.000000 1.000000 1.000000 1.000000
 ^tx_BackGround boots_mobile-5301437f3fd3acb46bc8924e850b75cf-1.png
 ^tx_FrontGround black.png
@@ -247,6 +251,7 @@
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 26.000000 26.000000 1.000000
 ^SubScale 26.000000 26.000000 1.000000
+^bDecrease 1
 ^Color 1.000000 1.000000 1.000000 1.000000
 ^tx_BackGround axe_mobile-d4d9e8a208f1f964783b426340fc8c29-1.png
 ^tx_FrontGround black.png
@@ -330,9 +335,10 @@
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 115.801628 8.354493 1.000000
 ^SubScale 115.801628 8.354493 1.000000
-^Color 1.000000 1.000000 1.000000 1.000000
+^bDecrease 1
+^Color 1.000000 0.000000 0.000000 1.000000
 ^tx_BackGround Alpha.png
-^tx_FrontGround red.png
+^tx_FrontGround White.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -704,7 +710,7 @@
 ^Position 235.000000 -125.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 98.000000 8.000000 1.000000
-^Color 1.000000 1.000000 1.000000 1.000000
+^Color 0.800000 0.800000 0.800000 1.000000
 ^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^pfEventHover 7274
 ^vpEventHover 
@@ -870,50 +876,6 @@
 ^vpEventPress 
 ^pfEventClick 7274
 ^vpEventClick 
-
-^Type 783
-^NodeName Temp_Btn0
-^ParentName Inventory_Panel
-^KeyState 135 135
-^bRender 1
-^Position 157.000000 95.000000 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 50.000000 15.000000 1.000000
-^Color 1.000000 1.000000 1.000000 1.000000
-^Align 0
-^strText Shop
-^TextSize 20.000000
-^tx_Normal blue_button00.png
-^tx_Hover blue_button01.png
-^tx_Press blue_button02.png
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7277
-^vpEventClick Shop_Panel
-
-^Type 783
-^NodeName Temp_Btn1
-^ParentName Inventory_Panel
-^KeyState 135 135
-^bRender 1
-^Position 280.000000 95.000000 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 50.000000 15.000000 1.000000
-^Color 1.000000 1.000000 1.000000 1.000000
-^Align 0
-^strText Smithy
-^TextSize 20.000000
-^tx_Normal blue_button00.png
-^tx_Hover blue_button01.png
-^tx_Press blue_button02.png
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7277
-^vpEventClick Smithy_Panel
 
 ^Type 777
 ^NodeName Info_Panel
@@ -2247,6 +2209,7 @@
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 151.000000 8.500000 1.000000
 ^SubScale 151.000000 8.500000 1.000000
+^bDecrease 0
 ^Color 1.000000 0.500000 1.000000 1.000000
 ^tx_BackGround Alpha.png
 ^tx_FrontGround µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
@@ -3898,7 +3861,7 @@
 ^Color 1.000000 1.000000 1.000000 0.000000
 ^Align 0
 ^strText STR+5
-^TextSize 20.000000
+^TextSize 17.000000
 ^tx_Normal NO_IMAGE.png
 ^tx_Hover NO_IMAGE.png
 ^tx_Press NO_IMAGE.png
@@ -3920,7 +3883,7 @@
 ^Color 1.000000 1.000000 1.000000 0.000000
 ^Align 0
 ^strText °­È­È®·ü50%
-^TextSize 25.000000
+^TextSize 20.000000
 ^tx_Normal NO_IMAGE.png
 ^tx_Hover NO_IMAGE.png
 ^tx_Press NO_IMAGE.png
@@ -4015,7 +3978,7 @@
 ^Color 1.000000 1.000000 1.000000 0.000000
 ^Align 0
 ^strText DEX+5
-^TextSize 20.000000
+^TextSize 17.000000
 ^tx_Normal NO_IMAGE.png
 ^tx_Hover NO_IMAGE.png
 ^tx_Press NO_IMAGE.png
@@ -4037,7 +4000,7 @@
 ^Color 1.000000 1.000000 1.000000 0.000000
 ^Align 0
 ^strText °­È­È®·ü50%
-^TextSize 25.000000
+^TextSize 20.000000
 ^tx_Normal NO_IMAGE.png
 ^tx_Hover NO_IMAGE.png
 ^tx_Press NO_IMAGE.png
@@ -4132,7 +4095,7 @@
 ^Color 1.000000 1.000000 1.000000 0.000000
 ^Align 0
 ^strText INT+5
-^TextSize 20.000000
+^TextSize 17.000000
 ^tx_Normal NO_IMAGE.png
 ^tx_Hover NO_IMAGE.png
 ^tx_Press NO_IMAGE.png
@@ -4154,7 +4117,7 @@
 ^Color 1.000000 1.000000 1.000000 0.000000
 ^Align 0
 ^strText °­È­È®·ü50%
-^TextSize 25.000000
+^TextSize 20.000000
 ^tx_Normal NO_IMAGE.png
 ^tx_Hover NO_IMAGE.png
 ^tx_Press NO_IMAGE.png
@@ -4249,7 +4212,7 @@
 ^Color 1.000000 1.000000 1.000000 0.000000
 ^Align 0
 ^strText LUK+5
-^TextSize 20.000000
+^TextSize 17.000000
 ^tx_Normal NO_IMAGE.png
 ^tx_Hover NO_IMAGE.png
 ^tx_Press NO_IMAGE.png
@@ -4271,7 +4234,7 @@
 ^Color 1.000000 1.000000 1.000000 0.000000
 ^Align 0
 ^strText °­È­È®·ü50%
-^TextSize 25.000000
+^TextSize 20.000000
 ^tx_Normal NO_IMAGE.png
 ^tx_Hover NO_IMAGE.png
 ^tx_Press NO_IMAGE.png
@@ -4677,8 +4640,8 @@
 ^Scale 75.000000 15.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
 ^Align 0
-^strText Ãµ¸¸¿ø
-^TextSize 25.000000
+^strText 100,000,000
+^TextSize 23.000000
 ^tx_Normal btn_001.png
 ^tx_Hover btn_000.png
 ^tx_Press btn_002.png
@@ -4749,9 +4712,9 @@
 ^bRender 1
 ^Position 0.000000 -271.834656 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 229.833908 24.167107 1.000000
-^Color 0.000000 0.000000 0.000000 1.000000
-^tx_Normal White.png
+^Scale 231.833969 26.000471 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_Normal TopTitle.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -4766,7 +4729,7 @@
 ^bRender 1
 ^Position 0.000000 -271.834656 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 231.804459 27.247435 1.000000
+^Scale 231.804459 22.336908 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
 ^Align 1
 ^TextSize 13.000000
@@ -4786,12 +4749,12 @@
 ^ParentName Chat_Panel
 ^KeyState 135 135
 ^bRender 1
-^Position 226.000000 -268.760651 0.000000
+^Position 229.104111 -271.624054 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 2.000000 20.000000 1.000000
+^Scale -1.000000 23.746208 1.000000
 ^SubScale 7.000000 7.000000 1.000000
-^Color 0.000000 0.000000 0.000000 1.000000
-^tx_Bar Alpha.png
+^Color 1.000000 0.500000 0.700000 1.000000
+^tx_Bar black.png
 ^tx_Handle circle.png
 ^pfEventHover 7274
 ^vpEventHover 
@@ -4984,10 +4947,10 @@
 ^ParentName Root
 ^KeyState 135 135
 ^bRender 0
-^Position 0.000000 -165.002365 0.000000
+^Position 0.000000 -168.669724 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 200.000000 20.000000 1.000000
-^Color 1.000000 1.000000 1.000000 1.000000
+^Scale 150.000000 15.000000 1.000000
+^Color 1.000000 0.800000 1.000000 1.000000
 ^tx_Normal xPush.png
 ^pfEventHover 7274
 ^vpEventHover 
