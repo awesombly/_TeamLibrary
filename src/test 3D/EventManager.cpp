@@ -658,7 +658,7 @@ namespace TimeEvent {
 namespace DyingEvent {
 	void CenterDead(Collider* pCollider, const UINT& killUser)
 	{
-		//ObjectManager::Get().DisableObject(pCollider->m_pParent);
+		pCollider->m_pParent->isEnable(false);
 		SoundManager::Get().PlayQueue("SE_fire1.mp3", pCollider->m_pParent->GetPosition(), PlayerController::Get().SoundRange);
 	}
 

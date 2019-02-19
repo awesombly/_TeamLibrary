@@ -178,6 +178,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 		case EAction::LSkill:
 		{
 			pObject->SetANIM_Loop(Paladin_ATTACK);
+			pObject->SetGravityScale(50.0f);
 		}	break;
 		case EAction::LCharge1:
 		{
@@ -223,6 +224,10 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 			SoundManager::Get().PlayVariation("SV_paladin_atk", false, 4);
 			SoundManager::Get().PlayQueue("SE_Sword_slash1.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
 		}	break;
+		case EAction::Wait:
+		{
+			pObject->SetGravityScale(pObject->GetScale().x * 1.5f);
+		}	break;
 		case EAction::RSkill:
 		{
 			pObject->SetANIM_Loop(Paladin_POWERUP);
@@ -230,6 +235,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 		case EAction::Special2:
 		{
 			// ±¤È­
+			SoundManager::Get().PlayQueue("SV_paladin_shout.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
 			auto pItem = ObjectManager::Get().TakeObject(L"EBerserk");
 			pItem->SetPosition(pObject->GetPosition() + pObject->GetUp() * 60.0f);
 
@@ -238,15 +244,30 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 
 			pItem = ObjectManager::Get().TakeObject(L"EFire");
 			pItem->SetParent(pObject);
-
-			SoundManager::Get().PlayQueue("SV_paladin_shout.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
-			//
+			///
+			PacketManager::Get().UserList[socket]->MotionRate += 0.65f;
+			if (PlayerController::Get().GetParent() == pObject)
+			{
+				PlayerController::Get().m_pEffectBerserk = pItem;
+				PlayerController::Get().m_motionBuff = 0.65f;
+				PlayerController::Get().m_cooltimeBuff = 2;
+			}
 		}	break;
 		case EAction::Special3:
 		{
 			// ±¤È­ Á¾·á
 			pObject->SetDamage(0.0f, 0);
 			pObject->GetCollider()->CollisionEvent = nullptr;
+			///
+			PacketManager::Get().UserList[socket]->MotionRate -= 0.65f;
+			if (PlayerController::Get().GetParent() == pObject)
+			{
+				if(PlayerController::Get().m_pEffectBerserk->isEnable())
+					ObjectManager::Get().DisableObject(PlayerController::Get().m_pEffectBerserk);
+				PlayerController::Get().m_pEffectBerserk = nullptr;
+				PlayerController::Get().m_motionBuff = 0.0f;
+				PlayerController::Get().m_cooltimeBuff = 0;
+			}
 		}	break;
 		case Special:
 		{
@@ -643,7 +664,6 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 		{
 			auto pItem = ObjectManager::Get().TakeObject(L"Magic");
 			pItem->SetPosition(pObject->GetPosition() + pObject->GetForward() * 40.0f + pObject->GetUp() * 65.0f + pObject->GetRight() * 20.0f);
-			pItem->SetRotation(pObject->GetRotation());
 			pItem->SetScale(pObject->GetScale());
 			pItem->SetForce((forward + Vector3::Up * 0.8f) * 240.0f);
 			pItem->m_pPhysics->UserSocket = socket;
@@ -655,28 +675,30 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 		}	break;
 		case EAction::ChargeAttack:
 		{
-			auto pItem = ObjectManager::Get().TakeObject(L"Magic");
-			pItem->SetPosition(pObject->GetPosition() + pObject->GetForward() * 40.0f + pObject->GetUp() * 65.0f + pObject->GetRight() * 20.0f);
-			pItem->SetRotation(pObject->GetRotation());
-			pItem->SetScale(pObject->GetScale());
-			pItem->SetForce((forward + Vector3::Up * 0.8f) * 240.0f);
-			pItem->m_pPhysics->UserSocket = socket;
-			pItem->SetDamage(0.25f * PacketManager::Get().UserList[socket]->AttackRate);
-			pItem->GetCollider()->AddIgnoreList(pObject->GetCollider());
-
-			SoundManager::Get().PlayQueue("SE_flare_shot.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
 			SoundManager::Get().PlayQueue("SV_mage_atk2.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
+		}	break;
+		case EAction::LCharging:
+		{
+			auto pItem = ObjectManager::Get().TakeObject(L"Magic");
+			pItem->SetPosition(pObject->GetPosition() + pObject->GetForward() * 40.0f + pObject->GetUp() * 50.0f + pObject->GetRight() * 20.0f);
+			pItem->SetScale(pObject->GetScale());
+			pItem->SetForce((forward + Vector3::Up * 0.2f) * 850.0f);
+			pItem->m_pPhysics->UserSocket = socket;
+			pItem->SetDamage(0.15f * PacketManager::Get().UserList[socket]->AttackRate);
+			pItem->GetCollider()->AddIgnoreList(pObject->GetCollider());
+			SoundManager::Get().PlayQueue("SE_flare_shot.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
 		}	break;
 		case EAction::ChargeAttack2:
 		{
-			auto pItem = ObjectManager::Get().TakeObject(L"Magic");
-			pItem->SetPosition(pObject->GetPosition() + pObject->GetForward() * 40.0f + pObject->GetUp() * 65.0f + pObject->GetRight() * 20.0f);
-			pItem->SetRotation(pObject->GetRotation());
-			pItem->SetScale(pObject->GetScale());
-			pItem->SetForce((forward + Vector3::Up * 0.8f) * 240.0f);
-			pItem->m_pPhysics->UserSocket = socket;
-			pItem->SetDamage(0.25f * PacketManager::Get().UserList[socket]->AttackRate);
-			pItem->GetCollider()->AddIgnoreList(pObject->GetCollider());
+			for (int i = 1; i < 10; ++i)
+			{
+				auto pItem = ObjectManager::Get().TakeObject(L"Magic");
+				pItem->SetPosition(pObject->GetPosition() + pObject->GetForward() * 80.0f * i + pObject->GetUp() * 800.0f + pObject->GetRight() * 20.0f);
+				pItem->SetForce(Vector3::Down * 400.0f + Vector3::Down * 150.0f * (10 - i));
+				pItem->m_pPhysics->UserSocket = socket;
+				pItem->SetDamage(0.25f * PacketManager::Get().UserList[socket]->AttackRate);
+				pItem->GetCollider()->AddIgnoreList(pObject->GetCollider());
+			}
 
 			SoundManager::Get().PlayQueue("SE_flare_shot.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
 			SoundManager::Get().PlayQueue("SV_mage_atk3.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
@@ -932,7 +954,7 @@ void PlayerController::UpdateStatus(const bool& infoUpdate) noexcept
 	auto pUserInfo = PacketManager::Get().pMyInfo;
 	m_moveSpeed = MoveSpeed + MoveSpeed * pUserInfo->StatDex * 0.05f;
 	m_jumpPower = JumpPower;
-	pUserInfo->MotionRate = 1.3f + pUserInfo->StatDex * 0.05f;
+	pUserInfo->MotionRate = 1.3f + pUserInfo->StatDex * 0.05f + m_motionBuff;
 	switch (m_curCharacter)
 	{
 	case PlayerController::EGuard:
@@ -975,11 +997,11 @@ void PlayerController::UpdateStatus(const bool& infoUpdate) noexcept
 		pUIManager->m_pInfoMP->SetString(to_wstring((int)(m_curMP * 100.0f)) + L" / " + to_wstring((int)(m_maxMP * 100.0f)));
 		pUIManager->m_pInfoEXP->SetString(to_wstring((int)(m_EXP * 100.0f)) + L" / " + to_wstring((int)(m_NeedEXP * 100.0f)));
 		//pUIManager->m_pInfoName->SetString(pUserInfo->UserID);
-		pUIManager->m_pInfoAttackSpeed->SetString(to_wstring((pUserInfo->MotionRate * 0.769f) * 100.0f).substr(0, 5) + L" %");
+		pUIManager->m_pInfoAttackSpeed->SetString(to_wstring((pUserInfo->MotionRate * 0.77f) * 100.0f).substr(0, 5) + L" %");
 		pUIManager->m_pInfoMoveSpeed->SetString(to_wstring((2.0f - 5.0f / (5.0f + pUserInfo->StatLuk)) * 100.0f).substr(0, 5) + L" %");
 		pUIManager->m_pInfoLevel->SetString(to_wstring(pUserInfo->Level));
 		if(m_upgradeWeapon >= 1)
-			pUIManager->m_pInfoDamage->SetString(to_wstring(100.0f * (pUserInfo->AttackRate - m_upgradeWeapon * 0.15f)).substr(0, 5) + L" + " + to_wstring(m_upgradeWeapon * 15.0f).substr(0, 5) + L" %");
+			pUIManager->m_pInfoDamage->SetString(to_wstring(100.0f * (pUserInfo->AttackRate - m_upgradeWeapon * 0.15f + 0.001f)).substr(0, 5) + L" + " + to_wstring(m_upgradeWeapon * 15.0f).substr(0, 5) + L" %");
 		else
 			pUIManager->m_pInfoDamage->SetString(to_wstring(100.0f * pUserInfo->AttackRate).substr(0, 5) + L" %");
 		pUIManager->m_pInfoSP->SetString(to_wstring(m_statPoint));
@@ -1047,15 +1069,20 @@ void PlayerController::Possess(GameObject* pObject) noexcept
 		pPlayer->SendPhysicsInfo();
 		if (pPlayer->m_pEffectFly != nullptr)
 			ObjectManager::Get().DisableObject(pPlayer->m_pEffectFly);
+		if(pPlayer->m_pEffectBerserk != nullptr)
+			ObjectManager::Get().DisableObject(pPlayer->m_pEffectBerserk);
 
 		pPlayer->ResetOption();
 		pPlayer->UpdateStatus();
 		pPlayer->SetState(EPlayerState::Basic);
+
 		pPlayer->m_curDelayDash = 0.0f;
 		pPlayer->m_curDelayLSkill = 0.0f;
 		pPlayer->m_curDelayRSkill = 0.0f;
 		pPlayer->m_chargeCount = 0.0f;
 		pPlayer->m_berserkFrame = 0.0f;
+		pPlayer->m_motionBuff = 0.0f;
+		pPlayer->m_cooltimeBuff = 0.0f;
 		// »óÅÂÃ¢
 		UIManager::Get().m_pInfoName->SetString(PacketManager::Get().pMyInfo->UserID);
 		UIManager::Get().m_pInfoTitle->SetString(pObj->m_myName);

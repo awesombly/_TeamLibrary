@@ -26,7 +26,7 @@ bool IntroScene::Init() noexcept
 bool IntroScene::Frame() noexcept
 {
 	// Click
-	if (Input::GetKeyState(EMouseButton::Left) == EKeyState::DOWN)
+	if (Input::GetKeyState(VK_LBUTTON) == EKeyState::DOWN)
 	{
 		SoundManager::Get().Play("SE_Click01.mp3");
 	}
@@ -490,7 +490,6 @@ void IntroScene::SetObjects() noexcept
 	pCollider = new Collider(6.0f);
 	pHeroObj->SetScale(Vector3::One * 0.75f);
 	pHeroObj->AddComponent({ pCollider, pRenderer });
-	pHeroObj->SetHP(100.0f);
 	pCollider->m_pivot = Vector3::Up * 6.0f + Vector3::Forward * 2.5f;
 	//pCollider->SetGravityScale(0.5f);
 	pCollider->CollisionEvent = MyEvent::DaggerHit;

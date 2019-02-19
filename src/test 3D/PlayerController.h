@@ -54,6 +54,7 @@ private:
 
 	GameObject* m_pTargetEnemy	= nullptr;
 	GameObject*	m_pEffectFly	= nullptr;
+	GameObject*	m_pEffectBerserk= nullptr;
 	bool		m_inputCombo	= false;
 	char		m_comboCount	= 0;
 	///
@@ -64,10 +65,10 @@ private:
 	const float	JumpPower = 210.0f;
 public:
 	map<int, void(*)(PlayerController*, void*)> m_ItemList;
-	UIManager*  pUIManager		= nullptr;
-	EAction		m_eAction;				// 눌린 애니메이션
-	ECharacter  m_curCharacter = ECharacter::EDummy;	// 현재 캐릭터
-	ECharacter  m_selectCharacter = ECharacter::EDummy;
+	UIManager*  pUIManager			= nullptr;
+	EAction		m_eAction;									// 눌린 애니메이션
+	ECharacter  m_curCharacter		= ECharacter::EDummy;	// 현재 캐릭터
+	ECharacter  m_selectCharacter	= ECharacter::EDummy;
 
 	float		m_NeedEXP			= 1.0f;
 	UCHAR		m_statPoint			= 0;
@@ -94,6 +95,9 @@ public:
 	char		m_defencePoint		 = 0;
 	float		m_chargeCount		 = 0.0f;
 	float		m_berserkFrame		 = 0.0f;
+	float		m_motionBuff		 = 0.0f;
+	char		m_cooltimeBuff		 = 0;
+
 	float		m_maxMP				 = 1.0f;
 	float		m_curMP				 = 0.0f;
 	float		m_disMP				 = 0.0f;
@@ -103,7 +107,7 @@ public:
 	const float SoundRange			 = 302500.0f;
 public:
 	GameObject* m_pHome			 = nullptr;
-	const float HomeRadius		 = 12000.0f;
+	const float HomeRadius		 = 15000.0f;
 
 	D3DXVECTOR3 m_CarpetPos[4];
 	bool		m_canChurh = false;
@@ -113,7 +117,7 @@ public:
 	UCHAR		m_upgradeAcce1 = 0;
 	UCHAR		m_upgradeAcce2 = 0;
 
-	int			m_money;
+	int			m_money = 0;
 private:
 	void SendGiantMode(const float& spf)											noexcept;
 public:

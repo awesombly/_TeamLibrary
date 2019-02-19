@@ -103,11 +103,11 @@ void Physics::HealHP(const float& value) noexcept
 
 void Physics::SetHP(const float& value) noexcept
 {
-	m_pPhysics->m_curHP = m_pPhysics->m_disHP = max(value, 0.0f);
-	if (value > m_pPhysics->m_maxHP)
-	{
-		m_pPhysics->m_maxHP = value;
-	}
+	m_pPhysics->m_curHP = m_pPhysics->m_maxHP = m_pPhysics->m_disHP = max(value, 0.0f);
+	//if (value > m_pPhysics->m_maxHP)
+	//{
+	//	m_pPhysics->m_maxHP = value;
+	//}
 }
 
 const float& Physics::GetHP() const noexcept

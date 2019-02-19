@@ -11,7 +11,8 @@ bool GameScene::Init() noexcept
 	LoadUI();
 	m_pPlayer = &PlayerController::Get();
 	PlayerController::Get().Init();
-	m_pPlayer->SetPosition(Vector3::Up * 100.0f + Vector3::Backward * 50.0f);
+	m_pPlayer->SetPosition(Vector3::Up * 450.0f + Vector3::Backward * 750.0f);
+	m_pPlayer->SetRotation(Quaternion::Up * 0.45f);
 	FirstInit();
 	ObjectManager::KeyCount = 1000;
 
