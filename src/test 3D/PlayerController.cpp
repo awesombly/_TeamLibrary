@@ -1179,15 +1179,15 @@ void PlayerController::CheckTownCollision() noexcept
 				pUIManager->m_pSmithyBtnAcce2->SetString(to_wstring((m_upgradeAcce2 + 1) * 5000) + L" KG");
 
 				pUIManager->m_pSmithyInfo1Weapon->SetString(L"Level " + to_wstring(m_upgradeWeapon) + L" ¡æ Level " + to_wstring(m_upgradeWeapon + 1));
-				pUIManager->m_pSmithyInfo2Weapon->SetString(L"Dmg " + to_wstring((m_upgradeWeapon) * 15) + L"% ¡æ " + to_wstring((m_upgradeWeapon + 1) * 15) + L"%");
+				pUIManager->m_pSmithyInfo2Weapon->SetString(L"Damage " + to_wstring((m_upgradeWeapon) * 15) + L"% ¡æ " + to_wstring((m_upgradeWeapon + 1) * 15) + L"%");
 
 				pUIManager->m_pSmithyInfo1Armor->SetString(L"Level " + to_wstring(m_upgradeArmor) + L" ¡æ Level " + to_wstring(m_upgradeArmor + 1));
-				pUIManager->m_pSmithyInfo2Armor->SetString(L"Arm " + to_wstring((1.0f - (5.0f / (5.0f + m_defencePoint + m_upgradeArmor))) * 100.0f).substr(0, 4) + L"% ¡æ " + to_wstring((1.0f - (5.0f / (5.0f + m_defencePoint + m_upgradeArmor + 1))) * 100.0f).substr(0, 4) + L"%"); 
+				pUIManager->m_pSmithyInfo2Armor->SetString(L"Armor " + to_wstring((1.0f - (5.0f / (5.0f + m_defencePoint + m_upgradeArmor))) * 100.0f).substr(0, 4) + L"% ¡æ " + to_wstring((1.0f - (5.0f / (5.0f + m_defencePoint + m_upgradeArmor + 1))) * 100.0f).substr(0, 4) + L"%"); 
 
 				pUIManager->m_pSmithyInfo1Acce1->SetString(L"Level " + to_wstring(m_upgradeAcce1) + L" ¡æ Level " + to_wstring(m_upgradeAcce1 + 1));
-				pUIManager->m_pSmithyInfo2Acce1->SetString(L"Cool " + to_wstring((1.0f - (5.0f / (5.0f + m_upgradeAcce1))) * 100.0f).substr(0, 4) + L"% ¡æ " + to_wstring((1.0f - (5.0f / (5.0f + m_upgradeAcce1 + 1))) * 100.0f).substr(0, 4) + L"%");
+				pUIManager->m_pSmithyInfo2Acce1->SetString(L"Cooltime " + to_wstring((1.0f - (5.0f / (5.0f + m_upgradeAcce1))) * 100.0f).substr(0, 4) + L"% ¡æ " + to_wstring((1.0f - (5.0f / (5.0f + m_upgradeAcce1 + 1))) * 100.0f).substr(0, 4) + L"%");
 
-				pUIManager->m_pSmithyInfo1Acce2->SetString(L"Level " + to_wstring(m_upgradeAcce1) + L" ¡æ Level " + to_wstring(m_upgradeAcce2 + 1));
+				pUIManager->m_pSmithyInfo1Acce2->SetString(L"Level " + to_wstring(m_upgradeAcce2) + L" ¡æ Level " + to_wstring(m_upgradeAcce2 + 1));
 				pUIManager->m_pSmithyInfo2Acce2->SetString(L"All Stat " + to_wstring(m_upgradeAcce2) + L" ¡æ " + to_wstring(m_upgradeAcce2 + 1));
 			}	break;
 			case ECarpet::Church:

@@ -464,7 +464,6 @@ void IntroScene::SetObjects() noexcept
 	pCollider->m_eTagArray[ETag::Dummy] = false;
 	pCollider->m_eTagArray[ETag::Ally] = false;
 	pCollider->m_eTagArray[ETag::Enemy] = false;
-	//pCollider->CollisionEvent = MyEvent::MissileCollision;
 	ObjectManager::Get().SetProtoObject(pHeroObj);
 
 	// ÇÙ

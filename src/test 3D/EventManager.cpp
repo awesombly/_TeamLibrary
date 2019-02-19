@@ -729,7 +729,11 @@ namespace DyingEvent {
 		pItem->SetPosition(pCollider->m_pParent->GetPosition());
 		pItem->SetScale(Vector3::One * 1.5f);
 		pItem->m_pPhysics->UserSocket = killUser;
-		pItem->m_pPhysics->m_damage = 0.75f * PacketManager::Get().UserList[killUser]->AttackRate;		
+		auto finder = PacketManager::Get().UserList.find(killUser);
+		if(finder == PacketManager::Get().UserList.end())
+			pItem->m_pPhysics->m_damage = 0.75f;
+		else
+			pItem->m_pPhysics->m_damage = 0.75f * finder->second->AttackRate;
 
 		//ObjectManager::Get().DisableObject(pCollider->m_pParent);
 		SoundManager::Get().PlayQueue("SE_bomb.mp3", pCollider->m_pParent->GetPosition(), PlayerController::Get().SoundRange);

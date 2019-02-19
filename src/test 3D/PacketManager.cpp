@@ -270,7 +270,7 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 						pItem->SetPosition(TowerPos[index] + Vector3::Up * 250.0f);
 						//pItem->SetRotation(pObject->GetRotation());
 						pItem->SetScale(Vector3::One);
-						pItem->SetForce((iter->GetPosition() - TowerPos[index] - Vector3::Up * 250.0f) + Vector3::Up * 20.0f);
+						pItem->SetForce((iter->GetPosition() - TowerPos[index] - Vector3::Up * 250.0f) * 1.2f + Vector3::Up * 20.0f);
 						pItem->m_pPhysics->m_damage = TowerDamage;
 						pItem->m_pPhysics->UserSocket = ESocketType::EDummy;
 
@@ -279,7 +279,7 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 						pItem->SetPosition(TowerPos[index] + Vector3::Up * 250.0f);
 						//pItem->SetRotation(pObject->GetRotation());
 						pItem->SetScale(Vector3::One);
-						pItem->SetForce((iter->GetPosition() - TowerPos[index] - Vector3::Up * 250.0f) + Vector3::Up * 20.0f);
+						pItem->SetForce((iter->GetPosition() - TowerPos[index] - Vector3::Up * 250.0f) * 1.2f + Vector3::Up * 20.0f);
 						pItem->m_pPhysics->m_damage = TowerDamage;
 						pItem->m_pPhysics->UserSocket = ESocketType::EDummy;
 						break;
