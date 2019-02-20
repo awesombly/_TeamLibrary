@@ -2,7 +2,7 @@
 ../../data/ui/Item/Bomb1.jpg Bomb1
 ../../data/ui/Item/Bomb2.jpg Bomb2
 ../../data/ui/Item/Bomb3.jpg Bomb3
-../../data/ui/Item/Bomb4.jpg Bomb4
+../../data/ui/Item/LandMine.jpg LandMine
 ../../data/ui/Item/Barge.png Barge
 ../../data/ui/Item/Missile.jpg Missile
 ../../data/ui/Item/Nuclear.jpg Nuclear
