@@ -1,6 +1,6 @@
 #pragma once
 #include "AMesh.h"
-#include "AAseObj.h"
+//#include "AAseObj.h"
 #include <fstream>
 
 

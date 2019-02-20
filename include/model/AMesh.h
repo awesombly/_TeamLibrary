@@ -138,3 +138,13 @@ public:
 
 };
 
+class AAnimation
+{
+public:
+	D3DXMATRIX	Interpolate(AMesh* pMesh, D3DXMATRIX* matParents, float fFrameTick, AScene tScene);
+	D3DXMATRIX	Update(float fElapseTime, AMesh* pMesh, D3DXMATRIX &matWorld, AScene &tScene);
+	bool		GetAnimationTrack(float fFrame, vector<AAnimTrack*>& pTrackList, AAnimTrack** pStartTrack, AAnimTrack** pEndTrack);
+public:
+	AAnimation(void);
+	virtual ~AAnimation(void);
+};

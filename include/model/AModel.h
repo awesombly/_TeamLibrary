@@ -47,14 +47,10 @@ protected:
 	int					m_iMatrixIndex;
 
 public:
-	//A_Box                       m_CollsionBox;
-	//A_Box						m_InitBox;
-	//A_Sphere                    m_Sphere;
-	//A_Plane                     m_Plane;
 	float						m_fTickSpeed;
 	AScene						 m_Scene;
 
-	//D3DXMATRIX				m_matLocal;	// c0						
+	//D3DXMATRIX			m_matLocal;	// c0						
 	D3DXMATRIX*				m_matView;	// c4						
 	D3DXMATRIX*				m_matProj;	// c8	
 

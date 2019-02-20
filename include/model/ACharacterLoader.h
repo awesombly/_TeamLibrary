@@ -1,5 +1,6 @@
 #pragma once
-#include "AAseParser.h"
+#include "AAseObjStd.h"
+
 
 class ACharacterLoader
 {

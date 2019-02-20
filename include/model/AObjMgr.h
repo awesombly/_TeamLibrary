@@ -1,9 +1,6 @@
 #pragma once
-#include "AAseObj.h"
-#include "kkbObj.h"
 #include "ASkinObj.h"
 #include "ABoneObj.h"
-
 
 
 
@@ -18,9 +15,6 @@ private:
 
 
 public:
-	//int			LoadObj(ID3D11Device* pd3dDevice,
-	//	const TCHAR* strFileName,
-	//	const TCHAR* strShaderName, bool bThread = false);
 
 	int			LoadObj(ID3D11Device* pd3dDevice,
 		ID3D11DeviceContext* pContext,
