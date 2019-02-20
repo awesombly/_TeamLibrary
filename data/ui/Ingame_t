@@ -3338,40 +3338,6 @@
 ^vpEventClick 
 
 ^Type 788
-^NodeName Shop_Item2_Back
-^ParentName Shop_Panel
-^KeyState 135 135
-^bRender 1
-^Position 45.000000 80.000000 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 35.000000 35.000000 1.000000
-^Color 1.000000 1.000000 1.000000 1.000000
-^tx_Normal black_wdim10.png
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick 
-
-^Type 788
-^NodeName Shop_Item2
-^ParentName Shop_Item2_Back
-^KeyState 135 135
-^bRender 1
-^Position 0.000000 0.000000 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 27.000000 27.000000 1.000000
-^Color 1.000000 1.000000 1.000000 1.000000
-^tx_Normal Bomb3.jpg
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick 
-
-^Type 788
 ^NodeName Shop_Item1_Back
 ^ParentName Shop_Panel
 ^KeyState 135 135
@@ -3398,6 +3364,40 @@
 ^Scale 27.000000 27.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
 ^tx_Normal Bomb2.jpg
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName Shop_Item2_Back
+^ParentName Shop_Panel
+^KeyState 135 135
+^bRender 1
+^Position 45.000000 80.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 35.000000 35.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_Normal black_wdim10.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName Shop_Item2
+^ParentName Shop_Item2_Back
+^KeyState 135 135
+^bRender 1
+^Position 0.000000 0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 27.000000 27.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_Normal Bomb3.jpg
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -3499,7 +3499,7 @@
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 27.000000 27.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
-^tx_Normal Potion.png
+^tx_Normal Barge.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -3598,7 +3598,7 @@
 ^vpEventClick 
 
 ^Type 783
-^NodeName Shop_Item2_Btn
+^NodeName Shop_Item1_Btn
 ^ParentName Shop_Panel
 ^KeyState 135 135
 ^bRender 1
@@ -3620,7 +3620,7 @@
 ^vpEventClick 
 
 ^Type 783
-^NodeName Shop_Item1_Btn
+^NodeName Shop_Item2_Btn
 ^ParentName Shop_Panel
 ^KeyState 135 135
 ^bRender 1
