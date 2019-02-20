@@ -66,6 +66,7 @@ bool PlayerStateBasic::Process(const float& spf) noexcept
 		{
 			m_pOwner->m_ItemList[UIManager::Get().m_pSlot1->m_pItem->m_pIndexList[0]](m_pOwner, nullptr);
 			UIManager::Get().m_pSlot1->DelItem();
+			m_pOwner->SetState(EPlayerState::Wait);
 			m_pOwner->m_DelayFrame = 1.0f;
 		}
 	}
@@ -75,6 +76,7 @@ bool PlayerStateBasic::Process(const float& spf) noexcept
 		{
 			m_pOwner->m_ItemList[UIManager::Get().m_pSlot2->m_pItem->m_pIndexList[0]](m_pOwner, nullptr);
 			UIManager::Get().m_pSlot2->DelItem();
+			m_pOwner->SetState(EPlayerState::Wait);
 			m_pOwner->m_DelayFrame = 1.0f;
 		}
 	}
@@ -84,6 +86,7 @@ bool PlayerStateBasic::Process(const float& spf) noexcept
 		{
 			m_pOwner->m_ItemList[UIManager::Get().m_pSlot3->m_pItem->m_pIndexList[0]](m_pOwner, nullptr);
 			UIManager::Get().m_pSlot3->DelItem();
+			m_pOwner->SetState(EPlayerState::Wait);
 			m_pOwner->m_DelayFrame = 1.0f;
 		}
 	}
@@ -95,7 +98,6 @@ bool PlayerStateBasic::Process(const float& spf) noexcept
 		m_pOwner->m_curMP >= 0.3f &&
 		!UIManager::Get().m_pMouseIcon->m_bRender)
 	{
-		m_pOwner->m_curMP -= 0.3f;
 		m_pOwner->m_curDelayLSkill = m_pOwner->m_DelayLSkill;
 		m_pOwner->SetState(EPlayerState::LSkill);
 		return true;
@@ -161,7 +163,7 @@ bool PlayerStateLSkill::Process(const float& spf) noexcept
 		static float forwardRate = 1.0f;
 		forwardRate = 1.0f;
 		if (Input::GetKeyState('W') == EKeyState::HOLD)
-			forwardRate = 1.5f;
+			forwardRate = 1.6f;
 		if (Input::GetKeyState('S') == EKeyState::HOLD)
 			forwardRate = 0.35f;
 		switch (m_pOwner->m_comboCount)
@@ -172,6 +174,7 @@ bool PlayerStateLSkill::Process(const float& spf) noexcept
 			++m_pOwner->m_comboCount;
 			m_pOwner->m_DelayFrame = 0.2f;
 			m_pOwner->GetParent()->AddForce(m_pOwner->GetParent()->GetForward() * 600.0f * forwardRate);
+			m_pOwner->m_curMP -= 0.3f;
 		}	break;
 		case 1:
 		{
@@ -189,7 +192,6 @@ bool PlayerStateLSkill::Process(const float& spf) noexcept
 				++m_pOwner->m_comboCount;
 				m_pOwner->m_eAction = PlayerController::EAction::LCharge1;
 				m_pOwner->m_DelayFrame = 0.35f;
-				m_pOwner->m_curMP -= 0.25f;
 			}
 			else
 			{
@@ -205,6 +207,7 @@ bool PlayerStateLSkill::Process(const float& spf) noexcept
 			++m_pOwner->m_comboCount;
 			m_pOwner->m_DelayFrame = 0.2f;
 			m_pOwner->GetParent()->AddForce(m_pOwner->GetParent()->GetForward() * 800.0f * forwardRate);
+			m_pOwner->m_curMP -= 0.25f;
 		}	break;
 		case 4:
 		{
@@ -223,7 +226,6 @@ bool PlayerStateLSkill::Process(const float& spf) noexcept
 				m_pOwner->m_eAction = PlayerController::EAction::LCharge2;
 				m_pOwner->m_DelayFrame = 0.6f;
 				m_pOwner->m_moveSpeed = 0.0f;
-				m_pOwner->m_curMP -= 0.25f;
 			}
 			else
 			{
@@ -239,6 +241,7 @@ bool PlayerStateLSkill::Process(const float& spf) noexcept
 			++m_pOwner->m_comboCount;
 			m_pOwner->m_DelayFrame = 0.2f;
 			m_pOwner->GetParent()->AddForce(m_pOwner->GetParent()->GetForward() * 1000.0f * forwardRate);
+			m_pOwner->m_curMP -= 0.25f;
 		}	break;
 		case 7:
 		{
@@ -369,7 +372,6 @@ bool PlayerStateGuard::Process(const float& spf) noexcept
 	return true;
 }
 
-
 // ´ë½¬
 void PlayerStateRun::StateInit(PlayerController* pOwner) noexcept
 {
@@ -420,6 +422,40 @@ bool PlayerStateRun::Process(const float& spf) noexcept
 	return true;
 }
 
+// ´ë±â
+void PlayerStateWait::StateInit(PlayerController* pOwner) noexcept
+{
+	m_pOwner = pOwner;
+}
+bool PlayerStateWait::Process(const float& spf) noexcept
+{
+	m_pOwner->m_DelayFrame -= (spf * PacketManager::Get().pMyInfo->MotionRate);
+	if (m_pOwner->m_DelayFrame <= 0.0f)
+	{
+		m_pOwner->SetState(EPlayerState::Basic);
+		return true;
+	}
+
+	m_pOwner->m_eAction = PlayerController::EAction::NIdle;
+	if (Input::GetKeyState('W') == EKeyState::HOLD)
+	{
+		m_pOwner->m_eAction = (PlayerController::EAction)(m_pOwner->m_eAction + PlayerController::EAction::NForward);
+	}
+	if (Input::GetKeyState('S') == EKeyState::HOLD)
+	{
+		m_pOwner->m_eAction = (PlayerController::EAction)(m_pOwner->m_eAction + PlayerController::EAction::NBackward);
+	}
+	if (Input::GetKeyState('A') == EKeyState::HOLD)
+	{
+		m_pOwner->m_eAction = (PlayerController::EAction)(m_pOwner->m_eAction + PlayerController::EAction::NLeft);
+	}
+	if (Input::GetKeyState('D') == EKeyState::HOLD)
+	{
+		m_pOwner->m_eAction = (PlayerController::EAction)(m_pOwner->m_eAction + PlayerController::EAction::NRight);
+	}
+	return true;
+}
+
 
 /// ============================= ±Ã¼ö ===================================
 
@@ -460,6 +496,7 @@ bool ArcherStateBasic::Process(const float& spf) noexcept
 		{
 			m_pOwner->m_ItemList[UIManager::Get().m_pSlot1->m_pItem->m_pIndexList[0]](m_pOwner, nullptr);
 			UIManager::Get().m_pSlot1->DelItem();
+			m_pOwner->SetState(EPlayerState::Wait);
 			m_pOwner->m_DelayFrame = 1.0f;
 		}
 	}
@@ -469,6 +506,7 @@ bool ArcherStateBasic::Process(const float& spf) noexcept
 		{
 			m_pOwner->m_ItemList[UIManager::Get().m_pSlot2->m_pItem->m_pIndexList[0]](m_pOwner, nullptr);
 			UIManager::Get().m_pSlot2->DelItem();
+			m_pOwner->SetState(EPlayerState::Wait);
 			m_pOwner->m_DelayFrame = 1.0f;
 		}
 	}
@@ -478,6 +516,7 @@ bool ArcherStateBasic::Process(const float& spf) noexcept
 		{
 			m_pOwner->m_ItemList[UIManager::Get().m_pSlot3->m_pItem->m_pIndexList[0]](m_pOwner, nullptr);
 			UIManager::Get().m_pSlot3->DelItem();
+			m_pOwner->SetState(EPlayerState::Wait);
 			m_pOwner->m_DelayFrame = 1.0f;
 		}
 	}
@@ -501,14 +540,16 @@ bool ArcherStateBasic::Process(const float& spf) noexcept
 		m_pOwner->m_pParent->isGround() &&
 		m_pOwner->m_curDelayDash <= 0.0f)
 	{
-		m_pOwner->m_curDelayDash = m_pOwner->m_DelayDash;
-
-		m_pOwner->m_eAction = PlayerController::EAction::Dash;
-		if (Input::GetKeyState('A') == EKeyState::HOLD)
-			m_pOwner->m_eAction = PlayerController::EAction::DashLeft;
-		if (Input::GetKeyState('D') == EKeyState::HOLD)
-			m_pOwner->m_eAction = PlayerController::EAction::DashRight;
 		m_pOwner->SetState(EPlayerState::Dash);
+		return true;
+	}
+
+	// ´ýºí¸µ
+	if (Input::GetKeyState(VK_SPACE) == EKeyState::DOWN &&
+		m_pOwner->m_pParent->isGround() &&
+		m_pOwner->m_curDelayDash <= 0.0f)
+	{
+		m_pOwner->SetState(EPlayerState::Special);
 		return true;
 	}
 
@@ -516,7 +557,6 @@ bool ArcherStateBasic::Process(const float& spf) noexcept
 	if (Input::GetKeyState(VK_RBUTTON) == EKeyState::DOWN &&
 		m_pOwner->m_curDelayRSkill <= 0.0f)
 	{
-		m_pOwner->m_curDelayRSkill = m_pOwner->m_DelayRSkill;
 		m_pOwner->SetState(EPlayerState::RSkill);
 		return true;
 	}
@@ -625,7 +665,8 @@ void ArcherStateRSkill::StateInit(PlayerController* pOwner) noexcept
 	m_pOwner = pOwner;
 	m_pOwner->m_eAction = PlayerController::EAction::RSkill;
 	m_pOwner->m_DelayFrame = 0.35f;
-	m_pOwner->m_moveSpeed *= 0.4f;
+	m_pOwner->m_moveSpeed *= 0.3f;
+	m_pOwner->m_curDelayRSkill = m_pOwner->m_DelayRSkill;
 }
 bool ArcherStateRSkill::Process(const float& spf) noexcept
 {
@@ -633,7 +674,7 @@ bool ArcherStateRSkill::Process(const float& spf) noexcept
 	if (m_pOwner->m_DelayFrame <= 0.0f)
 	{
 		m_pOwner->SetState(EPlayerState::Wait);
-		m_pOwner->m_eAction = PlayerController::EAction::Special;
+		m_pOwner->m_eAction = PlayerController::EAction::Attack2;
 		m_pOwner->m_DelayFrame = 0.65f;
 		return true;
 	}
@@ -664,6 +705,22 @@ void ArcherStateDash::StateInit(PlayerController* pOwner) noexcept
 	m_pOwner = pOwner;
 	m_pOwner->m_DelayFrame = 1.25f;
 	//m_pOwner->m_moveSpeed *= 0.15f;
+	m_pOwner->m_curDelayDash = m_pOwner->m_DelayDash;
+
+	if (Input::GetKeyState('A') == EKeyState::HOLD)
+	{
+		m_pOwner->GetParent()->SetForce((Normalize(m_pOwner->GetParent()->GetForward() + m_pOwner->GetParent()->GetLeft() * 0.5f) * m_pOwner->m_moveSpeed * 2.2f + Vector3::Up * 90.0f));
+		m_pOwner->m_eAction = PlayerController::EAction::DashLeft;
+		return;
+	}
+	if (Input::GetKeyState('D') == EKeyState::HOLD)
+	{
+		m_pOwner->GetParent()->SetForce((Normalize(m_pOwner->GetParent()->GetForward() + m_pOwner->GetParent()->GetRight() * 0.5f) * m_pOwner->m_moveSpeed * 2.2f + Vector3::Up * 90.0f));
+		m_pOwner->m_eAction = PlayerController::EAction::DashRight;
+		return;
+	}
+	m_pOwner->m_eAction = PlayerController::EAction::Dash;
+	m_pOwner->GetParent()->SetForce((Normalize(m_pOwner->GetParent()->GetForward()) * m_pOwner->m_moveSpeed * 2.2f + Vector3::Up * 90.0f));
 }
 bool ArcherStateDash::Process(const float& spf) noexcept
 {
@@ -671,6 +728,7 @@ bool ArcherStateDash::Process(const float& spf) noexcept
 	if (m_pOwner->m_DelayFrame <= 0.0f)
 	{
 		m_pOwner->SetState(EPlayerState::Wait);
+		m_pOwner->m_eAction = PlayerController::EAction::Wait;
 		return true;
 	}
 
@@ -694,11 +752,62 @@ bool ArcherStateDash::Process(const float& spf) noexcept
 	return true;
 }
 
+// ´ýºí¸µ
+void ArcherStateTumbling::StateInit(PlayerController* pOwner) noexcept
+{
+	m_pOwner = pOwner;
+	m_pOwner->m_DelayFrame = 1.55f;
+	m_pOwner->m_eAction = PlayerController::EAction::Special;
+	m_pOwner->m_curDelayDash = m_pOwner->m_DelayDash;
+	m_pOwner->m_moveSpeed *= 0.3f;
+	m_pOwner->m_comboCount = 5;
+	m_pOwner->GetParent()->SetForce(m_pOwner->GetParent()->GetBackward() * m_pOwner->m_moveSpeed * 3.0f + Vector3::Up * 300.0f);
+}
+bool ArcherStateTumbling::Process(const float& spf) noexcept
+{
+	if (Input::GetKeyState(VK_LBUTTON) == EKeyState::DOWN &&
+		m_pOwner->m_comboCount >= 1)
+	{
+		m_pOwner->m_curMP = max(m_pOwner->m_curMP - 0.1f, 0.0f);
+		--m_pOwner->m_comboCount;
+		m_pOwner->m_eAction = PlayerController::EAction::Special2;
+		return true;
+	}
+
+	m_pOwner->m_DelayFrame -= spf;// *PacketManager::Get().pMyInfo->MotionRate;
+	if (m_pOwner->m_DelayFrame <= 0.0f)
+	{
+		m_pOwner->UpdateStatus();
+		PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
+		m_pOwner->SetState(EPlayerState::Wait);
+		m_pOwner->m_eAction = PlayerController::EAction::Wait;
+		return true;
+	}
+
+	m_pOwner->m_eAction = PlayerController::EAction::NIdle;
+	if (Input::GetKeyState('W') == EKeyState::HOLD)
+	{
+		m_pOwner->m_eAction = (PlayerController::EAction)(m_pOwner->m_eAction + PlayerController::EAction::NForward);
+	}
+	if (Input::GetKeyState('S') == EKeyState::HOLD)
+	{
+		m_pOwner->m_eAction = (PlayerController::EAction)(m_pOwner->m_eAction + PlayerController::EAction::NBackward);
+	}
+	if (Input::GetKeyState('A') == EKeyState::HOLD)
+	{
+		m_pOwner->m_eAction = (PlayerController::EAction)(m_pOwner->m_eAction + PlayerController::EAction::NLeft);
+	}
+	if (Input::GetKeyState('D') == EKeyState::HOLD)
+	{
+		m_pOwner->m_eAction = (PlayerController::EAction)(m_pOwner->m_eAction + PlayerController::EAction::NRight);
+	}
+	return true;
+}
+
 // ´ë±â
 void ArcherStateWait::StateInit(PlayerController* pOwner) noexcept
 {
 	m_pOwner = pOwner;
-	m_pOwner->m_eAction = PlayerController::EAction::Wait;
 }
 bool ArcherStateWait::Process(const float& spf) noexcept
 {
@@ -769,6 +878,7 @@ bool MageStateBasic::Process(const float& spf) noexcept
 		{
 			m_pOwner->m_ItemList[UIManager::Get().m_pSlot1->m_pItem->m_pIndexList[0]](m_pOwner, nullptr);
 			UIManager::Get().m_pSlot1->DelItem();
+			m_pOwner->SetState(EPlayerState::Wait);
 			m_pOwner->m_DelayFrame = 1.0f;
 		}
 	}
@@ -778,6 +888,7 @@ bool MageStateBasic::Process(const float& spf) noexcept
 		{
 			m_pOwner->m_ItemList[UIManager::Get().m_pSlot2->m_pItem->m_pIndexList[0]](m_pOwner, nullptr);
 			UIManager::Get().m_pSlot2->DelItem();
+			m_pOwner->SetState(EPlayerState::Wait);
 			m_pOwner->m_DelayFrame = 1.0f;
 		}
 	}
@@ -787,6 +898,7 @@ bool MageStateBasic::Process(const float& spf) noexcept
 		{
 			m_pOwner->m_ItemList[UIManager::Get().m_pSlot3->m_pItem->m_pIndexList[0]](m_pOwner, nullptr);
 			UIManager::Get().m_pSlot3->DelItem();
+			m_pOwner->SetState(EPlayerState::Wait);
 			m_pOwner->m_DelayFrame = 1.0f;
 		}
 	}
@@ -797,7 +909,6 @@ bool MageStateBasic::Process(const float& spf) noexcept
 		m_pOwner->m_curMP >= 0.3f &&
 		!UIManager::Get().m_pMouseIcon->m_bRender)
 	{
-		m_pOwner->m_curMP -= 0.3f;
 		m_pOwner->SetState(EPlayerState::LSkill);
 		return true;
 	}
@@ -853,6 +964,7 @@ bool MageStateLSkill::Process(const float& spf) noexcept
 			++m_pOwner->m_comboCount;
 			m_pOwner->m_eAction = PlayerController::EAction::Attack;
 			m_pOwner->m_DelayFrame = 0.8f;
+			m_pOwner->m_curMP -= 0.3f;
 		}	break;
 		case 1:
 		{
@@ -864,7 +976,6 @@ bool MageStateLSkill::Process(const float& spf) noexcept
 				m_pOwner->m_eAction = PlayerController::EAction::LCharge1;
 				m_pOwner->m_DelayFrame = 0.8f;
 				m_pOwner->m_moveSpeed *= 0.4f;
-				m_pOwner->m_curMP -= 0.3f;
 			}
 			else
 			{
@@ -888,6 +999,7 @@ bool MageStateLSkill::Process(const float& spf) noexcept
 			++m_pOwner->m_comboCount;
 			m_pOwner->m_eAction = PlayerController::EAction::LCharging;
 			m_pOwner->m_DelayFrame = 0.25f;
+			m_pOwner->m_curMP -= 0.12f;
 		}	break;
 		case 6:
 		{
@@ -898,8 +1010,7 @@ bool MageStateLSkill::Process(const float& spf) noexcept
 				++m_pOwner->m_comboCount;
 				m_pOwner->m_eAction = PlayerController::EAction::LCharge2;
 				m_pOwner->m_DelayFrame = 1.1f;
-				m_pOwner->m_moveSpeed *= 0.3f;
-				m_pOwner->m_curMP -= 0.3f;
+				m_pOwner->m_moveSpeed = 0.0f;
 			}
 			else
 			{
@@ -914,6 +1025,7 @@ bool MageStateLSkill::Process(const float& spf) noexcept
 			++m_pOwner->m_comboCount;
 			m_pOwner->m_eAction = PlayerController::EAction::ChargeAttack2;
 			m_pOwner->m_DelayFrame = 1.05f;
+			m_pOwner->m_curMP -= 0.3f;
 		}	break;
 		case 8:
 		{
@@ -1015,6 +1127,40 @@ bool MageStateDash::Process(const float& spf) noexcept
 		m_pOwner->m_eAction = PlayerController::EAction::Special3;
 		m_pOwner->m_curDelayDash = m_pOwner->m_DelayDash;
 		m_pOwner->m_DelayFrame = 0.8f;
+		return true;
+	}
+
+	m_pOwner->m_eAction = PlayerController::EAction::NIdle;
+	if (Input::GetKeyState('W') == EKeyState::HOLD)
+	{
+		m_pOwner->m_eAction = (PlayerController::EAction)(m_pOwner->m_eAction + PlayerController::EAction::NForward);
+	}
+	if (Input::GetKeyState('S') == EKeyState::HOLD)
+	{
+		m_pOwner->m_eAction = (PlayerController::EAction)(m_pOwner->m_eAction + PlayerController::EAction::NBackward);
+	}
+	if (Input::GetKeyState('A') == EKeyState::HOLD)
+	{
+		m_pOwner->m_eAction = (PlayerController::EAction)(m_pOwner->m_eAction + PlayerController::EAction::NLeft);
+	}
+	if (Input::GetKeyState('D') == EKeyState::HOLD)
+	{
+		m_pOwner->m_eAction = (PlayerController::EAction)(m_pOwner->m_eAction + PlayerController::EAction::NRight);
+	}
+	return true;
+}
+
+// ´ë±â
+void MageStateWait::StateInit(PlayerController* pOwner) noexcept
+{
+	m_pOwner = pOwner;
+}
+bool MageStateWait::Process(const float& spf) noexcept
+{
+	m_pOwner->m_DelayFrame -= (spf * PacketManager::Get().pMyInfo->MotionRate);
+	if (m_pOwner->m_DelayFrame <= 0.0f)
+	{
+		m_pOwner->SetState(EPlayerState::Basic);
 		return true;
 	}
 

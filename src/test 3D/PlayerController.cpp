@@ -1,6 +1,6 @@
 #include "PlayerController.h"
 #include "AHeroObj.h"
-#include "Collider.h"
+#include "ColliderOBB.h"
 #include "ObjectManager.h"
 #include "PacketManager.h"
 #include "SoundManager.h"
@@ -18,7 +18,7 @@ bool PlayerController::Init() noexcept
 	}
 	auto& ItemIndex = JItem::Get()->m_pItemList;
 	// ÅÛ ¼³Á¤
-	m_ItemList[ItemIndex[L"Berry_0"]] = ActiveEvent::ShockWave;
+	/*m_ItemList[ItemIndex[L"Berry_0"]] = ActiveEvent::ShockWave;
 	m_ItemList[ItemIndex[L"Berry_1"]] = ActiveEvent::ShockWave;
 	m_ItemList[ItemIndex[L"Book_0"]] = ActiveEvent::ShockWave;
 	m_ItemList[ItemIndex[L"Book_1"]] = ActiveEvent::ThrowShockBoom;
@@ -47,7 +47,17 @@ bool PlayerController::Init() noexcept
 	m_ItemList[ItemIndex[L"Potion_0"]] = ActiveEvent::UsePotion;
 	m_ItemList[ItemIndex[L"Potion_1"]] = ActiveEvent::ThrowNuclear;
 	m_ItemList[ItemIndex[L"Wood_0"]] = ActiveEvent::ThrowNuclear;
-	m_ItemList[ItemIndex[L"Wood_1"]] = ActiveEvent::ThrowNuclear;
+	m_ItemList[ItemIndex[L"Wood_1"]] = ActiveEvent::ThrowNuclear;*/
+
+	m_ItemList[ItemIndex[L"Book_0"]] = ActiveEvent::ShockWave;
+	m_ItemList[ItemIndex[L"Ball_0"]] = ActiveEvent::ThrowBomb;
+	m_ItemList[ItemIndex[L"Ball_1"]] = ActiveEvent::ThrowTimeBomb;
+	m_ItemList[ItemIndex[L"Gems_0"]] = ActiveEvent::ThrowShockBoom;
+	m_ItemList[ItemIndex[L"MetalCase_0"]] = ActiveEvent::ThrowMissile;
+	m_ItemList[ItemIndex[L"Parchment_0"]] = ActiveEvent::ThrowNuclear;
+	m_ItemList[ItemIndex[L"Stone_1"]] = ActiveEvent::ThrowMine;
+	m_ItemList[ItemIndex[L"Potion_0"]] = ActiveEvent::UsePotion;
+	m_ItemList[ItemIndex[L"Wood_0"]] = ActiveEvent::ThrowBarricade;
 	return true;
 }
 
@@ -62,8 +72,8 @@ bool PlayerController::Frame(const float& spf, const float& accTime)	noexcept
 	{
 		m_pParent->HealHP(spf * m_RegenHP);
 		// HP, MP ¹Ù
-		m_pParent->m_pPhysics->m_disHP = max<float>(m_pParent->m_pPhysics->m_disHP - spf * 0.5f * m_pParent->GetHP(), m_pParent->GetHP());
-		m_disMP = max<float>(m_disMP - spf * 0.5f * m_curMP, m_curMP);
+		m_pParent->m_pPhysics->m_disHP = max<float>(m_pParent->m_pPhysics->m_disHP - spf * m_pParent->m_pPhysics->m_maxHP, m_pParent->GetHP());
+		m_disMP = max<float>(m_disMP - spf * m_maxMP, m_curMP);
 
 		PlayerInput(spf);
 		CheckTownCollision();
@@ -239,7 +249,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 			auto pItem = ObjectManager::Get().TakeObject(L"EBerserk");
 			pItem->SetPosition(pObject->GetPosition() + pObject->GetUp() * 60.0f);
 
-			pObject->SetDamage(0.35f * PacketManager::Get().UserList[socket]->AttackRate);
+			pObject->SetDamage(0.2f * PacketManager::Get().UserList[socket]->AttackRate);
 			pObject->GetCollider()->CollisionEvent = MyEvent::BerserkMode;
 
 			pItem = ObjectManager::Get().TakeObject(L"EFire");
@@ -291,7 +301,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 		case EAction::ShockWave:
 		{
 			// Ãæ°ÝÆÄ
-			pObject->SetANIM_OneTime(Paladin_POWERUP);
+			pObject->SetANIM_Loop(Paladin_POWERUP);
 			auto pItem = ObjectManager::Get().TakeObject(L"PShock");
 			pItem->SetPosition(pObject->GetPosition() + pObject->GetUp() * 100.0f);
 			pItem->SetScale(Vector3::One);
@@ -303,7 +313,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 		case EAction::ThrowBomb:
 		{
 			// ÆøÅº
-			pObject->SetANIM_OneTime(Paladin_THROW);
+			pObject->SetANIM_Loop(Paladin_THROW);
 			auto pItem = ObjectManager::Get().TakeObject(L"PBomb");
 			pItem->SetPosition(pObject->GetPosition() + pObject->GetForward() * 40.0f + pObject->GetUp() * 65.0f + pObject->GetRight() * 20.0f);
 			pItem->SetForce((forward * 0.6f + Vector3::Up) * 300.0f);
@@ -317,7 +327,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 		case EAction::ITimeBomb:
 		{
 			// ½ÃÇÑÆøÅº
-			pObject->SetANIM_OneTime(Paladin_THROW);
+			pObject->SetANIM_Loop(Paladin_THROW);
 			auto pItem = ObjectManager::Get().TakeObject(L"TimeBomb");
 			pItem->SetPosition(pObject->GetPosition() + pObject->GetForward() * 40.0f + pObject->GetUp() * 50.0f + pObject->GetRight() * 20.0f);
 			pItem->SetForce(forward * 90.0f);
@@ -329,7 +339,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 		case EAction::IShockBomb:
 		{
 			// Ãæ°ÝÆøÅº
-			pObject->SetANIM_OneTime(Paladin_THROW);
+			pObject->SetANIM_Loop(Paladin_THROW);
 			auto pItem = ObjectManager::Get().TakeObject(L"ShockBomb");
 			pItem->SetPosition(pObject->GetPosition() + pObject->GetForward() * 40.0f + pObject->GetUp() * 50.0f + pObject->GetRight() * 20.0f);
 			pItem->SetForce(forward * 350.0f);
@@ -340,7 +350,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 		case EAction::IMine:
 		{
 			// Áö·Ú
-			pObject->SetANIM_OneTime(Paladin_THROW);
+			pObject->SetANIM_Loop(Paladin_THROW);
 			auto pItem = ObjectManager::Get().TakeObject(L"Mine");
 			pItem->SetPosition(pObject->GetPosition() + pObject->GetForward() * 45.0f + pObject->GetUp() * 50.0f);
 			pItem->SetForce(forward * 30.0f);
@@ -351,7 +361,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 		case EAction::IMissile:
 		{
 			// ¹Ì»çÀÏ
-			pObject->SetANIM_OneTime(Paladin_POWERUP);
+			pObject->SetANIM_Loop(Paladin_POWERUP);
 			missileTarget = forward * 600.0f;
 			for (int i = 0; i < 13; ++i)
 			{
@@ -369,7 +379,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 		case EAction::INuclear:
 		{
 			// ÇÙ
-			pObject->SetANIM_OneTime(Paladin_THROW);
+			pObject->SetANIM_Loop(Paladin_THROW);
 			auto pItem = ObjectManager::Get().TakeObject(L"SkyShip");
 			pItem->SetPosition(pObject->GetPosition() + Vector3::Up * 800.0f + pObject->GetBackward() * 450.0f);
 			pItem->SetRotation(pObject->GetRotation());
@@ -381,9 +391,25 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 		case EAction::IPotion:
 		{
 			// ¹°¾à
-			pObject->SetANIM_OneTime(Paladin_THROW);
+			pObject->SetANIM_Loop(Paladin_THROW);
 			pObject->HealHP(pObject->GetHP() * 0.5f);
 			SoundManager::Get().Play("SE_drink.mp3");
+		}	break;
+		case EAction::IBarricade:
+		{
+			// ¹Ù¸®ÄÉÀÌµå
+			pObject->SetANIM_Loop(Paladin_THROW);
+			auto pItem = ObjectManager::Get().TakeObject(L"Barricade", false);
+			pItem->m_objType = EObjType::Character;
+			pItem->SetPosition(pObject->GetPosition() + pObject->GetForward() * 45.0f + pObject->GetUp() * 50.0f);
+			pItem->SetRotation(pObject->GetRotation());
+			auto pCollider = new ColliderOBB(-Vector3::One, Vector3::One);
+			pItem->AddComponent(pCollider);
+			pItem->SetHP(5.0f);
+			pItem->SetForce(forward * 50.0f);
+			//pItem->m_pPhysics->m_damage = 0.8f;
+			pItem->m_pPhysics->UserSocket = socket;
+			SoundManager::Get().PlayQueue("SE_dash.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
 		}	break;
 		}
 	}	break;
@@ -451,6 +477,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 			pItem->m_pPhysics->UserSocket = socket;
 			pItem->SetDamage(0.3f * PacketManager::Get().UserList[socket]->AttackRate);
 			pItem->GetCollider()->AddIgnoreList(pObject->GetCollider());
+			pItem->GetCollider()->CollisionEvent = MyEvent::ArrowHit;
 			//SoundManager::Get().Play("SV_archer_atk2.mp3");
 			SoundManager::Get().PlayQueue("SE_bow_shot.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
 		}	break;
@@ -485,9 +512,9 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 		case EAction::RSkill:
 		{
 			SoundManager::Get().PlayQueue("SV_archer_atk1.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
-			pObject->SetANIM_OneTime(Archer_THROW);
+			pObject->SetANIM_Loop(Archer_THROW);
 		}	break;
-		case EAction::Special:
+		case EAction::Attack2:
 		{
 			auto pItem = ObjectManager::Get().TakeObject(L"ArrowR");
 			pItem->SetPosition(pObject->GetPosition() + pObject->GetForward() * 40.0f + pObject->GetUp() * 50.0f);
@@ -511,6 +538,31 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 			auto pEffect = ObjectManager::Get().TakeObject(L"EPDust");
 			pEffect->SetPosition(pObject->GetPosition() + Vector3::Up * 30.0f);
 		}	break;
+		case EAction::Special:
+		{
+			pObject->SetHeroAnimSpeed(1.0f);
+			PacketManager::Get().UserList[socket]->MotionRate = 1.3f;
+			pObject->GetCollider()->m_eTagArray[ETag::Enemy] = false;
+			pObject->GetCollider()->m_eTagArray[ETag::Dummy] = false;
+			//
+			pObject->SetANIM_Loop(Archer_BACKDIVE);
+			SoundManager::Get().PlayQueue("SV_archer_atk2.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
+		}	break;
+		case EAction::Special2:
+		{
+			//pObject->SetANIM_Loop(Archer_AIM_SHOT);
+
+			auto pItem = ObjectManager::Get().TakeObject(L"Arrow");
+			pItem->SetPosition(pObject->GetPosition() + pObject->GetForward() * 40.0f + pObject->GetUp() * 35.0f + pObject->GetRight() * 15.0f);
+			pItem->SetRotation(pObject->GetRotation());
+			pItem->SetScale(Vector3::One * 3.0f);
+			pItem->SetForce(forward * 800.0f);
+			pItem->m_pPhysics->UserSocket = socket;
+			pItem->SetDamage(0.2f * PacketManager::Get().UserList[socket]->AttackRate);
+			pItem->GetCollider()->AddIgnoreList(pObject->GetCollider());
+			//SoundManager::Get().Play("SV_archer_atk2.mp3");
+			SoundManager::Get().PlayQueue("SE_bow_shot.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
+		}	break;
 		case EAction::Wait:
 		{
 			pObject->GetCollider()->m_eTagArray[ETag::Enemy] = true;
@@ -520,7 +572,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 		case EAction::ShockWave:
 		{
 			// Ãæ°ÝÆÄ
-			pObject->SetANIM_OneTime(Archer_THROW);
+			pObject->SetANIM_Loop(Archer_THROW);
 			auto pItem = ObjectManager::Get().TakeObject(L"PShock");
 			pItem->SetPosition(pObject->GetPosition() + pObject->GetUp() * 100.0f);
 			pItem->SetScale(Vector3::One);
@@ -532,7 +584,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 		case EAction::ThrowBomb:
 		{
 			// ÆøÅº
-			pObject->SetANIM_OneTime(Archer_THROW);
+			pObject->SetANIM_Loop(Archer_THROW);
 			auto pItem = ObjectManager::Get().TakeObject(L"PBomb");
 			pItem->SetPosition(pObject->GetPosition() + pObject->GetForward() * 40.0f + pObject->GetUp() * 65.0f + pObject->GetRight() * 20.0f);
 			pItem->SetForce((forward * 0.6f + Vector3::Up) * 300.0f);
@@ -546,7 +598,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 		case EAction::ITimeBomb:
 		{
 			// ½ÃÇÑÆøÅº
-			pObject->SetANIM_OneTime(Archer_THROW);
+			pObject->SetANIM_Loop(Archer_THROW);
 			auto pItem = ObjectManager::Get().TakeObject(L"TimeBomb");
 			pItem->SetPosition(pObject->GetPosition() + pObject->GetForward() * 40.0f + pObject->GetUp() * 50.0f + pObject->GetRight() * 20.0f);
 			pItem->SetForce(forward * 90.0f);
@@ -558,7 +610,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 		case EAction::IShockBomb:
 		{
 			// Ãæ°ÝÆøÅº
-			pObject->SetANIM_OneTime(Archer_THROW);
+			pObject->SetANIM_Loop(Archer_THROW);
 			auto pItem = ObjectManager::Get().TakeObject(L"ShockBomb");
 			pItem->SetPosition(pObject->GetPosition() + pObject->GetForward() * 40.0f + pObject->GetUp() * 50.0f + pObject->GetRight() * 20.0f);
 			pItem->SetForce(forward * 350.0f);
@@ -569,7 +621,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 		case EAction::IMine:
 		{
 			// Áö·Ú
-			pObject->SetANIM_OneTime(Archer_THROW);
+			pObject->SetANIM_Loop(Archer_THROW);
 			auto pItem = ObjectManager::Get().TakeObject(L"Mine");
 			pItem->SetPosition(pObject->GetPosition() + pObject->GetForward() * 45.0f + pObject->GetUp() * 50.0f);
 			pItem->SetForce(forward * 30.0f);
@@ -580,7 +632,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 		case EAction::IMissile:
 		{
 			// ¹Ì»çÀÏ
-			pObject->SetANIM_OneTime(Archer_THROW);
+			pObject->SetANIM_Loop(Archer_THROW);
 			missileTarget = forward * 600.0f;
 			for (int i = 0; i < 13; ++i)
 			{
@@ -598,7 +650,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 		case EAction::INuclear:
 		{
 			// ÇÙ
-			pObject->SetANIM_OneTime(Archer_THROW);
+			pObject->SetANIM_Loop(Archer_THROW);
 			auto pItem = ObjectManager::Get().TakeObject(L"SkyShip");
 			pItem->SetPosition(pObject->GetPosition() + Vector3::Up * 800.0f + pObject->GetBackward() * 562.5f);
 			pItem->SetRotation(pObject->GetRotation());
@@ -610,7 +662,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 		case EAction::IPotion:
 		{
 			// ¹°¾à
-			pObject->SetANIM_OneTime(Archer_THROW);
+			pObject->SetANIM_Loop(Archer_THROW);
 			pObject->HealHP(pObject->GetHP() * 0.5f);
 			SoundManager::Get().Play("SE_drink.mp3");
 		}	break;
@@ -750,7 +802,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 		case EAction::ShockWave:
 		{
 			// Ãæ°ÝÆÄ
-			pObject->SetANIM_OneTime(Mage_ATK_UD);
+			pObject->SetANIM_Loop(Mage_ATK_UD);
 			auto pItem = ObjectManager::Get().TakeObject(L"PShock");
 			pItem->SetPosition(pObject->GetPosition() + pObject->GetUp() * 100.0f);
 			pItem->SetScale(Vector3::One);
@@ -762,7 +814,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 		case EAction::ThrowBomb:
 		{
 			// ÆøÅº
-			pObject->SetANIM_OneTime(Mage_THROW);
+			pObject->SetANIM_Loop(Mage_THROW);
 			auto pItem = ObjectManager::Get().TakeObject(L"PBomb");
 			pItem->SetPosition(pObject->GetPosition() + pObject->GetForward() * 40.0f + pObject->GetUp() * 65.0f + pObject->GetRight() * 20.0f);
 			pItem->SetForce((forward * 0.6f + Vector3::Up) * 300.0f);
@@ -776,7 +828,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 		case EAction::ITimeBomb:
 		{
 			// ½ÃÇÑÆøÅº
-			pObject->SetANIM_OneTime(Mage_THROW);
+			pObject->SetANIM_Loop(Mage_THROW);
 			auto pItem = ObjectManager::Get().TakeObject(L"TimeBomb");
 			pItem->SetPosition(pObject->GetPosition() + pObject->GetForward() * 40.0f + pObject->GetUp() * 50.0f + pObject->GetRight() * 20.0f);
 			pItem->SetForce(forward * 90.0f);
@@ -788,7 +840,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 		case EAction::IShockBomb:
 		{
 			// Ãæ°ÝÆøÅº
-			pObject->SetANIM_OneTime(Mage_THROW);
+			pObject->SetANIM_Loop(Mage_THROW);
 			auto pItem = ObjectManager::Get().TakeObject(L"ShockBomb");
 			pItem->SetPosition(pObject->GetPosition() + pObject->GetForward() * 40.0f + pObject->GetUp() * 50.0f + pObject->GetRight() * 20.0f);
 			pItem->SetForce(forward * 350.0f);
@@ -799,7 +851,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 		case EAction::IMine:
 		{
 			// Áö·Ú
-			pObject->SetANIM_OneTime(Mage_THROW);
+			pObject->SetANIM_Loop(Mage_THROW);
 			auto pItem = ObjectManager::Get().TakeObject(L"Mine");
 			pItem->SetPosition(pObject->GetPosition() + pObject->GetForward() * 45.0f + pObject->GetUp() * 50.0f);
 			pItem->SetForce(forward * 30.0f);
@@ -810,7 +862,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 		case EAction::IMissile:
 		{
 			// ¹Ì»çÀÏ
-			pObject->SetANIM_OneTime(Mage_ATK_UD);
+			pObject->SetANIM_Loop(Mage_ATK_UD);
 			missileTarget = forward * 600.0f;
 			for (int i = 0; i < 13; ++i)
 			{
@@ -828,7 +880,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 		case EAction::INuclear:
 		{
 			// ÇÙ
-			pObject->SetANIM_OneTime(Mage_THROW);
+			pObject->SetANIM_Loop(Mage_THROW);
 			auto pItem = ObjectManager::Get().TakeObject(L"SkyShip");
 			pItem->SetPosition(pObject->GetPosition() + Vector3::Up * 800.0f + pObject->GetBackward() * 562.5f);
 			pItem->SetRotation(pObject->GetRotation());
@@ -840,7 +892,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 		case EAction::IPotion:
 		{
 			// ¹°¾à
-			pObject->SetANIM_OneTime(Mage_THROW);
+			pObject->SetANIM_Loop(Mage_THROW);
 			pObject->HealHP(pObject->GetHP() * 0.5f);
 			SoundManager::Get().Play("SE_drink.mp3");
 		}	break;
@@ -975,10 +1027,10 @@ void PlayerController::UpdateStatus(const bool& infoUpdate) noexcept
 	m_DelayRSkill = 4.0f * 5.0f / (5.0f + m_upgradeAcce1);
 	m_DelayDash = 2.5f * 5.0f / (5.0f + m_upgradeAcce1);
 	pUIManager->m_pLeftIcon->SetValue(m_curDelayDash, m_DelayDash, m_curDelayDash);
-	pUIManager->m_pRightIcon->SetValue(m_curDelayRSkill, m_DelayRSkill, m_curDelayDash);
+	pUIManager->m_pRightIcon->SetValue(m_curDelayRSkill, m_DelayRSkill, m_curDelayRSkill);
 
 	m_maxMP = 1.0f + pUserInfo->StatInt * 0.2f;
-	m_RegenMP = 0.3f + pUserInfo->StatInt * 0.045f;
+	m_RegenMP = 0.2f + pUserInfo->StatInt * 0.03f;
 	m_RegenHP = 0.04f + pUserInfo->StatStr * 0.006f;
 	
 	pUIManager->m_pMpBar->SetValue(m_curMP, m_maxMP, m_disMP);
@@ -993,31 +1045,59 @@ void PlayerController::UpdateStatus(const bool& infoUpdate) noexcept
 	}
 	if (infoUpdate)
 	{
-		pUIManager->m_pInfoMP->SetString(to_wstring((int)(m_curMP * 100.0f)) + L" / " + to_wstring((int)(m_maxMP * 100.0f)));
-		pUIManager->m_pInfoMP->SetString(to_wstring((int)(m_curMP * 100.0f)) + L" / " + to_wstring((int)(m_maxMP * 100.0f)));
-		pUIManager->m_pInfoEXP->SetString(to_wstring((int)(m_EXP * 100.0f)) + L" / " + to_wstring((int)(m_NeedEXP * 100.0f)));
-		//pUIManager->m_pInfoName->SetString(pUserInfo->UserID);
-		pUIManager->m_pInfoAttackSpeed->SetString(to_wstring((pUserInfo->MotionRate * 0.77f) * 100.0f).substr(0, 5) + L" %");
-		pUIManager->m_pInfoMoveSpeed->SetString(to_wstring((2.0f - 5.0f / (5.0f + pUserInfo->StatLuk)) * 100.0f).substr(0, 5) + L" %");
-		pUIManager->m_pInfoLevel->SetString(to_wstring(pUserInfo->Level));
-		if(m_upgradeWeapon >= 1)
-			pUIManager->m_pInfoDamage->SetString(to_wstring(100.0f * (pUserInfo->AttackRate - m_upgradeWeapon * 0.15f + 0.001f)).substr(0, 5) + L" + " + to_wstring(m_upgradeWeapon * 15.0f).substr(0, 5) + L" %");
-		else
-			pUIManager->m_pInfoDamage->SetString(to_wstring(100.0f * pUserInfo->AttackRate).substr(0, 5) + L" %");
-		pUIManager->m_pInfoSP->SetString(to_wstring(m_statPoint));
-		if (m_upgradeAcce2 >= 1)
+		if (pUIManager->m_pInfoPanel->m_bRender)
 		{
-			pUIManager->m_pInfoStr->SetString(to_wstring(pUserInfo->StatStr - m_upgradeAcce2) + L" + " + to_wstring(m_upgradeAcce2));
-			pUIManager->m_pInfoDex->SetString(to_wstring(pUserInfo->StatDex - m_upgradeAcce2) + L" + " + to_wstring(m_upgradeAcce2));
-			pUIManager->m_pInfoInt->SetString(to_wstring(pUserInfo->StatInt - m_upgradeAcce2) + L" + " + to_wstring(m_upgradeAcce2));
-			pUIManager->m_pInfoLuk->SetString(to_wstring(pUserInfo->StatLuk - m_upgradeAcce2) + L" + " + to_wstring(m_upgradeAcce2));
+			pUIManager->m_pInvenMoney->SetString(to_wstring(m_money));
+			pUIManager->m_pInfoMP->SetString(to_wstring((int)(m_curMP * 100.0f)) + L" / " + to_wstring((int)(m_maxMP * 100.0f)));
+			pUIManager->m_pInfoMP->SetString(to_wstring((int)(m_curMP * 100.0f)) + L" / " + to_wstring((int)(m_maxMP * 100.0f)));
+			pUIManager->m_pInfoEXP->SetString(to_wstring((int)(m_EXP * 100.0f)) + L" / " + to_wstring((int)(m_NeedEXP * 100.0f)));
+			//pUIManager->m_pInfoName->SetString(pUserInfo->UserID);
+			pUIManager->m_pInfoAttackSpeed->SetString(to_wstring((pUserInfo->MotionRate * 0.77f) * 100.0f).substr(0, 5) + L" %");
+			pUIManager->m_pInfoMoveSpeed->SetString(to_wstring((2.0f - 5.0f / (5.0f + pUserInfo->StatLuk)) * 100.0f).substr(0, 5) + L" %");
+			pUIManager->m_pInfoLevel->SetString(to_wstring(pUserInfo->Level));
+			if (m_upgradeWeapon >= 1)
+				pUIManager->m_pInfoDamage->SetString(to_wstring(100.0f * (pUserInfo->AttackRate - m_upgradeWeapon * 0.15f + 0.001f)).substr(0, 5) + L" + " + to_wstring(m_upgradeWeapon * 15.0f).substr(0, 5) + L" %");
+			else
+				pUIManager->m_pInfoDamage->SetString(to_wstring(100.0f * pUserInfo->AttackRate).substr(0, 5) + L" %");
+			pUIManager->m_pInfoSP->SetString(to_wstring(m_statPoint));
+			if (m_upgradeAcce2 >= 1)
+			{
+				pUIManager->m_pInfoStr->SetString(to_wstring(pUserInfo->StatStr - m_upgradeAcce2) + L" + " + to_wstring(m_upgradeAcce2));
+				pUIManager->m_pInfoDex->SetString(to_wstring(pUserInfo->StatDex - m_upgradeAcce2) + L" + " + to_wstring(m_upgradeAcce2));
+				pUIManager->m_pInfoInt->SetString(to_wstring(pUserInfo->StatInt - m_upgradeAcce2) + L" + " + to_wstring(m_upgradeAcce2));
+				pUIManager->m_pInfoLuk->SetString(to_wstring(pUserInfo->StatLuk - m_upgradeAcce2) + L" + " + to_wstring(m_upgradeAcce2));
+			}
+			else
+			{
+				pUIManager->m_pInfoStr->SetString(to_wstring(pUserInfo->StatStr));
+				pUIManager->m_pInfoDex->SetString(to_wstring(pUserInfo->StatDex));
+				pUIManager->m_pInfoInt->SetString(to_wstring(pUserInfo->StatInt));
+				pUIManager->m_pInfoLuk->SetString(to_wstring(pUserInfo->StatLuk));
+			}
 		}
-		else
+		if (pUIManager->m_pInvenPanel->m_bRender)
 		{
-			pUIManager->m_pInfoStr->SetString(to_wstring(pUserInfo->StatStr));
-			pUIManager->m_pInfoDex->SetString(to_wstring(pUserInfo->StatDex));
-			pUIManager->m_pInfoInt->SetString(to_wstring(pUserInfo->StatInt));
-			pUIManager->m_pInfoLuk->SetString(to_wstring(pUserInfo->StatLuk));
+			if (pUIManager->m_pInvenWeapon->CheckHovered())
+			{
+				//m_pInvenInfoName = 
+				pUIManager->m_pInvenInfoEffect->SetString(L"Damage +" + to_wstring(m_upgradeWeapon * 15) + L"%");
+				pUIManager->m_pInvenInfoReinforce->SetString(L"+" + to_wstring(m_upgradeWeapon));
+			}
+			if (pUIManager->m_pInvenArmor->CheckHovered())
+			{
+				pUIManager->m_pInvenInfoEffect->SetString(L"Armor +" + to_wstring((1.0f - (5.0f / (5.0f + m_upgradeArmor))) * 100.0f).substr(0, 4) + L"%");
+				pUIManager->m_pInvenInfoReinforce->SetString(L"+" + to_wstring(m_upgradeArmor));
+			}
+			if (pUIManager->m_pInvenAcce1->CheckHovered())
+			{
+				pUIManager->m_pInvenInfoEffect->SetString(L"Cooltime +" + to_wstring((1.0f - (5.0f / (5.0f + m_upgradeAcce1 + 1))) * 100.0f).substr(0, 4) + L"%");
+				pUIManager->m_pInvenInfoReinforce->SetString(L"+" + to_wstring(m_upgradeAcce1));
+			}
+			if (pUIManager->m_pInvenAcce2->CheckHovered())
+			{
+				pUIManager->m_pInvenInfoEffect->SetString(L"All Stat +" + to_wstring(m_upgradeAcce2));
+				pUIManager->m_pInvenInfoReinforce->SetString(L"+" + to_wstring(m_upgradeAcce2));
+			}
 		}
 	}
 }
@@ -1133,7 +1213,7 @@ void PlayerController::HitEvent(Collider* pTarget) noexcept
 
 void PlayerController::OperEXP(const float& value) noexcept
 {
-	m_money += (int)(value * 1000.0f * PacketManager::Get().pMyInfo->StatLuk * 0.1f);
+	m_money += (int)(value * 1000.0f + value * PacketManager::Get().pMyInfo->StatLuk * 150.0f);
 	m_EXP += value;
 	if (m_EXP >= m_NeedEXP && m_pParent != nullptr)
 	{
@@ -1179,16 +1259,16 @@ void PlayerController::CheckTownCollision() noexcept
 				pUIManager->m_pSmithyBtnAcce2->SetString(to_wstring((m_upgradeAcce2 + 1) * 5000) + L" KG");
 
 				pUIManager->m_pSmithyInfo1Weapon->SetString(L"Level " + to_wstring(m_upgradeWeapon) + L" ¡æ Level " + to_wstring(m_upgradeWeapon + 1));
-				pUIManager->m_pSmithyInfo2Weapon->SetString(L"Damage " + to_wstring((m_upgradeWeapon) * 15) + L"% ¡æ " + to_wstring((m_upgradeWeapon + 1) * 15) + L"%");
+				pUIManager->m_pSmithyInfo2Weapon->SetString(L"Damage +" + to_wstring((m_upgradeWeapon) * 15) + L"% ¡æ +" + to_wstring((m_upgradeWeapon + 1) * 15) + L"%");
 
 				pUIManager->m_pSmithyInfo1Armor->SetString(L"Level " + to_wstring(m_upgradeArmor) + L" ¡æ Level " + to_wstring(m_upgradeArmor + 1));
-				pUIManager->m_pSmithyInfo2Armor->SetString(L"Armor " + to_wstring((1.0f - (5.0f / (5.0f + m_defencePoint + m_upgradeArmor))) * 100.0f).substr(0, 4) + L"% ¡æ " + to_wstring((1.0f - (5.0f / (5.0f + m_defencePoint + m_upgradeArmor + 1))) * 100.0f).substr(0, 4) + L"%"); 
+				pUIManager->m_pSmithyInfo2Armor->SetString(L"Armor +" + to_wstring((1.0f - (5.0f / (5.0f + m_defencePoint + m_upgradeArmor))) * 100.0f).substr(0, 4) + L"% ¡æ +" + to_wstring((1.0f - (5.0f / (5.0f + m_defencePoint + m_upgradeArmor + 1))) * 100.0f).substr(0, 4) + L"%"); 
 
 				pUIManager->m_pSmithyInfo1Acce1->SetString(L"Level " + to_wstring(m_upgradeAcce1) + L" ¡æ Level " + to_wstring(m_upgradeAcce1 + 1));
-				pUIManager->m_pSmithyInfo2Acce1->SetString(L"Cooltime " + to_wstring((1.0f - (5.0f / (5.0f + m_upgradeAcce1))) * 100.0f).substr(0, 4) + L"% ¡æ " + to_wstring((1.0f - (5.0f / (5.0f + m_upgradeAcce1 + 1))) * 100.0f).substr(0, 4) + L"%");
+				pUIManager->m_pSmithyInfo2Acce1->SetString(L"Cooltime +" + to_wstring((1.0f - (5.0f / (5.0f + m_upgradeAcce1))) * 100.0f).substr(0, 4) + L"% ¡æ +" + to_wstring((1.0f - (5.0f / (5.0f + m_upgradeAcce1 + 1))) * 100.0f).substr(0, 4) + L"%");
 
 				pUIManager->m_pSmithyInfo1Acce2->SetString(L"Level " + to_wstring(m_upgradeAcce2) + L" ¡æ Level " + to_wstring(m_upgradeAcce2 + 1));
-				pUIManager->m_pSmithyInfo2Acce2->SetString(L"All Stat " + to_wstring(m_upgradeAcce2) + L" ¡æ " + to_wstring(m_upgradeAcce2 + 1));
+				pUIManager->m_pSmithyInfo2Acce2->SetString(L"All Stat +" + to_wstring(m_upgradeAcce2) + L" ¡æ +" + to_wstring(m_upgradeAcce2 + 1));
 			}	break;
 			case ECarpet::Church:
 			{
@@ -1230,14 +1310,14 @@ void PlayerController::CheckTownCollision() noexcept
 						pUIManager->m_pMouseIcon->m_bRender = true;
 						pUIManager->m_pInvenPanel->m_bRender = true;
 
-						pUIManager->m_pShopItem0->SetString(L"100 KG");
-						pUIManager->m_pShopItem1->SetString(L"200 KG");
-						pUIManager->m_pShopItem2->SetString(L"300 KG");
-						pUIManager->m_pShopItem3->SetString(L"400 KG");
+						pUIManager->m_pShopItem0->SetString(L"500 KG");
+						pUIManager->m_pShopItem1->SetString(L"500 KG");
+						pUIManager->m_pShopItem2->SetString(L"500 KG");
+						pUIManager->m_pShopItem3->SetString(L"500 KG");
 						pUIManager->m_pShopItem4->SetString(L"500 KG");
-						pUIManager->m_pShopItem5->SetString(L"600 KG");
-						pUIManager->m_pShopItem6->SetString(L"700 KG");
-						pUIManager->m_pShopItem7->SetString(L"800 KG");
+						pUIManager->m_pShopItem5->SetString(L"500 KG");
+						pUIManager->m_pShopItem6->SetString(L"500 KG");
+						pUIManager->m_pShopItem7->SetString(L"500 KG");
 					}
 				}
 			}	break;
@@ -1260,6 +1340,7 @@ void PlayerController::CheckTownCollision() noexcept
 
 					}
 				}
+				pUIManager->m_pTowerUpgrade->SetString(to_wstring(1000 + PacketManager::Get().TowerLevel * 1000) + L" KG");
 				pUIManager->m_pTowerCurLevel->SetString(to_wstring(PacketManager::Get().TowerLevel));
 				pUIManager->m_pTowerCurAtkDamage->SetString(to_wstring(PacketManager::Get().TowerDamage * 100.0f).substr(0, 4));
 				pUIManager->m_pTowerCurAtkSpeed->SetString(to_wstring(PacketManager::Get().TowerDelayShot).substr(0, 4));
@@ -1276,7 +1357,7 @@ void PlayerController::CheckTownCollision() noexcept
 					pUIManager->m_pTowerNextAtkSpeed->SetString(to_wstring(PacketManager::Get().TowerDelayShot * 0.85f).substr(0, 4));
 
 				if (PacketManager::Get().TowerLevel == 4)
-					pUIManager->m_pTowerText2->SetString(L"ÆøÅº Ãß°¡");
+					pUIManager->m_pTowerText2->SetString(L"ÆøÅº °ø°Ý");
 				else
 					pUIManager->m_pTowerText2->SetString(L"");
 			}	break;
@@ -1308,106 +1389,82 @@ void PlayerController::SendAnimTransform(const EAction& eAction, const ECharacte
 	m_prevRotY = p_AnimTransform.Rotation.y;
 	p_AnimTransform.EAnimState = m_curAnim = eAction;
 	p_AnimTransform.ECharacter = eCharacter;
+	p_AnimTransform.Force = m_pParent->GetForce();
 
 	// ÀÌµ¿ Ã³¸®
 	switch (eAction)
 	{
-	case EAction::Jump:
-	{
-		p_AnimTransform.Force = Vector3::Up * m_jumpPower;
-	}	break;
 	case EAction::Left:
 	case EAction::RLeft:
 	{
-		p_AnimTransform.Force = m_pParent->GetForce();
 		p_AnimTransform.Direction = m_pParent->GetLeft();
 		p_AnimTransform.Direction = Normalize(p_AnimTransform.Direction) * m_moveSpeed;
 	}	break;
 	case EAction::Right:
 	case EAction::RRight:
 	{
-		p_AnimTransform.Force = m_pParent->GetForce();
 		p_AnimTransform.Direction = m_pParent->GetRight();
 		p_AnimTransform.Direction = Normalize(p_AnimTransform.Direction) * m_moveSpeed;
 	}	break;
 	case EAction::Forward:
 	case EAction::RForward:
 	{
-		p_AnimTransform.Force = m_pParent->GetForce();
 		p_AnimTransform.Direction = m_pParent->GetForward();
 		p_AnimTransform.Direction = Normalize(p_AnimTransform.Direction) * m_moveSpeed;
 	}	break;
 	case EAction::Backward:
 	case EAction::RBackward:
 	{
-		p_AnimTransform.Force = m_pParent->GetForce();
 		p_AnimTransform.Direction = m_pParent->GetBackward();
 		p_AnimTransform.Direction = Normalize(p_AnimTransform.Direction) * m_moveSpeed;
 	}	break;
 	case EAction::ForwardLeft:
 	case EAction::NForwardLeft:
 	{
-		p_AnimTransform.Force = m_pParent->GetForce();
 		p_AnimTransform.Direction = m_pParent->GetForward() + m_pParent->GetLeft();
 		p_AnimTransform.Direction = Normalize(p_AnimTransform.Direction) * m_moveSpeed;
 	}	break;
 	case EAction::ForwardRight:
 	case EAction::NForwardRight:
 	{
-		p_AnimTransform.Force = m_pParent->GetForce();
 		p_AnimTransform.Direction = m_pParent->GetForward() + m_pParent->GetRight();
 		p_AnimTransform.Direction = Normalize(p_AnimTransform.Direction) * m_moveSpeed;
 	}	break;
 	case EAction::BackwardLeft:
 	case EAction::NBackwardLeft:
 	{
-		p_AnimTransform.Force = m_pParent->GetForce();
 		p_AnimTransform.Direction = m_pParent->GetBackward() + m_pParent->GetLeft();
 		p_AnimTransform.Direction = Normalize(p_AnimTransform.Direction) * m_moveSpeed;
 	}	break;
 	case EAction::BackwardRight:
 	case EAction::NBackwardRight:
 	{
-		p_AnimTransform.Force = m_pParent->GetForce();
 		p_AnimTransform.Direction = m_pParent->GetBackward() + m_pParent->GetRight();
 		p_AnimTransform.Direction = Normalize(p_AnimTransform.Direction) * m_moveSpeed;
 	}	break;
 	case EAction::Run:
 	{
-		p_AnimTransform.Force = m_pParent->GetForce();
 		p_AnimTransform.Direction = m_pParent->GetForward();
 		p_AnimTransform.Direction = Normalize(p_AnimTransform.Direction) * m_moveSpeed * 2.0f;
 	}	break;
 	case EAction::RunLeft:
 	{
-		p_AnimTransform.Force = m_pParent->GetForce();
 		p_AnimTransform.Direction = m_pParent->GetForward() + m_pParent->GetLeft() * 0.5f;
 		p_AnimTransform.Direction = Normalize(p_AnimTransform.Direction) * m_moveSpeed * 2.0f;
 	}	break;
 	case EAction::RunRight:
 	{
-		p_AnimTransform.Force = m_pParent->GetForce();
 		p_AnimTransform.Direction = m_pParent->GetForward() + m_pParent->GetRight() * 0.5f;
 		p_AnimTransform.Direction = Normalize(p_AnimTransform.Direction) * m_moveSpeed * 2.0f;
 	}	break;
 	case EAction::Dash:
-	{
-		p_AnimTransform.Force = (Normalize(m_pParent->GetForward()) * m_moveSpeed * 2.2f + Vector3::Up * 90.0f);
-		p_AnimTransform.Direction = Vector3::Zero;
-	}	break;
 	case EAction::DashLeft:
-	{
-		p_AnimTransform.Force = (Normalize(m_pParent->GetForward() + m_pParent->GetLeft() * 0.5f) * m_moveSpeed * 2.2f + Vector3::Up * 90.0f);
-		p_AnimTransform.Direction = Vector3::Zero;
-	}	break;
 	case EAction::DashRight:
 	{
-		p_AnimTransform.Force = (Normalize(m_pParent->GetForward() + m_pParent->GetRight() * 0.5f) * m_moveSpeed * 2.2f + Vector3::Up * 90.0f);
 		p_AnimTransform.Direction = Vector3::Zero;
 	}	break;
 	default:
 	{
-		p_AnimTransform.Force = m_pParent->GetForce();
 		p_AnimTransform.Direction = ObjectManager::Cameras[ECamera::Main]->GetForward();
 		p_AnimTransform.Direction = Normalize(p_AnimTransform.Direction);
 	}	break;
@@ -1443,6 +1500,7 @@ void PlayerController::SendReqRespawn(const ECharacter& eCharacter) noexcept
 			m_stateList.try_emplace(EPlayerState::RSkill, new PlayerStateRSkill());
 			m_stateList.try_emplace(EPlayerState::Run, new PlayerStateRun());
 			m_stateList.try_emplace(EPlayerState::Special, new PlayerStateGuard());
+			m_stateList.try_emplace(EPlayerState::Wait, new PlayerStateWait());
 			//m_stateList.try_emplace(EPlayerState::Dead, new PlayerStateDead());
 			break;
 		case PlayerController::EArcher:
@@ -1450,6 +1508,7 @@ void PlayerController::SendReqRespawn(const ECharacter& eCharacter) noexcept
 			m_stateList.try_emplace(EPlayerState::LSkill, new ArcherStateLSkill());
 			m_stateList.try_emplace(EPlayerState::RSkill, new ArcherStateRSkill());
 			m_stateList.try_emplace(EPlayerState::Dash, new ArcherStateDash());
+			m_stateList.try_emplace(EPlayerState::Special, new ArcherStateTumbling());
 			m_stateList.try_emplace(EPlayerState::Wait, new ArcherStateWait());
 			break;
 		case PlayerController::EMage:
@@ -1457,6 +1516,7 @@ void PlayerController::SendReqRespawn(const ECharacter& eCharacter) noexcept
 			m_stateList.try_emplace(EPlayerState::LSkill, new MageStateLSkill());
 			m_stateList.try_emplace(EPlayerState::RSkill, new MageStateRSkill());
 			m_stateList.try_emplace(EPlayerState::Dash, new MageStateDash());
+			m_stateList.try_emplace(EPlayerState::Wait, new MageStateWait());
 			break;
 		default:
 			break;

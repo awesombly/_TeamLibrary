@@ -258,27 +258,27 @@ PBUFFER_OUTPUT PS(VS_OUTPUT input) : SV_Target
 	}
 
 	// ½¦µµ¿ì
-	if (cb_useShadow)
-	{
-		static const float iNumKernel = 3;
-		float fLightAmount = 0.0f;
-		float3 ShadowTexColor = input.TexShadow.xyz / input.TexShadow.w;
+	//if (cb_useShadow)
+	//{
+	//	static const float iNumKernel = 3;
+	//	float fLightAmount = 0.0f;
+	//	float3 ShadowTexColor = input.TexShadow.xyz / input.TexShadow.w;
 
-		const float fdelta = 1.0f / SMapSize;
-		int iHalf = (iNumKernel - 1) / 2;
-		for (int v = -iHalf; v <= iHalf; v++)
-		{
-			for (int u = -iHalf; u <= iHalf; u++)
-			{
-				float2 vOffset = float2(u * fdelta, v * fdelta);
-				fLightAmount += g_txDepthMap.SampleCmpLevelZero(samComShadowMap,
-					ShadowTexColor.xy + vOffset, ShadowTexColor.z);
-			}
-		}
-		fLightAmount /= iNumKernel * iNumKernel;
+	//	const float fdelta = 1.0f / SMapSize;
+	//	int iHalf = (iNumKernel - 1) / 2;
+	//	for (int v = -iHalf; v <= iHalf; v++)
+	//	{
+	//		for (int u = -iHalf; u <= iHalf; u++)
+	//		{
+	//			float2 vOffset = float2(u * fdelta, v * fdelta);
+	//			fLightAmount += g_txDepthMap.SampleCmpLevelZero(samComShadowMap,
+	//				ShadowTexColor.xy + vOffset, ShadowTexColor.z);
+	//		}
+	//	}
+	//	fLightAmount /= iNumKernel * iNumKernel;
 
-		output.color0.xyz *= max(cb_useShadow, fLightAmount);
-	}
+	//	output.color0.xyz *= max(cb_useShadow, fLightAmount);
+	//}
 
 	output.color0 *= input.col;
 	return output;

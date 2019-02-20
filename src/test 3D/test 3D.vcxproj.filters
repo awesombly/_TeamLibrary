@@ -92,6 +92,7 @@
       <Filter>State</Filter>
     </ClInclude>
     <ClInclude Include="GameMap.h" />
+    <ClInclude Include="..\..\include\model\_ActionList.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="MainCore">

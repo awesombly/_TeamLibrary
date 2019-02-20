@@ -25,7 +25,7 @@ public:
 		Dash, DashLeft, DashRight, Run, RunLeft, RunRight, 
 		Special,		Special2, Special3, Attack, Attack2, Wait,
 		ChargeAttack,	ChargeAttack2, LCharging, LCharge1, LCharge2,
-		ShockWave,		ThrowBomb,	ITimeBomb, IShockBomb, IMine, IMissile, INuclear, IPotion,
+		ShockWave,		ThrowBomb,	ITimeBomb, IShockBomb, IMine, IMissile, INuclear, IPotion, IBarricade
 	};
 	enum ECharacter : UCHAR {
 		EDummy = 0, EGuard, EArcher, EMage
@@ -61,8 +61,8 @@ private:
 	float		m_EXP			= 0.0f;
 	float		m_disEXP		= 0.0f;
 	//
-	const float	MoveSpeed = 105.0f;
-	const float	JumpPower = 210.0f;
+	const float	MoveSpeed		= 105.0f;
+	const float	JumpPower		= 210.0f;
 public:
 	map<int, void(*)(PlayerController*, void*)> m_ItemList;
 	UIManager*  pUIManager			= nullptr;
@@ -165,7 +165,7 @@ public:
 	friend class ArcherStateLSkill;
 	friend class ArcherStateRSkill;
 	friend class ArcherStateDash;
-	friend class ArcherStateWait;
+	friend class ArcherStateTumbling;
 
 	friend class MageStateBasic;
 	friend class MageStateLSkill;

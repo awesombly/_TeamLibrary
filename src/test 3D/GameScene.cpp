@@ -12,7 +12,8 @@ bool GameScene::Init() noexcept
 	m_pPlayer = &PlayerController::Get();
 	PlayerController::Get().Init();
 	m_pPlayer->SetPosition(Vector3::Up * 500.0f + Vector3::Backward * 750.0f);
-	m_pPlayer->SetRotation(Quaternion::Up * 0.6f);
+	//m_pPlayer->SetRotation(Quaternion::Up * PI * 0.8f);
+	ObjectManager::Cameras[ECamera::Main]->SetRotation(Quaternion::Up * PI * 0.2f);
 	FirstInit();
 	ObjectManager::KeyCount = 1000;
 
@@ -724,6 +725,7 @@ void GameScene::LoadUI() noexcept
 					{
 						((Renderer*)pRenderer)->SetShadowRate(0.0f);
 						((Renderer*)pRenderer)->SetLightRate(1.0f);
+						((Renderer*)pRenderer)->SetEnviromentMap(L"");
 					}
 				}
 			}
@@ -738,6 +740,7 @@ void GameScene::LoadUI() noexcept
 						{
 							((Renderer*)pRenderer)->SetShadowRate(0.0f);
 							((Renderer*)pRenderer)->SetLightRate(1.0f);
+							((Renderer*)pRenderer)->SetEnviromentMap(L"");
 						}
 					}
 				}
@@ -745,6 +748,7 @@ void GameScene::LoadUI() noexcept
 		}
 		else
 		{
+			auto skySrc = ((Renderer*)m_pSkyBox->GetComponent(EComponent::Renderer))->m_srcName;
 			for (auto&[name, iter] : ObjectManager::Get().m_ProtoPull)
 			{
 				if (auto pList = iter->GetComponentList(EComponent::Renderer);
@@ -754,6 +758,7 @@ void GameScene::LoadUI() noexcept
 					{
 						((Renderer*)pRenderer)->SetShadowRate(0.5f);
 						((Renderer*)pRenderer)->SetLightRate(0.3f);
+						((Renderer*)pRenderer)->SetEnviromentMap(skySrc, EEnviType::Refraction);
 					}
 				}
 			}
@@ -768,6 +773,7 @@ void GameScene::LoadUI() noexcept
 						{
 							((Renderer*)pRenderer)->SetShadowRate(0.5f);
 							((Renderer*)pRenderer)->SetLightRate(0.3f);
+							((Renderer*)pRenderer)->SetEnviromentMap(skySrc, EEnviType::Refraction);
 						}
 					}
 				}
@@ -820,6 +826,7 @@ void GameScene::LoadUI() noexcept
 	UIManager::Get().m_pEnemyHPText = (JTextCtrl*)pUIRoot->find_child(L"Enemy_HP_txt");
 
 	// 인포창
+	UIManager::Get().m_pInfoPanel = (JPanel*)pUIRoot->find_child(L"Info_Panel");
 	UIManager::Get().m_pExpProgress = (JProgressBar*)pUIRoot->find_child(L"Exp_Progress");
 	UIManager::Get().m_pInfoTitle = (JTextCtrl*)pUIRoot->find_child(L"Info_Title");
 	UIManager::Get().m_pInfoHP = (JTextCtrl*)pUIRoot->find_child(L"Info_HP");
@@ -865,6 +872,17 @@ void GameScene::LoadUI() noexcept
 	// 인벤, 슬롯
 	UIManager::Get().m_pInvenSlot = (JInventory*)pUIRoot->find_child(L"Inventory_Slot");
 	UIManager::Get().m_pInvenPanel = (JPanel*)pUIRoot->find_child(L"Inventory_Panel");
+	UIManager::Get().m_pInvenMoney = (JTextCtrl*)pUIRoot->find_child(L"Inventory_Money");
+
+	UIManager::Get().m_pInvenWeapon = (JPanel*)pUIRoot->find_child(L"Inventory_Weapon_Back");
+	UIManager::Get().m_pInvenArmor = (JPanel*)pUIRoot->find_child(L"Inventory_Armor_Back");
+	UIManager::Get().m_pInvenAcce1 = (JPanel*)pUIRoot->find_child(L"Inventory_Accessories_Back");
+	UIManager::Get().m_pInvenAcce2 = (JPanel*)pUIRoot->find_child(L"Inventory_Accessories2_Back");
+
+	// 인벤토리 정보
+	UIManager::Get().m_pInvenInfoName = (JTextCtrl*)pUIRoot->find_child(L"Item_Info_Name");
+	UIManager::Get().m_pInvenInfoEffect = (JTextCtrl*)pUIRoot->find_child(L"Item_Info_Effect");
+	UIManager::Get().m_pInvenInfoReinforce = (JTextCtrl*)pUIRoot->find_child(L"Item_Info_Reinforce");
 
 	UIManager::Get().m_pSlot1 = (JSlot*)pUIRoot->find_child(L"Slot1");
 	UIManager::Get().m_pSlot2 = (JSlot*)pUIRoot->find_child(L"Slot2");
@@ -900,58 +918,90 @@ void GameScene::LoadUI() noexcept
 	UIManager::Get().m_pShopPanel = (JPanel*)pUIRoot->find_child(L"Shop_Panel");
 	UIManager::Get().m_pShopItem0 = (JTextCtrl*)pUIRoot->find_child(L"Shop_Item0_Btn");
 	UIManager::Get().m_pShopItem0->EventClick.first = [](void*) {
-		//if()
+		if(PlayerController::Get().m_money >= 500)
 		{
+			PlayerController::Get().m_money -= 500;
 			UIManager::Get().AddSlotItem(L"Berry_0");
+		}
+		else {
+			UIManager::Get().m_pHelpTextPanel->m_bRender = true;
 		}
 	};
 	UIManager::Get().m_pShopItem1 = (JTextCtrl*)pUIRoot->find_child(L"Shop_Item1_Btn");
 	UIManager::Get().m_pShopItem1->EventClick.first = [](void*) {
-		//if()
+		if (PlayerController::Get().m_money >= 500)
 		{
+			PlayerController::Get().m_money -= 500;
 			UIManager::Get().AddSlotItem(L"Gems_0");
+		}
+		else {
+			UIManager::Get().m_pHelpTextPanel->m_bRender = true;
 		}
 	};
 	UIManager::Get().m_pShopItem2 = (JTextCtrl*)pUIRoot->find_child(L"Shop_Item2_Btn");
 	UIManager::Get().m_pShopItem2->EventClick.first = [](void*) {
-		//if()
+		if (PlayerController::Get().m_money >= 500)
 		{
+			PlayerController::Get().m_money -= 500;
 			UIManager::Get().AddSlotItem(L"Gems_0");
+		}
+		else {
+			UIManager::Get().m_pHelpTextPanel->m_bRender = true;
 		}
 	};
 	UIManager::Get().m_pShopItem3 = (JTextCtrl*)pUIRoot->find_child(L"Shop_Item3_Btn");
 	UIManager::Get().m_pShopItem3->EventClick.first = [](void*) {
-		//if()
+		if (PlayerController::Get().m_money >= 500)
 		{
+			PlayerController::Get().m_money -= 500;
 			UIManager::Get().AddSlotItem(L"Gems_0");
+		}
+		else {
+			UIManager::Get().m_pHelpTextPanel->m_bRender = true;
 		}
 	};
 	UIManager::Get().m_pShopItem4 = (JTextCtrl*)pUIRoot->find_child(L"Shop_Item4_Btn");
 	UIManager::Get().m_pShopItem4->EventClick.first = [](void*) {
-		//if()
+		if (PlayerController::Get().m_money >= 500)
 		{
+			PlayerController::Get().m_money -= 500;
 			UIManager::Get().AddSlotItem(L"Gems_0");
+		}
+		else {
+			UIManager::Get().m_pHelpTextPanel->m_bRender = true;
 		}
 	};
 	UIManager::Get().m_pShopItem5 = (JTextCtrl*)pUIRoot->find_child(L"Shop_Item5_Btn");
 	UIManager::Get().m_pShopItem5->EventClick.first = [](void*) {
-		//if()
+		if (PlayerController::Get().m_money >= 500)
 		{
+			PlayerController::Get().m_money -= 500;
 			UIManager::Get().AddSlotItem(L"Gems_0");
+		}
+		else {
+			UIManager::Get().m_pHelpTextPanel->m_bRender = true;
 		}
 	};
 	UIManager::Get().m_pShopItem6 = (JTextCtrl*)pUIRoot->find_child(L"Shop_Item6_Btn");
 	UIManager::Get().m_pShopItem6->EventClick.first = [](void*) {
-		//if()
+		if (PlayerController::Get().m_money >= 500)
 		{
+			PlayerController::Get().m_money -= 500;
 			UIManager::Get().AddSlotItem(L"Gems_0");
+		}
+		else {
+			UIManager::Get().m_pHelpTextPanel->m_bRender = true;
 		}
 	};
 	UIManager::Get().m_pShopItem7 = (JTextCtrl*)pUIRoot->find_child(L"Shop_Item7_Btn");
 	UIManager::Get().m_pShopItem7->EventClick.first = [](void*) {
-		//if()
+		if (PlayerController::Get().m_money >= 500)
 		{
+			PlayerController::Get().m_money -= 500;
 			UIManager::Get().AddSlotItem(L"Gems_0");
+		}
+		else {
+			UIManager::Get().m_pHelpTextPanel->m_bRender = true;
 		}
 	};
 	// 타워
@@ -965,11 +1015,16 @@ void GameScene::LoadUI() noexcept
 	UIManager::Get().m_pTowerNextAtkDamage = (JTextCtrl*)pUIRoot->find_child(L"Tower_NextAtk");
 	UIManager::Get().m_pTowerNextAtkSpeed = (JTextCtrl*)pUIRoot->find_child(L"Tower_NextAtkSpeed");
 	UIManager::Get().m_pTowerText2 = (JTextCtrl*)pUIRoot->find_child(L"Tower_Explanation1");
-	UIManager::Get().m_pTowerUpgrade = (JButtonCtrl*)pUIRoot->find_child(L"Tower_Btn");
+	UIManager::Get().m_pTowerUpgrade = (JTextCtrl*)pUIRoot->find_child(L"Tower_Btn");
 	UIManager::Get().m_pTowerUpgrade->EventClick.first = [](void*) {
-		//if()
+		auto needMoney = 1000 + 1000 * PacketManager::Get().TowerLevel;
+		if (PlayerController::Get().m_money >= needMoney)
 		{
+			PlayerController::Get().m_money -= needMoney;
 			PacketManager::Get().SendPacket((char*)&PI, sizeof(PI), PACKET_TowerUpgrade);
+		}
+		else {
+			UIManager::Get().m_pHelpTextPanel->m_bRender = true;
 		}
 	};
 	// 대장간
@@ -984,33 +1039,50 @@ void GameScene::LoadUI() noexcept
 	UIManager::Get().m_pSmithyInfo2Acce2 = (JTextCtrl*)pUIRoot->find_child(L"Smithy_Accessories2_Info_Text1");
 	UIManager::Get().m_pSmithyBtnWeapon = (JTextCtrl*)pUIRoot->find_child(L"Smithy_Weapon_Btn");
 	UIManager::Get().m_pSmithyBtnWeapon->EventClick.first = [](void*) {
-		//if()
+		auto needMoney = 1000 + 1000 * PlayerController::Get().m_upgradeWeapon;
+		if (PlayerController::Get().m_money >= needMoney)
 		{
+			PlayerController::Get().m_money -= needMoney;
 			++PlayerController::Get().m_upgradeWeapon;
 			PlayerController::Get().UpdateStatus();
+		}
+		else {
+			UIManager::Get().m_pHelpTextPanel->m_bRender = true;
 		}
 	};
 	UIManager::Get().m_pSmithyBtnArmor = (JTextCtrl*)pUIRoot->find_child(L"Smithy_Armor_Btn");
 	UIManager::Get().m_pSmithyBtnArmor->EventClick.first = [](void*) {
-		//if()
+		auto needMoney = 1000 + 1000 * PlayerController::Get().m_upgradeArmor;
+		if (PlayerController::Get().m_money >= needMoney)
 		{
+			PlayerController::Get().m_money -= needMoney;
 			++PlayerController::Get().m_upgradeArmor;
 			if (PlayerController::Get().GetParent() != nullptr)
 				PlayerController::Get().GetParent()->SetArmor(PlayerController::Get().m_defencePoint + PlayerController::Get().m_upgradeArmor);
 		}
+		else {
+			UIManager::Get().m_pHelpTextPanel->m_bRender = true;
+		}
 	};
 	UIManager::Get().m_pSmithyBtnAcce1 = (JTextCtrl*)pUIRoot->find_child(L"Smithy_Accessories_Btn");
 	UIManager::Get().m_pSmithyBtnAcce1->EventClick.first = [](void*) {
-		//if()
+		auto needMoney = 1000 + 1000 * PlayerController::Get().m_upgradeAcce1;
+		if (PlayerController::Get().m_money >= needMoney)
 		{
+			PlayerController::Get().m_money -= needMoney;
 			++PlayerController::Get().m_upgradeAcce1;
 			PlayerController::Get().UpdateStatus(false);
+		}
+		else {
+			UIManager::Get().m_pHelpTextPanel->m_bRender = true;
 		}
 	};
 	UIManager::Get().m_pSmithyBtnAcce2 = (JTextCtrl*)pUIRoot->find_child(L"Smithy_Accessories2_Btn");
 	UIManager::Get().m_pSmithyBtnAcce2->EventClick.first = [](void*) {
-		//if()
+		auto needMoney = 1000 + 1000 * PlayerController::Get().m_upgradeAcce2;
+		if (PlayerController::Get().m_money >= needMoney)
 		{
+			PlayerController::Get().m_money -= needMoney;
 			++PlayerController::Get().m_upgradeAcce2;
 			++PacketManager::Get().pMyInfo->StatStr;
 			++PacketManager::Get().pMyInfo->StatDex;
@@ -1018,8 +1090,15 @@ void GameScene::LoadUI() noexcept
 			++PacketManager::Get().pMyInfo->StatLuk;
 			PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
 		}
+		else {
+			UIManager::Get().m_pHelpTextPanel->m_bRender = true;
+		}
 	};
 	///
+	// 돈 부족
+	UIManager::Get().m_pHelpTextPanel = (JPanel*)pUIRoot->find_child(L"HelpText")->m_pParent;
+	UIManager::Get().m_pHelpTextPanel->m_bRender = false;
+
 	ObjectManager::Get().PushObject(pUIRoot);
 	UI::InGameEvent(pUIRoot);
 }

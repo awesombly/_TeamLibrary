@@ -5,13 +5,8 @@ class PlayerController;
 class GameObject;
 
 namespace MyEvent {
-	//void CarpetChurch(Collider* pA, Collider* pB);
-	//void CarpetSmithy(Collider* pA, Collider* pB);
-	//void CarpetShop(Collider* pA, Collider* pB);
-	//void CarpetTower(Collider* pA, Collider* pB);
 	void ForceWave(Collider* pA, Collider* pB);
 	void MissileCollision(Collider* pA, Collider* pB);
-	//void ShockBoom(Collider* pA, Collider* pB);
 	void MineBoom(Collider* pA, Collider* pB);
 	void NuclearBoom(Collider* pA, Collider* pB);
 	void BuffWave(Collider* pA, Collider* pB);
@@ -21,6 +16,7 @@ namespace MyEvent {
 	void PlayerBomb(Collider* pA, Collider* pB);
 	void OneTimeHit(Collider* pA, Collider* pB);
 	void DaggerHit(Collider* pA, Collider* pB);
+	void ArrowHit(Collider* pA, Collider* pB);
 	void MeleeHit(Collider* pA, Collider* pB);
 	void ZombieHit(Collider* pA, Collider* pB);
 	void ZombieAttack(Collider* pA, Collider* pB);
@@ -43,6 +39,7 @@ namespace ActiveEvent {
 	void ThrowMine(PlayerController* pPlayer, void*);
 	void ThrowNuclear(PlayerController* pPlayer, void*);
 	void UsePotion(PlayerController* pPlayer, void*);
+	void ThrowBarricade(PlayerController* pPlayer, void*);
 }
 
 namespace TimeEvent {

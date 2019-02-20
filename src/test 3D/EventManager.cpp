@@ -353,6 +353,51 @@ namespace MyEvent {
 		//SoundManager::Get().Play("SE_HIT.mp3");//, pObject->GetWorldPosition(), SoundRange);
 	}
 
+	void ArrowHit(Collider* pA, Collider* pB)
+	{
+		if (pB != nullptr)
+		{
+			pB->SetForce((Normalize(-pA->GetTotalForce())) * 210.0f);
+			pB->m_pParent->OperHP(-pA->m_pPhysics->m_damage);
+			// 내가 맞았을때
+			if (pB->m_pParent == PlayerController::Get().GetParent())
+			{
+				UIManager::Get().m_pHitEffect->SetEventTime(1.0f);
+				((JPanel*)UIManager::Get().m_pHitEffect)->EffectPlay();
+			}
+			// 내가 때렸을때
+			else if (PacketManager::Get().pMyInfo->UserSocket == pA->m_pPhysics->UserSocket)
+			{
+				PlayerController::Get().HitEvent(pB);
+				if (pB->m_pParent->GetHP() <= 0.0f)
+				{
+					PacketManager::Get().SendDeadEvent(pB->m_pParent->m_keyValue, pB->m_pPhysics->UserSocket, pA->m_pPhysics->UserSocket);
+				}
+				else
+				{
+					PacketManager::Get().pMyInfo->Score += (int)(pA->m_pPhysics->m_damage * 100.0f);
+					PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
+				}
+			}
+			else if (pA->m_pPhysics->UserSocket == ESocketType::EDummy && PacketManager::Get().isHost && pB->m_pParent->GetHP() <= 0.0f)
+			{
+				PacketManager::Get().SendDeadEvent(pB->m_pParent->m_keyValue, pB->m_pPhysics->UserSocket, ESocketType::EDummy);
+			}
+			pA->m_pParent->SetPosition(pA->m_pParent->GetPosition() - pB->m_pParent->GetWorldPosition());
+			pA->m_pParent->SetScale(Divide(pA->m_pParent->GetScale(), pB->m_pParent->GetWorldScale()));
+			pA->m_pParent->SetParent(pB->m_pParent);
+		}
+		pA->m_pParent->isStatic(true);
+		pA->m_pParent->usePhysics(false);
+		pA->m_pParent->SetGravityScale(0.0f);
+		pA->m_pParent->GetCollider()->CollisionEvent = nullptr;
+
+		auto pEffect = ObjectManager::Get().TakeObject(L"EPAttack");
+		pEffect->SetPosition(pA->m_pParent->GetPosition());
+		//ObjectManager::Get().DisableObject(pA->m_pParent);
+		//SoundManager::Get().Play("SE_HIT.mp3");//, pObject->GetWorldPosition(), SoundRange);
+	}
+
 	void MeleeHit(Collider* pA, Collider* pB)
 	{
 		if (pB != nullptr)
@@ -513,6 +558,7 @@ namespace MyEvent {
 			if (PlayerController::Get().GetParent() != nullptr &&
 				pB->m_pParent == PlayerController::Get().GetParent())
 			{
+				pB->m_pParent->SetForce(Vector3::Zero);
 				auto value = (int)(RandomNormal() * JItem::Get()->m_pItemList.size());
 				for (auto& iter : JItem::Get()->m_pItemList)
 				{
@@ -599,6 +645,12 @@ namespace ActiveEvent {
 	void UsePotion(PlayerController* pPlayer, void*)
 	{
 		pPlayer->m_eAction = PlayerController::EAction::IPotion;
+	}
+
+	// 바리케이드
+	void ThrowBarricade(PlayerController* pPlayer, void*)
+	{
+		pPlayer->m_eAction = PlayerController::EAction::IBarricade;
 	}
 }
 

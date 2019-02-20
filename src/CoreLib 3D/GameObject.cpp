@@ -324,17 +324,26 @@ Collider* GameObject::GetCollider() noexcept
 
 void GameObject::SetWorldPosition(const D3DXVECTOR3& position) noexcept 
 {
-	m_position = position - m_pParent->GetWorldPosition();
+	if (m_pParent != nullptr)
+		m_position = position - m_pParent->GetWorldPosition();
+	else
+		m_position = position;
 }
 
 void GameObject::SetWorldRotation(const D3DXQUATERNION& rotation) noexcept
 {
-	m_rotation = rotation - m_pParent->GetWorldRotation();
+	if (m_pParent != nullptr)
+		m_rotation = rotation - m_pParent->GetWorldRotation();
+	else
+		m_rotation = rotation;
 }
 
 void GameObject::SetWorldScale(const D3DXVECTOR3& scale) noexcept
 {
-	m_scale = Divide(scale, m_pParent->GetWorldScale());
+	if (m_pParent != nullptr)
+		m_scale = Divide(scale, m_pParent->GetWorldScale());
+	else
+		m_scale = scale;
 }
 
 D3DXVECTOR3	  GameObject::GetWorldPosition() const noexcept

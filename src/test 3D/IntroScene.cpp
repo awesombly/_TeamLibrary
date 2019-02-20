@@ -303,6 +303,7 @@ void IntroScene::SetObjects() noexcept
 	pCollider->m_eTag = ETag::Dummy;
 	pCollider->m_eTagArray[ETag::Collider] = false;
 	pCollider->m_eTagArray[ETag::Ally] = false;
+	pCollider->m_eTagArray[ETag::Dummy] = false;
 	ObjectManager::Get().SetProtoObject(pObject);
 
 	// 밀리 어택
@@ -311,6 +312,7 @@ void IntroScene::SetObjects() noexcept
 	pCollider->CollisionEvent = MyEvent::MeleeHit;
 	pCollider->m_eTag = ETag::Dummy;
 	pCollider->m_eTagArray[ETag::Collider] = false;
+	pCollider->m_eTagArray[ETag::Dummy] = false;
 	pCollider->SetGravityScale(0.0f);
 	pCollider->usePhysics(false);
 	ObjectManager::Get().SetProtoObject(pObject);
@@ -334,6 +336,7 @@ void IntroScene::SetObjects() noexcept
 	pCollider->usePhysics(false);
 	pCollider->CollisionEvent = MyEvent::BuffWave;
 	pCollider->m_eTag = ETag::Dummy;
+	pCollider->m_eTagArray[ETag::Dummy] = false;
 	pCollider->m_eTagArray[ETag::Collider] = false;
 	ObjectManager::Get().SetProtoObject(pObject);
 
@@ -348,6 +351,7 @@ void IntroScene::SetObjects() noexcept
 	pCollider->m_eTagArray[ETag::Collider] = false;
 	ObjectManager::Get().SetProtoObject(pObject);
 	// ========================================== 오브젝트 ==================================================================
+
 	// 템 상자
 	auto pHeroObj = new AHeroObj();
 	pHeroObj->SetPlayerCharacter(ITEM_Box);
@@ -377,8 +381,8 @@ void IntroScene::SetObjects() noexcept
 	pCollider->m_pivot = Vector3::Up * 6.0f;
 	pCollider->CollisionEvent = MyEvent::PlayerBomb;
 	pCollider->m_eTag = ETag::Dummy;
-	pCollider->m_eTagArray[ETag::Collider] = false;
 	pCollider->m_eTagArray[ETag::Dummy] = false;
+	pCollider->m_eTagArray[ETag::Collider] = false;
 	ObjectManager::Get().SetProtoObject(pHeroObj);
 
 	// 시한폭탄
@@ -393,6 +397,7 @@ void IntroScene::SetObjects() noexcept
 	pTimer->TimerEvent = { TimeEvent::TimeBomb, nullptr };
 	pHeroObj->AddComponent({ pCollider, pRenderer, pTimer, ObjectManager::Get().TakeComponent(L"Fire") });
 	pCollider->m_eTag = ETag::Dummy;
+	pCollider->m_eTagArray[ETag::Dummy] = false;
 	pCollider->m_eTagArray[ETag::Collider] = false;
 	ObjectManager::Get().SetProtoObject(pHeroObj);
 

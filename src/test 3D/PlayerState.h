@@ -27,6 +27,7 @@ public:
 	virtual void StateInit(PlayerController* pOwner) noexcept = 0;
 };
 
+
 // 기본
 class PlayerStateBasic : public PlayerState
 {
@@ -83,6 +84,17 @@ public:
 	virtual void StateInit(PlayerController* pOwner)	noexcept override;
 };
 
+// 대기
+class PlayerStateWait : public PlayerState
+{
+public:
+	PlayerStateWait() : PlayerState(EPlayerState::Special) {};
+	virtual ~PlayerStateWait() = default;
+public:
+	virtual bool Process(const float& spf)				noexcept override;
+	virtual void StateInit(PlayerController* pOwner)	noexcept override;
+};
+
 /// ==================================== 궁수 ===========================================
 // 기본
 class ArcherStateBasic : public PlayerState
@@ -124,6 +136,17 @@ class ArcherStateDash : public PlayerState
 public:
 	ArcherStateDash() : PlayerState(EPlayerState::Dash) {};
 	virtual ~ArcherStateDash() = default;
+public:
+	virtual bool Process(const float& spf)				noexcept override;
+	virtual void StateInit(PlayerController* pOwner)	noexcept override;
+};
+
+// 덤블링
+class ArcherStateTumbling : public PlayerState
+{
+public:
+	ArcherStateTumbling() : PlayerState(EPlayerState::Special) {};
+	virtual ~ArcherStateTumbling() = default;
 public:
 	virtual bool Process(const float& spf)				noexcept override;
 	virtual void StateInit(PlayerController* pOwner)	noexcept override;
@@ -182,6 +205,17 @@ class MageStateDash : public PlayerState
 public:
 	MageStateDash() : PlayerState(EPlayerState::Dash) {};
 	virtual ~MageStateDash() = default;
+public:
+	virtual bool Process(const float& spf)				noexcept override;
+	virtual void StateInit(PlayerController* pOwner)	noexcept override;
+};
+
+// 대기
+class MageStateWait : public PlayerState
+{
+public:
+	MageStateWait() : PlayerState(EPlayerState::Dash) {};
+	virtual ~MageStateWait() = default;
 public:
 	virtual bool Process(const float& spf)				noexcept override;
 	virtual void StateInit(PlayerController* pOwner)	noexcept override;

@@ -26,6 +26,7 @@ public:
 	JTextCtrl*		m_pEnemyHPText		= nullptr;		// 
 	JProgressBar*	m_pExpProgress		= nullptr;		// 
 	// 인포창
+	JPanel*			m_pInfoPanel		= nullptr;
 	JEditCtrl*		m_pInfoName			= nullptr;
 	JTextCtrl*		m_pInfoHP			= nullptr;	
 	JTextCtrl*		m_pInfoMP			= nullptr;	
@@ -48,6 +49,14 @@ public:
 	// 인벤, 슬롯
 	JInventory*		m_pInvenSlot		= nullptr;
 	JPanel*			m_pInvenPanel		= nullptr;
+	JTextCtrl*		m_pInvenMoney		= nullptr;
+	JPanel*			m_pInvenWeapon		= nullptr;
+	JPanel*			m_pInvenArmor		= nullptr;
+	JPanel*			m_pInvenAcce1		= nullptr;
+	JPanel*			m_pInvenAcce2		= nullptr;
+	JTextCtrl*		m_pInvenInfoName = nullptr;
+	JTextCtrl*		m_pInvenInfoEffect = nullptr;
+	JTextCtrl*		m_pInvenInfoReinforce = nullptr;
 
 	JSlot*			m_pSlot1			= nullptr;
 	JSlot*			m_pSlot2			= nullptr;
@@ -63,7 +72,7 @@ public:
 	JTextCtrl*		m_pTowerNextAtkDamage	= nullptr;
 	JTextCtrl*		m_pTowerNextAtkSpeed	= nullptr;
 	JTextCtrl*		m_pTowerText2			= nullptr;
-	JButtonCtrl*	m_pTowerUpgrade			= nullptr;
+	JTextCtrl*		m_pTowerUpgrade			= nullptr;
 	// 상점
 	JPanel*			m_pShopPanel			= nullptr;
 	JTextCtrl*		m_pShopItem0			= nullptr;
@@ -90,6 +99,7 @@ public:
 	JTextCtrl*		m_pSmithyInfo1Acce2		= nullptr;
 	JTextCtrl*		m_pSmithyInfo2Acce2		= nullptr;
 	///
+	JPanel*			m_pHelpTextPanel		= nullptr;
 	JImageCtrl*		m_pXPush				= nullptr;
 public:
 	void			AddSlotItem(const wstring_view& itemName);
