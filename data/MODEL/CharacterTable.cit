@@ -29,7 +29,8 @@
 *CHARACTERNAME	Archer
 *SHADERFILENMAE		..\..\data\model\Character.hlsl
 
-*MATRIXMATRIXCOUNT  10
+*MATRIXMATRIXCOUNT  11
+*MATRIXFILENAME		..\..\data\model\archer\archer_backDive.mat
 *MATRIXFILENAME		..\..\data\model\archer\archer_Throw.mat
 *MATRIXFILENAME		..\..\data\model\archer\archer_Aim_Idle.mat
 *MATRIXFILENAME		..\..\data\model\archer\archer_Aim_Rdy.mat

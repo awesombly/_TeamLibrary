@@ -24,6 +24,7 @@
 //ANIM_COUNT  10
 #define	 Archer_IDLE			L"archer_Idle.Mat"
 #define	 Archer_DIVE			L"archer_Dive.mat"
+#define	 Archer_BACKDIVE		L"archer_backDive.Mat"
 #define	 Archer_WALK			L"archer_Walk.mat"
 #define	 Archer_LEFT			L"archer_Left.mat"
 #define	 Archer_RIGHT			L"archer_Right.mat"
