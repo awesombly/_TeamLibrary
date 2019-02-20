@@ -18,46 +18,16 @@ bool PlayerController::Init() noexcept
 	}
 	auto& ItemIndex = JItem::Get()->m_pItemList;
 	// ≈€ º≥¡§
-	/*m_ItemList[ItemIndex[L"Berry_0"]] = ActiveEvent::ShockWave;
-	m_ItemList[ItemIndex[L"Berry_1"]] = ActiveEvent::ShockWave;
-	m_ItemList[ItemIndex[L"Book_0"]] = ActiveEvent::ShockWave;
-	m_ItemList[ItemIndex[L"Book_1"]] = ActiveEvent::ThrowShockBoom;
-	m_ItemList[ItemIndex[L"Cloak_0"]] = ActiveEvent::ThrowNuclear;
-	m_ItemList[ItemIndex[L"Cloak_1"]] = ActiveEvent::ThrowTimeBomb;
-	m_ItemList[ItemIndex[L"Coin_0"]] = ActiveEvent::ThrowTimeBomb;
-	m_ItemList[ItemIndex[L"Ball_0"]] = ActiveEvent::ThrowTimeBomb;
-	m_ItemList[ItemIndex[L"Ball_1"]] = ActiveEvent::ThrowTimeBomb;
-	m_ItemList[ItemIndex[L"Essence_0"]] = ActiveEvent::ThrowMissile;
-	m_ItemList[ItemIndex[L"Flower_0"]] = ActiveEvent::ThrowMissile;
-	m_ItemList[ItemIndex[L"Gems_0"]] = ActiveEvent::ThrowMissile;
-	m_ItemList[ItemIndex[L"Gems_1"]] = ActiveEvent::ThrowMissile;
-	m_ItemList[ItemIndex[L"MetalCase_0"]] = ActiveEvent::ThrowMissile;
-	m_ItemList[ItemIndex[L"MetalCase_1"]] = ActiveEvent::ThrowShockBoom;
-	m_ItemList[ItemIndex[L"Plate_0"]] = ActiveEvent::ThrowShockBoom;
-	m_ItemList[ItemIndex[L"Sword_0"]] = ActiveEvent::ThrowShockBoom;
-	m_ItemList[ItemIndex[L"Necklace_0"]] = ActiveEvent::ThrowShockBoom;
-	m_ItemList[ItemIndex[L"Necklace_1"]] = ActiveEvent::ThrowMine;
-	m_ItemList[ItemIndex[L"Ornament_0"]] = ActiveEvent::ThrowMine;
-	m_ItemList[ItemIndex[L"Ornament_1"]] = ActiveEvent::ThrowMine;
-	m_ItemList[ItemIndex[L"Parchment_0"]] = ActiveEvent::ThrowMine;
-	m_ItemList[ItemIndex[L"Stone_0"]] = ActiveEvent::ThrowBomb;
-	m_ItemList[ItemIndex[L"Stone_1"]] = ActiveEvent::ThrowBomb;
-	m_ItemList[ItemIndex[L"Shirt_0"]] = ActiveEvent::ThrowBomb;
-	m_ItemList[ItemIndex[L"Shirt_1"]] = ActiveEvent::ThrowBomb;
-	m_ItemList[ItemIndex[L"Potion_0"]] = ActiveEvent::UsePotion;
-	m_ItemList[ItemIndex[L"Potion_1"]] = ActiveEvent::ThrowNuclear;
-	m_ItemList[ItemIndex[L"Wood_0"]] = ActiveEvent::ThrowNuclear;
-	m_ItemList[ItemIndex[L"Wood_1"]] = ActiveEvent::ThrowNuclear;*/
-
-	m_ItemList[ItemIndex[L"Book_0"]] = ActiveEvent::ShockWave;
-	m_ItemList[ItemIndex[L"Ball_0"]] = ActiveEvent::ThrowBomb;
-	m_ItemList[ItemIndex[L"Ball_1"]] = ActiveEvent::ThrowTimeBomb;
-	m_ItemList[ItemIndex[L"Gems_0"]] = ActiveEvent::ThrowShockBoom;
-	m_ItemList[ItemIndex[L"MetalCase_0"]] = ActiveEvent::ThrowMissile;
-	m_ItemList[ItemIndex[L"Parchment_0"]] = ActiveEvent::ThrowNuclear;
-	m_ItemList[ItemIndex[L"Stone_1"]] = ActiveEvent::ThrowMine;
-	m_ItemList[ItemIndex[L"Potion_0"]] = ActiveEvent::UsePotion;
-	m_ItemList[ItemIndex[L"Wood_0"]] = ActiveEvent::ThrowBarricade;
+	// ShockWave
+	m_ItemList[ItemIndex[L"Bomb1"]] = ActiveEvent::ThrowNuclear;
+	m_ItemList[ItemIndex[L"Bomb2"]] = ActiveEvent::ThrowShockBoom;
+	m_ItemList[ItemIndex[L"Bomb3"]] = ActiveEvent::ThrowBomb;
+	m_ItemList[ItemIndex[L"Bomb4"]] = ActiveEvent::ThrowTimeBomb;
+	m_ItemList[ItemIndex[L"Barge"]] = ActiveEvent::ThrowBarricade;
+	m_ItemList[ItemIndex[L"Missile"]] = ActiveEvent::ThrowMissile;
+	m_ItemList[ItemIndex[L"Nuclear"]] = ActiveEvent::ThrowMine;
+	m_ItemList[ItemIndex[L"TNT"]] = ActiveEvent::ShockWave;
+	m_ItemList[ItemIndex[L"Potion"]] = ActiveEvent::UsePotion;
 	return true;
 }
 

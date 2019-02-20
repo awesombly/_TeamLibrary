@@ -921,7 +921,7 @@ void GameScene::LoadUI() noexcept
 		if(PlayerController::Get().m_money >= 500)
 		{
 			PlayerController::Get().m_money -= 500;
-			UIManager::Get().AddSlotItem(L"Berry_0");
+			UIManager::Get().AddSlotItem(L"Bomb1");
 		}
 		else {
 			UIManager::Get().m_pHelpTextPanel->m_bRender = true;
@@ -932,7 +932,7 @@ void GameScene::LoadUI() noexcept
 		if (PlayerController::Get().m_money >= 500)
 		{
 			PlayerController::Get().m_money -= 500;
-			UIManager::Get().AddSlotItem(L"Gems_0");
+			UIManager::Get().AddSlotItem(L"Bomb2");
 		}
 		else {
 			UIManager::Get().m_pHelpTextPanel->m_bRender = true;
@@ -943,7 +943,7 @@ void GameScene::LoadUI() noexcept
 		if (PlayerController::Get().m_money >= 500)
 		{
 			PlayerController::Get().m_money -= 500;
-			UIManager::Get().AddSlotItem(L"Gems_0");
+			UIManager::Get().AddSlotItem(L"Bomb3");
 		}
 		else {
 			UIManager::Get().m_pHelpTextPanel->m_bRender = true;
@@ -954,7 +954,7 @@ void GameScene::LoadUI() noexcept
 		if (PlayerController::Get().m_money >= 500)
 		{
 			PlayerController::Get().m_money -= 500;
-			UIManager::Get().AddSlotItem(L"Gems_0");
+			UIManager::Get().AddSlotItem(L"Bomb4");
 		}
 		else {
 			UIManager::Get().m_pHelpTextPanel->m_bRender = true;
@@ -965,7 +965,7 @@ void GameScene::LoadUI() noexcept
 		if (PlayerController::Get().m_money >= 500)
 		{
 			PlayerController::Get().m_money -= 500;
-			UIManager::Get().AddSlotItem(L"Gems_0");
+			UIManager::Get().AddSlotItem(L"Missile");
 		}
 		else {
 			UIManager::Get().m_pHelpTextPanel->m_bRender = true;
@@ -976,7 +976,7 @@ void GameScene::LoadUI() noexcept
 		if (PlayerController::Get().m_money >= 500)
 		{
 			PlayerController::Get().m_money -= 500;
-			UIManager::Get().AddSlotItem(L"Gems_0");
+			UIManager::Get().AddSlotItem(L"Barge");
 		}
 		else {
 			UIManager::Get().m_pHelpTextPanel->m_bRender = true;
@@ -987,7 +987,7 @@ void GameScene::LoadUI() noexcept
 		if (PlayerController::Get().m_money >= 500)
 		{
 			PlayerController::Get().m_money -= 500;
-			UIManager::Get().AddSlotItem(L"Gems_0");
+			UIManager::Get().AddSlotItem(L"TNT");
 		}
 		else {
 			UIManager::Get().m_pHelpTextPanel->m_bRender = true;
@@ -998,7 +998,7 @@ void GameScene::LoadUI() noexcept
 		if (PlayerController::Get().m_money >= 500)
 		{
 			PlayerController::Get().m_money -= 500;
-			UIManager::Get().AddSlotItem(L"Gems_0");
+			UIManager::Get().AddSlotItem(L"Nuclear");
 		}
 		else {
 			UIManager::Get().m_pHelpTextPanel->m_bRender = true;
