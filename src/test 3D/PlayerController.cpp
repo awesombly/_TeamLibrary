@@ -22,7 +22,7 @@ bool PlayerController::Init() noexcept
 	m_ItemList[ItemIndex[L"Bomb1"]] = ActiveEvent::ThrowNuclear;
 	m_ItemList[ItemIndex[L"Bomb2"]] = ActiveEvent::ThrowShockBoom;
 	m_ItemList[ItemIndex[L"Bomb3"]] = ActiveEvent::ThrowBomb;
-	m_ItemList[ItemIndex[L"Bomb4"]] = ActiveEvent::ThrowTimeBomb;
+	m_ItemList[ItemIndex[L"LandMine"]] = ActiveEvent::ThrowTimeBomb;
 	m_ItemList[ItemIndex[L"Barge"]] = ActiveEvent::ThrowBarricade;
 	m_ItemList[ItemIndex[L"Missile"]] = ActiveEvent::ThrowMissile;
 	m_ItemList[ItemIndex[L"Nuclear"]] = ActiveEvent::ThrowMine;
@@ -372,13 +372,19 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 			auto pItem = ObjectManager::Get().TakeObject(L"Barricade", false);
 			pItem->m_objType = EObjType::Character;
 			pItem->SetPosition(pObject->GetPosition() + pObject->GetForward() * 45.0f + pObject->GetUp() * 50.0f);
-			pItem->SetRotation(pObject->GetRotation());
-			auto pCollider = new ColliderOBB(-Vector3::One, Vector3::One);
+			pItem->SetScale(4.0f, 1.5f, 4.0f);
+			pItem->SetRotation(pObject->GetRotation() + Quaternion::Left * PI * 0.5f);
+			auto pCollider = new ColliderOBB({ -7.0f, 0.0f, -25.0f }, {7.0f, 50.0f, 25.0f});
+			pCollider->m_eTag = ETag::Ally;
 			pItem->AddComponent(pCollider);
-			pItem->SetHP(5.0f);
+			//pCollider->usePhysics(false);
+			pItem->SetGravityScale(10.0f);
+			pItem->m_pPhysics->m_mass = 0.1f;
+			pItem->SetHP(10.0f);
 			pItem->SetForce(forward * 50.0f);
 			//pItem->m_pPhysics->m_damage = 0.8f;
 			pItem->m_pPhysics->UserSocket = socket;
+			ObjectManager::Get().PushObject(pItem);
 			SoundManager::Get().PlayQueue("SE_dash.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
 		}	break;
 		}
@@ -447,7 +453,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 			pItem->m_pPhysics->UserSocket = socket;
 			pItem->SetDamage(0.3f * PacketManager::Get().UserList[socket]->AttackRate);
 			pItem->GetCollider()->AddIgnoreList(pObject->GetCollider());
-			pItem->GetCollider()->CollisionEvent = MyEvent::ArrowHit;
+			//pItem->GetCollider()->CollisionEvent = MyEvent::ArrowHit;
 			//SoundManager::Get().Play("SV_archer_atk2.mp3");
 			SoundManager::Get().PlayQueue("SE_bow_shot.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
 		}	break;
@@ -511,7 +517,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 		case EAction::Special:
 		{
 			pObject->SetHeroAnimSpeed(1.0f);
-			PacketManager::Get().UserList[socket]->MotionRate = 1.3f;
+			PacketManager::Get().UserList[socket]->MotionRate = 1.0f;
 			pObject->GetCollider()->m_eTagArray[ETag::Enemy] = false;
 			pObject->GetCollider()->m_eTagArray[ETag::Dummy] = false;
 			//
@@ -768,6 +774,23 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 			pEffect->SetPosition(pObject->GetPosition() + Vector3::Up * 25.5f);
 			pObject->SetANIM_Loop(Mage_ATK_UD);
 		}	break;
+		case EAction::Motion1:
+		{
+			pObject->SetANIM_Loop(Mage_ATK_UD);
+		}	break;
+		case EAction::Motion2:
+		{
+			auto targetPos = pObject->GetPosition() + forward * 300.0f;
+			targetPos.y = 500.0f;
+			auto pItem = ObjectManager::Get().TakeObject(L"Magic");
+			pItem->SetPosition(targetPos);
+			pItem->SetScale(Vector3::One);
+			pItem->SetForce(Vector3::Down * 300.0f);
+			pItem->m_pPhysics->UserSocket = socket;
+			pItem->SetDamage(0.55f * PacketManager::Get().UserList[socket]->AttackRate);
+			pItem->GetCollider()->AddIgnoreList(pObject->GetCollider());
+			SoundManager::Get().PlayQueue("SV_mage_atk4.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
+		}	break;
 		// ================================== 템 사용 =========================================
 		case EAction::ShockWave:
 		{
@@ -865,6 +888,28 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 			pObject->SetANIM_Loop(Mage_THROW);
 			pObject->HealHP(pObject->GetHP() * 0.5f);
 			SoundManager::Get().Play("SE_drink.mp3");
+		}	break;
+		case EAction::IBarricade:
+		{
+			// 바리케이드
+			pObject->SetANIM_Loop(Paladin_THROW);
+			auto pItem = ObjectManager::Get().TakeObject(L"Barricade", false);
+			pItem->m_objType = EObjType::Character;
+			pItem->SetPosition(pObject->GetPosition() + pObject->GetForward() * 45.0f + pObject->GetUp() * 50.0f);
+			pItem->SetScale(4.0f, 1.5f, 4.0f);
+			pItem->SetRotation(pObject->GetRotation() + Quaternion::Left * PI * 0.5f);
+			auto pCollider = new ColliderOBB({ -7.0f, 0.0f, -25.0f }, { 7.0f, 50.0f, 25.0f });
+			pCollider->m_eTag = ETag::Ally;
+			pItem->AddComponent(pCollider);
+			//pCollider->usePhysics(false);
+			pItem->SetGravityScale(10.0f);
+			pItem->m_pPhysics->m_mass = 0.1f;
+			pItem->SetHP(10.0f);
+			pItem->SetForce(forward * 50.0f);
+			//pItem->m_pPhysics->m_damage = 0.8f;
+			pItem->m_pPhysics->UserSocket = socket;
+			ObjectManager::Get().PushObject(pItem);
+			SoundManager::Get().PlayQueue("SE_dash.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
 		}	break;
 		}
 	}	break;
@@ -1017,7 +1062,6 @@ void PlayerController::UpdateStatus(const bool& infoUpdate) noexcept
 	{
 		if (pUIManager->m_pInfoPanel->m_bRender)
 		{
-			pUIManager->m_pInvenMoney->SetString(to_wstring(m_money));
 			pUIManager->m_pInfoMP->SetString(to_wstring((int)(m_curMP * 100.0f)) + L" / " + to_wstring((int)(m_maxMP * 100.0f)));
 			pUIManager->m_pInfoMP->SetString(to_wstring((int)(m_curMP * 100.0f)) + L" / " + to_wstring((int)(m_maxMP * 100.0f)));
 			pUIManager->m_pInfoEXP->SetString(to_wstring((int)(m_EXP * 100.0f)) + L" / " + to_wstring((int)(m_NeedEXP * 100.0f)));
@@ -1047,6 +1091,7 @@ void PlayerController::UpdateStatus(const bool& infoUpdate) noexcept
 		}
 		if (pUIManager->m_pInvenPanel->m_bRender)
 		{
+			pUIManager->m_pInvenMoney->SetString(to_wstring(m_money));
 			if (pUIManager->m_pInvenWeapon->CheckHovered())
 			{
 				//m_pInvenInfoName = 
@@ -1183,7 +1228,7 @@ void PlayerController::HitEvent(Collider* pTarget) noexcept
 
 void PlayerController::OperEXP(const float& value) noexcept
 {
-	m_money += (int)(value * 1000.0f + value * PacketManager::Get().pMyInfo->StatLuk * 150.0f);
+	m_money += (int)(value * 5000.0f + value * PacketManager::Get().pMyInfo->StatLuk * 750.0f);
 	m_EXP += value;
 	if (m_EXP >= m_NeedEXP && m_pParent != nullptr)
 	{
@@ -1257,7 +1302,7 @@ void PlayerController::CheckTownCollision() noexcept
 						PacketManager::Get().SendPacket((char*)&p_HealHP, (USHORT)sizeof(Packet_Float), PACKET_HealHP);
 						//SoundManager::Get().Play("SE_dark.mp3");
 						// + 포션
-						UIManager::Get().AddSlotItem(L"Potion_0");
+						UIManager::Get().AddSlotItem(L"Potion");
 					}
 				}
 			}	break;
@@ -1486,6 +1531,7 @@ void PlayerController::SendReqRespawn(const ECharacter& eCharacter) noexcept
 			m_stateList.try_emplace(EPlayerState::LSkill, new MageStateLSkill());
 			m_stateList.try_emplace(EPlayerState::RSkill, new MageStateRSkill());
 			m_stateList.try_emplace(EPlayerState::Dash, new MageStateDash());
+			m_stateList.try_emplace(EPlayerState::Special, new MageStateSpecial());
 			m_stateList.try_emplace(EPlayerState::Wait, new MageStateWait());
 			break;
 		default:

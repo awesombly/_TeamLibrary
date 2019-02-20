@@ -25,6 +25,7 @@ public:
 		Dash, DashLeft, DashRight, Run, RunLeft, RunRight, 
 		Special,		Special2, Special3, Attack, Attack2, Wait,
 		ChargeAttack,	ChargeAttack2, LCharging, LCharge1, LCharge2,
+		Motion1,		Motion2,	Motion3,
 		ShockWave,		ThrowBomb,	ITimeBomb, IShockBomb, IMine, IMissile, INuclear, IPotion, IBarricade
 	};
 	enum ECharacter : UCHAR {
@@ -170,5 +171,6 @@ public:
 	friend class MageStateBasic;
 	friend class MageStateLSkill;
 	friend class MageStateRSkill;
+	friend class MageStateSpecial;
 	friend class MageStateDash;
 };

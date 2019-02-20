@@ -208,10 +208,7 @@ bool GameMap::Init() noexcept
 	m_wall00.SetRotationY(PI*-0.5f);
 	m_wall00.SetScaleZ(2.2f);
 	m_wall00.m_objType = EObjType::AObject;
-	m_wall00.m_myName = L"Barricade";
 	ObjectManager::Get().PushObject(&m_wall00, false);
-
-	ObjectManager::Get().SetProtoObject(&m_wall00);
 
 	m_wall01.SetPlayerCharacter(L"MAP_WALL", 575.0f, 0.0f, 900.0f);
 	m_wall01.SetRotationY(PI*-0.5f);
@@ -547,6 +544,9 @@ bool GameMap::Init() noexcept
 	m_fence33.SetRotationY(PI*-0.5f);
 	m_fence33.m_objType = EObjType::AObject;
 	ObjectManager::Get().PushObject(&m_fence33, false);
+
+	m_fence33.m_myName = L"Barricade";
+	ObjectManager::Get().SetProtoObject(&m_fence33);
 #pragma endregion
 
 #pragma region MyCarpet

@@ -954,7 +954,7 @@ void GameScene::LoadUI() noexcept
 		if (PlayerController::Get().m_money >= 500)
 		{
 			PlayerController::Get().m_money -= 500;
-			UIManager::Get().AddSlotItem(L"Bomb4");
+			UIManager::Get().AddSlotItem(L"LandMine");
 		}
 		else {
 			UIManager::Get().m_pHelpTextPanel->m_bRender = true;

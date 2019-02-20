@@ -10,7 +10,7 @@ namespace MyEvent {
 	void ForceWave(Collider* pA, Collider* pB) {
 		if (pB != nullptr)
 		{
-			pB->SetForce((Normalize(pB->GetCenter() - pA->GetCenter()) + Vector3::Up) * 180.0f);
+			pB->SetForce((Normalize(pB->GetCenter() - pA->GetCenter())) * 180.0f);
 			pA->AddIgnoreList(pB);
 		}
 	}
@@ -109,7 +109,7 @@ namespace MyEvent {
 			}	break;
 			case ETag::Enemy:
 			{
-				pB->SetForce((Normalize(-pA->GetTotalForce()) + Vector3::Up) * 210.0f);
+				pB->SetForce(Vector3::Up * 100.0f);
 				pB->m_pParent->OperHP(-pA->m_pPhysics->m_damage);
 				// 내가 맞았을때
 				if (pB->m_pParent == PlayerController::Get().GetParent())
@@ -153,7 +153,7 @@ namespace MyEvent {
 			 	return;
 			 case ETag::Ally:
 			 {
-			 	pB->SetForce((Normalize(pA->GetTotalForce()) + Vector3::Up) * 45.0f);
+			 	pB->SetForce((Normalize(pA->GetTotalForce())) * 45.0f);
 			 	pB->m_pParent->HealHP(pA->m_pPhysics->m_damage * 1.5f);
 			 	// 내가 맞았을때
 			 	if (pB->m_pParent == PlayerController::Get().GetParent())
@@ -171,7 +171,7 @@ namespace MyEvent {
 			 }	break;
 			 case ETag::Enemy:
 			 {
-			 	pB->SetForce((Normalize(-pA->GetTotalForce()) + Vector3::Up) * 210.0f);
+			 	pB->SetForce((Normalize(-pA->GetTotalForce())) * 150.0f);
 			 	pB->m_pParent->OperHP(-pA->m_pPhysics->m_damage);
 			 	// 내가 맞았을때
 			 	if (pB->m_pParent == PlayerController::Get().GetParent())
@@ -283,7 +283,7 @@ namespace MyEvent {
 	{
 		if (pB != nullptr)
 		{
-			pB->SetForce((Normalize(-pA->GetTotalForce()) + Vector3::Up) * 210.0f);
+			pB->SetForce((Normalize(-pA->GetTotalForce())) * 210.0f);
 			pB->m_pParent->OperHP(-pA->m_pPhysics->m_damage);
 			// 내가 맞았을때
 			if (pB->m_pParent == PlayerController::Get().GetParent())
@@ -487,7 +487,7 @@ namespace MyEvent {
 	{
 		if (pB != nullptr)
 		{
-			pB->SetForce((Normalize(-pA->GetTotalForce()) + Vector3::Up) * 240.0f);
+			pB->SetForce((Normalize(-pA->GetTotalForce())) * 200.0f);
 			pB->m_pParent->OperHP(-pA->m_pPhysics->m_damage);
 			// 내가 맞았을때
 			if (pB->m_pParent == PlayerController::Get().GetParent())

@@ -88,7 +88,7 @@ public:
 class PlayerStateWait : public PlayerState
 {
 public:
-	PlayerStateWait() : PlayerState(EPlayerState::Special) {};
+	PlayerStateWait() : PlayerState(EPlayerState::Wait) {};
 	virtual ~PlayerStateWait() = default;
 public:
 	virtual bool Process(const float& spf)				noexcept override;
@@ -210,11 +210,22 @@ public:
 	virtual void StateInit(PlayerController* pOwner)	noexcept override;
 };
 
+// 메테오
+class MageStateSpecial : public PlayerState
+{
+public:
+	MageStateSpecial() : PlayerState(EPlayerState::Special) {};
+	virtual ~MageStateSpecial() = default;
+public:
+	virtual bool Process(const float& spf)				noexcept override;
+	virtual void StateInit(PlayerController* pOwner)	noexcept override;
+};
+
 // 대기
 class MageStateWait : public PlayerState
 {
 public:
-	MageStateWait() : PlayerState(EPlayerState::Dash) {};
+	MageStateWait() : PlayerState(EPlayerState::Wait) {};
 	virtual ~MageStateWait() = default;
 public:
 	virtual bool Process(const float& spf)				noexcept override;
