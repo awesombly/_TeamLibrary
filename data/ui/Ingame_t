@@ -588,7 +588,7 @@
 ^Color 1.000000 1.000000 1.000000 1.000000
 ^Align 0
 ^strText Á¤·Ä
-^TextSize 15.000000
+^TextSize 13.000000
 ^tx_Normal Btn3_Normal.png
 ^tx_Hover Btn3_Hover.png
 ^tx_Press Btn3_Press.png
@@ -610,7 +610,7 @@
 ^Color 1.000000 1.000000 1.000000 1.000000
 ^Align 0
 ^strText Ãß°¡
-^TextSize 15.000000
+^TextSize 13.000000
 ^tx_Normal Btn3_Normal.png
 ^tx_Hover Btn3_Hover.png
 ^tx_Press Btn3_Hover.png
@@ -827,7 +827,7 @@
 ^Color 0.000000 0.000000 0.000000 1.000000
 ^Align 0
 ^strText 999999999999
-^TextSize 15.000000
+^TextSize 13.000000
 ^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
@@ -866,7 +866,7 @@
 ^Color 1.000000 1.000000 1.000000 0.000000
 ^Align 0
 ^strText ¿ø
-^TextSize 15.000000
+^TextSize 13.000000
 ^tx_Normal NO_IMAGE.png
 ^tx_Hover NO_IMAGE.png
 ^tx_Press NO_IMAGE.png
@@ -953,7 +953,7 @@
 ^Color 0.700000 1.000000 1.000000 1.000000
 ^Align 0
 ^strText 646464/1000000
-^TextSize 15.000000
+^TextSize 13.000000
 ^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
@@ -975,7 +975,7 @@
 ^Color 1.000000 0.500000 1.000000 1.000000
 ^Align 0
 ^strText HP
-^TextSize 17.000000
+^TextSize 15.000000
 ^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
@@ -997,7 +997,7 @@
 ^Color 0.700000 1.000000 1.000000 1.000000
 ^Align 0
 ^strText 969696/1000000
-^TextSize 15.000000
+^TextSize 13.000000
 ^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
@@ -1019,7 +1019,7 @@
 ^Color 1.000000 0.500000 1.000000 1.000000
 ^Align 0
 ^strText MP
-^TextSize 17.000000
+^TextSize 15.000000
 ^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
@@ -1041,7 +1041,7 @@
 ^Color 0.700000 1.000000 1.000000 1.000000
 ^Align 0
 ^strText 123456/1000000
-^TextSize 15.000000
+^TextSize 13.000000
 ^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
@@ -1063,7 +1063,7 @@
 ^Color 1.000000 0.500000 1.000000 1.000000
 ^Align 0
 ^strText EXP
-^TextSize 17.000000
+^TextSize 15.000000
 ^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
@@ -1121,7 +1121,7 @@
 ^Scale 65.000000 7.000000 1.000000
 ^Color 0.700000 1.000000 1.000000 1.000000
 ^Align 0
-^TextSize 15.000000
+^TextSize 13.000000
 ^TextLength 6
 ^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^pfEventHover 7274
@@ -1142,7 +1142,7 @@
 ^Color 1.000000 0.500000 1.000000 1.000000
 ^Align 0
 ^strText ÀÌ¸§
-^TextSize 17.000000
+^TextSize 15.000000
 ^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
@@ -1164,7 +1164,7 @@
 ^Color 0.700000 1.000000 1.000000 1.000000
 ^Align 0
 ^strText 1.47
-^TextSize 15.000000
+^TextSize 13.000000
 ^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
@@ -1186,7 +1186,7 @@
 ^Color 1.000000 0.500000 1.000000 1.000000
 ^Align 0
 ^strText °ø°Ý¼Óµµ
-^TextSize 17.000000
+^TextSize 15.000000
 ^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
@@ -1208,7 +1208,7 @@
 ^Color 0.700000 1.000000 1.000000 1.000000
 ^Align 0
 ^strText 3.29
-^TextSize 15.000000
+^TextSize 13.000000
 ^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
@@ -1230,7 +1230,7 @@
 ^Color 1.000000 0.500000 1.000000 1.000000
 ^Align 0
 ^strText ÀÌµ¿¼Óµµ
-^TextSize 17.000000
+^TextSize 15.000000
 ^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
@@ -1252,7 +1252,7 @@
 ^Color 0.700000 1.000000 1.000000 1.000000
 ^Align 0
 ^strText 1
-^TextSize 15.000000
+^TextSize 13.000000
 ^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
@@ -1274,7 +1274,7 @@
 ^Color 1.000000 0.500000 1.000000 1.000000
 ^Align 0
 ^strText ·¹º§
-^TextSize 17.000000
+^TextSize 15.000000
 ^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
@@ -1296,7 +1296,7 @@
 ^Color 0.700000 1.000000 1.000000 1.000000
 ^Align 0
 ^strText 21212~1212115
-^TextSize 15.000000
+^TextSize 13.000000
 ^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
@@ -1318,7 +1318,7 @@
 ^Color 1.000000 0.500000 1.000000 1.000000
 ^Align 0
 ^strText °ø°Ý·Â
-^TextSize 17.000000
+^TextSize 15.000000
 ^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
@@ -1340,7 +1340,7 @@
 ^Color 0.700000 1.000000 1.000000 1.000000
 ^Align 0
 ^strText 3945748
-^TextSize 15.000000
+^TextSize 13.000000
 ^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
@@ -1362,7 +1362,7 @@
 ^Color 1.000000 0.500000 1.000000 1.000000
 ^Align 0
 ^strText ¹æ¾î·Â
-^TextSize 17.000000
+^TextSize 15.000000
 ^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
@@ -1428,7 +1428,7 @@
 ^Color 0.700000 1.000000 1.000000 1.000000
 ^Align 0
 ^strText 999999
-^TextSize 15.000000
+^TextSize 13.000000
 ^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
@@ -1450,7 +1450,7 @@
 ^Color 0.700000 1.000000 1.000000 1.000000
 ^Align 0
 ^strText 88888888
-^TextSize 15.000000
+^TextSize 13.000000
 ^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
@@ -1472,7 +1472,7 @@
 ^Color 0.700000 1.000000 1.000000 1.000000
 ^Align 0
 ^strText 77777
-^TextSize 15.000000
+^TextSize 13.000000
 ^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
@@ -1494,7 +1494,7 @@
 ^Color 0.700000 1.000000 1.000000 1.000000
 ^Align 0
 ^strText 666666666
-^TextSize 15.000000
+^TextSize 13.000000
 ^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
@@ -1592,7 +1592,7 @@
 ^Color 0.000000 0.500000 1.000000 1.000000
 ^Align 0
 ^strText STR
-^TextSize 17.000000
+^TextSize 15.000000
 ^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
@@ -1614,7 +1614,7 @@
 ^Color 0.000000 0.500000 1.000000 1.000000
 ^Align 0
 ^strText DEX
-^TextSize 17.000000
+^TextSize 15.000000
 ^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
@@ -1636,7 +1636,7 @@
 ^Color 0.000000 0.500000 1.000000 1.000000
 ^Align 0
 ^strText INT
-^TextSize 17.000000
+^TextSize 15.000000
 ^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
@@ -1658,7 +1658,7 @@
 ^Color 0.000000 0.500000 1.000000 1.000000
 ^Align 0
 ^strText LUK
-^TextSize 17.000000
+^TextSize 15.000000
 ^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
@@ -1819,7 +1819,7 @@
 ^bRender 1
 ^Position 95.000000 -118.500046 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 16.000000 8.000000 1.000000
+^Scale 11.000000 6.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
 ^tx_Normal Á¾·á.png
 ^pfEventHover 7274
@@ -1891,7 +1891,7 @@
 ^Color 1.000000 1.000000 1.000000 0.000000
 ^Align 1
 ^strText Ãæµ¹Ã¼È®ÀÎ
-^TextSize 25.000000
+^TextSize 20.000000
 ^tx_Normal NO_IMAGE.png
 ^tx_Hover NO_IMAGE.png
 ^tx_Press NO_IMAGE.png
@@ -1966,7 +1966,7 @@
 ^Color 1.000000 1.000000 1.000000 0.000000
 ^Align 1
 ^strText Àú»ç¾ç¸ðµå
-^TextSize 25.000000
+^TextSize 20.000000
 ^tx_Normal NO_IMAGE.png
 ^tx_Hover NO_IMAGE.png
 ^tx_Press NO_IMAGE.png
@@ -2005,7 +2005,7 @@
 ^Color 1.000000 1.000000 1.000000 0.000000
 ^Align 1
 ^strText ÄíÆù
-^TextSize 25.000000
+^TextSize 20.000000
 ^tx_Normal NO_IMAGE.png
 ^tx_Hover NO_IMAGE.png
 ^tx_Press NO_IMAGE.png
@@ -3014,7 +3014,7 @@
 ^ParentName Root
 ^KeyState 135 135
 ^bRender 0
-^Position 41.000000 147.000000 0.000000
+^Position -200.000000 0.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 1.000000 1.000000 1.000000
 
@@ -3036,193 +3036,17 @@
 ^vpEventClick 
 
 ^Type 783
-^NodeName Item_Info_STR
-^ParentName Item_Info_Panel
-^KeyState 135 135
-^bRender 1
-^Position 25.000000 25.000000 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 60.000000 8.000000 1.000000
-^Color 0.800000 0.700000 1.000000 1.000000
-^Align 0
-^strText Sample
-^TextSize 15.000000
-^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
-^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
-^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick 
-
-^Type 783
-^NodeName Item_Info_DEX
-^ParentName Item_Info_Panel
-^KeyState 135 135
-^bRender 1
-^Position 25.000000 0.000000 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 60.000000 8.000000 1.000000
-^Color 0.800000 0.700000 1.000000 1.000000
-^Align 0
-^strText Sample
-^TextSize 15.000000
-^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
-^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
-^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick 
-
-^Type 783
-^NodeName Item_Info_INT
-^ParentName Item_Info_Panel
-^KeyState 135 135
-^bRender 1
-^Position 25.000000 -25.000000 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 60.000000 8.000000 1.000000
-^Color 0.800000 0.700000 1.000000 1.000000
-^Align 0
-^strText Sample
-^TextSize 15.000000
-^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
-^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
-^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick 
-
-^Type 783
-^NodeName Item_Info_LUK
-^ParentName Item_Info_Panel
-^KeyState 135 135
-^bRender 1
-^Position 25.000000 -50.000000 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 60.000000 8.000000 1.000000
-^Color 0.800000 0.700000 1.000000 1.000000
-^Align 0
-^strText Sample
-^TextSize 15.000000
-^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
-^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
-^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick 
-
-^Type 783
 ^NodeName Item_Info_Name
 ^ParentName Item_Info_Panel
 ^KeyState 135 135
 ^bRender 1
 ^Position 25.000000 50.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 60.000000 8.000000 1.000000
+^Scale 60.000000 10.000000 1.000000
 ^Color 0.800000 0.700000 1.000000 1.000000
 ^Align 0
-^strText Sample
-^TextSize 15.000000
-^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
-^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
-^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick 
-
-^Type 783
-^NodeName Item_Info_LUK_txt
-^ParentName Item_Info_Panel
-^KeyState 135 135
-^bRender 1
-^Position -55.000000 -50.000000 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 30.000000 8.000000 1.000000
-^Color 1.000000 1.000000 0.300000 1.000000
-^Align 0
-^strText LUK
-^TextSize 17.000000
-^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
-^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
-^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick 
-
-^Type 783
-^NodeName Item_Info_INT_txt
-^ParentName Item_Info_Panel
-^KeyState 135 135
-^bRender 1
-^Position -55.000000 -25.000000 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 30.000000 8.000000 1.000000
-^Color 1.000000 1.000000 0.300000 1.000000
-^Align 0
-^strText INT
-^TextSize 17.000000
-^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
-^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
-^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick 
-
-^Type 783
-^NodeName Item_Info_DEX_txt
-^ParentName Item_Info_Panel
-^KeyState 135 135
-^bRender 1
-^Position -55.000000 0.000000 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 30.000000 8.000000 1.000000
-^Color 1.000000 1.000000 0.300000 1.000000
-^Align 0
-^strText DEX
-^TextSize 17.000000
-^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
-^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
-^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick 
-
-^Type 783
-^NodeName Item_Info_STR_txt
-^ParentName Item_Info_Panel
-^KeyState 135 135
-^bRender 1
-^Position -55.000000 25.000000 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 30.000000 8.000000 1.000000
-^Color 1.000000 1.000000 0.300000 1.000000
-^Align 0
-^strText STR
-^TextSize 17.000000
+^strText ÃÊº¸ÀÚÀÇ°Ë
+^TextSize 13.000000
 ^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
@@ -3240,11 +3064,11 @@
 ^bRender 1
 ^Position -55.000000 50.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 30.000000 8.000000 1.000000
+^Scale 30.000000 10.000000 1.000000
 ^Color 1.000000 1.000000 0.300000 1.000000
 ^Align 0
-^strText Name
-^TextSize 17.000000
+^strText ÀÌ¸§
+^TextSize 15.000000
 ^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
@@ -3254,6 +3078,182 @@
 ^vpEventPress 
 ^pfEventClick 7274
 ^vpEventClick ýýýý
+
+^Type 783
+^NodeName Item_Info_Rating
+^ParentName Item_Info_Panel
+^KeyState 135 135
+^bRender 1
+^Position 25.000000 0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 60.000000 10.000000 1.000000
+^Color 0.800000 0.700000 1.000000 1.000000
+^Align 0
+^strText ¾ðÄ¿¸Õ
+^TextSize 13.000000
+^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 783
+^NodeName Item_Info_Rating_txt
+^ParentName Item_Info_Panel
+^KeyState 135 135
+^bRender 1
+^Position -55.000000 0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 30.000000 10.000000 1.000000
+^Color 1.000000 1.000000 0.300000 1.000000
+^Align 0
+^strText µî±Þ
+^TextSize 15.000000
+^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 783
+^NodeName Item_Info_Effect
+^ParentName Item_Info_Panel
+^KeyState 135 135
+^bRender 1
+^Position 25.000000 25.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 60.000000 10.000000 1.000000
+^Color 0.800000 0.700000 1.000000 1.000000
+^Align 0
+^strText STR+55
+^TextSize 13.000000
+^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 783
+^NodeName Item_Info_Effect_txt
+^ParentName Item_Info_Panel
+^KeyState 135 135
+^bRender 1
+^Position -55.000000 25.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 30.000000 10.000000 1.000000
+^Color 1.000000 1.000000 0.300000 1.000000
+^Align 0
+^strText È¿°ú
+^TextSize 15.000000
+^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 783
+^NodeName Item_Info_Kind
+^ParentName Item_Info_Panel
+^KeyState 135 135
+^bRender 1
+^Position 25.000000 -25.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 60.000000 10.000000 1.000000
+^Color 0.800000 0.700000 1.000000 1.000000
+^Align 0
+^strText ¹«±â
+^TextSize 13.000000
+^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 783
+^NodeName Item_Info_Kind_txt
+^ParentName Item_Info_Panel
+^KeyState 135 135
+^bRender 1
+^Position -55.000000 -25.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 30.000000 10.000000 1.000000
+^Color 1.000000 1.000000 0.300000 1.000000
+^Align 0
+^strText Á¾·ù
+^TextSize 15.000000
+^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 783
+^NodeName Item_Info_Reinforce
+^ParentName Item_Info_Panel
+^KeyState 135 135
+^bRender 1
+^Position 25.000000 -50.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 60.000000 10.000000 1.000000
+^Color 0.800000 0.700000 1.000000 1.000000
+^Align 0
+^strText +22ÀÌÀÌee2
+^TextSize 13.000000
+^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 783
+^NodeName Item_Info_Reinforce_txt
+^ParentName Item_Info_Panel
+^KeyState 135 135
+^bRender 1
+^Position -55.000000 -50.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 30.000000 10.000000 1.000000
+^Color 1.000000 1.000000 0.300000 1.000000
+^Align 0
+^strText °­È­
+^TextSize 15.000000
+^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
 
 ^Type 777
 ^NodeName Shop_Panel
@@ -3586,7 +3586,7 @@
 ^Color 1.000000 1.000000 1.000000 1.000000
 ^Align 0
 ^strText ¹é¸¸¿ø
-^TextSize 15.000000
+^TextSize 13.000000
 ^tx_Normal btn_177.png
 ^tx_Hover btn_176.png
 ^tx_Press btn_176.png
@@ -3608,7 +3608,7 @@
 ^Color 1.000000 1.000000 1.000000 1.000000
 ^Align 0
 ^strText Ä¥¾ï
-^TextSize 15.000000
+^TextSize 13.000000
 ^tx_Normal btn_177.png
 ^tx_Hover btn_176.png
 ^tx_Press btn_176.png
@@ -3630,7 +3630,7 @@
 ^Color 1.000000 1.000000 1.000000 1.000000
 ^Align 0
 ^strText Ãµ¸¸¿ø
-^TextSize 15.000000
+^TextSize 13.000000
 ^tx_Normal btn_177.png
 ^tx_Hover btn_176.png
 ^tx_Press btn_176.png
@@ -3652,7 +3652,7 @@
 ^Color 1.000000 1.000000 1.000000 1.000000
 ^Align 0
 ^strText 100Kg¿ø
-^TextSize 15.000000
+^TextSize 13.000000
 ^tx_Normal btn_177.png
 ^tx_Hover btn_176.png
 ^tx_Press btn_176.png
@@ -3674,7 +3674,7 @@
 ^Color 1.000000 1.000000 1.000000 1.000000
 ^Align 0
 ^strText 76*6/12.5¿ø
-^TextSize 15.000000
+^TextSize 13.000000
 ^tx_Normal btn_177.png
 ^tx_Hover btn_176.png
 ^tx_Press btn_176.png
@@ -3696,7 +3696,7 @@
 ^Color 1.000000 1.000000 1.000000 1.000000
 ^Align 0
 ^strText 4-8+6¿ø
-^TextSize 15.000000
+^TextSize 13.000000
 ^tx_Normal btn_177.png
 ^tx_Hover btn_176.png
 ^tx_Press btn_176.png
@@ -3718,7 +3718,7 @@
 ^Color 1.000000 1.000000 1.000000 1.000000
 ^Align 0
 ^strText ¼­¸¥¸¶Èç´Ù¼¸
-^TextSize 15.000000
+^TextSize 13.000000
 ^tx_Normal btn_177.png
 ^tx_Hover btn_176.png
 ^tx_Press btn_176.png
@@ -3740,7 +3740,7 @@
 ^Color 1.000000 1.000000 1.000000 1.000000
 ^Align 0
 ^strText 15Á¶
-^TextSize 15.000000
+^TextSize 13.000000
 ^tx_Normal btn_177.png
 ^tx_Hover btn_176.png
 ^tx_Press btn_176.png
@@ -3861,7 +3861,7 @@
 ^Color 1.000000 1.000000 1.000000 0.000000
 ^Align 0
 ^strText STR+5
-^TextSize 17.000000
+^TextSize 15.000000
 ^tx_Normal NO_IMAGE.png
 ^tx_Hover NO_IMAGE.png
 ^tx_Press NO_IMAGE.png
@@ -3883,7 +3883,7 @@
 ^Color 1.000000 1.000000 1.000000 0.000000
 ^Align 0
 ^strText °­È­È®·ü50%
-^TextSize 20.000000
+^TextSize 18.000000
 ^tx_Normal NO_IMAGE.png
 ^tx_Hover NO_IMAGE.png
 ^tx_Press NO_IMAGE.png
@@ -3905,7 +3905,7 @@
 ^Color 1.000000 1.000000 1.000000 1.000000
 ^Align 0
 ^strText 10,000
-^TextSize 20.000000
+^TextSize 15.000000
 ^tx_Normal btn_177.png
 ^tx_Hover btn_176.png
 ^tx_Press btn_176.png
@@ -3978,7 +3978,7 @@
 ^Color 1.000000 1.000000 1.000000 0.000000
 ^Align 0
 ^strText DEX+5
-^TextSize 17.000000
+^TextSize 15.000000
 ^tx_Normal NO_IMAGE.png
 ^tx_Hover NO_IMAGE.png
 ^tx_Press NO_IMAGE.png
@@ -4000,7 +4000,7 @@
 ^Color 1.000000 1.000000 1.000000 0.000000
 ^Align 0
 ^strText °­È­È®·ü50%
-^TextSize 20.000000
+^TextSize 18.000000
 ^tx_Normal NO_IMAGE.png
 ^tx_Hover NO_IMAGE.png
 ^tx_Press NO_IMAGE.png
@@ -4022,7 +4022,7 @@
 ^Color 1.000000 1.000000 1.000000 1.000000
 ^Align 0
 ^strText 10,000
-^TextSize 20.000000
+^TextSize 15.000000
 ^tx_Normal btn_177.png
 ^tx_Hover btn_176.png
 ^tx_Press btn_176.png
@@ -4095,7 +4095,7 @@
 ^Color 1.000000 1.000000 1.000000 0.000000
 ^Align 0
 ^strText INT+5
-^TextSize 17.000000
+^TextSize 15.000000
 ^tx_Normal NO_IMAGE.png
 ^tx_Hover NO_IMAGE.png
 ^tx_Press NO_IMAGE.png
@@ -4117,7 +4117,7 @@
 ^Color 1.000000 1.000000 1.000000 0.000000
 ^Align 0
 ^strText °­È­È®·ü50%
-^TextSize 20.000000
+^TextSize 18.000000
 ^tx_Normal NO_IMAGE.png
 ^tx_Hover NO_IMAGE.png
 ^tx_Press NO_IMAGE.png
@@ -4139,7 +4139,7 @@
 ^Color 1.000000 1.000000 1.000000 1.000000
 ^Align 0
 ^strText 10,000
-^TextSize 20.000000
+^TextSize 15.000000
 ^tx_Normal btn_177.png
 ^tx_Hover btn_176.png
 ^tx_Press btn_176.png
@@ -4212,7 +4212,7 @@
 ^Color 1.000000 1.000000 1.000000 0.000000
 ^Align 0
 ^strText LUK+5
-^TextSize 17.000000
+^TextSize 15.000000
 ^tx_Normal NO_IMAGE.png
 ^tx_Hover NO_IMAGE.png
 ^tx_Press NO_IMAGE.png
@@ -4234,7 +4234,7 @@
 ^Color 1.000000 1.000000 1.000000 0.000000
 ^Align 0
 ^strText °­È­È®·ü50%
-^TextSize 20.000000
+^TextSize 18.000000
 ^tx_Normal NO_IMAGE.png
 ^tx_Hover NO_IMAGE.png
 ^tx_Press NO_IMAGE.png
@@ -4256,7 +4256,7 @@
 ^Color 1.000000 1.000000 1.000000 1.000000
 ^Align 0
 ^strText 10,000
-^TextSize 20.000000
+^TextSize 15.000000
 ^tx_Normal btn_177.png
 ^tx_Hover btn_176.png
 ^tx_Press btn_176.png
@@ -4326,7 +4326,7 @@
 ^Color 1.000000 1.000000 1.000000 0.000000
 ^Align 0
 ^strText 0
-^TextSize 20.000000
+^TextSize 15.000000
 ^tx_Normal NO_IMAGE.png
 ^tx_Hover NO_IMAGE.png
 ^tx_Press NO_IMAGE.png
@@ -4399,7 +4399,7 @@
 ^Color 0.800000 1.000000 1.000000 1.000000
 ^Align 0
 ^strText ·¹º§
-^TextSize 25.000000
+^TextSize 20.000000
 ^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
@@ -4421,7 +4421,7 @@
 ^Color 0.800000 1.000000 1.000000 1.000000
 ^Align 0
 ^strText °ø°Ý·Â
-^TextSize 25.000000
+^TextSize 20.000000
 ^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
@@ -4443,7 +4443,7 @@
 ^Color 0.800000 1.000000 1.000000 1.000000
 ^Align 0
 ^strText °ø°Ý¼Óµµ
-^TextSize 25.000000
+^TextSize 20.000000
 ^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
@@ -4465,7 +4465,7 @@
 ^Color 1.000000 1.000000 1.000000 0.000000
 ^Align 0
 ^strText ¡æ
-^TextSize 45.000000
+^TextSize 35.000000
 ^tx_Normal NO_IMAGE.png
 ^tx_Hover NO_IMAGE.png
 ^tx_Press NO_IMAGE.png
@@ -4487,7 +4487,7 @@
 ^Color 1.000000 1.000000 1.000000 0.000000
 ^Align 0
 ^strText 1
-^TextSize 23.000000
+^TextSize 20.000000
 ^tx_Normal NO_IMAGE.png
 ^tx_Hover NO_IMAGE.png
 ^tx_Press NO_IMAGE.png
@@ -4509,7 +4509,7 @@
 ^Color 1.000000 1.000000 1.000000 0.000000
 ^Align 0
 ^strText 100
-^TextSize 20.000000
+^TextSize 15.000000
 ^tx_Normal NO_IMAGE.png
 ^tx_Hover NO_IMAGE.png
 ^tx_Press NO_IMAGE.png
@@ -4531,7 +4531,7 @@
 ^Color 1.000000 1.000000 1.000000 0.000000
 ^Align 0
 ^strText ¡æ
-^TextSize 45.000000
+^TextSize 35.000000
 ^tx_Normal NO_IMAGE.png
 ^tx_Hover NO_IMAGE.png
 ^tx_Press NO_IMAGE.png
@@ -4553,7 +4553,7 @@
 ^Color 1.000000 1.000000 1.000000 0.000000
 ^Align 0
 ^strText 108
-^TextSize 23.000000
+^TextSize 20.000000
 ^tx_Normal NO_IMAGE.png
 ^tx_Hover NO_IMAGE.png
 ^tx_Press NO_IMAGE.png
@@ -4575,7 +4575,7 @@
 ^Color 1.000000 1.000000 1.000000 0.000000
 ^Align 0
 ^strText 0.75
-^TextSize 20.000000
+^TextSize 15.000000
 ^tx_Normal NO_IMAGE.png
 ^tx_Hover NO_IMAGE.png
 ^tx_Press NO_IMAGE.png
@@ -4597,7 +4597,7 @@
 ^Color 1.000000 1.000000 1.000000 0.000000
 ^Align 0
 ^strText ¡æ
-^TextSize 45.000000
+^TextSize 35.000000
 ^tx_Normal NO_IMAGE.png
 ^tx_Hover NO_IMAGE.png
 ^tx_Press NO_IMAGE.png
@@ -4619,7 +4619,7 @@
 ^Color 1.000000 1.000000 1.000000 0.000000
 ^Align 0
 ^strText 0.87
-^TextSize 23.000000
+^TextSize 20.000000
 ^tx_Normal NO_IMAGE.png
 ^tx_Hover NO_IMAGE.png
 ^tx_Press NO_IMAGE.png
@@ -4637,11 +4637,11 @@
 ^bRender 1
 ^Position -2.000000 -113.246681 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 75.000000 15.000000 1.000000
+^Scale 60.000000 15.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
 ^Align 0
 ^strText 100,000,000
-^TextSize 23.000000
+^TextSize 18.000000
 ^tx_Normal btn_001.png
 ^tx_Hover btn_000.png
 ^tx_Press btn_002.png
@@ -4663,7 +4663,7 @@
 ^Color 1.000000 0.800000 1.000000 1.000000
 ^Align 0
 ^strText 5·¹º§:Æ÷ÅºÃß°¡
-^TextSize 25.000000
+^TextSize 23.000000
 ^tx_Normal backimg_000.png
 ^tx_Hover backimg_000.png
 ^tx_Press backimg_000.png
@@ -4685,7 +4685,7 @@
 ^Color 1.000000 0.800000 1.000000 1.000000
 ^Align 0
 ^strText 15·¹º§:Áö·ÚÃß°¡
-^TextSize 25.000000
+^TextSize 23.000000
 ^tx_Normal backimg_000.png
 ^tx_Hover backimg_000.png
 ^tx_Press backimg_000.png
@@ -4751,11 +4751,11 @@
 ^bRender 1
 ^Position 229.104111 -271.624054 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale -1.000000 23.746208 1.000000
-^SubScale 7.000000 7.000000 1.000000
-^Color 1.000000 0.500000 0.700000 1.000000
-^tx_Bar black.png
-^tx_Handle circle.png
+^Scale -1.175175 17.744797 1.000000
+^SubScale 10.000000 10.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_Bar Alpha.png
+^tx_Handle PropertyButtonFavouriteFilled-f49031973d301466f8844bd153a56efc-1.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -4969,6 +4969,54 @@
 ^Scale 400.000000 300.000000 1.000000
 ^Color 0.450000 1.000000 0.350000 0.000000
 ^tx_Normal White.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick ýýýý
+
+^Type 777
+^NodeName HelpTextPanel
+^ParentName Root
+^KeyState 135 135
+^bRender 1
+^Position 0.000000 0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 1.000000 1.000000 1.000000
+
+^Type 788
+^NodeName HelpText_Back
+^ParentName HelpTextPanel
+^KeyState 135 135
+^bRender 1
+^Position 0.000000 185.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 251.000000 16.000000 1.000000
+^Color 0.000000 0.000000 0.000000 1.000000
+^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 783
+^NodeName HelpText
+^ParentName HelpTextPanel
+^KeyState 135 135
+^bRender 1
+^Position 0.000000 185.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 250.000000 15.000000 1.000000
+^Color 1.000000 0.700000 0.700000 1.000000
+^Align 0
+^strText ÇÒMoney!!¤»¤»¤»¤»¤»¤»¤»¤»¤»¤»
+^TextSize 20.000000
+^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274

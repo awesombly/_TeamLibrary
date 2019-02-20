@@ -85,6 +85,15 @@ namespace UI
 		float				m_fWidth;  // 화면 크기 설정 -> matproj
 		float				m_fHeight; // 화면 크기 설정 -> matproj
 		float				m_fUITimer;
+	private:
+		bool				m_bHovered = false;
+		bool				m_bPressed = false;
+		bool				m_bClicked = false;
+	public:
+		void UpdateButtonState();
+		bool CheckHovered();
+		bool CheckPressed();
+		bool CheckClicked();
 	public:
 		bool SetParent(JPanel* pParent);
 		void push_child(JPanel* pChild);

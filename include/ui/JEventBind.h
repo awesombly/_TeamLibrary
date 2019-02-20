@@ -170,17 +170,42 @@ namespace UI
 		static JPanel* Armor = (JPanel*)pRoot->find_child(L"Inventory_Armor_Back");
 		static JPanel* Accessoris = (JPanel*)pRoot->find_child(L"Inventory_Accessories_Back");
 		static JPanel* Accessoris2 = (JPanel*)pRoot->find_child(L"Inventory_Accessories2_Back");
+		static JTextCtrl* ItemInfoName = (JTextCtrl*)pRoot->find_child(L"Item_Info_Name");
+		static JTextCtrl* ItemInfoKind = (JTextCtrl*)pRoot->find_child(L"Item_Info_Kind");
 
 		static auto E_SHOW_ITEM_INFO = [](void* vp)
 		{
 			pItemHelp->m_bRender = false;
 			if (!pInventoryPanel->m_bRender) return;
 
-			if (Weapon->m_pShape->Hovered(Weapon->m_rt, Weapon->m_ptMouse.Getpt()) ||
-				Armor->m_pShape->Hovered(Armor->m_rt, Armor->m_ptMouse.Getpt()) ||
-				Accessoris->m_pShape->Hovered(Accessoris->m_rt, Accessoris->m_ptMouse.Getpt()) ||
-				Accessoris2->m_pShape->Hovered(Accessoris2->m_rt, Accessoris2->m_ptMouse.Getpt()))
+			if (Weapon->CheckHovered())
 			{
+				ItemInfoName->SetString(L"초보자의 검");
+				ItemInfoKind->SetString(L"무기");
+				pItemHelp->m_vPos.x = pItemHelp->m_ptMouse.Getpt().x - pItemHelpBack->m_vScl.x;
+				pItemHelp->m_vPos.y = pItemHelp->m_ptMouse.Getpt().y - pItemHelpBack->m_vScl.y;
+				pItemHelp->m_bRender = true;
+			}
+			if (Armor->CheckHovered())
+			{
+				ItemInfoName->SetString(L"초보자의 갑옷");
+				ItemInfoKind->SetString(L"방어구");
+				pItemHelp->m_vPos.x = pItemHelp->m_ptMouse.Getpt().x - pItemHelpBack->m_vScl.x;
+				pItemHelp->m_vPos.y = pItemHelp->m_ptMouse.Getpt().y - pItemHelpBack->m_vScl.y;
+				pItemHelp->m_bRender = true;
+			}
+			if (Accessoris->CheckHovered())
+			{
+				ItemInfoName->SetString(L"초보자의 목걸이");
+				ItemInfoKind->SetString(L"악세사리");
+				pItemHelp->m_vPos.x = pItemHelp->m_ptMouse.Getpt().x - pItemHelpBack->m_vScl.x;
+				pItemHelp->m_vPos.y = pItemHelp->m_ptMouse.Getpt().y - pItemHelpBack->m_vScl.y;
+				pItemHelp->m_bRender = true;
+			}
+			if (Accessoris2->CheckHovered())
+			{
+				ItemInfoName->SetString(L"초보자의 팔찌");
+				ItemInfoKind->SetString(L"악세사리");
 				pItemHelp->m_vPos.x = pItemHelp->m_ptMouse.Getpt().x - pItemHelpBack->m_vScl.x;
 				pItemHelp->m_vPos.y = pItemHelp->m_ptMouse.Getpt().y - pItemHelpBack->m_vScl.y;
 				pItemHelp->m_bRender = true;

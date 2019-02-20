@@ -9,9 +9,6 @@ namespace UI
 		vector<PNCT_VERTEX> m_pVertices;
 		vector<DWORD>		m_pIndices;
 		UI::VSCB			m_cbData;
-		bool				m_bHovered = false;
-		bool				m_bPressed = false;
-		bool				m_bClicked = false;
 	public:
 		D3DXMATRIX			m_matWorld;
 		D3DXVECTOR3         m_vRot;
@@ -21,6 +18,9 @@ namespace UI
 		bool Clicked(RECT& rt, POINT& pt);
 		bool Hovered(RECT& rt, POINT& pt);
 		bool Pressed(RECT& rt, POINT& pt);
+		//bool CheckHovered();
+		//bool CheckPressed();
+		//bool CheckClicked();
 		bool Create(ID3D11Device* pDevice, const char* PSName = "PS", const TCHAR* szShaderName = L"../../data/ui/shader/DefaultUI.hlsl");
 	public:
 		bool Frame();
