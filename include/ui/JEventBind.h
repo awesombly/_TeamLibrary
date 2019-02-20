@@ -213,5 +213,24 @@ namespace UI
 		};
 		pItemHelp->PreEvent.first = E_SHOW_ITEM_INFO;
 		pItemHelp->PreEvent.second = pItemHelp;
+
+		auto pHelpText = (JTextCtrl*)pRoot->find_child(L"HelpText");
+		pHelpText->SetString(L"금액이 부족합니다.");
+		JPanel* pHelpTextPanel = pHelpText->m_pParent;
+		static auto E_HelpText = [](void* vp)
+		{
+			JPanel* pPanel = (JPanel*)vp;
+
+			if (pPanel->m_bRender)
+				pPanel->m_fUITimer += Timer::SPF;
+
+			if (pPanel->m_fUITimer >= 3.0f)
+			{
+				pPanel->m_bRender = false;
+				pPanel->m_fUITimer = 0.0f;
+			}
+		};
+		pHelpTextPanel->PreEvent.first = E_HelpText;
+		pHelpTextPanel->PreEvent.second = pHelpTextPanel;
 	}
 }

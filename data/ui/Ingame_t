@@ -4980,7 +4980,7 @@
 ^NodeName HelpTextPanel
 ^ParentName Root
 ^KeyState 135 135
-^bRender 1
+^bRender 0
 ^Position 0.000000 0.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 1.000000 1.000000 1.000000
@@ -4992,7 +4992,7 @@
 ^bRender 1
 ^Position 0.000000 185.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 251.000000 16.000000 1.000000
+^Scale 151.000000 16.000000 1.000000
 ^Color 0.000000 0.000000 0.000000 1.000000
 ^tx_Normal 菅斬剪謝辦望軀2.png
 ^pfEventHover 7274
@@ -5009,10 +5009,10 @@
 ^bRender 1
 ^Position 0.000000 185.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
-^Scale 250.000000 15.000000 1.000000
+^Scale 150.000000 15.000000 1.000000
 ^Color 1.000000 0.700000 0.700000 1.000000
 ^Align 0
-^strText йMoney!!六六六六六六六六六六
+^strText 旎擋檜
 ^TextSize 20.000000
 ^tx_Normal 菅斬剪謝辦望軀2.png
 ^tx_Hover 菅斬剪謝辦望軀2.png
