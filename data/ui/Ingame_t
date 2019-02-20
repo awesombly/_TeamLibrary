@@ -656,91 +656,6 @@
 ^pfEventClick 7274
 ^vpEventClick 
 
-^Type 782
-
-^SpriteType 6430
-^NodeName Inventory_Movey_Sprite
-^ParentName Inventory_Panel
-^KeyState 135 135
-^bRender 1
-^bLoop 1
-^Position 120.000000 -125.000000 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 13.000000 13.000000 1.000000
-^Color 1.000000 1.000000 1.000000 1.000000
-^AnimTime 1.000000
-^AnimUV 4 2 
-^SPRITESTART 1 
-^02Sprite_Gold-97c22b9c49552ae499f748b5fb535d0d-1.png
-^SPRITEEND
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick 
-
-^Type 783
-^NodeName Inventory_Movey
-^ParentName Inventory_Panel
-^KeyState 135 135
-^bRender 1
-^Position 235.000000 -125.000000 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 100.000000 10.000000 1.000000
-^Color 0.000000 0.000000 0.000000 1.000000
-^Align 0
-^strText 999999999999
-^TextSize 15.000000
-^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
-^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
-^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick 
-
-^Type 788
-^NodeName Inventory_Movey_Back
-^ParentName Inventory_Panel
-^KeyState 135 135
-^bRender 1
-^Position 235.000000 -125.000000 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 98.000000 8.000000 1.000000
-^Color 0.800000 0.800000 0.800000 1.000000
-^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick 
-
-^Type 783
-^NodeName Inventory_Movey_Text
-^ParentName Inventory_Panel
-^KeyState 135 135
-^bRender 1
-^Position 320.000000 -125.000000 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 10.000000 10.000000 1.000000
-^Color 1.000000 1.000000 1.000000 0.000000
-^Align 0
-^strText ¿ø
-^TextSize 15.000000
-^tx_Normal NO_IMAGE.png
-^tx_Hover NO_IMAGE.png
-^tx_Press NO_IMAGE.png
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick 
-
 ^Type 788
 ^NodeName Inventory_Weapon_Back
 ^ParentName Inventory_Panel
@@ -870,6 +785,91 @@
 ^Scale 20.000000 20.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
 ^tx_Normal 1_444.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 782
+
+^SpriteType 6430
+^NodeName Inventory_Money_Sprite
+^ParentName Inventory_Panel
+^KeyState 135 135
+^bRender 1
+^bLoop 1
+^Position 120.000000 -125.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 13.000000 13.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^AnimTime 1.000000
+^AnimUV 4 2 
+^SPRITESTART 1 
+^02Sprite_Gold-97c22b9c49552ae499f748b5fb535d0d-1.png
+^SPRITEEND
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 783
+^NodeName Inventory_Money
+^ParentName Inventory_Panel
+^KeyState 135 135
+^bRender 1
+^Position 235.000000 -125.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 100.000000 10.000000 1.000000
+^Color 0.000000 0.000000 0.000000 1.000000
+^Align 0
+^strText 999999999999
+^TextSize 15.000000
+^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Hover µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Press µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName Inventory_Money_Back
+^ParentName Inventory_Panel
+^KeyState 135 135
+^bRender 1
+^Position 235.000000 -125.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 98.000000 8.000000 1.000000
+^Color 0.800000 0.800000 0.800000 1.000000
+^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 783
+^NodeName Inventory_Money_Text
+^ParentName Inventory_Panel
+^KeyState 135 135
+^bRender 1
+^Position 320.000000 -125.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 10.000000 10.000000 1.000000
+^Color 1.000000 1.000000 1.000000 0.000000
+^Align 0
+^strText ¿ø
+^TextSize 15.000000
+^tx_Normal NO_IMAGE.png
+^tx_Hover NO_IMAGE.png
+^tx_Press NO_IMAGE.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
