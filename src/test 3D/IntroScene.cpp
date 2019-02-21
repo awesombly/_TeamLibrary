@@ -716,7 +716,7 @@ void IntroScene::SetObjects() noexcept
 	pHeroObj->AddComponent({ pCollider, pRerderEnvi, new AIZombieKing() });
 	pCollider->CollisionEvent = MyEvent::ZombieHit;
 	//pCollider->m_pPhysics->m_mass = 0.05f;
-	pCollider->SetGravityScale(30.0f);
+	pCollider->SetGravityScale(100.0f);
 	pCollider->m_pPhysics->m_damping = 3.0f;
 	pCollider->m_eTag = ETag::Enemy;
 	pHeroObj->m_pPhysics->DeadEvent = DyingEvent::ZombieKingDead;

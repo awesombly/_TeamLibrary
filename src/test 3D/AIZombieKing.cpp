@@ -58,7 +58,7 @@ bool AIZombieKing::Frame(const float& spf, const float& accTime)	noexcept
 			 ((AHeroObj*)m_pParent)->SetANIM_Loop(Zombie_KING_IDLE);
 			 m_pParent->isMoving(false);
 			 //m_pParent->m_pPhysics->m_mass = 0.05f;
-			 m_pParent->SetGravityScale(30.0f);
+			 m_pParent->SetGravityScale(100.0f);
 			 m_pParent->m_pPhysics->m_damping = 3.0f;
 			 m_pCollider->m_eTagArray[ETag::Enemy] = true;
 			 m_pCollider->m_eTagArray[ETag::Dummy] = true;
@@ -111,7 +111,8 @@ bool AIZombieKing::Frame(const float& spf, const float& accTime)	noexcept
 		 case EState::Action3:
 		 {
 			 // а║гн
-			 m_delay = 3.5f;
+			 m_delay = 2.2f;
+			 m_dealyAttack = 3.5f;
 			 m_pParent->isMoving(false);
 			 m_pParent->SetForce(m_Target);
 			 auto pEffect = ObjectManager::Get().TakeObject(L"EZStump");
@@ -149,12 +150,12 @@ bool AIZombieKing::Frame(const float& spf, const float& accTime)	noexcept
 					m_delayStump = 0.0f;
 					m_pParent->SetFocus(iter->GetPosition());
 					//m_pParent->m_pPhysics->m_mass = 1.0f;
-					m_pParent->SetGravityScale(1.6f);
-					m_pParent->m_pPhysics->m_damping = 0.25f;
+					m_pParent->SetGravityScale(2.0f);
+					m_pParent->m_pPhysics->m_damping = 0.35f;
 					m_pCollider->m_eTagArray[ETag::Enemy] = false;
 					m_pCollider->m_eTagArray[ETag::Dummy] = false;
 					m_pCollider->m_eTagArray[ETag::Collider] = false;
-					m_Target = (iter->GetPosition() - m_pParent->GetPosition()) * 1.55 + Vector3::Up * 600.0f;
+					m_Target = (iter->GetPosition() - m_pParent->GetPosition()) + Vector3::Up * 550.0f;
 					m_eDirState = EState::Action3;
 					m_delay = 0.5f;
 					((AHeroObj*)m_pParent)->SetANIM_OneTime(Zombie_KING_JUMP_ATTACK);

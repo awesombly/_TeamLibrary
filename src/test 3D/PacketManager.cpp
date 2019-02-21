@@ -268,18 +268,18 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 
 						auto pItem = ObjectManager::Get().TakeObject(L"Arrow");
 						pItem->SetPosition(TowerPos[index] + Vector3::Up * 250.0f);
-						//pItem->SetRotation(pObject->GetRotation());
-						pItem->SetScale(Vector3::One);
-						pItem->SetForce((iter->GetPosition() - TowerPos[index] - Vector3::Up * 250.0f) * 1.2f + Vector3::Up * 20.0f);
+						pItem->SetScale(Vector3::One * 7.0f);
+						pItem->SetFocus(iter->GetPosition());
+						pItem->SetForce((iter->GetPosition() - TowerPos[index] - Vector3::Up * 250.0f) * 1.2f + Vector3::Up * 30.0f);
 						pItem->m_pPhysics->m_damage = TowerDamage;
 						pItem->m_pPhysics->UserSocket = ESocketType::EDummy;
 
 						++index;
 						pItem = ObjectManager::Get().TakeObject(L"Arrow");
 						pItem->SetPosition(TowerPos[index] + Vector3::Up * 250.0f);
-						//pItem->SetRotation(pObject->GetRotation());
-						pItem->SetScale(Vector3::One);
-						pItem->SetForce((iter->GetPosition() - TowerPos[index] - Vector3::Up * 250.0f) * 1.2f + Vector3::Up * 20.0f);
+						pItem->SetScale(Vector3::One * 7.0f);
+						pItem->SetFocus(iter->GetPosition());
+						pItem->SetForce((iter->GetPosition() - TowerPos[index] - Vector3::Up * 250.0f) * 1.2f + Vector3::Up * 30.0f);
 						pItem->m_pPhysics->m_damage = TowerDamage;
 						pItem->m_pPhysics->UserSocket = ESocketType::EDummy;
 						break;
@@ -442,15 +442,7 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 	case PACKET_SendUserInfo:
 	{
 		memcpy(&p_KeyValue, data, sizeof(Packet_KeyValue));
-		//// 유저 목록에 있으면 갱신
-		//auto userIter = UserList.find(p_KeyValue.KeyValue);
-		//if (userIter != UserList.end())
-		//{
-		//	auto pUserInfo = UserList[p_KeyValue.KeyValue];
-		//	memcpy((char*)pUserInfo, data, PS_UserInfo);
-		//	memcpy(((char*)pUserInfo + PS_UserInfo), ((char*)data + PS_UserInfo), pUserInfo->DataSize);
-		//	return;
-		//}
+		// 유저 목록에 있으면 갱신
 		int i = 0;
 		for (auto& iter : UserList)
 		{
@@ -779,6 +771,7 @@ void PacketManager::SendSpawnEnemy(const WCHAR* objName, const UINT& socketNum, 
 	p_TakeObject.UserSocket = socketNum;
 	for (int i = 0; i < spawnCount; ++i)
 	{
+		// 체력
 		switch (socketNum)
 		 {
 		 case ESocketType::EZombie:
@@ -800,25 +793,25 @@ void PacketManager::SendSpawnEnemy(const WCHAR* objName, const UINT& socketNum, 
 		 	p_TakeObject.HP = hp;
 		 }	break;
 		}
-
-
+		
+		// 스폰 위치
 		switch ((int)(RandomNormal() * 4.0f))
 		{
 		case 0:
 		{
-			p_TakeObject.Position = { 1500.0f, 0.0f, 0.0f };
+			p_TakeObject.Position = { 1500.0f, 0.0f, RandomNormal() * 100.0f - 50.0f };
 		}	break;
 		case 1:
 		{
-			p_TakeObject.Position = { -1500.0f, 0.0f, 0.0f };
+			p_TakeObject.Position = { -1500.0f, 0.0f, RandomNormal() * 100.0f - 50.0f };
 		}	break;
 		case 2:
 		{
-			p_TakeObject.Position = { 0.0f, 0.0f, 1500.0f };
+			p_TakeObject.Position = { RandomNormal() * 100.0f - 50.0f, 0.0f, 1500.0f };
 		}	break;
 		case 3:
 		{
-			p_TakeObject.Position = { 0.0f, 0.0f, -1500.0f };
+			p_TakeObject.Position = { RandomNormal() * 100.0f - 50.0f, 0.0f, -1500.0f };
 		}	break;
 		}
 		p_TakeObject.KeyValue = ++PacketManager::Get().PlayerKeyCount;

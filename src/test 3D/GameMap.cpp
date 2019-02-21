@@ -1123,6 +1123,7 @@ bool GameMap::Init() noexcept
 
 	pObject->SetGravityScale(0.0f);
 	pObject->usePhysics(false);
+	pObject->m_pPhysics->m_repulsion = 0.6f;
 	pObject->m_pPhysics->m_armor = 0.0f;
 #pragma endregion
 

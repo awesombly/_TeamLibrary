@@ -195,27 +195,27 @@ bool GameScene::CheatMessage() noexcept
 		}
 		else if (str._Equal(L"Zombie"))
 		{
-			PacketManager::Get().SendSpawnEnemy(L"Zombie", ESocketType::EZombie, (UCHAR)PacketManager::Get().UserList.size(), 1.0f, 0.25f, 0.05f);
+			PacketManager::Get().SendSpawnEnemy(L"Zombie", ESocketType::EZombie, atoi(WCharToChar(m_chatMessage.substr(finder + 1).c_str())), 1.0f, 0.25f, 0.05f);
 			return false;
 		}
 		else if (str._Equal(L"Caster"))
 		{
-			PacketManager::Get().SendSpawnEnemy(L"Caster", ESocketType::ECaster, (UCHAR)PacketManager::Get().UserList.size(), 0.8f, 0.22f, 0.05f);
+			PacketManager::Get().SendSpawnEnemy(L"Caster", ESocketType::ECaster, atoi(WCharToChar(m_chatMessage.substr(finder + 1).c_str())), 0.8f, 0.22f, 0.05f);
 			return false;
 		}
 		else if (str._Equal(L"Crawler"))
 		{
-			PacketManager::Get().SendSpawnEnemy(L"Crawler", ESocketType::ECrawler, (UCHAR)PacketManager::Get().UserList.size(), 0.6f, 0.15f, 0.1f);
+			PacketManager::Get().SendSpawnEnemy(L"Crawler", ESocketType::ECrawler, atoi(WCharToChar(m_chatMessage.substr(finder + 1).c_str())), 0.6f, 0.15f, 0.1f);
 			return false;
 		}
 		else if (str._Equal(L"Mutant"))
 		{
-			PacketManager::Get().SendSpawnEnemy(L"Mutant", ESocketType::EMutant, (UCHAR)PacketManager::Get().UserList.size(), 5.0f, 0.5f, 0.1f);
+			PacketManager::Get().SendSpawnEnemy(L"Mutant", ESocketType::EMutant, atoi(WCharToChar(m_chatMessage.substr(finder + 1).c_str())), 5.0f, 0.5f, 0.1f);
 			return false;
 		}
 		else if (str._Equal(L"Tank"))
 		{
-			PacketManager::Get().SendSpawnEnemy(L"Tank", ESocketType::ETank, 1, 15.0f * PacketManager::Get().UserList.size(), 1.1f, 0.1f);
+			PacketManager::Get().SendSpawnEnemy(L"Tank", ESocketType::ETank, atoi(WCharToChar(m_chatMessage.substr(finder + 1).c_str())), 15.0f * PacketManager::Get().UserList.size(), 1.1f, 0.1f);
 			return false;
 		}
 		else if (str._Equal(L"Dead"))
