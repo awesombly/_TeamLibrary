@@ -15,7 +15,7 @@ public:
 	EGameState m_eState = EGameState::PreWait;
 	PlayerController* m_pPlayer = &PlayerController::Get();		// 컨트롤러
 	float* m_pFrameCount = nullptr;
-	UINT  m_waveCount = 0;
+	
 	int   m_spawnCount = 0;
 	// UI
 	JEditCtrl*	 m_pChat = nullptr;

@@ -83,6 +83,7 @@ public:
 	float		m_DelayLSkill;
 	float		m_DelayRSkill;
 	float		m_DelayDash;
+	float		m_DelaySpecial;
 	float		m_RegenMP;
 	float		m_RegenHP;
 										 
@@ -92,6 +93,7 @@ public:
 	float		m_curDelayLSkill	 = 0.0f;
 	float		m_curDelayRSkill	 = 0.0f;
 	float		m_curDelayDash		 = 0.0f;
+	float		m_curDelaySpecial	 = 0.0f;
 
 	char		m_defencePoint		 = 0;
 	float		m_chargeCount		 = 0.0f;

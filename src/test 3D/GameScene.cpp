@@ -195,27 +195,27 @@ bool GameScene::CheatMessage() noexcept
 		}
 		else if (str._Equal(L"Zombie"))
 		{
-			PacketManager::Get().SendTakeObject(L"Zombie", ESocketType::EZombie, atoi(WCharToChar(m_chatMessage.substr(finder + 1).c_str())), 1.0f, 0.25f, 0.05f, { -500.0f, 0.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
+			PacketManager::Get().SendSpawnEnemy(L"Zombie", ESocketType::EZombie, (UCHAR)PacketManager::Get().UserList.size(), 1.0f, 0.25f, 0.05f);
 			return false;
 		}
 		else if (str._Equal(L"Caster"))
 		{
-			PacketManager::Get().SendTakeObject(L"Caster", ESocketType::ECaster, atoi(WCharToChar(m_chatMessage.substr(finder + 1).c_str())), 0.8f, 0.22f, 0.05f, { -500.0f, 0.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
+			PacketManager::Get().SendSpawnEnemy(L"Caster", ESocketType::ECaster, (UCHAR)PacketManager::Get().UserList.size(), 0.8f, 0.22f, 0.05f);
 			return false;
 		}
 		else if (str._Equal(L"Crawler"))
-		{			
-			PacketManager::Get().SendTakeObject(L"Crawler", ESocketType::ECrawler, atoi(WCharToChar(m_chatMessage.substr(finder + 1).c_str())), 0.6f, 0.2f, 0.05f, { -500.0f, 0.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
+		{
+			PacketManager::Get().SendSpawnEnemy(L"Crawler", ESocketType::ECrawler, (UCHAR)PacketManager::Get().UserList.size(), 0.6f, 0.15f, 0.1f);
 			return false;
 		}
 		else if (str._Equal(L"Mutant"))
 		{
-			PacketManager::Get().SendTakeObject(L"Mutant", ESocketType::EMutant, atoi(WCharToChar(m_chatMessage.substr(finder + 1).c_str())), 5.0f, 0.5f, 0.1f, { -500.0f, 0.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
+			PacketManager::Get().SendSpawnEnemy(L"Mutant", ESocketType::EMutant, (UCHAR)PacketManager::Get().UserList.size(), 5.0f, 0.5f, 0.1f);
 			return false;
 		}
 		else if (str._Equal(L"Tank"))
 		{
-			PacketManager::Get().SendTakeObject(L"Tank", ESocketType::ETank, atoi(WCharToChar(m_chatMessage.substr(finder + 1).c_str())), 15.0f * PacketManager::Get().UserList.size(), 1.1f, 0.1f, { -500.0f, 0.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
+			PacketManager::Get().SendSpawnEnemy(L"Tank", ESocketType::ETank, 1, 15.0f * PacketManager::Get().UserList.size(), 1.1f, 0.1f);
 			return false;
 		}
 		else if (str._Equal(L"Dead"))
@@ -464,7 +464,7 @@ void GameScene::HostFrame() noexcept
 		{
 			m_eState = EGameState::WaveInit;
 			*m_pFrameCount = 3.0f;
-			m_waveCount = 0;
+			PacketManager::Get().m_waveCount = 0;
 
 			Packet_Float p_WaveStart;
 			p_WaveStart.KeyValue = 0;
@@ -479,17 +479,17 @@ void GameScene::HostFrame() noexcept
 		case EGameState::WaveInit:
 		{
 			m_eState = EGameState::Spawn;
-			++m_waveCount;
+			++PacketManager::Get().m_waveCount;
 			m_spawnCount = 4;
 
 			Packet_Float p_WaveStart;
-			p_WaveStart.KeyValue = m_waveCount;
+			p_WaveStart.KeyValue = PacketManager::Get().m_waveCount;
 			p_WaveStart.Value = *m_pFrameCount;
 			PacketManager::Get().SendPacket((char*)&p_WaveStart, sizeof(Packet_Float), PACKET_WaveStart);
 		}	break;
 		case EGameState::Spawn:
 		{
-			switch (m_waveCount)
+			switch (PacketManager::Get().m_waveCount)
 			{
 			case 1:
 			{
@@ -534,7 +534,7 @@ void GameScene::HostFrame() noexcept
 			}
 
 			// 클리어 조건
-			if (m_waveCount >= 5 && m_spawnCount <= 1)
+			if (PacketManager::Get().m_waveCount >= 5 && m_spawnCount <= 1)
 			{
 				if (ObjectManager::Get().GetObjectList(EObjType::Enemy)->empty())
 				{
@@ -550,7 +550,7 @@ void GameScene::HostFrame() noexcept
 			if (m_spawnCount <= 0)
 			{
 				m_eState = EGameState::WaveInit;
-				*m_pFrameCount = 30.0f;
+				*m_pFrameCount = 60.0f;
 			}
 			Packet_Float p_WaveStart;
 			p_WaveStart.KeyValue = m_spawnCount;
@@ -682,18 +682,19 @@ void GameScene::LoadUI() noexcept
 	// Option Volume
 	m_pVolume = (JSliderCtrl*)pUIRoot->find_child(L"Set_Volum");
 	m_pVolume->EventHover.first = [](void* pSlider) {
-		SoundManager::Get().SetMasterVolume(*((JSliderCtrl*)pSlider)->GetValue());
 		ErrorMessage("볼륨 : " + to_string(*((JSliderCtrl*)pSlider)->GetValue()));
+		SoundManager::Get().SetMasterVolume(*((JSliderCtrl*)pSlider)->GetValue());
 	};
 	m_pVolume->EventHover.second = m_pVolume;
 	m_pVolume->SetValue(0.5f);
 	SoundManager::Get().SetMasterVolume(*m_pVolume->GetValue());
 	// Mouse
 	m_pMouseSense = (JSliderCtrl*)pUIRoot->find_child(L"Set_Mouse");
-	m_pMouseSense->EventHover.first = [](void* pSlider) {
+	m_pMouseSense->EventClick.first = [](void* pSlider) {
+		ErrorMessage("마우스 : " + to_string(*((JSliderCtrl*)pSlider)->GetValue()));
 		PlayerController::Get().m_mouseSense = *((JSliderCtrl*)pSlider)->GetValue();
 	};
-	m_pMouseSense->EventHover.second = m_pMouseSense;
+	m_pMouseSense->EventClick.second = m_pMouseSense;
 	m_pMouseSense->SetValue(0.5f);
 	PlayerController::Get().m_mouseSense = *m_pMouseSense->GetValue();
 	// Exit

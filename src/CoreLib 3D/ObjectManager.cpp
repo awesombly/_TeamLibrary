@@ -527,6 +527,7 @@ void ObjectManager::DisableObject(GameObject* pObject) noexcept
 	static auto disableEvent = [](void* pVoid, void*) {
 		GameObject* pObj = (GameObject*)pVoid;
 		pObj->isEnable(false);
+		pObj->CutParent(false);
 		pObj->SetPosition(Vector3::Up * 100000.0f);
 		ObjectManager::Get().PopObject(pObj);
 		ObjectManager::Get().m_DisabledPull[pObj->m_myName].push(pObj);

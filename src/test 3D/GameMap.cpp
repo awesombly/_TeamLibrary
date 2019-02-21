@@ -28,6 +28,8 @@ bool GameMap::Init() noexcept
 	m_fountain.SetScale(D3DXVECTOR3(8.0f, 8.0f, 8.0f));
 	m_fountain.m_objType = EObjType::AObject;
 	m_fountain.m_myName = L"HolyWater";
+	m_fountain.m_keyValue = ++ObjectManager::Get().KeyCount;
+	ObjectManager::KeyObjects[m_fountain.m_keyValue] = &m_fountain;
 	pCollider->m_eTag = ETag::Ally;
 	pCollider->m_pivot = Vector3::Up * 50.0f;
 	pCollider->SetGravityScale(0.0f);

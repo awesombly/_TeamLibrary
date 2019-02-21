@@ -23,9 +23,9 @@ public:
 
 	PP::PPSender*		pSender;
 	bool				isHost;
-
 	UINT				PlayerKeyCount	= 10000;
 	queue< PP::PPPacketForProcess> PacketHistory;
+	std::function<int()> PacketFunc;
 	///
 	wstring				InputIP;
 	JListCtrl*			pChatList		= nullptr;
@@ -33,8 +33,8 @@ public:
 	JPanel*				pUserPanel[4];
 	JListCtrl*			pKillDisplay	= nullptr;
 	//
-	std::function<int()> PacketFunc;
-
+	UINT				m_waveCount = 0;
+	// Å¸¿ö
 	D3DXVECTOR3			TowerPos[8];
 	char				TowerLevel		= 0;
 	float				TowerDelayShot  = 0.0f;

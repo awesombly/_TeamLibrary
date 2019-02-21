@@ -329,6 +329,23 @@ void IntroScene::SetObjects() noexcept
 	//pCollider->SetGravityScale(0.5f);
 	ObjectManager::Get().SetProtoObject(pObject);
 
+	// 메테오
+	pCollider = new Collider(1.1f);
+	pParticle = m_pParser->CreateFromParticle(L"HellFire.eff", urlEffect)->SetEffectScale(2.0f);
+	auto pSphere = (Renderer*)ObjectManager::Get().TakeComponent(L"RowSphere");
+	pSphere->SetColor(DxManager::GetDContext(), Color::Red);
+	//pParticle->isFollow(true);
+	pObject = new GameObject(L"Meteor", { pCollider, pParticle, pSphere }, EObjType::Object);
+	pObject->SetScale(Vector3::One * 50.0f);
+	pCollider->CollisionEvent = MyEvent::NuclearBoom;
+	pCollider->m_eTag = ETag::Dummy;
+	pCollider->m_eTagArray[ETag::Dummy] = false;
+	pCollider->m_eTagArray[ETag::Collider] = false;
+	pCollider->m_eTagArray[ETag::Ally] = false;
+	pCollider->m_eTagArray[ETag::Enemy] = false;
+	//pCollider->SetGravityScale(0.5f);
+	ObjectManager::Get().SetProtoObject(pObject);
+
 	// 버프 웨이브 
 	pCollider = new Collider(1.0f);
 	pObject = new GameObject(L"BuffWave", { pCollider, m_pParser->CreateFromParticle(L"Emission2.eff", urlEffect)->SetEffectScale(3.0f), new CTransformer(Vector3::Zero, Quaternion::Zero, Vector3::One * 150.0f) }, EObjType::Effect);
@@ -511,11 +528,27 @@ void IntroScene::SetObjects() noexcept
 	pHeroObj->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
 	pHeroObj->m_myName = L"Arrow";
 	pHeroObj->m_objType = EObjType::AObject;
-	pCollider = new Collider(5.0f);
+	pCollider = new Collider(4.0f);
 	pHeroObj->AddComponent({ pCollider, pRenderer, ObjectManager::Get().TakeComponent(L"Fire") });
 	//pCollider->m_pivot = Vector3::Up * 6.0f + Vector3::Forward * 2.5f;
 	pCollider->SetGravityScale(0.5f);
 	pCollider->CollisionEvent = MyEvent::OneTimeHit;
+	pCollider->m_eTag = ETag::Dummy;
+	pCollider->m_eTagArray[ETag::Collider] = false;
+	pCollider->m_eTagArray[ETag::Dummy] = false;
+	ObjectManager::Get().SetProtoObject(pHeroObj);
+
+	// 관통 화살
+	pHeroObj = new AHeroObj();
+	pHeroObj->SetPlayerCharacter(ITEM_ARROW);
+	pHeroObj->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+	pHeroObj->m_myName = L"ArrowP";
+	pHeroObj->m_objType = EObjType::AObject;
+	pCollider = new Collider(4.0f);
+	pHeroObj->AddComponent({ pCollider, pRenderer, ObjectManager::Get().TakeComponent(L"Fire") });
+	//pCollider->m_pivot = Vector3::Up * 6.0f + Vector3::Forward * 2.5f;
+	pCollider->SetGravityScale(0.5f);
+	pCollider->CollisionEvent = MyEvent::PiercingHit;
 	pCollider->m_eTag = ETag::Dummy;
 	pCollider->m_eTagArray[ETag::Collider] = false;
 	pCollider->m_eTagArray[ETag::Dummy] = false;

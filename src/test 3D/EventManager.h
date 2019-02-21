@@ -15,6 +15,7 @@ namespace MyEvent {
 	void PlayerAttack(Collider* pA, Collider* pB);
 	void PlayerBomb(Collider* pA, Collider* pB);
 	void OneTimeHit(Collider* pA, Collider* pB);
+	void PiercingHit(Collider* pA, Collider* pB);
 	void DaggerHit(Collider* pA, Collider* pB);
 	void ArrowHit(Collider* pA, Collider* pB);
 	void MeleeHit(Collider* pA, Collider* pB);

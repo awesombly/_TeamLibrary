@@ -497,6 +497,7 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 		memcpy(&p_PlayerDead, data, sizeof(Packet_PlayerDead));
 		// 죽은게 자신일시
 		auto pObject = ObjectManager::KeyObjects[p_PlayerDead.KeyValue];
+
 		if (PlayerController::Get().GetParent() == pObject)
 		{
 			++pMyInfo->DeathCount;
@@ -504,6 +505,7 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 			PacketManager::Get().SendPacket((char*)pMyInfo, (USHORT)(PS_UserInfo + pMyInfo->DataSize), PACKET_SendUserInfo);
 			PlayerController::Get().DeadEvent();
 		}
+
 
 		// 
 		switch (pObject->m_objType)
@@ -695,6 +697,7 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 	{
 		memcpy(&p_Float, data, sizeof(Packet_Float));
 		pChatList->push_string(L"========================= Wave " + to_wstring(p_Float.KeyValue) + L" Start! ===========================");
+		m_waveCount = p_Float.KeyValue;
 		PlayerController::Get().m_GameFrameCount = p_Float.Value;
 		PlayerController::Get().m_canChurh = true;
 		//SoundManager::Get().Play("SE_wave.mp3");
@@ -773,10 +776,32 @@ void PacketManager::SendSpawnEnemy(const WCHAR* objName, const UINT& socketNum, 
 	memcpy(p_TakeObject.ObjectName, objName, strSize);
 	p_TakeObject.DataSize = (UCHAR)strSize;
 	p_TakeObject.Rotation = Quaternion::Base;
-	p_TakeObject.HP = hp;
 	p_TakeObject.UserSocket = socketNum;
 	for (int i = 0; i < spawnCount; ++i)
 	{
+		switch (socketNum)
+		 {
+		 case ESocketType::EZombie:
+		 case ESocketType::ECaster:
+		 case ESocketType::ECrawler:
+		 {
+		 	p_TakeObject.HP = hp * m_waveCount;
+		 }	break;
+		 case ESocketType::EMutant:
+		 {
+		 	p_TakeObject.HP = hp + hp * m_waveCount * 0.4f;
+		 }	break;
+		 case ESocketType::ETank:
+		 {
+		 	p_TakeObject.HP = hp + hp * m_waveCount * 0.2f;
+		 }	break;
+		 default:
+		 {
+		 	p_TakeObject.HP = hp;
+		 }	break;
+		}
+
+
 		switch ((int)(RandomNormal() * 4.0f))
 		{
 		case 0:
