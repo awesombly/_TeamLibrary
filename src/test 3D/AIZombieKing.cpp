@@ -26,7 +26,7 @@ bool AIZombieKing::Init() noexcept
 		m_Breath = nullptr;
 	}
 	m_isEnable = true;
-	m_attackRange = m_pParent->GetScaleAverage() * 3000.0f;
+	m_attackRange = m_pParent->GetScaleAverage() * 5000.0f;
 	m_moveSpeed = RandomNormal() * 15.0f + 45.0f;
 	m_delayBreath = 0.0f;
 	m_delayStump = 0.0f;
@@ -149,7 +149,7 @@ bool AIZombieKing::Frame(const float& spf, const float& accTime)	noexcept
 					m_delayStump = 0.0f;
 					m_pParent->SetFocus(iter->GetPosition());
 					//m_pParent->m_pPhysics->m_mass = 1.0f;
-					m_pParent->SetGravityScale(1.0f);
+					m_pParent->SetGravityScale(1.6f);
 					m_pParent->m_pPhysics->m_damping = 0.25f;
 					m_pCollider->m_eTagArray[ETag::Enemy] = false;
 					m_pCollider->m_eTagArray[ETag::Dummy] = false;

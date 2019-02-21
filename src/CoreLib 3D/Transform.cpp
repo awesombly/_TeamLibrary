@@ -41,10 +41,10 @@ void Transform::SetFocus(const D3DXVECTOR3& target) noexcept
 	D3DXVec3Normalize(&dirTarget, &dirTarget);
 	float fRadian = acosf(D3DXVec3Dot(&dirTarget, &forward));
 
-	if (D3DXVec3Dot(&GetRight(), &dirTarget) > 0.0f)
-		m_rotation.y = fRadian;
+	if (VectorDot(Normalize(GetRight()), dirTarget) > 0.0f)
+		m_rotation.y += fRadian;
 	else
-		m_rotation.y = -fRadian;
+		m_rotation.y += -fRadian;
 }
 const float Transform::GetFocusY(const D3DXVECTOR3& target) noexcept
 {
