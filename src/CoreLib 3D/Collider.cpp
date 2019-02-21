@@ -78,7 +78,7 @@ bool Collider::CollisionAllCheck(const float& spf) noexcept
 	for (auto& iter : m_IgnoreList)
 	{
 		m_CollisionList.push_front(iter);
-	}
+	} 
 	m_CollisionList.push_front(this);
 
 	for (auto& iter : ObjectManager::Get().GetColliderList())
@@ -147,13 +147,13 @@ bool Collider::CollisionAllCheck(const float& spf) noexcept
 				//////m_force = Vector3::Zero;
 				//////iter->m_force = Vector3::Zero;
 
-				if (m_pPhysics->m_usePhysics)// && iter->m_eTag != ETag::Dummy)
+				if (usePhysics())// && iter->m_eTag != ETag::Dummy)
 				{
 					m_pPhysics->m_force = Normalize(GetCenter() - iter->GetCenter()) * (m_pPhysics->m_repulsion + iter->m_pPhysics->m_repulsion) * PushPower;
 					if (m_pPhysics->m_isMoving)
 						m_pParent->Translate(-m_pPhysics->m_direction * spf);
 				}
-				if (iter->m_pPhysics->m_usePhysics)// && m_eTag != ETag::Dummy)
+				if (iter->usePhysics())// && m_eTag != ETag::Dummy)
 				{
 					iter->m_pPhysics->m_force = Normalize(iter->GetCenter() - GetCenter()) * (m_pPhysics->m_repulsion + iter->m_pPhysics->m_repulsion) * PushPower;
 					if (m_pPhysics->m_isMoving)

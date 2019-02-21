@@ -242,9 +242,12 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 			PacketManager::Get().UserList[socket]->MotionRate -= 0.65f;
 			if (PlayerController::Get().GetParent() == pObject)
 			{
-				if(PlayerController::Get().m_pEffectBerserk->isEnable())
-					ObjectManager::Get().DisableObject(PlayerController::Get().m_pEffectBerserk);
-				PlayerController::Get().m_pEffectBerserk = nullptr;
+				if (PlayerController::Get().m_pEffectBerserk != nullptr)
+				{
+					//ObjectManager::Get().DisableObject(PlayerController::Get().m_pEffectBerserk);
+					ObjectManager::Get().RemoveObject(PlayerController::Get().m_pEffectBerserk);
+					PlayerController::Get().m_pEffectBerserk = nullptr;
+				}
 				PlayerController::Get().m_motionBuff = 0.0f;
 				PlayerController::Get().m_cooltimeBuff = 0;
 			}
@@ -815,7 +818,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 		}	break;
 		case EAction::Motion2:
 		{
-			auto targetPos = pObject->GetPosition() + forward * 280.0f;
+			auto targetPos = pObject->GetPosition() + forward * 310.0f;
 			targetPos.y = 1000.0f;
 			auto pItem = ObjectManager::Get().TakeObject(L"Meteor");
 			pItem->SetPosition(targetPos);

@@ -41,48 +41,50 @@ bool AIZombieCrawl::Frame(const float& spf, const float& accTime)	noexcept
 		{
 		case EState::Idle:
 		{
+			m_pParent->isMoving(false);
 		}	break;
 		case EState::Move:
 		{
 			((AHeroObj*)m_pParent)->SetANIM_Loop(ZombieR_CRAWL);
+			m_pParent->SetDirectionForce(Normalize((m_Target = PlayerController::Get().m_pHome->GetPosition()) - m_pParent->GetPosition()) * m_moveSpeed);
 			m_pParent->SetFocus(m_Target = PlayerController::Get().m_pHome->GetPosition());
 		}	break;
 		case EState::Attack:
 		{
 			m_delay = 1.5f;
-			//((AHeroObj*)m_pParent)->SetANIM_OneTime(Zombie_ATTACK);
+			m_pParent->isMoving(false);
+			m_pParent->SetFocus(m_Target);
 		}	break;
 		}
 		return true;
 	}
+
 	// 행동
 	switch (m_eState)
 	{
 	case EState::Idle:
 	{
-		m_eDirState = EState::Move;
+		if (m_dealyAttack <= 0.0f)
+		{
+			m_eDirState = EState::Move;
+		}
 	}	break;
 	case EState::Move:
 	{
-		//for (auto& iter : *ObjectManager::Get().GetObjectList(EObjType::Character))
-		//{
-		//	if (VectorLengthSq(iter->GetPosition() - m_pParent->GetPosition()) <= m_attackRange)
-		//	{
-		//		m_pParent->SetRotationY(m_pParent->GetFocusY(m_Target = iter->GetPosition()) - PI * 0.5f);
-		//		m_eDirState = EState::Attack;
-		//		return true;
-		//	}
-		//}
-		if (VectorLengthSq(m_Target - m_pParent->GetPosition()) <= m_attackRange + PlayerController::Get().HomeRadius)
+		/*for (auto& iter : *ObjectManager::Get().GetObjectList(EObjType::Character))
 		{
-			m_pParent->SetFocus(m_Target);
+			if (VectorLengthSq(iter->GetPosition() - m_pParent->GetPosition()) <= m_attackRange)
+			{
+				m_Target = iter->GetPosition();
+				m_inAttackRange = true;
+				break;
+			}
+		}*/
+
+		if (VectorLengthSq((m_Target = PlayerController::Get().m_pHome->GetPosition()) - m_pParent->GetPosition()) <= m_attackRange + PlayerController::Get().HomeRadius)
+		{
 			m_eDirState = EState::Attack;
 			return true;
-		}
-		// 이동
-		if (VectorLengthSq(m_Target - m_pParent->GetPosition()) >= m_attackRange + PlayerController::Get().HomeRadius)
-		{
-			m_pParent->Translate(Normalize(m_Target - m_pParent->GetPosition()) * m_moveSpeed * spf);
 		}
 	}	break;
 	case EState::Attack:
@@ -91,11 +93,10 @@ bool AIZombieCrawl::Frame(const float& spf, const float& accTime)	noexcept
 		// 공격
 		auto pEffect = ObjectManager::Get().TakeObject(L"ZBoom");
 		pEffect->SetPosition(m_pParent->GetPosition());
+		pEffect->SetScale(Vector3::One * 1.5f);
 		pEffect->m_pPhysics->m_damage = 0.8f;
 
 		ObjectManager::Get().DisableObject(m_pParent);
-		return false;
-		///
 	}	break;
 	}
 	return true;

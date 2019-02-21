@@ -55,26 +55,34 @@ bool AIZombieKing::Frame(const float& spf, const float& accTime)	noexcept
 		{
 		 case EState::Idle:
 		 {
-		 }	break;
-		 case EState::Move:
-		 {
-			 m_pParent->m_pPhysics->m_mass = 0.05f;
+			 ((AHeroObj*)m_pParent)->SetANIM_Loop(Zombie_KING_IDLE);
+			 m_pParent->isMoving(false);
+			 //m_pParent->m_pPhysics->m_mass = 0.05f;
+			 m_pParent->SetGravityScale(30.0f);
 			 m_pParent->m_pPhysics->m_damping = 3.0f;
 			 m_pCollider->m_eTagArray[ETag::Enemy] = true;
 			 m_pCollider->m_eTagArray[ETag::Dummy] = true;
 			 m_pCollider->m_eTagArray[ETag::Collider] = true;
+		 }	break;
+		 case EState::Move:
+		 {
 		 	((AHeroObj*)m_pParent)->SetANIM_Loop(Zombie_KING_WALK);
-		 	m_pParent->SetFocus(m_Target = PlayerController::Get().m_pHome->GetPosition());
+			m_pParent->SetDirectionForce(Normalize((m_Target = PlayerController::Get().m_pHome->GetPosition()) - m_pParent->GetPosition()) * m_moveSpeed);
+			m_pParent->SetFocus(m_Target);
 		 }	break;
 		 case EState::Attack:
 		 {
-		 	m_delay = 0.45f;
 		 	((AHeroObj*)m_pParent)->SetANIM_Loop(Zombie_KING_ATTACK);
+		 	m_delay = 0.45f;
+			m_pParent->isMoving(false);
+			m_pParent->SetFocus(m_Target);
 		 }	break;
 		 case EState::Action1:
 		 {
-		 	m_delay = 0.9f;
 		 	((AHeroObj*)m_pParent)->SetANIM_Loop(Zombie_KING_ROAR);
+		 	m_delay = 0.9f;
+			m_pParent->isMoving(false);
+			m_pParent->SetFocus(m_Target);
 		 }	break;
 		 case EState::Action2:
 		 {
@@ -104,10 +112,11 @@ bool AIZombieKing::Frame(const float& spf, const float& accTime)	noexcept
 		 {
 			 // 점핑
 			 m_delay = 3.5f;
+			 m_pParent->isMoving(false);
 			 m_pParent->SetForce(m_Target);
 			 auto pEffect = ObjectManager::Get().TakeObject(L"EZStump");
 			 pEffect->SetPosition(m_pParent->GetPosition() + Vector3::Up * 5.0f);
-			 m_eDirState = EState::Move;
+			 m_eDirState = EState::Idle;
 		 }	break;
 		}
 		return true;
@@ -117,7 +126,10 @@ bool AIZombieKing::Frame(const float& spf, const float& accTime)	noexcept
 	{
 	case EState::Idle:
 	{
-		m_eDirState = EState::Move;
+		if (m_dealyAttack <= 0.0f)
+		{
+			m_eDirState = EState::Move;
+		}
 	}	break;
 	case EState::Move:
 	{
@@ -127,21 +139,22 @@ bool AIZombieKing::Frame(const float& spf, const float& accTime)	noexcept
 			{
 				if (VectorLengthSq(iter->GetPosition() - m_pParent->GetPosition()) <= m_attackRange)
 				{
-					m_pParent->SetRotationY(m_pParent->GetFocusY(m_Target = iter->GetPosition()) - PI * 0.5f);
+					m_Target = iter->GetPosition();
 					m_eDirState = EState::Attack;
 					return true;
 				}
-				else if (m_delayStump >= 6.0f)
+				if (m_delayStump >= 6.0f)
 				{
 					// 점프 어택
 					m_delayStump = 0.0f;
 					m_pParent->SetFocus(iter->GetPosition());
-					m_pParent->m_pPhysics->m_mass = 1.0f;
+					//m_pParent->m_pPhysics->m_mass = 1.0f;
+					m_pParent->SetGravityScale(1.0f);
 					m_pParent->m_pPhysics->m_damping = 0.25f;
 					m_pCollider->m_eTagArray[ETag::Enemy] = false;
 					m_pCollider->m_eTagArray[ETag::Dummy] = false;
 					m_pCollider->m_eTagArray[ETag::Collider] = false;
-					m_Target = (iter->GetPosition() - m_pParent->GetPosition()) * 1.6f + Vector3::Up * 600.0f;
+					m_Target = (iter->GetPosition() - m_pParent->GetPosition()) * 1.55 + Vector3::Up * 600.0f;
 					m_eDirState = EState::Action3;
 					m_delay = 0.5f;
 					((AHeroObj*)m_pParent)->SetANIM_OneTime(Zombie_KING_JUMP_ATTACK);
@@ -152,7 +165,8 @@ bool AIZombieKing::Frame(const float& spf, const float& accTime)	noexcept
 					return true;
 				}
 			}
-			if (VectorLengthSq(m_Target - m_pParent->GetPosition()) <= m_attackRange + PlayerController::Get().HomeRadius)
+			///
+			if (VectorLengthSq((m_Target = PlayerController::Get().m_pHome->GetPosition()) - m_pParent->GetPosition()) <= m_attackRange + PlayerController::Get().HomeRadius)
 			{
 				m_eDirState = EState::Attack;
 				return true;
@@ -161,17 +175,10 @@ bool AIZombieKing::Frame(const float& spf, const float& accTime)	noexcept
 			else if (m_delayBreath >= 8.0f)
 			{
 				m_delayBreath = 0.0f;
-				m_pParent->SetFocus(m_Target = PlayerController::Get().m_pHome->GetPosition());
 				m_eDirState = EState::Action1;
 				return true;
 			}
-			m_pParent->Translate(Normalize(m_Target - m_pParent->GetPosition()) * m_moveSpeed * spf);
 			return true;
-		}
-		// 이동
-		if (VectorLengthSq(m_Target - m_pParent->GetPosition()) >= m_attackRange + PlayerController::Get().HomeRadius)
-		{
-			m_pParent->Translate(Normalize(m_Target = PlayerController::Get().m_pHome->GetPosition() - m_pParent->GetPosition()) * m_moveSpeed * spf);
 		}
 	}	break;
 	case EState::Attack:
@@ -183,10 +190,10 @@ bool AIZombieKing::Frame(const float& spf, const float& accTime)	noexcept
 		pEffect->SetPosition(m_pParent->GetPosition() + m_pParent->GetForward() * 60.0f + m_pParent->GetUp() * 35.0f);
 		pEffect->m_pPhysics->m_damage = 0.9f;
 		pEffect->SetScale(m_pParent->GetScale());
-		m_dealyAttack = 4.0f;
+		m_dealyAttack = 3.5f;
 		///
 		m_delay = 0.9f;
-		m_eDirState = EState::Move;
+		m_eDirState = EState::Idle;
 	}	break;
 	case EState::Action1:
 	{

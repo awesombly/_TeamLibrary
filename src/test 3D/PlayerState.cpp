@@ -1207,8 +1207,8 @@ bool MageStateSpecial::Process(const float& spf) noexcept
 	{
 	case 0:
 	{
-		auto targetPos = m_pOwner->GetParent()->GetPosition() + m_pOwner->m_pCamera->/* ObjectManager::Cameras[ECamera::Main]*/GetForward() * 280.0f;// ->GetForward() * 400.0f;
-		targetPos.y = 30.0f;
+		auto targetPos = m_pOwner->GetParent()->GetPosition() + m_pOwner->m_pCamera->GetForward() * 310.0f;// ->GetForward() * 400.0f;
+		targetPos.y = 10.0f;
 		m_pOwner->m_pEffectFly->SetPosition(targetPos);
 
 		if (m_pOwner->m_DelayFrame <= 0.0f)

@@ -18,7 +18,7 @@ bool AIZombie::Init() noexcept
 {
 	m_isEnable = true;
 	m_attackRange = m_pParent->GetScaleAverage() * 1500.0f;
-	m_moveSpeed   = RandomNormal() * 75.0f + 75.0f;
+	m_moveSpeed   = RandomNormal() * 50.0f + 80.0f;
 	m_delay = 0.0f;
 	m_eState = EState::Idle;
 	m_eDirState = EState::Idle;
@@ -42,59 +42,55 @@ bool AIZombie::Frame(const float& spf, const float& accTime)	noexcept
 		{
 		case EState::Idle:
 		{
+			((AHeroObj*)m_pParent)->SetANIM_Loop(ZombieR_IDLE);
+			m_pParent->isMoving(false);
 		}	break;
 		case EState::Move:
 		{
 			((AHeroObj*)m_pParent)->SetANIM_Loop(ZombieR_WALK);
-			m_pParent->SetFocus(m_Target = PlayerController::Get().m_pHome->GetPosition());
+			m_pParent->SetDirectionForce(Normalize((m_Target = PlayerController::Get().m_pHome->GetPosition()) - m_pParent->GetPosition()) * m_moveSpeed);
+			m_pParent->SetFocus(m_Target);
 		}	break;
 		case EState::Attack:
 		{
-			m_delay = 1.1f;
 			((AHeroObj*)m_pParent)->SetANIM_Loop(ZombieR_ATTACK);
+			m_delay = 1.1f;
+			m_pParent->isMoving(false);
+			m_pParent->SetFocus(m_Target);
 		}	break;
 		}
 		return true;
 	}
+
 	// 행동
 	switch (m_eState)
 	{
-	 case EState::Idle:
-	 {
-		 Init();
-		 m_eDirState = EState::Move;
-	 }	break;
-	 case EState::Move:
+	case EState::Idle:
 	 {
 		 if (m_dealyAttack <= 0.0f)
 		 {
-			 for (auto& iter : *ObjectManager::Get().GetObjectList(EObjType::Character))
-			 {
-				 if (VectorLengthSq(iter->GetPosition() - m_pParent->GetPosition()) <= m_attackRange)
-				 {
-					 //m_pParent->SetRotationY(m_pParent->GetFocusY(m_Target = iter->GetPosition()) - PI * 0.5f);
-					 m_pParent->SetRotation(m_pParent->GetRotation().x, m_pParent->GetFocusY(m_Target = iter->GetPosition()) - PI * 0.5f, m_pParent->GetRotation().z);
-					 m_eDirState = EState::Attack;
-					 return true;
-				 }
-			 }
-			 if (VectorLengthSq(m_Target - m_pParent->GetPosition()) <= m_attackRange + PlayerController::Get().HomeRadius)
-			 {
-				 m_pParent->SetFocus(m_Target);
-				 //m_pParent->SetRotation(m_pParent->GetRotation());
-				 m_eDirState = EState::Attack;
-				 return true;
-			 }
-			 m_pParent->Translate(Normalize(m_Target - m_pParent->GetPosition()) * m_moveSpeed * spf);
-			 return true;
+			 m_eDirState = EState::Move;
 		 }
-		 // 이동
-		 if (VectorLengthSq(m_Target - m_pParent->GetPosition()) >= m_attackRange + PlayerController::Get().HomeRadius)
-		 {
-			 m_pParent->Translate(Normalize(m_Target - m_pParent->GetPosition()) * m_moveSpeed * spf);
-		 }
-	 	//m_dirRotY = m_pParent->GetFocusY(m_Target);
-	 	//m_pParent->SetRotationY(Lerp(m_dirRotY, m_pParent->GetRotation().y, spf * 5.0f));
+	}	break;
+	case EState::Move:
+	{
+		if (m_dealyAttack <= 0.0f)
+		{
+			for (auto& iter : *ObjectManager::Get().GetObjectList(EObjType::Character))
+			{
+				if (VectorLengthSq(iter->GetPosition() - m_pParent->GetPosition()) <= m_attackRange)
+				{
+					m_Target = iter->GetPosition();
+					m_eDirState = EState::Attack;
+					return true;
+				}
+			}
+			if (VectorLengthSq((m_Target = PlayerController::Get().m_pHome->GetPosition()) - m_pParent->GetPosition()) <= m_attackRange + PlayerController::Get().HomeRadius)
+			{
+				m_eDirState = EState::Attack;
+				return true;
+			}
+		}
 	 }	break;
 	 case EState::Attack:
 	 {
@@ -107,7 +103,7 @@ bool AIZombie::Frame(const float& spf, const float& accTime)	noexcept
 		 m_dealyAttack = 3.0f;
 		 ///
 		 m_delay = 2.0f;
-		 m_eDirState = EState::Move;
+		 m_eDirState = EState::Idle;
 	 }	break;
 	}
 	return true;

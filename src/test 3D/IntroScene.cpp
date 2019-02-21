@@ -538,21 +538,21 @@ void IntroScene::SetObjects() noexcept
 	pCollider->m_eTagArray[ETag::Dummy] = false;
 	ObjectManager::Get().SetProtoObject(pHeroObj);
 
-	// 관통 화살
-	pHeroObj = new AHeroObj();
-	pHeroObj->SetPlayerCharacter(ITEM_ARROW);
-	pHeroObj->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-	pHeroObj->m_myName = L"ArrowP";
-	pHeroObj->m_objType = EObjType::AObject;
-	pCollider = new Collider(4.0f);
-	pHeroObj->AddComponent({ pCollider, pRenderer, ObjectManager::Get().TakeComponent(L"Fire") });
-	//pCollider->m_pivot = Vector3::Up * 6.0f + Vector3::Forward * 2.5f;
-	pCollider->SetGravityScale(0.5f);
-	pCollider->CollisionEvent = MyEvent::PiercingHit;
-	pCollider->m_eTag = ETag::Dummy;
-	pCollider->m_eTagArray[ETag::Collider] = false;
-	pCollider->m_eTagArray[ETag::Dummy] = false;
-	ObjectManager::Get().SetProtoObject(pHeroObj);
+	//// 관통 화살
+	//pHeroObj = new AHeroObj();
+	//pHeroObj->SetPlayerCharacter(ITEM_ARROW);
+	//pHeroObj->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+	//pHeroObj->m_myName = L"ArrowP";
+	//pHeroObj->m_objType = EObjType::AObject;
+	//pCollider = new Collider(4.0f);
+	//pHeroObj->AddComponent({ pCollider, pRenderer, ObjectManager::Get().TakeComponent(L"Fire") });
+	////pCollider->m_pivot = Vector3::Up * 6.0f + Vector3::Forward * 2.5f;
+	//pCollider->SetGravityScale(0.5f);
+	//pCollider->CollisionEvent = MyEvent::PiercingHit;
+	//pCollider->m_eTag = ETag::Dummy;
+	//pCollider->m_eTagArray[ETag::Collider] = false;
+	//pCollider->m_eTagArray[ETag::Dummy] = false;
+	//ObjectManager::Get().SetProtoObject(pHeroObj);
 
 	// 화살비
 	pHeroObj = new AHeroObj();
@@ -571,20 +571,6 @@ void IntroScene::SetObjects() noexcept
 	pCollider->m_eTagArray[ETag::Enemy] = false;
 	pCollider->m_eTagArray[ETag::Ally] = false;
 	ObjectManager::Get().SetProtoObject(pHeroObj);
-
-	//// 닭
-	//pHeroObj = new AHeroObj();
-	//pHeroObj->SetPlayerCharacter(ITEM_Chicken);
-	//pHeroObj->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-	//pHeroObj->m_myName = L"Chicken";
-	//pHeroObj->m_objType = EObjType::AObject;
-	//pHeroObj->SetScale(Vector3::One * 1.2f);
-	//pCollider = new Collider(15.0f);
-	//pHeroObj->AddComponent({ pCollider, pRenderer, ObjectManager::Get().TakeComponent(L"Fire") });
-	//pCollider->m_pivot = Vector3::Up * 4.0f + Vector3::Forward * 2.5f;
-	//pCollider->CollisionEvent = MyEvent::ZombieThrow;
-	//pCollider->m_eTag = ETag::Dummy;
-	//ObjectManager::Get().SetProtoObject(pHeroObj);
 
 	// 폭약통
 	pHeroObj = new AHeroObj();
@@ -693,7 +679,8 @@ void IntroScene::SetObjects() noexcept
 	pCollider = new ColliderOBB({ -13.0f, 0.0f , -40.0f }, { 13.0f, 25.0f , 40.0f });
 	pHeroObj->AddComponent({ pCollider, pRerderEnvi, new AIZombieCrawl() });
 	pCollider->CollisionEvent = MyEvent::ZombieHit;
-	pCollider->m_pPhysics->m_mass = 0.15f;
+	//pCollider->m_pPhysics->m_mass = 0.15f;
+	pCollider->SetGravityScale(15.0f);
 	pCollider->m_pPhysics->m_damping = 1.5f;
 	pCollider->m_eTag = ETag::Enemy;
 	pHeroObj->m_pPhysics->DeadEvent = DyingEvent::ZombieDead;
@@ -710,7 +697,8 @@ void IntroScene::SetObjects() noexcept
 	pCollider = new ColliderOBB({ -13.0f, 0.0f , -13.0f }, { 13.0f, 80.0f , 13.0f });
 	pHeroObj->AddComponent({ pCollider, pRerderEnvi, new AIZombieEx() });
 	pCollider->CollisionEvent = MyEvent::ZombieHit;
-	pCollider->m_pPhysics->m_mass = 0.15f;
+	//pCollider->m_pPhysics->m_mass = 0.15f;
+	pCollider->SetGravityScale(15.0f);
 	pCollider->m_pPhysics->m_damping = 1.5f;
 	pCollider->m_eTag = ETag::Enemy;
 	pHeroObj->m_pPhysics->DeadEvent = DyingEvent::ZombieExDead;
@@ -727,7 +715,8 @@ void IntroScene::SetObjects() noexcept
 	pCollider = new ColliderOBB({ -13.0f, 0.0f , -13.0f }, { 13.0f, 80.0f , 13.0f });
 	pHeroObj->AddComponent({ pCollider, pRerderEnvi, new AIZombieKing() });
 	pCollider->CollisionEvent = MyEvent::ZombieHit;
-	pCollider->m_pPhysics->m_mass = 0.05f;
+	//pCollider->m_pPhysics->m_mass = 0.05f;
+	pCollider->SetGravityScale(30.0f);
 	pCollider->m_pPhysics->m_damping = 3.0f;
 	pCollider->m_eTag = ETag::Enemy;
 	pHeroObj->m_pPhysics->DeadEvent = DyingEvent::ZombieKingDead;
