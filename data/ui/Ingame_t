@@ -2100,7 +2100,7 @@
 ^Scale 60.000000 15.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 0.000000
 ^Align 1
-^strText ¹à±â
+^strText È­¸é¹à±â
 ^TextSize 20.000000
 ^tx_Normal NO_IMAGE.png
 ^tx_Hover NO_IMAGE.png
@@ -5082,4 +5082,4 @@
 ^pfEventPress 7274
 ^vpEventPress 
 ^pfEventClick 7274
-^vpEventClick ýýýý
+^vpEventClick 

@@ -233,4 +233,49 @@ namespace UI
 		pHelpTextPanel->PreEvent.first = E_HelpText;
 		pHelpTextPanel->PreEvent.second = pHelpTextPanel;
 	}
+	static void LoadingEvent(JPanel* pRoot)
+	{
+		JPanel* pLoadingText = pRoot->find_child(L"Loading_Text");
+		if (pLoadingText == nullptr) return;
+		auto E_LodingText = [](void* vp)
+		{
+			JTextCtrl* pText = (JTextCtrl*)vp;
+
+			pText->m_fUITimer += Timer::SPF;
+
+			if (pText->m_fUITimer >= 0.3f && pText->m_fUITimer <= 0.6f)
+			{
+				pText->SetString(L"Loading");
+			}
+			else if (pText->m_fUITimer >= 0.6f && pText->m_fUITimer <= 0.9f)
+			{
+				pText->SetString(L"Loading.");
+			}
+			else if (pText->m_fUITimer >= 0.9f && pText->m_fUITimer <= 1.2f)
+			{
+				pText->SetString(L"Loading..");
+			}
+			else if (pText->m_fUITimer >= 1.2f && pText->m_fUITimer <= 1.5f)
+			{
+				pText->SetString(L"Loading...");
+			}
+			else
+			{
+				pText->m_fUITimer = 0.0f;
+			}
+		};
+		pLoadingText->PreEvent.first = E_LodingText;
+		pLoadingText->PreEvent.second = pLoadingText;
+
+		static JPanel* pLoadingSprite = pRoot->find_child(L"Loading_Sprite");
+		JPanel* pLoadingProgress = pRoot->find_child(L"Loading_Progress");
+		if (pLoadingProgress == nullptr) return;
+		auto E_Loading_Sprite = [](void* vp)
+		{
+			JProgressBar* pProg = (JProgressBar*)vp;
+			pLoadingSprite->m_vPos.x = ((pProg->m_fCurValue * (pProg->m_vScl.x * 2.0f)) - pProg->m_vScl.x) + pProg->m_vPos.x;
+		};
+		pLoadingProgress->PreEvent.first = E_Loading_Sprite;
+		pLoadingProgress->PreEvent.second = pLoadingProgress;
+	}
 }

@@ -1,0 +1,151 @@
+^Type 777
+^NodeName Root
+^ParentName 
+^Position 0.000000 0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 1.000000 1.000000 1.000000
+
+^Type 788
+^NodeName BackGround_Black
+^ParentName Root
+^KeyState 135 135
+^bRender 1
+^Position 0.000000 0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 400.000000 300.000000 1.000000
+^Color 0.000000 0.000000 0.000000 1.000000
+^tx_Normal NO_IMAGE.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName BackGround
+^ParentName Root
+^KeyState 135 135
+^bRender 1
+^Position 0.000000 0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 400.000000 270.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_Normal e0100959_56728a5c20d9d.jpg
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 780
+^VHType 1447
+^NodeName Loading_Progress
+^ParentName Root
+^KeyState 135 135
+^bRender 1
+^Position 0.000000 -235.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 240.000000 12.000000 1.000000
+^SubScale 236.000000 8.000000 1.000000
+^bDecrease 1
+^Color 0.300000 0.300000 0.300000 1.000000
+^tx_BackGround black.png
+^tx_FrontGround White.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 783
+^NodeName Loading_Text
+^ParentName Root
+^KeyState 135 135
+^bRender 1
+^Position -0.000000 -210.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 50.000000 15.000000 1.000000
+^Color 1.000000 1.000000 1.000000 0.000000
+^Align 0
+^strText Loading
+^TextSize 20.000000
+^tx_Normal NO_IMAGE.png
+^tx_Hover NO_IMAGE.png
+^tx_Press NO_IMAGE.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick ýýýý€
+
+^Type 783
+^NodeName Loading_Object
+^ParentName Root
+^KeyState 135 135
+^bRender 1
+^Position -1.000000 -236.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 50.000000 15.000000 1.000000
+^Color 1.000000 1.000000 1.000000 0.000000
+^Align 0
+^strText 10%
+^TextSize 15.000000
+^tx_Normal NO_IMAGE.png
+^tx_Hover NO_IMAGE.png
+^tx_Press NO_IMAGE.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 782
+
+^SpriteType 6430
+^NodeName Loading_Sprite
+^ParentName Root
+^KeyState 135 135
+^bRender 1
+^bLoop 1
+^Position 0.000000 -273.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale -22.000000 22.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^AnimTime 0.500000
+^AnimUV 2 2 
+^SPRITESTART 1 
+^ux_evan_run_icon.png
+^SPRITEEND
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 783
+^NodeName Loading_Percent
+^ParentName Root
+^KeyState 135 135
+^bRender 1
+^Position 294.000000 -282.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 100.000000 15.000000 1.000000
+^Color 1.000000 1.000000 1.000000 0.000000
+^Align 2
+^strText UIPanel
+^TextSize 15.000000
+^tx_Normal NO_IMAGE.png
+^tx_Hover NO_IMAGE.png
+^tx_Press NO_IMAGE.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick ýýýý
