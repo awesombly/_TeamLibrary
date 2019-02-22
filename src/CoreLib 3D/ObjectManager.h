@@ -52,6 +52,7 @@ public:
 	vector<Sprite>* GetSpriteList(const wstring_view& spriteName)	  noexcept;
 	map<wstring, vector<Sprite> > & GetSpriteList()					  noexcept;
 	forward_list<GameObject*>* GetObjectList(const EObjType& objType) noexcept;
+	map<EObjType, forward_list<GameObject*> >& GetObjectList()		  noexcept;
 	// 오브젝트 가져오기 (대기 풀에 남아있거나, 복사 풀에 등록 필요)
 	GameObject* TakeObject(const wstring_view& objName, const bool& pushObject = true) noexcept;
 	bool SetProtoObject(GameObject* pObject)					noexcept;	// 복사 풀에 추가

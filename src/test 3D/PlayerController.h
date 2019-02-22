@@ -108,6 +108,7 @@ public:
 	float		m_GameFrameCount	 = 0.0f;
 	// 들을 거리
 	const float SoundRange			 = 302500.0f;
+	float		m_LightAmount		 = 0.3f;
 public:
 	GameObject* m_pHome			 = nullptr;
 	const float HomeRadius		 = 15000.0f;

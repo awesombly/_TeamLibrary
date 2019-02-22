@@ -372,6 +372,11 @@ forward_list<GameObject*>* ObjectManager::GetObjectList(const EObjType& objType)
 	return &m_ObjectList[objType];
 }
 
+map<EObjType, forward_list<GameObject*> >& ObjectManager::GetObjectList() noexcept
+{
+	return m_ObjectList;
+}
+
 vector<Sprite>* ObjectManager::GetSpriteList(const wstring_view& spriteName) noexcept
 {
 	auto iter = m_SpriteList.find(spriteName.data());

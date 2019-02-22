@@ -12,20 +12,24 @@ public:
 	JPanel*			m_FightPanel		= nullptr;
 	JEditCtrl*		m_pChat				= nullptr;
 	JPanel*			m_pMouseIcon		= nullptr;
+	JPanel*			m_pRespawnEffect	= nullptr;
+	JPanel*			m_pHitEffect		= nullptr;
+	JPanel*			m_pGreenEffect		= nullptr;
+	// 프로그래스
+	JPanel*			m_pRespawn			= nullptr;
+	JProgressBar*	m_pRespawnBar		= nullptr;
 	JProgressBar*	m_pHpBar			= nullptr;	
 	JProgressBar*	m_pMpBar			= nullptr;
 	JProgressBar*	m_pLeftIcon			= nullptr;		
 	JProgressBar*	m_pRightIcon		= nullptr;		
-	JPanel*			m_pRespawn			= nullptr;
-	JProgressBar*	m_pRespawnBar		= nullptr;
-	JPanel*			m_pRespawnEffect	= nullptr;
-	JPanel*			m_pHitEffect		= nullptr;
-	JPanel*			m_pGreenEffect		= nullptr;
-	JPanel*			m_pEnemyPanel		= nullptr;		// 
-	JProgressBar*	m_pEnemyHP			= nullptr;		// 
-	JTextCtrl*		m_pEnemyName		= nullptr;		// 
-	JTextCtrl*		m_pEnemyHPText		= nullptr;		// 
-	JProgressBar*	m_pExpProgress		= nullptr;		// 
+
+	JPanel*			m_pEnemyPanel		= nullptr;
+	JProgressBar*	m_pEnemyHP			= nullptr;
+	JTextCtrl*		m_pEnemyName		= nullptr;
+	JTextCtrl*		m_pEnemyHPText		= nullptr;
+	JProgressBar*	m_pExpProgress		= nullptr;
+	// 옵션
+	JPanel*			m_pOptionPanel		= nullptr;
 	// 인포창
 	JPanel*			m_pInfoPanel		= nullptr;
 	JEditCtrl*		m_pInfoName			= nullptr;
@@ -48,20 +52,20 @@ public:
 	JButtonCtrl*	m_pInfoIntBtn		= nullptr;	
 	JButtonCtrl*	m_pInfoLukBtn		= nullptr;	
 	// 인벤, 슬롯
-	JInventory*		m_pInvenSlot		= nullptr;
-	JPanel*			m_pInvenPanel		= nullptr;
-	JTextCtrl*		m_pInvenMoney		= nullptr;
-	JPanel*			m_pInvenWeapon		= nullptr;
-	JPanel*			m_pInvenArmor		= nullptr;
-	JPanel*			m_pInvenAcce1		= nullptr;
-	JPanel*			m_pInvenAcce2		= nullptr;
-	JTextCtrl*		m_pInvenInfoName = nullptr;
-	JTextCtrl*		m_pInvenInfoEffect = nullptr;
-	JTextCtrl*		m_pInvenInfoReinforce = nullptr;
+	JInventory*		m_pInvenSlot			= nullptr;
+	JPanel*			m_pInvenPanel			= nullptr;
+	JTextCtrl*		m_pInvenMoney			= nullptr;
+	JPanel*			m_pInvenWeapon			= nullptr;
+	JPanel*			m_pInvenArmor			= nullptr;
+	JPanel*			m_pInvenAcce1			= nullptr;
+	JPanel*			m_pInvenAcce2			= nullptr;
+	JTextCtrl*		m_pInvenInfoName		= nullptr;
+	JTextCtrl*		m_pInvenInfoEffect		= nullptr;
+	JTextCtrl*		m_pInvenInfoReinforce	= nullptr;
 
-	JSlot*			m_pSlot1			= nullptr;
-	JSlot*			m_pSlot2			= nullptr;
-	JSlot*			m_pSlot3			= nullptr;
+	JSlot*			m_pSlot1				= nullptr;
+	JSlot*			m_pSlot2				= nullptr;
+	JSlot*			m_pSlot3				= nullptr;
 	// 타워
 	JPanel*			m_pTowerPanel			= nullptr;
 	JTextCtrl*		m_pTowerCurLevel		= nullptr;

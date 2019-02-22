@@ -96,8 +96,8 @@ namespace MyEvent {
 				// 내가 맞았을때
 				if (pB->m_pParent == PlayerController::Get().GetParent())
 				{
-					UIManager::Get().m_pRespawnEffect->SetEventTime(0.2f);
-					((JPanel*)UIManager::Get().m_pRespawnEffect)->EffectPlay();
+					UIManager::Get().m_pGreenEffect->SetEventTime(0.2f);
+					((JPanel*)UIManager::Get().m_pGreenEffect)->EffectPlay();
 				}
 				// 내가 때렸을때
 				if (PacketManager::Get().pMyInfo->UserSocket == pA->m_pPhysics->UserSocket)
@@ -158,8 +158,8 @@ namespace MyEvent {
 			 	// 내가 맞았을때
 			 	if (pB->m_pParent == PlayerController::Get().GetParent())
 			 	{
-					UIManager::Get().m_pRespawnEffect->SetEventTime(0.2f);
-			 		((JPanel*)UIManager::Get().m_pRespawnEffect)->EffectPlay();
+					UIManager::Get().m_pGreenEffect->SetEventTime(0.2f);
+			 		((JPanel*)UIManager::Get().m_pGreenEffect)->EffectPlay();
 			 	}
 			 	// 내가 때렸을때
 			 	if (PacketManager::Get().pMyInfo->UserSocket == pA->m_pPhysics->UserSocket)

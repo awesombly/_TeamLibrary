@@ -291,6 +291,7 @@ copy "*.h" "..\\..\\include\\core\\"</Command>
     <ClInclude Include="HeightMap.h" />
     <ClInclude Include="Instancer.h" />
     <ClInclude Include="Light.h" />
+    <ClInclude Include="LoadingParameter.h" />
     <ClInclude Include="MaxImporter.h" />
     <ClInclude Include="Physics.h" />
     <ClInclude Include="PlaneUI.h" />

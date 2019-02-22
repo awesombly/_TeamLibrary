@@ -21,8 +21,7 @@ public:
 	JEditCtrl*	 m_pChat = nullptr;
 	JTextCtrl*	 m_TimerText	= nullptr;
 	JCheckCtrl*  m_pCheckBox	= nullptr;
-	JSliderCtrl* m_pVolume		= nullptr;
-	JSliderCtrl* m_pMouseSense  = nullptr;
+
 	wstring		 m_chatMessage;
 	///
 	GameMap&	 m_MapObjects = GameMap::Get();

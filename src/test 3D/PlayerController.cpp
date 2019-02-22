@@ -261,14 +261,14 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 			auto pItem = ObjectManager::Get().TakeObject(L"EHit");
 			pItem->SetPosition(pObject->GetPosition() + pObject->GetUp() * 30.0f);
 
-			for (auto& iter : *ObjectManager::Get().GetObjectList(EObjType::Enemy))
-			{
-				if (auto pController = iter->GetComponent(EComponent::Etc);
-					pController != nullptr)
-				{
-					((AIZombie*)pController)->m_Target = pObject->GetPosition();
-				}
-			}
+			//for (auto& iter : *ObjectManager::Get().GetObjectList(EObjType::Enemy))
+			//{
+			//	if (auto pController = iter->GetComponent(EComponent::Etc);
+			//		pController != nullptr)
+			//	{
+			//		((AIZombie*)pController)->m_Target = pObject->GetPosition();
+			//	}
+			//}
 		}	break;
 		// ================================== еш ╩Г©К =========================================
 		case EAction::ShockWave:
@@ -369,6 +369,12 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 			pObject->SetANIM_Loop(Paladin_THROW);
 			pObject->HealHP(pObject->m_pPhysics->m_maxHP * 0.5f);
 			SoundManager::Get().Play("SE_drink.mp3");
+
+			if (pObject == PlayerController::Get().GetParent())
+			{
+				UIManager::Get().m_pGreenEffect->SetEventTime(0.5f);
+				((JPanel*)UIManager::Get().m_pGreenEffect)->EffectPlay();
+			}
 		}	break;
 		case EAction::IBarricade:
 		{
@@ -669,6 +675,12 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 			pObject->SetANIM_Loop(Archer_THROW);
 			pObject->HealHP(pObject->m_pPhysics->m_maxHP * 0.5f);
 			SoundManager::Get().Play("SE_drink.mp3");
+
+			if (pObject == PlayerController::Get().GetParent())
+			{
+				UIManager::Get().m_pGreenEffect->SetEventTime(0.5f);
+				((JPanel*)UIManager::Get().m_pGreenEffect)->EffectPlay();
+			}
 		}	break;
 		case EAction::IBarricade:
 		{
@@ -942,6 +954,12 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 			pObject->SetANIM_Loop(Mage_THROW);
 			pObject->HealHP(pObject->m_pPhysics->m_maxHP * 0.5f);
 			SoundManager::Get().Play("SE_drink.mp3");
+
+			if (pObject == PlayerController::Get().GetParent())
+			{
+				UIManager::Get().m_pGreenEffect->SetEventTime(0.5f);
+				((JPanel*)UIManager::Get().m_pGreenEffect)->EffectPlay();
+			}
 		}	break;
 		case EAction::IBarricade:
 		{
@@ -1169,6 +1187,34 @@ void PlayerController::UpdateStatus(const bool& infoUpdate) noexcept
 				pUIManager->m_pInvenInfoReinforce->SetString(L"+" + to_wstring(m_upgradeAcce2));
 			}
 		}
+		if (pUIManager->m_pOptionPanel->m_bRender)
+		{
+			for (auto& outer : ObjectManager::Get().GetObjectList())
+			{
+				switch (outer.first)
+				 {
+				 case EObjType::AObject:
+				 case EObjType::Object:
+				 case EObjType::Map:
+				 case EObjType::Character:
+				 case EObjType::Dummy:
+				 case EObjType::Enemy:
+				 {
+				 	for (auto& initer : outer.second)
+				 	{
+				 		if (auto pList = initer->GetComponentList(EComponent::Renderer);
+				 			pList != nullptr)
+				 		{
+				 			for (auto& pRenderer : *pList)
+				 			{
+				 				((Renderer*)pRenderer)->SetLightRate(m_LightAmount);
+				 			}
+				 		}
+				 	}
+				 }
+				}
+			}
+		}
 	}
 }
 
@@ -1308,7 +1354,7 @@ void PlayerController::CheckTownCollision() noexcept
 			{
 			case ECarpet::Smithy:
 			{
-				if (Input::GetKeyState('X') == EKeyState::DOWN)
+				if (Input::GetKeyState('F') == EKeyState::DOWN)
 				{
 					if (pUIManager->m_pSmithyPanel->m_bRender)
 					{
@@ -1345,12 +1391,12 @@ void PlayerController::CheckTownCollision() noexcept
 			{
 				if (PlayerController::Get().m_canChurh)
 				{
-					if (Input::GetKeyState('X') == EKeyState::DOWN)
+					if (Input::GetKeyState('F') == EKeyState::DOWN)
 					{
 						SoundManager::Get().Play("SE_church.mp3");
 						PlayerController::Get().m_canChurh = false;
-						pUIManager->m_pRespawnEffect->SetEventTime(1.5f);
-						pUIManager->m_pRespawnEffect->EffectPlay();
+						pUIManager->m_pGreenEffect->SetEventTime(1.5f);
+						pUIManager->m_pGreenEffect->EffectPlay();
 
 						Packet_Float p_HealHP;
 						p_HealHP.KeyValue = PlayerController::Get().GetParent()->m_keyValue;
@@ -1364,7 +1410,7 @@ void PlayerController::CheckTownCollision() noexcept
 			}	break;
 			case ECarpet::Shop:
 			{
-				if (Input::GetKeyState('X') == EKeyState::DOWN)
+				if (Input::GetKeyState('F') == EKeyState::DOWN)
 				{
 					if (pUIManager->m_pShopPanel->m_bRender)
 					{
@@ -1394,7 +1440,7 @@ void PlayerController::CheckTownCollision() noexcept
 			}	break;
 			case ECarpet::Tower:
 			{
-				if (Input::GetKeyState('X') == EKeyState::DOWN)
+				if (Input::GetKeyState('F') == EKeyState::DOWN)
 				{
 					if (pUIManager->m_pTowerPanel->m_bRender)
 					{

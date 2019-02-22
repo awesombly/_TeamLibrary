@@ -9,6 +9,9 @@ bool LobbyScene::Init() noexcept
 	// UI
 	LoadUI();
 
+	ObjectManager::Get().Lights.front()->SetPosition(0.0f, -30.0f, 36.0f);
+	ObjectManager::Get().Lights.front()->SetRotation(Quaternion::Left * PI * 0.5f);
+
 	m_pBackGuard = (AHeroObj*)ObjectManager::Get().TakeObject(L"Paladin", false);
 	m_pBackGuard->SetPosition(-40.0f, -31.0f, 35.0f);
 	m_pBackGuard->SetRotation(Quaternion::Left * PI * 0.8f);

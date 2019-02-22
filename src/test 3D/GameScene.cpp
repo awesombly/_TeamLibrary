@@ -670,29 +670,25 @@ void GameScene::LoadUI() noexcept
 		((JTextCtrl*)(*++++iter))->m_bRender = pUser->isDead;
 	};
 	PacketManager::Get().pUserPanel[3]->PostEvent.second = PacketManager::Get().pUserPanel[3];
-	// 마우스, 옵션, 전광판
-	//PlayerController::Get().m_pOption = (JPanel*)pUIRoot->find_child(L"Set_Panel");
+	// 마우스, 전광판
 	UIManager::Get().m_pMouseIcon = pUIRoot->find_child(L"mouse_cursor");
 	UIManager::Get().m_pMouseIcon->m_bRender = false;
 	PacketManager::Get().pKillDisplay = (JListCtrl*)pUIRoot->find_child(L"KilltoDeath");
-
 	// Skill Icon
 	UIManager::Get().m_pLeftIcon = (JProgressBar*)pUIRoot->find_child(L"Skill_Left");
 	UIManager::Get().m_pRightIcon = (JProgressBar*)pUIRoot->find_child(L"Skill_Right");
-
+	// 옵션
+	UIManager::Get().m_pOptionPanel = (JPanel*)pUIRoot->find_child(L"Set_Panel");
 	// Option Volume
-	m_pVolume = (JSliderCtrl*)pUIRoot->find_child(L"Set_Volum");
-	m_pVolume->SetValue(SoundManager::Get().m_masterVolume);
+	auto pVolume = (JSliderCtrl*)pUIRoot->find_child(L"Set_Volum");
+	pVolume->SetValue(SoundManager::Get().m_masterVolume);
 	SoundManager::Get().m_masterVolume = 0.5f;
 	// Mouse
-	m_pMouseSense = (JSliderCtrl*)pUIRoot->find_child(L"Set_Mouse");
-	m_pMouseSense->SetValue(PlayerController::Get().m_mouseSense);
-	//PlayerController::Get().m_mouseSense = *m_pMouseSense->GetValue();
-
-
-	JSliderCtrl* pLight = (JSliderCtrl*)pUIRoot->find_child(L"Set_Light");
-	pLight->SetValue(PlayerController::Get().m_mouseSense);
-
+	auto pMouseSense = (JSliderCtrl*)pUIRoot->find_child(L"Set_Mouse");
+	pMouseSense->SetValue(PlayerController::Get().m_mouseSense);
+	// 음영
+	auto pLightOption = (JSliderCtrl*)pUIRoot->find_child(L"Set_Light");
+	pLightOption->SetValue(PlayerController::Get().m_LightAmount);
 
 	// Exit
 	auto pExit = (JTextCtrl*)pUIRoot->find_child(L"Set_GameExit");
