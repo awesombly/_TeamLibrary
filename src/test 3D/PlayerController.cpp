@@ -1189,6 +1189,7 @@ void PlayerController::UpdateStatus(const bool& infoUpdate) noexcept
 		}
 		if (pUIManager->m_pOptionPanel->m_bRender)
 		{
+			auto lightValue = m_LightAmount * 1.2f - 0.2f;
 			for (auto& outer : ObjectManager::Get().GetObjectList())
 			{
 				switch (outer.first)
@@ -1207,7 +1208,7 @@ void PlayerController::UpdateStatus(const bool& infoUpdate) noexcept
 				 		{
 				 			for (auto& pRenderer : *pList)
 				 			{
-				 				((Renderer*)pRenderer)->SetLightRate(m_LightAmount);
+				 				((Renderer*)pRenderer)->SetLightRate(lightValue);
 				 			}
 				 		}
 				 	}

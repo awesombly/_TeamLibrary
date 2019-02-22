@@ -14,10 +14,9 @@
 bool IntroScene::Init() noexcept
 {
 	FirstInit();
-	// UI
-	++LoadClass::LoadingCount;
+	//
 	LoadSound();
-	++LoadClass::LoadingCount;
+	// UI
 	LoadUI();
 	///
 	m_isLoading = false;
@@ -146,7 +145,6 @@ bool IntroScene::FirstInit() noexcept
 {
 	if (m_isFirstInit)
 	{
-		++LoadClass::LoadingCount;
 		m_isFirstInit = false;
 		ErrorMessage(__FUNCTION__ + " -> Start."s);
 		// 폰트, 사운드 등
@@ -155,17 +153,19 @@ bool IntroScene::FirstInit() noexcept
 		m_pParser = new MaxImporter();
 
 		// ===================================== 캐릭터 초기화 ==============================================
-		++LoadClass::LoadingCount;
 		ErrorMessage(__FUNCTION__ + " -> Character Loading."s);
+		LoadClass::LoadingCount = 0;
 		I_CHARMGR.Init();
 		if (!I_CHARMGR.Load(DxManager::GetDevice(), DxManager::GetDContext(), TablePATH))		//경로 중요함
 		{
 			return false;
 		}
+		ErrorMessage(L"캐릭터 로딩값 : " + to_wstring(LoadClass::LoadingCount));
 		// ===================================== 오브젝트 초기화 ==============================================
-		++LoadClass::LoadingCount;
 		ErrorMessage(__FUNCTION__ + " -> Object Setting."s);
+		LoadClass::LoadingCount = 0;
 		SetObjects();
+		ErrorMessage(L"이펙, 세팅 로딩값 : " + to_wstring(LoadClass::LoadingCount));
 		return true;
 	}
 	return false;

@@ -79,7 +79,7 @@ VS_OUTPUT_Mix VS_Final(VS_INPUT_PNCTT input)
 	//{
 		//float fDot = lerp(dot(vLightDir, output.nor.xyz), 1.0f, 0.15f) + 0.2f;
 		//output.col = float4(fDot, fDot, fDot, 1.0f) * input.col;
-		output.col.xyz = input.col.xyz * max(cb_useLight, dot(vLightDir, output.nor.xyz) + 0.3f);
+		output.col.xyz = input.col.xyz * max(cb_useLight, dot(vLightDir, output.nor.xyz) + cb_useLight);
 		output.col.w = input.col.w;
 	//}
 	//else

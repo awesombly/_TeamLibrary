@@ -457,7 +457,6 @@ GameObject* ObjectManager::TakeObject(const wstring_view& objName, const bool& p
 
 bool ObjectManager::SetProtoObject(GameObject* pObject) noexcept
 {
-	++LoadClass::LoadingCount;
 	if (m_ProtoPull.find(pObject->m_myName) != m_ProtoPull.end())
 	{
 		ErrorMessage(__FUNCTION__ + " -> 중복된 이름!"s);
@@ -476,6 +475,7 @@ bool ObjectManager::SetProtoObject(GameObject* pObject) noexcept
 			PopCollider((Collider*)iter);
 		}
 	}
+	++LoadClass::LoadingCount;
 	return true;
 }
 
