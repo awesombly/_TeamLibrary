@@ -148,7 +148,8 @@ bool IntroScene::FirstInit() noexcept
 		// 폰트, 사운드 등
 		WriteManager::Get().SetText({ 0, 0 }, L"", D2D1::ColorF::Black, 20, L"휴면둥근헤드라인");
 		WriteManager::Get().SetFontSizeAlign(20, EAlign::Center, EAlign::Center);
-		m_pParser = new MaxImporter();
+		// 스프라이트
+		ObjectManager::Get().ReadSpriteScript();
 		// ===================================== 캐릭터 초기화 ==============================================
 		ErrorMessage(__FUNCTION__ + " -> Character Loading."s);
 		I_CHARMGR.Init();
@@ -168,7 +169,10 @@ void IntroScene::SetObjects() noexcept
 {
 	GameObject* pObject = nullptr;
 	Collider*   pCollider = nullptr;
-
+	// 스카이 박스
+	m_pSkyBox = new GameObject(L"SkyBox", { new SkySphere(20, L"SkySphere", L"CubeMap/A_nightsky.dds")/*, new CTransformer(Vector3::Zero, Quaternion::Right * 0.02f, Vector3::Zero)*/ }, EObjType::Dummy);
+	m_pSkyBox->SetScale(Vector3::One * 100);
+	m_pSkyBox->isGlobal(true);
 	// 컴포넌트 등록
 	ObjectManager::Get().SetProtoComponent(new RCube(L"Cube", L"None.png"));
 	//ObjectManager::Get().SetProtoComponent(new RSphere(20, L"Sphere", L"None.png"));
@@ -176,6 +180,7 @@ void IntroScene::SetObjects() noexcept
 	//ObjectManager::Get().Lights.front()->SetPosition(0.0f, 350.0f, 0.0f);
 	// ======================================= Load =====================================================
 	const auto urlEffect = L"../../data/script";
+	m_pParser = new MaxImporter();
 	ObjectManager::Get().SetProtoObject(new GameObject(L"EZDead", m_pParser->CreateFromParticle(L"ZombieDead.eff", urlEffect)->SetEffectScale(3.0f), EObjType::Effect));
 	ObjectManager::Get().SetProtoObject(new GameObject(L"EZDead2", m_pParser->CreateFromParticle(L"ZombieDead2.eff", urlEffect)->SetEffectScale(3.0f), EObjType::Effect));
 	ObjectManager::Get().SetProtoObject(new GameObject(L"EZDead3", m_pParser->CreateFromParticle(L"ZombieDead3.eff", urlEffect)->SetEffectScale(3.0f), EObjType::Effect));
@@ -330,7 +335,7 @@ void IntroScene::SetObjects() noexcept
 	// 메테오
 	pCollider = new Collider(1.1f);
 	pParticle = m_pParser->CreateFromParticle(L"HellFire.eff", urlEffect)->SetEffectScale(2.0f);
-	auto pSphere = (Renderer*)ObjectManager::Get().TakeComponent(L"RowSphere");
+	auto pSphere = new RSphere(7, L"CMeteor", L"None.png");
 	pSphere->SetColor(DxManager::GetDContext(), Color::Red);
 	//pParticle->isFollow(true);
 	pObject = new GameObject(L"Meteor", { pCollider, pParticle, pSphere }, EObjType::Object);

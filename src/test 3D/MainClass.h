@@ -33,30 +33,32 @@
 
 
 
-
-enum class ESceneName : char {
-	Intro = 0,
-	Main,
-	Lobby,
-};
+namespace ESceneName {
+	enum ESceneName : char {
+		Intro = 0,
+		Lobby,
+		Main,
+		size
+	};
+}
 
 // 전체 씬과 게임의 흐름을 관리
 class MainClass : public Core 
 {
 private:
 	static MainClass* m_curScene;
-	static map<ESceneName, MainClass*> m_SceneList;
+	static map<ESceneName::ESceneName, MainClass*> m_SceneList;
 	// 로딩
-	static GameObject* m_LoadingImage;
-	static GameObject* m_Icon;
-	static GameObject* m_Icon2;
-	static GameObject* m_Icon3;
-	static GameObject* m_Icon4;
-	//
-	static GameObject*				m_pBullet;
-	static list<GameObject*>		m_BulletList;
-	static GameObject*				m_pEnemy;
-	static list<GameObject*>		m_EnemyList;
+	//static GameObject* m_LoadingImage;
+	//static GameObject* m_Icon;
+	//static GameObject* m_Icon2;
+	//static GameObject* m_Icon3;
+	//static GameObject* m_Icon4;
+	////
+	//static GameObject*				m_pBullet;
+	//static list<GameObject*>		m_BulletList;
+	//static GameObject*				m_pEnemy;
+	//static list<GameObject*>		m_EnemyList;
 
 	bool				m_isMatching = false;
 public:
@@ -67,14 +69,14 @@ public:
 	static char				m_loginCheck;
 	static MaxImporter*		m_pParser;
 	///
-	float			m_loadPercent = 0.0f;
+	float					m_loadPercent = 0.0f;
 public:
 	static int m_iMatchingStatus;
 	static std::string m_strHostIPv4;
 public:
 	void MsgEvent(const MSG& _message)	noexcept;
 	// 씬 설정
-	void SetScene(const ESceneName& sceneName, const bool& useRelease = true) noexcept;
+	void SetScene(const ESceneName::ESceneName& sceneName, const bool& useRelease = true) noexcept;
 	void LoadSceneInput()	noexcept;
 	//void SendMovedObject()	noexcept;
 

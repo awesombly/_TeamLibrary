@@ -20,10 +20,6 @@ Texture::Texture(ID3D11ShaderResourceView* pSRView) noexcept
 // 리소스 파일로부터 텍스쳐를 얻어 쉐이더리소스뷰로 만듬
 Texture* Texture::CreateShaderResourceView(const wstring_view& srcUrl) noexcept
 {
-	++LoadClass::LoadingCount;
-	LoadClass::LoadingString = L"Load "s + srcUrl.data();
-	this_thread::sleep_for(chrono::milliseconds(50));
-	///
 	D3DX11CreateShaderResourceViewFromFile(DxManager::GetDevice(), srcUrl.data(), NULL, NULL, &m_pSRView, NULL);
 	if (m_pSRView == nullptr)
 	{
@@ -46,6 +42,9 @@ Texture* Texture::CreateShaderResourceView(const wstring_view& srcUrl) noexcept
 	src->Release();
 	tex2D->Release();
 
+	++LoadClass::LoadingCount;
+	LoadClass::LoadingString = srcUrl.data();
+	this_thread::sleep_for(chrono::milliseconds(20));
 	return this;
 }
 
