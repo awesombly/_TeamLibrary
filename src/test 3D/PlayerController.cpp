@@ -452,6 +452,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 			auto pItem = ObjectManager::Get().TakeObject(L"Arrow");
 			pItem->SetPosition(pObject->GetPosition() + pObject->GetForward() * 40.0f + pObject->GetUp() * 65.0f + pObject->GetRight() * 20.0f);
 			pItem->SetRotation(pObject->GetRotation());
+			pItem->SetFocusZ(Normalize(forward));
 			pItem->SetScale(Vector3::One * 3.0f);
 			pItem->SetForce(forward * 600.0f);
 			pItem->m_pPhysics->UserSocket = socket;
@@ -468,6 +469,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 			auto pItem = ObjectManager::Get().TakeObject(L"Arrow");
 			pItem->SetPosition(pObject->GetPosition() + pObject->GetForward() * 40.0f + pObject->GetUp() * 65.0f + pObject->GetRight() * 20.0f);
 			pItem->SetRotation(pObject->GetRotation());
+			pItem->SetFocusZ(pObject->GetPosition() + forward);
 			pItem->SetScale(Vector3::One * 4.5f);
 			pItem->SetForce(forward * 1050.0f);
 			pItem->m_pPhysics->UserSocket = socket;
@@ -480,24 +482,25 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 		{
 			pObject->SetANIM_Loop(Archer_AIM_SHOT);
 
-			auto pItem = ObjectManager::Get().TakeObject(L"Arrow");
+			/*auto pItem = ObjectManager::Get().TakeObject(L"Arrow");
 			pItem->SetPosition(pObject->GetPosition() + pObject->GetForward() * 40.0f + pObject->GetUp() * 65.0f + pObject->GetRight() * 20.0f);
 			pItem->SetRotation(pObject->GetRotation());
 			pItem->SetScale(Vector3::One * 6.0f);
 			pItem->SetForce(forward * 1800.0f);
 			pItem->m_pPhysics->UserSocket = socket;
 			pItem->SetDamage(1.6f * PacketManager::Get().UserList[socket]->AttackRate);
-			pItem->GetCollider()->AddIgnoreList(pObject->GetCollider());
+			pItem->GetCollider()->AddIgnoreList(pObject->GetCollider());*/
 
-			//auto pItem = ObjectManager::Get().TakeObject(L"ArrowP");
-			//pItem->SetPosition(pObject->GetPosition() + pObject->GetForward() * 40.0f + pObject->GetUp() * 65.0f + pObject->GetRight() * 20.0f);
-			//pItem->SetRotation(pObject->GetRotation());
-			//pItem->SetScale(Vector3::One * 6.0f);
-			////pItem->SetForce(forward * 1800.0f);
-			//pItem->SetDirectionForce(forward * 1000.0f);
-			//pItem->m_pPhysics->UserSocket = socket;
-			//pItem->SetDamage(1.6f * PacketManager::Get().UserList[socket]->AttackRate);
-			//pItem->GetCollider()->AddIgnoreList(pObject->GetCollider());
+			auto pItem = ObjectManager::Get().TakeObject(L"ArrowP");
+			pItem->SetPosition(pObject->GetPosition() + pObject->GetForward() * 40.0f + pObject->GetUp() * 65.0f + pObject->GetRight() * 20.0f);
+			pItem->SetRotation(pObject->GetRotation());
+			pItem->SetFocusZ(pObject->GetPosition() + forward);
+			pItem->SetScale(Vector3::One * 6.0f);
+			//pItem->SetForce(forward * 1800.0f);
+			pItem->SetDirectionForce(forward * 1200.0f);
+			pItem->m_pPhysics->UserSocket = socket;
+			pItem->SetDamage(1.2f * PacketManager::Get().UserList[socket]->AttackRate);
+			pItem->GetCollider()->AddIgnoreList(pObject->GetCollider());
 			
 			SoundManager::Get().PlayQueue("SE_bow_shot.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
 			SoundManager::Get().PlayQueue("SV_archer_atk1.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
@@ -1105,7 +1108,7 @@ void PlayerController::UpdateStatus(const bool& infoUpdate) noexcept
 	if (m_pParent != nullptr)
 	{
 		m_pParent->m_pPhysics->m_maxHP = 1.0f + pUserInfo->StatStr * 0.2f;
-		pUIManager->m_pHpBar->SetValue(m_pParent->GetHP(), m_pParent->m_pPhysics->m_maxHP, m_pParent->m_pPhysics->m_disHP);
+		pUIManager->m_pHpBar->SetValue(m_pParent->m_pPhysics->m_curHP, m_pParent->m_pPhysics->m_maxHP, m_pParent->m_pPhysics->m_disHP);
 		pUIManager->m_pInfoHP->SetString(to_wstring((int)(m_pParent->GetHP() * 100.0f)) + L" / " + to_wstring((int)(m_pParent->m_pPhysics->m_maxHP * 100.0f)));
 		//pUIManager->m_pInfoTitle->SetString(m_pParent->m_myName);
 		pUIManager->m_pInfoArmor->SetString(to_wstring((1.0f - m_pParent->m_pPhysics->m_armor) * 100.0f).substr(0, 4) + L" %");

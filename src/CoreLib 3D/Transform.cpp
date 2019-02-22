@@ -16,22 +16,6 @@ void Transform::LookAtVectorY(float targetY) noexcept
 
 void Transform::SetFocus(const D3DXVECTOR3& target) noexcept
 {
-	//D3DXVECTOR3 forward, dirTarget;
-	//forward = GetForward();
-	//D3DXVec3Normalize(&forward, &forward);
-	//forward.y = 0.0f;
-	//dirTarget = target - m_position;
-	//D3DXVec3Normalize(&dirTarget, &dirTarget);
-	//dirTarget.y = 0.0f;
-	//float fRadian = acosf(D3DXVec3Dot(&dirTarget, &forward));
-	//
-	//auto vRight = GetRight();
-	//D3DXVec3Normalize(&vRight, &vRight);
-	//if(D3DXVec3Dot(&vRight, &dirTarget) > 0.0f)
-	//	m_rotation.y = fRadian;
-	//else
-	//	m_rotation.y = -fRadian;
-
 	D3DXVECTOR3 forward, dirTarget;
 	forward = GetForward();
 	forward.y = 0.0f;
@@ -44,25 +28,24 @@ void Transform::SetFocus(const D3DXVECTOR3& target) noexcept
 	if (VectorDot(Normalize(GetRight()), dirTarget) > 0.0f)
 		m_rotation.y += fRadian;
 	else
-		m_rotation.y += -fRadian;
+		m_rotation.y -= fRadian;
 }
-const float Transform::GetFocusY(const D3DXVECTOR3& target) noexcept
+
+void Transform::SetFocusZ(const D3DXVECTOR3& target) noexcept
 {
 	D3DXVECTOR3 forward, dirTarget;
 	forward = GetForward();
-	D3DXVec3Normalize(&forward, &forward);
-	forward.y = 0.0f;
+	forward.z = 0.0f;
 	dirTarget = target - m_position;
+	dirTarget.z = 0.0f;
+	D3DXVec3Normalize(&forward, &forward);
 	D3DXVec3Normalize(&dirTarget, &dirTarget);
-	dirTarget.y = 0.0f;
 	float fRadian = acosf(D3DXVec3Dot(&dirTarget, &forward));
 
-	auto vRight = GetRight();
-	D3DXVec3Normalize(&vRight, &vRight);
-	if (D3DXVec3Dot(&vRight, &dirTarget) > 0.0f)
-		return fRadian;
+	if (VectorDot(Normalize(GetRight()), dirTarget) > 0.0f)
+		m_rotation.z -= fRadian;
 	else
-		return -fRadian;
+		m_rotation.z += fRadian;
 }
 
 Transform::Transform(const D3DXVECTOR3& position, const D3DXQUATERNION& rotation, const D3DXVECTOR3& scale) noexcept

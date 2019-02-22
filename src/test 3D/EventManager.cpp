@@ -283,7 +283,9 @@ namespace MyEvent {
 	{
 		if (pB != nullptr)
 		{
-			pB->SetForce((Normalize(-pA->GetTotalForce())) * 210.0f);
+			auto tempForce = Normalize(-pA->GetTotalForce()) * 220.0f;
+			tempForce.y = 20.0f;
+			pB->SetForce(tempForce);
 			pB->m_pParent->OperHP(-pA->m_pPhysics->m_damage);
 			// 내가 맞았을때
 			if (pB->m_pParent == PlayerController::Get().GetParent())
@@ -357,6 +359,7 @@ namespace MyEvent {
 	{
 		if (pB != nullptr)
 		{
+			pA->SetForce(Vector3::Zero);
 			pA->AddIgnoreList(pB);
 			pB->SetForce((Normalize(-pA->GetTotalForce())) * 210.0f);
 			pB->m_pParent->OperHP(-pA->m_pPhysics->m_damage);
@@ -384,6 +387,7 @@ namespace MyEvent {
 			{
 				PacketManager::Get().SendDeadEvent(pB->m_pParent->m_keyValue, pB->m_pPhysics->UserSocket, ESocketType::EDummy);
 			}
+			pA->m_pPhysics->m_damage *= 0.8f;
 			auto pEffect = ObjectManager::Get().TakeObject(L"EPAttack");
 			pEffect->SetPosition(pA->m_pParent->GetPosition());
 		}
@@ -446,7 +450,9 @@ namespace MyEvent {
 	{
 		if (pB != nullptr)
 		{
-			pB->SetForce((Normalize(pB->GetCenter() - pA->GetCenter())) * 300.0f);
+			auto tempForce = Normalize(pB->GetCenter() - pA->GetCenter()) * 300.0f;
+			tempForce.y = 20.0f;
+			pB->SetForce(tempForce);
 			pB->m_pParent->OperHP(-pA->m_pPhysics->m_damage);
 			pA->AddIgnoreList(pB);
 			// 내가 맞았을때

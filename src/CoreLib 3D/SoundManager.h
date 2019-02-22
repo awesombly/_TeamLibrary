@@ -12,8 +12,9 @@ private:
 
 	map<string, MySound>	m_SoundList;
 	MySound*				m_curBGM;
+public:
 	float					m_masterVolume = 1.0f;
-
+private:
 	// 사운드 이름, 위치, 사거리
 	queue<tuple<string, D3DXVECTOR3, float> > m_SoundQueue;
 public:

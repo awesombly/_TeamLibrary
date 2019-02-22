@@ -548,7 +548,7 @@ void IntroScene::SetObjects() noexcept
 	pHeroObj->AddComponent({ pCollider, pRenderer, new CEventTimer(3.0f), ObjectManager::Get().TakeComponent(L"Fire") });
 	//pCollider->m_pivot = Vector3::Up * 6.0f + Vector3::Forward * 2.5f;
 	pCollider->SetGravityScale(0.5f);
-	pCollider->usePhysics(false);
+	//pCollider->usePhysics(false);
 	pCollider->CollisionEvent = MyEvent::PiercingHit;
 	pCollider->m_eTag = ETag::Dummy;
 	pCollider->m_eTagArray[ETag::Collider] = false;

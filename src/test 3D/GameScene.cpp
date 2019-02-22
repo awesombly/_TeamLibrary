@@ -493,14 +493,14 @@ void GameScene::HostFrame() noexcept
 			{
 			case 1:
 			{
-				PacketManager::Get().SendSpawnEnemy(L"Zombie", ESocketType::EZombie, (UCHAR)PacketManager::Get().UserList.size(), 1.0f, 0.25f, 0.05f);
+				PacketManager::Get().SendSpawnEnemy(L"Zombie", ESocketType::EZombie, (UCHAR)PacketManager::Get().UserList.size() * 2, 1.0f, 0.25f, 0.05f);
 				PacketManager::Get().SendSpawnEnemy(L"Caster", ESocketType::ECaster, (UCHAR)PacketManager::Get().UserList.size(), 0.8f, 0.22f, 0.05f);
 				PacketManager::Get().SendSpawnEnemy(L"Crawler", ESocketType::ECrawler, (UCHAR)PacketManager::Get().UserList.size(), 0.6f, 0.2f, 0.05f);
 			}	break;
 			case 2:
 			{
 				PacketManager::Get().SendSpawnEnemy(L"Zombie", ESocketType::EZombie, (UCHAR)PacketManager::Get().UserList.size(), 1.0f, 0.25f, 0.05f);
-				PacketManager::Get().SendSpawnEnemy(L"Caster", ESocketType::ECaster, (UCHAR)PacketManager::Get().UserList.size(), 0.8f, 0.22f, 0.05f);
+				PacketManager::Get().SendSpawnEnemy(L"Caster", ESocketType::ECaster, (UCHAR)PacketManager::Get().UserList.size() * 2, 0.8f, 0.22f, 0.05f);
 				PacketManager::Get().SendSpawnEnemy(L"Crawler", ESocketType::ECrawler, (UCHAR)PacketManager::Get().UserList.size(), 0.6f, 0.2f, 0.05f);
 				PacketManager::Get().SendSpawnEnemy(L"Mutant", ESocketType::EMutant, 1, 5.0f, 0.5f, 0.1f);
 			}	break;
@@ -510,13 +510,14 @@ void GameScene::HostFrame() noexcept
 					PacketManager::Get().SendSpawnEnemy(L"Tank", ESocketType::ETank, 1, 15.0f * PacketManager::Get().UserList.size(), 1.1f, 0.1f);
 				PacketManager::Get().SendSpawnEnemy(L"Zombie", ESocketType::EZombie, (UCHAR)PacketManager::Get().UserList.size(), 1.0f, 0.25f, 0.05f);
 				PacketManager::Get().SendSpawnEnemy(L"Caster", ESocketType::ECaster, (UCHAR)PacketManager::Get().UserList.size(), 0.8f, 0.22f, 0.05f);
-				PacketManager::Get().SendSpawnEnemy(L"Crawler", ESocketType::ECrawler, (UCHAR)PacketManager::Get().UserList.size(), 0.6f, 0.2f, 0.05f);
+				PacketManager::Get().SendSpawnEnemy(L"Crawler", ESocketType::ECrawler, (UCHAR)PacketManager::Get().UserList.size() * 2, 0.6f, 0.2f, 0.05f);
 			}	break;
 			case 4:
 			{
 				if (m_spawnCount == 2)
 					PacketManager::Get().SendSpawnEnemy(L"Tank", ESocketType::ETank, 1, 15.0f * PacketManager::Get().UserList.size(), 1.1f, 0.1f);
 				PacketManager::Get().SendSpawnEnemy(L"Mutant", ESocketType::EMutant, (UCHAR)PacketManager::Get().UserList.size(), 5.0f, 0.5f, 0.1f);
+				PacketManager::Get().SendSpawnEnemy(L"Caster", ESocketType::ECaster, (UCHAR)PacketManager::Get().UserList.size(), 0.8f, 0.22f, 0.05f);
 				PacketManager::Get().SendSpawnEnemy(L"Crawler", ESocketType::ECrawler, (UCHAR)PacketManager::Get().UserList.size(), 0.6f, 0.15f, 0.1f);
 			}	break;
 			case 5:
@@ -670,9 +671,9 @@ void GameScene::LoadUI() noexcept
 	};
 	PacketManager::Get().pUserPanel[3]->PostEvent.second = PacketManager::Get().pUserPanel[3];
 	// 마우스, 옵션, 전광판
+	//PlayerController::Get().m_pOption = (JPanel*)pUIRoot->find_child(L"Set_Panel");
 	UIManager::Get().m_pMouseIcon = pUIRoot->find_child(L"mouse_cursor");
 	UIManager::Get().m_pMouseIcon->m_bRender = false;
-	//PlayerController::Get().m_pOption = (JPanel*)pUIRoot->find_child(L"Set_Panel");
 	PacketManager::Get().pKillDisplay = (JListCtrl*)pUIRoot->find_child(L"KilltoDeath");
 
 	// Skill Icon
@@ -681,22 +682,18 @@ void GameScene::LoadUI() noexcept
 
 	// Option Volume
 	m_pVolume = (JSliderCtrl*)pUIRoot->find_child(L"Set_Volum");
-	m_pVolume->EventHover.first = [](void* pSlider) {
-		ErrorMessage("볼륨 : " + to_string(*((JSliderCtrl*)pSlider)->GetValue()));
-		SoundManager::Get().SetMasterVolume(*((JSliderCtrl*)pSlider)->GetValue());
-	};
-	m_pVolume->EventHover.second = m_pVolume;
-	m_pVolume->SetValue(0.5f);
-	SoundManager::Get().SetMasterVolume(*m_pVolume->GetValue());
+	m_pVolume->SetValue(SoundManager::Get().m_masterVolume);
+	SoundManager::Get().m_masterVolume = 0.5f;
 	// Mouse
 	m_pMouseSense = (JSliderCtrl*)pUIRoot->find_child(L"Set_Mouse");
-	m_pMouseSense->EventClick.first = [](void* pSlider) {
-		ErrorMessage("마우스 : " + to_string(*((JSliderCtrl*)pSlider)->GetValue()));
-		PlayerController::Get().m_mouseSense = *((JSliderCtrl*)pSlider)->GetValue();
-	};
-	m_pMouseSense->EventClick.second = m_pMouseSense;
-	m_pMouseSense->SetValue(0.5f);
-	PlayerController::Get().m_mouseSense = *m_pMouseSense->GetValue();
+	m_pMouseSense->SetValue(PlayerController::Get().m_mouseSense);
+	//PlayerController::Get().m_mouseSense = *m_pMouseSense->GetValue();
+
+
+	JSliderCtrl* pLight = (JSliderCtrl*)pUIRoot->find_child(L"Set_Light");
+	pLight->SetValue(PlayerController::Get().m_mouseSense);
+
+
 	// Exit
 	auto pExit = (JTextCtrl*)pUIRoot->find_child(L"Set_GameExit");
 	pExit->EventClick.first = [](void* pScene) {
@@ -816,7 +813,7 @@ void GameScene::LoadUI() noexcept
 	// 쳐맞 효과
 	UIManager::Get().m_pHitEffect = (JPanel*)pUIRoot->find_child(L"fadeout");
 	UIManager::Get().m_pRespawnEffect = (JPanel*)pUIRoot->find_child(L"fadeout_white");
-	//PlayerController::Get().m_pRespawnEffect = (JPanel*)pUIRoot->find_child(L"fadein"); //(L"JohnSprite");
+	UIManager::Get().m_pGreenEffect = (JPanel*)pUIRoot->find_child(L"fadeout_green");
 
 	UIManager::Get().m_pChat = m_pChat = (JEditCtrl*)pUIRoot->find_child(L"Chat_Edit");
 	// 적 체력바
@@ -914,7 +911,7 @@ void GameScene::LoadUI() noexcept
 	pNameChange->EventClick.second = this;
 
 
-	UIManager::Get().m_pXPush = (JImageCtrl*)pUIRoot->find_child(L"XPUSH");
+	UIManager::Get().m_pXPush = (JImageCtrl*)pUIRoot->find_child(L"KeyPush_Img"); // F
 	// 상점
 	UIManager::Get().m_pShopPanel = (JPanel*)pUIRoot->find_child(L"Shop_Panel");
 	UIManager::Get().m_pShopItem0 = (JTextCtrl*)pUIRoot->find_child(L"Shop_Item0_Btn");
@@ -1099,6 +1096,7 @@ void GameScene::LoadUI() noexcept
 	// 돈 부족
 	UIManager::Get().m_pHelpTextPanel = (JPanel*)pUIRoot->find_child(L"HelpText")->m_pParent;
 	UIManager::Get().m_pHelpTextPanel->m_bRender = false;
+
 
 	ObjectManager::Get().PushObject(pUIRoot);
 	UI::InGameEvent(pUIRoot);
