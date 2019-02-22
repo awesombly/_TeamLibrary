@@ -9,9 +9,9 @@ namespace UI
 		JImageCtrl*			m_pMiddleGround;
 		JImageCtrl*			m_pFrontGround;
 		VHType				m_VHType = Horizontal;
-		const float*		m_fCur;
-		const float*		m_fDis;
-		float				m_fTemp = 1.0f; // 초기에 넣어놓는 값..
+		float*		m_fCur;
+		float*		m_fDis;
+		//float				m_fTemp = 1.0f; // 초기에 넣어놓는 값..
 		float			    m_fMaxValue = 1.0f;
 		float				m_fCurValue;
 		float				m_fDisValue = 0.0f;
@@ -21,7 +21,7 @@ namespace UI
 		void CheckDis(const float& spf);
 		void SetColor(D3DXVECTOR4 vColor);
 		void SetMiddleColor(D3DXVECTOR4 vColor);
-		void SetValue(const float& fValue, float fMaxValue, float& fDisValue);
+		void SetValue(float& fValue, float fMaxValue, float& fDisValue);
 		bool Create(ID3D11Device* pDevice, const TCHAR* szBack, const TCHAR* szFront, 
 			 const char* PSName = "PS", const TCHAR* szShaderName = L"../../data/ui/shader/DefaultUI.hlsl");
 	public:
@@ -38,6 +38,9 @@ namespace UI
 			m_pBackGround = new JImageCtrl(NodeName + L"_Back");
 			m_pFrontGround = new JImageCtrl(NodeName + L"_Front");
 			m_pMiddleGround = new JImageCtrl(NodeName + L"_Dis");
+
+			m_fCur = new float(0.5f);
+			m_fDis = new float(0.5f);
 		};
 		virtual ~JProgressBar() {};
 	};
