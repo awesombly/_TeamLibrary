@@ -1,2 +1,7 @@
 #pragma once
-static unsigned int LoadingCount = 0;
+
+class LoadClass 
+{
+public:
+	static unsigned int LoadingCount;
+};

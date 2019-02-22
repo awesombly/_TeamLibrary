@@ -9,12 +9,15 @@
 #include "AIZombieEx.h"
 #include "AIZombieKing.h"
 #include "CEventTimer.h"
+#include "LoadingParameter.h"
 
 bool IntroScene::Init() noexcept
 {
 	FirstInit();
 	// UI
+	++LoadClass::LoadingCount;
 	LoadSound();
+	++LoadClass::LoadingCount;
 	LoadUI();
 	///
 	m_isLoading = false;
@@ -143,6 +146,7 @@ bool IntroScene::FirstInit() noexcept
 {
 	if (m_isFirstInit)
 	{
+		++LoadClass::LoadingCount;
 		m_isFirstInit = false;
 		ErrorMessage(__FUNCTION__ + " -> Start."s);
 		// 폰트, 사운드 등
@@ -151,6 +155,7 @@ bool IntroScene::FirstInit() noexcept
 		m_pParser = new MaxImporter();
 
 		// ===================================== 캐릭터 초기화 ==============================================
+		++LoadClass::LoadingCount;
 		ErrorMessage(__FUNCTION__ + " -> Character Loading."s);
 		I_CHARMGR.Init();
 		if (!I_CHARMGR.Load(DxManager::GetDevice(), DxManager::GetDContext(), TablePATH))		//경로 중요함
@@ -158,6 +163,7 @@ bool IntroScene::FirstInit() noexcept
 			return false;
 		}
 		// ===================================== 오브젝트 초기화 ==============================================
+		++LoadClass::LoadingCount;
 		ErrorMessage(__FUNCTION__ + " -> Object Setting."s);
 		SetObjects();
 		return true;

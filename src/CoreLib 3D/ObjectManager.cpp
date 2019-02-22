@@ -3,6 +3,7 @@
 #include "ColliderOBB.h"
 #include <fstream>
 #include "../../include/model/AHeroObj.h"
+#include "LoadingParameter.h"
 
 map<UINT, GameObject*> ObjectManager::KeyObjects;
 UINT				   ObjectManager::KeyCount = 0;
@@ -456,6 +457,7 @@ GameObject* ObjectManager::TakeObject(const wstring_view& objName, const bool& p
 
 bool ObjectManager::SetProtoObject(GameObject* pObject) noexcept
 {
+	++LoadClass::LoadingCount;
 	if (m_ProtoPull.find(pObject->m_myName) != m_ProtoPull.end())
 	{
 		ErrorMessage(__FUNCTION__ + " -> 중복된 이름!"s);

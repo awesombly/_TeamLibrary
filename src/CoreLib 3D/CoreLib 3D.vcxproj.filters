@@ -121,6 +121,9 @@
     <ClCompile Include="HeightMap.cpp">
       <Filter>Component\Renderer\Child</Filter>
     </ClCompile>
+    <ClCompile Include="LoadingParameter.cpp">
+      <Filter>Utility</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CoreDX.h">

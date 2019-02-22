@@ -710,6 +710,7 @@ void GameScene::LoadUI() noexcept
 		auto pCheck = (JCheckCtrl*)pVoid;
 		if (pCheck->GetCheck())
 		{
+			PlayerController::Get().m_LightAmount = 1.0f;
 			for (auto& [name, iter] : ObjectManager::Get().m_ProtoPull)
 			{
 				if (auto pList = iter->GetComponentList(EComponent::Renderer);
@@ -718,7 +719,7 @@ void GameScene::LoadUI() noexcept
 					for (auto& pRenderer : *pList)
 					{
 						((Renderer*)pRenderer)->SetShadowRate(0.0f);
-						((Renderer*)pRenderer)->SetLightRate(1.0f);
+						//((Renderer*)pRenderer)->SetLightRate(1.0f);
 						((Renderer*)pRenderer)->SetEnviromentMap(L"");
 					}
 				}
@@ -733,7 +734,7 @@ void GameScene::LoadUI() noexcept
 						for (auto& pRenderer : *pList)
 						{
 							((Renderer*)pRenderer)->SetShadowRate(0.0f);
-							((Renderer*)pRenderer)->SetLightRate(1.0f);
+							//((Renderer*)pRenderer)->SetLightRate(1.0f);
 							((Renderer*)pRenderer)->SetEnviromentMap(L"");
 						}
 					}
@@ -742,6 +743,7 @@ void GameScene::LoadUI() noexcept
 		}
 		else
 		{
+			PlayerController::Get().m_LightAmount = 0.3f;
 			auto skySrc = ((Renderer*)m_pSkyBox->GetComponent(EComponent::Renderer))->m_srcName;
 			for (auto&[name, iter] : ObjectManager::Get().m_ProtoPull)
 			{
@@ -751,7 +753,7 @@ void GameScene::LoadUI() noexcept
 					for (auto& pRenderer : *pList)
 					{
 						((Renderer*)pRenderer)->SetShadowRate(0.5f);
-						((Renderer*)pRenderer)->SetLightRate(0.3f);
+						//((Renderer*)pRenderer)->SetLightRate(0.3f);
 						((Renderer*)pRenderer)->SetEnviromentMap(skySrc, EEnviType::Refraction);
 					}
 				}
@@ -766,7 +768,7 @@ void GameScene::LoadUI() noexcept
 						for (auto& pRenderer : *pList)
 						{
 							((Renderer*)pRenderer)->SetShadowRate(0.5f);
-							((Renderer*)pRenderer)->SetLightRate(0.3f);
+							//((Renderer*)pRenderer)->SetLightRate(0.3f);
 							((Renderer*)pRenderer)->SetEnviromentMap(skySrc, EEnviType::Refraction);
 						}
 					}

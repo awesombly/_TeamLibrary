@@ -248,6 +248,7 @@ copy "*.h" "..\\..\\include\\core\\"</Command>
     <ClCompile Include="HeightMap.cpp" />
     <ClCompile Include="Instancer.cpp" />
     <ClCompile Include="Light.cpp" />
+    <ClCompile Include="LoadingParameter.cpp" />
     <ClCompile Include="MaxImporter.cpp" />
     <ClCompile Include="Physics.cpp" />
     <ClCompile Include="PlaneUI.cpp" />
