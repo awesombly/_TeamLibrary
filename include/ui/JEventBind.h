@@ -108,7 +108,7 @@ namespace UI
 
 		JSliderCtrl* pChatSlider = (JSliderCtrl*)pRoot->find_child(L"Chat_Slider");
 		JListCtrl* pList = (JListCtrl*)pRoot->find_child(L"Chat_Log");
-		pList->m_fValue = &pChatSlider->m_fValue;
+		pList->m_fValue = pChatSlider->m_fValue;
 
 		// effect
 		JPanel* pEff1 = (JPanel*)pRoot->find_child(L"fadeout");

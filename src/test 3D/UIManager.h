@@ -20,6 +20,7 @@ public:
 	JProgressBar*	m_pRespawnBar		= nullptr;
 	JPanel*			m_pRespawnEffect	= nullptr;
 	JPanel*			m_pHitEffect		= nullptr;
+	JPanel*			m_pGreenEffect		= nullptr;
 	JPanel*			m_pEnemyPanel		= nullptr;		// 
 	JProgressBar*	m_pEnemyHP			= nullptr;		// 
 	JTextCtrl*		m_pEnemyName		= nullptr;		// 

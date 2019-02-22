@@ -1722,7 +1722,7 @@
 ^ParentName Set_Panel
 ^KeyState 135 135
 ^bRender 1
-^Position 0.000000 80.000000 0.000000
+^Position 0.000000 105.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 140.000000 15.000000 1.000000
 ^Color 0.500000 0.500000 0.500000 1.000000
@@ -1739,7 +1739,7 @@
 ^ParentName Set_Panel
 ^KeyState 135 135
 ^bRender 1
-^Position 0.000000 40.000000 0.000000
+^Position 0.000000 70.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 140.000000 15.000000 1.000000
 ^Color 0.500000 0.500000 0.500000 1.000000
@@ -1758,7 +1758,7 @@
 ^ParentName Set_Panel
 ^KeyState 135 135
 ^bRender 1
-^Position 30.000000 80.000000 0.000000
+^Position 30.000000 105.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 100.000000 2.000000 1.000000
 ^SubScale 7.000000 7.000000 1.000000
@@ -1779,7 +1779,7 @@
 ^ParentName Set_Panel
 ^KeyState 135 135
 ^bRender 1
-^Position 30.000000 40.000000 0.000000
+^Position 30.000000 70.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 100.000000 2.000000 1.000000
 ^SubScale 7.000000 7.000000 1.000000
@@ -1798,7 +1798,7 @@
 ^ParentName Set_Panel
 ^KeyState 135 135
 ^bRender 1
-^Position 95.000000 -118.000000 0.000000
+^Position 95.000000 -110.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 40.000000 20.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
@@ -1817,7 +1817,7 @@
 ^ParentName Set_Panel
 ^KeyState 135 135
 ^bRender 1
-^Position 95.000000 -118.500046 0.000000
+^Position 95.000000 -110.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 11.000000 6.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
@@ -1834,7 +1834,7 @@
 ^ParentName Set_Panel
 ^KeyState 135 135
 ^bRender 1
-^Position -105.000000 40.000000 0.000000
+^Position -105.000000 70.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 10.000000 10.000000 1.000000
 ^Color 0.000000 0.000000 0.000000 1.000000
@@ -1868,7 +1868,7 @@
 ^ParentName Set_Panel
 ^KeyState 135 135
 ^bRender 1
-^Position -105.000000 80.000000 0.000000
+^Position -105.000000 105.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 10.000000 10.000000 1.000000
 ^Color 0.000000 0.000000 0.000000 1.000000
@@ -1925,7 +1925,7 @@
 ^ParentName Set_Panel
 ^KeyState 135 135
 ^bRender 1
-^Position 0.000000 -40.000000 0.000000
+^Position 0.000000 -35.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 140.000000 15.000000 1.000000
 ^Color 0.500000 0.500000 0.500000 1.000000
@@ -1942,7 +1942,7 @@
 ^ParentName Set_Panel
 ^KeyState 135 135
 ^bRender 1
-^Position 120.000000 -40.000000 0.000000
+^Position 120.000000 -35.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 12.000000 12.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
@@ -1960,7 +1960,7 @@
 ^ParentName Set_Panel
 ^KeyState 135 135
 ^bRender 1
-^Position -60.000000 -40.000000 0.000000
+^Position -60.000000 -35.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 60.000000 15.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 0.000000
@@ -1982,7 +1982,7 @@
 ^ParentName Set_Panel
 ^KeyState 135 135
 ^bRender 1
-^Position 0.000000 -80.000000 0.000000
+^Position 0.000000 -70.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 140.000000 15.000000 1.000000
 ^Color 0.500000 0.500000 0.500000 1.000000
@@ -1999,7 +1999,7 @@
 ^ParentName Set_Panel
 ^KeyState 135 135
 ^bRender 1
-^Position -60.000000 -80.000000 0.000000
+^Position -60.000000 -70.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 60.000000 15.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 0.000000
@@ -2021,7 +2021,7 @@
 ^ParentName Set_Panel
 ^KeyState 135 135
 ^bRender 1
-^Position 30.000000 -80.000000 0.000000
+^Position 30.000000 -70.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 72.000000 10.000000 1.000000
 ^Color 0.000000 0.000000 0.000000 1.000000
@@ -2039,7 +2039,7 @@
 ^KeyState 135 135
 ^bRender 1
 ^bPrivate 0
-^Position 30.000000 -80.000000 0.000000
+^Position 30.000000 -70.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 70.000000 8.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
@@ -2059,13 +2059,73 @@
 ^ParentName Set_Panel
 ^KeyState 135 135
 ^bRender 1
-^Position 120.000000 -80.000000 0.000000
+^Position 120.000000 -70.000000 0.000000
 ^Rotate 0.000000 0.000000 0.000000
 ^Scale 12.000000 12.000000 1.000000
 ^Color 1.000000 1.000000 1.000000 1.000000
 ^tx_Normal btn_356.png
 ^tx_Hover btn_357.png
 ^tx_Press btn_357.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName Set_Light_Back
+^ParentName Set_Panel
+^KeyState 135 135
+^bRender 1
+^Position 0.000000 35.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 140.000000 15.000000 1.000000
+^Color 0.500000 0.500000 0.500000 1.000000
+^tx_Normal µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 783
+^NodeName Set_Light_txt
+^ParentName Set_Panel
+^KeyState 135 135
+^bRender 1
+^Position -60.000000 35.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 60.000000 15.000000 1.000000
+^Color 1.000000 1.000000 1.000000 0.000000
+^Align 1
+^strText È­¸é¹à±â
+^TextSize 20.000000
+^tx_Normal NO_IMAGE.png
+^tx_Hover NO_IMAGE.png
+^tx_Press NO_IMAGE.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 781
+
+^VHType 1447
+^NodeName Set_Light
+^ParentName Set_Panel
+^KeyState 135 135
+^bRender 1
+^Position 30.000000 35.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 100.000000 2.000000 1.000000
+^SubScale 7.000000 7.000000 1.000000
+^Color 1.000000 0.500000 0.500000 1.000000
+^tx_Bar µÕ±Ù°ÅÁÂ¿ì±æÂß2.png
+^tx_Handle filled-circle_icon-icons.com_72757.png
 ^pfEventHover 7274
 ^vpEventHover 
 ^pfEventPress 7274
@@ -4904,78 +4964,6 @@
 ^pfEventClick 7274
 ^vpEventClick ýýýý
 
-^Type 778
-^NodeName fadeout_white
-^ParentName Root
-^KeyState 135 135
-^bRender 0
-^Position 0.000000 -0.000000 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 400.000000 300.000000 1.000000
-^Color 1.000000 1.000000 1.000000 -0.000054
-^tx_Normal White.png
-^tx_Hover White.png
-^tx_Press White.png
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick 
-
-^Type 778
-^NodeName fadein
-^ParentName Root
-^KeyState 135 135
-^bRender 0
-^Position 0.000000 0.000000 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 400.000000 300.000000 1.000000
-^Color 1.000000 1.000000 1.000000 1.000576
-^tx_Normal White.png
-^tx_Hover White.png
-^tx_Press White.png
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick ýýýý
-
-^Type 788
-^NodeName XPUSH
-^ParentName Root
-^KeyState 135 135
-^bRender 0
-^Position 0.000000 -168.669724 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 150.000000 15.000000 1.000000
-^Color 1.000000 0.800000 1.000000 1.000000
-^tx_Normal xPush.png
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick ýýýýy?
-
-^Type 788
-^NodeName fadeout_green
-^ParentName Root
-^KeyState 135 135
-^bRender 0
-^Position 0.000000 0.000000 0.000000
-^Rotate 0.000000 0.000000 0.000000
-^Scale 400.000000 300.000000 1.000000
-^Color 0.450000 1.000000 0.350000 0.000000
-^tx_Normal White.png
-^pfEventHover 7274
-^vpEventHover 
-^pfEventPress 7274
-^vpEventPress 
-^pfEventClick 7274
-^vpEventClick ýýýý
-
 ^Type 777
 ^NodeName HelpTextPanel
 ^ParentName Root
@@ -5023,3 +5011,75 @@
 ^vpEventPress 
 ^pfEventClick 7274
 ^vpEventClick ýýýý
+
+^Type 788
+^NodeName KeyPush_Img
+^ParentName Root
+^KeyState 135 135
+^bRender 0
+^Position 0.000000 -165.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 130.000000 10.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000000
+^tx_Normal FPUSH.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 
+
+^Type 788
+^NodeName fadeout_green
+^ParentName Root
+^KeyState 135 135
+^bRender 0
+^Position 0.000000 0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 400.000000 300.000000 1.000000
+^Color 0.450000 1.000000 0.350000 0.000000
+^tx_Normal White.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick ýýýý
+
+^Type 778
+^NodeName fadein
+^ParentName Root
+^KeyState 135 135
+^bRender 0
+^Position 0.000000 0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 400.000000 300.000000 1.000000
+^Color 1.000000 1.000000 1.000000 1.000576
+^tx_Normal White.png
+^tx_Hover White.png
+^tx_Press White.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick ýýýý
+
+^Type 778
+^NodeName fadeout_white
+^ParentName Root
+^KeyState 135 135
+^bRender 0
+^Position 0.000000 -0.000000 0.000000
+^Rotate 0.000000 0.000000 0.000000
+^Scale 400.000000 300.000000 1.000000
+^Color 1.000000 1.000000 1.000000 -0.000054
+^tx_Normal White.png
+^tx_Hover White.png
+^tx_Press White.png
+^pfEventHover 7274
+^vpEventHover 
+^pfEventPress 7274
+^vpEventPress 
+^pfEventClick 7274
+^vpEventClick 

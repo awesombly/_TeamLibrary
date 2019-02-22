@@ -538,21 +538,22 @@ void IntroScene::SetObjects() noexcept
 	pCollider->m_eTagArray[ETag::Dummy] = false;
 	ObjectManager::Get().SetProtoObject(pHeroObj);
 
-	//// 관통 화살
-	//pHeroObj = new AHeroObj();
-	//pHeroObj->SetPlayerCharacter(ITEM_ARROW);
-	//pHeroObj->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
-	//pHeroObj->m_myName = L"ArrowP";
-	//pHeroObj->m_objType = EObjType::AObject;
-	//pCollider = new Collider(4.0f);
-	//pHeroObj->AddComponent({ pCollider, pRenderer, ObjectManager::Get().TakeComponent(L"Fire") });
-	////pCollider->m_pivot = Vector3::Up * 6.0f + Vector3::Forward * 2.5f;
-	//pCollider->SetGravityScale(0.5f);
-	//pCollider->CollisionEvent = MyEvent::PiercingHit;
-	//pCollider->m_eTag = ETag::Dummy;
-	//pCollider->m_eTagArray[ETag::Collider] = false;
-	//pCollider->m_eTagArray[ETag::Dummy] = false;
-	//ObjectManager::Get().SetProtoObject(pHeroObj);
+	// 관통 화살
+	pHeroObj = new AHeroObj();
+	pHeroObj->SetPlayerCharacter(ITEM_ARROW);
+	pHeroObj->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
+	pHeroObj->m_myName = L"ArrowP";
+	pHeroObj->m_objType = EObjType::AObject;
+	pCollider = new Collider(4.0f);
+	pHeroObj->AddComponent({ pCollider, pRenderer, new CEventTimer(3.0f), ObjectManager::Get().TakeComponent(L"Fire") });
+	//pCollider->m_pivot = Vector3::Up * 6.0f + Vector3::Forward * 2.5f;
+	pCollider->SetGravityScale(0.5f);
+	//pCollider->usePhysics(false);
+	pCollider->CollisionEvent = MyEvent::PiercingHit;
+	pCollider->m_eTag = ETag::Dummy;
+	pCollider->m_eTagArray[ETag::Collider] = false;
+	pCollider->m_eTagArray[ETag::Dummy] = false;
+	ObjectManager::Get().SetProtoObject(pHeroObj);
 
 	// 화살비
 	pHeroObj = new AHeroObj();

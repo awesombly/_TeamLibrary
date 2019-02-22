@@ -18,7 +18,7 @@ public:
 	void LookAtVectorY(float targetY)								 noexcept;
 	///
 	void SetFocus(const D3DXVECTOR3& target)						 noexcept;
-	const float GetFocusY(const D3DXVECTOR3& target)				 noexcept;
+	void SetFocusZ(const D3DXVECTOR3& target)						 noexcept;
 	// ¿¬»ê
 	void Transformation(const Transform& transform)					 noexcept;
 	void Translate(const D3DXVECTOR3& position)						 noexcept;

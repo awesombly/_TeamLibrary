@@ -305,6 +305,9 @@ bool PlayerStateRSkill::Process(const float& spf) noexcept
 		m_pOwner->m_DelayFrame = 0.7f;
 		m_pOwner->m_curDelayRSkill = m_pOwner->m_DelayRSkill;
 
+		// 카메라 진동
+		std::thread vibrator(&PlayerController::StartVibration, m_pOwner, 0.4f, 7.0f);
+		vibrator.detach();
 		return true;
 	}
 
