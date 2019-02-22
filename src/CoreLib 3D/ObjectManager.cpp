@@ -346,6 +346,11 @@ bool ObjectManager::ReadSpriteScript() noexcept
 		{
 			if (subString.empty())
 				break;
+
+			++LoadClass::LoadingCount;
+			LoadClass::LoadingString = L"Setting "s + subString.c_str();
+			this_thread::sleep_for(chrono::milliseconds(50));
+
 			wistringstream lineStream2(subString);
 			//
 			_frame	 = 0.0f;
@@ -457,6 +462,10 @@ GameObject* ObjectManager::TakeObject(const wstring_view& objName, const bool& p
 
 bool ObjectManager::SetProtoObject(GameObject* pObject) noexcept
 {
+	++LoadClass::LoadingCount;
+	LoadClass::LoadingString = L"Setting " + pObject->m_myName;
+	this_thread::sleep_for(chrono::milliseconds(50));
+
 	if (m_ProtoPull.find(pObject->m_myName) != m_ProtoPull.end())
 	{
 		ErrorMessage(__FUNCTION__ + " -> 중복된 이름!"s);
@@ -475,7 +484,6 @@ bool ObjectManager::SetProtoObject(GameObject* pObject) noexcept
 			PopCollider((Collider*)iter);
 		}
 	}
-	++LoadClass::LoadingCount;
 	return true;
 }
 

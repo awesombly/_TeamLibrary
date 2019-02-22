@@ -29,7 +29,7 @@
 //#include "ColliderAABB.h"
 #include "ColliderOBB.h"
 ///
-
+#include "LoadingParameter.h"
 
 
 
@@ -58,7 +58,7 @@ private:
 	static GameObject*				m_pEnemy;
 	static list<GameObject*>		m_EnemyList;
 
-	bool					m_isMatching = false;
+	bool				m_isMatching = false;
 public:
 	static GameObject* m_pSkyBox;
 
@@ -66,6 +66,8 @@ public:
 	static bool				m_isLoading;
 	static char				m_loginCheck;
 	static MaxImporter*		m_pParser;
+	///
+	float			m_loadPercent = 0.0f;
 public:
 	static int m_iMatchingStatus;
 	static std::string m_strHostIPv4;
@@ -80,7 +82,7 @@ public:
 	virtual void StartToGuest();
 	void MatchingCheck();
 
-	virtual void LoadUI()				noexcept { return; };
+	virtual void LoadUI()				noexcept;
 	virtual bool FirstInit()			noexcept;
 
 	virtual bool Init()					noexcept override;

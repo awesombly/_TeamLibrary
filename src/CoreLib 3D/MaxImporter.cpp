@@ -1,6 +1,7 @@
 #include "MaxImporter.h"
 #include "ObjectManager.h"
 #include "ParticleSystem.h"
+#include "LoadingParameter.h"
 
 map<string, MaxImporter::EAseTag> MaxImporter::m_AseTag;
 
@@ -36,6 +37,10 @@ ParticleSystem* MaxImporter::CreateFromParticle(const wstring_view& fileName, co
 {
 	Clear();
 	m_filePath = m_filePath / directory.data() / fileName.data();
+	///
+	++LoadClass::LoadingCount;
+	LoadClass::LoadingString = L"Setting "s + m_filePath.c_str();
+	this_thread::sleep_for(chrono::milliseconds(50));
 	// ¿¬°á
 	ifstream readStream(m_filePath);
 	if (!readStream.is_open())

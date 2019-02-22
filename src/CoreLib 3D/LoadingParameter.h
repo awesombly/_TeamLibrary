@@ -5,5 +5,5 @@ class LoadClass
 {
 public:
 	static unsigned int LoadingCount;
-	static std::wstring		LoadingString;
+	static std::wstring	LoadingString;
 };

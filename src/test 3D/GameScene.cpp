@@ -9,6 +9,7 @@ bool GameScene::Init() noexcept
 {
 	// UI
 	LoadUI();
+	///
 	m_pPlayer = &PlayerController::Get();
 	PlayerController::Get().Init();
 	m_pPlayer->SetPosition(Vector3::Up * 500.0f + Vector3::Backward * 750.0f);

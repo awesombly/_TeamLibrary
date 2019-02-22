@@ -6,6 +6,11 @@
 class UIManager : public ISingleton<UIManager>
 {
 public:
+	// 로딩화면
+	JPanel*			m_pUIRoot = nullptr;
+	JTextCtrl*		m_pObjectText = nullptr;
+	JTextCtrl*		m_pPercent = nullptr;
+	JProgressBar*	m_pProgress = nullptr;
 	// UI
 	JTextCtrl*		m_TimerText			= nullptr;
 	JPanel*			m_pStatePanel		= nullptr;

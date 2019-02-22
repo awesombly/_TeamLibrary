@@ -9,14 +9,12 @@
 #include "AIZombieEx.h"
 #include "AIZombieKing.h"
 #include "CEventTimer.h"
-#include "LoadingParameter.h"
 
 bool IntroScene::Init() noexcept
 {
 	FirstInit();
-	//
+	// 사운드, UI
 	LoadSound();
-	// UI
 	LoadUI();
 	///
 	m_isLoading = false;
@@ -151,21 +149,15 @@ bool IntroScene::FirstInit() noexcept
 		WriteManager::Get().SetText({ 0, 0 }, L"", D2D1::ColorF::Black, 20, L"휴면둥근헤드라인");
 		WriteManager::Get().SetFontSizeAlign(20, EAlign::Center, EAlign::Center);
 		m_pParser = new MaxImporter();
-
 		// ===================================== 캐릭터 초기화 ==============================================
 		ErrorMessage(__FUNCTION__ + " -> Character Loading."s);
-		LoadClass::LoadingCount = 0;
 		I_CHARMGR.Init();
 		if (!I_CHARMGR.Load(DxManager::GetDevice(), DxManager::GetDContext(), TablePATH))		//경로 중요함
 		{
 			return false;
 		}
-		ErrorMessage(L"캐릭터 로딩값 : " + to_wstring(LoadClass::LoadingCount));
 		// ===================================== 오브젝트 초기화 ==============================================
-		ErrorMessage(__FUNCTION__ + " -> Object Setting."s);
-		LoadClass::LoadingCount = 0;
 		SetObjects();
-		ErrorMessage(L"이펙, 세팅 로딩값 : " + to_wstring(LoadClass::LoadingCount));
 		return true;
 	}
 	return false;
