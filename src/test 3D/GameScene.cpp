@@ -1018,7 +1018,7 @@ void GameScene::LoadUI() noexcept
 	UIManager::Get().m_pTowerText2 = (JTextCtrl*)pUIRoot->find_child(L"Tower_Explanation1");
 	UIManager::Get().m_pTowerUpgrade = (JTextCtrl*)pUIRoot->find_child(L"Tower_Btn");
 	UIManager::Get().m_pTowerUpgrade->EventClick.first = [](void*) {
-		auto needMoney = 1000 + 1000 * PacketManager::Get().TowerLevel;
+		auto needMoney = 2000 + 2000 * PacketManager::Get().TowerLevel;
 		if (PlayerController::Get().m_money >= needMoney)
 		{
 			PlayerController::Get().m_money -= needMoney;
@@ -1040,7 +1040,7 @@ void GameScene::LoadUI() noexcept
 	UIManager::Get().m_pSmithyInfo2Acce2 = (JTextCtrl*)pUIRoot->find_child(L"Smithy_Accessories2_Info_Text1");
 	UIManager::Get().m_pSmithyBtnWeapon = (JTextCtrl*)pUIRoot->find_child(L"Smithy_Weapon_Btn");
 	UIManager::Get().m_pSmithyBtnWeapon->EventClick.first = [](void*) {
-		auto needMoney = 1000 + 1000 * PlayerController::Get().m_upgradeWeapon;
+		auto needMoney = 2000 + 2000 * PlayerController::Get().m_upgradeWeapon;
 		if (PlayerController::Get().m_money >= needMoney)
 		{
 			PlayerController::Get().m_money -= needMoney;
@@ -1053,7 +1053,7 @@ void GameScene::LoadUI() noexcept
 	};
 	UIManager::Get().m_pSmithyBtnArmor = (JTextCtrl*)pUIRoot->find_child(L"Smithy_Armor_Btn");
 	UIManager::Get().m_pSmithyBtnArmor->EventClick.first = [](void*) {
-		auto needMoney = 1000 + 1000 * PlayerController::Get().m_upgradeArmor;
+		auto needMoney = 2000 + 2000 * PlayerController::Get().m_upgradeArmor;
 		if (PlayerController::Get().m_money >= needMoney)
 		{
 			PlayerController::Get().m_money -= needMoney;
@@ -1067,7 +1067,7 @@ void GameScene::LoadUI() noexcept
 	};
 	UIManager::Get().m_pSmithyBtnAcce1 = (JTextCtrl*)pUIRoot->find_child(L"Smithy_Accessories_Btn");
 	UIManager::Get().m_pSmithyBtnAcce1->EventClick.first = [](void*) {
-		auto needMoney = 1000 + 1000 * PlayerController::Get().m_upgradeAcce1;
+		auto needMoney = 2000 + 2000 * PlayerController::Get().m_upgradeAcce1;
 		if (PlayerController::Get().m_money >= needMoney)
 		{
 			PlayerController::Get().m_money -= needMoney;
@@ -1080,7 +1080,7 @@ void GameScene::LoadUI() noexcept
 	};
 	UIManager::Get().m_pSmithyBtnAcce2 = (JTextCtrl*)pUIRoot->find_child(L"Smithy_Accessories2_Btn");
 	UIManager::Get().m_pSmithyBtnAcce2->EventClick.first = [](void*) {
-		auto needMoney = 1000 + 1000 * PlayerController::Get().m_upgradeAcce2;
+		auto needMoney = 10000 + 10000 * PlayerController::Get().m_upgradeAcce2;
 		if (PlayerController::Get().m_money >= needMoney)
 		{
 			PlayerController::Get().m_money -= needMoney;

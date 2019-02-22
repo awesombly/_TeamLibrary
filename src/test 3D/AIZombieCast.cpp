@@ -14,7 +14,7 @@ AIZombieCast::AIZombieCast()
 bool AIZombieCast::Init() noexcept
 {
 	m_isEnable = true;
-	m_attackRange = m_pParent->GetScaleAverage() * 15000.0f;
+	m_attackRange = m_pParent->GetScaleAverage() * 20000.0f;
 	m_moveSpeed = RandomNormal() * 30.0f + 60.0f;
 	m_delay = 0.0f;
 	m_eState = EState::Idle;
@@ -97,7 +97,7 @@ bool AIZombieCast::Frame(const float& spf, const float& accTime)	noexcept
 		pChicken->SetPosition(m_pParent->GetPosition() + m_pParent->GetForward() * 40.0f + m_pParent->GetUp() * 65.0f);
 		pChicken->SetRotation(m_pParent->GetRotation());
 		pChicken->SetScale(m_pParent->GetScale().x * 2.0f * Vector3::One);
-		pChicken->SetForce((m_pParent->GetForward() + Vector3::Up * 1.2f) * 200.0f);
+		pChicken->SetForce((m_pParent->GetForward() + Vector3::Up) * 220.0f);
 		pChicken->m_pPhysics->m_damage = 0.35f;
 		m_dealyAttack = 4.5f;
 		///

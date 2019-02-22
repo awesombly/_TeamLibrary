@@ -488,6 +488,16 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 			pItem->m_pPhysics->UserSocket = socket;
 			pItem->SetDamage(1.6f * PacketManager::Get().UserList[socket]->AttackRate);
 			pItem->GetCollider()->AddIgnoreList(pObject->GetCollider());
+
+			//auto pItem = ObjectManager::Get().TakeObject(L"ArrowP");
+			//pItem->SetPosition(pObject->GetPosition() + pObject->GetForward() * 40.0f + pObject->GetUp() * 65.0f + pObject->GetRight() * 20.0f);
+			//pItem->SetRotation(pObject->GetRotation());
+			//pItem->SetScale(Vector3::One * 6.0f);
+			////pItem->SetForce(forward * 1800.0f);
+			//pItem->SetDirectionForce(forward * 1000.0f);
+			//pItem->m_pPhysics->UserSocket = socket;
+			//pItem->SetDamage(1.6f * PacketManager::Get().UserList[socket]->AttackRate);
+			//pItem->GetCollider()->AddIgnoreList(pObject->GetCollider());
 			
 			SoundManager::Get().PlayQueue("SE_bow_shot.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
 			SoundManager::Get().PlayQueue("SV_archer_atk1.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
@@ -1311,10 +1321,10 @@ void PlayerController::CheckTownCollision() noexcept
 						pUIManager->m_pMouseIcon->m_bRender = true;
 					}
 				}
-				pUIManager->m_pSmithyBtnWeapon->SetString(to_wstring((m_upgradeWeapon + 1) * 1000) + L" KG");
-				pUIManager->m_pSmithyBtnArmor->SetString(to_wstring((m_upgradeArmor + 1) * 1000) + L" KG");
-				pUIManager->m_pSmithyBtnAcce1->SetString(to_wstring((m_upgradeAcce1 + 1) * 1000) + L" KG");
-				pUIManager->m_pSmithyBtnAcce2->SetString(to_wstring((m_upgradeAcce2 + 1) * 5000) + L" KG");
+				pUIManager->m_pSmithyBtnWeapon->SetString(to_wstring((m_upgradeWeapon + 1) * 2000) + L" KG");
+				pUIManager->m_pSmithyBtnArmor->SetString(to_wstring((m_upgradeArmor + 1) * 2000) + L" KG");
+				pUIManager->m_pSmithyBtnAcce1->SetString(to_wstring((m_upgradeAcce1 + 1) * 2000) + L" KG");
+				pUIManager->m_pSmithyBtnAcce2->SetString(to_wstring((m_upgradeAcce2 + 1) * 10000) + L" KG");
 
 				pUIManager->m_pSmithyInfo1Weapon->SetString(L"Level " + to_wstring(m_upgradeWeapon) + L" ¡æ Level " + to_wstring(m_upgradeWeapon + 1));
 				pUIManager->m_pSmithyInfo2Weapon->SetString(L"Damage +" + to_wstring((m_upgradeWeapon) * 15) + L"% ¡æ +" + to_wstring((m_upgradeWeapon + 1) * 15) + L"%");
@@ -1398,7 +1408,7 @@ void PlayerController::CheckTownCollision() noexcept
 
 					}
 				}
-				pUIManager->m_pTowerUpgrade->SetString(to_wstring(1000 + PacketManager::Get().TowerLevel * 1000) + L" KG");
+				pUIManager->m_pTowerUpgrade->SetString(to_wstring(2000 + PacketManager::Get().TowerLevel * 2000) + L" KG");
 				pUIManager->m_pTowerCurLevel->SetString(to_wstring(PacketManager::Get().TowerLevel));
 				pUIManager->m_pTowerCurAtkDamage->SetString(to_wstring(PacketManager::Get().TowerDamage * 100.0f).substr(0, 4));
 				pUIManager->m_pTowerCurAtkSpeed->SetString(to_wstring(PacketManager::Get().TowerDelayShot).substr(0, 4));

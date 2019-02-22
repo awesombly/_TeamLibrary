@@ -144,43 +144,45 @@ bool AIZombieKing::Frame(const float& spf, const float& accTime)	noexcept
 					m_eDirState = EState::Attack;
 					return true;
 				}
-				if (m_delayStump >= 6.0f)
-				{
-					// 점프 어택
-					m_delayStump = 0.0f;
-					m_pParent->SetFocus(iter->GetPosition());
-					//m_pParent->m_pPhysics->m_mass = 1.0f;
-					m_pParent->SetGravityScale(2.0f);
-					m_pParent->m_pPhysics->m_damping = 0.35f;
-					m_pCollider->m_eTagArray[ETag::Enemy] = false;
-					m_pCollider->m_eTagArray[ETag::Dummy] = false;
-					m_pCollider->m_eTagArray[ETag::Collider] = false;
-					m_Target = (iter->GetPosition() - m_pParent->GetPosition()) + Vector3::Up * 550.0f;
-					m_eDirState = EState::Action3;
-					m_delay = 0.5f;
-					((AHeroObj*)m_pParent)->SetANIM_OneTime(Zombie_KING_JUMP_ATTACK);
-					SoundManager::Get().PlayQueue("SV_zombie_king_shout.mp3", m_pParent->GetPosition(), PlayerController::Get().SoundRange);
-					// 카메라 진동
-					std::thread vibrator(&PlayerController::StartVibration, &PlayerController::Get(), 1.5f, 7.0f);
-					vibrator.detach();
-					return true;
-				}
 			}
-			///
-			if (VectorLengthSq((m_Target = PlayerController::Get().m_pHome->GetPosition()) - m_pParent->GetPosition()) <= m_attackRange + PlayerController::Get().HomeRadius)
-			{
-				m_eDirState = EState::Attack;
-				return true;
-			}
-			// 브레스
-			else if (m_delayBreath >= 8.0f)
-			{
-				m_delayBreath = 0.0f;
-				m_eDirState = EState::Action1;
-				return true;
-			}
+		}
+		if (m_delayStump >= 6.0f &&
+			!ObjectManager::Get().GetObjectList(EObjType::Character)->empty())
+		{
+			auto targetPos = ObjectManager::Get().GetObjectList(EObjType::Character)->front()->GetPosition();
+			// 점프 어택
+			m_delayStump = 0.0f;
+			m_pParent->SetFocus(targetPos);
+			//m_pParent->m_pPhysics->m_mass = 1.0f;
+			m_pParent->SetGravityScale(2.0f);
+			m_pParent->m_pPhysics->m_damping = 0.35f;
+			m_pCollider->m_eTagArray[ETag::Enemy] = false;
+			m_pCollider->m_eTagArray[ETag::Dummy] = false;
+			m_pCollider->m_eTagArray[ETag::Collider] = false;
+			m_Target = (targetPos - m_pParent->GetPosition()) + Vector3::Up * 550.0f;
+			m_eDirState = EState::Action3;
+			m_delay = 0.5f;
+			((AHeroObj*)m_pParent)->SetANIM_OneTime(Zombie_KING_JUMP_ATTACK);
+			SoundManager::Get().PlayQueue("SV_zombie_king_shout.mp3", m_pParent->GetPosition(), PlayerController::Get().SoundRange);
+			// 카메라 진동
+			std::thread vibrator(&PlayerController::StartVibration, &PlayerController::Get(), 1.5f, 7.0f);
+			vibrator.detach();
 			return true;
 		}
+		///
+		if (VectorLengthSq((m_Target = PlayerController::Get().m_pHome->GetPosition()) - m_pParent->GetPosition()) <= m_attackRange + PlayerController::Get().HomeRadius)
+		{
+			m_eDirState = EState::Attack;
+			return true;
+		}
+		// 브레스
+		else if (m_delayBreath >= 8.0f)
+		{
+			m_delayBreath = 0.0f;
+			m_eDirState = EState::Action1;
+			return true;
+		}
+		return true;
 	}	break;
 	case EState::Attack:
 	{
