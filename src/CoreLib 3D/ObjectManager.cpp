@@ -375,11 +375,9 @@ map<wstring, vector<Sprite> >& ObjectManager::GetSpriteList() noexcept
 GameObject* ObjectManager::TakeObject(const wstring_view& objName, const bool& pushObject) noexcept
 {
 	GameObject* pObject = nullptr;
-	//auto&& finder = m_DisabledPull.find(objName.data());
-	//if (finder == m_DisabledPull.end() ||
-	//	finder->second.empty())
-	if (m_DisabledPull.find(objName.data()) == m_DisabledPull.end() ||
-		m_DisabledPull.find(objName.data())->second.empty())
+	auto&& finder = m_DisabledPull.find(objName.data());
+	if (finder == m_DisabledPull.end() ||
+		finder->second.empty())
 	{
 		//대기 풀이 비었다면 복사 생성
 		auto&& iter = m_ProtoPull.find(objName.data());
@@ -393,8 +391,8 @@ GameObject* ObjectManager::TakeObject(const wstring_view& objName, const bool& p
 	else
 	{
 		// 대기 풀이 있다면 꺼내옴
-		pObject = m_DisabledPull.find(objName.data())->second.top();
-		m_DisabledPull.find(objName.data())->second.pop();
+		pObject = finder->second.top();
+		finder->second.pop();
 		//auto pComp = pObject->GetComponentList(EComponent::Collider);
 		//if (pComp != nullptr)
 		//{
@@ -535,8 +533,8 @@ void ObjectManager::DisableObject(GameObject* pObject) noexcept
 		pObject->isEnable(false);
 		PostFrameEvent.emplace(disableEvent, pObject, nullptr);
 	}
-	else
-		ErrorMessage(__FUNCTIONW__ + L" -> 비활성 오브젝트 : "s + pObject->m_myName);
+	//else
+	//	ErrorMessage(__FUNCTIONW__ + L" -> 비활성 오브젝트 : "s + pObject->m_myName);
 }
 
 bool ObjectManager::RemoveObject(GameObject* pObject) noexcept

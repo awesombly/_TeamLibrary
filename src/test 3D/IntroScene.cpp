@@ -18,6 +18,7 @@ bool IntroScene::Init() noexcept
 	LoadSound();
 	LoadUI();
 	///
+	//SoundManager::Get().Play("bgm_Intro_Theme.mp3");
 	m_isLoading = false;
 	return true;
 }
@@ -55,7 +56,7 @@ bool IntroScene::Release() noexcept
 
 void IntroScene::LoadSound() noexcept
 {
-	SoundManager::Get().Load("bgm_Intro_Theme.mp3");
+	//SoundManager::Get().Load("bgm_Intro_Theme.mp3");
 	SoundManager::Get().Load("bgm_Lobby_Theme.mp3");
 	SoundManager::Get().Load("bgm_InGame_Theme.mp3");
 	//////////////////////////////////////////////PLAYER_SV
@@ -96,6 +97,7 @@ void IntroScene::LoadSound() noexcept
 	SoundManager::Get().Load("SV_zombie_king_attack2.mp3");
 	SoundManager::Get().Load("SV_zombie_king_shout.mp3");
 
+	SoundManager::Get().Load("SV_zombie_dead.mp3");
 	///////////////////////////////////////////////SE
 	SoundManager::Get().Load("SE_chicken.mp3");
 	SoundManager::Get().Load("SE_Click01.mp3");
@@ -512,8 +514,8 @@ void IntroScene::SetObjects() noexcept
 	pHeroObj->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
 	pHeroObj->m_myName = L"Dagger";
 	pHeroObj->m_objType = EObjType::AObject;
-	pCollider = new Collider(20.0f);
-	pHeroObj->SetScale(Vector3::One * 1.0f);
+	pCollider = new Collider(25.0f);
+	pHeroObj->SetScale(Vector3::One * 0.9f);
 	pHeroObj->AddComponent({ pCollider, pRenderer });
 	pCollider->m_pivot = Vector3::Up * 8.0f + Vector3::Forward * 3.0f;
 	//pCollider->SetGravityScale(0.5f);
@@ -841,6 +843,5 @@ void IntroScene::LoadUI() noexcept
 	// ¾Ë¸²Ã¢
 	m_pHelpText = (JTextCtrl*)pUIRoot->find_child(L"Help_txt");
 
-	SoundManager::Get().Play("bgm_Intro_Theme.mp3");
 	UI::IntroEvent(pUIRoot);
 }

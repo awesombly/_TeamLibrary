@@ -111,7 +111,7 @@ bool AIZombieKing::Frame(const float& spf, const float& accTime)	noexcept
 		 case EState::Action3:
 		 {
 			 // 점핑
-			 m_delay = 2.0f;
+			 m_delay = 1.6f;
 			 m_dealyAttack = 3.5f;
 			 m_pParent->isMoving(false);
 			 m_pParent->SetForce(m_Target);
@@ -163,7 +163,8 @@ bool AIZombieKing::Frame(const float& spf, const float& accTime)	noexcept
 			m_eDirState = EState::Action3;
 			m_delay = 0.5f;
 			((AHeroObj*)m_pParent)->SetANIM_OneTime(Zombie_KING_JUMP_ATTACK);
-			SoundManager::Get().PlayQueue("SV_zombie_king_shout.mp3", m_pParent->GetPosition(), PlayerController::Get().SoundRange);
+			//SoundManager::Get().PlayQueue("SV_zombie_king_shout.mp3", m_pParent->GetPosition(), PlayerController::Get().SoundRange * 3.0f);
+			SoundManager::Get().Play("SV_zombie_king_shout.mp3");
 			// 카메라 진동
 			std::thread vibrator(&PlayerController::StartVibration, &PlayerController::Get(), 1.5f, 7.0f);
 			vibrator.detach();

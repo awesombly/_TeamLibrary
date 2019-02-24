@@ -117,8 +117,8 @@ void SoundManager::Play(const string_view& soundName, const bool& isPlay) noexce
 	}
 	if (!isPlaying)
 	{
-		m_SoundList[soundName.data()].SetVolume(m_masterVolume);
 		m_pSystem->playSound(m_SoundList[soundName.data()].m_Sound, 0, false, &m_SoundList[soundName.data()].m_Channel);
+		m_SoundList[soundName.data()].SetVolume(m_masterVolume);
 	}
 }
 

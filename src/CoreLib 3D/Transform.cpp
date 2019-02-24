@@ -25,6 +25,13 @@ void Transform::SetFocus(const D3DXVECTOR3& target) noexcept
 	D3DXVec3Normalize(&dirTarget, &dirTarget);
 	float fRadian = acosf(D3DXVec3Dot(&dirTarget, &forward));
 
+	if (_isnanf(fRadian))
+	{
+		//ErrorMessage(L"난 숫자 발생 : " + to_wstring(fRadian));
+		m_rotation.y = 0.0f;
+		return;
+	}
+
 	if (VectorDot(Normalize(GetRight()), dirTarget) > 0.0f)
 		m_rotation.y += fRadian;
 	else
@@ -36,16 +43,16 @@ void Transform::SetFocusZ(const D3DXVECTOR3& target) noexcept
 	D3DXVECTOR3 forward, dirTarget;
 	forward = GetForward();
 	forward.z = 0.0f;
-	dirTarget = target - m_position;
+	dirTarget = target;
 	dirTarget.z = 0.0f;
 	D3DXVec3Normalize(&forward, &forward);
 	D3DXVec3Normalize(&dirTarget, &dirTarget);
 	float fRadian = acosf(D3DXVec3Dot(&dirTarget, &forward));
 
 	if (VectorDot(Normalize(GetRight()), dirTarget) > 0.0f)
-		m_rotation.z -= fRadian;
-	else
 		m_rotation.z += fRadian;
+	else
+		m_rotation.z -= fRadian;
 }
 
 Transform::Transform(const D3DXVECTOR3& position, const D3DXQUATERNION& rotation, const D3DXVECTOR3& scale) noexcept

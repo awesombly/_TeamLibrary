@@ -268,18 +268,18 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 
 						auto pItem = ObjectManager::Get().TakeObject(L"Arrow");
 						pItem->SetPosition(TowerPos[index] + Vector3::Up * 250.0f);
-						pItem->SetScale(Vector3::One * 7.0f);
+						pItem->SetScale(10.0f, 10.0f, 2.0f);
 						pItem->SetFocus(iter->GetPosition());
-						pItem->SetForce((iter->GetPosition() - TowerPos[index] - Vector3::Up * 250.0f) * 1.2f + Vector3::Up * 30.0f);
+						pItem->SetForce((iter->GetPosition() - TowerPos[index] - Vector3::Up * 250.0f) * 1.4f + Vector3::Up * 100.0f);
 						pItem->m_pPhysics->m_damage = TowerDamage;
 						pItem->m_pPhysics->UserSocket = ESocketType::EDummy;
 
 						++index;
 						pItem = ObjectManager::Get().TakeObject(L"Arrow");
 						pItem->SetPosition(TowerPos[index] + Vector3::Up * 250.0f);
-						pItem->SetScale(Vector3::One * 7.0f);
+						pItem->SetScale(10.0f, 10.0f, 2.0f);
 						pItem->SetFocus(iter->GetPosition());
-						pItem->SetForce((iter->GetPosition() - TowerPos[index] - Vector3::Up * 250.0f) * 1.2f + Vector3::Up * 30.0f);
+						pItem->SetForce((iter->GetPosition() - TowerPos[index] - Vector3::Up * 250.0f) * 1.4f + Vector3::Up * 100.0f);
 						pItem->m_pPhysics->m_damage = TowerDamage;
 						pItem->m_pPhysics->UserSocket = ESocketType::EDummy;
 						break;
@@ -787,6 +787,7 @@ void PacketManager::SendSpawnEnemy(const WCHAR* objName, const UINT& socketNum, 
 		 case ESocketType::ETank:
 		 {
 		 	p_TakeObject.HP = hp + hp * m_waveCount * 0.2f;
+			PacketManager::Get().SendPlaySound("SV_zombie_king_idle.mp3", Vector3::Zero, PlayerController::Get().SoundRange * 2.0f);
 		 }	break;
 		 default:
 		 {

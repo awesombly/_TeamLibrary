@@ -316,7 +316,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 			auto pItem = ObjectManager::Get().TakeObject(L"ShockBomb");
 			pItem->SetPosition(pObject->GetPosition() + pObject->GetForward() * 40.0f + pObject->GetUp() * 50.0f + pObject->GetRight() * 20.0f);
 			pItem->SetForce(forward * 350.0f);
-			pItem->SetDamage(0.25f, PacketManager::Get().UserList[socket]->StatLuk);
+			pItem->SetDamage(0.45f, PacketManager::Get().UserList[socket]->StatLuk);
 			//pItem->m_pPhysics->UserSocket = socket;
 			pItem->SetHP(0.3f);
 			SoundManager::Get().PlayQueue("SE_dash.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
@@ -475,7 +475,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 			auto pItem = ObjectManager::Get().TakeObject(L"Arrow");
 			pItem->SetPosition(pObject->GetPosition() + pObject->GetForward() * 40.0f + pObject->GetUp() * 65.0f + pObject->GetRight() * 20.0f);
 			pItem->SetRotation(pObject->GetRotation());
-			pItem->SetFocusZ(pObject->GetPosition() + forward);
+			pItem->SetFocusZ(Normalize(forward));
 			pItem->SetScale(Vector3::One * 4.5f);
 			pItem->SetForce(forward * 1050.0f);
 			pItem->m_pPhysics->UserSocket = socket;
@@ -500,7 +500,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 			auto pItem = ObjectManager::Get().TakeObject(L"ArrowP");
 			pItem->SetPosition(pObject->GetPosition() + pObject->GetForward() * 40.0f + pObject->GetUp() * 65.0f + pObject->GetRight() * 20.0f);
 			pItem->SetRotation(pObject->GetRotation());
-			pItem->SetFocusZ(pObject->GetPosition() + forward);
+			pItem->SetFocusZ(Normalize(forward));
 			pItem->SetScale(Vector3::One * 6.0f);
 			//pItem->SetForce(forward * 1800.0f);
 			pItem->SetDirectionForce(forward * 1200.0f);
@@ -622,7 +622,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 			auto pItem = ObjectManager::Get().TakeObject(L"ShockBomb");
 			pItem->SetPosition(pObject->GetPosition() + pObject->GetForward() * 40.0f + pObject->GetUp() * 50.0f + pObject->GetRight() * 20.0f);
 			pItem->SetForce(forward * 350.0f);
-			pItem->SetDamage(0.25f, PacketManager::Get().UserList[socket]->StatLuk);
+			pItem->SetDamage(0.45f, PacketManager::Get().UserList[socket]->StatLuk);
 			//pItem->m_pPhysics->UserSocket = socket;
 			pItem->SetHP(0.3f);
 			SoundManager::Get().PlayQueue("SE_dash.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
@@ -901,7 +901,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 			auto pItem = ObjectManager::Get().TakeObject(L"ShockBomb");
 			pItem->SetPosition(pObject->GetPosition() + pObject->GetForward() * 40.0f + pObject->GetUp() * 50.0f + pObject->GetRight() * 20.0f);
 			pItem->SetForce(forward * 350.0f);
-			pItem->SetDamage(0.25f, PacketManager::Get().UserList[socket]->StatLuk);
+			pItem->SetDamage(0.45f, PacketManager::Get().UserList[socket]->StatLuk);
 			//pItem->m_pPhysics->UserSocket = socket;
 			pItem->SetHP(0.3f);
 			SoundManager::Get().PlayQueue("SE_dash.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);

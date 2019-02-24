@@ -40,14 +40,6 @@ bool GameScene::Init() noexcept
 // 프레임
 bool GameScene::Frame() noexcept
 {
-	if (Input::isDebug)
-	{
-		for (auto& iter : ObjectManager::Get().GetColliderList())
-		{
-			ObjectManager::Get().TakeObject(L"EHit")->SetPosition(iter->GetCenter());
-		}
-	}
-
 	// IME 채팅
 	if (m_pChat->m_bRender)
 	{
