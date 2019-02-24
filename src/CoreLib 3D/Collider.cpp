@@ -97,10 +97,10 @@ bool Collider::CollisionAllCheck(const float& spf) noexcept
 		{
 			if (CollisionCheck(iter))
 			{
-				if (!m_pParent->isEnable())
-					return false;
-				if (!iter->m_pParent->isEnable())
-					continue;
+				//if (!m_pParent->isEnable())
+					//return false;
+				//if (!iter->m_pParent->isEnable())
+					//continue;
 				// 상대 충돌 목록 추가
 				iter->m_CollisionList.push_front(this);
 

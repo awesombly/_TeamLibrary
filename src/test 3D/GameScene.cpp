@@ -40,6 +40,14 @@ bool GameScene::Init() noexcept
 // 프레임
 bool GameScene::Frame() noexcept
 {
+	if (Input::isDebug)
+	{
+		for (auto& iter : ObjectManager::Get().GetColliderList())
+		{
+			ObjectManager::Get().TakeObject(L"EHit")->SetPosition(iter->GetCenter());
+		}
+	}
+
 	// IME 채팅
 	if (m_pChat->m_bRender)
 	{
@@ -237,6 +245,11 @@ bool GameScene::CheatMessage() noexcept
 			PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
 			return false;
 		}
+		else if (str._Equal(L"Money"))
+		{
+			PlayerController::Get().m_money += atoi(WCharToChar(m_chatMessage.substr(finder + 1).c_str()));
+			return false;
+		}
 		else if (str._Equal(L"StatPoint"))
 		{
 			PlayerController::Get().m_statPoint += (UCHAR)atoi(WCharToChar(m_chatMessage.substr(finder + 1).c_str()));
@@ -353,7 +366,7 @@ void GameScene::DrawBoundingBox()	noexcept
 			pBox->SetPosition(iter->GetCenter());
 			pBox->SetRotation(Quaternion::Base);
 			pBox->SetScale(((ColliderAABB*)iter)->GetLength() * 0.5f);
-			pBox->Frame(0.0f, 0.0f);
+			pBox->Frame(Timer::SPF, Timer::AccumulateTime);
 			pBox->Render(DxManager::GetDContext());
 		}	break;
 		case ECollider::OBB:
@@ -361,21 +374,22 @@ void GameScene::DrawBoundingBox()	noexcept
 			pBox->SetPosition(iter->GetCenter());
 			pBox->SetRotation(iter->m_pParent->GetRotation());
 			pBox->SetScale(((ColliderOBB*)iter)->GetExtents());
-			pBox->Frame(0.0f, 0.0f);
+			pBox->Frame(Timer::SPF, Timer::AccumulateTime);
 			pBox->Render(DxManager::GetDContext());
 		}	break;
 		case ECollider::Sphere:
+		default:
 		{
 			pSphere->SetPosition(iter->GetCenter());
-			pSphere->SetRotation(Quaternion::Base);
+			//pSphere->SetRotation(Quaternion::Base);
 			pSphere->SetScale(iter->GetWorldRadius() * Vector3::One);
-			pSphere->Frame(0.0f, 0.0f);
+			pSphere->Frame(Timer::SPF, Timer::AccumulateTime);
 			pSphere->Render(DxManager::GetDContext());
 		}	break;
 		}
 	}
-	DxManager::Get().SetRasterizerState(ERasterS::Current);
 	DxManager::Get().SetDepthStencilState(EDepthS::Current);
+	DxManager::Get().SetRasterizerState(ERasterS::Current);
 }
 
 void GameScene::HostFrame() noexcept
@@ -396,10 +410,10 @@ void GameScene::HostFrame() noexcept
 	//spawnShot4 += Timer::SPF;
 
 	spawnBarrel += Timer::SPF;
-	if (spawnBarrel >= 15.0f)
+	if (spawnBarrel >= 20.0f)
 	{
 		spawnBarrel = 0.0f;
-		PacketManager::Get().SendTakeObject(L"Explosive", ESocketType::EDummy, (UCHAR)PacketManager::Get().UserList.size(), 0.6f, 0.3f, 0.0f, { -400.0f, 30.0f, -400.0f }, { 800.0f, 0.0f, 800.0f });
+		PacketManager::Get().SendTakeObject(L"Explosive", ESocketType::EDummy, (UCHAR)PacketManager::Get().UserList.size(), 0.6f, 0.3f, 0.0f, { -500.0f, 30.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
 	}
 
 	if (PacketManager::Get().TowerLevel >= 1)

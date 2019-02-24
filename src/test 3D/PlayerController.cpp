@@ -336,7 +336,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 		{
 			// 미사일
 			pObject->SetANIM_Loop(Paladin_POWERUP);
-			missileTarget = forward * 600.0f;
+			missileTarget = pObject->GetPosition() + forward * 600.0f;
 			for (int i = 0; i < 13; ++i)
 			{
 				auto pItem = ObjectManager::Get().TakeObject(L"Missile");
@@ -642,7 +642,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 		{
 			// 미사일
 			pObject->SetANIM_Loop(Archer_THROW);
-			missileTarget = forward * 600.0f;
+			missileTarget = pObject->GetPosition() + forward * 600.0f;
 			for (int i = 0; i < 13; ++i)
 			{
 				auto pItem = ObjectManager::Get().TakeObject(L"Missile");
@@ -921,7 +921,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 		{
 			// 미사일
 			pObject->SetANIM_Loop(Mage_THROW);
-			missileTarget = forward * 600.0f;
+			missileTarget = pObject->GetPosition() + forward * 600.0f;
 			for (int i = 0; i < 13; ++i)
 			{
 				auto pItem = ObjectManager::Get().TakeObject(L"Missile");

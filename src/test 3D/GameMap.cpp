@@ -21,7 +21,6 @@ bool GameMap::Init() noexcept
 	ObjectManager::Get().PushObject(pObject, false);
 
 	//////////////////////////////////////////////////////////////////////////////////////
-	PlayerController::Get().m_pHome = &m_fountain;
 	auto pCollider = new Collider(9.2f);
 	m_fountain.AddComponent(pCollider);
 	m_fountain.SetPlayerCharacter(L"MAP_Fountain", 0.0f, -50.0f, 0.0f);
@@ -37,6 +36,8 @@ bool GameMap::Init() noexcept
 	pCollider->SetHP(200.0f);
 	pCollider->m_pPhysics->DeadEvent = DyingEvent::CenterDead;
 	ObjectManager::Get().PushObject(&m_fountain, false);
+	PlayerController::Get().m_pHome = &m_fountain;
+	PlayerController::Get().m_HomePos = m_fountain.GetPosition();
 
 	m_church.SetPlayerCharacter(L"MAP_Church", -450.0f, 0, 450.0f);	//280
 	m_church.SetScale(D3DXVECTOR3(4.0f, 4.0f, 4.0f));

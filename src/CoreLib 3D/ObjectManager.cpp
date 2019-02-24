@@ -203,6 +203,11 @@ bool ObjectManager::Render(ID3D11DeviceContext* pDContext) noexcept
 			 DxManager::Get().SetSamplerState(1, ESamTextureS::Current, ESamFilterS::Current);
 			 DxManager::Get().SetSamplerState(2, ESamTextureS::Current, ESamFilterS::Current);
 		 }	break;
+		 case EObjType::Effect:
+		 case EObjType::UI:
+		 {
+			 continue;
+		 }	break;
 		 default:
 		 {
 		  for (auto& initer : outiter)
@@ -211,6 +216,15 @@ bool ObjectManager::Render(ID3D11DeviceContext* pDContext) noexcept
 		  }
 		 }	break;
 		}
+	}
+	// 이펙 랜더
+	for (auto& iter : m_ObjectList[EObjType::Effect])
+	{
+		iter->Render(pDContext);
+	}
+	for (auto& iter : m_ObjectList[EObjType::UI])
+	{
+		iter->Render(pDContext);
 	}
 
 	// 인스턴스 랜더
@@ -361,9 +375,11 @@ map<wstring, vector<Sprite> >& ObjectManager::GetSpriteList() noexcept
 GameObject* ObjectManager::TakeObject(const wstring_view& objName, const bool& pushObject) noexcept
 {
 	GameObject* pObject = nullptr;
-	auto&& finder = m_DisabledPull.find(objName.data());
-	if (finder == m_DisabledPull.end() ||
-		finder->second.empty())
+	//auto&& finder = m_DisabledPull.find(objName.data());
+	//if (finder == m_DisabledPull.end() ||
+	//	finder->second.empty())
+	if (m_DisabledPull.find(objName.data()) == m_DisabledPull.end() ||
+		m_DisabledPull.find(objName.data())->second.empty())
 	{
 		//대기 풀이 비었다면 복사 생성
 		auto&& iter = m_ProtoPull.find(objName.data());
@@ -377,8 +393,8 @@ GameObject* ObjectManager::TakeObject(const wstring_view& objName, const bool& p
 	else
 	{
 		// 대기 풀이 있다면 꺼내옴
-		pObject = finder->second.top();
-		finder->second.pop();
+		pObject = m_DisabledPull.find(objName.data())->second.top();
+		m_DisabledPull.find(objName.data())->second.pop();
 		//auto pComp = pObject->GetComponentList(EComponent::Collider);
 		//if (pComp != nullptr)
 		//{
@@ -514,13 +530,13 @@ void ObjectManager::DisableObject(GameObject* pObject) noexcept
 		}
 	};
 
-	//if (pObject->isEnable())
-	//{
-		//pObject->isEnable(false);
+	if (pObject->isEnable())
+	{
+		pObject->isEnable(false);
 		PostFrameEvent.emplace(disableEvent, pObject, nullptr);
-	//}
-	//else
-	//	ErrorMessage(__FUNCTIONW__ + L" -> 비활성 오브젝트 : "s + pObject->m_myName);
+	}
+	else
+		ErrorMessage(__FUNCTIONW__ + L" -> 비활성 오브젝트 : "s + pObject->m_myName);
 }
 
 bool ObjectManager::RemoveObject(GameObject* pObject) noexcept
@@ -636,7 +652,7 @@ void ObjectManager::DisableComponent(Component* pComponent) noexcept
 	PostFrameEvent.emplace(disableEvent, pComponent, nullptr);
 }
 
-forward_list<Collider*>& ObjectManager::GetColliderList() noexcept
+const forward_list<Collider*>& ObjectManager::GetColliderList() noexcept
 {
 	return m_ColliderList;
 }

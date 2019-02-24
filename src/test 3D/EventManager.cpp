@@ -490,6 +490,48 @@ namespace MyEvent {
 		if (pB != nullptr && 
 			pB->m_pParent->m_objType == EObjType::Character)
 		{
+			for (auto& iter : ObjectManager::Get().GetColliderList())
+			{
+				ObjectManager::Get().TakeObject(L"EHit")->SetPosition(iter->GetCenter());
+			}
+
+			if (pA->m_pParent->isEnable())
+			{
+				ErrorMessage("1. 부모 Enable");
+			}
+			//if (auto iter = std::find(ObjectManager::Get().GetColliderList().begin(), ObjectManager::Get().GetColliderList().end(), pA);
+			//	iter != ObjectManager::Get().GetColliderList().end())
+			for(auto& iter : ObjectManager::Get().GetColliderList())
+			{
+				if (iter == pA)
+				{
+					ErrorMessage(L"2. 충돌체 등록됨 : " + iter->m_pParent->m_myName);
+				}
+			}
+			int i = 0;
+			for (auto& iter : ObjectManager::Get().GetObjectList())
+			{
+				for (auto& initer : iter.second)
+				{
+					if (initer == pA->m_pParent)
+					{
+						i++;
+						if (i >= 2)
+						{
+							ErrorMessage("3. 리스트 중복 등록 : " + to_string(i));
+						}
+					}
+				}
+			}
+			if (i == 1)
+			{
+				ErrorMessage("3. 하나만 등록됨");
+			}
+			auto pos = pA->GetCenter();
+			ErrorMessage("4. CenterPos -> " + to_string(pos.x) + ", " + to_string(pos.y) + ", " + to_string(pos.z));
+			pos = pA->m_pParent->GetPosition();
+			ErrorMessage("5. ParentPos -> " + to_string(pos.x) + ", " + to_string(pos.y) + ", " + to_string(pos.z));
+
 			pB->SetForce((Normalize(pB->GetCenter() - pA->GetCenter())) * 180.0f);
 			pB->m_pParent->OperHP(-pA->m_pPhysics->m_damage);
 			// 내가 맞았을때

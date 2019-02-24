@@ -111,6 +111,7 @@ public:
 	float		m_LightAmount		 = 0.3f;
 public:
 	GameObject* m_pHome			 = nullptr;
+	D3DXVECTOR3 m_HomePos;
 	const float HomeRadius		 = 15000.0f;
 
 	D3DXVECTOR3 m_CarpetPos[4];

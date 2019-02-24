@@ -46,8 +46,8 @@ bool AIZombieCrawl::Frame(const float& spf, const float& accTime)	noexcept
 		case EState::Move:
 		{
 			((AHeroObj*)m_pParent)->SetANIM_Loop(ZombieR_CRAWL);
-			m_pParent->SetDirectionForce(Normalize((m_Target = PlayerController::Get().m_pHome->GetPosition()) - m_pParent->GetPosition()) * m_moveSpeed);
-			m_pParent->SetFocus(m_Target = PlayerController::Get().m_pHome->GetPosition());
+			m_pParent->SetDirectionForce(Normalize((m_Target = PlayerController::Get().m_HomePos) - m_pParent->GetPosition()) * m_moveSpeed);
+			m_pParent->SetFocus(m_Target = PlayerController::Get().m_HomePos);
 		}	break;
 		case EState::Attack:
 		{
@@ -81,11 +81,12 @@ bool AIZombieCrawl::Frame(const float& spf, const float& accTime)	noexcept
 			}
 		}*/
 
-		if (VectorLengthSq((m_Target = PlayerController::Get().m_pHome->GetPosition()) - m_pParent->GetPosition()) <= m_attackRange + PlayerController::Get().HomeRadius)
+		if (VectorLengthSq((m_Target = PlayerController::Get().m_HomePos) - m_pParent->GetPosition()) <= m_attackRange + PlayerController::Get().HomeRadius)
 		{
 			m_eDirState = EState::Attack;
 			return true;
 		}
+		m_pParent->SetDirectionForce(Normalize((PlayerController::Get().m_HomePos) - m_pParent->GetPosition()) * m_moveSpeed);
 	}	break;
 	case EState::Attack:
 	{

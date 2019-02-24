@@ -12,6 +12,7 @@
 
 bool IntroScene::Init() noexcept
 {
+	ErrorMessage(__FUNCTION__ + " -> Start."s);
 	FirstInit();
 	// 사운드, UI
 	LoadSound();
@@ -144,14 +145,13 @@ bool IntroScene::FirstInit() noexcept
 	if (m_isFirstInit)
 	{
 		m_isFirstInit = false;
-		ErrorMessage(__FUNCTION__ + " -> Start."s);
 		// 폰트, 사운드 등
 		WriteManager::Get().SetText({ 0, 0 }, L"", D2D1::ColorF::Black, 20, L"휴면둥근헤드라인");
 		WriteManager::Get().SetFontSizeAlign(20, EAlign::Center, EAlign::Center);
 		// 스프라이트
 		ObjectManager::Get().ReadSpriteScript();
 		// ===================================== 캐릭터 초기화 ==============================================
-		ErrorMessage(__FUNCTION__ + " -> Character Loading."s);
+		//ErrorMessage(__FUNCTION__ + " -> Character Loading."s);
 		I_CHARMGR.Init();
 		if (!I_CHARMGR.Load(DxManager::GetDevice(), DxManager::GetDContext(), TablePATH))		//경로 중요함
 		{
@@ -198,7 +198,7 @@ void IntroScene::SetObjects() noexcept
 	ObjectManager::Get().SetProtoObject(new GameObject(L"EPDustStay", m_pParser->CreateFromParticle(L"DustStay.eff", urlEffect)->SetEffectScale(3.0f), EObjType::Effect));
 	ObjectManager::Get().SetProtoObject(new GameObject(L"EHit", m_pParser->CreateFromParticle(L"Hit.eff", urlEffect)->SetEffectScale(3.0f), EObjType::Effect));
 	ObjectManager::Get().SetProtoObject(new GameObject(L"EHit2", m_pParser->CreateFromParticle(L"Hit2.eff", urlEffect)->SetEffectScale(3.0f), EObjType::Effect));
-	ObjectManager::Get().SetProtoObject(new GameObject(L"EHit3", m_pParser->CreateFromParticle(L"Hit3.eff", urlEffect)->SetEffectScale(3.0f), EObjType::Effect));
+	//ObjectManager::Get().SetProtoObject(new GameObject(L"EHit3", m_pParser->CreateFromParticle(L"Hit3.eff", urlEffect)->SetEffectScale(3.0f), EObjType::Effect));
 	ObjectManager::Get().SetProtoObject(new GameObject(L"EHitLight", m_pParser->CreateFromParticle(L"HitLight.eff", urlEffect)->SetEffectScale(3.0f), EObjType::Effect));
 	ObjectManager::Get().SetProtoObject(new GameObject(L"ELight", m_pParser->CreateFromParticle(L"Lightning.eff", urlEffect)->SetEffectScale(3.0f), EObjType::Effect));
 	//ObjectManager::Get().SetProtoObject(new GameObject(L"EEmission2", m_pParser->CreateFromParticle(L"Emission2.eff", urlEffect)->SetEffectScale(3.0f), EObjType::Effect));
@@ -463,7 +463,7 @@ void IntroScene::SetObjects() noexcept
 	pTimer->TimerEvent = { TimeEvent::MissileShot, (void*)&Vector3::Zero };
 	pHeroObj->AddComponent({pCollider, pRenderer, pTimer});
 	pCollider->m_pivot = Vector3::Up * 8.0f;
-	pCollider->SetGravityScale(0.1f);
+	pCollider->SetGravityScale(0.2f);
 	pCollider->m_eTag = ETag::Dummy;
 	pCollider->m_eTagArray[ETag::Collider] = false;
 	pCollider->m_eTagArray[ETag::Dummy] = false;
@@ -512,10 +512,10 @@ void IntroScene::SetObjects() noexcept
 	pHeroObj->SetMatrix(0, &ObjectManager::Get().Cameras[ECamera::Main]->m_matView, &ObjectManager::Get().Cameras[ECamera::Main]->m_matProj);
 	pHeroObj->m_myName = L"Dagger";
 	pHeroObj->m_objType = EObjType::AObject;
-	pCollider = new Collider(6.0f);
-	pHeroObj->SetScale(Vector3::One * 0.75f);
+	pCollider = new Collider(20.0f);
+	pHeroObj->SetScale(Vector3::One * 1.0f);
 	pHeroObj->AddComponent({ pCollider, pRenderer });
-	pCollider->m_pivot = Vector3::Up * 6.0f + Vector3::Forward * 2.5f;
+	pCollider->m_pivot = Vector3::Up * 8.0f + Vector3::Forward * 3.0f;
 	//pCollider->SetGravityScale(0.5f);
 	pCollider->CollisionEvent = MyEvent::DaggerHit;
 	pCollider->m_eTag = ETag::Dummy;
@@ -792,7 +792,7 @@ void GotoLobby2(void* pScene)
 
 void IntroScene::LoadUI() noexcept
 {
-	ErrorMessage(__FUNCTION__ + " -> Start."s);
+	//ErrorMessage(__FUNCTION__ + " -> Start."s);
 	JPanel* pUIRoot = new JPanel(L"Intro");
 	pUIRoot->m_objType = EObjType::UI;
 	JParser par;

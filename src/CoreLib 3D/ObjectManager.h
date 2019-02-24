@@ -66,7 +66,7 @@ public:
 	void DisableComponent(Component* pComponent)				noexcept;	// 컴포넌트 비활성화(->대기 풀)
 	bool RemoveComponent(Component* pComponent)					noexcept;	// 컴포넌트 제거("")
 	// 충돌체 리스트 추가, 제거
-	forward_list<Collider*>& GetColliderList()					noexcept;
+	const forward_list<Collider*>& GetColliderList()			noexcept;
 	void PushCollider(Collider* pCollider, const bool& isPostEvent = true)	noexcept;
 	void PopCollider(Collider* pCollider, const bool& isPostEvent = true)	noexcept;
 
