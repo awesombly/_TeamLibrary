@@ -26,7 +26,7 @@ bool AIZombieKing::Init() noexcept
 		ObjectManager::Get().DisableObject(m_Breath);
 		m_Breath = nullptr;
 	}
-	m_attackRange = m_pParent->GetScaleAverage() * 5000.0f;
+	m_attackRange = m_pParent->GetScaleAverage() * 27000.0f;
 	m_moveSpeed = RandomNormal() * 15.0f + 45.0f;
 	return true;
 }
@@ -82,14 +82,14 @@ bool AIZombieKing::Frame(const float& spf, const float& accTime)	noexcept
 		 case EState::Action2:
 		 {
 			 // 브레스 끝
-		 	if (m_delayBreath >= 3.8f)
+		 	if (m_delayBreath >= 3.1f)
 		 	{
 		 		ObjectManager::Get().DisableObject(m_Breath);
 		 		m_Breath = nullptr;
 		 		m_delayBreath = 0.0f;
 		 		m_delay = 1.0f;
-				m_dealyAttack = 4.0f;
-		 		m_eDirState = EState::Move;
+				m_dealyAttack = 3.5f;
+		 		m_eDirState = EState::Idle;
 		 		((AHeroObj*)m_pParent)->SetANIM_Loop(Zombie_KING_IDLE);
 		 		return true;
 		 	}
@@ -106,7 +106,7 @@ bool AIZombieKing::Frame(const float& spf, const float& accTime)	noexcept
 		 case EState::Action3:
 		 {
 			 // 점핑
-			 m_delay = 1.6f;
+			 m_delay = 2.5f;
 			 m_dealyAttack = 3.5f;
 			 m_pParent->isMoving(false);
 			 m_pParent->SetForce(m_Target);
@@ -129,8 +129,8 @@ bool AIZombieKing::Frame(const float& spf, const float& accTime)	noexcept
 	}	break;
 	case EState::Move:
 	{
-		if (m_dealyAttack <= 0.0f)
-		{
+		//if (m_dealyAttack <= 0.0f)
+		//{
 			for (auto& iter : *ObjectManager::Get().GetObjectList(EObjType::Character))
 			{
 				if (VectorLengthSq(iter->GetPosition() - m_pParent->GetPosition()) <= m_attackRange)
@@ -140,7 +140,7 @@ bool AIZombieKing::Frame(const float& spf, const float& accTime)	noexcept
 					return true;
 				}
 			}
-		}
+		//}
 		if (m_delayStump >= 6.0f &&
 			!ObjectManager::Get().GetObjectList(EObjType::Character)->empty())
 		{
@@ -149,12 +149,12 @@ bool AIZombieKing::Frame(const float& spf, const float& accTime)	noexcept
 			m_delayStump = 0.0f;
 			m_pParent->SetFocus(targetPos);
 			//m_pParent->m_pPhysics->m_mass = 1.0f;
-			m_pParent->SetGravityScale(2.0f);
-			m_pParent->m_pPhysics->m_damping = 0.6f;
+			m_pParent->SetGravityScale(10.0f);
+			m_pParent->m_pPhysics->m_damping = 0.67f;
 			m_pCollider->m_eTagArray[ETag::Enemy] = false;
 			m_pCollider->m_eTagArray[ETag::Dummy] = false;
 			m_pCollider->m_eTagArray[ETag::Collider] = false;
-			m_Target = (targetPos - m_pParent->GetPosition()) + Vector3::Up * 600.0f;
+			m_Target = (targetPos - m_pParent->GetPosition()) + Vector3::Up * 1800.0f;
 			m_eDirState = EState::Action3;
 			m_delay = 0.5f;
 			((AHeroObj*)m_pParent)->SetANIM_Loop(Zombie_KING_JUMP_ATTACK);
@@ -191,7 +191,7 @@ bool AIZombieKing::Frame(const float& spf, const float& accTime)	noexcept
 		pEffect->SetScale(m_pParent->GetScale());
 		m_dealyAttack = 3.5f;
 		///
-		m_delay = 0.9f;
+		m_delay = 0.75f;
 		m_eDirState = EState::Idle;
 	}	break;
 	case EState::Action1:

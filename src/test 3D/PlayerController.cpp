@@ -8,6 +8,7 @@
 #include "CEventTimer.h"
 #include "AIZombie.h"
 #include "UIManager.h"
+#include "ParticleSystem.h"
 
 bool PlayerController::Init() noexcept
 {
@@ -37,37 +38,26 @@ bool PlayerController::Frame(const float& spf, const float& accTime)	noexcept
 	GameObject::Frame(spf, accTime);
 	m_curMP = min(m_curMP + spf * m_RegenMP, m_maxMP);
 	
-	for (auto& iter : m_dyingEnemys)
-	{
-		auto& [pEnemy, deadFrame] = iter;
-		auto pList = pEnemy->GetComponentList(EComponent::Renderer);
-		if (pList != nullptr)
-		{
-			if (deadFrame >= 0.1f)
-			{
-				for (auto& pRenderer : *pList)
-				{
-					((Renderer*)pRenderer)->m_cbMaterial.ObjectID = (2.0f - deadFrame) * 0.5f;
-				}
-				deadFrame -= spf;
-			}
-			else
-			{
-				for (auto& pRenderer : *pList)
-				{
-					((Renderer*)pRenderer)->m_cbMaterial.ObjectID = 0.0f;
-				}
-				
-				ObjectManager::Get().DisableObject(pEnemy);
-				m_dyingEnemys.remove(iter);
-				break;
-			}
-		}
-	}
-
 	if (!pUIManager->m_pChat->m_bRender &&
 		m_pParent != nullptr)
 	{
+		// 적 사망 효과
+		for (auto& iter : m_followEffects)
+		{
+			if (!iter->isEnable())
+			{
+				m_followEffects.remove(iter);
+				break;
+			}
+			//auto targetPos = Normalize(m_pCollider->GetCenter() - iter->m_pParent->GetPosition());
+			auto targetPos = m_pCollider->GetCenter();
+			for (auto& pParticle : iter->m_particleList)
+			{
+				pParticle->m_direction += Normalize(targetPos - pParticle->GetPosition()) * spf * 10.0f;
+				//pParticle->Translate(spf * 200.0f * Normalize(targetPos - pParticle->GetPosition()));
+			}
+		}
+		///
 		m_pParent->HealHP(spf * m_RegenHP);
 		// HP, MP 바
 		m_pParent->m_pPhysics->m_disHP = max<float>(m_pParent->m_pPhysics->m_disHP - spf * m_pParent->m_pPhysics->m_maxHP, m_pParent->GetHP());
@@ -103,7 +93,38 @@ bool PlayerController::Frame(const float& spf, const float& accTime)	noexcept
 		if (m_curDelayRespawn >= m_DelayRespawn)
 		{
 			SendReqRespawn(m_curCharacter);
-			return true;
+		}
+	}
+
+	// 적 사망 대기
+	for (auto& iter : m_dyingEnemys)
+	{
+		auto&[pEnemy, deadFrame] = iter;
+		auto pList = pEnemy->GetComponentList(EComponent::Renderer);
+		if (pList != nullptr)
+		{
+			if (deadFrame >= 0.05f)
+			{
+				for (auto& pRenderer : *pList)
+				{
+					((Renderer*)pRenderer)->m_cbMaterial.ObjectID = 1.0f - deadFrame * 0.4f;
+				}
+				deadFrame -= spf;
+			}
+			else
+			{
+				for (auto& pRenderer : *pList)
+				{
+					((Renderer*)pRenderer)->m_cbMaterial.ObjectID = 0.0f;
+				}
+				auto pEffect = ObjectManager::Get().TakeObject(L"EZDead3");
+				pEffect->SetPosition(pEnemy->GetPosition());
+				m_followEffects.push_front((ParticleSystem*)pEffect->GetComponent(EComponent::Renderer));
+
+				ObjectManager::Get().DisableObject(pEnemy);
+				m_dyingEnemys.remove(iter);
+				break;
+			}
 		}
 	}
 
@@ -411,7 +432,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 			auto pItem = ObjectManager::Get().TakeObject(L"Barricade", false);
 			pItem->m_objType = EObjType::Character;
 			pItem->SetPosition(pObject->GetPosition() + pObject->GetForward() * 45.0f + pObject->GetUp() * 50.0f);
-			pItem->SetScale(4.0f, 1.5f, 4.0f);
+			pItem->SetScale(4.5f, 1.7f, 4.5f);
 			pItem->SetRotation(pObject->GetRotation() + Quaternion::Left * PI * 0.5f);
 			auto pCollider = new ColliderOBB({ -8.0f, 0.0f, -25.0f }, { 8.0f, 50.0f, 25.0f });
 			pCollider->m_eTag = ETag::Ally;
@@ -717,7 +738,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 			auto pItem = ObjectManager::Get().TakeObject(L"Barricade", false);
 			pItem->m_objType = EObjType::Character;
 			pItem->SetPosition(pObject->GetPosition() + pObject->GetForward() * 45.0f + pObject->GetUp() * 50.0f);
-			pItem->SetScale(4.0f, 1.5f, 4.0f);
+			pItem->SetScale(4.5f, 1.7f, 4.5f);
 			pItem->SetRotation(pObject->GetRotation() + Quaternion::Left * PI * 0.5f);
 			auto pCollider = new ColliderOBB({ -8.0f, 0.0f, -25.0f }, { 8.0f, 50.0f, 25.0f });
 			pCollider->m_eTag = ETag::Ally;
@@ -996,7 +1017,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 			auto pItem = ObjectManager::Get().TakeObject(L"Barricade", false);
 			pItem->m_objType = EObjType::Character;
 			pItem->SetPosition(pObject->GetPosition() + pObject->GetForward() * 45.0f + pObject->GetUp() * 50.0f);
-			pItem->SetScale(4.0f, 1.5f, 4.0f);
+			pItem->SetScale(4.5f, 1.7f, 4.5f);
 			pItem->SetRotation(pObject->GetRotation() + Quaternion::Left * PI * 0.5f);
 			auto pCollider = new ColliderOBB({ -8.0f, 0.0f, -25.0f }, { 8.0f, 50.0f, 25.0f });
 			pCollider->m_eTag = ETag::Ally;
@@ -1259,36 +1280,30 @@ void PlayerController::Possess(GameObject* pObject) noexcept
 		if (pObj->m_myName == L"Paladin")
 		{
 			pPlayer->m_curCharacter = PlayerController::ECharacter::EGuard;
-			pPlayer->m_pCollider = pObj->GetCollider();
 			{
 				pPlayer->m_defencePoint = 2;
 				pPlayer->pUIManager->m_pMpBar->SetColor({ 1.0f, 0.3f, 0.4f, 1.0f });
-				pPlayer->m_pCollider->CollisionEvent = nullptr;
-				pPlayer->m_pCollider->m_pivot = Vector3::Up * 40.0f * pObj->GetScale().x;
 			}
 		}
 		else if (pObj->m_myName == L"Archer")
 		{
 			pPlayer->m_curCharacter = PlayerController::ECharacter::EArcher;
-			pPlayer->m_pCollider = pObj->GetCollider();
 			{
 				pPlayer->m_defencePoint = 1;
 				pPlayer->pUIManager->m_pMpBar->SetColor({1.0f, 1.0f, 0.2f, 1.0f});
-				pPlayer->m_pCollider->CollisionEvent = nullptr;
-				pPlayer->m_pCollider->m_pivot = Vector3::Up * 40.0f * pObj->GetScale().x;
 			}
 		}
 		else if (pObj->m_myName == L"Mage")
 		{
 			pPlayer->m_curCharacter = PlayerController::ECharacter::EMage;
-			pPlayer->m_pCollider = pObj->GetCollider();
 			{
 				pPlayer->m_defencePoint = 0;
 				pPlayer->pUIManager->m_pMpBar->SetColor(Color::Blue);
-				pPlayer->m_pCollider->CollisionEvent = nullptr;
-				pPlayer->m_pCollider->m_pivot = Vector3::Up * 40.0f * pObj->GetScale().x;
 			}
 		}
+		pPlayer->m_pCollider = pObj->GetCollider();
+		pPlayer->m_pCollider->CollisionEvent = nullptr;
+		pPlayer->m_pCollider->m_pivot = Vector3::Up * 40.0f * pObj->GetScale().x;
 		pObj->SetArmor(pPlayer->m_defencePoint + pPlayer->m_upgradeArmor);
 		pPlayer->SendPhysicsInfo();
 		if (pPlayer->m_pEffectFly != nullptr)

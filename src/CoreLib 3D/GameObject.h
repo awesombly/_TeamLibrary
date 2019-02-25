@@ -8,6 +8,7 @@
 
 enum class EObjType : char {
 	Dummy,
+	Image,
 	Map,
 	Object,
 	Character,

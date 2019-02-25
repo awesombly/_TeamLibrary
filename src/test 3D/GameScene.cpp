@@ -396,16 +396,12 @@ void GameScene::HostFrame() noexcept
 	static float spawnBarrel = 0.0f;
 	static float spawnShot = 0.0f;
 	static float spawnShot2 = 0.0f;
-	//static float spawnShot3 = 0.0f;
-	//static float spawnShot4 = 0.0f;
-	//spawnShot3 += Timer::SPF;
-	//spawnShot4 += Timer::SPF;
 
 	spawnBarrel += Timer::SPF;
-	if (spawnBarrel >= 20.0f)
+	if (spawnBarrel >= 25.0f)
 	{
 		spawnBarrel = 0.0f;
-		PacketManager::Get().SendTakeObject(L"Explosive", ESocketType::EDummy, (UCHAR)PacketManager::Get().UserList.size(), 0.6f, 0.3f, 0.0f, { -500.0f, 30.0f, -500.0f }, { 1000.0f, 0.0f, 1000.0f });
+		PacketManager::Get().SendTakeObject(L"Explosive", ESocketType::EDummy, (UCHAR)PacketManager::Get().UserList.size(), 0.6f, 0.3f, 0.0f, { -630.0f, 30.0f, -630.0f }, { 1260.0f, 0.0f, 1260.0f });
 	}
 
 	if (PacketManager::Get().TowerLevel >= 1)
@@ -688,8 +684,8 @@ void GameScene::LoadUI() noexcept
 	UIManager::Get().m_pOptionPanel = (JPanel*)pUIRoot->find_child(L"Set_Panel");
 	// Option Volume
 	auto pVolume = (JSliderCtrl*)pUIRoot->find_child(L"Set_Volum");
-	pVolume->SetValue(SoundManager::Get().m_masterVolume);
-	SoundManager::Get().m_masterVolume = 0.5f;
+	pVolume->SetValue(const_cast<float&>(SoundManager::Get().GetMasterVolume()));
+	SoundManager::Get().SetMasterVolume(0.5f);
 	// Mouse
 	auto pMouseSense = (JSliderCtrl*)pUIRoot->find_child(L"Set_Mouse");
 	pMouseSense->SetValue(PlayerController::Get().m_mouseSense);

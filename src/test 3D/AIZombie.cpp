@@ -19,7 +19,7 @@ bool AIZombie::Init() noexcept
 {
 	//Update();
 	//
-	m_attackRange = m_pParent->GetScaleAverage() * 4000.0f;
+	m_attackRange = m_pParent->GetScaleAverage() * 6000.0f;
 	m_moveSpeed   = RandomNormal() * 50.0f + 80.0f;
 	return true;
 }

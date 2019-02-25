@@ -158,3 +158,8 @@ void SoundManager::SetMasterVolume(const float& value) noexcept
 		iter.second.SetVolume(value);
 	}*/
 }
+
+const float& SoundManager::GetMasterVolume() noexcept
+{
+	return m_masterVolume;
+}

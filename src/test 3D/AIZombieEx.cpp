@@ -18,7 +18,7 @@ bool AIZombieEx::Init() noexcept
 {
 	//Update();
 	//
-	m_attackRange = m_pParent->GetScaleAverage() * 5000.0f;
+	m_attackRange = m_pParent->GetScaleAverage() * 10000.0f;
 	m_moveSpeed = RandomNormal() * 15.0f + 105.0f;
 	return true;
 }
@@ -102,7 +102,7 @@ bool AIZombieEx::Frame(const float& spf, const float& accTime)	noexcept
 		pEffect->SetScale(m_pParent->GetScale());
 		m_dealyAttack = 3.0f;
 		///
-		m_delay = 2.0f;
+		m_delay = 1.45f;
 		m_eDirState = EState::Idle;
 	}	break;
 	}

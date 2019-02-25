@@ -837,8 +837,8 @@ namespace DyingEvent {
 			pObject->SetHP(10000.0f);
 		}
 		PlayerController::Get().OperEXP(0.03f);
-		auto pEffect = ObjectManager::Get().TakeObject(L"EZDead");
-		pEffect->SetPosition(pCollider->GetCenter());
+		//auto pEffect = ObjectManager::Get().TakeObject(L"EZDead");
+		//pEffect->SetPosition(pCollider->GetCenter());
 		// 
 		auto pAI = ((AIZombie*)pCollider->m_pParent->GetComponent(EComponent::Etc));
 		pAI->m_delay = 99.0f;
@@ -848,7 +848,7 @@ namespace DyingEvent {
 		pCollider->m_eTagArray[ETag::Collider] = false;
 		pCollider->isMoving(false);
 		((AHeroObj*)pCollider->m_pParent)->SetANIM_OneTime(ZombieR_DEATH);
-		PlayerController::Get().m_dyingEnemys.emplace_back((AHeroObj*)pCollider->m_pParent, 4.0f);
+		PlayerController::Get().m_dyingEnemys.emplace_front((AHeroObj*)pCollider->m_pParent, 5.0f);
 	}
 
 	void ZombieCrawlDead(Collider* pCollider, const UINT& killUser)
@@ -860,8 +860,8 @@ namespace DyingEvent {
 			pObject->SetHP(10000.0f);
 		}
 		PlayerController::Get().OperEXP(0.03f);
-		auto pEffect = ObjectManager::Get().TakeObject(L"EZDead");
-		pEffect->SetPosition(pCollider->GetCenter());
+		//auto pEffect = ObjectManager::Get().TakeObject(L"EZDead");
+		//pEffect->SetPosition(pCollider->GetCenter());
 		// 
 		auto pAI = ((AIZombie*)pCollider->m_pParent->GetComponent(EComponent::Etc));
 		pAI->m_delay = 99.0f;
@@ -870,8 +870,8 @@ namespace DyingEvent {
 		pCollider->m_eTagArray[ETag::Dummy] = false;
 		pCollider->m_eTagArray[ETag::Collider] = false;
 		pCollider->isMoving(false);
-		((AHeroObj*)pCollider->m_pParent)->SetHeroAnimSpeed(0.5f);
-		PlayerController::Get().m_dyingEnemys.emplace_back((AHeroObj*)pCollider->m_pParent, 2.0f);
+		((AHeroObj*)pCollider->m_pParent)->SetHeroAnimSpeed(0.4f);
+		PlayerController::Get().m_dyingEnemys.emplace_front((AHeroObj*)pCollider->m_pParent, 3.0f);
 	}
 
 	void ZombieExDead(Collider* pCollider, const UINT& killUser)
@@ -886,8 +886,8 @@ namespace DyingEvent {
 			pObject->SetHP(10000.0f);
 		}
 		PlayerController::Get().OperEXP(0.2f);
-		auto pEffect = ObjectManager::Get().TakeObject(L"EZDead2");
-		pEffect->SetPosition(pCollider->GetCenter());
+		//auto pEffect = ObjectManager::Get().TakeObject(L"EZDead2");
+		//pEffect->SetPosition(pCollider->GetCenter());
 		// 
 		auto pAI = ((AIZombie*)pCollider->m_pParent->GetComponent(EComponent::Etc));
 		pAI->m_delay = 99.0f;
@@ -897,7 +897,7 @@ namespace DyingEvent {
 		pCollider->m_eTagArray[ETag::Collider] = false;
 		pCollider->isMoving(false);
 		((AHeroObj*)pCollider->m_pParent)->SetANIM_OneTime(ZombieEX_DEATH);
-		PlayerController::Get().m_dyingEnemys.emplace_back((AHeroObj*)pCollider->m_pParent, 5.5f);
+		PlayerController::Get().m_dyingEnemys.emplace_front((AHeroObj*)pCollider->m_pParent, 6.0f);
 	}
 
 	void ZombieKingDead(Collider* pCollider, const UINT& killUser)
@@ -913,8 +913,8 @@ namespace DyingEvent {
 		}
 
 		PlayerController::Get().OperEXP(1.0f);
-		auto pEffect = ObjectManager::Get().TakeObject(L"EZDead3");
-		pEffect->SetPosition(pCollider->GetCenter());
+		//auto pEffect = ObjectManager::Get().TakeObject(L"EZDead3");
+		//pEffect->SetPosition(pCollider->GetCenter());
 		// ÀÌÆå »èÁ¦
 		auto pAI = ((AIZombieKing*)pCollider->m_pParent->GetComponent(EComponent::Etc));
 		if (pAI->m_Breath != nullptr)
@@ -929,7 +929,7 @@ namespace DyingEvent {
 		pCollider->m_eTagArray[ETag::Collider]	= false;
 		pCollider->isMoving(false);
 		((AHeroObj*)pCollider->m_pParent)->SetANIM_OneTime(Zombie_KING_DEATH);
-		PlayerController::Get().m_dyingEnemys.emplace_back((AHeroObj*)pCollider->m_pParent, 5.5f);
+		PlayerController::Get().m_dyingEnemys.emplace_front((AHeroObj*)pCollider->m_pParent, 7.0f);
 	}
 
 	void ShockBoomDead(Collider* pCollider, const UINT& killUser)

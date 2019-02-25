@@ -124,8 +124,8 @@ public:
 
 	int			m_money = 0;
 
-	list<ParticleSystem*> m_followEffects;
-	list<pair<AHeroObj*, float> > m_dyingEnemys;
+	forward_list<ParticleSystem*> m_followEffects;
+	forward_list<pair<AHeroObj*, float> > m_dyingEnemys;
 private:
 	void SendGiantMode(const float& spf)											noexcept;
 public:
