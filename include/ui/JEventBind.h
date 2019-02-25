@@ -8,32 +8,41 @@ namespace UI
 	{
 		if (pRoot == nullptr) return false;
 
+		LoadClass::LoadingCount += 1;
 		LoadClass::LoadingString = pRoot->m_NodeName;
-		Sleep(1);
+		Sleep(2);
 
+		LoadClass::LoadingCount += 1;
 		LoadClass::LoadingString = pRoot->m_NodeName + L"(Parent) : " + pRoot->m_ParentName;
-		Sleep(1);
+		Sleep(2);
 
+		LoadClass::LoadingCount += 1;
 		LoadClass::LoadingString = pRoot->m_NodeName + L"(Pos)";
-		Sleep(1);
+		Sleep(2);
 
+		LoadClass::LoadingCount += 1;
 		LoadClass::LoadingString = pRoot->m_NodeName + L"(Rot)";
-		Sleep(1);
+		Sleep(2);
 
+		LoadClass::LoadingCount += 1;
 		LoadClass::LoadingString = pRoot->m_NodeName + L"(Scl)";
-		Sleep(1);
+		Sleep(2);
 
+		LoadClass::LoadingCount += 1;
 		LoadClass::LoadingString = pRoot->m_NodeName + L"(Type)";
-		Sleep(1);
+		Sleep(2);
 
+		LoadClass::LoadingCount += 1;
 		LoadClass::LoadingString = pRoot->m_NodeName + L"(EventHover)";
-		Sleep(1);
+		Sleep(2);
 
+		LoadClass::LoadingCount += 1;
 		LoadClass::LoadingString = pRoot->m_NodeName + L"(EventPress)";
-		Sleep(1);
+		Sleep(2);
 
+		LoadClass::LoadingCount += 1;
 		LoadClass::LoadingString = pRoot->m_NodeName + L"(EventClick)";
-		Sleep(1);
+		Sleep(2);
 
 		for (auto iC = pRoot->m_pChildList.begin(); iC != pRoot->m_pChildList.end(); iC++)
 		{
