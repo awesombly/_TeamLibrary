@@ -1,6 +1,7 @@
 #pragma once
 #include "uiheader.h"
 #include "LoadingParameter.h"
+#include <Thread>
 
 namespace UI
 {
@@ -10,35 +11,34 @@ namespace UI
 
 		LoadClass::LoadingCount += 1;
 		LoadClass::LoadingString = pRoot->m_NodeName;
+		this_thread::sleep_for(std::chrono::milliseconds(5));
 
 		LoadClass::LoadingCount += 1;
 		LoadClass::LoadingString = pRoot->m_NodeName + L"(Parent) : " + pRoot->m_ParentName;
+		this_thread::sleep_for(std::chrono::milliseconds(5));
 
 		LoadClass::LoadingCount += 1;
-		LoadClass::LoadingString = pRoot->m_NodeName + L"(Pos)";
-
-		LoadClass::LoadingCount += 1;
-		LoadClass::LoadingString = pRoot->m_NodeName + L"(Rot)";
-
-		LoadClass::LoadingCount += 1;
-		LoadClass::LoadingString = pRoot->m_NodeName + L"(Scl)";
+		LoadClass::LoadingString = pRoot->m_NodeName + L"(Transform)";
+		this_thread::sleep_for(std::chrono::milliseconds(5));
 
 		LoadClass::LoadingCount += 1;
 		LoadClass::LoadingString = pRoot->m_NodeName + L"(Type)";
+		this_thread::sleep_for(std::chrono::milliseconds(5));
 
 		LoadClass::LoadingCount += 1;
-		LoadClass::LoadingString = pRoot->m_NodeName + L"(EventHover)";
+		LoadClass::LoadingString = pRoot->m_NodeName + L"(Texture)";
+		this_thread::sleep_for(std::chrono::milliseconds(5));
 
 		LoadClass::LoadingCount += 1;
-		LoadClass::LoadingString = pRoot->m_NodeName + L"(EventPress)";
+		LoadClass::LoadingString = pRoot->m_NodeName + L"(Event)";
+		this_thread::sleep_for(std::chrono::milliseconds(5));
 
-		LoadClass::LoadingCount += 1;
-		LoadClass::LoadingString = pRoot->m_NodeName + L"(EventClick)";
 
 		for (auto iC = pRoot->m_pChildList.begin(); iC != pRoot->m_pChildList.end(); iC++)
 		{
 			Loading(*iC);
 		}
+
 		return true;
 	}
 	static void IntroEvent(JPanel* pRoot)
@@ -274,38 +274,6 @@ namespace UI
 	}
 	static void LoadingEvent(JPanel* pRoot)
 	{
-		JPanel* pLoadingText = pRoot->find_child(L"Loading_Text");
-		if (pLoadingText == nullptr) return;
-		auto E_LodingText = [](void* vp)
-		{
-			JTextCtrl* pText = (JTextCtrl*)vp;
-
-			pText->m_fUITimer += Timer::SPF;
-
-			if (pText->m_fUITimer >= 0.3f && pText->m_fUITimer <= 0.6f)
-			{
-				pText->SetString(L"Loading");
-			}
-			else if (pText->m_fUITimer >= 0.6f && pText->m_fUITimer <= 0.9f)
-			{
-				pText->SetString(L"Loading.");
-			}
-			else if (pText->m_fUITimer >= 0.9f && pText->m_fUITimer <= 1.2f)
-			{
-				pText->SetString(L"Loading..");
-			}
-			else if (pText->m_fUITimer >= 1.2f && pText->m_fUITimer <= 1.5f)
-			{
-				pText->SetString(L"Loading...");
-			}
-			else
-			{
-				pText->m_fUITimer = 0.0f;
-			}
-		};
-		pLoadingText->PreEvent.first = E_LodingText;
-		pLoadingText->PreEvent.second = pLoadingText;
-
 		static JPanel* pLoadingSprite = pRoot->find_child(L"Loading_Sprite");
 		JPanel* pLoadingProgress = pRoot->find_child(L"Loading_Progress");
 		if (pLoadingProgress == nullptr) return;
