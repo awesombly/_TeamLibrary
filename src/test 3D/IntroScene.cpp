@@ -213,7 +213,6 @@ void IntroScene::SetObjects() noexcept
 
 	Renderer* pRerderEnvi = new Renderer(L"EnviR");
 	pRerderEnvi->SetEnviromentMap(((Renderer*)m_pSkyBox->GetComponent(EComponent::Renderer))->m_srcName, EEnviType::Refraction);
-	pRerderEnvi->m_cbMaterial.useNormalMap = 1.0f;		// 알파값용
 	Renderer* pRenderer = pRerderEnvi;// new Renderer(L"BaseR");
 
 
@@ -690,7 +689,7 @@ void IntroScene::SetObjects() noexcept
 	pCollider->SetGravityScale(15.0f);
 	pCollider->m_pPhysics->m_damping = 1.5f;
 	pCollider->m_eTag = ETag::Enemy;
-	pHeroObj->m_pPhysics->DeadEvent = DyingEvent::ZombieDead;
+	pHeroObj->m_pPhysics->DeadEvent = DyingEvent::ZombieCrawlDead;
 	pHeroObj->m_pPhysics->UserSocket = ESocketType::ECrawler;
 	pHeroObj->m_pPhysics->m_damage = 0.3f;
 	ObjectManager::Get().SetProtoObject(pHeroObj);

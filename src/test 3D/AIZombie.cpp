@@ -17,12 +17,10 @@ AIZombie::AIZombie()
 
 bool AIZombie::Init() noexcept
 {
-	m_isEnable = true;
+	//Update();
+	//
 	m_attackRange = m_pParent->GetScaleAverage() * 4000.0f;
 	m_moveSpeed   = RandomNormal() * 50.0f + 80.0f;
-	m_delay = 0.0f;
-	m_eState = EState::Idle;
-	m_eDirState = EState::Idle;
 	return true;
 }
 
@@ -54,7 +52,7 @@ bool AIZombie::Frame(const float& spf, const float& accTime)	noexcept
 		}	break;
 		case EState::Attack:
 		{
-			((AHeroObj*)m_pParent)->SetANIM_Loop(ZombieR_ATTACK);
+			((AHeroObj*)m_pParent)->SetANIM_Loop(ZombieR_DEATH/*ZombieR_ATTACK*/);
 			m_delay = 1.1f;
 			m_pParent->isMoving(false);
 			m_pParent->SetFocus(m_Target);
@@ -125,6 +123,17 @@ bool AIZombie::Release()	noexcept
 
 void AIZombie::Update()	noexcept
 {
+	m_isEnable = true;
+	auto pCollider = m_pParent->GetCollider();
+	pCollider->m_eTagArray[ETag::Ally] = true;
+	pCollider->m_eTagArray[ETag::Enemy] = true;
+	pCollider->m_eTagArray[ETag::Dummy] = true;
+	pCollider->m_eTagArray[ETag::Collider] = true;
+
+	m_delay = 0.0f;
+	m_eState = EState::Idle;
+	m_eDirState = EState::Idle;
+	((AHeroObj*)m_pParent)->SetHeroAnimSpeed(1.0f);
 	Init();
 }
 
@@ -132,6 +141,6 @@ void AIZombie::Update()	noexcept
 Component* AIZombie::clone() noexcept
 {
 	auto pAI = new AIZombie(*this);
-	pAI->Init();
+	pAI->Update();
 	return (Component*)pAI;
 }

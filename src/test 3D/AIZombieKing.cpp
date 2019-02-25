@@ -18,21 +18,16 @@ AIZombieKing::AIZombieKing()
 
 bool AIZombieKing::Init() noexcept
 {
-	AIZombie::Init();
+	//Update();
+	//
 	m_pCollider = m_pParent->GetCollider();
 	if (m_Breath != nullptr)
 	{
 		ObjectManager::Get().DisableObject(m_Breath);
 		m_Breath = nullptr;
 	}
-	m_isEnable = true;
 	m_attackRange = m_pParent->GetScaleAverage() * 5000.0f;
 	m_moveSpeed = RandomNormal() * 15.0f + 45.0f;
-	m_delayBreath = 0.0f;
-	m_delayStump = 0.0f;
-	m_delay = 0.0f;
-	m_eState = EState::Idle;
-	m_eDirState = EState::Idle;
 	return true;
 }
 
@@ -231,6 +226,6 @@ bool AIZombieKing::Release()	noexcept
 Component* AIZombieKing::clone() noexcept
 {
 	auto pAI = new AIZombieKing(*this);
-	pAI->Init();
+	pAI->Update();
 	return (Component*)pAI;
 }

@@ -16,12 +16,10 @@ AIZombieCrawl::AIZombieCrawl()
 
 bool AIZombieCrawl::Init() noexcept
 {
-	m_isEnable = true;
+	//Update();
+	//
 	m_attackRange = m_pParent->GetScaleAverage() * 2500.0f;
 	m_moveSpeed = RandomNormal() * 15.0f + 30.0f;
-	m_delay = 0.0f;
-	m_eState = EState::Idle;
-	m_eDirState = EState::Idle;
 	return true;
 }
 
@@ -118,6 +116,6 @@ bool AIZombieCrawl::Release()	noexcept
 Component* AIZombieCrawl::clone() noexcept
 {
 	auto pAI = new AIZombieCrawl(*this);
-	pAI->Init();
+	pAI->Update();
 	return (Component*)pAI;
 }

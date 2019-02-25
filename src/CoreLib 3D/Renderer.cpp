@@ -17,6 +17,7 @@ Renderer::Renderer(const wstring_view& myName, const string_view& vertexShaderNa
 	m_cbMaterial.useShadow = 0.5f;		// ½¦µµ¿ì ºñÀ²
 	m_cbMaterial.useEnviMap = 0.0f;
 	m_cbMaterial.useNormalMap = 0.0f;
+	m_cbMaterial.ObjectID = 1.0f;
 	CreateConstBuffer(&m_cbMaterial, sizeof(m_cbMaterial), &m_pMaterialCBuffer);
 
 	CreateConstBuffer(&(*m_ppCamera)->m_cbVS, sizeof(CB_VSMatrix), &m_pMatrixCBuffer);
@@ -397,7 +398,7 @@ void Renderer::UpdateConstBuffer(ID3D11DeviceContext* pDContext) noexcept
 		m_cbMaterial.matShadow = m_cbMaterial.matShadow * pLight->m_cbMaterial.matShadow;
 		D3DXMatrixTranspose(&m_cbMaterial.matShadow, &m_cbMaterial.matShadow);
 		m_cbMaterial.NumKernel = 3;
-		m_cbMaterial.ObjectID = 0;
+		//m_cbMaterial.ObjectID = 0;
 		*pMaterialData = m_cbMaterial;
 		pDContext->Unmap(m_pMaterialCBuffer, 0);
 	}

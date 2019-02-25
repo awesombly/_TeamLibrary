@@ -16,12 +16,10 @@ AIZombieEx::AIZombieEx()
 
 bool AIZombieEx::Init() noexcept
 {
-	m_isEnable = true;
+	//Update();
+	//
 	m_attackRange = m_pParent->GetScaleAverage() * 5000.0f;
 	m_moveSpeed = RandomNormal() * 15.0f + 105.0f;
-	m_delay = 0.0f;
-	m_eState = EState::Idle;
-	m_eDirState = EState::Idle;
 	return true;
 }
 
@@ -126,6 +124,6 @@ bool AIZombieEx::Release()	noexcept
 Component* AIZombieEx::clone() noexcept
 {
 	auto pAI = new AIZombieEx(*this);
-	pAI->Init();
+	pAI->Update();
 	return (Component*)pAI;
 }

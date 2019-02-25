@@ -1,10 +1,11 @@
 #include "EventManager.h"
-#include "PacketManager.h"
+#include "AHeroObj.h"
 #include "PlayerController.h"
 #include "ObjectManager.h"
-#include "UIManager.h"
+#include "PacketManager.h"
 #include "SoundManager.h"
 #include "AIZombieKing.h"
+#include "UIManager.h"
 
 namespace MyEvent {
 	void ForceWave(Collider* pA, Collider* pB) {
@@ -846,30 +847,31 @@ namespace DyingEvent {
 		pCollider->m_eTagArray[ETag::Dummy] = false;
 		pCollider->m_eTagArray[ETag::Collider] = false;
 		pCollider->isMoving(false);
-		// 알파 조절
-		auto pList = pCollider->m_pParent->GetComponentList(EComponent::Renderer);
-		if (pList != nullptr)
+		//((AHeroObj*)pCollider->m_pParent)->SetANIM_Loop(ZombieR_DEATH);
+		PlayerController::Get().m_dyingEnemys.emplace_back((AHeroObj*)pCollider->m_pParent, 4.0f);
+	}
+
+	void ZombieCrawlDead(Collider* pCollider, const UINT& killUser)
+	{
+		if (RandomNormal() >= 0.8f * 5.0f / (5.0f + PacketManager::Get().pMyInfo->StatLuk))
 		{
-			float deadFrame = 1.0f;
-			while (deadFrame >= 0.1f)
-			{
-				for (auto& pRenderer : *pList)
-				{
-					((Renderer*)pRenderer)->m_cbMaterial.useNormalMap = deadFrame;
-				}
-				deadFrame -= 0.02f;
-				this_thread::sleep_for(chrono::milliseconds(33));
-			}
-			for (auto& pRenderer : *pList)
-			{
-				((Renderer*)pRenderer)->m_cbMaterial.useNormalMap = 1.0f;
-			}
+			auto pObject = ObjectManager::Get().TakeObject(L"ItemBox");
+			pObject->SetPosition(pCollider->GetCenter());
+			pObject->SetHP(10000.0f);
 		}
-		pCollider->m_eTagArray[ETag::Ally] = true;
-		pCollider->m_eTagArray[ETag::Enemy] = true;
-		pCollider->m_eTagArray[ETag::Dummy] = true;
-		pCollider->m_eTagArray[ETag::Collider] = true;
-		ObjectManager::Get().DisableObject(pCollider->m_pParent);
+		PlayerController::Get().OperEXP(0.03f);
+		auto pEffect = ObjectManager::Get().TakeObject(L"EZDead");
+		pEffect->SetPosition(pCollider->GetCenter());
+		// 
+		auto pAI = ((AIZombie*)pCollider->m_pParent->GetComponent(EComponent::Etc));
+		pAI->m_delay = 99.0f;
+		pCollider->m_eTagArray[ETag::Ally] = false;
+		pCollider->m_eTagArray[ETag::Enemy] = false;
+		pCollider->m_eTagArray[ETag::Dummy] = false;
+		pCollider->m_eTagArray[ETag::Collider] = false;
+		pCollider->isMoving(false);
+		((AHeroObj*)pCollider->m_pParent)->SetHeroAnimSpeed(0.3f);
+		PlayerController::Get().m_dyingEnemys.emplace_back((AHeroObj*)pCollider->m_pParent, 2.0f);
 	}
 
 	void ZombieExDead(Collider* pCollider, const UINT& killUser)
@@ -894,30 +896,8 @@ namespace DyingEvent {
 		pCollider->m_eTagArray[ETag::Dummy] = false;
 		pCollider->m_eTagArray[ETag::Collider] = false;
 		pCollider->isMoving(false);
-		// 알파 조절
-		auto pList = pCollider->m_pParent->GetComponentList(EComponent::Renderer);
-		if (pList != nullptr)
-		{
-			float deadFrame = 1.0f;
-			while (deadFrame >= 0.1f)
-			{
-				for (auto& pRenderer : *pList)
-				{
-					((Renderer*)pRenderer)->m_cbMaterial.useNormalMap = deadFrame;
-				}
-				deadFrame -= 0.015f;
-				this_thread::sleep_for(chrono::milliseconds(33));
-			}
-			for (auto& pRenderer : *pList)
-			{
-				((Renderer*)pRenderer)->m_cbMaterial.useNormalMap = 1.0f;
-			}
-		}
-		pCollider->m_eTagArray[ETag::Ally] = true;
-		pCollider->m_eTagArray[ETag::Enemy] = true;
-		pCollider->m_eTagArray[ETag::Dummy] = true;
-		pCollider->m_eTagArray[ETag::Collider] = true;
-		ObjectManager::Get().DisableObject(pCollider->m_pParent);
+		((AHeroObj*)pCollider->m_pParent)->SetHeroAnimSpeed(0.3f);
+		PlayerController::Get().m_dyingEnemys.emplace_back((AHeroObj*)pCollider->m_pParent, 2.0f);
 	}
 
 	void ZombieKingDead(Collider* pCollider, const UINT& killUser)
@@ -948,30 +928,8 @@ namespace DyingEvent {
 		pCollider->m_eTagArray[ETag::Dummy]		= false;
 		pCollider->m_eTagArray[ETag::Collider]	= false;
 		pCollider->isMoving(false);
-		// 알파 조절
-		auto pList = pCollider->m_pParent->GetComponentList(EComponent::Renderer);
-		if (pList != nullptr)
-		{
-			float deadFrame = 1.0f;
-			while (deadFrame >= 0.1f)
-			{
-				for (auto& pRenderer : *pList)
-				{
-					((Renderer*)pRenderer)->m_cbMaterial.useNormalMap = deadFrame;
-				}
-				deadFrame -= 0.01f;
-				this_thread::sleep_for(chrono::milliseconds(33));
-			}
-			for (auto& pRenderer : *pList)
-			{
-				((Renderer*)pRenderer)->m_cbMaterial.useNormalMap = 1.0f;
-			}
-		}
-		pCollider->m_eTagArray[ETag::Ally]		= true;
-		pCollider->m_eTagArray[ETag::Enemy]		= true;
-		pCollider->m_eTagArray[ETag::Dummy]		= true;
-		pCollider->m_eTagArray[ETag::Collider]	= true;
-		ObjectManager::Get().DisableObject(pCollider->m_pParent);
+		((AHeroObj*)pCollider->m_pParent)->SetHeroAnimSpeed(0.3f);
+		PlayerController::Get().m_dyingEnemys.emplace_back((AHeroObj*)pCollider->m_pParent, 2.0f);
 	}
 
 	void ShockBoomDead(Collider* pCollider, const UINT& killUser)
@@ -987,7 +945,7 @@ namespace DyingEvent {
 			pItem->m_pPhysics->UserSocket = killUser;
 			pItem->SetDamage(pCollider->m_pPhysics->m_damage);
 		}
-		//ObjectManager::Get().DisableObject(pCollider->m_pParent);
+		ObjectManager::Get().DisableObject(pCollider->m_pParent);
 		SoundManager::Get().PlayQueue("SE_fire1.mp3", pCollider->m_pParent->GetPosition(), PlayerController::Get().SoundRange);
 	}
 
