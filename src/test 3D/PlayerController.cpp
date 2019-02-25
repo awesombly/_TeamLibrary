@@ -47,7 +47,7 @@ bool PlayerController::Frame(const float& spf, const float& accTime)	noexcept
 			{
 				for (auto& pRenderer : *pList)
 				{
-					((Renderer*)pRenderer)->m_cbMaterial.ObjectID = deadFrame * 0.5f;
+					((Renderer*)pRenderer)->m_cbMaterial.ObjectID = (2.0f - deadFrame) * 0.5f;
 				}
 				deadFrame -= spf;
 			}
@@ -55,7 +55,7 @@ bool PlayerController::Frame(const float& spf, const float& accTime)	noexcept
 			{
 				for (auto& pRenderer : *pList)
 				{
-					((Renderer*)pRenderer)->m_cbMaterial.ObjectID = 1.0f;
+					((Renderer*)pRenderer)->m_cbMaterial.ObjectID = 0.0f;
 				}
 				
 				ObjectManager::Get().DisableObject(pEnemy);

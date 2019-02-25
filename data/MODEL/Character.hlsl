@@ -185,7 +185,7 @@ VS_OUTPUT VS(PNCT5_VS_INPUT input)//,uniform bool bHalfVector )
 		//output.col = /*float4(fDot, fDot, fDot, 1.0f) **/ /*input.col **/ fDot;
 		output.col.xyz = input.col.xyz * max(cb_useLight * 2.0f, dot(vLightDir, output.nor.xyz) + cb_useLight * 2.0f);
 		//output.col.xy *= 0.85f;
-		output.col.w = input.col.w * g_iObjectID;
+		output.col.w = input.col.w - g_iObjectID;
 
 	// È¯°æ
 	if (cb_useEnviMap)

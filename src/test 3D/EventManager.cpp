@@ -847,7 +847,7 @@ namespace DyingEvent {
 		pCollider->m_eTagArray[ETag::Dummy] = false;
 		pCollider->m_eTagArray[ETag::Collider] = false;
 		pCollider->isMoving(false);
-		//((AHeroObj*)pCollider->m_pParent)->SetANIM_Loop(ZombieR_DEATH);
+		((AHeroObj*)pCollider->m_pParent)->SetANIM_OneTime(ZombieR_DEATH);
 		PlayerController::Get().m_dyingEnemys.emplace_back((AHeroObj*)pCollider->m_pParent, 4.0f);
 	}
 
@@ -870,7 +870,7 @@ namespace DyingEvent {
 		pCollider->m_eTagArray[ETag::Dummy] = false;
 		pCollider->m_eTagArray[ETag::Collider] = false;
 		pCollider->isMoving(false);
-		((AHeroObj*)pCollider->m_pParent)->SetHeroAnimSpeed(0.3f);
+		((AHeroObj*)pCollider->m_pParent)->SetHeroAnimSpeed(0.5f);
 		PlayerController::Get().m_dyingEnemys.emplace_back((AHeroObj*)pCollider->m_pParent, 2.0f);
 	}
 
@@ -896,8 +896,8 @@ namespace DyingEvent {
 		pCollider->m_eTagArray[ETag::Dummy] = false;
 		pCollider->m_eTagArray[ETag::Collider] = false;
 		pCollider->isMoving(false);
-		((AHeroObj*)pCollider->m_pParent)->SetHeroAnimSpeed(0.3f);
-		PlayerController::Get().m_dyingEnemys.emplace_back((AHeroObj*)pCollider->m_pParent, 2.0f);
+		((AHeroObj*)pCollider->m_pParent)->SetANIM_OneTime(ZombieEX_DEATH);
+		PlayerController::Get().m_dyingEnemys.emplace_back((AHeroObj*)pCollider->m_pParent, 5.5f);
 	}
 
 	void ZombieKingDead(Collider* pCollider, const UINT& killUser)
@@ -928,8 +928,8 @@ namespace DyingEvent {
 		pCollider->m_eTagArray[ETag::Dummy]		= false;
 		pCollider->m_eTagArray[ETag::Collider]	= false;
 		pCollider->isMoving(false);
-		((AHeroObj*)pCollider->m_pParent)->SetHeroAnimSpeed(0.3f);
-		PlayerController::Get().m_dyingEnemys.emplace_back((AHeroObj*)pCollider->m_pParent, 2.0f);
+		((AHeroObj*)pCollider->m_pParent)->SetANIM_OneTime(Zombie_KING_DEATH);
+		PlayerController::Get().m_dyingEnemys.emplace_back((AHeroObj*)pCollider->m_pParent, 5.5f);
 	}
 
 	void ShockBoomDead(Collider* pCollider, const UINT& killUser)

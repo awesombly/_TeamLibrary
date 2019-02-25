@@ -157,7 +157,7 @@ bool AIZombieKing::Frame(const float& spf, const float& accTime)	noexcept
 			m_Target = (targetPos - m_pParent->GetPosition()) + Vector3::Up * 600.0f;
 			m_eDirState = EState::Action3;
 			m_delay = 0.5f;
-			((AHeroObj*)m_pParent)->SetANIM_OneTime(Zombie_KING_JUMP_ATTACK);
+			((AHeroObj*)m_pParent)->SetANIM_Loop(Zombie_KING_JUMP_ATTACK);
 			//SoundManager::Get().PlayQueue("SV_zombie_king_shout.mp3", m_pParent->GetPosition(), PlayerController::Get().SoundRange * 3.0f);
 			SoundManager::Get().Play("SV_zombie_king_shout.mp3");
 			// 카메라 진동

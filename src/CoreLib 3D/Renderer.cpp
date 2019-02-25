@@ -17,7 +17,7 @@ Renderer::Renderer(const wstring_view& myName, const string_view& vertexShaderNa
 	m_cbMaterial.useShadow = 0.5f;		// ½¦µµ¿ì ºñÀ²
 	m_cbMaterial.useEnviMap = 0.0f;
 	m_cbMaterial.useNormalMap = 0.0f;
-	m_cbMaterial.ObjectID = 1.0f;
+	m_cbMaterial.ObjectID = 0.0f;
 	CreateConstBuffer(&m_cbMaterial, sizeof(m_cbMaterial), &m_pMaterialCBuffer);
 
 	CreateConstBuffer(&(*m_ppCamera)->m_cbVS, sizeof(CB_VSMatrix), &m_pMatrixCBuffer);

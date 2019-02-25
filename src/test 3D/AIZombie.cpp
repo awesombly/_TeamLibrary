@@ -52,7 +52,7 @@ bool AIZombie::Frame(const float& spf, const float& accTime)	noexcept
 		}	break;
 		case EState::Attack:
 		{
-			((AHeroObj*)m_pParent)->SetANIM_Loop(ZombieR_DEATH/*ZombieR_ATTACK*/);
+			((AHeroObj*)m_pParent)->SetANIM_Loop(ZombieR_ATTACK);
 			m_delay = 1.1f;
 			m_pParent->isMoving(false);
 			m_pParent->SetFocus(m_Target);
