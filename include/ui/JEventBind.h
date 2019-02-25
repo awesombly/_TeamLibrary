@@ -1,7 +1,46 @@
 #pragma once
 #include "uiheader.h"
+#include "LoadingParameter.h"
+
 namespace UI
 {
+	static bool Loading(const JPanel* pRoot)
+	{
+		if (pRoot == nullptr) return false;
+
+		LoadClass::LoadingString = pRoot->m_NodeName;
+		Sleep(JDxHelper::iRand(10, 50));
+
+		LoadClass::LoadingString = pRoot->m_NodeName + L"(Parent) : " + pRoot->m_ParentName;
+		Sleep(JDxHelper::iRand(10, 50));
+
+		LoadClass::LoadingString = pRoot->m_NodeName + L"(Pos)";
+		Sleep(JDxHelper::iRand(10, 50));
+
+		LoadClass::LoadingString = pRoot->m_NodeName + L"(Rot)";
+		Sleep(JDxHelper::iRand(10, 50));
+
+		LoadClass::LoadingString = pRoot->m_NodeName + L"(Scl)";
+		Sleep(JDxHelper::iRand(10, 50));
+
+		LoadClass::LoadingString = pRoot->m_NodeName + L"(Type)";
+		Sleep(JDxHelper::iRand(10, 50));
+
+		LoadClass::LoadingString = pRoot->m_NodeName + L"(EventHover)";
+		Sleep(JDxHelper::iRand(10, 50));
+
+		LoadClass::LoadingString = pRoot->m_NodeName + L"(EventPress)";
+		Sleep(JDxHelper::iRand(10, 50));
+
+		LoadClass::LoadingString = pRoot->m_NodeName + L"(EventClick)";
+		Sleep(JDxHelper::iRand(10, 50));
+
+		for (auto iC = pRoot->m_pChildList.begin(); iC != pRoot->m_pChildList.end(); iC++)
+		{
+			Loading(*iC);
+		}
+		return true;
+	}
 	static void IntroEvent(JPanel* pRoot)
 	{			   
 		JPanel* pMouseCursor = pRoot->find_child(L"mouse_cursor");
