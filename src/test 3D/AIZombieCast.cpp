@@ -13,12 +13,10 @@ AIZombieCast::AIZombieCast()
 
 bool AIZombieCast::Init() noexcept
 {
-	m_isEnable = true;
+	//Update();
+	//
 	m_attackRange = m_pParent->GetScaleAverage() * 20000.0f;
 	m_moveSpeed = RandomNormal() * 30.0f + 60.0f;
-	m_delay = 0.0f;
-	m_eState = EState::Idle;
-	m_eDirState = EState::Idle;
 	return true;
 }
 
@@ -124,6 +122,6 @@ bool AIZombieCast::Release()	noexcept
 Component* AIZombieCast::clone() noexcept
 {
 	auto pAI = new AIZombieCast(*this);
-	pAI->Init();
+	pAI->Update();
 	return (Component*)pAI;
 }

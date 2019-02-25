@@ -47,7 +47,7 @@ bool PlayerController::Frame(const float& spf, const float& accTime)	noexcept
 			{
 				for (auto& pRenderer : *pList)
 				{
-					((Renderer*)pRenderer)->m_cbMaterial.useNormalMap = deadFrame;
+					((Renderer*)pRenderer)->m_cbMaterial.ObjectID = deadFrame * 0.5f;
 				}
 				deadFrame -= spf;
 			}
@@ -55,16 +55,12 @@ bool PlayerController::Frame(const float& spf, const float& accTime)	noexcept
 			{
 				for (auto& pRenderer : *pList)
 				{
-					((Renderer*)pRenderer)->m_cbMaterial.useNormalMap = 1.0f;
+					((Renderer*)pRenderer)->m_cbMaterial.ObjectID = 1.0f;
 				}
-				auto pCollider = pEnemy->GetCollider();
-				pCollider->m_eTagArray[ETag::Ally] = true;
-				pCollider->m_eTagArray[ETag::Enemy] = true;
-				pCollider->m_eTagArray[ETag::Dummy] = true;
-				pCollider->m_eTagArray[ETag::Collider] = true;
 				
-				ObjectManager::Get().DisableObject(pCollider->m_pParent);
+				ObjectManager::Get().DisableObject(pEnemy);
 				m_dyingEnemys.remove(iter);
+				break;
 			}
 		}
 	}
