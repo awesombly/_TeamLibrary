@@ -90,7 +90,8 @@
 *CHARACTERNAME	zombieEX
 *SHADERFILENMAE		..\..\data\model\Character.hlsl
 
-*MATRIXMATRIXCOUNT  3
+*MATRIXMATRIXCOUNT  4
+*MATRIXFILENAME		..\..\data\model\zombieEX\zombieEX_death.Mat
 *MATRIXFILENAME		..\..\data\model\zombieEX\zombieEX_run.Mat
 *MATRIXFILENAME		..\..\data\model\zombieEX\zombieEX_attack.Mat
 *MATRIXFILENAME		..\..\data\model\zombieEX\zombieEX_idle.Mat
@@ -104,7 +105,8 @@
 *CHARACTERNAME	zombie_king
 *SHADERFILENMAE		..\..\data\model\Character.hlsl
 
-*MATRIXMATRIXCOUNT  5
+*MATRIXMATRIXCOUNT  6
+*MATRIXFILENAME			..\..\data\model\zombieKing\ZOMBIE_KING_DEATH.Mat
 *MATRIXFILENAME			..\..\data\model\zombieKing\ZOMBIE_KING_ROAR.Mat
 *MATRIXFILENAME			..\..\data\model\zombieKing\ZOMBIE_KING_JUMP_ATTACK.Mat
 *MATRIXFILENAME			..\..\data\model\zombieKing\ZOMBIE_KING_ATTACK.Mat
