@@ -74,6 +74,7 @@
 //Zombie
 #define  ZombieEX				L"zombieEX"
 //ANIM_COUNT  53
+#define	 ZombieEX_DEATH			L"zombieEX_death.Mat"
 #define	 ZombieEX_RUN			L"zombieEX_run.Mat"
 #define	 ZombieEX_ATTACK		L"zombieEX_attack.Mat"
 #define	 ZombieEX_IDLE			L"zombieEX_idle.Mat"
@@ -82,6 +83,7 @@
 //ZombieKing
 #define  Zombie_KING				L"zombie_king"
 //ANIM_COUNT  5
+#define	 Zombie_KING_DEATH			L"ZOMBIE_KING_DEATH.Mat"
 #define	 Zombie_KING_ROAR			L"ZOMBIE_KING_ROAR.Mat"
 #define	 Zombie_KING_JUMP_ATTACK	L"ZOMBIE_KING_JUMP_ATTACK.Mat"
 #define	 Zombie_KING_ATTACK			L"ZOMBIE_KING_ATTACK.Mat"
