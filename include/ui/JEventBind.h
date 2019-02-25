@@ -10,11 +10,11 @@ namespace UI
 		if (pRoot == nullptr) return false;
 
 		LoadClass::LoadingCount += 1;
-		LoadClass::LoadingString = pRoot->m_NodeName;
+		LoadClass::LoadingString = pRoot->m_NodeName + L"(Name)";
 		this_thread::sleep_for(std::chrono::milliseconds(5));
 
 		LoadClass::LoadingCount += 1;
-		LoadClass::LoadingString = pRoot->m_NodeName + L"(Parent) : " + pRoot->m_ParentName;
+		LoadClass::LoadingString = pRoot->m_NodeName + L"(Parent)";
 		this_thread::sleep_for(std::chrono::milliseconds(5));
 
 		LoadClass::LoadingCount += 1;
