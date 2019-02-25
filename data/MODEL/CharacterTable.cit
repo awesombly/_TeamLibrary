@@ -73,7 +73,8 @@
 *CHARACTERNAME	zombieR
 *SHADERFILENMAE		..\..\data\model\Character.hlsl
 
-*MATRIXMATRIXCOUNT  6
+*MATRIXMATRIXCOUNT  7
+*MATRIXFILENAME		..\..\data\model\zombieR\zombieR_death.Mat
 *MATRIXFILENAME		..\..\data\model\zombieR\zombieR_shot.Mat
 *MATRIXFILENAME		..\..\data\model\zombieR\zombieR_run.Mat
 *MATRIXFILENAME		..\..\data\model\zombieR\zombieR_crawl.Mat

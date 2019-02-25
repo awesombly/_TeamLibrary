@@ -67,6 +67,7 @@
 #define	 ZombieR_CRAWL		L"zombieR_crawl.Mat"
 #define	 ZombieR_ATTACK		L"zombieR_atk.Mat"
 #define	 ZombieR_WALK		L"zombieR_walk.Mat"
+#define	 ZombieR_DEATH		L"zombieR_death.Mat"
 #define	 ZombieR_IDLE		L"zombieR_idle.Mat"
 
 //////////////////////////////////////////////////////////////////////////
