@@ -7,7 +7,7 @@ class Collider;
 class Camera;
 class AHeroObj;
 class UIManager;
-
+class ParticleSystem;
 
 
 class PlayerController : public GameObject, public ISingleton<PlayerController>
@@ -123,6 +123,9 @@ public:
 	UCHAR		m_upgradeAcce2 = 0;
 
 	int			m_money = 0;
+
+	list<ParticleSystem*> m_followEffects;
+	list<pair<AHeroObj*, float> > m_dyingEnemys;
 private:
 	void SendGiantMode(const float& spf)											noexcept;
 public:

@@ -33,7 +33,7 @@ bool GameMap::Init() noexcept
 	pCollider->m_pivot = Vector3::Up * 50.0f;
 	pCollider->SetGravityScale(0.0f);
 	pCollider->usePhysics(false);
-	pCollider->SetHP(200.0f);
+	pCollider->SetHP(400.0f);
 	pCollider->m_pPhysics->DeadEvent = DyingEvent::CenterDead;
 	ObjectManager::Get().PushObject(&m_fountain, false);
 	PlayerController::Get().m_pHome = &m_fountain;

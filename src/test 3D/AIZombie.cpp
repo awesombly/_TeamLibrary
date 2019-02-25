@@ -5,6 +5,7 @@
 #include "EventManager.h"
 #include "PlayerController.h"
 #include "SoundManager.h"
+#include "Collider.h"
 
 AIZombie::AIZombie()
 {

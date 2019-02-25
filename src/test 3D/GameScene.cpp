@@ -1099,4 +1099,5 @@ void GameScene::LoadUI() noexcept
 
 	ObjectManager::Get().PushObject(pUIRoot);
 	UI::InGameEvent(pUIRoot);
+	UI::Loading(pUIRoot);
 }

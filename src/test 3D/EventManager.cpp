@@ -62,7 +62,7 @@ namespace MyEvent {
 			if (PacketManager::Get().pMyInfo->UserSocket == pA->m_pPhysics->UserSocket)
 			{
 				PlayerController::Get().HitEvent(pB);
-				if (pB->m_pParent->GetHP() <= 0.0f)
+				if (pB->m_pParent->GetHP() <= EPSILON)
 				{
 					PacketManager::Get().SendDeadEvent(pB->m_pParent->m_keyValue, pB->m_pPhysics->UserSocket, pA->m_pPhysics->UserSocket);
 				}
@@ -72,7 +72,7 @@ namespace MyEvent {
 					PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
 				}
 			}
-			else if (pA->m_pPhysics->UserSocket == ESocketType::EDummy && PacketManager::Get().isHost && pB->m_pParent->GetHP() <= 0.0f)
+			else if (pA->m_pPhysics->UserSocket == ESocketType::EDummy && PacketManager::Get().isHost && pB->m_pParent->GetHP() <= EPSILON)
 			{
 				PacketManager::Get().SendDeadEvent(pB->m_pParent->m_keyValue, pB->m_pPhysics->UserSocket, ESocketType::EDummy);
 			}
@@ -124,7 +124,7 @@ namespace MyEvent {
 				else if (PacketManager::Get().pMyInfo->UserSocket == pA->m_pPhysics->UserSocket)
 				{
 					PlayerController::Get().HitEvent(pB);
-					if (pB->m_pParent->GetHP() <= 0.0f)
+					if (pB->m_pParent->GetHP() <= EPSILON)
 					{
 						PacketManager::Get().SendDeadEvent(pB->m_pParent->m_keyValue, pB->m_pPhysics->UserSocket, pA->m_pPhysics->UserSocket);
 					}
@@ -134,7 +134,7 @@ namespace MyEvent {
 						PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
 					}
 				}
-				else if (pA->m_pPhysics->UserSocket == ESocketType::EDummy && PacketManager::Get().isHost && pB->m_pParent->GetHP() <= 0.0f)
+				else if (pA->m_pPhysics->UserSocket == ESocketType::EDummy && PacketManager::Get().isHost && pB->m_pParent->GetHP() <= EPSILON)
 				{
 					PacketManager::Get().SendDeadEvent(pB->m_pParent->m_keyValue, pB->m_pPhysics->UserSocket, ESocketType::EDummy);
 				}
@@ -186,7 +186,7 @@ namespace MyEvent {
 			 	else if (PacketManager::Get().pMyInfo->UserSocket == pA->m_pPhysics->UserSocket)
 			 	{
 			 		PlayerController::Get().HitEvent(pB);
-			 		if (pB->m_pParent->GetHP() <= 0.0f)
+			 		if (pB->m_pParent->GetHP() <= EPSILON)
 			 		{
 			 			PacketManager::Get().SendDeadEvent(pB->m_pParent->m_keyValue, pB->m_pPhysics->UserSocket, pA->m_pPhysics->UserSocket);
 			 		}
@@ -196,7 +196,7 @@ namespace MyEvent {
 			 			PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
 			 		}
 			 	}
-				else if (pA->m_pPhysics->UserSocket == ESocketType::EDummy && PacketManager::Get().isHost && pB->m_pParent->GetHP() <= 0.0f)
+				else if (pA->m_pPhysics->UserSocket == ESocketType::EDummy && PacketManager::Get().isHost && pB->m_pParent->GetHP() <= EPSILON)
 				{
 					PacketManager::Get().SendDeadEvent(pB->m_pParent->m_keyValue, pB->m_pPhysics->UserSocket, ESocketType::EDummy);
 				}
@@ -220,7 +220,7 @@ namespace MyEvent {
 			if (PacketManager::Get().pMyInfo->UserSocket == pA->m_pPhysics->UserSocket)
 			{
 				PlayerController::Get().HitEvent(pB);
-				if (pB->m_pParent->GetHP() <= 0.0f)
+				if (pB->m_pParent->GetHP() <= EPSILON)
 				{
 					PacketManager::Get().SendDeadEvent(pB->m_pParent->m_keyValue, pB->m_pPhysics->UserSocket, pA->m_pPhysics->UserSocket);
 				}
@@ -230,7 +230,7 @@ namespace MyEvent {
 					PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
 				}
 			}
-			else if (pA->m_pPhysics->UserSocket == ESocketType::EDummy && PacketManager::Get().isHost && pB->m_pParent->GetHP() <= 0.0f)
+			else if (pA->m_pPhysics->UserSocket == ESocketType::EDummy && PacketManager::Get().isHost && pB->m_pParent->GetHP() <= EPSILON)
 			{
 				PacketManager::Get().SendDeadEvent(pB->m_pParent->m_keyValue, pB->m_pPhysics->UserSocket, ESocketType::EDummy);
 			}
@@ -251,7 +251,7 @@ namespace MyEvent {
 			if (PacketManager::Get().pMyInfo->UserSocket == pA->m_pPhysics->UserSocket)
 			{
 				PlayerController::Get().HitEvent(pB);
-				if (pB->m_pParent->GetHP() <= 0.0f)
+				if (pB->m_pParent->GetHP() <= EPSILON)
 				{
 					PacketManager::Get().SendDeadEvent(pB->m_pParent->m_keyValue, pB->m_pPhysics->UserSocket, pA->m_pPhysics->UserSocket);
 				}
@@ -261,7 +261,7 @@ namespace MyEvent {
 					PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
 				}
 			}
-			else if (pA->m_pPhysics->UserSocket == ESocketType::EDummy && PacketManager::Get().isHost && pB->m_pParent->GetHP() <= 0.0f)
+			else if (pA->m_pPhysics->UserSocket == ESocketType::EDummy && PacketManager::Get().isHost && pB->m_pParent->GetHP() <= EPSILON)
 			{
 				PacketManager::Get().SendDeadEvent(pB->m_pParent->m_keyValue, pB->m_pPhysics->UserSocket, ESocketType::EDummy);
 			}
@@ -300,7 +300,7 @@ namespace MyEvent {
 			else if (PacketManager::Get().pMyInfo->UserSocket == pA->m_pPhysics->UserSocket)
 			{
 				PlayerController::Get().HitEvent(pB);
-				if (pB->m_pParent->GetHP() <= 0.0f)
+				if (pB->m_pParent->GetHP() <= EPSILON)
 				{
 					PacketManager::Get().SendDeadEvent(pB->m_pParent->m_keyValue, pB->m_pPhysics->UserSocket, pA->m_pPhysics->UserSocket);
 				}
@@ -310,7 +310,7 @@ namespace MyEvent {
 					PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
 				}
 			}
-			else if (pA->m_pPhysics->UserSocket == ESocketType::EDummy && PacketManager::Get().isHost && pB->m_pParent->GetHP() <= 0.0f)
+			else if (pA->m_pPhysics->UserSocket == ESocketType::EDummy && PacketManager::Get().isHost && pB->m_pParent->GetHP() <= EPSILON)
 			{
 				PacketManager::Get().SendDeadEvent(pB->m_pParent->m_keyValue, pB->m_pPhysics->UserSocket, ESocketType::EDummy);
 			}
@@ -337,7 +337,7 @@ namespace MyEvent {
 			else if (PacketManager::Get().pMyInfo->UserSocket == pA->m_pPhysics->UserSocket)
 			{
 				PlayerController::Get().HitEvent(pB);
-				if (pB->m_pParent->GetHP() <= 0.0f)
+				if (pB->m_pParent->GetHP() <= EPSILON)
 				{
 					PacketManager::Get().SendDeadEvent(pB->m_pParent->m_keyValue, pB->m_pPhysics->UserSocket, pA->m_pPhysics->UserSocket);
 				}
@@ -347,7 +347,7 @@ namespace MyEvent {
 					PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
 				}
 			}
-			else if (pA->m_pPhysics->UserSocket == ESocketType::EDummy && PacketManager::Get().isHost && pB->m_pParent->GetHP() <= 0.0f)
+			else if (pA->m_pPhysics->UserSocket == ESocketType::EDummy && PacketManager::Get().isHost && pB->m_pParent->GetHP() <= EPSILON)
 			{
 				PacketManager::Get().SendDeadEvent(pB->m_pParent->m_keyValue, pB->m_pPhysics->UserSocket, ESocketType::EDummy);
 			}
@@ -376,7 +376,7 @@ namespace MyEvent {
 			else if (PacketManager::Get().pMyInfo->UserSocket == pA->m_pPhysics->UserSocket)
 			{
 				PlayerController::Get().HitEvent(pB);
-				if (pB->m_pParent->GetHP() <= 0.0f)
+				if (pB->m_pParent->GetHP() <= EPSILON)
 				{
 					PacketManager::Get().SendDeadEvent(pB->m_pParent->m_keyValue, pB->m_pPhysics->UserSocket, pA->m_pPhysics->UserSocket);
 				}
@@ -386,7 +386,7 @@ namespace MyEvent {
 					PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
 				}
 			}
-			else if (pA->m_pPhysics->UserSocket == ESocketType::EDummy && PacketManager::Get().isHost && pB->m_pParent->GetHP() <= 0.0f)
+			else if (pA->m_pPhysics->UserSocket == ESocketType::EDummy && PacketManager::Get().isHost && pB->m_pParent->GetHP() <= EPSILON)
 			{
 				PacketManager::Get().SendDeadEvent(pB->m_pParent->m_keyValue, pB->m_pPhysics->UserSocket, ESocketType::EDummy);
 			}
@@ -420,7 +420,7 @@ namespace MyEvent {
 			else if (PacketManager::Get().pMyInfo->UserSocket == pA->m_pPhysics->UserSocket)
 			{
 				PlayerController::Get().HitEvent(pB);
-				if (pB->m_pParent->GetHP() <= 0.0f)
+				if (pB->m_pParent->GetHP() <= EPSILON)
 				{
 					PacketManager::Get().SendDeadEvent(pB->m_pParent->m_keyValue, pB->m_pPhysics->UserSocket, pA->m_pPhysics->UserSocket);
 				}
@@ -430,7 +430,7 @@ namespace MyEvent {
 					PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
 				}
 			}
-			else if (pA->m_pPhysics->UserSocket == ESocketType::EDummy && PacketManager::Get().isHost && pB->m_pParent->GetHP() <= 0.0f)
+			else if (pA->m_pPhysics->UserSocket == ESocketType::EDummy && PacketManager::Get().isHost && pB->m_pParent->GetHP() <= EPSILON)
 			{
 				PacketManager::Get().SendDeadEvent(pB->m_pParent->m_keyValue, pB->m_pPhysics->UserSocket, ESocketType::EDummy);
 			}
@@ -468,7 +468,7 @@ namespace MyEvent {
 			else if (PacketManager::Get().pMyInfo->UserSocket == pA->m_pPhysics->UserSocket)
 			{
 				PlayerController::Get().HitEvent(pB);
-				if (pB->m_pParent->GetHP() <= 0.0f)
+				if (pB->m_pParent->GetHP() <= EPSILON)
 				{
 					PacketManager::Get().SendDeadEvent(pB->m_pParent->m_keyValue, pB->m_pPhysics->UserSocket, pA->m_pPhysics->UserSocket);
 				}
@@ -478,7 +478,7 @@ namespace MyEvent {
 					PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
 				}
 			}
-			else if (pA->m_pPhysics->UserSocket == ESocketType::EDummy && PacketManager::Get().isHost && pB->m_pParent->GetHP() <= 0.0f)
+			else if (pA->m_pPhysics->UserSocket == ESocketType::EDummy && PacketManager::Get().isHost && pB->m_pParent->GetHP() <= EPSILON)
 			{
 				PacketManager::Get().SendDeadEvent(pB->m_pParent->m_keyValue, pB->m_pPhysics->UserSocket, ESocketType::EDummy);
 			}
@@ -551,7 +551,7 @@ namespace MyEvent {
 				UIManager::Get().m_pHitEffect->SetEventTime(0.2f);
 				UIManager::Get().m_pHitEffect->EffectPlay();
 				
-				if (pB->m_pParent->GetHP() <= 0.0f)
+				if (pB->m_pParent->GetHP() <= EPSILON)
 				{
 					PacketManager::Get().SendDeadEvent(pB->m_pParent->m_keyValue, pB->m_pPhysics->UserSocket, pA->m_pPhysics->UserSocket);
 				}
@@ -574,13 +574,13 @@ namespace MyEvent {
 			{
 				UIManager::Get().m_pHitEffect->SetEventTime(1.0f);
 				UIManager::Get().m_pHitEffect->EffectPlay();
-				if (pB->m_pParent->GetHP() <= 0.0f)
+				if (pB->m_pParent->GetHP() <= EPSILON)
 				{
 					PacketManager::Get().SendDeadEvent(pB->m_pParent->m_keyValue, pB->m_pPhysics->UserSocket, pA->m_pPhysics->UserSocket);
 				}
 			}
 			// 중립 때렸을때
-			else if (PacketManager::Get().isHost && pB->m_pPhysics->UserSocket == ESocketType::EDummy && pB->m_pParent->GetHP() <= 0.0f)
+			else if (PacketManager::Get().isHost && pB->m_pPhysics->UserSocket == ESocketType::EDummy && pB->m_pParent->GetHP() <= EPSILON)
 			{
 				PacketManager::Get().SendDeadEvent(pB->m_pParent->m_keyValue, pB->m_pPhysics->UserSocket, ESocketType::EDummy);
 			}
@@ -601,13 +601,13 @@ namespace MyEvent {
 			{
 				UIManager::Get().m_pHitEffect->SetEventTime(1.0f);
 				UIManager::Get().m_pHitEffect->EffectPlay();
-				if (pB->m_pParent->GetHP() <= 0.0f)
+				if (pB->m_pParent->GetHP() <= EPSILON)
 				{
 					PacketManager::Get().SendDeadEvent(pB->m_pParent->m_keyValue, pB->m_pPhysics->UserSocket, pA->m_pPhysics->UserSocket);
 				}
 			}
 			// 중립 때렸을때
-			else if (PacketManager::Get().isHost && pB->m_pPhysics->UserSocket == ESocketType::EDummy && pB->m_pParent->GetHP() <= 0.0f)
+			else if (PacketManager::Get().isHost && pB->m_pPhysics->UserSocket == ESocketType::EDummy && pB->m_pParent->GetHP() <= EPSILON)
 			{
 				PacketManager::Get().SendDeadEvent(pB->m_pParent->m_keyValue, pB->m_pPhysics->UserSocket, ESocketType::EDummy);
 			}
@@ -635,7 +635,7 @@ namespace MyEvent {
 	//		else if (PacketManager::Get().pMyInfo->UserSocket == pA->m_pPhysics->UserSocket)
 	//		{
 	//			PlayerController::Get().HitEvent(pB);
-	//			if (pB->m_pParent->GetHP() <= 0.0f)
+	//			if (pB->m_pParent->GetHP() <= EPSILON)
 	//			{
 	//				PacketManager::Get().SendDeadEvent(pB->m_pParent->m_keyValue, pB->m_pPhysics->UserSocket, pA->m_pPhysics->UserSocket);
 	//			}
@@ -838,6 +838,38 @@ namespace DyingEvent {
 		PlayerController::Get().OperEXP(0.03f);
 		auto pEffect = ObjectManager::Get().TakeObject(L"EZDead");
 		pEffect->SetPosition(pCollider->GetCenter());
+		// 
+		auto pAI = ((AIZombie*)pCollider->m_pParent->GetComponent(EComponent::Etc));
+		pAI->m_delay = 99.0f;
+		pCollider->m_eTagArray[ETag::Ally] = false;
+		pCollider->m_eTagArray[ETag::Enemy] = false;
+		pCollider->m_eTagArray[ETag::Dummy] = false;
+		pCollider->m_eTagArray[ETag::Collider] = false;
+		pCollider->isMoving(false);
+		// 알파 조절
+		auto pList = pCollider->m_pParent->GetComponentList(EComponent::Renderer);
+		if (pList != nullptr)
+		{
+			float deadFrame = 1.0f;
+			while (deadFrame >= 0.1f)
+			{
+				for (auto& pRenderer : *pList)
+				{
+					((Renderer*)pRenderer)->m_cbMaterial.useNormalMap = deadFrame;
+				}
+				deadFrame -= 0.02f;
+				this_thread::sleep_for(chrono::milliseconds(33));
+			}
+			for (auto& pRenderer : *pList)
+			{
+				((Renderer*)pRenderer)->m_cbMaterial.useNormalMap = 1.0f;
+			}
+		}
+		pCollider->m_eTagArray[ETag::Ally] = true;
+		pCollider->m_eTagArray[ETag::Enemy] = true;
+		pCollider->m_eTagArray[ETag::Dummy] = true;
+		pCollider->m_eTagArray[ETag::Collider] = true;
+		ObjectManager::Get().DisableObject(pCollider->m_pParent);
 	}
 
 	void ZombieExDead(Collider* pCollider, const UINT& killUser)
@@ -854,6 +886,38 @@ namespace DyingEvent {
 		PlayerController::Get().OperEXP(0.2f);
 		auto pEffect = ObjectManager::Get().TakeObject(L"EZDead2");
 		pEffect->SetPosition(pCollider->GetCenter());
+		// 
+		auto pAI = ((AIZombie*)pCollider->m_pParent->GetComponent(EComponent::Etc));
+		pAI->m_delay = 99.0f;
+		pCollider->m_eTagArray[ETag::Ally] = false;
+		pCollider->m_eTagArray[ETag::Enemy] = false;
+		pCollider->m_eTagArray[ETag::Dummy] = false;
+		pCollider->m_eTagArray[ETag::Collider] = false;
+		pCollider->isMoving(false);
+		// 알파 조절
+		auto pList = pCollider->m_pParent->GetComponentList(EComponent::Renderer);
+		if (pList != nullptr)
+		{
+			float deadFrame = 1.0f;
+			while (deadFrame >= 0.1f)
+			{
+				for (auto& pRenderer : *pList)
+				{
+					((Renderer*)pRenderer)->m_cbMaterial.useNormalMap = deadFrame;
+				}
+				deadFrame -= 0.015f;
+				this_thread::sleep_for(chrono::milliseconds(33));
+			}
+			for (auto& pRenderer : *pList)
+			{
+				((Renderer*)pRenderer)->m_cbMaterial.useNormalMap = 1.0f;
+			}
+		}
+		pCollider->m_eTagArray[ETag::Ally] = true;
+		pCollider->m_eTagArray[ETag::Enemy] = true;
+		pCollider->m_eTagArray[ETag::Dummy] = true;
+		pCollider->m_eTagArray[ETag::Collider] = true;
+		ObjectManager::Get().DisableObject(pCollider->m_pParent);
 	}
 
 	void ZombieKingDead(Collider* pCollider, const UINT& killUser)
@@ -878,7 +942,36 @@ namespace DyingEvent {
 			ObjectManager::Get().DisableObject(pAI->m_Breath);
 			pAI->m_Breath = nullptr;
 		}
-		//ObjectManager::Get().DisableObject(pObject);
+		pAI->m_delay = 99.0f;
+		pCollider->m_eTagArray[ETag::Ally]		= false;
+		pCollider->m_eTagArray[ETag::Enemy]		= false;
+		pCollider->m_eTagArray[ETag::Dummy]		= false;
+		pCollider->m_eTagArray[ETag::Collider]	= false;
+		pCollider->isMoving(false);
+		// 알파 조절
+		auto pList = pCollider->m_pParent->GetComponentList(EComponent::Renderer);
+		if (pList != nullptr)
+		{
+			float deadFrame = 1.0f;
+			while (deadFrame >= 0.1f)
+			{
+				for (auto& pRenderer : *pList)
+				{
+					((Renderer*)pRenderer)->m_cbMaterial.useNormalMap = deadFrame;
+				}
+				deadFrame -= 0.01f;
+				this_thread::sleep_for(chrono::milliseconds(33));
+			}
+			for (auto& pRenderer : *pList)
+			{
+				((Renderer*)pRenderer)->m_cbMaterial.useNormalMap = 1.0f;
+			}
+		}
+		pCollider->m_eTagArray[ETag::Ally]		= true;
+		pCollider->m_eTagArray[ETag::Enemy]		= true;
+		pCollider->m_eTagArray[ETag::Dummy]		= true;
+		pCollider->m_eTagArray[ETag::Collider]	= true;
+		ObjectManager::Get().DisableObject(pCollider->m_pParent);
 	}
 
 	void ShockBoomDead(Collider* pCollider, const UINT& killUser)

@@ -213,6 +213,7 @@ void IntroScene::SetObjects() noexcept
 
 	Renderer* pRerderEnvi = new Renderer(L"EnviR");
 	pRerderEnvi->SetEnviromentMap(((Renderer*)m_pSkyBox->GetComponent(EComponent::Renderer))->m_srcName, EEnviType::Refraction);
+	pRerderEnvi->m_cbMaterial.useNormalMap = 1.0f;		// 알파값용
 	Renderer* pRenderer = pRerderEnvi;// new Renderer(L"BaseR");
 
 
@@ -844,4 +845,5 @@ void IntroScene::LoadUI() noexcept
 	m_pHelpText = (JTextCtrl*)pUIRoot->find_child(L"Help_txt");
 
 	UI::IntroEvent(pUIRoot);
+	UI::Loading(pUIRoot);
 }

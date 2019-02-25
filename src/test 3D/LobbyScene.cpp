@@ -336,4 +336,5 @@ void LobbyScene::LoadUI() noexcept
 
 	ObjectManager::Get().PushObject(pUIRoot);
 	UI::LobbyEvent(pUIRoot);	
+	UI::Loading(pUIRoot);
 }

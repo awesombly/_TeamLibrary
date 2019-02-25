@@ -12,6 +12,7 @@
 bool PlayerController::Init() noexcept
 {
 	GameObject::Init();
+	m_pCamera = ObjectManager::Cameras[ECamera::Main];
 	if (pUIManager == nullptr)
 	{
 		pUIManager = &UIManager::Get();
@@ -36,6 +37,37 @@ bool PlayerController::Frame(const float& spf, const float& accTime)	noexcept
 	GameObject::Frame(spf, accTime);
 	m_curMP = min(m_curMP + spf * m_RegenMP, m_maxMP);
 	
+	for (auto& iter : m_dyingEnemys)
+	{
+		auto& [pEnemy, deadFrame] = iter;
+		auto pList = pEnemy->GetComponentList(EComponent::Renderer);
+		if (pList != nullptr)
+		{
+			if (deadFrame >= 0.1f)
+			{
+				for (auto& pRenderer : *pList)
+				{
+					((Renderer*)pRenderer)->m_cbMaterial.useNormalMap = deadFrame;
+				}
+				deadFrame -= spf;
+			}
+			else
+			{
+				for (auto& pRenderer : *pList)
+				{
+					((Renderer*)pRenderer)->m_cbMaterial.useNormalMap = 1.0f;
+				}
+				auto pCollider = pEnemy->GetCollider();
+				pCollider->m_eTagArray[ETag::Ally] = true;
+				pCollider->m_eTagArray[ETag::Enemy] = true;
+				pCollider->m_eTagArray[ETag::Dummy] = true;
+				pCollider->m_eTagArray[ETag::Collider] = true;
+				
+				ObjectManager::Get().DisableObject(pCollider->m_pParent);
+				m_dyingEnemys.remove(iter);
+			}
+		}
+	}
 
 	if (!pUIManager->m_pChat->m_bRender &&
 		m_pParent != nullptr)
@@ -391,7 +423,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 			pItem->SetGravityScale(100.0f);
 			pItem->m_pPhysics->m_mass = 0.1f;
 			//pItem->m_pPhysics->m_repulsion = 1.0f;
-			pItem->SetHP(10.0f);
+			pItem->SetHP(10.0f + PacketManager::Get().UserList[socket]->StatLuk * 1.5f);
 			pItem->SetForce(forward * 200.0f);
 			pItem->m_pPhysics->UserSocket = ESocketType::EDummy;
 			ObjectManager::Get().PushObject(pItem);
@@ -1078,7 +1110,6 @@ void PlayerController::ResetOption() noexcept
 	///
 	SetPosition(Vector3::Zero);
 	SetRotation(Quaternion::Base);
-	m_pCamera = ObjectManager::Cameras[ECamera::Main];
 	m_pCamera->SetRotation(Quaternion::Left * PI + Quaternion::Up * PI * 0.2f);
 	m_pCamera->m_lerpMoveSpeed = 6.0f;
 	m_pCamera->m_lerpRotateSpeed = 6.0f;

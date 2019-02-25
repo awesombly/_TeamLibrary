@@ -514,6 +514,7 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 				pMyInfo->Score += 500;
 				PacketManager::Get().SendPacket((char*)pMyInfo, (USHORT)(PS_UserInfo + pMyInfo->DataSize), PACKET_SendUserInfo);
 			}
+			ObjectManager::Get().DisableObject(pObject);
 		}	break;
 		case EObjType::AObject:
 		{
@@ -525,7 +526,11 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 		case EObjType::Enemy:
 		{
 			if (pObject->m_pPhysics->DeadEvent != nullptr)
-				pObject->m_pPhysics->DeadEvent(pObject->GetCollider(), p_PlayerDead.KillUser);
+			{
+				std::thread toDead(pObject->m_pPhysics->DeadEvent, pObject->GetCollider(), p_PlayerDead.KillUser);
+				toDead.detach();
+				//pObject->m_pPhysics->DeadEvent(pObject->GetCollider(), p_PlayerDead.KillUser);
+			}
 
 			float userRate = 1.0001f;
 			// 컴터가 죽였을시
@@ -563,7 +568,6 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 			}
 		}	break;
 		}
-		ObjectManager::Get().DisableObject(pObject);
 
 		// 전광판 입력
 		wstring killer, dead;
