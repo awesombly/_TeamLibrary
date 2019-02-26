@@ -94,10 +94,10 @@ bool AIZombieKing::Frame(const float& spf, const float& accTime)	noexcept
 		 		return true;
 		 	}
 			m_eState = EState::Action1;
-			if (m_Breath != nullptr)
-			{
-				m_Breath->SetPosition(m_pParent->GetPosition() + m_pParent->GetForward() * 30.0f + m_pParent->GetUp() * 55.0f);
-			}
+			//if (m_Breath != nullptr)
+			//{
+			//	m_Breath->SetPosition(m_pParent->GetPosition() + m_pParent->GetForward() * 50.0f + m_pParent->GetUp() * 55.0f);
+			//}
 		 	//if (sinf(m_delayBreath) >= 0.0f)
 		 	//	m_Breath->Rotate(Quaternion::Left * spf);
 		 	//else
@@ -106,13 +106,16 @@ bool AIZombieKing::Frame(const float& spf, const float& accTime)	noexcept
 		 case EState::Action3:
 		 {
 			 // 점핑
-			 m_delay = 2.5f;
-			 m_dealyAttack = 3.5f;
+			 //m_delay = 2.5f;
+			 //m_dealyAttack = 3.5f;
 			 m_pParent->isMoving(false);
+			 m_pParent->isGround(false);
 			 m_pParent->SetForce(m_Target);
 			 auto pEffect = ObjectManager::Get().TakeObject(L"EZStump");
-			 pEffect->SetPosition(m_pParent->GetPosition() + Vector3::Up * 5.0f);
-			 m_eDirState = EState::Idle;
+			 pEffect->SetPosition(m_pParent->GetPosition() + Vector3::Up * 3.0f);
+			 pEffect->SetScale(m_pParent->GetScale() * 0.6f);
+			 pEffect->SetDamage(0.3f);
+			 //m_eDirState = EState::Idle;
 		 }	break;
 		}
 		return true;
@@ -149,12 +152,12 @@ bool AIZombieKing::Frame(const float& spf, const float& accTime)	noexcept
 			m_delayStump = 0.0f;
 			m_pParent->SetFocus(targetPos);
 			//m_pParent->m_pPhysics->m_mass = 1.0f;
-			m_pParent->SetGravityScale(10.0f);
-			m_pParent->m_pPhysics->m_damping = 0.67f;
+			m_pParent->SetGravityScale(7.0f);
+			m_pParent->m_pPhysics->m_damping = 0.65f;
 			m_pCollider->m_eTagArray[ETag::Enemy] = false;
 			m_pCollider->m_eTagArray[ETag::Dummy] = false;
 			m_pCollider->m_eTagArray[ETag::Collider] = false;
-			m_Target = (targetPos - m_pParent->GetPosition()) + Vector3::Up * 1800.0f;
+			m_Target = (targetPos - m_pParent->GetPosition()) + Vector3::Up * 1600.0f;
 			m_eDirState = EState::Action3;
 			m_delay = 0.5f;
 			((AHeroObj*)m_pParent)->SetANIM_Loop(Zombie_KING_JUMP_ATTACK);
@@ -187,8 +190,8 @@ bool AIZombieKing::Frame(const float& spf, const float& accTime)	noexcept
 		// 공격
 		auto pEffect = ObjectManager::Get().TakeObject(L"ZAttack3");
 		pEffect->SetPosition(m_pParent->GetPosition() + m_pParent->GetForward() * 60.0f + m_pParent->GetUp() * 35.0f);
-		pEffect->m_pPhysics->m_damage = 0.9f;
 		pEffect->SetScale(m_pParent->GetScale());
+		pEffect->m_pPhysics->m_damage = 0.9f;
 		m_dealyAttack = 3.5f;
 		///
 		m_delay = 0.75f;
@@ -201,11 +204,27 @@ bool AIZombieKing::Frame(const float& spf, const float& accTime)	noexcept
 		// 브레스
 		m_Breath = ObjectManager::Get().TakeObject(L"ZBreath");
 		//m_Breath->SetParent(m_pParent);
+		m_Breath->SetPosition(m_pParent->GetPosition() + m_pParent->GetForward() * 50.0f + m_pParent->GetUp() * 55.0f);
 		m_Breath->SetRotation(m_pParent->GetRotation());
-		m_Breath->m_pPhysics->m_damage = 1.0f;
+		m_Breath->GetCollider()->m_pivot = m_pParent->GetForward() * 50.0f + m_pParent->GetDown() * 35.0f;
+		//m_Breath->SetFocus(m_pParent->GetPosition() + m_pParent->GetForward() * 1000.0f);
+		m_Breath->m_pPhysics->m_damage = 0.4f;		// 체력 비례 딜
 		///
 		m_delayBreath = 0.0f;
 		m_eDirState = EState::Action2;
+	}	break;
+	case EState::Action3:
+	{
+		if (m_pParent->isGround())
+		{
+			m_delay = 0.6f;
+			m_dealyAttack = 2.0f;
+			auto pEffect = ObjectManager::Get().TakeObject(L"EZStump");
+			pEffect->SetPosition(m_pParent->GetPosition() + Vector3::Up * 3.0f);
+			pEffect->SetScale(m_pParent->GetScale());
+			pEffect->m_pPhysics->m_damage = 0.75f;
+			m_eDirState = EState::Idle;
+		}
 	}	break;
 	}
 	return true;

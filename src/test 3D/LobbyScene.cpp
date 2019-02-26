@@ -17,18 +17,21 @@ bool LobbyScene::Init() noexcept
 	m_pBackGuard->SetRotation(Quaternion::Left * PI * 0.8f);
 	m_pBackGuard->SetScale(Vector3::One * 0.625f);
 	m_pBackGuard->SetGravityScale(0.0f);
+	((Renderer*)m_pBackGuard->GetComponent(EComponent::Renderer))->SetLightRate(0.5f);
 
 	m_pBackArcher = (AHeroObj*)ObjectManager::Get().TakeObject(L"Archer", false);
 	m_pBackArcher->SetPosition(-40.0f, -31.0f, 35.0f);
 	m_pBackArcher->SetRotation(Quaternion::Left * PI * 0.8f);
 	m_pBackArcher->SetScale(Vector3::One * 0.5f);
 	m_pBackArcher->SetGravityScale(0.0f);
+	((Renderer*)m_pBackArcher->GetComponent(EComponent::Renderer))->SetLightRate(0.5f);
 
 	m_pBackMage = (AHeroObj*)ObjectManager::Get().TakeObject(L"Mage", false);
 	m_pBackMage->SetPosition(-40.0f, -31.0f, 35.0f);
 	m_pBackMage->SetRotation(Quaternion::Left * PI * 0.8f);
 	m_pBackMage->SetScale(Vector3::One * 0.5f);
 	m_pBackMage->SetGravityScale(0.0f);
+	((Renderer*)m_pBackMage->GetComponent(EComponent::Renderer))->SetLightRate(0.5f);
 
 	SelectCharacter(true);
 	///

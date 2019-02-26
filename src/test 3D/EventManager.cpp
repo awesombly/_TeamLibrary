@@ -38,7 +38,7 @@ namespace MyEvent {
 		{
 			auto pItem = ObjectManager::Get().TakeObject(L"PBoom");
 			pItem->SetPosition(pA->m_pParent->GetPosition());
-			pItem->SetScale(Vector3::One * 3.0f);
+			pItem->SetScale(Vector3::One * 2.2f);
 			pItem->m_pPhysics->UserSocket = pA->m_pPhysics->UserSocket;
 			pItem->SetDamage(pA->m_pPhysics->m_damage);
 
@@ -494,55 +494,6 @@ namespace MyEvent {
 		if (pB != nullptr && 
 			pB->m_pParent->m_objType == EObjType::Character)
 		{
-			/*for (auto& iter : ObjectManager::Get().GetColliderList())
-			{
-				ObjectManager::Get().TakeObject(L"EHit")->SetPosition(iter->GetCenter());
-			}
-
-			int i = 0;
-			for (auto& iter : *pA->m_pParent->GetComponentList(EComponent::Collider))
-			{
-				++i;
-			}
-			ErrorMessage("1. 충돌체 갯수 : " + to_string(i));
-*/
-			//if (pA->m_pParent->isEnable())
-			//{
-			//	ErrorMessage("1. 부모 Enable");
-			//}
-			////if (auto iter = std::find(ObjectManager::Get().GetColliderList().begin(), ObjectManager::Get().GetColliderList().end(), pA);
-			////	iter != ObjectManager::Get().GetColliderList().end())
-			//for(auto& iter : ObjectManager::Get().GetColliderList())
-			//{
-			//	if (iter == pA)
-			//	{
-			//		ErrorMessage(L"2. 충돌체 등록됨 : " + iter->m_pParent->m_myName);
-			//	}
-			//}
-			//int i = 0;
-			//for (auto& iter : ObjectManager::Get().GetObjectList())
-			//{
-			//	for (auto& initer : iter.second)
-			//	{
-			//		if (initer == pA->m_pParent)
-			//		{
-			//			i++;
-			//			if (i >= 2)
-			//			{
-			//				ErrorMessage("3. 리스트 중복 등록 : " + to_string(i));
-			//			}
-			//		}
-			//	}
-			//}
-			//if (i == 1)
-			//{
-			//	ErrorMessage("3. 하나만 등록됨");
-			//}
-			//auto pos = pA->GetCenter();
-			//ErrorMessage("4. CenterPos -> " + to_string(pos.x) + ", " + to_string(pos.y) + ", " + to_string(pos.z));
-			//pos = pA->m_pParent->GetPosition();
-			//ErrorMessage("5. ParentPos -> " + to_string(pos.x) + ", " + to_string(pos.y) + ", " + to_string(pos.z));
-
 			pB->SetForce((Normalize(pB->GetCenter() - pA->GetCenter())) * 180.0f);
 			pB->m_pParent->OperHP(-pA->m_pPhysics->m_damage);
 			// 내가 맞았을때
@@ -617,6 +568,34 @@ namespace MyEvent {
 		pEffect->SetPosition(pA->m_pParent->GetPosition());
 		ObjectManager::Get().DisableObject(pA->m_pParent);
 		//SoundManager::Get().Play("SE_HIT.mp3");//, pObject->GetWorldPosition(), SoundRange);
+	}
+	
+	void TickDamage(Collider* pA, Collider* pB)
+	{
+		if (pB != nullptr)
+		{
+			pB->SetForce(Vector3::Zero);
+			//pB->m_pParent->OperHP(-pA->m_pPhysics->m_damage * Timer::SPF);
+			pB->m_pParent->OperHP(-pA->m_pPhysics->m_damage * std::min<float>(4.0f, pB->m_pPhysics->m_maxHP) * Timer::SPF);
+			// 내가 맞았을때
+			if (pB->m_pParent == PlayerController::Get().GetParent())
+			{
+				//UIManager::Get().m_pHitEffect->SetEventTime(Timer::SPF * 0.5f);
+				//UIManager::Get().m_pHitEffect->EffectPlay();
+				if (pB->m_pParent->GetHP() <= EPSILON)
+				{
+					PacketManager::Get().SendDeadEvent(pB->m_pParent->m_keyValue, pB->m_pPhysics->UserSocket, pA->m_pPhysics->UserSocket);
+				}
+			}
+			// 중립 때렸을때
+			else if (PacketManager::Get().isHost && pB->m_pPhysics->UserSocket == ESocketType::EDummy && pB->m_pParent->GetHP() <= EPSILON)
+			{
+				PacketManager::Get().SendDeadEvent(pB->m_pParent->m_keyValue, pB->m_pPhysics->UserSocket, ESocketType::EDummy);
+			}
+			//auto pEffect = ObjectManager::Get().TakeObject(L"EZHit");
+			//pEffect->SetPosition(pA->m_pParent->GetWorldPosition());
+			//SoundManager::Get().PlayQueue("SE_HIT.mp3", pA->m_pParent->GetWorldPosition(), SoundRange);
+		}
 	}
 
 	//void OneShots(Collider* pA, Collider* pB) {
@@ -772,13 +751,15 @@ namespace TimeEvent {
 	{
 		D3DXMATRIX matRotation;
 		D3DXVECTOR3 vecRot;
+
+		auto arrowScale = D3DXVECTOR3(3.0f, 3.0f, 1.2f);
 		for (int i = 0; i < 30; ++i)
 		{
 			auto pItem = ObjectManager::Get().TakeObject(L"Arrow");
 			pItem->SetPosition(pParent->GetPosition());
 			vecRot = { -RandomNormal() * PI * 0.4f - PI * 0.3f, RandomNormal() * PI, 0.0f };
 			pItem->SetRotation(vecRot);
-			pItem->SetScale(Vector3::One * 1.5f);
+			pItem->SetScale(arrowScale);
 			//pItem->SetForce({ RandomNormal() * 100.0f + -50.0f, RandomNormal() * 150.0f - 200.0f, RandomNormal() * 100.0f + -50.0f });
 			D3DXMatrixRotationYawPitchRoll(&matRotation, -vecRot.y, vecRot.x, vecRot.z);
 			vecRot = { matRotation._31, matRotation._32, matRotation._33 };

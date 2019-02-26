@@ -321,7 +321,7 @@ void PlayerStateGuard::StateInit(PlayerController* pOwner) noexcept
 	m_pOwner = pOwner;
 	m_pOwner->m_eAction = PlayerController::EAction::Special;
 	m_pOwner->m_DelayFrame = 0.7f;
-	m_pOwner->m_moveSpeed *= 0.8f;
+	m_pOwner->m_moveSpeed *= 0.6f;
 	// 변수 설정
 	m_pOwner->GetParent()->SetGravityScale(3.0f);
 	m_pOwner->GetParent()->m_pPhysics->m_damping = 2.0f;
@@ -339,14 +339,18 @@ bool PlayerStateGuard::Process(const float& spf) noexcept
 	}
 
 	m_pOwner->m_eAction = PlayerController::EAction::Idle;
-	//if (Input::GetKeyState('W') == EKeyState::HOLD)
-	//{
-	//	m_pOwner->m_eAction = (PlayerController::EAction)(m_pOwner->m_eAction + PlayerController::EAction::Forward);
-	//}
-	//if (Input::GetKeyState('S') == EKeyState::HOLD)
-	//{
-	//	m_pOwner->m_eAction = (PlayerController::EAction)(m_pOwner->m_eAction + PlayerController::EAction::Backward);
-	//}
+
+	if (m_pOwner->m_eView == PlayerController::EViewPoint::Quarter)
+	{
+		if (Input::GetKeyState('W') == EKeyState::HOLD)
+		{
+			m_pOwner->m_eAction = (PlayerController::EAction)(m_pOwner->m_eAction + PlayerController::EAction::Forward);
+		}
+		if (Input::GetKeyState('S') == EKeyState::HOLD)
+		{
+			m_pOwner->m_eAction = (PlayerController::EAction)(m_pOwner->m_eAction + PlayerController::EAction::Backward);
+		}
+	}
 	if (Input::GetKeyState('A') == EKeyState::HOLD)
 	{
 		m_pOwner->m_eAction = (PlayerController::EAction)(m_pOwner->m_eAction + PlayerController::EAction::Left);
@@ -377,6 +381,7 @@ void PlayerStateRun::StateInit(PlayerController* pOwner) noexcept
 {
 	m_pOwner = pOwner;
 	m_pOwner->m_eAction = PlayerController::EAction::Run;
+	m_pOwner->m_moveSpeed *= 2.3f;
 	if (m_pOwner->m_pEffectFly != nullptr)
 		ObjectManager::Get().DisableObject(m_pOwner->m_pEffectFly);
 	m_pOwner->m_pEffectFly = ObjectManager::Get().TakeObject(L"EPDustStay", false);
@@ -391,23 +396,47 @@ bool PlayerStateRun::Process(const float& spf) noexcept
 		return true;
 	}
 
-	m_pOwner->m_eAction = PlayerController::EAction::Run;
-
 	if (m_pOwner->m_DelayFrame >= 0.0f)
 	{
 		m_pOwner->m_DelayFrame -= spf;
 		return false;
 	}
-	/// 공통 작업
-	//CommonProcess(spf);
 
-	if (Input::GetKeyState('A') == EKeyState::HOLD)
+	m_pOwner->m_eAction = PlayerController::EAction::Run;
+	if (m_pOwner->m_eView == PlayerController::EViewPoint::Back)
 	{
-		m_pOwner->m_eAction = PlayerController::EAction::RunLeft;
+		if (Input::GetKeyState('A') == EKeyState::HOLD)
+		{
+			m_pOwner->m_eAction = PlayerController::EAction::RunLeft;
+		}
+		if (Input::GetKeyState('D') == EKeyState::HOLD)
+		{
+			m_pOwner->m_eAction = PlayerController::EAction::RunRight;
+		}
 	}
-	if (Input::GetKeyState('D') == EKeyState::HOLD)
+	else
 	{
-		m_pOwner->m_eAction = PlayerController::EAction::RunRight;
+		m_pOwner->m_eAction = PlayerController::EAction::NIdle;
+		if (Input::GetKeyState('W') == EKeyState::HOLD)
+		{
+			m_pOwner->m_eAction = (PlayerController::EAction)(m_pOwner->m_eAction + PlayerController::EAction::NForward);
+		}
+		if (Input::GetKeyState('S') == EKeyState::HOLD)
+		{
+			m_pOwner->m_eAction = (PlayerController::EAction)(m_pOwner->m_eAction + PlayerController::EAction::NBackward);
+		}
+		if (Input::GetKeyState('A') == EKeyState::HOLD)
+		{
+			m_pOwner->m_eAction = (PlayerController::EAction)(m_pOwner->m_eAction + PlayerController::EAction::NLeft);
+		}
+		if (Input::GetKeyState('D') == EKeyState::HOLD)
+		{
+			m_pOwner->m_eAction = (PlayerController::EAction)(m_pOwner->m_eAction + PlayerController::EAction::NRight);
+		}
+		if (m_pOwner->m_eAction == PlayerController::EAction::NIdle)
+		{
+			m_pOwner->m_eAction = PlayerController::EAction::Run;
+		}
 	}
 
 	// 기본으로
@@ -707,19 +736,22 @@ void ArcherStateDash::StateInit(PlayerController* pOwner) noexcept
 	m_pOwner->m_curDelayDash = m_pOwner->m_DelayDash;
 	m_pOwner->m_comboCount = 3;
 
-	if (Input::GetKeyState('A') == EKeyState::HOLD)
+	if (m_pOwner->m_eView == PlayerController::EViewPoint::Back)
 	{
-		m_pOwner->GetParent()->SetForce((Normalize(m_pOwner->GetParent()->GetForward() + m_pOwner->GetParent()->GetLeft() * 0.5f) * m_pOwner->m_moveSpeed * 2.2f + Vector3::Up * 90.0f));
-		m_pOwner->m_eAction = PlayerController::EAction::DashLeft;
-		m_pOwner->m_moveSpeed *= 0.15f;
-		return;
-	}
-	if (Input::GetKeyState('D') == EKeyState::HOLD)
-	{
-		m_pOwner->GetParent()->SetForce((Normalize(m_pOwner->GetParent()->GetForward() + m_pOwner->GetParent()->GetRight() * 0.5f) * m_pOwner->m_moveSpeed * 2.2f + Vector3::Up * 90.0f));
-		m_pOwner->m_eAction = PlayerController::EAction::DashRight;
-		m_pOwner->m_moveSpeed *= 0.15f;
-		return;
+		if (Input::GetKeyState('A') == EKeyState::HOLD)
+		{
+			m_pOwner->GetParent()->SetForce((Normalize(m_pOwner->GetParent()->GetForward() + m_pOwner->GetParent()->GetLeft() * 0.5f) * m_pOwner->m_moveSpeed * 2.2f + Vector3::Up * 90.0f));
+			m_pOwner->m_eAction = PlayerController::EAction::DashLeft;
+			m_pOwner->m_moveSpeed *= 0.15f;
+			return;
+		}
+		if (Input::GetKeyState('D') == EKeyState::HOLD)
+		{
+			m_pOwner->GetParent()->SetForce((Normalize(m_pOwner->GetParent()->GetForward() + m_pOwner->GetParent()->GetRight() * 0.5f) * m_pOwner->m_moveSpeed * 2.2f + Vector3::Up * 90.0f));
+			m_pOwner->m_eAction = PlayerController::EAction::DashRight;
+			m_pOwner->m_moveSpeed *= 0.15f;
+			return;
+		}
 	}
 	m_pOwner->m_eAction = PlayerController::EAction::Dash;
 	m_pOwner->GetParent()->SetForce((Normalize(m_pOwner->GetParent()->GetForward()) * m_pOwner->m_moveSpeed * 2.2f + Vector3::Up * 90.0f));
@@ -1210,9 +1242,18 @@ bool MageStateSpecial::Process(const float& spf) noexcept
 	{
 	case 0:
 	{
-		auto targetPos = m_pOwner->GetParent()->GetPosition() + m_pOwner->m_pCamera->GetForward() * 310.0f;// ->GetForward() * 400.0f;
-		targetPos.y = 10.0f;
-		m_pOwner->m_pEffectFly->SetPosition(targetPos);
+		if (m_pOwner->m_eView == PlayerController::EViewPoint::Back)
+		{
+			auto targetPos = m_pOwner->GetParent()->GetPosition() + m_pOwner->m_pCamera->GetForward() * 340.0f;
+			targetPos.y = 5.0f;
+			m_pOwner->m_pEffectFly->SetPosition(targetPos);
+		}
+		else if (m_pOwner->m_eView == PlayerController::EViewPoint::Quarter)
+		{
+			auto targetPos = m_pOwner->GetParent()->GetPosition() + m_pOwner->GetParent()->GetForward() * 340.0f;
+			targetPos.y = 5.0f;
+			m_pOwner->m_pEffectFly->SetPosition(targetPos);
+		}
 
 		if (m_pOwner->m_DelayFrame <= 0.0f)
 		{
@@ -1254,7 +1295,7 @@ bool MageStateSpecial::Process(const float& spf) noexcept
 			m_pOwner->m_DelayFrame = 1.1f;
 			m_pOwner->m_curDelaySpecial = m_pOwner->m_DelaySpecial;
 			// 카메라 진동
-			std::thread vibrator(&PlayerController::StartVibration, m_pOwner, 1.5f, 6.0f);
+			std::thread vibrator(&PlayerController::StartVibration, m_pOwner, 1.8f, 6.0f);
 			vibrator.detach();
 			return true;
 		}

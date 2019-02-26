@@ -115,21 +115,30 @@ bool GameScene::Frame() noexcept
 	/// 재생성
 	if (Input::GetKeyState(VK_NUMPAD1) == EKeyState::DOWN)
 	{
-		if (PlayerController::Get().GetParent() != nullptr)
-			PlayerController::Get().GetParent()->m_pPhysics->UserSocket = (UINT)-1;
-		PlayerController::Get().SendReqRespawn(PlayerController::ECharacter::EGuard);
+		if (PlayerController::Get().m_curState->m_myState == EPlayerState::Basic)
+		{
+			if (PlayerController::Get().GetParent() != nullptr)
+				PlayerController::Get().GetParent()->m_pPhysics->UserSocket = (UINT)-1;
+			PlayerController::Get().SendReqRespawn(PlayerController::ECharacter::EGuard);
+		}
 	}
 	if (Input::GetKeyState(VK_NUMPAD2) == EKeyState::DOWN)
 	{
-		if (PlayerController::Get().GetParent() != nullptr)
-			PlayerController::Get().GetParent()->m_pPhysics->UserSocket = (UINT)-1;
-		PlayerController::Get().SendReqRespawn(PlayerController::ECharacter::EArcher);
+		if (PlayerController::Get().m_curState->m_myState == EPlayerState::Basic)
+		{
+			if (PlayerController::Get().GetParent() != nullptr)
+				PlayerController::Get().GetParent()->m_pPhysics->UserSocket = (UINT)-1;
+			PlayerController::Get().SendReqRespawn(PlayerController::ECharacter::EArcher);
+		}
 	}
 	if (Input::GetKeyState(VK_NUMPAD3) == EKeyState::DOWN)
 	{
-		if (PlayerController::Get().GetParent() != nullptr)
-			PlayerController::Get().GetParent()->m_pPhysics->UserSocket = (UINT)-1;
-		PlayerController::Get().SendReqRespawn(PlayerController::ECharacter::EMage);
+		if (PlayerController::Get().m_curState->m_myState == EPlayerState::Basic)
+		{
+			if (PlayerController::Get().GetParent() != nullptr)
+				PlayerController::Get().GetParent()->m_pPhysics->UserSocket = (UINT)-1;
+			PlayerController::Get().SendReqRespawn(PlayerController::ECharacter::EMage);
+		}
 	}
 	return true;
 }
@@ -580,8 +589,10 @@ bool GameScene::FirstInit() noexcept
 		//	return; spf; accTime; pTrans;
 		//};
 		//ObjectManager::Get().Lights.front()->AddComponent(pTrans);
-		ObjectManager::Get().Lights.front()->SetRotation(Quaternion::Up * PI * 0.65f);
-		ObjectManager::Get().Lights.front()->SetPosition(0.0f, 550.0f, 800.0f);
+		//ObjectManager::Get().Lights.front()->SetRotation(Quaternion::Up * PI * 0.65f);
+		//ObjectManager::Get().Lights.front()->SetPosition(0.0f, 550.0f, 800.0f);
+		ObjectManager::Get().Lights.front()->SetPosition(820.0f, 520.0f, 820.0f);
+		ObjectManager::Get().Lights.front()->SetRotation(1.0f, -2.3f, 0.0f);
 		//ObjectManager::Get().Lights.front()->SetFocus(Vector3::Zero);
 		// 라이트 랜더러
 		auto pShpere = (Renderer*)ObjectManager::GetInstance().TakeComponent(L"RowSphere");
@@ -685,7 +696,6 @@ void GameScene::LoadUI() noexcept
 	// Option Volume
 	auto pVolume = (JSliderCtrl*)pUIRoot->find_child(L"Set_Volum");
 	pVolume->SetValue(const_cast<float&>(SoundManager::Get().GetMasterVolume()));
-	SoundManager::Get().SetMasterVolume(0.5f);
 	// Mouse
 	auto pMouseSense = (JSliderCtrl*)pUIRoot->find_child(L"Set_Mouse");
 	pMouseSense->SetValue(PlayerController::Get().m_mouseSense);

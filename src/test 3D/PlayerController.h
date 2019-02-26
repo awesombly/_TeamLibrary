@@ -31,16 +31,18 @@ public:
 	enum ECharacter : UCHAR {
 		EDummy = 0, EGuard, EArcher, EMage
 	};
-	enum EItem : UCHAR {
-		Shock = 0, Bomb, 
-	};
-	enum ECarpet : UCHAR {
+	enum class ECarpet : UCHAR {
 		Smithy = 0, Church, Shop, Tower
 	};
+	enum class EViewPoint : UCHAR {
+		Back, Quarter, 
+	};
+public:
+	PlayerState*					 m_curState = nullptr;	// 현재 상태
 private:
 	map<EPlayerState, PlayerState*>  m_stateList;			// 상태별 행동
-	PlayerState*					 m_curState = nullptr;	// 현재 상태
 	PlayerState*					 m_preState;			// 이전 상태
+	EViewPoint  m_eView			= EViewPoint::Back;
 	///
 	Collider*	m_pCollider		= nullptr;
 	Camera*		m_pCamera		= nullptr;
@@ -163,11 +165,9 @@ public:
 	friend class PlayerState;
 	friend class PlayerStateBasic;
 	friend class PlayerStateLSkill;
-	friend class PlayerStateCombo1;
-	friend class PlayerStateCombo2;
-	friend class PlayerStateCombo3;
 	friend class PlayerStateRSkill;
 	friend class PlayerStateRun;
+	friend class PlayerStateGuard;
 
 	friend class ArcherStateBasic;
 	friend class ArcherStateLSkill;
@@ -178,6 +178,6 @@ public:
 	friend class MageStateBasic;
 	friend class MageStateLSkill;
 	friend class MageStateRSkill;
-	friend class MageStateSpecial;
 	friend class MageStateDash;
+	friend class MageStateSpecial;
 };

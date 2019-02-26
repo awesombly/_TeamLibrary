@@ -37,7 +37,7 @@ bool PlayerController::Frame(const float& spf, const float& accTime)	noexcept
 {
 	GameObject::Frame(spf, accTime);
 	m_curMP = min(m_curMP + spf * m_RegenMP, m_maxMP);
-	
+
 	if (!pUIManager->m_pChat->m_bRender &&
 		m_pParent != nullptr)
 	{
@@ -53,7 +53,7 @@ bool PlayerController::Frame(const float& spf, const float& accTime)	noexcept
 			auto targetPos = m_pCollider->GetCenter();
 			for (auto& pParticle : iter->m_particleList)
 			{
-				pParticle->m_direction += Normalize(targetPos - pParticle->GetPosition()) * spf * 10.0f;
+				pParticle->Translate((targetPos - pParticle->GetPosition()) * spf * 2.5f);
 				//pParticle->Translate(spf * 200.0f * Normalize(targetPos - pParticle->GetPosition()));
 			}
 		}
@@ -83,6 +83,19 @@ bool PlayerController::Frame(const float& spf, const float& accTime)	noexcept
 				m_curDelayRespawn = -9999.9f;
 				CutParent(false, true);
 				ObjectManager::Cameras[ECamera::Main]->CutParent(false, true);
+			}
+			if (Input::GetKeyState('P') == EKeyState::DOWN)
+			{
+				switch (m_eView)
+				{
+				case EViewPoint::Back:
+					m_eView = EViewPoint::Quarter;
+					break;
+				case EViewPoint::Quarter:
+					m_eView = EViewPoint::Back;
+					break;
+				}
+				ResetOption();
 			}
 		}
 	}
@@ -117,7 +130,7 @@ bool PlayerController::Frame(const float& spf, const float& accTime)	noexcept
 				{
 					((Renderer*)pRenderer)->m_cbMaterial.ObjectID = 0.0f;
 				}
-				auto pEffect = ObjectManager::Get().TakeObject(L"EZDead3");
+				auto pEffect = ObjectManager::Get().TakeObject(L"EZDead");
 				pEffect->SetPosition(pEnemy->GetPosition());
 				m_followEffects.push_front((ParticleSystem*)pEffect->GetComponent(EComponent::Renderer));
 
@@ -419,6 +432,9 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 			pObject->HealHP(pObject->m_pPhysics->m_maxHP * 0.5f);
 			SoundManager::Get().Play("SE_drink.mp3");
 
+			//auto pItem = ObjectManager::Get().TakeObject(L"EHeal");
+			//pItem->SetPosition(pObject->GetPosition() + pObject->GetUp() * 50.0f);
+
 			if (pObject == PlayerController::Get().GetParent())
 			{
 				UIManager::Get().m_pGreenEffect->SetEventTime(0.5f);
@@ -508,7 +524,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 			pItem->SetPosition(pObject->GetPosition() + pObject->GetForward() * 40.0f + pObject->GetUp() * 65.0f + pObject->GetRight() * 20.0f);
 			pItem->SetRotation(pObject->GetRotation());
 			//pItem->SetFocusZ(Normalize(forward));
-			pItem->SetScale(Vector3::One * 3.0f);
+			pItem->SetScale(4.0f, 4.0f, 1.5f);
 			pItem->SetForce(forward * 600.0f);
 			pItem->m_pPhysics->UserSocket = socket;
 			pItem->SetDamage(0.3f * PacketManager::Get().UserList[socket]->AttackRate);
@@ -525,7 +541,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 			pItem->SetPosition(pObject->GetPosition() + pObject->GetForward() * 40.0f + pObject->GetUp() * 65.0f + pObject->GetRight() * 20.0f);
 			pItem->SetRotation(pObject->GetRotation());
 			//pItem->SetFocusZ(Normalize(forward));
-			pItem->SetScale(Vector3::One * 4.5f);
+			pItem->SetScale(6.0f, 6.0f, 2.25f);
 			pItem->SetForce(forward * 1050.0f);
 			pItem->m_pPhysics->UserSocket = socket;
 			pItem->SetDamage(0.8f * PacketManager::Get().UserList[socket]->AttackRate);
@@ -550,13 +566,13 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 			pItem->SetPosition(pObject->GetPosition() + pObject->GetForward() * 40.0f + pObject->GetUp() * 65.0f + pObject->GetRight() * 20.0f);
 			pItem->SetRotation(pObject->GetRotation());
 			//pItem->SetFocusZ(Normalize(forward));
-			pItem->SetScale(Vector3::One * 6.0f);
+			pItem->SetScale(9.0f, 9.0f, 3.0f);
 			//pItem->SetForce(forward * 1800.0f);
-			pItem->SetDirectionForce(forward * 1200.0f);
+			pItem->SetDirectionForce(forward * 1500.0f);
 			pItem->m_pPhysics->UserSocket = socket;
 			pItem->SetDamage(1.2f * PacketManager::Get().UserList[socket]->AttackRate);
 			pItem->GetCollider()->AddIgnoreList(pObject->GetCollider());
-			
+
 			SoundManager::Get().PlayQueue("SE_bow_shot.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
 			SoundManager::Get().PlayQueue("SV_archer_atk1.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
 		}	break;
@@ -571,7 +587,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 			pItem->SetPosition(pObject->GetPosition() + pObject->GetForward() * 40.0f + pObject->GetUp() * 50.0f);
 			pItem->SetRotation(pObject->GetRotation());
 			pItem->SetScale(Vector3::One * 3.0f);
-			pItem->SetForce((forward * 0.4f + Vector3::Up) * 540.0f);
+			pItem->SetForce((forward * 0.52f + Vector3::Up) * 500.0f);
 			pItem->SetDamage(0.4f * PacketManager::Get().UserList[socket]->AttackRate);
 			pItem->m_pPhysics->UserSocket = socket;
 			pItem->GetCollider()->AddIgnoreList(pObject->GetCollider());
@@ -611,8 +627,8 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 			auto pItem = ObjectManager::Get().TakeObject(L"Arrow");
 			pItem->SetPosition(pObject->GetPosition() + pObject->GetForward() * 40.0f + pObject->GetUp() * 35.0f + pObject->GetRight() * 15.0f);
 			pItem->SetRotation(pObject->GetRotation());
-			pItem->SetScale(Vector3::One * 3.0f);
-			pItem->SetForce(forward * 800.0f);
+			pItem->SetScale(4.0f, 4.0f, 1.5f);
+			pItem->SetForce(forward * 600.0f);
 			pItem->m_pPhysics->UserSocket = socket;
 			pItem->SetDamage(0.2f * PacketManager::Get().UserList[socket]->AttackRate);
 			pItem->GetCollider()->AddIgnoreList(pObject->GetCollider());
@@ -724,6 +740,9 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 			pObject->SetANIM_Loop(Archer_THROW);
 			pObject->HealHP(pObject->m_pPhysics->m_maxHP * 0.5f);
 			SoundManager::Get().Play("SE_drink.mp3");
+
+			//auto pItem = ObjectManager::Get().TakeObject(L"EHeal");
+			//pItem->SetPosition(pObject->GetPosition() + pObject->GetUp() * 50.0f);
 
 			if (pObject == PlayerController::Get().GetParent())
 			{
@@ -1004,6 +1023,9 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 			pObject->HealHP(pObject->m_pPhysics->m_maxHP * 0.5f);
 			SoundManager::Get().Play("SE_drink.mp3");
 
+			//auto pItem = ObjectManager::Get().TakeObject(L"EHeal");
+			//pItem->SetPosition(pObject->GetPosition() + pObject->GetUp() * 50.0f);
+
 			if (pObject == PlayerController::Get().GetParent())
 			{
 				UIManager::Get().m_pGreenEffect->SetEventTime(0.5f);
@@ -1066,56 +1088,41 @@ void PlayerController::CameraInput(const float& spf) noexcept
 	static const float MinCameraY = -PI * 0.2f;
 	static const float MaxCameraY = PI * 0.4f;
 
+	// 카메라 Arm 조절
+	if (!pUIManager->m_pChat->m_bRender)
+	{
+		m_pCamera->m_armLength = std::clamp(m_pCamera->m_armLength - Input::GetWheelScroll() * m_mouseSense * spf * 5.0f, 0.0f, 350.0f);
+	}
 	// 마우스 고정
 	static POINT prevPoint = { 0, 0 };
 	prevPoint = Input::GetCursor();
 	SetCursorPos((int)m_setMouseScreen.x, (int)m_setMouseScreen.y);
-
 	Input::OperMoveMousePos({ (float)(-m_setMouseClient.x + prevPoint.x), (float)(-m_setMouseClient.y + prevPoint.y) });
-
-	// 카메라 Arm 조절
-	if (!pUIManager->m_pChat->m_bRender)
+	///
+	switch (m_eView)
 	{
-		m_pCamera->m_armLength = std::clamp(m_pCamera->m_armLength - Input::GetWheelScroll() * m_mouseSense * spf * 5.0f, 0.0f, 320.0f);
-	}
-	// 회전
-	m_pCamera->SetRotationX(std::clamp(m_pCamera->GetRotation().x + Input::GetMouseMovePos().y * m_mouseSense * 0.004f, MinCameraY, MaxCameraY));
-	m_pParent->Rotate(0.0f, Input::GetMouseMovePos().x * m_mouseSense * 0.004f);
-	// 회전 동기화
-	if (abs(m_prevRotY - m_pParent->GetRotation().y) > 0.08f)
+	case EViewPoint::Back:
 	{
-		SendAnimTransform(m_curAnim, ECharacter::EDummy);
-	}
+		// 회전
+		m_pCamera->SetRotationX(std::clamp(m_pCamera->GetRotation().x + Input::GetMouseMovePos().y * m_mouseSense * 0.004f, MinCameraY, MaxCameraY));
+		m_pParent->Rotate(0.0f, Input::GetMouseMovePos().x * m_mouseSense * 0.004f);
+		// 회전 동기화
+		if (abs(m_prevRotY - m_pParent->GetRotation().y) > 0.08f)
+		{
+			SendAnimTransform(m_curAnim, ECharacter::EDummy);
+		}
+	}break;
+	case EViewPoint::Quarter:
+	{
+		if (Input::GetKeyState(VK_CONTROL) == EKeyState::HOLD)
+		{
+			// 회전
+			m_pCamera->SetRotationX(std::clamp(m_pCamera->GetRotation().x + Input::GetMouseMovePos().y * m_mouseSense * 0.004f, MinCameraY, MaxCameraY));
+			m_pCamera->SetRotationY(m_pCamera->GetRotation().y + Input::GetMouseMovePos().x * m_mouseSense * 0.004f);
+		}
 
-	//static Packet_MouseRotate p_MouseRotate;
-	//if (Input::GetMouseMovePos().x > 0.0f &&
-	//	m_MouseDirection != EDirection::Right)
-	//{
-	//	m_MouseDirection = EDirection::Right;
-	//	m_prevMouseDir = p_MouseRotate.RotateSpeed = m_mouseSense * 0.1f;
-	//	p_MouseRotate.KeyValue = m_pParent->m_keyValue;
-	//	PacketManager::Get().SendPacket((char*)&p_MouseRotate, sizeof(Packet_MouseRotate), PACKET_MouseRotate);
-	//	
-	//	ErrorMessage("회전 : " + to_string(Input::GetMouseMovePos().x));
-	//}
-	//else if (Input::GetMouseMovePos().x < 0.0f &&
-	//		 m_MouseDirection != EDirection::Left)
-	//{
-	//	m_MouseDirection = EDirection::Left;
-	//	m_prevMouseDir = p_MouseRotate.RotateSpeed = -m_mouseSense * 0.1f;
-	//	p_MouseRotate.KeyValue = m_pParent->m_keyValue;
-	//	PacketManager::Get().SendPacket((char*)&p_MouseRotate, sizeof(Packet_MouseRotate), PACKET_MouseRotate);
-	//	ErrorMessage("회전 : " + to_string(Input::GetMouseMovePos().x));
-	//}
-	//else if (Input::GetMouseMovePos().x == 0.0f &&
-	//		 m_MouseDirection != EDirection::Middle)
-	//{
-	//	m_MouseDirection = EDirection::Middle;
-	//	m_prevMouseDir = p_MouseRotate.RotateSpeed = 0.0f;
-	//	p_MouseRotate.KeyValue = m_pParent->m_keyValue;
-	//	PacketManager::Get().SendPacket((char*)&p_MouseRotate, sizeof(Packet_MouseRotate), PACKET_MouseRotate);
-	//	ErrorMessage("회전 : " + to_string(Input::GetMouseMovePos().x));
-	//}
+	}break;
+	}
 }
 
 void PlayerController::ResetOption() noexcept
@@ -1127,13 +1134,27 @@ void PlayerController::ResetOption() noexcept
 	///
 	SetPosition(Vector3::Zero);
 	SetRotation(Quaternion::Base);
-	m_pCamera->SetRotation(Quaternion::Left * PI + Quaternion::Up * PI * 0.2f);
 	m_pCamera->m_lerpMoveSpeed = 6.0f;
-	m_pCamera->m_lerpRotateSpeed = 6.0f;
 	if (m_pParent == nullptr)
 		return;
-	m_pCamera->SetPosition(Vector3::Up * 85.0f * m_pParent->GetScale().x);
-	m_pCamera->m_armLength = 10.0f * m_pParent->GetScale().x;
+	///
+	switch (m_eView)
+	{
+	case EViewPoint::Back:
+	{
+		m_pCamera->m_lerpRotateSpeed = 6.0f;
+		m_pCamera->SetRotation(Quaternion::Left * PI + Quaternion::Up * PI * 0.2f);
+		m_pCamera->SetPosition(Vector3::Up * 85.0f * m_pParent->GetScale().x);
+		m_pCamera->m_armLength = 10.0f * m_pParent->GetScale().x;
+	}	break;
+	case EViewPoint::Quarter:
+	{
+		m_pCamera->m_lerpRotateSpeed = 60.0f;
+		m_pCamera->SetRotation(Quaternion::Left * PI + Quaternion::Up * PI * 0.27f);
+		m_pCamera->SetPosition(Vector3::Up * 85.0f * m_pParent->GetScale().x);
+		m_pCamera->m_armLength = 300.0f * m_pParent->GetScale().x;
+	}	break;
+	}
 }
 
 void PlayerController::UpdateStatus(const bool& infoUpdate) noexcept
@@ -1168,7 +1189,7 @@ void PlayerController::UpdateStatus(const bool& infoUpdate) noexcept
 	m_maxMP = 1.0f + pUserInfo->StatInt * 0.2f;
 	m_RegenMP = 0.2f + pUserInfo->StatInt * 0.03f;
 	m_RegenHP = 0.04f + pUserInfo->StatStr * 0.006f;
-	
+
 	pUIManager->m_pMpBar->SetValue(m_curMP, m_maxMP, m_disMP);
 	pUIManager->m_pExpProgress->SetValue(m_EXP, m_NeedEXP, m_disEXP);
 	if (m_pParent != nullptr)
@@ -1241,26 +1262,26 @@ void PlayerController::UpdateStatus(const bool& infoUpdate) noexcept
 			for (auto& outer : ObjectManager::Get().GetObjectList())
 			{
 				switch (outer.first)
-				 {
-				 case EObjType::AObject:
-				 case EObjType::Object:
-				 case EObjType::Map:
-				 case EObjType::Character:
-				 case EObjType::Dummy:
-				 case EObjType::Enemy:
-				 {
-				 	for (auto& initer : outer.second)
-				 	{
-				 		if (auto pList = initer->GetComponentList(EComponent::Renderer);
-				 			pList != nullptr)
-				 		{
-				 			for (auto& pRenderer : *pList)
-				 			{
-				 				((Renderer*)pRenderer)->SetLightRate(lightValue);
-				 			}
-				 		}
-				 	}
-				 }
+				{
+				case EObjType::AObject:
+				case EObjType::Object:
+				case EObjType::Map:
+				case EObjType::Character:
+				case EObjType::Dummy:
+				case EObjType::Enemy:
+				{
+					for (auto& initer : outer.second)
+					{
+						if (auto pList = initer->GetComponentList(EComponent::Renderer);
+							pList != nullptr)
+						{
+							for (auto& pRenderer : *pList)
+							{
+								((Renderer*)pRenderer)->SetLightRate(lightValue);
+							}
+						}
+					}
+				}
 				}
 			}
 		}
@@ -1290,7 +1311,7 @@ void PlayerController::Possess(GameObject* pObject) noexcept
 			pPlayer->m_curCharacter = PlayerController::ECharacter::EArcher;
 			{
 				pPlayer->m_defencePoint = 1;
-				pPlayer->pUIManager->m_pMpBar->SetColor({1.0f, 1.0f, 0.2f, 1.0f});
+				pPlayer->pUIManager->m_pMpBar->SetColor({ 1.0f, 1.0f, 0.2f, 1.0f });
 			}
 		}
 		else if (pObj->m_myName == L"Mage")
@@ -1308,7 +1329,7 @@ void PlayerController::Possess(GameObject* pObject) noexcept
 		pPlayer->SendPhysicsInfo();
 		if (pPlayer->m_pEffectFly != nullptr)
 			ObjectManager::Get().DisableObject(pPlayer->m_pEffectFly);
-		if(pPlayer->m_pEffectBerserk != nullptr)
+		if (pPlayer->m_pEffectBerserk != nullptr)
 			ObjectManager::Get().DisableObject(pPlayer->m_pEffectBerserk);
 
 		pPlayer->ResetOption();
@@ -1422,7 +1443,7 @@ void PlayerController::CheckTownCollision() noexcept
 				pUIManager->m_pSmithyInfo2Weapon->SetString(L"Damage +" + to_wstring((m_upgradeWeapon) * 15) + L"% → +" + to_wstring((m_upgradeWeapon + 1) * 15) + L"%");
 
 				pUIManager->m_pSmithyInfo1Armor->SetString(L"Level " + to_wstring(m_upgradeArmor) + L" → Level " + to_wstring(m_upgradeArmor + 1));
-				pUIManager->m_pSmithyInfo2Armor->SetString(L"Armor +" + to_wstring((1.0f - (5.0f / (5.0f + m_defencePoint + m_upgradeArmor))) * 100.0f).substr(0, 4) + L"% → +" + to_wstring((1.0f - (5.0f / (5.0f + m_defencePoint + m_upgradeArmor + 1))) * 100.0f).substr(0, 4) + L"%"); 
+				pUIManager->m_pSmithyInfo2Armor->SetString(L"Armor +" + to_wstring((1.0f - (5.0f / (5.0f + m_defencePoint + m_upgradeArmor))) * 100.0f).substr(0, 4) + L"% → +" + to_wstring((1.0f - (5.0f / (5.0f + m_defencePoint + m_upgradeArmor + 1))) * 100.0f).substr(0, 4) + L"%");
 
 				pUIManager->m_pSmithyInfo1Acce1->SetString(L"Level " + to_wstring(m_upgradeAcce1) + L" → Level " + to_wstring(m_upgradeAcce1 + 1));
 				pUIManager->m_pSmithyInfo2Acce1->SetString(L"Cooltime +" + to_wstring((1.0f - (5.0f / (5.0f + m_upgradeAcce1))) * 100.0f).substr(0, 4) + L"% → +" + to_wstring((1.0f - (5.0f / (5.0f + m_upgradeAcce1 + 1))) * 100.0f).substr(0, 4) + L"%");
@@ -1504,14 +1525,14 @@ void PlayerController::CheckTownCollision() noexcept
 				pUIManager->m_pTowerCurLevel->SetString(to_wstring(PacketManager::Get().TowerLevel));
 				pUIManager->m_pTowerCurAtkDamage->SetString(to_wstring(PacketManager::Get().TowerDamage * 100.0f).substr(0, 4));
 				pUIManager->m_pTowerCurAtkSpeed->SetString(to_wstring(PacketManager::Get().TowerDelayShot).substr(0, 4));
-				if(PacketManager::Get().TowerLevel >= 5)
+				if (PacketManager::Get().TowerLevel >= 5)
 					pUIManager->m_pTowerText1->SetString(L"폭탄 공격");
 				else
 					pUIManager->m_pTowerText1->SetString(L"");
-						
+
 				pUIManager->m_pTowerNextLevel->SetString(to_wstring(PacketManager::Get().TowerLevel + 1));
 				pUIManager->m_pTowerNextAtkDamage->SetString(to_wstring((0.2f + PacketManager::Get().TowerLevel * 0.05f) * 100.0f).substr(0, 4));
-				if(PacketManager::Get().TowerLevel == 0)
+				if (PacketManager::Get().TowerLevel == 0)
 					pUIManager->m_pTowerNextAtkSpeed->SetString(to_wstring(8.0f).substr(0, 4));
 				else
 					pUIManager->m_pTowerNextAtkSpeed->SetString(to_wstring(PacketManager::Get().TowerDelayShot * 0.85f).substr(0, 4));
@@ -1544,91 +1565,183 @@ void PlayerController::SendAnimTransform(const EAction& eAction, const ECharacte
 
 	p_AnimTransform.KeyValue = m_pParent->m_keyValue;
 	p_AnimTransform.UserSocket = PacketManager::Get().pMyInfo->UserSocket;
-	p_AnimTransform.Position = m_pParent->GetPosition();
-	p_AnimTransform.Rotation = m_pParent->GetRotation();
-	m_prevRotY = p_AnimTransform.Rotation.y;
 	p_AnimTransform.EAnimState = m_curAnim = eAction;
 	p_AnimTransform.ECharacter = eCharacter;
 	p_AnimTransform.Force = m_pParent->GetForce();
 
-	// 이동 처리
-	switch (eAction)
+	switch (m_eView)
 	{
-	case EAction::Left:
-	case EAction::RLeft:
+	case EViewPoint::Back:
 	{
-		p_AnimTransform.Direction = m_pParent->GetLeft();
-		p_AnimTransform.Direction = Normalize(p_AnimTransform.Direction) * m_moveSpeed;
+		p_AnimTransform.Position = m_pParent->GetPosition();
+		p_AnimTransform.Rotation = m_pParent->GetRotation();
+		m_prevRotY = p_AnimTransform.Rotation.y;
+
+		// 이동 처리
+		switch (eAction)
+		{
+		case EAction::Left:
+		case EAction::RLeft:
+		{
+			p_AnimTransform.Direction = Normalize(m_pParent->GetLeft()) * m_moveSpeed;
+		}	break;
+		case EAction::Right:
+		case EAction::RRight:
+		{
+			p_AnimTransform.Direction = Normalize(m_pParent->GetRight()) * m_moveSpeed;
+		}	break;
+		case EAction::Forward:
+		case EAction::RForward:
+		{
+			p_AnimTransform.Direction = Normalize(m_pParent->GetForward()) * m_moveSpeed;
+		}	break;
+		case EAction::Backward:
+		case EAction::RBackward:
+		{
+			p_AnimTransform.Direction = Normalize(m_pParent->GetBackward()) * m_moveSpeed;
+		}	break;
+		case EAction::ForwardLeft:
+		case EAction::NForwardLeft:
+		{
+			p_AnimTransform.Direction = Normalize(m_pParent->GetForward() + m_pParent->GetLeft()) * m_moveSpeed;
+		}	break;
+		case EAction::ForwardRight:
+		case EAction::NForwardRight:
+		{
+			p_AnimTransform.Direction = Normalize(m_pParent->GetForward() + m_pParent->GetRight()) * m_moveSpeed;
+		}	break;
+		case EAction::BackwardLeft:
+		case EAction::NBackwardLeft:
+		{
+			p_AnimTransform.Direction = Normalize(m_pParent->GetBackward() + m_pParent->GetLeft()) * m_moveSpeed;
+		}	break;
+		case EAction::BackwardRight:
+		case EAction::NBackwardRight:
+		{
+			p_AnimTransform.Direction = Normalize(m_pParent->GetBackward() + m_pParent->GetRight()) * m_moveSpeed;
+		}	break;
+		case EAction::Run:
+		{
+			p_AnimTransform.Direction = Normalize(m_pParent->GetForward()) * m_moveSpeed * 2.0f;
+		}	break;
+		case EAction::RunLeft:
+		{
+			p_AnimTransform.Direction = Normalize(m_pParent->GetForward() + m_pParent->GetLeft() * 0.5f) * m_moveSpeed * 2.0f;
+		}	break;
+		case EAction::RunRight:
+		{
+			p_AnimTransform.Direction = Normalize(m_pParent->GetForward() + m_pParent->GetRight() * 0.5f) * m_moveSpeed * 2.0f;
+		}	break;
+		case EAction::Dash:
+		case EAction::DashLeft:
+		case EAction::DashRight:
+		{
+			p_AnimTransform.Direction = Vector3::Zero;
+		}	break;
+		default:
+		{
+			p_AnimTransform.Direction = Normalize(m_pCamera->GetForward());
+		}	break;
+		}
 	}	break;
-	case EAction::Right:
-	case EAction::RRight:
+	case EViewPoint::Quarter:
 	{
-		p_AnimTransform.Direction = m_pParent->GetRight();
-		p_AnimTransform.Direction = Normalize(p_AnimTransform.Direction) * m_moveSpeed;
-	}	break;
-	case EAction::Forward:
-	case EAction::RForward:
-	{
-		p_AnimTransform.Direction = m_pParent->GetForward();
-		p_AnimTransform.Direction = Normalize(p_AnimTransform.Direction) * m_moveSpeed;
-	}	break;
-	case EAction::Backward:
-	case EAction::RBackward:
-	{
-		p_AnimTransform.Direction = m_pParent->GetBackward();
-		p_AnimTransform.Direction = Normalize(p_AnimTransform.Direction) * m_moveSpeed;
-	}	break;
-	case EAction::ForwardLeft:
-	case EAction::NForwardLeft:
-	{
-		p_AnimTransform.Direction = m_pParent->GetForward() + m_pParent->GetLeft();
-		p_AnimTransform.Direction = Normalize(p_AnimTransform.Direction) * m_moveSpeed;
-	}	break;
-	case EAction::ForwardRight:
-	case EAction::NForwardRight:
-	{
-		p_AnimTransform.Direction = m_pParent->GetForward() + m_pParent->GetRight();
-		p_AnimTransform.Direction = Normalize(p_AnimTransform.Direction) * m_moveSpeed;
-	}	break;
-	case EAction::BackwardLeft:
-	case EAction::NBackwardLeft:
-	{
-		p_AnimTransform.Direction = m_pParent->GetBackward() + m_pParent->GetLeft();
-		p_AnimTransform.Direction = Normalize(p_AnimTransform.Direction) * m_moveSpeed;
-	}	break;
-	case EAction::BackwardRight:
-	case EAction::NBackwardRight:
-	{
-		p_AnimTransform.Direction = m_pParent->GetBackward() + m_pParent->GetRight();
-		p_AnimTransform.Direction = Normalize(p_AnimTransform.Direction) * m_moveSpeed;
-	}	break;
-	case EAction::Run:
-	{
-		p_AnimTransform.Direction = m_pParent->GetForward();
-		p_AnimTransform.Direction = Normalize(p_AnimTransform.Direction) * m_moveSpeed * 2.0f;
-	}	break;
-	case EAction::RunLeft:
-	{
-		p_AnimTransform.Direction = m_pParent->GetForward() + m_pParent->GetLeft() * 0.5f;
-		p_AnimTransform.Direction = Normalize(p_AnimTransform.Direction) * m_moveSpeed * 2.0f;
-	}	break;
-	case EAction::RunRight:
-	{
-		p_AnimTransform.Direction = m_pParent->GetForward() + m_pParent->GetRight() * 0.5f;
-		p_AnimTransform.Direction = Normalize(p_AnimTransform.Direction) * m_moveSpeed * 2.0f;
-	}	break;
-	case EAction::Dash:
-	case EAction::DashLeft:
-	case EAction::DashRight:
-	{
-		p_AnimTransform.Direction = Vector3::Zero;
-	}	break;
-	default:
-	{
-		p_AnimTransform.Direction = ObjectManager::Cameras[ECamera::Main]->GetForward();
-		p_AnimTransform.Direction = Normalize(p_AnimTransform.Direction);
-	}	break;
+		p_AnimTransform.Position = m_pParent->GetPosition();
+		m_prevRotY = p_AnimTransform.Rotation.y;
+
+		auto prevRot = m_pParent->GetRotation().y;
+		// 이동 처리
+		switch (eAction)
+		{
+		case EAction::Left:
+		case EAction::RLeft:
+		{
+			auto focus = m_pCamera->GetLeft();
+			focus.y = 0.0f;
+			m_pParent->SetFocusDir(focus);
+			p_AnimTransform.Direction = Normalize(focus) * m_moveSpeed;
+		}	break;
+		case EAction::Right:
+		case EAction::RRight:
+		{
+			auto focus = m_pCamera->GetRight();
+			focus.y = 0.0f;
+			m_pParent->SetFocusDir(focus);
+			p_AnimTransform.Direction = Normalize(focus) * m_moveSpeed;
+		}	break;
+		case EAction::Forward:
+		case EAction::RForward:
+		{
+			auto focus = m_pCamera->GetUp();
+			focus.y = 0.0f;
+			m_pParent->SetFocusDir(focus);
+			p_AnimTransform.Direction = Normalize(focus) * m_moveSpeed;
+		}	break;
+		case EAction::Backward:
+		case EAction::RBackward:
+		{
+			auto focus = m_pCamera->GetDown();
+			focus.y = 0.0f;
+			m_pParent->SetFocusDir(focus);
+			p_AnimTransform.Direction = Normalize(focus) * m_moveSpeed;
+		}	break;
+		case EAction::ForwardLeft:
+		case EAction::NForwardLeft:
+		{
+			auto focus = m_pCamera->GetForward() + m_pCamera->GetLeft();
+			focus.y = 0.0f;
+			m_pParent->SetFocusDir(focus);
+			p_AnimTransform.Direction = Normalize(focus) * m_moveSpeed;
+		}	break;
+		case EAction::ForwardRight:
+		case EAction::NForwardRight:
+		{
+			auto focus = m_pCamera->GetForward() + m_pCamera->GetRight();
+			focus.y = 0.0f;
+			m_pParent->SetFocusDir(focus);
+			p_AnimTransform.Direction = Normalize(focus) * m_moveSpeed;
+		}	break;
+		case EAction::BackwardLeft:
+		case EAction::NBackwardLeft:
+		{
+			auto focus = m_pCamera->GetBackward() + m_pCamera->GetLeft();
+			focus.y = 0.0f;
+			m_pParent->SetFocusDir(focus);
+			p_AnimTransform.Direction = Normalize(focus) * m_moveSpeed;
+		}	break;
+		case EAction::BackwardRight:
+		case EAction::NBackwardRight:
+		{
+			auto focus = m_pCamera->GetBackward() + m_pCamera->GetRight();
+			focus.y = 0.0f;
+			m_pParent->SetFocusDir(focus);
+			p_AnimTransform.Direction = Normalize(focus) * m_moveSpeed;
+		}	break;
+		case EAction::Run:
+		case EAction::RunLeft:
+		case EAction::RunRight:
+		{
+			auto focus = m_pParent->GetForward();
+			focus.y = 0.0f;
+			m_pParent->SetFocusDir(focus);
+			p_AnimTransform.Direction = Normalize(focus) * m_moveSpeed;
+		}	break;
+		case EAction::Dash:
+		case EAction::DashLeft:
+		case EAction::DashRight:
+		{
+			p_AnimTransform.Direction = Vector3::Zero;
+		}	break;
+		default:
+		{
+			p_AnimTransform.Direction = Normalize(m_pParent->GetForward());
+		}	break;
+		}
+		p_AnimTransform.Rotation = m_pParent->GetRotation();
+		m_pCamera->Rotate(0.0f, (prevRot - p_AnimTransform.Rotation.y), 0.0f);
 	}
+	}
+	///
 	PacketManager::Get().SendPacket((char*)&p_AnimTransform, sizeof(Packet_AnimTransform), PACKET_SetAnimTransform);
 }
 

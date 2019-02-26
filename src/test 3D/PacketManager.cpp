@@ -268,7 +268,7 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 
 						auto pItem = ObjectManager::Get().TakeObject(L"Arrow");
 						pItem->SetPosition(TowerPos[index] + Vector3::Up * 250.0f);
-						pItem->SetScale(10.0f, 10.0f, 2.0f);
+						pItem->SetScale(20.0f, 20.0f, 2.0f);
 						pItem->SetFocus(iter->GetPosition());
 						pItem->SetForce((iter->GetPosition() - TowerPos[index] - Vector3::Up * 250.0f) * 1.4f + Vector3::Up * 100.0f);
 						pItem->m_pPhysics->m_damage = TowerDamage;
@@ -277,7 +277,7 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 						++index;
 						pItem = ObjectManager::Get().TakeObject(L"Arrow");
 						pItem->SetPosition(TowerPos[index] + Vector3::Up * 250.0f);
-						pItem->SetScale(10.0f, 10.0f, 2.0f);
+						pItem->SetScale(20.0f, 20.0f, 2.0f);
 						pItem->SetFocus(iter->GetPosition());
 						pItem->SetForce((iter->GetPosition() - TowerPos[index] - Vector3::Up * 250.0f) * 1.4f + Vector3::Up * 100.0f);
 						pItem->m_pPhysics->m_damage = TowerDamage;

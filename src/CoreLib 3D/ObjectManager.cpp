@@ -528,7 +528,7 @@ void ObjectManager::DisableObject(GameObject* pObject) noexcept
 		}
 	};
 
-	if (pObject->isEnable())
+	if (pObject != nullptr && pObject->isEnable())
 	{
 		pObject->isEnable(false);
 		PostFrameEvent.emplace(disableEvent, pObject, nullptr);
