@@ -186,7 +186,7 @@ void IntroScene::SetObjects() noexcept
 	//ObjectManager::Get().SetProtoObject(new GameObject(L"EZDead", m_pParser->CreateFromParticle(L"ZombieDead.eff", urlEffect)->SetEffectScale(3.0f), EObjType::Effect));
 	//ObjectManager::Get().SetProtoObject(new GameObject(L"EZDead2", m_pParser->CreateFromParticle(L"ZombieDead2.eff", urlEffect)->SetEffectScale(3.0f), EObjType::Effect));
 	//ObjectManager::Get().SetProtoObject(new GameObject(L"EZDead3", m_pParser->CreateFromParticle(L"ZombieDead3.eff", urlEffect)->SetEffectScale(3.0f), EObjType::Effect));
-	ObjectManager::Get().SetProtoObject(new GameObject(L"EZDead", m_pParser->CreateFromParticle(L"DeadEffect.eff", urlEffect)->SetEffectScale(3.0f), EObjType::Effect));
+	//ObjectManager::Get().SetProtoObject(new GameObject(L"EZDead", m_pParser->CreateFromParticle(L"DeadEffect.eff", urlEffect)->SetEffectScale(3.0f), EObjType::Effect));
 	ObjectManager::Get().SetProtoObject(new GameObject(L"EZHit", m_pParser->CreateFromParticle(L"ZombieAttack.eff", urlEffect)->SetEffectScale(3.0f), EObjType::Effect));
 	//ObjectManager::Get().SetProtoObject(new GameObject(L"EZStump", m_pParser->CreateFromParticle(L"Stump.eff", urlEffect)->SetEffectScale(3.0f), EObjType::Effect));
 	//ObjectManager::Get().SetProtoObject(new GameObject(L"ZBoom", pZBoom, EObjType::Effect));

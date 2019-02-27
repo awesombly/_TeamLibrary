@@ -595,12 +595,12 @@ bool GameScene::FirstInit() noexcept
 		ObjectManager::Get().Lights.front()->SetRotation(1.0f, -2.3f, 0.0f);
 		//ObjectManager::Get().Lights.front()->SetFocus(Vector3::Zero);
 		// 라이트 랜더러
-		auto pShpere = (Renderer*)ObjectManager::GetInstance().TakeComponent(L"RowSphere");
-		pShpere->SetShaderLayout("VS_Basic", "PS_Basic");
-		auto pObject = new GameObject(L"Sun", pShpere);
-		pObject->isGlobal(true);
-		pObject->SetScale(Vector3::One * 10);
-		pObject->SetParent(ObjectManager::Get().Lights.front());
+		//auto pShpere = (Renderer*)ObjectManager::GetInstance().TakeComponent(L"RowSphere");
+		//pShpere->SetShaderLayout("VS_Basic", "PS_Basic");
+		//auto pObject = new GameObject(L"Sun", pShpere);
+		//pObject->isGlobal(true);
+		//pObject->SetScale(Vector3::One * 10);
+		//pObject->SetParent(ObjectManager::Get().Lights.front());
 		///
 		m_pPlayer->m_myName = L"Player";
 		m_pPlayer->m_objType = EObjType::Object;

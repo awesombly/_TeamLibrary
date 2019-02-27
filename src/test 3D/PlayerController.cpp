@@ -297,7 +297,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 			{
 				PlayerController::Get().m_pEffectBerserk = pItem;
 				PlayerController::Get().m_motionBuff = 0.65f;
-				PlayerController::Get().m_cooltimeBuff = 2;
+				PlayerController::Get().m_cooltimeBuff = 10;
 			}
 		}	break;
 		case EAction::Special3:
