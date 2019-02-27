@@ -696,7 +696,7 @@ void PacketManager::InterceptPacket(const PP::PPPacketType& sendMode, const char
 		m_waveCount = p_Float.KeyValue;
 		PlayerController::Get().m_GameFrameCount = p_Float.Value;
 		PlayerController::Get().m_canChurh = true;
-		//SoundManager::Get().Play("SE_wave.mp3");
+		SoundManager::Get().Play("SE_wave.mp3");
 	}	break;
 	case PACKET_WaveCount:
 	{
