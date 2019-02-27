@@ -519,7 +519,7 @@ void GameScene::HostFrame() noexcept
 			case 3:
 			{
 				if(m_spawnCount == 2)
-					PacketManager::Get().SendSpawnEnemy(L"Tank", ESocketType::ETank, 1, 15.0f * PacketManager::Get().UserList.size(), 1.1f, 0.1f);
+					PacketManager::Get().SendSpawnEnemy(L"Tank", ESocketType::ETank, 1, 13.0f * PacketManager::Get().UserList.size(), 1.1f, 0.1f);
 				PacketManager::Get().SendSpawnEnemy(L"Zombie", ESocketType::EZombie, (UCHAR)PacketManager::Get().UserList.size(), 1.0f, 0.25f, 0.05f);
 				PacketManager::Get().SendSpawnEnemy(L"Caster", ESocketType::ECaster, (UCHAR)PacketManager::Get().UserList.size(), 0.8f, 0.22f, 0.05f);
 				PacketManager::Get().SendSpawnEnemy(L"Crawler", ESocketType::ECrawler, (UCHAR)PacketManager::Get().UserList.size() * 2, 0.6f, 0.2f, 0.05f);
@@ -527,7 +527,7 @@ void GameScene::HostFrame() noexcept
 			case 4:
 			{
 				if (m_spawnCount == 2)
-					PacketManager::Get().SendSpawnEnemy(L"Tank", ESocketType::ETank, 1, 15.0f * PacketManager::Get().UserList.size(), 1.1f, 0.1f);
+					PacketManager::Get().SendSpawnEnemy(L"Tank", ESocketType::ETank, 1, 13.0f * PacketManager::Get().UserList.size(), 1.1f, 0.1f);
 				PacketManager::Get().SendSpawnEnemy(L"Mutant", ESocketType::EMutant, (UCHAR)PacketManager::Get().UserList.size(), 5.0f, 0.5f, 0.1f);
 				PacketManager::Get().SendSpawnEnemy(L"Caster", ESocketType::ECaster, (UCHAR)PacketManager::Get().UserList.size(), 0.8f, 0.22f, 0.05f);
 				PacketManager::Get().SendSpawnEnemy(L"Crawler", ESocketType::ECrawler, (UCHAR)PacketManager::Get().UserList.size(), 0.6f, 0.15f, 0.1f);
@@ -536,7 +536,7 @@ void GameScene::HostFrame() noexcept
 			{
 				if (m_spawnCount >= 2)
 				{
-					PacketManager::Get().SendSpawnEnemy(L"Tank", ESocketType::ETank, 1, 15.0f * PacketManager::Get().UserList.size(), 1.1f, 0.1f);
+					PacketManager::Get().SendSpawnEnemy(L"Tank", ESocketType::ETank, 1, 13.0f * PacketManager::Get().UserList.size(), 1.1f, 0.1f);
 					UIManager::Get().m_TimerText->m_bRender = false;
 				}
 			}	break;

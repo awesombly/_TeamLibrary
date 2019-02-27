@@ -41,7 +41,7 @@ enum EPacketProtocol : USHORT {
 };
 
 // 패킷 배열 제외 사이즈
-#define PS_UserInfo					23
+#define PS_UserInfo					31
 #define PS_SyncObjects				2
 #define PS_ChatMessage				5
 #define PS_PlaySound				17
