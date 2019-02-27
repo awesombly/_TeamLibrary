@@ -625,7 +625,9 @@ void GameScene::LoadUI() noexcept
 	UIManager::Get().m_FightPanel = (JPanel*)pUIRoot->find_child(L"fight_panel");
 	UIManager::Get().m_pStatePanel = (JPanel*)pUIRoot->find_child(L"State_Panel");
 	//UIManager::Get().m_pMpBar->m_pShape->m_cbData.vColor;
-
+	// 마우스
+	UIManager::Get().m_pCrosshair = (JPanel*)pUIRoot->find_child(L"Game_Panel")->find_child(L"CrossHair");
+	
 	// 상황판
 	/* Name Kill Death Score */
 	//m_pUser1->PreEvent.first; // bRender 상관없이 돌아감

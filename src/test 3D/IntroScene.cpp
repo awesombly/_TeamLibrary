@@ -589,7 +589,7 @@ void IntroScene::SetObjects() noexcept
 	pHeroObj->m_objType = EObjType::AObject;
 	pCollider = new Collider(1.0f);
 	pHeroObj->SetScale(Vector3::One * 3.0f);
-	pTimer = new CEventTimer(1.5f);
+	pTimer = new CEventTimer(1.3f);
 	pTimer->TimerEvent = { TimeEvent::ArrowRain, nullptr };
 	pHeroObj->AddComponent({ pCollider, pRenderer, pTimer });
 	pCollider->m_eTag = ETag::Dummy;

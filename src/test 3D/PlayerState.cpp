@@ -655,8 +655,8 @@ bool ArcherStateLSkill::Process(const float& spf) noexcept
 	}
 
 	m_pOwner->m_chargeCount += (spf * PacketManager::Get().pMyInfo->MotionRate);
-	if (Input::GetKeyState(VK_LBUTTON) == EKeyState::FREE ||
-		m_pOwner->m_curMP <= 0.0f &&
+	if ((Input::GetKeyState(VK_LBUTTON) == EKeyState::FREE ||
+		m_pOwner->m_curMP <= 0.0f) &&
 		!UIManager::Get().m_pMouseIcon->m_bRender)
 	{
 		if (m_pOwner->m_chargeCount >= 0.6f)

@@ -89,11 +89,13 @@ bool PlayerController::Frame(const float& spf, const float& accTime)	noexcept
 				switch (m_eView)
 				{
 				case EViewPoint::Back:
+				{
 					m_eView = EViewPoint::Quarter;
-					break;
+				}	break;
 				case EViewPoint::Quarter:
+				{
 					m_eView = EViewPoint::Back;
-					break;
+				}	break;
 				}
 				ResetOption();
 			}
@@ -592,7 +594,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 			pItem->SetPosition(pObject->GetPosition() + pObject->GetForward() * 40.0f + pObject->GetUp() * 50.0f);
 			pItem->SetRotation(pObject->GetRotation());
 			pItem->SetScale(Vector3::One * 3.0f);
-			pItem->SetForce((forward * 0.52f + Vector3::Up) * 500.0f);
+			pItem->SetForce((forward * 0.45f + Vector3::Up) * 500.0f);
 			pItem->SetDamage(0.4f * PacketManager::Get().UserList[socket]->AttackRate);
 			pItem->m_pPhysics->UserSocket = socket;
 			pItem->GetCollider()->AddIgnoreList(pObject->GetCollider());
@@ -916,7 +918,7 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 		}	break;
 		case EAction::Motion2:
 		{
-			auto targetPos = pObject->GetPosition() + forward * 310.0f;
+			auto targetPos = pObject->GetPosition() + forward * 340.0f;
 			targetPos.y = 1000.0f;
 			auto pItem = ObjectManager::Get().TakeObject(L"Meteor");
 			pItem->SetPosition(targetPos);
@@ -1147,6 +1149,7 @@ void PlayerController::ResetOption() noexcept
 	{
 	case EViewPoint::Back:
 	{
+		pUIManager->m_pCrosshair->m_bRender = true;
 		m_pCamera->m_lerpRotateSpeed = 6.0f;
 		m_pCamera->SetRotation(Quaternion::Left * PI + Quaternion::Up * PI * 0.2f);
 		m_pCamera->SetPosition(Vector3::Up * 85.0f * m_pParent->GetScale().x);
@@ -1154,6 +1157,7 @@ void PlayerController::ResetOption() noexcept
 	}	break;
 	case EViewPoint::Quarter:
 	{
+		pUIManager->m_pCrosshair->m_bRender = false;
 		m_pCamera->m_lerpRotateSpeed = 60.0f;
 		m_pCamera->SetRotation(Quaternion::Left * PI + Quaternion::Up * PI * 0.27f);
 		m_pCamera->SetPosition(Vector3::Up * 85.0f * m_pParent->GetScale().x);
