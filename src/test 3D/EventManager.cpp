@@ -811,7 +811,7 @@ namespace DyingEvent {
 
 	void ZombieDead(Collider* pCollider, const UINT& killUser)
 	{
-		if (RandomNormal() >= 0.8f * 5.0f / (5.0f + PacketManager::Get().pMyInfo->StatLuk))
+		if (RandomNormal() >= 0.9f * 5.0f / (5.0f + PacketManager::Get().pMyInfo->StatLuk))
 		{
 			auto pObject = ObjectManager::Get().TakeObject(L"ItemBox");
 			pObject->SetPosition(pCollider->GetCenter());
@@ -834,7 +834,7 @@ namespace DyingEvent {
 
 	void ZombieCrawlDead(Collider* pCollider, const UINT& killUser)
 	{
-		if (RandomNormal() >= 0.8f * 5.0f / (5.0f + PacketManager::Get().pMyInfo->StatLuk))
+		if (RandomNormal() >= 0.9f * 5.0f / (5.0f + PacketManager::Get().pMyInfo->StatLuk))
 		{
 			auto pObject = ObjectManager::Get().TakeObject(L"ItemBox");
 			pObject->SetPosition(pCollider->GetCenter());
@@ -860,7 +860,7 @@ namespace DyingEvent {
 		//SoundManager::Get().PlayQueue("SV_zombie_dead.mp3", pCollider->GetCenter(), PlayerController::Get().SoundRange);
 		SoundManager::Get().Play("SV_zombie_dead.mp3");
 		
-		if (RandomNormal() >= 0.4f * 5.0f / (5.0f + PacketManager::Get().pMyInfo->StatLuk))
+		if (RandomNormal() >= 0.7f * 5.0f / (5.0f + PacketManager::Get().pMyInfo->StatLuk))
 		{
 			auto pObject = ObjectManager::Get().TakeObject(L"ItemBox");
 			pObject->SetPosition(pCollider->GetCenter());
@@ -886,7 +886,7 @@ namespace DyingEvent {
 		auto pObject = ObjectManager::Get().TakeObject(L"ItemBox");
 		pObject->SetPosition(pCollider->GetCenter());
 		pObject->SetHP(10000.0f);
-		if (RandomNormal() >= 0.5f * 5.0f / (5.0f + PacketManager::Get().pMyInfo->StatLuk))
+		if (RandomNormal() >= 0.8f * 5.0f / (5.0f + PacketManager::Get().pMyInfo->StatLuk))
 		{
 			pObject = ObjectManager::Get().TakeObject(L"ItemBox");
 			pObject->SetPosition(pCollider->GetCenter());

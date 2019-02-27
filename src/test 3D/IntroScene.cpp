@@ -19,6 +19,7 @@ bool IntroScene::Init() noexcept
 	LoadUI();
 	///
 	//SoundManager::Get().Play("bgm_Intro_Theme.mp3");
+	SoundManager::Get().Load("bgm_Intro_Theme.mp3", true);
 	m_isLoading = false;
 	return true;
 }

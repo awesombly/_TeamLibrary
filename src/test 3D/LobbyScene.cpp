@@ -8,7 +8,6 @@ bool LobbyScene::Init() noexcept
 	FirstInit();
 	// UI
 	LoadUI();
-
 	ObjectManager::Get().Lights.front()->SetPosition(0.0f, -30.0f, 36.0f);
 	ObjectManager::Get().Lights.front()->SetRotation(Quaternion::Left * PI * 0.5f);
 
