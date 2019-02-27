@@ -393,7 +393,7 @@ void PlayerStateRun::StateInit(PlayerController* pOwner) noexcept
 {
 	m_pOwner = pOwner;
 	m_pOwner->m_eAction = PlayerController::EAction::Run;
-	m_pOwner->m_moveSpeed *= 2.0f;
+	m_pOwner->m_moveSpeed *= 2.2f;
 	if (m_pOwner->m_pEffectFly != nullptr)
 		ObjectManager::Get().DisableObject(m_pOwner->m_pEffectFly);
 	m_pOwner->m_pEffectFly = ObjectManager::Get().TakeObject(L"EPDustStay", false);

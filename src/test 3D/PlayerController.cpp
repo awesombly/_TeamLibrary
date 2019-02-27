@@ -1165,7 +1165,7 @@ void PlayerController::ResetOption() noexcept
 void PlayerController::UpdateStatus(const bool& infoUpdate) noexcept
 {
 	auto pUserInfo = PacketManager::Get().pMyInfo;
-	m_moveSpeed = MoveSpeed + MoveSpeed * pUserInfo->StatDex * 0.05f;
+	m_moveSpeed = MoveSpeed + MoveSpeed * pUserInfo->StatDex * 0.03f;
 	m_jumpPower = JumpPower;
 	pUserInfo->MotionRate = 1.3f + pUserInfo->StatDex * 0.05f + m_motionBuff;
 	switch (m_curCharacter)
@@ -1627,15 +1627,15 @@ void PlayerController::SendAnimTransform(const EAction& eAction, const ECharacte
 		}	break;
 		case EAction::Run:
 		{
-			p_AnimTransform.Direction = Normalize(m_pParent->GetForward()) * m_moveSpeed * 2.0f;
+			p_AnimTransform.Direction = Normalize(m_pParent->GetForward()) * m_moveSpeed;
 		}	break;
 		case EAction::RunLeft:
 		{
-			p_AnimTransform.Direction = Normalize(m_pParent->GetForward() + m_pParent->GetLeft() * 0.5f) * m_moveSpeed * 2.0f;
+			p_AnimTransform.Direction = Normalize(m_pParent->GetForward() + m_pParent->GetLeft() * 0.5f) * m_moveSpeed;
 		}	break;
 		case EAction::RunRight:
 		{
-			p_AnimTransform.Direction = Normalize(m_pParent->GetForward() + m_pParent->GetRight() * 0.5f) * m_moveSpeed * 2.0f;
+			p_AnimTransform.Direction = Normalize(m_pParent->GetForward() + m_pParent->GetRight() * 0.5f) * m_moveSpeed;
 		}	break;
 		case EAction::Dash:
 		case EAction::DashLeft:
