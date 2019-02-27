@@ -41,22 +41,22 @@ bool PlayerController::Frame(const float& spf, const float& accTime)	noexcept
 	if (!pUIManager->m_pChat->m_bRender &&
 		m_pParent != nullptr)
 	{
-		// Àû »ç¸Á È¿°ú
-		for (auto& iter : m_followEffects)
-		{
-			if (!iter->isEnable())
-			{
-				m_followEffects.remove(iter);
-				break;
-			}
-			//auto targetPos = Normalize(m_pCollider->GetCenter() - iter->m_pParent->GetPosition());
-			auto targetPos = m_pCollider->GetCenter();
-			for (auto& pParticle : iter->m_particleList)
-			{
-				pParticle->Translate((targetPos - pParticle->GetPosition()) * spf * 2.5f);
-				//pParticle->Translate(spf * 200.0f * Normalize(targetPos - pParticle->GetPosition()));
-			}
-		}
+		//// Àû »ç¸Á È¿°ú
+		//for (auto& iter : m_followEffects)
+		//{
+		//	if (!iter->isEnable())
+		//	{
+		//		m_followEffects.remove(iter);
+		//		break;
+		//	}
+		//	//auto targetPos = Normalize(m_pCollider->GetCenter() - iter->m_pParent->GetPosition());
+		//	auto targetPos = m_pCollider->GetCenter();
+		//	for (auto& pParticle : iter->m_particleList)
+		//	{
+		//		pParticle->Translate((targetPos - pParticle->GetPosition()) * spf * 2.5f);
+		//		//pParticle->Translate(spf * 200.0f * Normalize(targetPos - pParticle->GetPosition()));
+		//	}
+		//}
 		///
 		m_pParent->HealHP(spf * m_RegenHP);
 		// HP, MP ¹Ù
@@ -130,9 +130,9 @@ bool PlayerController::Frame(const float& spf, const float& accTime)	noexcept
 				{
 					((Renderer*)pRenderer)->m_cbMaterial.ObjectID = 0.0f;
 				}
-				auto pEffect = ObjectManager::Get().TakeObject(L"EZDead");
-				pEffect->SetPosition(pEnemy->GetPosition());
-				m_followEffects.push_front((ParticleSystem*)pEffect->GetComponent(EComponent::Renderer));
+				//auto pEffect = ObjectManager::Get().TakeObject(L"EZDead");
+				//pEffect->SetPosition(pEnemy->GetPosition());
+				//m_followEffects.push_front((ParticleSystem*)pEffect->GetComponent(EComponent::Renderer));
 
 				ObjectManager::Get().DisableObject(pEnemy);
 				m_dyingEnemys.remove(iter);
@@ -214,6 +214,9 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 		}	break;
 		case EAction::Run:
 		{
+			pObject->SetDamage(0.3f * PacketManager::Get().UserList[socket]->AttackRate);
+			pObject->GetCollider()->CollisionEvent = MyEvent::BerserkMode;
+
 			SoundManager::Get().PlayQueue("SE_dash2.mp3", pObject->GetPosition(), PlayerController::Get().SoundRange);
 			pObject->SetANIM_Loop(Paladin_RUN);
 		}	break;
@@ -268,6 +271,8 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 		}	break;
 		case EAction::Wait:
 		{
+			pObject->SetDamage(0.0f);
+			pObject->GetCollider()->CollisionEvent = nullptr;
 			pObject->SetGravityScale(pObject->GetScale().x * 1.5f);
 		}	break;
 		case EAction::RSkill:
@@ -281,8 +286,8 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 			auto pItem = ObjectManager::Get().TakeObject(L"EBerserk");
 			pItem->SetPosition(pObject->GetPosition() + pObject->GetUp() * 60.0f);
 
-			pObject->SetDamage(0.2f * PacketManager::Get().UserList[socket]->AttackRate);
-			pObject->GetCollider()->CollisionEvent = MyEvent::BerserkMode;
+			//pObject->SetDamage(0.2f * PacketManager::Get().UserList[socket]->AttackRate);
+			//pObject->GetCollider()->CollisionEvent = MyEvent::BerserkMode;
 
 			pItem = ObjectManager::Get().TakeObject(L"EFire");
 			pItem->SetParent(pObject);
@@ -298,8 +303,8 @@ void PlayerController::SetAnim(AHeroObj* pObject, const UINT& socket, const ECha
 		case EAction::Special3:
 		{
 			// ±¤È­ Á¾·á
-			pObject->SetDamage(0.0f, 0);
-			pObject->GetCollider()->CollisionEvent = nullptr;
+			//pObject->SetDamage(0.0f, 0);
+			//pObject->GetCollider()->CollisionEvent = nullptr;
 			///
 			PacketManager::Get().UserList[socket]->MotionRate -= 0.65f;
 			if (PlayerController::Get().GetParent() == pObject)

@@ -159,10 +159,22 @@ bool PlayerStateLSkill::Process(const float& spf) noexcept
 	{
 		static float forwardRate = 1.0f;
 		forwardRate = 1.0f;
-		if (Input::GetKeyState('W') == EKeyState::HOLD)
-			forwardRate = 1.6f;
-		if (Input::GetKeyState('S') == EKeyState::HOLD)
-			forwardRate = 0.35f;
+		if (m_pOwner->m_eView == PlayerController::EViewPoint::Back)
+		{
+			if (Input::GetKeyState('W') == EKeyState::HOLD)
+				forwardRate = 1.6f;
+			if (Input::GetKeyState('S') == EKeyState::HOLD)
+				forwardRate = 0.35f;
+		}
+		else
+		{
+			if (Input::GetKeyState('W') == EKeyState::HOLD ||
+				Input::GetKeyState('S') == EKeyState::HOLD ||
+				Input::GetKeyState('A') == EKeyState::HOLD ||
+				Input::GetKeyState('D') == EKeyState::HOLD)
+				forwardRate = 1.6f;
+		}
+
 		switch (m_pOwner->m_comboCount)
 		{
 		case 0:
@@ -381,7 +393,7 @@ void PlayerStateRun::StateInit(PlayerController* pOwner) noexcept
 {
 	m_pOwner = pOwner;
 	m_pOwner->m_eAction = PlayerController::EAction::Run;
-	m_pOwner->m_moveSpeed *= 2.3f;
+	m_pOwner->m_moveSpeed *= 2.0f;
 	if (m_pOwner->m_pEffectFly != nullptr)
 		ObjectManager::Get().DisableObject(m_pOwner->m_pEffectFly);
 	m_pOwner->m_pEffectFly = ObjectManager::Get().TakeObject(L"EPDustStay", false);
@@ -443,6 +455,7 @@ bool PlayerStateRun::Process(const float& spf) noexcept
 	if (Input::GetKeyState(VK_SHIFT) == EKeyState::UP)
 	{
 		m_pOwner->SetState(EPlayerState::Basic);
+		m_pOwner->m_eAction = PlayerController::EAction::Wait;
 		if (m_pOwner->m_pEffectFly != nullptr)
 			ObjectManager::Get().DisableObject(m_pOwner->m_pEffectFly);
 		m_pOwner->m_pEffectFly = nullptr;
