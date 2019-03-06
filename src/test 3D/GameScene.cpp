@@ -1027,6 +1027,7 @@ void GameScene::LoadUI() noexcept
 		{
 			PlayerController::Get().m_money -= needMoney;
 			PacketManager::Get().SendPacket((char*)&PI, sizeof(PI), PACKET_TowerUpgrade);
+			PlayerController::Get().UpdateShopInfo();
 		}
 		else {
 			UIManager::Get().m_pHelpTextPanel->m_bRender = true;
@@ -1050,9 +1051,11 @@ void GameScene::LoadUI() noexcept
 			PlayerController::Get().m_money -= needMoney;
 			++PlayerController::Get().m_upgradeWeapon;
 			PlayerController::Get().UpdateStatus();
+			PlayerController::Get().UpdateShopInfo();
 		}
 		else {
 			UIManager::Get().m_pHelpTextPanel->m_bRender = true;
+			PlayerController::Get().UpdateShopInfo();
 		}
 	};
 	UIManager::Get().m_pSmithyBtnArmor = (JTextCtrl*)pUIRoot->find_child(L"Smithy_Armor_Btn");
@@ -1064,9 +1067,11 @@ void GameScene::LoadUI() noexcept
 			++PlayerController::Get().m_upgradeArmor;
 			if (PlayerController::Get().GetParent() != nullptr)
 				PlayerController::Get().GetParent()->SetArmor(PlayerController::Get().m_defencePoint + PlayerController::Get().m_upgradeArmor);
+			PlayerController::Get().UpdateShopInfo();
 		}
 		else {
 			UIManager::Get().m_pHelpTextPanel->m_bRender = true;
+			PlayerController::Get().UpdateShopInfo();
 		}
 	};
 	UIManager::Get().m_pSmithyBtnAcce1 = (JTextCtrl*)pUIRoot->find_child(L"Smithy_Accessories_Btn");
@@ -1077,9 +1082,11 @@ void GameScene::LoadUI() noexcept
 			PlayerController::Get().m_money -= needMoney;
 			++PlayerController::Get().m_upgradeAcce1;
 			PlayerController::Get().UpdateStatus(false);
+			PlayerController::Get().UpdateShopInfo();
 		}
 		else {
 			UIManager::Get().m_pHelpTextPanel->m_bRender = true;
+			PlayerController::Get().UpdateShopInfo();
 		}
 	};
 	UIManager::Get().m_pSmithyBtnAcce2 = (JTextCtrl*)pUIRoot->find_child(L"Smithy_Accessories2_Btn");
@@ -1094,9 +1101,11 @@ void GameScene::LoadUI() noexcept
 			++PacketManager::Get().pMyInfo->StatInt;
 			++PacketManager::Get().pMyInfo->StatLuk;
 			PacketManager::Get().SendPacket((char*)PacketManager::Get().pMyInfo, (USHORT)(PS_UserInfo + PacketManager::Get().pMyInfo->DataSize), PACKET_SendUserInfo);
+			PlayerController::Get().UpdateShopInfo();
 		}
 		else {
 			UIManager::Get().m_pHelpTextPanel->m_bRender = true;
+			PlayerController::Get().UpdateShopInfo();
 		}
 	};
 	///

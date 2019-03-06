@@ -143,6 +143,7 @@ public:
 	void HitEvent(Collider* pTarget)												noexcept;
 	void OperEXP(const float& value)												noexcept;
 	void CheckTownCollision()														noexcept;
+	void UpdateShopInfo()															noexcept;
 
 	void SendAnimTransform(const EAction& eAction, const ECharacter& eCharacter)	noexcept;
 	void SendReqRespawn(const ECharacter& eCharacter)								noexcept;

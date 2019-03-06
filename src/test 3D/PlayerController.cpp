@@ -1419,7 +1419,7 @@ void PlayerController::OperEXP(const float& value) noexcept
 
 void PlayerController::CheckTownCollision() noexcept
 {
-	for (int i = 0; i < 4; ++i)
+	for (UCHAR i = 0; i < 4; ++i)
 	{
 		if (VectorLengthSq(m_CarpetPos[i] - GetWorldPosition()) <= 5000.0f)
 		{
@@ -1441,24 +1441,9 @@ void PlayerController::CheckTownCollision() noexcept
 						SoundManager::Get().Play("SE_blacksmith.mp3");
 						pUIManager->m_pSmithyPanel->m_bRender = true;
 						pUIManager->m_pMouseIcon->m_bRender = true;
+						UpdateShopInfo();
 					}
 				}
-				pUIManager->m_pSmithyBtnWeapon->SetString(to_wstring((m_upgradeWeapon + 1) * 2000) + L" KG");
-				pUIManager->m_pSmithyBtnArmor->SetString(to_wstring((m_upgradeArmor + 1) * 2000) + L" KG");
-				pUIManager->m_pSmithyBtnAcce1->SetString(to_wstring((m_upgradeAcce1 + 1) * 2000) + L" KG");
-				pUIManager->m_pSmithyBtnAcce2->SetString(to_wstring((m_upgradeAcce2 + 1) * 10000) + L" KG");
-
-				pUIManager->m_pSmithyInfo1Weapon->SetString(L"Level " + to_wstring(m_upgradeWeapon) + L" ¡æ Level " + to_wstring(m_upgradeWeapon + 1));
-				pUIManager->m_pSmithyInfo2Weapon->SetString(L"Damage +" + to_wstring((m_upgradeWeapon) * 15) + L"% ¡æ +" + to_wstring((m_upgradeWeapon + 1) * 15) + L"%");
-
-				pUIManager->m_pSmithyInfo1Armor->SetString(L"Level " + to_wstring(m_upgradeArmor) + L" ¡æ Level " + to_wstring(m_upgradeArmor + 1));
-				pUIManager->m_pSmithyInfo2Armor->SetString(L"Armor +" + to_wstring((1.0f - (5.0f / (5.0f + m_defencePoint + m_upgradeArmor))) * 100.0f).substr(0, 4) + L"% ¡æ +" + to_wstring((1.0f - (5.0f / (5.0f + m_defencePoint + m_upgradeArmor + 1))) * 100.0f).substr(0, 4) + L"%");
-
-				pUIManager->m_pSmithyInfo1Acce1->SetString(L"Level " + to_wstring(m_upgradeAcce1) + L" ¡æ Level " + to_wstring(m_upgradeAcce1 + 1));
-				pUIManager->m_pSmithyInfo2Acce1->SetString(L"Cooltime +" + to_wstring((1.0f - (5.0f / (5.0f + m_upgradeAcce1))) * 100.0f).substr(0, 4) + L"% ¡æ +" + to_wstring((1.0f - (5.0f / (5.0f + m_upgradeAcce1 + 1))) * 100.0f).substr(0, 4) + L"%");
-
-				pUIManager->m_pSmithyInfo1Acce2->SetString(L"Level " + to_wstring(m_upgradeAcce2) + L" ¡æ Level " + to_wstring(m_upgradeAcce2 + 1));
-				pUIManager->m_pSmithyInfo2Acce2->SetString(L"All Stat +" + to_wstring(m_upgradeAcce2) + L" ¡æ +" + to_wstring(m_upgradeAcce2 + 1));
 			}	break;
 			case ECarpet::Church:
 			{
@@ -1527,35 +1512,16 @@ void PlayerController::CheckTownCollision() noexcept
 						SoundManager::Get().Play("SE_towerround.mp3");
 						pUIManager->m_pTowerPanel->m_bRender = true;
 						pUIManager->m_pMouseIcon->m_bRender = true;
-
+						UpdateShopInfo();
 					}
 				}
-				pUIManager->m_pTowerUpgrade->SetString(to_wstring(2000 + PacketManager::Get().TowerLevel * 2000) + L" KG");
-				pUIManager->m_pTowerCurLevel->SetString(to_wstring(PacketManager::Get().TowerLevel));
-				pUIManager->m_pTowerCurAtkDamage->SetString(to_wstring(PacketManager::Get().TowerDamage * 100.0f).substr(0, 4));
-				pUIManager->m_pTowerCurAtkSpeed->SetString(to_wstring(PacketManager::Get().TowerDelayShot).substr(0, 4));
-				if (PacketManager::Get().TowerLevel >= 5)
-					pUIManager->m_pTowerText1->SetString(L"ÆøÅº °ø°Ý");
-				else
-					pUIManager->m_pTowerText1->SetString(L"");
-
-				pUIManager->m_pTowerNextLevel->SetString(to_wstring(PacketManager::Get().TowerLevel + 1));
-				pUIManager->m_pTowerNextAtkDamage->SetString(to_wstring((0.2f + PacketManager::Get().TowerLevel * 0.05f) * 100.0f).substr(0, 4));
-				if (PacketManager::Get().TowerLevel == 0)
-					pUIManager->m_pTowerNextAtkSpeed->SetString(to_wstring(8.0f).substr(0, 4));
-				else
-					pUIManager->m_pTowerNextAtkSpeed->SetString(to_wstring(PacketManager::Get().TowerDelayShot * 0.85f).substr(0, 4));
-
-				if (PacketManager::Get().TowerLevel == 4)
-					pUIManager->m_pTowerText2->SetString(L"ÆøÅº °ø°Ý");
-				else
-					pUIManager->m_pTowerText2->SetString(L"");
 			}	break;
 			}
 			pUIManager->m_pXPush->m_bRender = true;
 			return;
 		}
 	}
+	// ¹þ¾î³µÀ»½Ã
 	if (pUIManager->m_pXPush->m_bRender)
 	{
 		pUIManager->m_pXPush->m_bRender = false;
@@ -1567,6 +1533,48 @@ void PlayerController::CheckTownCollision() noexcept
 	}
 }
 
+void PlayerController::UpdateShopInfo() noexcept
+{
+	// ´ëÀå°£
+	pUIManager->m_pSmithyBtnWeapon->SetString(to_wstring((m_upgradeWeapon + 1) * 2000) + L" KG");
+	pUIManager->m_pSmithyBtnArmor->SetString(to_wstring((m_upgradeArmor + 1) * 2000) + L" KG");
+	pUIManager->m_pSmithyBtnAcce1->SetString(to_wstring((m_upgradeAcce1 + 1) * 2000) + L" KG");
+	pUIManager->m_pSmithyBtnAcce2->SetString(to_wstring((m_upgradeAcce2 + 1) * 10000) + L" KG");
+
+	pUIManager->m_pSmithyInfo1Weapon->SetString(L"Level " + to_wstring(m_upgradeWeapon) + L" ¡æ Level " + to_wstring(m_upgradeWeapon + 1));
+	pUIManager->m_pSmithyInfo2Weapon->SetString(L"Damage +" + to_wstring((m_upgradeWeapon) * 15) + L"% ¡æ +" + to_wstring((m_upgradeWeapon + 1) * 15) + L"%");
+
+	pUIManager->m_pSmithyInfo1Armor->SetString(L"Level " + to_wstring(m_upgradeArmor) + L" ¡æ Level " + to_wstring(m_upgradeArmor + 1));
+	pUIManager->m_pSmithyInfo2Armor->SetString(L"Armor +" + to_wstring((1.0f - (5.0f / (5.0f + m_defencePoint + m_upgradeArmor))) * 100.0f).substr(0, 4) + L"% ¡æ +" + to_wstring((1.0f - (5.0f / (5.0f + m_defencePoint + m_upgradeArmor + 1))) * 100.0f).substr(0, 4) + L"%");
+
+	pUIManager->m_pSmithyInfo1Acce1->SetString(L"Level " + to_wstring(m_upgradeAcce1) + L" ¡æ Level " + to_wstring(m_upgradeAcce1 + 1));
+	pUIManager->m_pSmithyInfo2Acce1->SetString(L"Cooltime +" + to_wstring((1.0f - (5.0f / (5.0f + m_upgradeAcce1))) * 100.0f).substr(0, 4) + L"% ¡æ +" + to_wstring((1.0f - (5.0f / (5.0f + m_upgradeAcce1 + 1))) * 100.0f).substr(0, 4) + L"%");
+
+	pUIManager->m_pSmithyInfo1Acce2->SetString(L"Level " + to_wstring(m_upgradeAcce2) + L" ¡æ Level " + to_wstring(m_upgradeAcce2 + 1));
+	pUIManager->m_pSmithyInfo2Acce2->SetString(L"All Stat +" + to_wstring(m_upgradeAcce2) + L" ¡æ +" + to_wstring(m_upgradeAcce2 + 1));
+
+	// Å¸¿ö
+	pUIManager->m_pTowerUpgrade->SetString(to_wstring(2000 + PacketManager::Get().TowerLevel * 2000) + L" KG");
+	pUIManager->m_pTowerCurLevel->SetString(to_wstring(PacketManager::Get().TowerLevel));
+	pUIManager->m_pTowerCurAtkDamage->SetString(to_wstring(PacketManager::Get().TowerDamage * 100.0f).substr(0, 4));
+	pUIManager->m_pTowerCurAtkSpeed->SetString(to_wstring(PacketManager::Get().TowerDelayShot).substr(0, 4));
+	if (PacketManager::Get().TowerLevel >= 5)
+		pUIManager->m_pTowerText1->SetString(L"ÆøÅº °ø°Ý");
+	else
+		pUIManager->m_pTowerText1->SetString(L"");
+
+	pUIManager->m_pTowerNextLevel->SetString(to_wstring(PacketManager::Get().TowerLevel + 1));
+	pUIManager->m_pTowerNextAtkDamage->SetString(to_wstring((0.2f + PacketManager::Get().TowerLevel * 0.05f) * 100.0f).substr(0, 4));
+	if (PacketManager::Get().TowerLevel == 0)
+		pUIManager->m_pTowerNextAtkSpeed->SetString(to_wstring(8.0f).substr(0, 4));
+	else
+		pUIManager->m_pTowerNextAtkSpeed->SetString(to_wstring(PacketManager::Get().TowerDelayShot * 0.85f).substr(0, 4));
+
+	if (PacketManager::Get().TowerLevel == 4)
+		pUIManager->m_pTowerText2->SetString(L"ÆøÅº °ø°Ý");
+	else
+		pUIManager->m_pTowerText2->SetString(L"");
+}
 
 void PlayerController::SendAnimTransform(const EAction& eAction, const ECharacter& eCharacter) noexcept
 {
