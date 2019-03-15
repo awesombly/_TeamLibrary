@@ -148,7 +148,6 @@ const D3DXVECTOR3	 Divide(const D3DXVECTOR3& vectorA, const D3DXVECTOR3& vectorB
 const D3DXQUATERNION Divide(const D3DXQUATERNION& quatA, const D3DXQUATERNION& quatB)				 noexcept;
 const D3DXVECTOR2	 Normalize(const D3DXVECTOR2& vector2)											 noexcept;
 const D3DXVECTOR3	 Normalize(const D3DXVECTOR3& vector3)											 noexcept;
-//const D3DXVECTOR2	 VectorCross(const D3DXVECTOR2& vectorA, const D3DXVECTOR2& vectorB)			 noexcept;
 const D3DXVECTOR3	 VectorCross(const D3DXVECTOR3& vectorA, const D3DXVECTOR3& vectorB)			 noexcept;
 const float			 VectorDot(const D3DXVECTOR2& vectorA, const D3DXVECTOR2& vectorB)				 noexcept;
 const float			 VectorDot(const D3DXVECTOR3& vectorA, const D3DXVECTOR3& vectorB)				 noexcept;

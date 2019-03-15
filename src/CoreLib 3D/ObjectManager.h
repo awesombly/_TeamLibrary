@@ -22,7 +22,6 @@ class Collider;
 class ObjectManager : public IDxBasis, public ISingleton<ObjectManager>
 {
 private:
-	// 오브젝트 리스트
 	map<EObjType, forward_list<GameObject*> >	 m_ObjectList;		// 전체 순회용 리스트
 	map<wstring, stack<GameObject*> >			 m_DisabledPull;	// 대기 상태 풀
 	map<wstring, GameObject*>					 m_ProtoPull;		// 복사용 오브젝트 풀
@@ -43,41 +42,38 @@ public:
 	// 후처리 이벤트 등록용(함수, 인자, 인자)
 	static queue<tuple<void(*)(void*, void*), void*, void*> > PostFrameEvent;
 public:
-	void ProcessPostEvent()	noexcept;
-	// txt 파일 읽기
-	bool ReadSpriteScript()	noexcept;
-	// 카메라 설정
-	void SetCurCamera(const ECamera& eCamera)	noexcept;
-	// 리스트 반환
-	vector<Sprite>* GetSpriteList(const wstring_view& spriteName)	  noexcept;
-	map<wstring, vector<Sprite> > & GetSpriteList()					  noexcept;
-	forward_list<GameObject*>* GetObjectList(const EObjType& objType) noexcept;
-	map<EObjType, forward_list<GameObject*> >& GetObjectList()		  noexcept;
+	void ProcessPostEvent()													noexcept;	// 이벤트 처리
+	bool ReadSpriteScript()													noexcept;	// 스프라이트 파일 읽기
+	void SetCurCamera(const ECamera& eCamera)								noexcept;	// 카메라 설정
+	vector<Sprite>* GetSpriteList(const wstring_view& spriteName)			noexcept;	
+	map<wstring, vector<Sprite> > & GetSpriteList()							noexcept;
+	forward_list<GameObject*>* GetObjectList(const EObjType& objType)		noexcept;
+	map<EObjType, forward_list<GameObject*> >& GetObjectList()				noexcept;
 	// 오브젝트 가져오기 (대기 풀에 남아있거나, 복사 풀에 등록 필요)
 	GameObject* TakeObject(const wstring_view& objName, const bool& pushObject = true) noexcept;
-	bool SetProtoObject(GameObject* pObject)					noexcept;	// 복사 풀에 추가
+	bool SetProtoObject(GameObject* pObject)								noexcept;	// 복사 풀에 추가
 	void PushObject(GameObject* pObject, const bool& isPostEvent = true)	noexcept;	// 오브젝트 리스트에 추가
-	void PopObject(GameObject* pObject)							noexcept;	// 오브젝트 리스트에서 꺼내기
-	void DisableObject(GameObject* pObject)						noexcept;	// 오브젝트 비활성화(->대기 풀)
-	bool RemoveObject(GameObject* pObject)						noexcept;	// 오브젝트 제거(삭제 이벤트 등록)
+	void PopObject(GameObject* pObject)										noexcept;	// 오브젝트 리스트에서 꺼내기
+	void DisableObject(GameObject* pObject)									noexcept;	// 오브젝트 비활성화(->대기 풀)
+	bool RemoveObject(GameObject* pObject)									noexcept;	// 오브젝트 제거(삭제 이벤트 등록)
 	// 컴포넌트 가져오기, 등록, 삭제
-	Component* TakeComponent(const wstring_view& compName)		noexcept;
-	bool SetProtoComponent(Component* pComponent)				noexcept;
-	void DisableComponent(Component* pComponent)				noexcept;	// 컴포넌트 비활성화(->대기 풀)
-	bool RemoveComponent(Component* pComponent)					noexcept;	// 컴포넌트 제거("")
+	Component* TakeComponent(const wstring_view& compName)					noexcept;
+	bool SetProtoComponent(Component* pComponent)							noexcept;
+	void DisableComponent(Component* pComponent)							noexcept;	// 컴포넌트 비활성화(->대기 풀)
+	bool RemoveComponent(Component* pComponent)								noexcept;	// 컴포넌트 제거("")
 	// 충돌체 리스트 추가, 제거
-	const forward_list<Collider*>& GetColliderList()			noexcept;
+	const forward_list<Collider*>& GetColliderList()						noexcept;
 	void PushCollider(Collider* pCollider, const bool& isPostEvent = true)	noexcept;
 	void PopCollider(Collider* pCollider, const bool& isPostEvent = true)	noexcept;
 
 	// 인스턴스 리스트 넣기, 빼기
-	InstanceRenderer* PushInstance(InstanceRenderer* pInstance) noexcept;
-	void PopInstance(InstanceRenderer* pInstance)				noexcept;				
+	InstanceRenderer* PushInstance(InstanceRenderer* pInstance)				noexcept;
+	void PopInstance(InstanceRenderer* pInstance)							noexcept;				
 
-	virtual bool Init()											noexcept override;
-	virtual bool Frame(const float& spf, const float& accTime)	noexcept override;
-	virtual bool Render(ID3D11DeviceContext* pDContext)			noexcept override;
-	virtual bool Release()										noexcept override;
+	virtual bool Init()														noexcept override;
+	virtual bool Frame(const float& spf, const float& accTime)				noexcept override;
+	virtual bool Render(ID3D11DeviceContext* pDContext)						noexcept override;
+	virtual bool Release()													noexcept override;
 private:
 	friend class ISingleton<ObjectManager>;
 	friend class Dialog_Preset;
