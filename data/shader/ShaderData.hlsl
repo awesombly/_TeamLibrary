@@ -1,4 +1,5 @@
 #define DirectLight
+//#define Deferred
 
 static const float fNEAR = 0.1f;
 static const float fFAR = 2000.0f;

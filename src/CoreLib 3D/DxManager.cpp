@@ -3,6 +3,7 @@
 #include "Window.h"
 #include "Texture.h"
 #include <wrl.h>						// ComPtr
+#include "../../data/shader/ShaderData.hlsl"
 
 bool DxManager::Init() noexcept
 {
@@ -135,7 +136,11 @@ bool DxManager::Frame() noexcept
 	else if (Input::GetKeyState(VK_F3) == EKeyState::DOWN)
 	{
 		m_RasterList[ERasterS::Current] = m_RasterList[ERasterS::Basic];
+#ifdef Deferred
+		m_BlenderList[EBlendS::Current] = m_BlenderList[EBlendS::NoAlpha];
+#else
 		m_BlenderList[EBlendS::Current] = m_BlenderList[EBlendS::Basic];
+#endif
 		m_DepthList[EDepthS::Current] = m_DepthList[EDepthS::Basic];
 		m_RTDSView.m_pScreen->SetPixelShader("PS_MRT_None");
 	}

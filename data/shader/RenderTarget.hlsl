@@ -242,15 +242,27 @@ float4 PS_MRT(VS_OUTPUT_MRT input) : SV_TARGET
 // 후처리 None
 float4 PS_MRT_None(VS_OUTPUT_MRT input) : SV_TARGET
 {
+#ifdef Deferred
+	#ifdef DirectLight
+	float3 vLightDir = -cb_LightVector.xyz;
+	#else
+	//float3 vLightDir = normalize(cb_LightVector.xyz - WorldPos.xyz);
+	#endif
+
+	float4 vFinal = g_txDiffuse.Sample(samLinear,input.tex);
+	float4 vNormal = g_txNormalMap.Sample(samLinear, input.tex);
+
+	vFinal.xyz *= max(cb_useLight, dot(vLightDir, vNormal.xyz) + cb_useLight);
+	vFinal.w = 1.0f;
+#else
 	float4 vFinal = g_txDiffuse.Sample(samLinear,input.tex);
 	vFinal.w = 1.0f;
+#endif
 	return vFinal;
 }
 
 // 노말값 출력
 float4 PS_MRT_Normal(VS_OUTPUT_MRT input) : SV_TARGET
 {
-	//float4 vNormalDepth = g_txNormalMap.Sample(samLinear,input.tex);
-	//vNormalDepth.w = 1.0f;	// 텍스처에 그릴때부터 투명한 상태라 w 고정시켜도 그대로
 	return g_txNormalMap.Sample(samLinear,input.tex);
 }

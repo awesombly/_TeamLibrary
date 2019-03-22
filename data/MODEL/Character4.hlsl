@@ -181,6 +181,9 @@ VS_OUTPUT VS(PNCT5_VS_INPUT input)//,uniform bool bHalfVector )
 
 	//if (cb_useLight)
 	//{
+#ifdef Deferred
+	output.col = input.col;
+#else
 	#ifdef DirectLight
 		float3 vLightDir = -cb_LightVector.xyz;
 	#else
@@ -191,11 +194,7 @@ VS_OUTPUT VS(PNCT5_VS_INPUT input)//,uniform bool bHalfVector )
 		output.col.xyz = input.col.xyz * max(cb_useLight, dot(vLightDir, output.nor.xyz) + cb_useLight);
 		//output.col.xy *= 0.85f;
 		output.col.w = input.col.w;
-	//}
-	//else
-	//{
-	//	output.col = input.col;
-	//}
+#endif
 
 	// È¯°æ
 	if (cb_useEnviMap)
