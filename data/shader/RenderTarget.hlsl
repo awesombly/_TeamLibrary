@@ -2,6 +2,7 @@
 
 Texture2D   g_txDiffuse   : register(t0);
 Texture2D	g_txNormalMap : register(t1);
+Texture2D	g_txDeferred : register(t2);
 //Buffer<float> g_fGaussianMask : register(t2);
 //TextureCube g_txCubeMap   : register(t2);
 
@@ -261,8 +262,21 @@ float4 PS_MRT_None(VS_OUTPUT_MRT input) : SV_TARGET
 	return vFinal;
 }
 
+
+
 // 노말값 출력
 float4 PS_MRT_Normal(VS_OUTPUT_MRT input) : SV_TARGET
 {
-	return g_txNormalMap.Sample(samLinear,input.tex);
+	float4 pos = g_txDeferred.Sample(samLinear, input.tex);
+	pos = mul(transpose(g_matProj), pos);
+	pos = mul(transpose(g_matView), pos);
+	pos.w = 0.0f;
+	pos = normalize(pos);
+	pos.w = 1.0f;
+	//aa.w = 0.0f;
+	//aa = normalize(aa);
+	//aa.w = 1.0f;
+	return pos;
+	//return normalize(g_txDeferred.Sample(samLinear,input.tex));
+	//return g_txNormalMap.Sample(samLinear,input.tex);
 }

@@ -44,13 +44,15 @@ cbuffer cbMaterial : register (b3)
 	float			g_iNumKernel : packoffset(c5.y);
 }
 
-// ·»´õ Å¸°Ù
+// MRT¿ë
 struct PBUFFER_OUTPUT
 {
 	float4 color0 : SV_TARGET0;
 	float4 color1 : SV_TARGET1;
+#ifdef Deferred
+	float4 color2 : SV_TARGET2;
+#endif
 };
-
 
 #ifdef FT_CONSTANTBUFFER
 	cbuffer cbAnimMatrices : register (b1)
@@ -226,6 +228,7 @@ PBUFFER_OUTPUT PS(VS_OUTPUT input) : SV_Target
 	if (output.color0.w < 0.1f)
 		discard;
 	output.color1	= input.nor;
+	output.color2 = input.pos;
 
 	// È¯°æ
 	if (cb_useEnviMap)

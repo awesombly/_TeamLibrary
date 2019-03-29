@@ -15,12 +15,12 @@ protected:
 	int m_RTViewCount;
 
 	D3D11_TEXTURE2D_DESC		m_TexDesc;
-	ID3D11Texture2D*			m_pTexTextures[2];	// 중간 랜더용 텍스처
-	ID3D11RenderTargetView*		m_pTexRTViews[2];	// 텍스처 랜더, 노말+깊이
+	ID3D11Texture2D*			m_pTexTextures[3];	// 중간 랜더용 텍스처
+	ID3D11RenderTargetView*		m_pTexRTViews[3];	// 텍스처 랜더, 노말+깊이
 public:
 	PlaneUI*					m_pScreen;
 
-	ID3D11ShaderResourceView*	m_pTexSRViews[2];	// 중간 출력용 리소스
+	ID3D11ShaderResourceView*	m_pTexSRViews[3];	// 중간 출력용 리소스
 	ID3D11RenderTargetView*		m_pRTView;			// 생성된 후면 버퍼 중 랜더링 될 버퍼
 	ID3D11DepthStencilView*		m_pDepthSView;		// 깊이 스텐실 뷰
 protected:

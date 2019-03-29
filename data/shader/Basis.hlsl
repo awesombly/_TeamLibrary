@@ -48,6 +48,9 @@ struct PBUFFER_OUTPUT
 {
 	float4 color0 : SV_TARGET0;
 	float4 color1 : SV_TARGET1;
+#ifdef Deferred
+	float4 color2 : SV_TARGET2;
+#endif
 };
 
 // PNCTT 정점 입력

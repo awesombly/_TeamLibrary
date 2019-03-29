@@ -18,7 +18,7 @@ HRESULT RenderDepthView::Create(ID3D11DeviceContext* pDContext, IDXGISwapChain* 
 	}
 	else
 	{
-		m_RTViewCount = 2;
+		m_RTViewCount = 3;
 		m_pScreen = new PlaneUI(L"ScreenView", L"None.png", "VS_MRT", "PS_MRT_None");
 	}
 	m_pScreen->SetCamera(&ObjectManager::Cameras[ECamera::Screen]);
@@ -32,9 +32,10 @@ HRESULT RenderDepthView::Create(ID3D11DeviceContext* pDContext, IDXGISwapChain* 
 	// 리소스 장착
 	vector<Sprite>* sprites = new vector<Sprite>();
 	sprites->emplace_back(Sprite(new Texture(m_pTexSRViews[0]), 0.0f));
-	if (m_RTViewCount == 2)
+	if (m_RTViewCount == 3)
 	{
 		sprites->emplace_back(Sprite(new Texture(m_pTexSRViews[1]), 0.0f));
+		sprites->emplace_back(Sprite(new Texture(m_pTexSRViews[2]), 0.0f));
 		m_pScreen->isMultiTexture(true);
 	}
 	m_pScreen->SetSpriteList(sprites);
@@ -58,6 +59,7 @@ void RenderDepthView::ClearView(ID3D11DeviceContext* pDContext) noexcept
 	static float BackDepthColor[] = { 0.0f, 0.0f, 0.0f, 0.0f };
 	pDContext->ClearRenderTargetView(m_pTexRTViews[0], BackColor);
 	pDContext->ClearRenderTargetView(m_pTexRTViews[1], BackDepthColor);
+	pDContext->ClearRenderTargetView(m_pTexRTViews[2], BackColor);
 	// 깊이-스텐실 버퍼를 초기화, 초기화 대상 플래그, 깊이값, 스텐실값
 	pDContext->ClearDepthStencilView(m_pDepthSView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 	// 랜더 타겟 뷰 설정(텍스쳐)
@@ -102,7 +104,7 @@ HRESULT RenderDepthView::CreateResourceRTView(ID3D11DeviceContext* pDContext, ID
 	RTViewDesc.ViewDimension = D3D11_RTV_DIMENSION_TEXTURE2D;
 	RTViewDesc.Texture2D.MipSlice = 0;
 
-	if (m_RTViewCount == 2)
+	if (m_RTViewCount == 3)
 	{
 		if (m_pTexTextures[0] != nullptr)
 		{
@@ -116,12 +118,21 @@ HRESULT RenderDepthView::CreateResourceRTView(ID3D11DeviceContext* pDContext, ID
 			m_pTexSRViews[1]->Release();
 			m_pTexRTViews[1]->Release();
 		}
+		if (m_pTexTextures[2] != nullptr)
+		{
+			m_pTexTextures[2]->Release();
+			m_pTexSRViews[2]->Release();
+			m_pTexRTViews[2]->Release();
+		}
 		if (FAILED(DxManager::GetDevice()->CreateTexture2D(&m_TexDesc, nullptr, &m_pTexTextures[0])) ||
 			FAILED(DxManager::GetDevice()->CreateTexture2D(&m_TexDesc, nullptr, &m_pTexTextures[1])) ||
+			FAILED(DxManager::GetDevice()->CreateTexture2D(&m_TexDesc, nullptr, &m_pTexTextures[2])) ||
 			FAILED(DxManager::GetDevice()->CreateShaderResourceView(m_pTexTextures[0], &SRViewDesc, &m_pTexSRViews[0])) ||
 			FAILED(DxManager::GetDevice()->CreateShaderResourceView(m_pTexTextures[1], &SRViewDesc, &m_pTexSRViews[1])) ||
+			FAILED(DxManager::GetDevice()->CreateShaderResourceView(m_pTexTextures[2], &SRViewDesc, &m_pTexSRViews[2])) ||
 			FAILED(DxManager::GetDevice()->CreateRenderTargetView(m_pTexTextures[0], &RTViewDesc, &m_pTexRTViews[0])) ||
-			FAILED(DxManager::GetDevice()->CreateRenderTargetView(m_pTexTextures[1], &RTViewDesc, &m_pTexRTViews[1])))
+			FAILED(DxManager::GetDevice()->CreateRenderTargetView(m_pTexTextures[1], &RTViewDesc, &m_pTexRTViews[1])) ||
+			FAILED(DxManager::GetDevice()->CreateRenderTargetView(m_pTexTextures[2], &RTViewDesc, &m_pTexRTViews[2])) )
 		{
 			return E_FAIL;
 	   }
@@ -165,7 +176,7 @@ HRESULT RenderDepthView::CreateDSView(const DXGI_SWAP_CHAIN_DESC& swapDesc) noex
 	DSViewDesc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
 	DSViewDesc.Texture2D.MipSlice = 0;
 
-	if (m_RTViewCount == 2)
+	if (m_RTViewCount == 3)
 	{
 		depthTexDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
 		depthTexDesc.BindFlags = D3D11_BIND_DEPTH_STENCIL;		// 생성 타입

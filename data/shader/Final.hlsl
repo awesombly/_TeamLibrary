@@ -115,6 +115,7 @@ PBUFFER_OUTPUT PS_Final(VS_OUTPUT_Mix input) : SV_Target
 	PBUFFER_OUTPUT output = (PBUFFER_OUTPUT)0;
 	output.color1 = input.nor;
 	output.color0 = g_txDiffuse.Sample(samLinear, input.tex);
+	output.color2 = input.pos;
 
 	// È¯°æ
 	if(cb_useEnviMap)

@@ -2,7 +2,6 @@
 #include "PacketManager.h"
 #include "JEventBind.h"
 #include "UIManager.h"
-//#include "../../data/shader/ShaderData.hlsl"
 #include "ColliderAABB.h"
 
 bool GameScene::Init() noexcept
