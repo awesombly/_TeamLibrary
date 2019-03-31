@@ -249,11 +249,11 @@ float4 PS_MRT_None(VS_OUTPUT_MRT input) : SV_TARGET
 	#else
 	//float3 vLightDir = normalize(cb_LightVector.xyz - WorldPos.xyz);
 	#endif
-
+	
 	float4 vFinal = g_txDiffuse.Sample(samLinear,input.tex);
 	float4 vNormal = g_txNormalMap.Sample(samLinear, input.tex);
 
-	vFinal.xyz *= max(cb_useLight, dot(vLightDir, vNormal.xyz) + cb_useLight);
+	vFinal.xyz *= max(0.3f, dot(vLightDir, vNormal.xyz) + 0.3f);
 	vFinal.w = 1.0f;
 #else
 	float4 vFinal = g_txDiffuse.Sample(samLinear,input.tex);
@@ -267,16 +267,38 @@ float4 PS_MRT_None(VS_OUTPUT_MRT input) : SV_TARGET
 // 노말값 출력
 float4 PS_MRT_Normal(VS_OUTPUT_MRT input) : SV_TARGET
 {
-	float4 pos = g_txDeferred.Sample(samLinear, input.tex);
-	pos = mul(transpose(g_matProj), pos);
-	pos = mul(transpose(g_matView), pos);
-	pos.w = 0.0f;
-	pos = normalize(pos);
-	pos.w = 1.0f;
-	//aa.w = 0.0f;
-	//aa = normalize(aa);
-	//aa.w = 1.0f;
-	return pos;
-	//return normalize(g_txDeferred.Sample(samLinear,input.tex));
-	//return g_txNormalMap.Sample(samLinear,input.tex);
+//#ifdef Deferred
+//	#ifdef DirectLight
+//	float3 vLightDir = -cb_LightVector.xyz;
+//	#else
+//	//float3 vLightDir = normalize(cb_LightVector.xyz - WorldPos.xyz);
+//	#endif
+//
+//	float4 vFinal	= g_txDiffuse.Sample(samLinear,input.tex);
+//	float4 vNormal	= g_txNormalMap.Sample(samLinear, input.tex);
+//	float3 vPos		= g_txDeferred.Sample(samLinear, input.tex).xyz;
+//	float3 vLPos = float3(0.0f, 10.0f, 0.0f);
+//
+//	if (distance(vLPos, vPos) <= 5.0f)
+//	{
+//		float power = distance(vLPos, vPos) / 5.0f;
+//		vFinal.xyz -= 0.5f;
+//	}
+//	vFinal.w = 1.0f;
+//#else
+//	float4 vFinal = g_txDiffuse.Sample(samLinear,input.tex);
+//	vFinal.w = 1.0f;
+//#endif
+//	return vFinal;
+
+
+	//float4 pos = g_txDeferred.Sample(samLinear, input.tex);
+	////pos = mul(pos, transpose(g_matProj));
+	////pos = mul(pos, transpose(g_matView));
+	//////pos.w = 0.0f;
+	//pos.xyz = normalize(pos.xyz);
+	//pos.w = 1.0f;
+	//return pos;
+	////return normalize(g_txDeferred.Sample(samLinear,input.tex));
+	return g_txNormalMap.Sample(samLinear,input.tex);
 }

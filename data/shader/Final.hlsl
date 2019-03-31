@@ -25,6 +25,7 @@ struct VS_OUTPUT_Mix
 	float3 eye		 : TEXCOORD6;
 	// ½¦µµ¿ì
 	float4 TexShadow : TEXCOORD7;
+	float4 pos2		 : TEXCOORD8;
 };
 
 
@@ -46,6 +47,8 @@ VS_OUTPUT_Mix VS_Final(VS_INPUT_PNCTT input)
 	float4 WorldPos = mul(float4(input.pos, 1.0f), g_matWorld);
 	output.pos = mul(WorldPos, g_matView);
 	output.pos = mul(output.pos, g_matProj);
+	output.pos2.xyz = input.pos.xyz;
+	output.pos2.w = 1.0f;
 
 	float3 vNormal = normalize(mul(input.nor, (float3x3)g_matNormal));
 	output.nor = float4(vNormal, (output.pos.w - fNEAR) / (fFAR - fNEAR));
@@ -115,7 +118,9 @@ PBUFFER_OUTPUT PS_Final(VS_OUTPUT_Mix input) : SV_Target
 	PBUFFER_OUTPUT output = (PBUFFER_OUTPUT)0;
 	output.color1 = input.nor;
 	output.color0 = g_txDiffuse.Sample(samLinear, input.tex);
-	output.color2 = input.pos;
+#ifdef Deferred
+	output.color2 = input.pos2;
+#endif
 
 	// È¯°æ
 	if(cb_useEnviMap)

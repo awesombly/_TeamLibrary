@@ -115,6 +115,7 @@ struct VS_OUTPUT
 	//float3 eye		 : TEXCOORD3;
 	// ½¦µµ¿ì
 	float4 TexShadow : TEXCOORD3;
+	float4 pos2		 : TEXCOORD4;
 };
 
 // ÇÁ·¹³Ú °è»ê
@@ -166,6 +167,7 @@ VS_OUTPUT VS(PNCT5_VS_INPUT input)//,uniform bool bHalfVector )
 	float4 WorldPos = mul(output.pos, g_matWorld);
 	output.pos = mul(WorldPos, g_matView);
 	output.pos = mul(output.pos, g_matProj);
+	output.pos2 = WorldPos;
 
 	//Norm = output.nor.xyz;
 	//output.nor.z = -Norm.x;
@@ -227,8 +229,10 @@ PBUFFER_OUTPUT PS(VS_OUTPUT input) : SV_Target
 	output.color0	= g_txDiffuse.Sample(samLinear, input.tex);
 	if (output.color0.w < 0.1f)
 		discard;
-	output.color1	= input.nor;
-	output.color2 = input.pos;
+	output.color1 = input.nor;
+#ifdef Deferred
+	output.color2 = input.pos2;
+#endif
 
 	// È¯°æ
 	if (cb_useEnviMap)
